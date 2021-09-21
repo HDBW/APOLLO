@@ -38,7 +38,7 @@ Enhancing the cooperation of Public Employment Services (PES).
 Working with ESCO
 ---
 
-The ESCO data model
+This is the exceprt of The [ESCO data model](https://ec.europa.eu/esco/portal/document/en/87a9f66a-1830-4c93-94f0-5daa5e00507e).
 
 In general terms, the data model is structured on the basis of three pillars, represnting a searchable databse in 26 languages.
 
@@ -61,7 +61,12 @@ The pillars are:
         - A formal definition
         - The relationship between occupations and skills (i.e. the occupations for which the knowledge, skill or competence is essential and the occupations for which the knowledge, skill or competence is optional)
         - The relationship between knowledge, skills and competences, and other knowledge, skills and competences. This realtionship is categorised as essential or optional.
-        - The reusability level, which indicates how widley a knowledge, skill or competenc concept can be applied. 
+        - The reusability level, which indicates how widley a knowledge, skill or competency concept can be applied. ESCO distinguishes four levels of skill reusability:
+            - **Transversal knowledge, skills andd competences** are relevant to a broad range of occupations and sectors. They are often referred to as **“core skills”, “basic skills” or “soft skills”**. 
+            Transversal skills are not usually related directly to occupations in ESCO, except if this link is relevant for their labour market. In fact, they are too abstract to be suitable for job matching. Therefore, they are contextualised. The contextualisation of skills analyses how transversal skills, competences or knowledge are applied in the specific context of a sector or an occupation, and 
+allows knowledge or skill and competence concepts to be created.
+            - Cross sector knowledge, skills and competences are relevant to occupations across several economic sectors.
+            - Sector-specific knowledge, skills and competences are specific to one sector, but are relevant for more than one occupation within that sector. 
     - Competence
         The proven ability to use knowledge, skills and personal, social and/or methodological abilities in work or study situations, and in professional and personal development.
     Example: Working as a "civil airline pilot" requires the competence to combine knowledge about "emergency procedures" and "equipment malfunctions" with skills relating to "reading position coordinates" and "following the flight route".
@@ -69,11 +74,36 @@ The pillars are:
 
 these are interlined in order to show the relations between them, while occupational profiles show wheter skills and competences are essential or optional and what qualifications are relevant for each ESCO occupation. 
 
+The structure of the skills pillar.
+---
+
+The ESCO v1 skills pillar does not contain a full hierarchical structure. However, the 13492 elements of the skills pillar are structured in four different ways:
+
+- Through their relationship with occupations, by using occupational profiles as entry 
+point; 
+- Transversal knowledge, skills and competences are organised through a skills 
+hierarchy with the following five headings: 
+    - thinking; 
+    - language; 
+    - application of knowledge; 
+    - social interaction; 
+    - attitudes and values. 
+- Through relationships indicating how knowledge, skills and competences are 
+relevant to other knowledge, skills and competences (in particular in cases of the 
+contextualisation of skills);
+- Through functional collections that allow the selection of subsets of the skills pillar, according to the function that users have in mind. For example, an organisation may want to use ESCO in an online CV section, where a user indicates his/her 
+language skills. The organisation does not need all the ESCO skills in that section, only the language ones. If a user searches for "Chinese" in this section, the system should suggest "Chinese", "understand spoken Chinese" “understand written Chinese” or "interact verbally in Chinese", but not "traditional Chinese medicine" or "give shiatsu massages". A functional collection would allow the user to pick exactly the skills (or occupations) s/he is looking for. 
+
+ESCO v1 includes the following three functional collections: 
+- Skills from the Digital Competence Framework that have been included in ESCO; 
+- Language skills; 
+- Transversal skills.
+
+> Note: Make sure you understand the following concepts from this section 
+Knowledge, skill, competence, the skills pillar, transversal, cross-sector, sectorspecific, skills pillar structure.
+
+
 ESCO is using [TURTLE](https://www.w3.org/TR/turtle/#bib-N-TRIPLES) to store its data. 
-
-
-ESCO is using the [Linked Open Data](https://www.linked-open-data.org/) approach to share data on occupations and skills. The data is available on [Open Data Hub](https://opendatahub.ec.europa.eu/). The datastructure is based on the [ESCO schema](https://ec.europa.eu/skills/esco/esco-schema.json). The data is available in: [JSON](https://opendatahub.ec.europa.eu/dataset/ESCO), [CSV](https://opendatahub.ec.europa.eu/dataset/ESCO/download/csv), [RDF](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdf), [XML](https://opendatahub.ec.europa.eu/dataset/ESCO/download/xml), [Turtle](https://opendatahub.ec.europa.eu/dataset/ESCO/download/ttl), [N-Triples](https://opendatahub.ec.europa.eu/dataset/ESCO/download/nt), [N-Quads](https://opendatahub.ec.europa.eu/dataset/ESCO/download/nq), [RDF/XML](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdfxml), [RDF/JSON](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdfjson), [RDF/Turtle](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdfttl), [RDF/N-Triples](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdfnt), [RDF/N-Quads](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdfnq), [RDF/XML-ABBREV](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdfxmlabbrev), [RDF/JSON-LD](https://opendatahub.ec.europa.eu/dataset/ESCO/download/rdfjsonld). 
-The native implementation of ESCO is using the [Turtle](https://www.w3.org/TR/turtle/) (Terse RDF Triple Language) W3C standard as data representation. 
 
 This will allow us to build a graph of occupations and skills, and to use it to match people to jobs and to suggest trainings.
 
