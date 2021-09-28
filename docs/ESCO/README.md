@@ -40,6 +40,9 @@ Working with ESCO
 
 This is the exceprt of The [ESCO data model](https://ec.europa.eu/esco/portal/document/en/87a9f66a-1830-4c93-94f0-5daa5e00507e).
 
+Overview ESCO
+---
+
 In general terms, the data model is structured on the basis of three pillars, represnting a searchable databse in 26 languages.
 
 The pillars are:
@@ -100,7 +103,10 @@ ESCO v1 includes the following three functional collections:
 - Transversal skills.
 
 > Note: Make sure you understand the following concepts from this section 
-Knowledge, skill, competence, the skills pillar, transversal, cross-sector, sectorspecific, skills pillar structure.
+Knowledge, skill, competence, the skills pillar, transversal, cross-sector, sector-specific, skills pillar structure.
+
+The qualifications structure
+---
 
 
 ESCO is using [TURTLE](https://www.w3.org/TR/turtle/#bib-N-TRIPLES) to store its data. 
@@ -108,6 +114,14 @@ ESCO is using [TURTLE](https://www.w3.org/TR/turtle/#bib-N-TRIPLES) to store its
 This will allow us to build a graph of occupations and skills, and to use it to match people to jobs and to suggest trainings.
 
 
+Resources
+---
 
+- European Commission ESCO - [The ESCO data model](https://ec.europa.eu/esco/portal/document/en/87a9f66a-1830-4c93-94f0-5daa5e00507e)
+- European Commission ESCO - [ESCO Service Platform - Technical Documentation](https://ec.europa.eu/esco/portal/document/en/7c597e8c-0825-4914-abcf-3c7a2f7d779c)
+- European Commission ESCO - [The ESCO Handbook](https://ec.europa.eu/esco/portal/document/en/0a89839c-098d-4e34-846c-54cbd5684d24)
+- European Commission ESCO - [Connecting education and training with the labour market](https://ec.europa.eu/esco/portal/document/en/a19f0318-c5a3-4d94-90f8-7dd018e13659)
+- European Commission ESCO - [ESCO strategic framework](https://ec.europa.eu/esco/portal/document/en/89a2ca9a-bc79-4b95-a33b-cf36ae1ac6db)
+- European Commission ESCO - [Continuous improvement workflow for ESCO](https://ec.europa.eu/esco/portal/document/en/f834e202-0ebf-461a-9249-a00e91d86e94)
 
-
+- European Commission - [Europass CV](https://europa.eu/europass/en/create-europass-cv)
