@@ -5,7 +5,7 @@ ESCO
 
 ESCO works as a dictionary, describing, identifying and classifying professional occupations and skills relevant for the EU labour market and education and training.  Those concepts and the relationships between them can be understood by electronic systems, which allows different online platforms to use ESCO for services like matching jobseekers to jobs on the basis of their skills, suggesting trainings to people who want to reskill or upskill etc.
 
-ESCO provides descriptions of 2942 occupations and 13.485 skills linked to these occupations, translated into 27 languages (all official EU languages plus Icelandic, Norwegian and Arabic). 
+ESCO provides descriptions of **2942** occupations and **13.485** skills linked to these occupations, translated into 27 languages (all official EU languages plus Icelandic, Norwegian and Arabic). 
 
 TL;DR
 -
@@ -21,6 +21,8 @@ TL;DR
 - 350k Occupational terms
 - 500 Transversal skills
 - Linked Open Data
+
+!["ESCO by the numbers"](statsbubble.png)
 
 Abstract
 -
@@ -107,7 +109,11 @@ Knowledge, skill, competence, the skills pillar, transversal, cross-sector, sect
 
 The qualifications structure
 ---
+TBD
 
+![Qualifications](qualifications.png)
+
+![Qualificationslink](qualificationslink.png)
 
 ESCO is using [TURTLE](https://www.w3.org/TR/turtle/#bib-N-TRIPLES) to store its data. 
 
