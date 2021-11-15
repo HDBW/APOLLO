@@ -1,3 +1,4 @@
-# Releasenotes
+# Release notes
 
-Tothing so far :(
+Nothing so far :(
+
