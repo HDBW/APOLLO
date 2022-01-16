@@ -2,6 +2,7 @@
 [![Discord](https://img.shields.io/discord/591914197219016707.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/dTbWXuUgfn)
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
 
+![](/swag/logo.svg)
 
 # APOLLO
 INVITE Project APOLLO - **A**I-based cross-**P**lattform C**O**mpanion-app for **L**ive Long **L**earning **O**ptimization
