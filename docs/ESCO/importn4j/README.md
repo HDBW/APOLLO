@@ -6,8 +6,19 @@ Make sure you have docker on your machine and docker is up and running.
 Install docker for Windows Install Docker Desktop on Windows | Docker Documentation
 Install docker for WSL2 Docker Desktop WSL 2 backend | Docker Documentation
 
-From the command line run (WSL2 Ubuntu 20.04) 
-docker run --rm --name neo4j -p 7474:7474 -p 7687:7687 neo4j:latest
+From the command line run (WSL2 Ubuntu 20.04)  
+
+docker run \
+    --name testneo4j \
+    -p7474:7474 -p7687:7687 \
+    -d \
+    -v $HOME/neo4j/data:/data \
+    -v $HOME/neo4j/logs:/logs \
+    -v $HOME/neo4j/import:/var/lib/neo4j/import \
+    -v $HOME/neo4j/plugins:/plugins \
+    --env NEO4J_AUTH=neo4j/test \
+    neo4j:latest
+
 default user and password are neo4j
 
 
