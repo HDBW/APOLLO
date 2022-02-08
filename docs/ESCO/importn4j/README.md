@@ -8,26 +8,32 @@ Install docker for WSL2 Docker Desktop WSL 2 backend | Docker Documentation
 
 From the command line run (WSL2 Ubuntu 20.04)  
 
-docker run \
-    --name testneo4j \
-    -p7474:7474 -p7687:7687 \
-    -d \
-    -v $HOME/neo4j/data:/data \
-    -v $HOME/neo4j/logs:/logs \
-    -v $HOME/neo4j/import:/var/lib/neo4j/import \
-    -v $HOME/neo4j/plugins:/plugins \
-    --env NEO4J_AUTH=neo4j/test \
-    neo4j:latest
+## !!! UPDATED !!!:
+
+```
+docker run --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data --env='NEO4JLABS_PLUGINS=["apoc", "n10s"]' --env=NEO4J_AUTH=neo4j/neo4j neo4j:latest
+```
 
 default user and password are neo4j
 
+We ran into issue:
 
-Before you get started you should download the corresponding files from or you use the blobstorage url of azure.
+> "KO"	0	0	null	"The following constraint is required for importing RDF. Please run 'CREATE CONSTRAINT n10s_unique_uri ON (r:Resource) ASSERT r.uri IS UNIQUE' and try again."	null
 
-[https://ec.europa.eu/esco/portal/download/](https://ec.europa.eu/esco/portal/download/)
+please execute the following commands first neo4j
 
-Here is a combination for version 1.03 note current version is 1.08 and draft 1.09 exists.
-ESCO - [Download - European Commission (europa.eu)](https://ec.europa.eu/esco/portal/download/e00,e01,e02,e03,e1,ea,et,e12,e1l,e1u,e2b,e2k,e33,e34,e35,j1,ja,jt,j12,j1l,j1u,j2b,j2k,j33,j34,j35)
+```
+CALL n10s.graphconfig.init();
+```
 
-In neo4j use the [import.cql](https://github.com/HDBW/APOLLO/blob/main/docs/ESCO/importn4j/import.cql) or german [import_de.cql](https://github.com/HDBW/APOLLO/blob/main/docs/ESCO/importn4j/import_de.cql) script and change the url to your csv files. 
+```
+CREATE CONSTRAINT n10s_unique_uri ON (r:Resource)
+ASSERT r.uri IS UNIQUE;
+```
+
+```
+CALL n10s.rdf.import.fetch("https://pixiclients.blob.core.windows.net/clients/esco110/esco_v1.1.0.ttl?sv=2020-10-02&st=2022-02-08T11%3A28%3A49Z&se=2023-12-09T11%3A28%3A00Z&sr=b&sp=r&sig=MhFo4eZhQ%2FImhM4yv1BuqZva8MjYV0PxFCg7eJRgABU%3D","Turtle");
+```
+
+
 
