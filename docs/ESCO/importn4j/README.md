@@ -8,7 +8,7 @@ Install docker for WSL2 Docker Desktop WSL 2 backend | Docker Documentation
 
 From the command line run (WSL2 Ubuntu 20.04)  
 
-## !!! UPDATED !!!:
+## !!! UPDATED ESCO Version 1.1.0 !!!:
 
 ```
 docker run --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data --env='NEO4JLABS_PLUGINS=["apoc", "n10s"]' --env=NEO4J_AUTH=neo4j/neo4j neo4j:latest
