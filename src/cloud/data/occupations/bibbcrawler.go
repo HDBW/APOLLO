@@ -17,7 +17,7 @@ type Fact struct {
 
 func main() {
 	//create factlist
-	allFacts := make([]Fact, 0)
+	//allFacts := make([]Fact, 0)
 
 	//TODO: crawl the list of occupations relevant for INVITE project apollo
 
@@ -31,7 +31,7 @@ func main() {
 
 	})
 
-	collector.OnRequest(func(request *colly.Request) {
+	collectoccupations.OnRequest(func(request *colly.Request) {
 		fmt.Println("Visiting: ", request.URL.String())
 	})
 
