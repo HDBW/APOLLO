@@ -1,4 +1,6 @@
-# BA Jobsearch Crawler
+# berufenet occupation search
+
+# berufenet Jobsearch 
 
 This is the implementation of the BA Crawler. 
 Please note the BA crawler is part of distributed system. And as such is part of bigger network of services. 

@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\cloud",
+    "\\src\\cloud\\backend",
+    "\\src\\cloud\\data",
+    "\\src\\cloud\\data\\occupations",
+    "\\src\\cloud\\data\\ojp",
+    "\\swag"
+  ],
+  "SelectedNode": "\\src\\cloud\\backend",
+  "PreviewInSolutionExplorer": false
+}
