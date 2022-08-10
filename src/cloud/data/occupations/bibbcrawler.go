@@ -23,12 +23,12 @@ func main() {
 
 	//create instance of colly collector
 	collectoccupations := colly.NewCollector(
-		//TODO: Add list of external references of bibb
-		colly.AllowedDomains("bibb.de"),
+	//TODO: Add list of external references of bibb
+	//colly.AllowedDomains("bibb.de"),
 	)
 
-	collectoccupations.OnHTML("c-link-block__link", func(element *colly.HTMLElement) {
-
+	collectoccupations.OnHTML("title", func(element *colly.HTMLElement) {
+		fmt.Println(element.Text)
 	})
 
 	collectoccupations.OnRequest(func(request *colly.Request) {

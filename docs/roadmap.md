@@ -17,9 +17,17 @@ For released versions of the product:
 | Milestone                 | Release Date |
 |---------------------------|--------------|
 | Requirements Engineering and Specifications | 1st of November 2021  |
-| Call for Specifications | 1st of November 2021 |
-| End - Call for Specifications | 1st of March 2022 |
-| Specifications Release | 1st of April 2022 |
+| Workshops Features | 1st of March 2022 |
+| Workshops Vision and Mission | 1st of April 2022 |
+| Workshops Persona | 1st of July 2022 |
+| Workshops Persona | 1st of July 2022 |
+| Workshops UI/UX | 3rd of August 2022 |
+| UX/UI Mockup | October 2022 |
+| Backend Courses | October 2022 |
+| ML Pipeline Courses | November 2022 |
+| Frontend Courses | November 2022 |
+| Prototype 1 | December 2022 |
+...
 
 Milestone information will be updated, you can check out the Issue milestones to find more details.
 
