@@ -1,4 +1,5 @@
-﻿using Graph.Apollo.Cloud.Common;
+﻿using System.Diagnostics;
+using Graph.Apollo.Cloud.Common;
 using Graph.Apollo.Cloud.Greeter.Services;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +37,8 @@ namespace GreeterServiceTests.IntegrationTests
                 new HelloRequest { Name = "Joe" });
 
             // Assert
-            Assert.AreEqual($"Test Joe", response.Message);
+            Debug.Assert(response != null, nameof(response) + " != null");
+            Assert.That(response.Message, Is.EqualTo("Test Joe"));
         }
 
         [Test]
