@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "FJ3lg3F5pe64CqljWkjB4C+24rBUDBBRnpK8u0Z1R3I=",
+  "Source": "Graph.Apollo.Cloud.Greeter",
+  "BasePath": "_content/Graph.Apollo.Cloud.Greeter",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
