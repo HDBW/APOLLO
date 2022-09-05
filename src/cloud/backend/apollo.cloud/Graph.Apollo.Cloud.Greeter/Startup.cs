@@ -1,4 +1,5 @@
 ﻿using Graph.Apollo.Cloud.Greeter.Services;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Graph.Apollo.Cloud.Greeter
 {
@@ -8,6 +9,10 @@ namespace Graph.Apollo.Cloud.Greeter
         {
             services.AddGrpc(o => o.EnableDetailedErrors = true);
             services.AddSingleton<IGreeter, Services.Greeter>();
+            services.AddGrpcHealthChecks(o =>
+            {
+                o.Services.MapService("greet.Greeter", r => r.Tags.Contains("greeter"));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -22,6 +27,7 @@ namespace Graph.Apollo.Cloud.Greeter
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcHealthChecksService();
             });
         }
     }

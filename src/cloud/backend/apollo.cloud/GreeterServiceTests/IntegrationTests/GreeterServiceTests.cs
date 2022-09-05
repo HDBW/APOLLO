@@ -7,6 +7,8 @@ namespace GreeterServiceTests.IntegrationTests;
 [TestFixture]
 public class GreeterServiceTests : IntegrationTestBase
 {
+    //TODO: TEST Healthprobe for service see https://docs.microsoft.com/en-us/aspnet/core/grpc/health-checks?view=aspnetcore-6.0
+
     [Test]
     public async Task SayHelloUnaryTest()
     {

@@ -51,10 +51,30 @@
           "lib/net6.0/_._": {}
         }
       },
-      "Grpc.AspNetCore.Server/2.40.0": {
+      "Grpc.AspNetCore.HealthChecks/2.48.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.Net.Common": "2.40.0"
+          "Grpc.AspNetCore.Server": "2.48.0",
+          "Grpc.HealthCheck": "2.48.0"
+        },
+        "compile": {
+          "lib/net6.0/Grpc.AspNetCore.HealthChecks.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Grpc.AspNetCore.HealthChecks.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Grpc.AspNetCore.Server/2.48.0": {
+        "type": "package",
+        "dependencies": {
+          "Grpc.Net.Common": "2.48.0"
         },
         "compile": {
           "lib/net6.0/Grpc.AspNetCore.Server.dll": {
@@ -145,6 +165,24 @@
           }
         }
       },
+      "Grpc.HealthCheck/2.48.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Protobuf": "3.19.4",
+          "Grpc.Core.Api": "2.48.0",
+          "System.Threading.Channels": "4.6.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Grpc.HealthCheck.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Grpc.HealthCheck.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Grpc.Net.Client/2.40.0": {
         "type": "package",
         "dependencies": {
@@ -179,10 +217,10 @@
           }
         }
       },
-      "Grpc.Net.Common/2.40.0": {
+      "Grpc.Net.Common/2.48.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.Core.Api": "2.40.0"
+          "Grpc.Core.Api": "2.48.0"
         },
         "compile": {
           "lib/net6.0/Grpc.Net.Common.dll": {
@@ -1428,6 +1466,19 @@
           "lib/netstandard1.3/System.Threading.dll": {}
         }
       },
+      "System.Threading.Channels/4.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/System.Threading.Channels.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.Threading.Channels.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Threading.Tasks/4.0.11": {
         "type": "package",
         "dependencies": {
@@ -1533,6 +1584,7 @@
         "dependencies": {
           "Graph.Apollo.Cloud.Common": "1.0.0",
           "Grpc.AspNetCore": "2.40.0",
+          "Grpc.AspNetCore.HealthChecks": "2.48.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.17.0"
         },
         "compile": {
@@ -1661,14 +1713,36 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.AspNetCore.Server/2.40.0": {
-      "sha512": "cBSpT42syKkVnTBEehk+Sc2dX5sDO2lP+5o4ylFnup+JHPntbewTx5QHHizWPRTKTwWDe4EXR4rR1ilgf6eTnQ==",
+    "Grpc.AspNetCore.HealthChecks/2.48.0": {
+      "sha512": "kYDpM/elipAQI/aoF3NenpuiQyVnDMXxtRRbwjS89me6Dg+dWZaSjvEr/cr62EluByJ1Z53KI/TsZF03e+kA5g==",
       "type": "package",
-      "path": "grpc.aspnetcore.server/2.40.0",
+      "path": "grpc.aspnetcore.healthchecks/2.48.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.aspnetcore.server.2.40.0.nupkg.sha512",
+        "grpc.aspnetcore.healthchecks.2.48.0.nupkg.sha512",
+        "grpc.aspnetcore.healthchecks.nuspec",
+        "lib/net5.0/Grpc.AspNetCore.HealthChecks.dll",
+        "lib/net5.0/Grpc.AspNetCore.HealthChecks.pdb",
+        "lib/net5.0/Grpc.AspNetCore.HealthChecks.xml",
+        "lib/net6.0/Grpc.AspNetCore.HealthChecks.dll",
+        "lib/net6.0/Grpc.AspNetCore.HealthChecks.pdb",
+        "lib/net6.0/Grpc.AspNetCore.HealthChecks.xml",
+        "lib/netcoreapp3.0/Grpc.AspNetCore.HealthChecks.dll",
+        "lib/netcoreapp3.0/Grpc.AspNetCore.HealthChecks.pdb",
+        "lib/netcoreapp3.0/Grpc.AspNetCore.HealthChecks.xml",
+        "packageIcon.png"
+      ]
+    },
+    "Grpc.AspNetCore.Server/2.48.0": {
+      "sha512": "7GaNW8YnE5t+BpU75PsHgAJuy5Fp5ZMvLDSBdjUR4zUi27FwnVxiOhACyayprdCNNOwitbxUIc3iB5A7yn/QvQ==",
+      "type": "package",
+      "path": "grpc.aspnetcore.server/2.48.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "grpc.aspnetcore.server.2.48.0.nupkg.sha512",
         "grpc.aspnetcore.server.nuspec",
         "lib/net5.0/Grpc.AspNetCore.Server.dll",
         "lib/net5.0/Grpc.AspNetCore.Server.pdb",
@@ -1756,6 +1830,28 @@
         "packageIcon.png"
       ]
     },
+    "Grpc.HealthCheck/2.48.0": {
+      "sha512": "EggIXC7YOAYyN9U/9VnIwdLgC8PWjW/mBkBXBZYTgSctCTVNet58Vf5LgjfD1FdB2JoTZUwDkzVVEhBlGDn8OQ==",
+      "type": "package",
+      "path": "grpc.healthcheck/2.48.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "grpc.healthcheck.2.48.0.nupkg.sha512",
+        "grpc.healthcheck.nuspec",
+        "lib/net462/Grpc.HealthCheck.dll",
+        "lib/net462/Grpc.HealthCheck.pdb",
+        "lib/net462/Grpc.HealthCheck.xml",
+        "lib/netstandard1.5/Grpc.HealthCheck.dll",
+        "lib/netstandard1.5/Grpc.HealthCheck.pdb",
+        "lib/netstandard1.5/Grpc.HealthCheck.xml",
+        "lib/netstandard2.0/Grpc.HealthCheck.dll",
+        "lib/netstandard2.0/Grpc.HealthCheck.pdb",
+        "lib/netstandard2.0/Grpc.HealthCheck.xml",
+        "packageIcon.png"
+      ]
+    },
     "Grpc.Net.Client/2.40.0": {
       "sha512": "+Z+onJ5jOLwKR41wROs+I1Bo6+NKT9ov/moXZCi9vH7aDRVQuqhmfALoxWdsNUNO9Bl3A/VzmfPB2jxZB4B1WQ==",
       "type": "package",
@@ -1804,14 +1900,14 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Net.Common/2.40.0": {
-      "sha512": "nj5XotYmzAT4UlGyOK6xWacPp2nODupQvlbeA2qqu9F47BIr+vze6+psJ9gSgED2HeTVBXuc+vdKrUXzk0ErMQ==",
+    "Grpc.Net.Common/2.48.0": {
+      "sha512": "ju/jD0VR+cYdByLdaDc7toqAJxGzM0ba2rpQTbBrlHT+sRpCZAXUURZAlSszGAR7GLDXh4jm5n/KB6amT/xkVg==",
       "type": "package",
-      "path": "grpc.net.common/2.40.0",
+      "path": "grpc.net.common/2.48.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.net.common.2.40.0.nupkg.sha512",
+        "grpc.net.common.2.48.0.nupkg.sha512",
         "grpc.net.common.nuspec",
         "lib/net5.0/Grpc.Net.Common.dll",
         "lib/net5.0/Grpc.Net.Common.pdb",
@@ -5100,6 +5196,27 @@
         "runtimes/aot/lib/netcore50/System.Threading.dll",
         "system.threading.4.0.11.nupkg.sha512",
         "system.threading.nuspec"
+      ]
+    },
+    "System.Threading.Channels/4.6.0": {
+      "sha512": "xdCw/eEo1XwxQNuhTLD10gaXnVt5rkKZCPjttXE5vtqwEkheqdGrNBcbU0UP9zWdgIwZWD+4NEl4OS10jKrZtg==",
+      "type": "package",
+      "path": "system.threading.channels/4.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netcoreapp3.0/System.Threading.Channels.dll",
+        "lib/netcoreapp3.0/System.Threading.Channels.xml",
+        "lib/netstandard1.3/System.Threading.Channels.dll",
+        "lib/netstandard1.3/System.Threading.Channels.xml",
+        "lib/netstandard2.0/System.Threading.Channels.dll",
+        "lib/netstandard2.0/System.Threading.Channels.xml",
+        "system.threading.channels.4.6.0.nupkg.sha512",
+        "system.threading.channels.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Threading.Tasks/4.0.11": {
