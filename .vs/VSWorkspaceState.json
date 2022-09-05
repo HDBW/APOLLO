@@ -4,11 +4,9 @@
     "\\src",
     "\\src\\cloud",
     "\\src\\cloud\\backend",
-    "\\src\\cloud\\data",
-    "\\src\\cloud\\data\\occupations",
-    "\\src\\cloud\\data\\ojp",
-    "\\swag"
+    "\\src\\cloud\\backend\\apollo.cloud",
+    "\\src\\cloud\\data\\occupations"
   ],
-  "SelectedNode": "\\src\\cloud\\backend",
+  "SelectedNode": "\\src\\cloud\\backend\\apollo.cloud",
   "PreviewInSolutionExplorer": false
 }
