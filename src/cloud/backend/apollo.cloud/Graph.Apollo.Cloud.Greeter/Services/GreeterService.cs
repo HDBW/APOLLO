@@ -5,13 +5,25 @@ namespace Graph.Apollo.Cloud.Greeter.Services
 {
     public class GreeterService : Graph.Apollo.Cloud.Common.Greeter.GreeterBase
     {
-        private readonly ILogger<GreeterService> _logger;
+        //private readonly ILogger<GreeterService> _logger;
         private readonly IGreeter _greeter;
         
-        public GreeterService(ILogger<GreeterService> logger, IGreeter greeter)
+        //public GreeterService(ILogger<GreeterService> logger, IGreeter greeter)
+        //{
+        //    _logger = logger;
+        //    _greeter = greeter;
+        //}
+
+        public GreeterService(IGreeter greeter)
         {
-            _logger = logger;
             _greeter = greeter;
+        }
+
+        public override Task<HelloReply> SayHelloUnary(HelloRequest request,
+            ServerCallContext context)
+        {
+            var message = _greeter.Greet(request.Name);
+            return Task.FromResult(new HelloReply { Message = message });
         }
 
         public override async Task SayHelloServerStreaming(HelloRequest request,
