@@ -10,6 +10,7 @@
         "dependencies": {
           "Graph.Apollo.Cloud.Common": "1.0.0",
           "Grpc.AspNetCore": "2.40.0",
+          "Grpc.AspNetCore.HealthChecks": "2.48.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.17.0"
         },
         "runtime": {
@@ -31,20 +32,32 @@
           "Grpc.Tools": "2.40.0"
         }
       },
-      "Grpc.AspNetCore.Server/2.40.0": {
+      "Grpc.AspNetCore.HealthChecks/2.48.0": {
         "dependencies": {
-          "Grpc.Net.Common": "2.40.0"
+          "Grpc.AspNetCore.Server": "2.48.0",
+          "Grpc.HealthCheck": "2.48.0"
+        },
+        "runtime": {
+          "lib/net6.0/Grpc.AspNetCore.HealthChecks.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.48.0.0"
+          }
+        }
+      },
+      "Grpc.AspNetCore.Server/2.48.0": {
+        "dependencies": {
+          "Grpc.Net.Common": "2.48.0"
         },
         "runtime": {
           "lib/net6.0/Grpc.AspNetCore.Server.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.40.0.0"
+            "fileVersion": "2.48.0.0"
           }
         }
       },
       "Grpc.AspNetCore.Server.ClientFactory/2.40.0": {
         "dependencies": {
-          "Grpc.AspNetCore.Server": "2.40.0",
+          "Grpc.AspNetCore.Server": "2.48.0",
           "Grpc.Net.ClientFactory": "2.40.0"
         },
         "runtime": {
@@ -104,9 +117,22 @@
           }
         }
       },
+      "Grpc.HealthCheck/2.48.0": {
+        "dependencies": {
+          "Google.Protobuf": "3.21.5",
+          "Grpc.Core.Api": "2.48.0",
+          "System.Threading.Channels": "4.6.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Grpc.HealthCheck.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.48.0.0"
+          }
+        }
+      },
       "Grpc.Net.Client/2.40.0": {
         "dependencies": {
-          "Grpc.Net.Common": "2.40.0",
+          "Grpc.Net.Common": "2.48.0",
           "Microsoft.Extensions.Logging.Abstractions": "3.0.3"
         },
         "runtime": {
@@ -128,14 +154,14 @@
           }
         }
       },
-      "Grpc.Net.Common/2.40.0": {
+      "Grpc.Net.Common/2.48.0": {
         "dependencies": {
           "Grpc.Core.Api": "2.48.0"
         },
         "runtime": {
           "lib/net6.0/Grpc.Net.Common.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.40.0.0"
+            "fileVersion": "2.48.0.0"
           }
         }
       },
@@ -186,6 +212,7 @@
       "Microsoft.Extensions.Primitives/3.0.3": {},
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.17.0": {},
       "System.Memory/4.5.3": {},
+      "System.Threading.Channels/4.6.0": {},
       "Graph.Apollo.Cloud.Common/1.0.0": {
         "dependencies": {
           "Google.Protobuf": "3.21.5",
@@ -218,12 +245,19 @@
       "path": "grpc.aspnetcore/2.40.0",
       "hashPath": "grpc.aspnetcore.2.40.0.nupkg.sha512"
     },
-    "Grpc.AspNetCore.Server/2.40.0": {
+    "Grpc.AspNetCore.HealthChecks/2.48.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-cBSpT42syKkVnTBEehk+Sc2dX5sDO2lP+5o4ylFnup+JHPntbewTx5QHHizWPRTKTwWDe4EXR4rR1ilgf6eTnQ==",
-      "path": "grpc.aspnetcore.server/2.40.0",
-      "hashPath": "grpc.aspnetcore.server.2.40.0.nupkg.sha512"
+      "sha512": "sha512-kYDpM/elipAQI/aoF3NenpuiQyVnDMXxtRRbwjS89me6Dg+dWZaSjvEr/cr62EluByJ1Z53KI/TsZF03e+kA5g==",
+      "path": "grpc.aspnetcore.healthchecks/2.48.0",
+      "hashPath": "grpc.aspnetcore.healthchecks.2.48.0.nupkg.sha512"
+    },
+    "Grpc.AspNetCore.Server/2.48.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7GaNW8YnE5t+BpU75PsHgAJuy5Fp5ZMvLDSBdjUR4zUi27FwnVxiOhACyayprdCNNOwitbxUIc3iB5A7yn/QvQ==",
+      "path": "grpc.aspnetcore.server/2.48.0",
+      "hashPath": "grpc.aspnetcore.server.2.48.0.nupkg.sha512"
     },
     "Grpc.AspNetCore.Server.ClientFactory/2.40.0": {
       "type": "package",
@@ -246,6 +280,13 @@
       "path": "grpc.core.api/2.48.0",
       "hashPath": "grpc.core.api.2.48.0.nupkg.sha512"
     },
+    "Grpc.HealthCheck/2.48.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EggIXC7YOAYyN9U/9VnIwdLgC8PWjW/mBkBXBZYTgSctCTVNet58Vf5LgjfD1FdB2JoTZUwDkzVVEhBlGDn8OQ==",
+      "path": "grpc.healthcheck/2.48.0",
+      "hashPath": "grpc.healthcheck.2.48.0.nupkg.sha512"
+    },
     "Grpc.Net.Client/2.40.0": {
       "type": "package",
       "serviceable": true,
@@ -260,12 +301,12 @@
       "path": "grpc.net.clientfactory/2.40.0",
       "hashPath": "grpc.net.clientfactory.2.40.0.nupkg.sha512"
     },
-    "Grpc.Net.Common/2.40.0": {
+    "Grpc.Net.Common/2.48.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-nj5XotYmzAT4UlGyOK6xWacPp2nODupQvlbeA2qqu9F47BIr+vze6+psJ9gSgED2HeTVBXuc+vdKrUXzk0ErMQ==",
-      "path": "grpc.net.common/2.40.0",
-      "hashPath": "grpc.net.common.2.40.0.nupkg.sha512"
+      "sha512": "sha512-ju/jD0VR+cYdByLdaDc7toqAJxGzM0ba2rpQTbBrlHT+sRpCZAXUURZAlSszGAR7GLDXh4jm5n/KB6amT/xkVg==",
+      "path": "grpc.net.common/2.48.0",
+      "hashPath": "grpc.net.common.2.48.0.nupkg.sha512"
     },
     "Grpc.Tools/2.40.0": {
       "type": "package",
@@ -357,6 +398,13 @@
       "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
       "path": "system.memory/4.5.3",
       "hashPath": "system.memory.4.5.3.nupkg.sha512"
+    },
+    "System.Threading.Channels/4.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xdCw/eEo1XwxQNuhTLD10gaXnVt5rkKZCPjttXE5vtqwEkheqdGrNBcbU0UP9zWdgIwZWD+4NEl4OS10jKrZtg==",
+      "path": "system.threading.channels/4.6.0",
+      "hashPath": "system.threading.channels.4.6.0.nupkg.sha512"
     },
     "Graph.Apollo.Cloud.Common/1.0.0": {
       "type": "project",

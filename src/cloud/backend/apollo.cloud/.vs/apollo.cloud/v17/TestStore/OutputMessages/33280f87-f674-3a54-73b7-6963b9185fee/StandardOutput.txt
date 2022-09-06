@@ -1,0 +1,41 @@
+0,002s Grpc.Net.Client.Internal.GrpcCall - Debug: Starting gRPC call. Method type: 'ClientStreaming', URI: 'http://localhost/greet.Greeter/SayHelloClientStreaming'.
+0,002s Microsoft.AspNetCore.Hosting.Diagnostics - Information: Request starting HTTP/2 POST http://localhost/greet.Greeter/SayHelloClientStreaming application/grpc -
+0,002s Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware - Trace: All hosts are allowed.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Debug: Sending message.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloRequest' to 7 byte message.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Trace: Message sent.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Debug: Sending message.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloRequest' to 4 byte message.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Trace: Message sent.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Debug: Sending message.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloRequest' to 5 byte message.
+0,002s Grpc.Net.Client.Internal.GrpcCall - Trace: Message sent.
+0,002s Grpc.Net.Client.Internal.HttpContentClientStreamWriter - Debug: Completing client stream.
+0,003s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: 3 candidate(s) found for the request path '/greet.Greeter/SayHelloClientStreaming'
+0,003s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: Endpoint 'gRPC - /greet.Greeter/SayHelloClientStreaming' with route pattern '/greet.Greeter/SayHelloClientStreaming' is valid for the request path '/greet.Greeter/SayHelloClientStreaming'
+0,003s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: Endpoint 'gRPC - Unimplemented method for greet.Greeter' with route pattern 'greet.Greeter/{unimplementedMethod}' is valid for the request path '/greet.Greeter/SayHelloClientStreaming'
+0,003s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: Endpoint 'gRPC - Unimplemented service' with route pattern '{unimplementedService}/{unimplementedMethod}' is valid for the request path '/greet.Greeter/SayHelloClientStreaming'
+0,003s Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware - Debug: Request matched endpoint 'gRPC - /greet.Greeter/SayHelloClientStreaming'
+0,003s Microsoft.AspNetCore.Routing.EndpointMiddleware - Information: Executing endpoint 'gRPC - /greet.Greeter/SayHelloClientStreaming'
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Deserializing 7 byte message to 'Graph.Apollo.Cloud.Common.HelloRequest'.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Received message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Deserializing 4 byte message to 'Graph.Apollo.Cloud.Common.HelloRequest'.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Received message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Deserializing 5 byte message to 'Graph.Apollo.Cloud.Common.HelloRequest'.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Received message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: No message returned.
+0,006s Graph.Apollo.Cloud.Greeter.Services.Greeter - Information: Creating greeting to James, Jo, Lee
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Sending message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloReply' to 22 byte message.
+0,006s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Message sent.
+0,006s Microsoft.AspNetCore.Routing.EndpointMiddleware - Information: Executed endpoint 'gRPC - /greet.Greeter/SayHelloClientStreaming'
+0,007s Microsoft.AspNetCore.Hosting.Diagnostics - Information: Request finished HTTP/2 POST http://localhost/greet.Greeter/SayHelloClientStreaming application/grpc - - 200 - application/grpc 4.6123ms
+0,007s Grpc.Net.Client.Internal.GrpcCall - Trace: Response headers received.
+0,007s Grpc.Net.Client.Internal.GrpcCall - Debug: Reading message.
+0,007s Grpc.Net.Client.Internal.GrpcCall - Trace: Deserializing 22 byte message to 'Graph.Apollo.Cloud.Common.HelloReply'.
+0,007s Grpc.Net.Client.Internal.GrpcCall - Trace: Received message.
+0,008s Grpc.Net.Client.Internal.GrpcCall - Debug: Finished gRPC call.
