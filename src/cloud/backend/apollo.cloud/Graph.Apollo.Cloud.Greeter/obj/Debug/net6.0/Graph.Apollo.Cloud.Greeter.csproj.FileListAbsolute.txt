@@ -35,3 +35,5 @@ C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Gra
 C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Greeter\obj\Debug\net6.0\Graph.Apollo.Cloud.Greeter.pdb
 C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Greeter\obj\Debug\net6.0\Graph.Apollo.Cloud.Greeter.genruntimeconfig.cache
 C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Greeter\obj\Debug\net6.0\ref\Graph.Apollo.Cloud.Greeter.dll
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Greeter\bin\Debug\net6.0\Grpc.AspNetCore.HealthChecks.dll
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Greeter\bin\Debug\net6.0\Grpc.HealthCheck.dll

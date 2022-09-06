@@ -1,0 +1,58 @@
+0,022s Grpc.Net.Client.Internal.GrpcCall - Debug: Starting gRPC call. Method type: 'DuplexStreaming', URI: 'http://localhost/greet.Greeter/SayHelloBidirectionalStreaming'.
+0,044s Microsoft.AspNetCore.Hosting.Diagnostics - Information: Request starting HTTP/2 POST http://localhost/greet.Greeter/SayHelloBidirectionalStreaming application/grpc -
+0,045s Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware - Debug: Wildcard detected, all requests with hosts will be allowed.
+0,045s Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware - Trace: All hosts are allowed.
+0,046s Grpc.Net.Client.Internal.GrpcCall - Debug: Sending message.
+0,051s Grpc.Net.Client.Internal.GrpcCall - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloRequest' to 7 byte message.
+0,051s Grpc.Net.Client.Internal.GrpcCall - Trace: Message sent.
+0,056s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: 3 candidate(s) found for the request path '/greet.Greeter/SayHelloBidirectionalStreaming'
+0,057s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: Endpoint 'gRPC - /greet.Greeter/SayHelloBidirectionalStreaming' with route pattern '/greet.Greeter/SayHelloBidirectionalStreaming' is valid for the request path '/greet.Greeter/SayHelloBidirectionalStreaming'
+0,057s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: Endpoint 'gRPC - Unimplemented method for greet.Greeter' with route pattern 'greet.Greeter/{unimplementedMethod}' is valid for the request path '/greet.Greeter/SayHelloBidirectionalStreaming'
+0,057s Microsoft.AspNetCore.Routing.Matching.DfaMatcher - Debug: Endpoint 'gRPC - Unimplemented service' with route pattern '{unimplementedService}/{unimplementedMethod}' is valid for the request path '/greet.Greeter/SayHelloBidirectionalStreaming'
+0,057s Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware - Debug: Request matched endpoint 'gRPC - /greet.Greeter/SayHelloBidirectionalStreaming'
+0,059s Microsoft.AspNetCore.Routing.EndpointMiddleware - Information: Executing endpoint 'gRPC - /greet.Greeter/SayHelloBidirectionalStreaming'
+0,069s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,071s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Deserializing 7 byte message to 'Graph.Apollo.Cloud.Common.HelloRequest'.
+0,075s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Received message.
+0,075s Graph.Apollo.Cloud.Greeter.Services.Greeter - Information: Creating greeting to James
+0,077s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Sending message.
+0,078s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloReply' to 13 byte message.
+0,080s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Message sent.
+0,080s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,081s Grpc.Net.Client.Internal.GrpcCall - Trace: Response headers received.
+0,086s Grpc.Net.Client.Internal.GrpcCall - Debug: Reading message.
+0,088s Grpc.Net.Client.Internal.GrpcCall - Trace: Deserializing 13 byte message to 'Graph.Apollo.Cloud.Common.HelloReply'.
+0,089s Grpc.Net.Client.Internal.GrpcCall - Trace: Received message.
+0,089s Grpc.Net.Client.Internal.GrpcCall - Debug: Sending message.
+0,089s Grpc.Net.Client.Internal.GrpcCall - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloRequest' to 4 byte message.
+0,089s Grpc.Net.Client.Internal.GrpcCall - Trace: Message sent.
+0,089s Grpc.Net.Client.Internal.GrpcCall - Debug: Reading message.
+0,090s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Deserializing 4 byte message to 'Graph.Apollo.Cloud.Common.HelloRequest'.
+0,091s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Received message.
+0,091s Graph.Apollo.Cloud.Greeter.Services.Greeter - Information: Creating greeting to Jo
+0,091s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Sending message.
+0,091s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloReply' to 10 byte message.
+0,091s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Message sent.
+0,091s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Trace: Deserializing 10 byte message to 'Graph.Apollo.Cloud.Common.HelloReply'.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Trace: Received message.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Debug: Sending message.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloRequest' to 5 byte message.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Trace: Message sent.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Debug: Reading message.
+0,092s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Deserializing 5 byte message to 'Graph.Apollo.Cloud.Common.HelloRequest'.
+0,092s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Received message.
+0,092s Graph.Apollo.Cloud.Greeter.Services.Greeter - Information: Creating greeting to Lee
+0,092s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Sending message.
+0,092s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Serialized 'Graph.Apollo.Cloud.Common.HelloReply' to 11 byte message.
+0,092s Grpc.AspNetCore.Server.ServerCallHandler - Trace: Message sent.
+0,092s Grpc.AspNetCore.Server.ServerCallHandler - Debug: Reading message.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Trace: Deserializing 11 byte message to 'Graph.Apollo.Cloud.Common.HelloReply'.
+0,092s Grpc.Net.Client.Internal.GrpcCall - Trace: Received message.
+0,092s Grpc.Net.Client.Internal.HttpContentClientStreamWriter - Debug: Completing client stream.
+0,093s Grpc.AspNetCore.Server.ServerCallHandler - Trace: No message returned.
+0,096s Microsoft.AspNetCore.Routing.EndpointMiddleware - Information: Executed endpoint 'gRPC - /greet.Greeter/SayHelloBidirectionalStreaming'
+0,097s Microsoft.AspNetCore.Hosting.Diagnostics - Information: Request finished HTTP/2 POST http://localhost/greet.Greeter/SayHelloBidirectionalStreaming application/grpc - - 200 - application/grpc 53.8529ms
+0,100s Grpc.Net.Client.Internal.GrpcCall - Information: Call failed with gRPC error status. Status code: 'Cancelled', Message: 'gRPC call disposed.'.
+0,100s Grpc.Net.Client.Internal.GrpcCall - Debug: Finished gRPC call.
+0,100s Grpc.Net.Client.Internal.GrpcCall - Debug: gRPC call canceled.
