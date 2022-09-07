@@ -1,0 +1,12 @@
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\bin\Debug\net6.0\Graph.Apollo.Cloud.Common.deps.json
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\bin\Debug\net6.0\Graph.Apollo.Cloud.Common.dll
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\bin\Debug\net6.0\Graph.Apollo.Cloud.Common.pdb
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\Graph.Apollo.Cloud.Common.csproj.AssemblyReference.cache
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\Graph.Apollo.Cloud.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\Graph.Apollo.Cloud.Common.AssemblyInfoInputs.cache
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\Graph.Apollo.Cloud.Common.AssemblyInfo.cs
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\Graph.Apollo.Cloud.Common.csproj.CoreCompileInputs.cache
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\Graph.Apollo.Cloud.Common.dll
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\refint\Graph.Apollo.Cloud.Common.dll
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\Graph.Apollo.Cloud.Common.pdb
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\obj\Debug\net6.0\ref\Graph.Apollo.Cloud.Common.dll
