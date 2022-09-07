@@ -1,6 +1,2 @@
 obj\Debug\net6.0\Protos/Training.cs \
-obj\Debug\net6.0\Protos/TrainingGrpc.cs: C:/Users/patbo/.nuget/packages/grpc.tools/2.48.1/build/native/include/google/protobuf/duration.proto\
- C:/Users/patbo/.nuget/packages/grpc.tools/2.48.1/build/native/include/google/protobuf/timestamp.proto\
- C:/Users/patbo/.nuget/packages/grpc.tools/2.48.1/build/native/include/google/protobuf/any.proto\
- C:/Users/patbo/.nuget/packages/grpc.tools/2.48.1/build/native/include/google/protobuf/empty.proto\
- Protos/training.proto
+obj\Debug\net6.0\Protos/TrainingGrpc.cs: Protos/training.proto

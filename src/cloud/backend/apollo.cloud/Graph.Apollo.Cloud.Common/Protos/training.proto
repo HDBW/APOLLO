@@ -1,124 +1,25 @@
 ﻿syntax = "proto3";
 
-import "google/protobuf/duration.proto";  
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/any.proto";
-import "google/protobuf/empty.proto";
-
 option csharp_namespace = "Graph.Apollo.Cloud.Common";
 
-package training;
+package Graph.Apollo.Cloud.Common;
 
 service Trainings {
-	rpc GetTrainings (google.protobuf.Empty) returns (GetTrainingsResponse);
+  // Sends a greeting
+    rpc GetTrainings (TrainingRequest) returns (TrainingReply);
 }
 
-message GetTrainingsResponse
-{
-	repeated TrainingMessage trainings = 1;
+// The request message containing the user's name.
+message TrainingRequest {
+  string name = 1;
 }
 
-message TrainingMessage {
-	// Segment Metadata
-	string apolloid = 1;
-	string externalId = 2;
+// The response message containing the greetings.
+message TrainingReply {
+  string message = 1;
+}
 
-	//Represents the public Url of the trianing or course
-	string externalUri = 3;
-	
-	//Indicates the latest datetime the training was updated
-	google.protobuf.Timestamp latestUpdate = 4;
-	//Indicates the creation date of the training or course
-	google.protobuf.Timestamp created = 5;
-
-	//List of associated internal documents
-	repeated string internalDocuments = 6;
-
-	/// --- Segemnt Course Information ---
-
-	// The title of the traiing or Course
-	string title = 7;
-
-	//The description of the trianing or Course
-	string externalDescription = 8;
-
-	//The Value Propostion of the training or course
-	string benefitDescription = 9;
-
-	// --- Segment Indicators ---
-
-	//Indicates if the course or training is an online training.
-	bool isOnlineTraining = 10;
-
-	//Is a property that describes how long the the training or course takes.
-	google.protobuf.Duration duration = 11;
-
-	//Indicates wheter a training or course is available as fulltime option.
-	bool isFulltimeTraining = 12;
-
-	//Indicates wheter a training or course is available as parttime option.
-	bool isParttimeTraining = 13;
-
-	// --- Segment AI Based Fields ---
-	
-	//Is a MachineLearning generated executive summary of the training
-	string shortDescription = 14;
-
-	//Is a MachineLearning generated summerization of the training
-	string summerization = 15;
-
-	//A list of public available documents about the Course
-	repeated string publicDocuments = 16;
-
-	repeated string tags = 17;
-
-	// --- Segment User Rating ---
-	
-	// Is a MachineLEarning generated summerization of the users Ratings
-	string userRatingSummerization = 18;
-
-	int32 trianingReviewScore = 19;
-
-	/// --- Segment Appointments
-	
-	message CourseAppointments {
-		//Property that describes where the training or course is taking place.
-		string traininglocation = 1;
-		//Indicates if this training will happen or maybe be canceld
-		bool isGuaranteed = 2;
-		//Indicates wheter a appointment is a parttime option.
-		bool isParttime = 3;
-		//Indicates wheter a appointment is a fulltime option.
-		bool isFulltime = 4;
-
-		message Appointment{
-			string subjectOfAppointment = 1;
-			google.protobuf.Timestamp time = 2;
-			google.protobuf.Duration duration = 3;
-		}
-
-		repeated Appointment appointments = 5;
-	}
-
-	repeated CourseAppointments courseDates = 20;
-
-
-	/// --- Segment Associations ---
-
-	//TODO: ListOfEscoCompetenciesExtracted
-	//TODO: ListOfEscoCompetenciesAssigned
-	//TODO: ListOfCompetencies (Assigned and Extracted Competencies)
-
-	//TODO: AssignedOccupations
-	//TODO: ExtractedOccupations
-	//TODO: Occupations (Assigned and Extracted Competencies)
-
-	//TODO: ChangesExtracted
-
-	// --- Segment Booking ---
-
-
-	// -- Segment Content Managment --
-	
+message Training {
+    string title = 1;
 }
 
