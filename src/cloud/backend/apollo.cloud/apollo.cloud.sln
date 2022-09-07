@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Apollo.Cloud.Greeter"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreeterServiceTests", "GreeterServiceTests\GreeterServiceTests.csproj", "{49FD77D6-9FC0-4A81-9E71-490999F0B527}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Apollo.Cloud.Trainings", "Graph.Apollo.Cloud.Trainings\Graph.Apollo.Cloud.Trainings.csproj", "{743B5D24-B2C1-47D1-BCCE-DE38F580C103}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{49FD77D6-9FC0-4A81-9E71-490999F0B527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49FD77D6-9FC0-4A81-9E71-490999F0B527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49FD77D6-9FC0-4A81-9E71-490999F0B527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{743B5D24-B2C1-47D1-BCCE-DE38F580C103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{743B5D24-B2C1-47D1-BCCE-DE38F580C103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{743B5D24-B2C1-47D1-BCCE-DE38F580C103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{743B5D24-B2C1-47D1-BCCE-DE38F580C103}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{58DC75C2-BE50-4ADE-B7BD-D31B61387012} = {B2CB0643-6E59-4F44-8FA0-3CDFEDD9E4FA}
 		{DCB12047-D227-4FA8-8F1A-AAC61A270CA4} = {244FEC10-2C8B-4A91-9ADA-7998B7FCF22F}
 		{49FD77D6-9FC0-4A81-9E71-490999F0B527} = {B2CB0643-6E59-4F44-8FA0-3CDFEDD9E4FA}
+		{743B5D24-B2C1-47D1-BCCE-DE38F580C103} = {244FEC10-2C8B-4A91-9ADA-7998B7FCF22F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9B9B73F-5630-42C9-B54E-D3FC8E7DA22F}
