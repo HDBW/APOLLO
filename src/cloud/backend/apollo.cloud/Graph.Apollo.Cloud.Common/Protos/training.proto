@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/duration.proto";  
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Graph.Apollo.Cloud.Common";
+
+package Graph.Apollo.Cloud;
+
+message Training {
+	string apolloid = 1;
+	string externalId = 2;
+	string title = 3;
+
+	string externalUri = 4;
+	string externalDescription = 5;
+
+	google.protobuf.Timestamp latestUpdate = 6;
+	google.protobuf.Timestamp created = 7;
+
+
+}
