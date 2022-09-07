@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "FsRsTZ7g7LFKbIZZd2V5qy7qkkciZ/+V7rfQXxyGmGbOQtGvXXcfmAMJMyv7xw3V76/blxyIam1F8DQ2m1Y7UQ==",
+  "dgSpecHash": "nxvpG0WMr8wHg6UOnC9Muxk5yjHLrP4CzjYXXzwXkA4B1HE1ufMVOyyDcKxgCcW+QGBnH8zOH1Zyex5pc5iAbg==",
   "success": true,
   "projectFilePath": "C:\\Users\\patbo\\Documents\\Source\\GitHub\\APOLLO\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Trainings\\Graph.Apollo.Cloud.Trainings.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\patbo\\.nuget\\packages\\google.protobuf\\3.21.5\\google.protobuf.3.21.5.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\gremlin.net\\3.6.1\\gremlin.net.3.6.1.nupkg.sha512",
     "C:\\Users\\patbo\\.nuget\\packages\\grpc.aspnetcore\\2.40.0\\grpc.aspnetcore.2.40.0.nupkg.sha512",
     "C:\\Users\\patbo\\.nuget\\packages\\grpc.aspnetcore.server\\2.40.0\\grpc.aspnetcore.server.2.40.0.nupkg.sha512",
     "C:\\Users\\patbo\\.nuget\\packages\\grpc.aspnetcore.server.clientfactory\\2.40.0\\grpc.aspnetcore.server.clientfactory.2.40.0.nupkg.sha512",
@@ -25,7 +26,11 @@
     "C:\\Users\\patbo\\.nuget\\packages\\microsoft.extensions.options\\3.0.3\\microsoft.extensions.options.3.0.3.nupkg.sha512",
     "C:\\Users\\patbo\\.nuget\\packages\\microsoft.extensions.primitives\\3.0.3\\microsoft.extensions.primitives.3.0.3.nupkg.sha512",
     "C:\\Users\\patbo\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
-    "C:\\Users\\patbo\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+    "C:\\Users\\patbo\\.nuget\\packages\\polly\\7.2.3\\polly.7.2.3.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\system.text.json\\6.0.5\\system.text.json.6.0.5.nupkg.sha512"
   ],
   "logs": []
 }
