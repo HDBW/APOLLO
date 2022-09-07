@@ -1,0 +1,6 @@
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Trainings\obj\Debug\net6.0\Graph.Apollo.Cloud.Trainings.csproj.AssemblyReference.cache
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Trainings\obj\Debug\net6.0\Graph.Apollo.Cloud.Trainings.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Trainings\obj\Debug\net6.0\Graph.Apollo.Cloud.Trainings.AssemblyInfoInputs.cache
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Trainings\obj\Debug\net6.0\Graph.Apollo.Cloud.Trainings.AssemblyInfo.cs
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Trainings\obj\Debug\net6.0\Graph.Apollo.Cloud.Trainings.csproj.CoreCompileInputs.cache
+C:\Users\patbo\Documents\Source\GitHub\APOLLO\src\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Trainings\obj\Debug\net6.0\Graph.Apollo.Cloud.Trainings.MvcApplicationPartsAssemblyInfo.cache
