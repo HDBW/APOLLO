@@ -10,7 +10,7 @@ using grpc = global::Grpc.Core;
 namespace Graph.Apollo.Cloud.Common {
   public static partial class Trainings
   {
-    static readonly string __ServiceName = "training.Trainings";
+    static readonly string __ServiceName = "Graph.Apollo.Cloud.Common.Trainings";
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static void __Helper_SerializeMessage(global::Google.Protobuf.IMessage message, grpc::SerializationContext context)
@@ -46,17 +46,17 @@ namespace Graph.Apollo.Cloud.Common {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
+    static readonly grpc::Marshaller<global::Graph.Apollo.Cloud.Common.TrainingRequest> __Marshaller_Graph_Apollo_Cloud_Common_TrainingRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Graph.Apollo.Cloud.Common.TrainingRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Graph.Apollo.Cloud.Common.GetTrainingsResponse> __Marshaller_training_GetTrainingsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Graph.Apollo.Cloud.Common.GetTrainingsResponse.Parser));
+    static readonly grpc::Marshaller<global::Graph.Apollo.Cloud.Common.TrainingReply> __Marshaller_Graph_Apollo_Cloud_Common_TrainingReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Graph.Apollo.Cloud.Common.TrainingReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Graph.Apollo.Cloud.Common.GetTrainingsResponse> __Method_GetTrainings = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Graph.Apollo.Cloud.Common.GetTrainingsResponse>(
+    static readonly grpc::Method<global::Graph.Apollo.Cloud.Common.TrainingRequest, global::Graph.Apollo.Cloud.Common.TrainingReply> __Method_GetTrainings = new grpc::Method<global::Graph.Apollo.Cloud.Common.TrainingRequest, global::Graph.Apollo.Cloud.Common.TrainingReply>(
         grpc::MethodType.Unary,
         __ServiceName,
         "GetTrainings",
-        __Marshaller_google_protobuf_Empty,
-        __Marshaller_training_GetTrainingsResponse);
+        __Marshaller_Graph_Apollo_Cloud_Common_TrainingRequest,
+        __Marshaller_Graph_Apollo_Cloud_Common_TrainingReply);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -68,8 +68,14 @@ namespace Graph.Apollo.Cloud.Common {
     [grpc::BindServiceMethod(typeof(Trainings), "BindService")]
     public abstract partial class TrainingsBase
     {
+      /// <summary>
+      /// Sends a greeting
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Graph.Apollo.Cloud.Common.GetTrainingsResponse> GetTrainings(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Graph.Apollo.Cloud.Common.TrainingReply> GetTrainings(global::Graph.Apollo.Cloud.Common.TrainingRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -103,23 +109,51 @@ namespace Graph.Apollo.Cloud.Common {
       {
       }
 
+      /// <summary>
+      /// Sends a greeting
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Graph.Apollo.Cloud.Common.GetTrainingsResponse GetTrainings(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Graph.Apollo.Cloud.Common.TrainingReply GetTrainings(global::Graph.Apollo.Cloud.Common.TrainingRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetTrainings(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Sends a greeting
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Graph.Apollo.Cloud.Common.GetTrainingsResponse GetTrainings(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual global::Graph.Apollo.Cloud.Common.TrainingReply GetTrainings(global::Graph.Apollo.Cloud.Common.TrainingRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_GetTrainings, null, options, request);
       }
+      /// <summary>
+      /// Sends a greeting
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Graph.Apollo.Cloud.Common.GetTrainingsResponse> GetTrainingsAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Graph.Apollo.Cloud.Common.TrainingReply> GetTrainingsAsync(global::Graph.Apollo.Cloud.Common.TrainingRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetTrainingsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Sends a greeting
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Graph.Apollo.Cloud.Common.GetTrainingsResponse> GetTrainingsAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Graph.Apollo.Cloud.Common.TrainingReply> GetTrainingsAsync(global::Graph.Apollo.Cloud.Common.TrainingRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetTrainings, null, options, request);
       }
@@ -147,7 +181,7 @@ namespace Graph.Apollo.Cloud.Common {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, TrainingsBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_GetTrainings, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Graph.Apollo.Cloud.Common.GetTrainingsResponse>(serviceImpl.GetTrainings));
+      serviceBinder.AddMethod(__Method_GetTrainings, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Graph.Apollo.Cloud.Common.TrainingRequest, global::Graph.Apollo.Cloud.Common.TrainingReply>(serviceImpl.GetTrainings));
     }
 
   }
