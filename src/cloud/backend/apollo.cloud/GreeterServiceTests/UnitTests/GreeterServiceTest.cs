@@ -23,7 +23,8 @@ public class GreeterServiceTest
 
         // Assert
         mockGreeter.Verify(v => v.Greet("Joe"));
-        Assert.AreEqual("Hello Joe", response.Message);
+        var message = "Hello Joe";
+        Assert.That(response.Message, Is.EqualTo(message));
     }
 
     [Test]
@@ -48,14 +49,15 @@ public class GreeterServiceTest
         responseStream.Complete();
 
         var allMessages = new List<HelloReply>();
-        await foreach (var message in responseStream.ReadAllAsync())
+        await foreach (var message in responseStream.ReadAllAsync().WithCancellation(cts.Token))
         {
             allMessages.Add(message);
         }
 
         Assert.GreaterOrEqual(allMessages.Count, 1);
 
-        Assert.AreEqual("Hello Joe 1", allMessages[0].Message);
+        var msg = "Hello Joe 1";
+        Assert.That(allMessages[0].Message, Is.EqualTo(msg));
     }
 
     [Test]
@@ -77,7 +79,8 @@ public class GreeterServiceTest
 
         // Assert
         var response = await call;
-        Assert.AreEqual("Hello James, Jo, Lee", response.Message);
+        var msg = "Hello James, Jo, Lee";
+        Assert.That(response.Message, Is.EqualTo(msg));
     }
 
     [Test]
@@ -95,13 +98,13 @@ public class GreeterServiceTest
 
         // Assert
         requestStream.AddMessage(new HelloRequest { Name = "James" });
-        Assert.AreEqual("Hello James", (await responseStream.ReadNextAsync())!.Message);
+        Assert.That((await responseStream.ReadNextAsync())!.Message, Is.EqualTo("Hello James"));
 
         requestStream.AddMessage(new HelloRequest { Name = "Jo" });
-        Assert.AreEqual("Hello Jo", (await responseStream.ReadNextAsync())!.Message);
+        Assert.That((await responseStream.ReadNextAsync())!.Message, Is.EqualTo("Hello Jo"));
 
         requestStream.AddMessage(new HelloRequest { Name = "Lee" });
-        Assert.AreEqual("Hello Lee", (await responseStream.ReadNextAsync())!.Message);
+        Assert.That((await responseStream.ReadNextAsync())!.Message, Is.EqualTo("Hello Lee"));
 
         requestStream.Complete();
 
