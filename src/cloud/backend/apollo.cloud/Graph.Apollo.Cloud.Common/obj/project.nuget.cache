@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "h9W+EPtaz8hSus0coCWd+5SuAcL5jtKk48JEL6S0TWu7coXIFO3oPSZzW+hWd19nfpBJxnMviuJ1BWVpBMfcWw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\patbo\\Documents\\Source\\GitHub\\APOLLO\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Common\\Graph.Apollo.Cloud.Common.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\patbo\\.nuget\\packages\\google.protobuf\\3.21.5\\google.protobuf.3.21.5.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\grpc.core\\2.46.3\\grpc.core.2.46.3.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\grpc.core.api\\2.48.0\\grpc.core.api.2.48.0.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\grpc.tools\\2.48.1\\grpc.tools.2.48.1.nupkg.sha512",
+    "C:\\Users\\patbo\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}
