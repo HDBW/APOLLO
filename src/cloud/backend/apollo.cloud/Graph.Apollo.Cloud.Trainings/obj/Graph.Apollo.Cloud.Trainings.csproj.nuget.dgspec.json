@@ -129,6 +129,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Gremlin.Net": {
+              "target": "Package",
+              "version": "[3.6.1, )"
+            },
             "Grpc.AspNetCore": {
               "target": "Package",
               "version": "[2.40.0, )"
