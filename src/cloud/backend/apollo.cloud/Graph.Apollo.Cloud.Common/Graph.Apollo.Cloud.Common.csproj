@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="Protos\greet.proto" />
+    <None Remove="Protos\training.proto" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
     <Protobuf Include="Protos\greet.proto">
       <GrpcServices>Both</GrpcServices>
     </Protobuf>
+    <Protobuf Include="Protos\training.proto" />
   </ItemGroup>
 
 </Project>

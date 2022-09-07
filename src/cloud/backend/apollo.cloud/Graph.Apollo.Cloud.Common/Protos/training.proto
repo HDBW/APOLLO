@@ -3,35 +3,47 @@
 import "google/protobuf/duration.proto";  
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
 
 option csharp_namespace = "Graph.Apollo.Cloud.Common";
 
-package Graph.Apollo.Cloud;
+package training;
 
-message Training {
+service Trainings {
+	rpc GetTrainings (google.protobuf.Empty) returns (GetTrainingsResponse);
+}
+
+message GetTrainingsResponse
+{
+	repeated TrainingMessage trainings = 1;
+}
+
+message TrainingMessage {
 	// Segment Metadata
 	string apolloid = 1;
 	string externalId = 2;
-	string title = 3;
 
 	//Represents the public Url of the trianing or course
-	string externalUri = 4;
+	string externalUri = 3;
 	
 	//Indicates the latest datetime the training was updated
-	google.protobuf.Timestamp latestUpdate = 5;
+	google.protobuf.Timestamp latestUpdate = 4;
 	//Indicates the creation date of the training or course
-	google.protobuf.Timestamp created = 6;
+	google.protobuf.Timestamp created = 5;
 
 	//List of associated internal documents
-	repeated string internalDocuments = 7;
+	repeated string internalDocuments = 6;
 
 	/// --- Segemnt Course Information ---
 
 	// The title of the traiing or Course
-	string title = 8;
+	string title = 7;
 
 	//The description of the trianing or Course
-	string externalDescription = 9;
+	string externalDescription = 8;
+
+	//The Value Propostion of the training or course
+	string benefitDescription = 9;
 
 	// --- Segment Indicators ---
 
@@ -65,7 +77,7 @@ message Training {
 	// Is a MachineLEarning generated summerization of the users Ratings
 	string userRatingSummerization = 18;
 
-	int trianingReviewScore = 19;
+	int32 trianingReviewScore = 19;
 
 	/// --- Segment Appointments
 	
