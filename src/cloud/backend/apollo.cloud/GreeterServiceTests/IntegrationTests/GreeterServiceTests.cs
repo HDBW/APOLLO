@@ -1,6 +1,5 @@
 ﻿using Graph.Apollo.Cloud.Common;
 using Grpc.Core;
-using NUnit.Framework;
 
 namespace GreeterServiceTests.IntegrationTests;
 
@@ -14,12 +13,13 @@ public class GreeterServiceTests : IntegrationTestBase
     {
         // Arrange
         var client = new Greeter.GreeterClient(Channel);
+        const string name = "Joe";
 
         // Act
-        var response = await client.SayHelloUnaryAsync(new HelloRequest { Name = "Joe" });
+        var response = await client.SayHelloUnaryAsync(new HelloRequest { Name = name });
 
         // Assert
-        Assert.AreEqual("Hello Joe", response.Message);
+        Assert.That(response.Message, Is.EqualTo($"Hello {name}"));
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class GreeterServiceTests : IntegrationTestBase
         response = await call;
 
         // Assert
-        Assert.AreEqual("Hello James, Jo, Lee", response.Message);
+        Assert.That(response.Message, Is.EqualTo("Hello James, Jo, Lee"));
     }
 
     [Test]
@@ -54,12 +54,13 @@ public class GreeterServiceTests : IntegrationTestBase
         var cts = new CancellationTokenSource();
         var hasMessages = false;
         var callCancelled = false;
+        const string name = "Joe";
 
         // Act
-        using var call = client.SayHelloServerStreaming(new HelloRequest { Name = "Joe" }, cancellationToken: cts.Token);
+        using var call = client.SayHelloServerStreaming(new HelloRequest { Name = name }, cancellationToken: cts.Token);
         try
         {
-            await foreach (var message in call.ResponseStream.ReadAllAsync())
+            await foreach (var message in call.ResponseStream.ReadAllAsync(cts.Token))
             {
                 hasMessages = true;
                 cts.Cancel();
@@ -97,7 +98,7 @@ public class GreeterServiceTests : IntegrationTestBase
         await call.RequestStream.CompleteAsync();
 
         // Assert
-        Assert.AreEqual(3, messages.Count);
-        Assert.AreEqual("Hello James", messages[0]);
+        Assert.That(messages.Count, Is.EqualTo(3));
+        Assert.That(messages[0], Is.EqualTo("Hello James"));
     }
 }
