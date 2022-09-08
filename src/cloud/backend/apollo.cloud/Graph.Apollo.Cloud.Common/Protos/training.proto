@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Graph.Apollo.Cloud.Common";
+
+package Graph.Apollo.Cloud.Common;
+
+service Trainings {
+  // Sends a greeting
+    rpc GetTrainings (TrainingRequest) returns (TrainingReply);
+}
+
+// The request message containing the user's name.
+message TrainingRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message TrainingReply {
+  string message = 1;
+}
+
+message Training {
+    string title = 1;
+}
+
