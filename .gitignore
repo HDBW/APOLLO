@@ -1,3 +1,5 @@
 
 docs/.DS_Store
 .DS_Store
+/src/cloud/backend/apollo.cloud/dashboard.apollo.cloud/Client/Properties/ServiceDependencies/local/secrets2.arm.json
+/src/cloud/backend/apollo.cloud/dashboard.apollo.cloud/Client/Properties/launchSettings.json
