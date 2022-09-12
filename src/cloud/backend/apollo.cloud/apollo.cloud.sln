@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dashboard.apollo.cloud.Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graph.Apollo.Cloud.UserProfiles", "Graph.Apollo.Cloud.UserProfiles\Graph.Apollo.Cloud.UserProfiles.csproj", "{EF10DDE7-E4E8-42AF-A42F-AB50C7005E59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Apollo.Cloud.ESCO", "Graph.Apollo.Cloud.ESCO\Graph.Apollo.Cloud.ESCO.csproj", "{FFD748F3-70F5-40FD-911B-70ECE09E3627}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{EF10DDE7-E4E8-42AF-A42F-AB50C7005E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF10DDE7-E4E8-42AF-A42F-AB50C7005E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF10DDE7-E4E8-42AF-A42F-AB50C7005E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD748F3-70F5-40FD-911B-70ECE09E3627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD748F3-70F5-40FD-911B-70ECE09E3627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD748F3-70F5-40FD-911B-70ECE09E3627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD748F3-70F5-40FD-911B-70ECE09E3627}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{7CFDDFEF-50D4-40EF-AC07-0009227A7A23} = {987136B7-130A-45E0-8B9E-1C1A50B8E5EE}
 		{C9734561-A2B5-4BD7-B2B5-37287A4408B9} = {987136B7-130A-45E0-8B9E-1C1A50B8E5EE}
 		{EF10DDE7-E4E8-42AF-A42F-AB50C7005E59} = {244FEC10-2C8B-4A91-9ADA-7998B7FCF22F}
+		{FFD748F3-70F5-40FD-911B-70ECE09E3627} = {244FEC10-2C8B-4A91-9ADA-7998B7FCF22F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9B9B73F-5630-42C9-B54E-D3FC8E7DA22F}

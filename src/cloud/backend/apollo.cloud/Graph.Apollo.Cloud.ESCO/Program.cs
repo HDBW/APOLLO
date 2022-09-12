@@ -1,4 +1,4 @@
-using Graph.Apollo.Cloud.UserProfiles.Services;
+using Graph.Apollo.Cloud.ESCO.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
 var app = builder.Build();
 
