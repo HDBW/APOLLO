@@ -4,4 +4,19 @@ option csharp_namespace = "Graph.Apollo.Cloud.Common";
 
 package esco;
 
+// The esco service definition.
+service ESCO {
+	
+}
 
+message Skill {
+	
+}
+
+message Occupation {
+	
+}
+
+message Concept {
+	
+}
