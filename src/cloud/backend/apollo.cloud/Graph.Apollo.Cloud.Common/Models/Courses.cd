@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Graph.Apollo.Cloud.Common.Models.Course">
+    <Position X="4" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>JEhAAQqlAAgiAGgIQEAEIAAQSACAAMBAgCAggBAUCAA=</HashCode>
+      <FileName>Models\Course.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CourseFeedback">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAiAAAgAAAQAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\CourseFeedback.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CourseDraft">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAACAAAAAAAAAAAAAAAAAACAAAYCAAAAgAAAAAA=</HashCode>
+      <FileName>Models\CourseDraft.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CourseDraftRequest">
+    <Position X="11.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CourseDraft.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CourseDraftReply">
+    <Position X="10" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\CourseDraft.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CoursePrice">
+    <Position X="1.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAgAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\CoursePrice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Graph.Apollo.Cloud.Common.Models.ICourseDraftService">
+    <Position X="10" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Models\CourseDraft.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9.75" />
+</ClassDiagram>
