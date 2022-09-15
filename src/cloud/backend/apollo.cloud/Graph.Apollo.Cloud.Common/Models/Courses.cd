@@ -42,11 +42,12 @@
       <FileName>Models\CoursePrice.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="Graph.Apollo.Cloud.Common.Models.ICourseDraftService">
+  <Interface Name="Graph.Apollo.Cloud.Common.Models.ICourseService">
     <Position X="10" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
-      <FileName>Models\CourseDraft.cs</FileName>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course.cs</FileName>
+      <NewMemberFileName>Models\CourseDraft.cs</NewMemberFileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9.75" />
