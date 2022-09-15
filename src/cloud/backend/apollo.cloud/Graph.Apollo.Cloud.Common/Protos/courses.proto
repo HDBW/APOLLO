@@ -4,22 +4,22 @@ option csharp_namespace = "Graph.Apollo.Cloud.Common";
 
 package Graph.Apollo.Cloud.Common;
 
-service Trainings {
+service Courses {
   // Sends a greeting
-    rpc GetTrainings (TrainingRequest) returns (TrainingReply);
+    rpc GetCourses (CoursesRequest) returns (CoursesReply);
 }
 
 // The request message containing the user's name.
-message TrainingRequest {
+message CoursesRequest {
   string name = 1;
 }
 
 // The response message containing the greetings.
-message TrainingReply {
+message CoursesReply {
   string message = 1;
 }
 
-message Training {
+message Course {
     string title = 1;
 }
 

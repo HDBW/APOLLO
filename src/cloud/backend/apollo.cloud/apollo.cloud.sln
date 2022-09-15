@@ -13,28 +13,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B2CB0643
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apollo.common", "apollo.common", "{426ACA46-5438-420E-B15F-FCD3B80C1A81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Apollo.Cloud.Common", "Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj", "{8B153C87-799B-475F-BB87-97390E26C130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graph.Apollo.Cloud.Common", "Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj", "{8B153C87-799B-475F-BB87-97390E26C130}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{58DC75C2-BE50-4ADE-B7BD-D31B61387012}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Apollo.Cloud.Greeter", "Graph.Apollo.Cloud.Greeter\Graph.Apollo.Cloud.Greeter.csproj", "{DCB12047-D227-4FA8-8F1A-AAC61A270CA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graph.Apollo.Cloud.Greeter", "Graph.Apollo.Cloud.Greeter\Graph.Apollo.Cloud.Greeter.csproj", "{DCB12047-D227-4FA8-8F1A-AAC61A270CA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreeterServiceTests", "GreeterServiceTests\GreeterServiceTests.csproj", "{49FD77D6-9FC0-4A81-9E71-490999F0B527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreeterServiceTests", "GreeterServiceTests\GreeterServiceTests.csproj", "{49FD77D6-9FC0-4A81-9E71-490999F0B527}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Apollo.Cloud.Trainings", "Graph.Apollo.Cloud.Trainings\Graph.Apollo.Cloud.Trainings.csproj", "{743B5D24-B2C1-47D1-BCCE-DE38F580C103}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graph.Apollo.Cloud.Courses", "Graph.Apollo.Cloud.Trainings\Graph.Apollo.Cloud.Courses.csproj", "{743B5D24-B2C1-47D1-BCCE-DE38F580C103}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF85BD69-4C13-4FF4-BEDC-DC1B2BFB0998}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dashboard.apollo.cloud.Server", "dashboard.apollo.cloud\Server\dashboard.apollo.cloud.Server.csproj", "{529F5AED-90B0-42F4-A69C-71437D6A0956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dashboard.apollo.cloud.Server", "dashboard.apollo.cloud\Server\dashboard.apollo.cloud.Server.csproj", "{529F5AED-90B0-42F4-A69C-71437D6A0956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dashboard.apollo.cloud.Client", "dashboard.apollo.cloud\Client\dashboard.apollo.cloud.Client.csproj", "{7CFDDFEF-50D4-40EF-AC07-0009227A7A23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dashboard.apollo.cloud.Client", "dashboard.apollo.cloud\Client\dashboard.apollo.cloud.Client.csproj", "{7CFDDFEF-50D4-40EF-AC07-0009227A7A23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dashboard.apollo.cloud.Shared", "dashboard.apollo.cloud\Shared\dashboard.apollo.cloud.Shared.csproj", "{C9734561-A2B5-4BD7-B2B5-37287A4408B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dashboard.apollo.cloud.Shared", "dashboard.apollo.cloud\Shared\dashboard.apollo.cloud.Shared.csproj", "{C9734561-A2B5-4BD7-B2B5-37287A4408B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph.Apollo.Cloud.UserProfiles", "Graph.Apollo.Cloud.UserProfiles\Graph.Apollo.Cloud.UserProfiles.csproj", "{EF10DDE7-E4E8-42AF-A42F-AB50C7005E59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graph.Apollo.Cloud.UserProfiles", "Graph.Apollo.Cloud.UserProfiles\Graph.Apollo.Cloud.UserProfiles.csproj", "{EF10DDE7-E4E8-42AF-A42F-AB50C7005E59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
