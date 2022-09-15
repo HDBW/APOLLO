@@ -2,10 +2,30 @@
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 using ProtoBuf.Grpc;
 
 namespace Graph.Apollo.Cloud.Common.Models;
 
+[ServiceContract]
+public interface ICourseService
+{
+    [OperationContract]
+    Task<CourseReply> CreateCourseAsync(CourseDraftRequest request, CallContext context = default);
+}
+
+[DataContract]
+public class CourseReply
+{
+    [DataMember(Order = 1)]
+    public string Message { get; set; }
+}
+
+public class CourseRequest
+{
+    [DataMember(Order = 1)]
+    public string Title { get; set; }
+}
 
 [DataContract]
 public class Course
