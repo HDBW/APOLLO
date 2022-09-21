@@ -9,8 +9,10 @@ INVITE Project APOLLO - **A**I-based cross-**P**lattform C**O**mpanion-app for *
 
 ## Summary
 
+For more information check out our [website](https://project-apollo.de/). 
+
 ## We are hiring !!! 
-If you are interested in joining the apollo team, please contact [Prof. Dominik Boesl, HDBW](dominik.boesl@hdbw-hochschule.de).
+If you are interested in joining the apollo team, please contact [Prof. Dominik Boesl, HDBW](mailto:dominik.boesl@hdbw-hochschule.de).
 
 ## How to Engage, Contribute and Provide Feedback
 
