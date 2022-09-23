@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Graph.Apollo.Cloud.Common.Models.CourseDraft">
-    <Position X="7.5" Y="3" Width="1.5" />
+    <Position X="7.5" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>IAAAAAACAAAAAAAAAAAAAAAAAACAAAYCAAAAgAAAAAA=</HashCode>
       <FileName>Models\CourseDraft.cs</FileName>
