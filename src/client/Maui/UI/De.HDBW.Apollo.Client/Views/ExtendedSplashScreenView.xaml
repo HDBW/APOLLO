@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.ExtendedSplashScreenView"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewModels:ExtendedSplashScreenViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             IsBusy="{Binding IsBusy}">
+    <Grid Margin="20" RowDefinitions="*, auto, auto">
+        <CarouselView ItemsSource="{Binding Instructions}"
+                  IndicatorView="indicatorView">
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="models:Instruction">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding Text}" />
+                        <Image Source="{Binding Image}" VerticalOptions="Fill"/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <IndicatorView Grid.Row="1" x:Name="indicatorView"
+                   IndicatorColor="LightGray"
+                   SelectedIndicatorColor="DarkGray"
+                   HorizontalOptions="Center"/>
+        <Button Grid.Row="2" VerticalOptions="End" Text="{x:Static strings:Resource.Global_Skip}" Command="{Binding SkipCommand}" />
+    </Grid>
+</ContentPage>

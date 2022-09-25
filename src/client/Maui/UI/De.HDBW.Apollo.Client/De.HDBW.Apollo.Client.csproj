@@ -71,6 +71,9 @@
 	  <MauiXaml Update="Views\EmptyView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ExtendedSplashScreenView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -78,6 +81,9 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resource.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\ExtendedSplashScreenView.xaml.cs">
+	    <DependentUpon>ExtendedSplashScreenView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\StartView.xaml.cs">
 	    <DependentUpon>StartView.xaml</DependentUpon>

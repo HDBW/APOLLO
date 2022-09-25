@@ -61,6 +61,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction1 {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dafür braucht Apollo Infos zu deinen beruflichen Erfahrungen von dir..
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction2 {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsere App zeigt dir den Weg zu deinem Traumberuf!.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction3 {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to direkt loslegen.
         /// </summary>
         public static string FirstTimeDialog_Continue {
@@ -93,6 +120,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string FirstTimeDialog_Title {
             get {
                 return ResourceManager.GetString("FirstTimeDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Überspringen.
+        /// </summary>
+        public static string Global_Skip {
+            get {
+                return ResourceManager.GetString("Global_Skip", resourceCulture);
             }
         }
         
