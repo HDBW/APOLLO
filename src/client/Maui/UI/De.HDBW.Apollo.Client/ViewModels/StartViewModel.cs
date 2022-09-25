@@ -30,7 +30,7 @@
             this.OpenSettingsCommand?.NotifyCanExecuteChanged();
         }
 
-        [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenSettings), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenSettings), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task OpenSettings(CancellationToken token)
         {
             try
@@ -67,7 +67,7 @@
             return !this.IsBusy;
         }
 
-        [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
+        [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
         private async Task LoadData(CancellationToken token)
         {
             try

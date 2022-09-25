@@ -10,7 +10,7 @@
             var result = new NavigationParameters();
             foreach (var kv in query)
             {
-                if (Enum.TryParse<NavigationParameter>(kv.Key, true, out NavigationParameter key))
+                if (Enum.TryParse(kv.Key, true, out NavigationParameter key))
                 {
                     result.Add(key, kv.Value);
                 }

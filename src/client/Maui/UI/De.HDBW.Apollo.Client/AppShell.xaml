@@ -66,7 +66,7 @@
     <Tab FlyoutItemIsVisible="False">
         <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:StartView}">
         </ShellContent>
-        <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:StartView}">
+        <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:EmptyView}">
         </ShellContent>
     </Tab>
    

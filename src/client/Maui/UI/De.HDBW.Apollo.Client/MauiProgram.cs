@@ -49,7 +49,7 @@ public static class MauiProgram
     private static void SetupServices(IServiceCollection services)
     {
         services.AddLogging();
-        services.AddSingleton<IPreferences>((s) => { return Preferences.Default; });
+        services.AddSingleton((s) => { return Preferences.Default; });
         services.AddSingleton<IPreferenceService, PreferenceService>();
         services.AddSingleton<IDispatcherService, DispatcherService>();
         services.AddSingleton<INavigationService, NavigationService>();
@@ -58,6 +58,8 @@ public static class MauiProgram
         services.AddSingleton<AppShellViewModel>();
         services.AddTransient<StartView>();
         services.AddTransient<StartViewModel>();
+        services.AddTransient<ExtendedSplashScreenView>();
+        services.AddTransient<ExtendedSplashScreenViewModel>();
         services.AddTransient<FirstTimeDialog>();
         services.AddTransient<FirstTimeDialogViewModel>();
         services.AddTransient<EmptyView>();
@@ -66,8 +68,10 @@ public static class MauiProgram
 
     private static void SetupRoutes()
     {
+        Routing.RegisterRoute(Routes.Shell, typeof(AppShell));
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
         Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
+        Routing.RegisterRoute(Routes.ExtendedSplashScreenView, typeof(ExtendedSplashScreenView));
     }
 }
