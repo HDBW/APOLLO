@@ -24,17 +24,20 @@ public class CourseReply
 public class CourseRequest
 {
     [DataMember(Order = 1)]
-    public string Title { get; set; }
+    public string CourseId { get; set; }
 }
 
 [DataContract]
 public class Course
 {
+    private bool _loanOptionsAvailable;
+
     /// <summary>
     /// Segment Metadata
+    /// This is the ApolloId a unique Identifier of a course
     /// </summary>
     [DataMember(Order = 1), Required]
-    public string ApolloId { get; set; }
+    public string CourseId { get; set; }
 
     /// <summary>
     /// Segment Content
@@ -73,14 +76,28 @@ public class Course
     [DataMember(Order = 6)]
     public Dictionary<string,string>? Modules { get; set; }
 
+    /// <summary>
+    /// Describes the Benefits of a course
+    /// </summary>
     [DataMember(Order = 7), Required]
-    public string Benefits { get; set; }
+    public List<string> Benefits { get; set; }
 
-    //TODO: Replace with enum maybe?
-    // Propably Autocalculated field
+    // Indicates if there are available loans.
     [DataMember(Order = 8)]
-    public bool? LoanOptionsAvailable { get; set; }
-    
+    public bool LoanOptionsAvailable
+    {
+        get => LoanOptions != null && LoanOptions!.Count>0;
+        private set
+        {
+            _loanOptionsAvailable = value;
+            _loanOptionsAvailable = false;
+        }
+    }
+
+    /// <summary>
+    /// Represents financial aid for participants of a course. 
+    /// That could be loans, scholarships, bursary ...
+    /// </summary>
     [DataMember(Order = 9)]
     private Dictionary<string,Uri>? LoanOptions { get; set; }
 
@@ -113,18 +130,18 @@ public class Course
     [DataMember()]
     public List<string> HiddenCompetencies { get; set; }
 
-    //TODO: Change to Occupation
+    //TODO: Change to ESCO Occupation
     [DataMember()]
     public List<string> ExtractedOccupations { get; set; }
 
-    //TODO: Change to Occupation
+    //TODO: Change to ESCO Occupation
     [DataMember()]
     public List<string> AssignedOccupations { get; set; }
 
     /// <summary>
     /// Helper Property returning Assigned and Extracted Occupations.
     /// </summary>
-    //TODO: Change to Occupation
+    //TODO: Change to ESCO Occupation
     [DataMember()]
     public List<string> Occupations => AssignedOccupations.Concat(ExtractedOccupations).ToList();
 
@@ -211,7 +228,7 @@ public class Course
     [DataMember()]
     public Dictionary<string,string> CourseFaq { get; set; }
 
-    //TODO: Course Telemetry such as Viewed, Listed, Relevance, ...
+    //TODO: Course Telemetry 1h as Viewed, Listed, Relevance, ...
 
 
     /// <summary>

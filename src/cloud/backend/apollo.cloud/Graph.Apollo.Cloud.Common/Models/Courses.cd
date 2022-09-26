@@ -22,32 +22,67 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Graph.Apollo.Cloud.Common.Models.CourseDraftRequest">
-    <Position X="11.75" Y="3" Width="1.5" />
+    <Position X="10" Y="1.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\CourseDraft.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Graph.Apollo.Cloud.Common.Models.CourseDraftReply">
-    <Position X="10" Y="3" Width="1.5" />
+    <Position X="10" Y="3" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>Models\CourseDraft.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Graph.Apollo.Cloud.Common.Models.CoursePrice">
-    <Position X="1.75" Y="6" Width="1.5" />
+    <Position X="8.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAgAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAAAgAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\CoursePrice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CoursePriceReply" Collapsed="true">
+    <Position X="10.75" Y="10.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Models\CoursePrice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CoursePriceRequest" Collapsed="true">
+    <Position X="10.75" Y="9.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CoursePrice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph.Apollo.Cloud.Common.Models.CoursePriceCreationRequest" Collapsed="true">
+    <Position X="10.75" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\CoursePrice.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Graph.Apollo.Cloud.Common.Models.ICourseService">
-    <Position X="10" Y="4.25" Width="1.5" />
+    <Position X="10" Y="4.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Course.cs</FileName>
       <NewMemberFileName>Models\CourseDraft.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Graph.Apollo.Cloud.Common.Models.IRetrieveCoursePricesService" Collapsed="true">
+    <Position X="7.75" Y="10" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAQAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CoursePrice.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Graph.Apollo.Cloud.Common.Models.ICoursePriceService" Collapsed="true">
+    <Position X="8" Y="8.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CoursePrice.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9.75" />
