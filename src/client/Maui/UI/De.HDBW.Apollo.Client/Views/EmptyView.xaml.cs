@@ -9,7 +9,7 @@ public partial class EmptyView
         this.BindingContext = model;
     }
 
-    public EmptyViewModel Viemodel
+    public EmptyViewModel? Viemodel
     {
         get
         {

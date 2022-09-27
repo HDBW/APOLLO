@@ -10,7 +10,7 @@ public partial class StartView
         this.BindingContext = model;
     }
 
-    public StartViewModel Viemodel
+    public StartViewModel? Viemodel
     {
         get
         {

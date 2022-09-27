@@ -23,17 +23,22 @@
 
         private IDispatcherService DispatcherService { get; }
 
-        public async Task<TV> ShowPopupAsync<TU, TV>(CancellationToken token)
+        public async Task<TV?> ShowPopupAsync<TU, TV>(CancellationToken token)
             where TU : Popup
             where TV : NavigationParameters
         {
             token.ThrowIfCancellationRequested();
-            Popup popup = null;
+            Popup? popup = null;
             try
             {
                 popup = this.ServiceProvider.GetService<TU>();
+                if (popup == null || Shell.Current?.CurrentPage == null)
+                {
+                    throw new NotSupportedException();
+                }
+
                 this.RegisterDialog(popup);
-                var result = await this.DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current?.CurrentPage?.ShowPopupAsync(popup), token);
+                var result = await this.DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current.CurrentPage.ShowPopupAsync(popup), token);
                 return result as TV;
             }
             catch (OperationCanceledException)
@@ -52,7 +57,10 @@
             }
             finally
             {
-                this.UnregisterDialog(popup);
+                if (popup != null)
+                {
+                    this.UnregisterDialog(popup);
+                }
             }
 
             return null;
@@ -64,7 +72,13 @@
             token.ThrowIfCancellationRequested();
             try
             {
-                return this.DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current?.CurrentPage?.ShowPopupAsync(this.ServiceProvider.GetService<TU>()), token);
+                var popup = this.ServiceProvider.GetService<TU>();
+                if (Shell.Current?.CurrentPage == null || popup == null)
+                {
+                    throw new NotSupportedException();
+                }
+
+                return this.DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current.CurrentPage.ShowPopupAsync(popup), token);
             }
             catch (OperationCanceledException)
             {
@@ -81,7 +95,7 @@
                 this.Logger?.LogError(ex, $"Unknown Error while ShowPopupAsync in {this.GetType()}.");
             }
 
-            return null;
+            return Task.CompletedTask;
         }
 
         public bool ClosePopup<TV>(BaseViewModel viewModel, TV result)
@@ -90,7 +104,7 @@
             try
             {
                 var itemToClose = this.dialogLookup.FirstOrDefault(k => k.Value == viewModel);
-                if (!itemToClose.Key.TryGetTarget(out Popup popup))
+                if (!itemToClose.Key.TryGetTarget(out Popup? popup))
                 {
                     return false;
                 }
@@ -111,7 +125,7 @@
             try
             {
                 var itemToClose = this.dialogLookup.FirstOrDefault(k => k.Value == viewModel);
-                if (!itemToClose.Key.TryGetTarget(out Popup popup))
+                if (!itemToClose.Key.TryGetTarget(out Popup? popup))
                 {
                     return false;
                 }
@@ -135,7 +149,7 @@
             }
 
             this.CleanupLookups();
-            var exitingItem = this.dialogLookup.FirstOrDefault(k => k.Key.TryGetTarget(out Popup p) && p == popup);
+            var exitingItem = this.dialogLookup.FirstOrDefault(k => k.Key.TryGetTarget(out Popup? p) && p == popup);
             if (exitingItem.Key == null)
             {
                 return false;
@@ -163,7 +177,7 @@
 
             this.CleanupLookups();
             var dialog = popup;
-            var viewModel = dialog?.BindingContext as BaseViewModel;
+            var viewModel = dialog.BindingContext as BaseViewModel;
             if (viewModel == null)
             {
                 return false;

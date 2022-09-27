@@ -20,7 +20,7 @@
                   IndicatorView="indicatorView"
                   x:Name="PART_Animation">
             <CarouselView.ItemTemplate>
-                <DataTemplate x:DataType="models:Instruction">
+                <DataTemplate x:DataType="models:InstructionEntry">
                     <Grid RowDefinitions="auto, *" >
                         <Label Text="{Binding Text}" />
                         <skia:SKLottieView Source="{Binding Animation, Converter={StaticResource StringToLottieImageSourceConverter}}"  Grid.Row="1" RepeatMode="Restart" RepeatCount="-1" IsAnimationEnabled="True"  VerticalOptions="Fill" HorizontalOptions="Fill"/>

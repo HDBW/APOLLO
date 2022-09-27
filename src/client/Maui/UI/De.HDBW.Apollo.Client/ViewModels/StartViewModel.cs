@@ -11,7 +11,7 @@
 
     public partial class StartViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Interaction> interactions = new ObservableCollection<Interaction>();
+        private readonly ObservableCollection<InteractionEntry> interactions = new ObservableCollection<InteractionEntry>();
 
         public StartViewModel(
             IPreferenceService preferenceService,
@@ -22,14 +22,14 @@
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             this.PreferenceService = preferenceService;
-            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, this.HandleInteract, this.CanHandleInteract));
         }
 
-        public ObservableCollection<Interaction> Interactions
+        public ObservableCollection<InteractionEntry> Interactions
         {
             get
             {
@@ -88,7 +88,7 @@
             try
             {
                 var taskList = new List<Task>();
-                Task<NavigationParameters> dialogTask = null;
+                Task<NavigationParameters>? dialogTask = null;
                 var isFirstTime = this.PreferenceService.GetValue(Preference.IsFirstTime, true);
                 if (isFirstTime)
                 {
@@ -122,12 +122,12 @@
             }
         }
 
-        private bool CanHandleInteract(Interaction arg)
+        private bool CanHandleInteract(InteractionEntry arg)
         {
             return !this.IsBusy;
         }
 
-        private Task HandleInteract(Interaction arg)
+        private Task HandleInteract(InteractionEntry arg)
         {
             throw new NotImplementedException();
         }
