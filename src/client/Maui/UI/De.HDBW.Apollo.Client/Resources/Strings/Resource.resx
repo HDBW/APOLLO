@@ -168,4 +168,24 @@
   <data name="MainNavigation_ViewTutorial" xml:space="preserve">
     <value>Tutorial anzeigen</value>
   </data>
+  <data name="RegistrationView_RegisterUser" xml:space="preserve">
+    <value>Registrieren</value>
+  </data>
+  <data name="StartViewModel_InteractionCareer" xml:space="preserve">
+    <value>Entdecke dein Karrierepotential
+(Ist-Stand bekannt – Inspiration)</value>
+  </data>
+  <data name="StartViewModel_InteractionCV" xml:space="preserve">
+    <value>CV Generieren</value>
+  </data>
+  <data name="StartViewModel_InteractionProfile" xml:space="preserve">
+    <value>Checke dein Profil für einen Job 
+deiner Wahl</value>
+  </data>
+  <data name="StartViewModel_InteractionRetraining" xml:space="preserve">
+    <value>staatlich geförderte Umschulungs&#x2;und Weiterbildungsmaßnahme</value>
+  </data>
+  <data name="StartViewModel_InteractionSkills" xml:space="preserve">
+    <value>Lerne neue Skills</value>
+  </data>
 </root>

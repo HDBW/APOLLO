@@ -10,14 +10,18 @@
         [ObservableProperty]
         private string image;
 
+        [ObservableProperty]
+        private string animation;
+
         private Instruction()
         {
         }
 
-        public static Instruction Import (string image, string text)
+        public static Instruction Import(string image, string animation,  string text)
         {
             return new Instruction()
             {
+                Animation = animation,
                 Image = image,
                 Text = text,
             };

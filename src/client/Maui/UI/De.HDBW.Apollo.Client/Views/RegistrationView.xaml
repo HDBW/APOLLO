@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.RegistrationView"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             x:DataType="viewModels:RegistrationViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             IsBusy="{Binding IsBusy}">
+    <VerticalStackLayout Padding="20">
+        <Button Text="{x:Static strings:Resource.RegistrationView_RegisterUser}" Command="{Binding RegisterCommand}"/>
+        <Button Text="{x:Static strings:Resource.Global_Skip}" Command="{Binding SkipCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

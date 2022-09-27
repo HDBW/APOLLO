@@ -3,20 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.ExtendedSplashScreenView"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:ExtendedSplashScreenViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              IsBusy="{Binding IsBusy}">
+    <ContentPage.Resources>
+        <converter:StringToLottieImageSourceConverter x:Key="StringToLottieImageSourceConverter" />
+    </ContentPage.Resources>
     <Grid Margin="20" RowDefinitions="*, auto, auto">
         <CarouselView ItemsSource="{Binding Instructions}"
-                  IndicatorView="indicatorView">
+                  IndicatorView="indicatorView"
+                  x:Name="PART_Animation">
             <CarouselView.ItemTemplate>
                 <DataTemplate x:DataType="models:Instruction">
-                    <VerticalStackLayout>
+                    <Grid RowDefinitions="auto, *" >
                         <Label Text="{Binding Text}" />
-                        <Image Source="{Binding Image}" VerticalOptions="Fill"/>
-                    </VerticalStackLayout>
+                        <skia:SKLottieView Source="{Binding Animation, Converter={StaticResource StringToLottieImageSourceConverter}}"  Grid.Row="1" RepeatMode="Restart" RepeatCount="-1" IsAnimationEnabled="True"  VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                    </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
