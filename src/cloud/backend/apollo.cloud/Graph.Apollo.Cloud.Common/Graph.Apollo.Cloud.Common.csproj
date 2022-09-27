@@ -11,7 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Protos\courses.proto" />
     <None Remove="Protos\greet.proto" />
   </ItemGroup>
 
@@ -23,13 +22,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="protobuf-net.Grpc" Version="1.0.177" />
   </ItemGroup>
 
   <ItemGroup>
     <Protobuf Include="Protos\greet.proto">
       <GrpcServices>Both</GrpcServices>
     </Protobuf>
-    <Protobuf Include="Protos\courses.proto" GrpcServices="Both" />
   </ItemGroup>
 
 </Project>
