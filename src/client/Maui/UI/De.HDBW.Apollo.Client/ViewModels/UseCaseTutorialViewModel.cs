@@ -1,31 +1,19 @@
 ﻿namespace De.HDBW.Apollo.Client.ViewModels
 {
-    using System.Collections.ObjectModel;
-    using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Input;
     using De.HDBW.Apollo.Client.Contracts;
     using De.HDBW.Apollo.Client.Models;
     using Microsoft.Extensions.Logging;
 
-    public partial class ExtendedSplashScreenViewModel : BaseViewModel
+    public partial class UseCaseTutorialViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Instruction> instructions = new ObservableCollection<Instruction>();
-
-        public ExtendedSplashScreenViewModel(
-            IDispatcherService dispatcherService,
-            INavigationService navigationService,
-            IDialogService dialogService,
-            ILogger<ExtendedSplashScreenViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+        public UseCaseTutorialViewModel(
+           IDispatcherService dispatcherService,
+           INavigationService navigationService,
+           IDialogService dialogService,
+           ILogger<UseCaseTutorialViewModel> logger)
+           : base(dispatcherService, navigationService, dialogService, logger)
         {
-            this.Instructions.Add(Instruction.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1));
-            this.Instructions.Add(Instruction.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction2));
-            this.Instructions.Add(Instruction.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction3));
-        }
-
-        public ObservableCollection<Instruction> Instructions
-        {
-            get { return this.instructions; }
         }
 
         protected override void RefreshCommands()
@@ -40,7 +28,7 @@
             this.IsBusy = true;
             try
             {
-                await this.NavigationService.PushToRootAsnc(Routes.Shell, token);
+                await this.NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token);
             }
             catch (OperationCanceledException)
             {

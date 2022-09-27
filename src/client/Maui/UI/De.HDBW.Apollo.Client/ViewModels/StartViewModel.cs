@@ -1,6 +1,6 @@
 ﻿namespace De.HDBW.Apollo.Client.ViewModels
 {
-    using CommunityToolkit.Mvvm.ComponentModel;
+    using System.Collections.ObjectModel;
     using CommunityToolkit.Mvvm.Input;
     using De.HDBW.Apollo.Client.Contracts;
     using De.HDBW.Apollo.Client.Dialogs;
@@ -11,6 +11,8 @@
 
     public partial class StartViewModel : BaseViewModel
     {
+        private readonly ObservableCollection<Interaction> interactions = new ObservableCollection<Interaction>();
+
         public StartViewModel(
             IPreferenceService preferenceService,
             IDispatcherService dispatcherService,
@@ -20,6 +22,19 @@
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             this.PreferenceService = preferenceService;
+            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, this.HandleInteract, this.CanHandleInteract));
+            this.Interactions.Add(Interaction.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, this.HandleInteract, this.CanHandleInteract));
+        }
+
+        public ObservableCollection<Interaction> Interactions
+        {
+            get
+            {
+                return this.interactions;
+            }
         }
 
         private IPreferenceService PreferenceService { get; }
@@ -105,6 +120,16 @@
             {
                 this.Logger?.LogError(ex, $"Unknown Error in LoadData in {this.GetType()}.");
             }
+        }
+
+        private bool CanHandleInteract(Interaction arg)
+        {
+            return !this.IsBusy;
+        }
+
+        private Task HandleInteract(Interaction arg)
+        {
+            throw new NotImplementedException();
         }
     }
 }

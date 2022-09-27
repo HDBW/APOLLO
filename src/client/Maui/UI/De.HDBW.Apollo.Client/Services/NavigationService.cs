@@ -96,7 +96,23 @@
 
         private Task PushToRootOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters parameters)
         {
-            Application.Current.MainPage = Routing.GetOrCreateContent(route, this.ServiceProvider) as Page;
+            var page = Routing.GetOrCreateContent(route, this.ServiceProvider) as Page;
+            var navigationPage = Application.Current.MainPage as NavigationPage;
+            if (navigationPage == null)
+            {
+
+                Application.Current.MainPage = page;
+            }
+            else
+            {
+                navigationPage.Navigation.PushAsync(page, true);
+                var existingPages = navigationPage.Navigation.NavigationStack.ToList();
+                foreach (var existingPage in existingPages)
+                {
+                    navigationPage.Navigation.RemovePage(existingPage);
+                }
+            }
+
             return Task.CompletedTask;
         }
     }

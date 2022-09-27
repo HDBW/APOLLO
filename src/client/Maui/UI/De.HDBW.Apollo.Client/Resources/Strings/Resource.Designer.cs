@@ -212,5 +212,61 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
                 return ResourceManager.GetString("MainNavigation_ViewTutorial", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrieren.
+        /// </summary>
+        public static string RegistrationView_RegisterUser {
+            get {
+                return ResourceManager.GetString("RegistrationView_RegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entdecke dein Karrierepotential
+        ///(Ist-Stand bekannt – Inspiration).
+        /// </summary>
+        public static string StartViewModel_InteractionCareer {
+            get {
+                return ResourceManager.GetString("StartViewModel_InteractionCareer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CV Generieren.
+        /// </summary>
+        public static string StartViewModel_InteractionCV {
+            get {
+                return ResourceManager.GetString("StartViewModel_InteractionCV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checke dein Profil für einen Job 
+        ///deiner Wahl.
+        /// </summary>
+        public static string StartViewModel_InteractionProfile {
+            get {
+                return ResourceManager.GetString("StartViewModel_InteractionProfile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to staatlich geförderte Umschulungs- und Weiterbildungsmaßnahme.
+        /// </summary>
+        public static string StartViewModel_InteractionRetraining {
+            get {
+                return ResourceManager.GetString("StartViewModel_InteractionRetraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lerne neue Skills.
+        /// </summary>
+        public static string StartViewModel_InteractionSkills {
+            get {
+                return ResourceManager.GetString("StartViewModel_InteractionSkills", resourceCulture);
+            }
+        }
     }
 }

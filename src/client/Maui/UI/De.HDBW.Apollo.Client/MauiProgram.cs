@@ -9,7 +9,10 @@ using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Identity.Client;
 using Serilog;
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using System;
 
 public static class MauiProgram
 {
@@ -18,6 +21,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         SetupLogging();
         SetupRoutes();
+
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
@@ -25,8 +29,29 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+        builder.UseSkiaSharp();
+        SetupB2CLogin(builder.Services);
         SetupServices(builder.Services);
         return builder.Build();
+    }
+
+    private static void SetupB2CLogin(IServiceCollection services)
+    {
+        var b2cClientApplicationBuilder = PublicClientApplicationBuilder.Create(Constants.ClientId)
+#if ANDROID
+            .WithParentActivityOrWindow(() => Platform.CurrentActivity)
+#endif
+#if WINDOWS
+			.WithRedirectUri("http://localhost");
+#else
+            .WithRedirectUri($"msal{Constants.ClientId}://auth");
+#endif
+
+        services.AddSingleton<IAuthService>(new AuthServiceB2C(
+            b2cClientApplicationBuilder
+                .WithIosKeychainSecurityGroup(Constants.IosKeychainSecurityGroups)
+                .WithB2CAuthority(Constants.AuthoritySignIn)
+                .Build()));
     }
 
     private static void SetupLogging()
@@ -50,6 +75,7 @@ public static class MauiProgram
     {
         services.AddLogging();
         services.AddSingleton((s) => { return Preferences.Default; });
+        services.AddSingleton<ISessionService, SessionService>();
         services.AddSingleton<IPreferenceService, PreferenceService>();
         services.AddSingleton<IDispatcherService, DispatcherService>();
         services.AddSingleton<INavigationService, NavigationService>();
@@ -60,6 +86,12 @@ public static class MauiProgram
         services.AddTransient<StartViewModel>();
         services.AddTransient<ExtendedSplashScreenView>();
         services.AddTransient<ExtendedSplashScreenViewModel>();
+        services.AddTransient<RegistrationView>();
+        services.AddTransient<RegistrationViewModel>();
+        services.AddTransient<UseCaseTutorialView>();
+        services.AddTransient<UseCaseTutorialViewModel>();
+        services.AddTransient<UseCaseSelectionView>();
+        services.AddTransient<UseCaseSelectionViewModel>();
         services.AddTransient<FirstTimeDialog>();
         services.AddTransient<FirstTimeDialogViewModel>();
         services.AddTransient<EmptyView>();
@@ -68,10 +100,15 @@ public static class MauiProgram
 
     private static void SetupRoutes()
     {
-        Routing.RegisterRoute(Routes.Shell, typeof(AppShell));
-        Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
-        Routing.RegisterRoute(Routes.StartView, typeof(StartView));
-        Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
         Routing.RegisterRoute(Routes.ExtendedSplashScreenView, typeof(ExtendedSplashScreenView));
+        Routing.RegisterRoute(Routes.Shell, typeof(AppShell));
+        Routing.RegisterRoute(Routes.RegistrationView, typeof(RegistrationView));
+        Routing.RegisterRoute(Routes.UseCaseTutorialView, typeof(UseCaseTutorialView));
+        Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
+        Routing.RegisterRoute(Routes.StartView, typeof(StartView));
+
+        // TBD
+        Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
+        Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
     }
 }

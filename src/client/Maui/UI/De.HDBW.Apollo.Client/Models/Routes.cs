@@ -11,5 +11,11 @@
         public static readonly string StartView = "/StartView";
 
         public static readonly string TutorialView = "/EmptyView";
+
+        public static readonly string RegistrationView = "/RegistrationView";
+
+        public static readonly string UseCaseTutorialView = "/UseCaseTutorialView";
+
+        public static readonly string UseCaseSelectionView = "/UseCaseSelection";
     }
 }
