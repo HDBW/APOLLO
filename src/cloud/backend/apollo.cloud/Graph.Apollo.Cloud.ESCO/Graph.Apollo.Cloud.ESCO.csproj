@@ -1,17 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>0a1f14f9-9237-49ce-a063-72a18e683be3</UserSecretsId>
+    <UserSecretsId>c856c308-ef51-42de-afcb-e39217ebe174</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <ApplicationInsightsResourceId>/subscriptions/59a650b4-0b91-41cd-a3e5-d6f8dcf54cbf/resourceGroups/rg-apollo-dev/providers/microsoft.insights/components/appi-apollo-dev</ApplicationInsightsResourceId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />

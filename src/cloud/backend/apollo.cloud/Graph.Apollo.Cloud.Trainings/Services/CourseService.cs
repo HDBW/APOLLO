@@ -3,7 +3,8 @@ using Grpc.Core;
 
 namespace Graph.Apollo.Cloud.Courses.Services
 {
-    public class CourseService : Graph.Apollo.Cloud.Common.Courses.CoursesBase
+    public class CourseService : Graph.Apollo.Cloud.Common
+        .Courses.CoursesBase
     {
         private readonly ICourses _courses;
         private readonly ILogger<CourseService> _logger;
