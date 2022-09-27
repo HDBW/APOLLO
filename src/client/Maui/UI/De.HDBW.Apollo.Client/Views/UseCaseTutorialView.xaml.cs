@@ -11,7 +11,7 @@ public partial class UseCaseTutorialView
         this.BindingContext = model;
     }
 
-    public UseCaseTutorialViewModel Viemodel
+    public UseCaseTutorialViewModel? Viemodel
     {
         get
         {

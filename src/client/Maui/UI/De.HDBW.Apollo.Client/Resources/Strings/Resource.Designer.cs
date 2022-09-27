@@ -250,9 +250,9 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
                 return ResourceManager.GetString("StartViewModel_InteractionProfile", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to staatlich geförderte Umschulungs- und Weiterbildungsmaßnahme.
+        ///   Looks up a localized string similar to staatlich geförderte Umschulungsund Weiterbildungsmaßnahme.
         /// </summary>
         public static string StartViewModel_InteractionRetraining {
             get {
@@ -266,6 +266,60 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_InteractionSkills {
             get {
                 return ResourceManager.GetString("StartViewModel_InteractionSkills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung des Usecase A.
+        /// </summary>
+        public static string UseCase_A_Description {
+            get {
+                return ResourceManager.GetString("UseCase_A_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usecase A.
+        /// </summary>
+        public static string UseCase_A_Name {
+            get {
+                return ResourceManager.GetString("UseCase_A_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung des Usecase B.
+        /// </summary>
+        public static string UseCase_B_Description {
+            get {
+                return ResourceManager.GetString("UseCase_B_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usecase B.
+        /// </summary>
+        public static string UseCase_B_Name {
+            get {
+                return ResourceManager.GetString("UseCase_B_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung des Usecase C.
+        /// </summary>
+        public static string UseCase_C_Description {
+            get {
+                return ResourceManager.GetString("UseCase_C_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usecase C.
+        /// </summary>
+        public static string UseCase_C_Name {
+            get {
+                return ResourceManager.GetString("UseCase_C_Name", resourceCulture);
             }
         }
     }

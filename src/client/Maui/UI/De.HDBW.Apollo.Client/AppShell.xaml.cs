@@ -9,7 +9,7 @@ public partial class AppShell : Shell
         this.BindingContext = model;
     }
 
-    public AppShellViewModel Viemodel
+    public AppShellViewModel? Viemodel
     {
         get
         {

@@ -11,7 +11,7 @@
         bool ClosePopup<TV>(BaseViewModel viewModel, TV result)
             where TV : NavigationParameters;
 
-        Task<TV> ShowPopupAsync<TU, TV>(CancellationToken token)
+        Task<TV?> ShowPopupAsync<TU, TV>(CancellationToken token)
             where TU : Popup
             where TV : NavigationParameters;
 

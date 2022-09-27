@@ -6,7 +6,6 @@ using De.HDBW.Apollo.SharedContracts.Services;
 
 public partial class App : Application
 {
-
     public static string ApiEndpoint = "https://fabrikamb2chello.azurewebsites.net/hello";
 
     public App(
@@ -17,6 +16,7 @@ public partial class App : Application
         ISessionService sessionService)
     {
         this.InitializeComponent();
+
         if (preferenceService.GetValue(Preference.IsFirstTime, false))
         {
             this.MainPage = new NavigationPage(splashScreenView);

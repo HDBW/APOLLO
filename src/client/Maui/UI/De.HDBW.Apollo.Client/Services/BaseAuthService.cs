@@ -16,11 +16,11 @@
         public Task<AuthenticationResult?> SignInInteractively(CancellationToken cancellationToken)
         {
             return this.authenticationClient
-                   .AcquireTokenInteractive(Constants.Scopes)
+                    .AcquireTokenInteractive(Constants.Scopes)
 #if WINDOWS
-				.WithUseEmbeddedWebView(false)				
+                    .WithUseEmbeddedWebView(false)
 #endif
-                   .ExecuteAsync(cancellationToken);
+                    .ExecuteAsync(cancellationToken);
         }
 
         public async Task<AuthenticationResult?> AcquireTokenSilent(CancellationToken cancellationToken)

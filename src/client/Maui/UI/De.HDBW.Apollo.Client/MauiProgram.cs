@@ -7,7 +7,9 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.Views;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Identity.Client;
 using Serilog;
@@ -75,11 +77,14 @@ public static class MauiProgram
     {
         services.AddLogging();
         services.AddSingleton((s) => { return Preferences.Default; });
+
         services.AddSingleton<ISessionService, SessionService>();
         services.AddSingleton<IPreferenceService, PreferenceService>();
         services.AddSingleton<IDispatcherService, DispatcherService>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
+
         services.AddSingleton<AppShell>();
         services.AddSingleton<AppShellViewModel>();
         services.AddTransient<StartView>();

@@ -10,7 +10,7 @@ public partial class UseCaseSelectionView
         this.BindingContext = model;
     }
 
-    public UseCaseSelectionViewModel Viemodel
+    public UseCaseSelectionViewModel? Viemodel
     {
         get
         {

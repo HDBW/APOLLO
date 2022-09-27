@@ -2,24 +2,24 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
 
-    public partial class Instruction : ObservableObject
+    public partial class InstructionEntry : ObservableObject
     {
         [ObservableProperty]
-        private string text;
+        private string? text;
 
         [ObservableProperty]
-        private string image;
+        private string? image;
 
         [ObservableProperty]
-        private string animation;
+        private string? animation;
 
-        private Instruction()
+        private InstructionEntry()
         {
         }
 
-        public static Instruction Import(string image, string animation,  string text)
+        public static InstructionEntry Import(string? image, string? animation, string? text)
         {
-            return new Instruction()
+            return new InstructionEntry()
             {
                 Animation = animation,
                 Image = image,

@@ -10,7 +10,7 @@ public partial class RegistrationView
         this.BindingContext = model;
     }
 
-    public RegistrationViewModel Viemodel
+    public RegistrationViewModel? Viemodel
     {
         get
         {

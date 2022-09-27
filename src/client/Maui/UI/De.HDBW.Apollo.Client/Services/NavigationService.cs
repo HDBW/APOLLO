@@ -2,13 +2,10 @@
 {
     using De.HDBW.Apollo.Client.Contracts;
     using De.HDBW.Apollo.Client.Models;
-    using De.HDBW.Apollo.Client.ViewModels;
     using Microsoft.Extensions.Logging;
 
     public class NavigationService : INavigationService
     {
-        private readonly WeakEventManager weakEventManager = new WeakEventManager();
-
         public NavigationService(IDispatcherService dispatcherService, ILogger<NavigationService> logger, IServiceProvider serviceProvider)
         {
             this.Logger = logger;
@@ -22,7 +19,7 @@
 
         private IServiceProvider ServiceProvider { get; }
 
-        public async Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters parameters = null)
+        public async Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
             token.ThrowIfCancellationRequested();
             var result = false;
@@ -49,7 +46,7 @@
             return result;
         }
 
-        public async Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters parameters = null)
+        public async Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
             token.ThrowIfCancellationRequested();
             var result = false;
@@ -76,31 +73,42 @@
             return result;
         }
 
-        private Task NavigateOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters parameters)
+        private Task NavigateOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
+            token.ThrowIfCancellationRequested();
+            if (Application.Current == null || Shell.Current == null)
+            {
+                return Task.CompletedTask;
+            }
+
             var navigationPage = Application.Current.MainPage as NavigationPage;
             if (navigationPage != null && Shell.Current == null)
             {
-                navigationPage.PushAsync(Routing.GetOrCreateContent(route, this.ServiceProvider) as Page, false);
+                return navigationPage.PushAsync(Routing.GetOrCreateContent(route, this.ServiceProvider) as Page, false);
             }
 
             if (parameters == null)
             {
-                return Shell.Current?.GoToAsync(route, true);
+                return Shell.Current.GoToAsync(route, true);
             }
             else
             {
-                return Shell.Current?.GoToAsync(route, true, parameters.ToQueryDictionary());
+                return Shell.Current.GoToAsync(route, true, parameters.ToQueryDictionary());
             }
         }
 
-        private Task PushToRootOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters parameters)
+        private Task PushToRootOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
+            token.ThrowIfCancellationRequested();
+            if (Application.Current == null)
+            {
+                return Task.CompletedTask;
+            }
+
             var page = Routing.GetOrCreateContent(route, this.ServiceProvider) as Page;
             var navigationPage = Application.Current.MainPage as NavigationPage;
             if (navigationPage == null)
             {
-
                 Application.Current.MainPage = page;
             }
             else
@@ -109,6 +117,11 @@
                 var existingPages = navigationPage.Navigation.NavigationStack.ToList();
                 foreach (var existingPage in existingPages)
                 {
+                    if (existingPage == page)
+                    {
+                        continue;
+                    }
+
                     navigationPage.Navigation.RemovePage(existingPage);
                 }
             }

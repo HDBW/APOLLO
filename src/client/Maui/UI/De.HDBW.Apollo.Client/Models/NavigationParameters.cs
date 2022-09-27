@@ -27,10 +27,15 @@
         public void AddValue<TU>(NavigationParameter key, TU value)
         {
             this.Remove(key);
+            if (value == null)
+            {
+                return;
+            }
+
             this.Add(key, value);
         }
 
-        public TU GetValue<TU>(NavigationParameter key)
+        public TU? GetValue<TU>(NavigationParameter key)
         {
             if (!this.ContainsKey(key))
             {

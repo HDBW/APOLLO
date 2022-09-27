@@ -14,7 +14,7 @@ public partial class ExtendedSplashScreenView
         this.BindingContext = model;
     }
 
-    public ExtendedSplashScreenViewModel Viemodel
+    public ExtendedSplashScreenViewModel? Viemodel
     {
         get
         {

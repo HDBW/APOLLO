@@ -4,8 +4,8 @@
 
     public interface INavigationService
     {
-        Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters parameters = null);
+        Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null);
 
-        Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters parameters = null);
+        Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null);
     }
 }
