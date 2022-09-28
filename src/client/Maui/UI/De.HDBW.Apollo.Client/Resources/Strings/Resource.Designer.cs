@@ -322,5 +322,14 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
                 return ResourceManager.GetString("UseCase_C_Name", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erstellen.
+        /// </summary>
+        public static string UseCaseSelectionView_CreateUseCase {
+            get {
+                return ResourceManager.GetString("UseCaseSelectionView_CreateUseCase", resourceCulture);
+            }
+        }
     }
 }

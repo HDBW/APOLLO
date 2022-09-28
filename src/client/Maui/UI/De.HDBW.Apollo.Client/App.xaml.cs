@@ -6,8 +6,6 @@ using De.HDBW.Apollo.SharedContracts.Services;
 
 public partial class App : Application
 {
-    public static string ApiEndpoint = "https://fabrikamb2chello.azurewebsites.net/hello";
-
     public App(
         ExtendedSplashScreenView splashScreenView,
         RegistrationView registrationView,
