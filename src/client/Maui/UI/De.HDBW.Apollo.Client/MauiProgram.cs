@@ -21,6 +21,15 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         SetupLogging();
+        Log.Information($"---------------------------------------- Application started at {DateTime.Now} ------------------------------------------");
+        Log.Debug($"Model: {DeviceInfo.Current.Model}");
+        Log.Debug($"Manufacturer: {DeviceInfo.Current.Manufacturer}");
+        Log.Debug($"Name: {DeviceInfo.Name}");
+        Log.Debug($"OS Version: {DeviceInfo.VersionString}");
+        Log.Debug($"Refresh Rate: {DeviceInfo.Current}");
+        Log.Debug($"Idiom: {DeviceInfo.Current.Idiom}");
+        Log.Debug($"Platform: {DeviceInfo.Current.Platform}");
+        Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
         SetupRoutes();
 
         builder.UseMauiApp<App>()
@@ -58,6 +67,14 @@ public static class MauiProgram
     private static void SetupLogging()
     {
         var path = Path.Combine(FileSystem.AppDataDirectory, "logs", "log-.txt");
+        if (!Directory.Exists(path))
+        {
+            var directory = Path.GetDirectoryName(path);
+            if (!string.IsNullOrWhiteSpace(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+        }
 
         Log.Logger = new LoggerConfiguration()
 #if DEBUG
