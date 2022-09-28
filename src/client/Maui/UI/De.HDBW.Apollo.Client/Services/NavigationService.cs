@@ -21,6 +21,7 @@
 
         public async Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
+            this.Logger?.LogDebug($"PushToRoot to {route} with parameters: {parameters?.ToString()}.");
             token.ThrowIfCancellationRequested();
             var result = false;
             try
@@ -48,6 +49,7 @@
 
         public async Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
+            this.Logger?.LogDebug($"Navigate to {route} with parameters: {parameters?.ToString()}.");
             token.ThrowIfCancellationRequested();
             var result = false;
             try
@@ -75,6 +77,7 @@
 
         private Task NavigateOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
+            this.Logger?.LogDebug($"NavigateOnUI to {route} with parameters: {parameters?.ToString()}.");
             token.ThrowIfCancellationRequested();
             if (Application.Current == null || Shell.Current == null)
             {
@@ -99,6 +102,7 @@
 
         private Task PushToRootOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
+            this.Logger?.LogDebug($"PushToRootOnUI to {route} with parameters: {parameters?.ToString()}.");
             token.ThrowIfCancellationRequested();
             if (Application.Current == null)
             {
