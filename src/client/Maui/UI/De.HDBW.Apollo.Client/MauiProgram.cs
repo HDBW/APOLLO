@@ -14,7 +14,6 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Identity.Client;
 using Serilog;
 using SkiaSharp.Views.Maui.Controls.Hosting;
-using System;
 
 public static class MauiProgram
 {
