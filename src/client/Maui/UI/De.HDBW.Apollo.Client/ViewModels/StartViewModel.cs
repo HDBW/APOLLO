@@ -88,7 +88,7 @@
             try
             {
                 var taskList = new List<Task>();
-                Task<NavigationParameters>? dialogTask = null;
+                Task<NavigationParameters?>? dialogTask = null;
                 var isFirstTime = this.PreferenceService.GetValue(Preference.IsFirstTime, true);
                 if (isFirstTime)
                 {

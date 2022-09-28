@@ -44,7 +44,7 @@ public static class MauiProgram
             .WithParentActivityOrWindow(() => Platform.CurrentActivity)
 #endif
 #if WINDOWS
-			.WithRedirectUri("http://localhost");
+            .WithRedirectUri("http://localhost");
 #else
             .WithRedirectUri($"msal{Constants.ClientId}://auth");
 #endif

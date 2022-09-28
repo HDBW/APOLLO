@@ -188,6 +188,9 @@ deiner Wahl</value>
   <data name="StartViewModel_InteractionSkills" xml:space="preserve">
     <value>Lerne neue Skills</value>
   </data>
+  <data name="UseCaseSelectionView_CreateUseCase" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
   <data name="UseCase_A_Description" xml:space="preserve">
     <value>Beschreibung des Usecase A</value>
   </data>

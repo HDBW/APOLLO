@@ -1,10 +1,11 @@
 ﻿namespace De.HDBW.Apollo.Client.Models
 {
     using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Input;
     using De.HDBW.Apollo.Client.Contracts;
     using De.HDBW.Apollo.SharedContracts.Enums;
 
-    public class UseCaseEntry : ObservableObject, ISelectableItem<UseCaseEntry>
+    public partial class UseCaseEntry : ObservableObject, ISelectableItem<UseCaseEntry>
     {
         private readonly UseCase useCase;
         private bool isSelected;
@@ -92,6 +93,12 @@
         {
             this.isSelected = isSelected;
             this.OnPropertyChanged(nameof(this.IsSelected));
+        }
+
+        [RelayCommand]
+        private void ToggleSelection()
+        {
+            this.IsSelected = !this.IsSelected;
         }
     }
 }

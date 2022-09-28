@@ -2,11 +2,11 @@
 {
     public class MenuItemTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate DefaultTemplate { get; set; }
+        public DataTemplate? DefaultTemplate { get; set; }
 
-        public DataTemplate TemplateWithSeperator { get; set; }
+        public DataTemplate? TemplateWithSeperator { get; set; }
 
-        protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
+        protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             var entry = item as BaseShellItem;
             if (entry?.Title == Resources.Strings.Resource.MainNavigation_FieldsOfInterest ||
