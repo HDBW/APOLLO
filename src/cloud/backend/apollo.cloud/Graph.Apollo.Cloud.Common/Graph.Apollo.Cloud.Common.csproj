@@ -22,13 +22,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="protobuf-net.Grpc" Version="1.0.177" />
   </ItemGroup>
 
   <ItemGroup>
     <Protobuf Include="Protos\greet.proto">
       <GrpcServices>Both</GrpcServices>
     </Protobuf>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
