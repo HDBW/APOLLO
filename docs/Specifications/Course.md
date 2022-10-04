@@ -9,6 +9,7 @@ Date:
 14.07.2022
 19.07.2022
 23.09.2022
+04.10.2022
 
 []: # Language: markdown
 []: # Path: docs\Specifications\Course.md
@@ -18,6 +19,7 @@ Version:
 - 0.0.2 - July 2022
 - 0.0.3 - July 2022
 - 0.0.4 - September 2022
+- 0.0.5 - October 2022
 
 ## Abstract
 The purpose of this document is to summarize the data structure for courses and trainings managed in the apollo backend as well as the purpose of trainings and courses. 
@@ -139,7 +141,7 @@ Describes Properties or Edges as well as Nodes for the given training data struc
 |     Property  |   Data Type   |  Segment  | Description  | Provided by  | Prototype | UI/UX |
 | ------------- | ------------- | ------------- |------------- |------------- |------------- |------------- |
 | CourseId  | String  | Metadata  | Used as unique identifier | Apollo | YES | NO |
-| CourseId  | String  | Metadata  | Used as unique identifier | Training Provider | YES | NO |
+| ProviderId  | String  | Metadata  | Used as unique identifier | Training Provider | YES | NO |
 | Title  | String | Content/Description  | The title of a course  | Training Provider | YES | YES |
 | ShortDescription  | String | Content/Description  | A short description of the course  | Training Provider | YES | YES |
 | Description  | String | Content/Description  | description of the course  | Training Provider | YES | YES |
@@ -166,59 +168,105 @@ Describes Properties or Edges as well as Nodes for the given training data struc
 | Documents  | List<Url> | Content/Description | A list of public available documents such as flyers or additional information regarding the course offered by the training providers. | Training Providers | MAYBE | YES |
 | Duration  | TimeSpan | Content/Description | The overall timeinvest of a participant needed to attend a course. | Training Providers / Apollo (Autocalculated) | YES | YES |
 | Occurance  | CourseOccurance | Enumeration | Indicates if a course is available: parttime, fulltime or both. | Training Providers | YES | YES |
-| Tags  | List<string> | MetaData | Used for SEO optimization or tagging of the courses |
-| BookingUrl  | string | Booking | The url to the booking page of the course. Typically a Trackingurl provided by the trianing providers. |
-| BookingOptions  | string | Booking | A list of available booking options. |
-| HasGarantuedAppointments  | bool | Booking | Indicates if a course has a guaranteed appointment offered by the training provider. |
-| CourseAppointments  | List<CourseAppointment> | Booking | A list of available appointments for a course offered by the training providers. |
-| CourseAbvailability  | CourseAvailability | Enumeration | Indicates if a course is available: Unknown, Available, Unavailable |
-| CourseLanguages  | List<string> | Content/Description | A list of languages the course is available in. |
-| Language  | string | Content/Description | The language the course description is in. |
-| CourseMedia  | List<string> | Content/Description | A list of media assets for a course. |
-| CourseType  | CourseType | Enumeration | Indicates the type of a course: Unknown, Online, InPerson, OnAndOffline, InHouse, All |
-| TrainingProvider  | string | Content/Description | The name of the training provider. |
-| TrainingProviderUrl  | string | Content/Description | The Url of training provider |
-| TrainingProviderLogo  | string | Content/Description | The Url of the training provider logo |
-| CourseProvider  | string | Content/Description | The name of the course provider. |
-| CourseProviderUrl  | string | Content/Description | The Url of course provider |
-| CourseProviderLogo  | string | Content/Description | The Url of the course provider logo |
-| QualificationProvider  | string | Content/Description | The name of the qualification provider. |
-| QualificationProviderUrl  | string | Content/Description | The Url of qualification provider |
-| QualificationProviderLogo  | string | Content/Description | The Url of the qualification provider logo |
-| PublishingDate  | DateTime | Content Management | The date the course was published. |
-| LastUpdate  | DateTime | Content Management | The date the course was last updated. |
-| DepricationDate  | DateTime | Content Management | The date of the course deprication. |
-| DepricationReason  | string | Content Management | The reason for the course deprication. |
-| UnpublishDate  | DateTime | Content Management | The date the course was unpublished. |
-| CourseSuccessor  | Course | None | The Course replacing the current course. |
-| CourseSuccessorUrl | string | None | The Url of the course replacing the current course. NOTE: JSON-LD relevant! |
-| CoursePredecessor  | Course | None | The Course replaced by the current course. |
-| CoursePredecessorUrl | string | None | The Url of the course replaced by the current course. NOTE: JSON-LD relevant! |
-| FAQ  | Dictonary<string,string> | Content/Description | A list of frequently asked questions regarding the course. |
-| MetaData | Dictonary<string,string> | MetaData | A list of meta data associated to the course. |
-| ParentIds  | List<string> | Relations | A course can be part of a other course. (In this case the actual course is a module of a course) Since a module can be part of more than one course this is a reference to a list of Unique Identifiers of the parten courses. |
-| ChildIds  | List<string> | Relations | A course can have modules or courses. Note: Don´t get confused with qualifications since for example to become a architect you need to take several courses. This is not the porpuse of the course to course relation. |
-| SimilarIds  | List<string> | Relations | A list of similar courses. |
-| RecommendedIds  | List<string> | Relations | A list of recommended courses. |
-| Attributes | Attributes | Content | A list of attributes associated to the course. Allowing Training providers to add additional information to a trainnig or course. |
+| Tags  | List<string> | MetaData | Used for SEO optimization or tagging of the courses | Training Providers | NO | NO |
+| BookingUrl  | string | Booking | The url to the booking page of the course. Typically a Trackingurl provided by the trianing providers. | Training Providers | YES | YES |
+| BookingOptions  | string | Booking | A list of available booking options. | Training Providers | YES | YES |
+| HasGarantuedAppointments  | bool | Booking | Indicates if a course has a guaranteed appointment offered by the training provider. Will be autocalculated by the backend. | Training Providers / Apollo | YES | YES |
+| CourseAppointments  | List<CourseAppointment> | Booking | A list of available appointments for a course offered by the training providers. | Training Providers | YES | YES |
+| CourseAbvailability  | CourseAvailability | Enumeration | Indicates if a course is available: Unknown, Available, Unavailable | Training Providers | YES | YES |
+| CourseLanguages  | List<string> | Content/Description | A list of languages the course is available in. | Training Providers | NO | YES |
+| Language  | string | Content/Description | The language the course description is in. | Apollo | NO | NO |
+| CourseMedia  | List<string> | Content/Description | A list of media assets for a course. | Training Providers / Apollo | MAYBE | YES |
+| CourseType  | CourseType | Enumeration | Indicates the type of a course: Unknown, Online, InPerson, OnAndOffline, InHouse, All | Training Providers | YES | YES |
+| TrainingProvider  | string | Content/Description | The name of the training provider. | Training Providers | YES | YES |
+| TrainingProviderUrl  | string | Content/Description | The Url of training provider | Training Providers | YES | YES |
+| TrainingProviderLogo  | string | Content/Description | The Url of the training provider logo | Training Providers | YES | YES |
+| CourseProvider  | string | Content/Description | The name of the course provider. | Training Providers | YES | YES |
+| CourseProviderUrl  | string | Content/Description | The Url of course provider | Training Providers | YES | YES |
+| CourseProviderLogo  | string | Content/Description | The Url of the course provider logo | Training Providers | YES | YES |
+| QualificationProvider  | string | Content/Description | The name of the qualification provider. | Training Providers | NO | NO |
+| QualificationProviderUrl  | string | Content/Description | The Url of qualification provider. NOTE THIS IS TRICKY LET US DOUBLE CHECK THE REQUIREMENTS | Training Providers | NO | NO |
+| QualificationProviderLogo  | string | Content/Description | The Url of the qualification provider logo | Training Providers | NO | NO |
+| PublishingDate  | DateTime | Content Management | The date the course was published. | Apollo | YES | YES |
+| LastUpdate  | DateTime | Content Management | The date the course was last updated. | Apollo | YES | YES |
+| DepricationDate  | DateTime | Content Management | The date of the course deprication. | Apollo | YES | YES |
+| DepricationReason  | string | Content Management | The reason for the course deprication. | Apollo | YES | YES |
+| UnpublishDate  | DateTime | Content Management | The date the course was unpublished. | Apollo | YES | YES |
+| CourseSuccessor  | Course | None | The Course replacing the current course. | Training Provider / Apollo | YES | YES |
+| CourseSuccessorUrl | string | None | The Url of the course replacing the current course. NOTE: JSON-LD relevant! | Apollo | NO | NO |
+| CoursePredecessor  | Course | None | The Course replaced by the current course. | Training Provider / Apollo | YES | YES |
+| CoursePredecessorUrl | string | None | The Url of the course replaced by the current course. NOTE: JSON-LD relevant! | Apollo | NO | NO |
+| FAQ  | Dictonary<string,string> | Content/Description | A list of frequently asked questions regarding the course. | Training Providers / Apollo | MAYBE | MAYBE |
+| MetaData | Dictonary<string,string> | MetaData | A list of meta data associated to the course. | Training Providers / Apollo | NO | NO |
+| ParentIds  | List<string> | Relations | A course can be part of a other course. (In this case the actual course is a module of a course) Since a module can be part of more than one course this is a reference to a list of Unique Identifiers of the parten courses. | Training Provider / Apollo | YES | YES |
+| ChildIds  | List<string> | Relations | A course can have modules or courses. Note: Don´t get confused with qualifications since for example to become a architect you need to take several courses. This is not the porpuse of the course to course relation. | Training Providers / Apollo | YES | YES |
+| SimilarIds  | List<string> | Relations | A list of similar courses. | Apollo | NO | YES |
+| RecommendedIds  | List<string> | Relations | A list of recommended courses. | Apollo | NO | YES |
+| Attributes | Attributes | Content | A list of attributes associated to the course. Allowing Training providers to add additional information to a trainnig or course. | Training Providers | NO | NO |
 
 ### Grpc Message: Attributes
 
-| Attributes | Attributes | Content | A list of attributes associated to the course. Allowing Training providers to add additional information to a trainnig or course. |
+|     Property  |   Data Type   |  Segment  | Description  | Provided by  | Prototype | UI/UX |
+| ------------- | ------------- | ------------- |------------- |------------- |------------- |------------- |
+| Attributes | Attributes | Content | A list of attributes associated to the course. Allowing Training providers to add additional information to a trainnig or course. | Training Providers | NO | NO |
 
 ### Grpc Message: CourseAppointment
 
-### Appointment Data Structure
+|     Property  |   Data Type   |  Segment  | Description  | Provided by  | Prototype | UI/UX |
+| ------------- | ------------- | ------------- |------------- |------------- |------------- |------------- |
+| AppointmentId  | string | TBD | The unique identifier of the appointment. | Apollo | YES | NO |
+| Bookingcode  | string | TBD | Bookingcode used by the training provider. | Training Provider | YES | YES |
+| Summary | string | TBD | A short description of the appointment. | Training Provider | YES | YES |
+| StartDate  | DateTime | TBD | The start date of the appointment. | Training Provider | YES | YES |
+| StartTimezone  | TimeZone | TBD | The timezone of the appointment. | apollo | YES | YES |
+| EndDate  | DateTime | TBD | The end date of the appointment. | Training Provider | YES | YES |
+| EndTimezone  | TimeZone | TBD | The timezone of the appointment. | apollo | YES | YES |
+| Recurrence  | string | TBD | The recurrence of the appointment. | Training Provider | YES | YES |
+| Location  | string | TBD | The location of the appointment. | Training Provider | YES | YES |
+| IsBookable  | bool | TBD | Indicates if the appointment is bookable. | Training Provider | YES | YES |
+| IsCancelled  | bool | TBD | Indicates if the appointment is cancelled. | Training Provider | YES | YES |
+| AppointmentType  | AppointmentType | TBD | Indicates the type of the appointment: Unknown, IsGuaranteed | Training Provider | YES | YES |
+| CourseType | CourseType | TBD | Indicates the type of the appointment.  | Training Provider | YES | YES |
+| Occurance | OccuranceType | TBD | Indicates the type of the appointment is: PartTime, Fulltime | Training Provider | YES | YES |
+| Price  | CoursePrice | TBD | The price of the appointment. | Training Provider | YES | YES |
+| BookingOptions  | List<string> | TBD | A list of booking options. | Training Provider | YES | YES |
+| BookingUrl  | string | TBD | The Url of the booking page. | Training Provider | YES | YES |
+| BookingContact  | BookingContact | TBD | The contact information for booking. | Training Provider | YES | YES |
+| Attributes | Attributes | TBD | A list of attributes associated to the appointment. Allowing Training providers to add additional information to a trainnig or course. | Training Providers | NO | NO |
 
-| Property | DataType | Description | 
-| -------- | -------- | -------- |
-| StartDate | DateTime | The start date of an appointment |
-| EndDate | DateTime? | The end date of an appointment |
-| Dates | Dictionary<Startdate, Timespan> | A list of recurring appointments for a course |
-| Location | string? | The location of an appointment |
-| Price | double | The price of an appointment |
-| IsOnline | bool? | Indicates if an appointment is available as online training |
-| IsInPerson | bool? | Indicates if an appointment is available as in person training |
-| IsGuaranteed | bool? | Indicates if an appointment is taken place |
+### Grpc Message: BookingContact (nested appointment)
+|    Property  |   Data Type   |  Description  | Provided by  | Prototype | UI/UX |
+| ------------- | ------------- | ------------- |------------- |------------- |------------- |
+| Name  | string | The name of the contact person. | Training Provider | YES | YES |
+| Email  | string | The email of the contact person. | Training Provider | YES | YES |
+| Phone  | string | The phone number of the contact person. | Training Provider | YES | YES |
+| Url  | string | The Url of the contact person. | Training Provider | YES | YES |
 
+### Grpc Message: CoursePrice
+|    Property  |   Data Type   |  Description  | Provided by  | Prototype | UI/UX |
+| ------------- | ------------- | ------------- |------------- |------------- |------------- |
+| StartDate  | DateTime | The start date of the price. | Training Provider | YES | YES |
+| EndDate  | DateTime | The end date of the price. Can be null. | Training Provider | YES | YES |
+| Price  | float | The price of the appointment. | Training Provider | YES | YES |
+| Currency  | string | The currency of the price. | Training Provider | YES | YES |
 
+### Grpc Message: CourseRequest
+
+NOTE: Backend specific message.
+
+|    Property  |   Data Type   |  Description  | OPTIONAL  |
+| ------------- | ------------- | ------------- |------------- |
+| CourseId  | string | The unique identifier of the course. | YES |
+| CourseName  | string | The name of the course. | YES |
+| Skills  | List<string> | A list of skills you are looking for. | YES |
+| Occupations  | List<string> | A list of occupations you are looking for. | YES |
+| QueryParameters  | List<key,value> | Parameters to query for courses | YES |
+| Language  | string | The language of the course. | YES |
+
+### Grpc Message: CourseResponse
+
+NOTE: Client specific message. Indication for Streaming done in the service definition.
+
+|    Property  |   Data Type   |  Description  | OPTIONAL  |
+| ------------- | ------------- | ------------- |------------- |
+| Courses  | List<Course> | A list of courses. Can be empty. | NO |
