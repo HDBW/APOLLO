@@ -4,12 +4,15 @@ Authors:
 - Patric Boscolo
 - Ivana Boscolo
 
+Co-Authors:
+- GPT-3 by OpenAI
+
 Date:
-08.10.2021
-14.07.2022
-19.07.2022
-23.09.2022
-04.10.2022
+- 08.10.2021
+- 14.07.2022
+- 19.07.2022
+- 23.09.2022
+- 04.10.2022
 
 []: # Language: markdown
 []: # Path: docs\Specifications\Course.md
