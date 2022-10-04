@@ -92,7 +92,8 @@ message Course {
 	string courseproviderurl = 56;
 	string courseproviderlogo = 57;
 
-	reserved 58, 59;
+	string qualificationprovider = 58;
+	string qualificationproviderlogo = 59;
 	
 	datetime publishingdate = 60;
 	datetime lastupdated = 61;
@@ -179,18 +180,23 @@ message CourseAppointments
 	
 	Attributes attributes = 11;
 
-	enum AppointmentType type = 12;
+	AppointmentType type = 12;
+	CourseType appointmentcoursetype = 13
 	
-	bool iscancelled = 13;
-	bool isbookable = 14;
+	bool iscancelled = 14;
+	bool isbookable = 15;
 
 		message BookingContact{
 			string name = 1;
 			string email = 2;
 			string phone = 3;
+			string url = 4;
 		}
 	
-	BookingContact bookingcontact = 15;
+	BookingContact bookingcontact = 16;
+	repeat string bookingoptions = 17;
+	string bookingurl = 18;
+	
 }
 
 enum AppointmentType
