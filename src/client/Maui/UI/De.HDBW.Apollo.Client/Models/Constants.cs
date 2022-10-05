@@ -2,6 +2,7 @@
 {
     using System;
 
+    // TODO: Add B2C Credentials here. Dont forget info.plist and androidmanifest.xml
     public static class Constants
     {
         // From Azure portral
