@@ -21,7 +21,7 @@ message CourseReply {
 }
 
 message Course {
-	string courseid = 1;
+	long courseid = 1;
 	string providerid = 2;
 
 	string title = 3;
@@ -157,34 +157,35 @@ message CoursePrice
 
 message CourseAppointments
 {
-	string appointmentid = 1;
-	string bookingcode = 2;
+	long appointmentid = 1;
+	long courseid = 2;
+	string bookingcode = 3;
 
-	string summary = 3;
+	string summary = 4;
 
-	datetime startdate = 4;
-	timeZone starttimezone = 5;
-	datetime enddate = 6;
-	timeZone endtimezone = 7;
-
-	recurrence recurrence = 8;
-
-	string location = 9;
+	datetime startdate = 5;
+	timeZone starttimezone = 6;
+	datetime enddate = 7;
+	timeZone endtimezone = 8;
 	
-	CoursePrice price = 10;
+	recurrence recurrence = 9;
+
+	string location = 10;
+	
+	CoursePrice price = 11;
 	
 	
 		message Attributes{
 			map<string, string> values = 1;
 		}
 	
-	Attributes attributes = 11;
+	Attributes attributes = 12;
 
-	AppointmentType type = 12;
-	CourseType appointmentcoursetype = 13
+	AppointmentType type = 13;
+	CourseType appointmentcoursetype = 14;
 	
-	bool iscancelled = 14;
-	bool isbookable = 15;
+	bool iscancelled = 15;
+	bool isbookable = 16;
 
 		message BookingContact{
 			string name = 1;
@@ -193,9 +194,9 @@ message CourseAppointments
 			string url = 4;
 		}
 	
-	BookingContact bookingcontact = 16;
-	repeat string bookingoptions = 17;
-	string bookingurl = 18;
+	BookingContact bookingcontact = 17;
+	repeat string bookingoptions = 18;
+	string bookingurl = 19;
 	
 }
 
