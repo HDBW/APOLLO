@@ -42,7 +42,13 @@
             try
             {
                 this.IsBusy = true;
-                await this.UseCaseBuilder.BuildAsync(this.UseCases.First(u => u.IsSelected).UseCase, token);
+                if (!await this.UseCaseBuilder.BuildAsync(this.UseCases.First(u => u.IsSelected).UseCase, token))
+                {
+                    return;
+                }
+
+                await this.NavigationService.PushToRootAsnc(Routes.Shell, token);
+
             }
             catch (OperationCanceledException)
             {

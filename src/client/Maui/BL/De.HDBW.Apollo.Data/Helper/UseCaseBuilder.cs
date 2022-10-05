@@ -15,7 +15,7 @@
 
         public Task<bool> BuildAsync(UseCase usecase, CancellationToken token)
         {
-            var result = false;
+            var result = true;
             try
             {
                 switch (usecase)

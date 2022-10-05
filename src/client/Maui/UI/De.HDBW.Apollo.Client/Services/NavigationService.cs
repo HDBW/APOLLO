@@ -111,7 +111,7 @@
 
             var page = Routing.GetOrCreateContent(route, this.ServiceProvider) as Page;
             var navigationPage = Application.Current.MainPage as NavigationPage;
-            if (navigationPage == null)
+            if (navigationPage == null || page is Shell)
             {
                 Application.Current.MainPage = page;
             }
