@@ -9,6 +9,7 @@
     using De.HDBW.Apollo.SharedContracts.Services;
     using Microsoft.Extensions.Logging;
 
+    // TODO: We need a way to navigate back to UseCaseSelection. PushToRoot
     public partial class StartViewModel : BaseViewModel
     {
         private readonly ObservableCollection<InteractionEntry> interactions = new ObservableCollection<InteractionEntry>();

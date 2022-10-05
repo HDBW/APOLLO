@@ -8,6 +8,7 @@
     using De.HDBW.Apollo.SharedContracts.Helper;
     using Microsoft.Extensions.Logging;
 
+    // TODO: Clear UsecaseData when navigating to this model.
     public partial class UseCaseSelectionViewModel : BaseViewModel
     {
         private readonly ObservableCollection<UseCaseEntry> useCases = new ObservableCollection<UseCaseEntry>();
