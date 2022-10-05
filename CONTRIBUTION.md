@@ -5,7 +5,7 @@ You can contribute to Project Apollo with issues and PRs. Simply filing issues f
 
 ## Contribution "Bar"
 
-Project maintainers will merge changes that improve the product significantly and broadly align with the [Apollo Roadmap](https://github.com/dotnet/core/blob/master/roadmap.md).
+Project maintainers will merge changes that improve the product significantly and broadly align with the [Apollo Roadmap](docs/roadmap.md).
 
 Maintainers will not merge changes that have narrowly-defined benefits, due to compatibility risk. Since 3rd parties rely on apollo we may revert changes if they are found to be breaking.
 
