@@ -1,11 +1,11 @@
-﻿namespace De.HDBW.Apollo.Client.ViewModels
-{
-    using CommunityToolkit.Mvvm.Input;
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.Client.Models;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Identity.Client;
+﻿using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 
+namespace De.HDBW.Apollo.Client.ViewModels
+{
     public partial class RegistrationViewModel : BaseViewModel
     {
         public RegistrationViewModel(
@@ -16,7 +16,7 @@
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            this.AuthService = authService;
+            AuthService = authService;
         }
 
         private IAuthService AuthService { get; set; }
@@ -24,82 +24,82 @@
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            this.SkipCommand?.NotifyCanExecuteChanged();
+            SkipCommand?.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
-            this.IsBusy = true;
+            IsBusy = true;
             try
             {
-                await this.NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
+                await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled Skip in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled Skip in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error in Skip in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
             }
             finally
             {
                 if (!token.IsCancellationRequested)
                 {
-                    this.IsBusy = false;
+                    IsBusy = false;
                 }
             }
         }
 
         private bool CanSkip()
         {
-            return !this.IsBusy;
+            return !IsBusy;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
-            this.IsBusy = true;
+            IsBusy = true;
             try
             {
-                var x = await this.AuthService.AcquireTokenSilent(token).ConfigureAwait(false);
-                var result = await this.AuthService.SignInInteractively(token).ConfigureAwait(false);
+                var x = await AuthService.AcquireTokenSilent(token).ConfigureAwait(false);
+                var result = await AuthService.SignInInteractively(token).ConfigureAwait(false);
 
-                await this.NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
+                await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled Register in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled Register in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled Register in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled Register in {GetType()}.");
             }
             catch (MsalException ex)
             {
-                this.Logger?.LogWarning(ex, $"Error while registering user in {this.GetType()}.");
+                Logger?.LogWarning(ex, $"Error while registering user in {GetType()}.");
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error in Register in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error in Register in {GetType()}.");
             }
             finally
             {
                 if (!token.IsCancellationRequested)
                 {
-                    this.IsBusy = false;
+                    IsBusy = false;
                 }
             }
         }
 
         private bool CanRegister()
         {
-            return !this.IsBusy;
+            return !IsBusy;
         }
     }
 }

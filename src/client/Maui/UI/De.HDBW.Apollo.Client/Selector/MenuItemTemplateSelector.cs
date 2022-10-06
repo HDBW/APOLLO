@@ -13,10 +13,10 @@
                 entry?.Title == Resources.Strings.Resource.MainNavigation_LearningPath ||
                 entry?.Title == Resources.Strings.Resource.MainNavigation_CVGenerator)
             {
-                return this.TemplateWithSeperator;
+                return TemplateWithSeperator;
             }
 
-            return this.DefaultTemplate;
+            return DefaultTemplate;
         }
     }
 }

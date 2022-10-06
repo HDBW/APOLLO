@@ -1,15 +1,15 @@
-﻿namespace De.HDBW.Apollo.Client.ViewModels
-{
-    using System.Collections.ObjectModel;
-    using CommunityToolkit.Mvvm.Input;
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.Client.Models;
-    using De.HDBW.Apollo.SharedContracts.Services;
-    using Microsoft.Extensions.Logging;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Client.ViewModels
+{
     public partial class ExtendedSplashScreenViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<InstructionEntry> instructions = new ObservableCollection<InstructionEntry>();
+        private readonly ObservableCollection<InstructionEntry> _instructions = new ObservableCollection<InstructionEntry>();
 
         public ExtendedSplashScreenViewModel(
             IDispatcherService dispatcherService,
@@ -20,16 +20,16 @@
             ILogger<ExtendedSplashScreenViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            this.PreferenceService = preferenceService;
-            this.SessionService = sessionService;
-            this.Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1));
-            this.Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction2));
-            this.Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction3));
+            PreferenceService = preferenceService;
+            SessionService = sessionService;
+            Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1));
+            Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction2));
+            Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction3));
         }
 
         public ObservableCollection<InstructionEntry> Instructions
         {
-            get { return this.instructions; }
+            get { return _instructions; }
         }
 
         private IPreferenceService PreferenceService { get; }
@@ -39,48 +39,48 @@
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            this.SkipCommand?.NotifyCanExecuteChanged();
+            SkipCommand?.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
-            this.IsBusy = true;
+            IsBusy = true;
             try
             {
-                if (this.SessionService.HasRegisteredUser)
+                if (SessionService.HasRegisteredUser)
                 {
-                    await this.NavigationService.PushToRootAsnc(Routes.StartView, token);
+                    await NavigationService.PushToRootAsnc(Routes.StartView, token);
                 }
                 else
                 {
-                    await this.NavigationService.PushToRootAsnc(Routes.RegistrationView, token);
+                    await NavigationService.PushToRootAsnc(Routes.RegistrationView, token);
                 }
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled Skip in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled Skip in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error in Skip in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
             }
             finally
             {
                 if (!token.IsCancellationRequested)
                 {
-                    this.IsBusy = false;
+                    IsBusy = false;
                 }
             }
         }
 
         private bool CanSkip()
         {
-            return !this.IsBusy;
+            return !IsBusy;
         }
     }
 }

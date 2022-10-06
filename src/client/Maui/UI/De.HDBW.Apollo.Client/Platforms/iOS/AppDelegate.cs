@@ -1,9 +1,8 @@
-﻿namespace De.HDBW.Apollo.Client;
-
-using Foundation;
+﻿using Foundation;
 using Microsoft.Identity.Client;
 using UIKit;
 
+namespace De.HDBW.Apollo.Client;
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate
 {

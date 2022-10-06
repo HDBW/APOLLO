@@ -1,7 +1,7 @@
-﻿namespace De.HDBW.Apollo.Client.Contracts
-{
-    using Microsoft.Identity.Client;
+﻿using Microsoft.Identity.Client;
 
+namespace De.HDBW.Apollo.Client.Contracts
+{
     public interface IAuthService
     {
         Task<AuthenticationResult?> SignInInteractively(CancellationToken cancellationToken);

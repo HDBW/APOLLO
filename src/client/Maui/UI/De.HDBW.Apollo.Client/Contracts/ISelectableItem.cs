@@ -1,7 +1,7 @@
-﻿namespace De.HDBW.Apollo.Client.Contracts
-{
-    using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 
+namespace De.HDBW.Apollo.Client.Contracts
+{
     public interface ISelectableItem<TU>
     {
         bool IsSelected { get; set; }

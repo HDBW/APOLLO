@@ -1,17 +1,17 @@
-﻿namespace De.HDBW.Apollo.Client.ViewModels
-{
-    using System.Collections.ObjectModel;
-    using CommunityToolkit.Mvvm.Input;
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.Client.Models;
-    using De.HDBW.Apollo.SharedContracts.Enums;
-    using De.HDBW.Apollo.SharedContracts.Helper;
-    using Microsoft.Extensions.Logging;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Helper;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Client.ViewModels
+{
     // TODO: Clear UsecaseData when navigating to this model.
     public partial class UseCaseSelectionViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<UseCaseEntry> useCases = new ObservableCollection<UseCaseEntry>();
+        private readonly ObservableCollection<UseCaseEntry> _useCases = new ObservableCollection<UseCaseEntry>();
 
         public UseCaseSelectionViewModel(
            IDispatcherService dispatcherService,
@@ -21,17 +21,17 @@
            ILogger<UseCaseTutorialViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
-            this.UseCaseBuilder = builder;
-            this.UseCases.Add(UseCaseEntry.Import(UseCase.A, this.OnUseCaseSelectionChanged));
-            this.UseCases.Add(UseCaseEntry.Import(UseCase.B, this.OnUseCaseSelectionChanged));
-            this.UseCases.Add(UseCaseEntry.Import(UseCase.C, this.OnUseCaseSelectionChanged));
+            UseCaseBuilder = builder;
+            UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
+            UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
+            UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));
         }
 
         public ObservableCollection<UseCaseEntry> UseCases
         {
             get
             {
-                return this.useCases;
+                return _useCases;
             }
         }
 
@@ -42,50 +42,49 @@
         {
             try
             {
-                this.IsBusy = true;
-                if (!await this.UseCaseBuilder.BuildAsync(this.UseCases.First(u => u.IsSelected).UseCase, token))
+                IsBusy = true;
+                if (!await UseCaseBuilder.BuildAsync(UseCases.First(u => u.IsSelected).UseCase, token))
                 {
                     return;
                 }
 
-                await this.NavigationService.PushToRootAsnc(Routes.Shell, token);
-
+                await NavigationService.PushToRootAsnc(Routes.Shell, token);
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled CreateUseCase in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled CreateUseCase in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled CreateUseCase in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled CreateUseCase in {GetType()}.");
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error in CreateUseCase in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error in CreateUseCase in {GetType()}.");
             }
             finally
             {
                 if (!token.IsCancellationRequested)
                 {
-                    this.IsBusy = false;
+                    IsBusy = false;
                 }
             }
         }
 
         public bool CanCreateUseCase()
         {
-            return !this.IsBusy && this.UseCases.Any(u => u.IsSelected);
+            return !IsBusy && UseCases.Any(u => u.IsSelected);
         }
 
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            this.CreateUseCaseCommand?.NotifyCanExecuteChanged();
+            CreateUseCaseCommand?.NotifyCanExecuteChanged();
         }
 
         private void OnUseCaseSelectionChanged(UseCaseEntry useCase)
         {
-            foreach (var item in this.UseCases)
+            foreach (var item in UseCases)
             {
                 if (item == useCase)
                 {
@@ -95,7 +94,7 @@
                 item.UpdateSelectedState(false);
             }
 
-            this.RefreshCommands();
+            RefreshCommands();
         }
     }
 }

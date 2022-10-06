@@ -1,17 +1,17 @@
-﻿namespace De.HDBW.Apollo.Client.Models
-{
-    using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
+namespace De.HDBW.Apollo.Client.Models
+{
     public partial class InstructionEntry : ObservableObject
     {
         [ObservableProperty]
-        private string? text;
+        private string? _text;
 
         [ObservableProperty]
-        private string? image;
+        private string? _image;
 
         [ObservableProperty]
-        private string? animation;
+        private string? _animation;
 
         private InstructionEntry()
         {

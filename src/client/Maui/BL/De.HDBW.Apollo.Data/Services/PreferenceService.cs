@@ -1,15 +1,15 @@
-﻿namespace De.HDBW.Apollo.Data.Services
-{
-    using De.HDBW.Apollo.SharedContracts.Enums;
-    using De.HDBW.Apollo.SharedContracts.Services;
-    using Microsoft.Extensions.Logging;
+﻿using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Data.Services
+{
     public class PreferenceService : IPreferenceService
     {
         public PreferenceService(ILogger<PreferenceService>? logger, IPreferences? preferences)
         {
-            this.Logger = logger;
-            this.Preferences = preferences;
+            Logger = logger;
+            Preferences = preferences;
         }
 
         private ILogger? Logger { get; }
@@ -20,13 +20,13 @@
         {
             try
             {
-                this.Preferences?.Remove(key.ToString());
-                this.Preferences?.Set<TU>(key.ToString(), value);
+                Preferences?.Remove(key.ToString());
+                Preferences?.Set<TU>(key.ToString(), value);
                 return true;
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown error while SetValue<TU> in {this.GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while SetValue<TU> in {GetType().Name}.");
             }
 
             return false;
@@ -38,14 +38,14 @@
 
             try
             {
-                if (this.Preferences != null)
+                if (Preferences != null)
                 {
-                    result = this.Preferences.Get<TU>(key.ToString(), defaultValue);
+                    result = Preferences.Get<TU>(key.ToString(), defaultValue);
                 }
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown error while GetValue<TU> in {this.GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while GetValue<TU> in {GetType().Name}.");
             }
 
             return result is TU ? (TU)result : defaultValue;

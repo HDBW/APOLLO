@@ -1,20 +1,19 @@
-﻿namespace De.HDBW.Apollo.Client.Views;
+﻿using De.HDBW.Apollo.Client.ViewModels;
 
-using De.HDBW.Apollo.Client.ViewModels;
-
+namespace De.HDBW.Apollo.Client.Views;
 public partial class StartView
 {
     public StartView(StartViewModel model)
     {
-        this.InitializeComponent();
-        this.BindingContext = model;
+        InitializeComponent();
+        BindingContext = model;
     }
 
     public StartViewModel? Viemodel
     {
         get
         {
-            return this.BindingContext as StartViewModel;
+            return BindingContext as StartViewModel;
         }
     }
 }

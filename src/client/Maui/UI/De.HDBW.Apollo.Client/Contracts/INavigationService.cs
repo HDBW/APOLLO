@@ -1,7 +1,7 @@
-﻿namespace De.HDBW.Apollo.Client.Contracts
-{
-    using De.HDBW.Apollo.Client.Models;
+﻿using De.HDBW.Apollo.Client.Models;
 
+namespace De.HDBW.Apollo.Client.Contracts
+{
     public interface INavigationService
     {
         Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null);

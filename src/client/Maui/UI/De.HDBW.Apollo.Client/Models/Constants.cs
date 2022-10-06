@@ -1,7 +1,7 @@
-﻿namespace De.HDBW.Apollo.Client.Models
-{
-    using System;
+﻿using System;
 
+namespace De.HDBW.Apollo.Client.Models
+{
     // TODO: Add B2C Credentials here. Dont forget info.plist and androidmanifest.xml
     public static class Constants
     {

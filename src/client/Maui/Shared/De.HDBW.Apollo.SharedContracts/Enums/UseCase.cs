@@ -5,6 +5,6 @@
         Unknown,
         A,
         B,
-        C
+        C,
     }
 }
