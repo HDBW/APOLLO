@@ -1,48 +1,47 @@
-namespace De.HDBW.Apollo.Data.Tests.Services;
-
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.Data.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
+namespace De.HDBW.Apollo.Data.Tests.Services;
 public class PreferenceServiceTests : IDisposable
 {
-    private Dictionary<string, object> storage = new Dictionary<string, object>();
-    private ILogger<PreferenceService> logger;
+    private Dictionary<string, object> _storage = new Dictionary<string, object>();
+    private ILogger<PreferenceService> _logger;
 
     public PreferenceServiceTests()
     {
-        this.logger = this.SetupLogger<PreferenceService>();
+        _logger = this.SetupLogger<PreferenceService>();
     }
 
     public void Dispose()
     {
-        this.storage.Clear();
+        _storage.Clear();
     }
 
     [Fact]
     public void TestCreation()
     {
-        IPreferences preferences = null;
+        IPreferences? preferences = null;
 
         var service = new PreferenceService(null, preferences);
         Assert.NotNull(service);
 
         preferences = null;
-        service = new PreferenceService(this.logger, preferences);
+        service = new PreferenceService(_logger, preferences);
         Assert.NotNull(service);
 
-        preferences = this.SetupPreference();
-        service = new PreferenceService(this.logger, preferences);
+        preferences = SetupPreference();
+        service = new PreferenceService(_logger, preferences);
         Assert.NotNull(service);
     }
 
     [Fact]
     public void TestGetSetValueWithException()
     {
-        var preferences = this.SetupPreference(true);
-        var service = new PreferenceService(this.logger, preferences);
+        var preferences = SetupPreference(true);
+        var service = new PreferenceService(_logger, preferences);
         var result = service.GetValue(SharedContracts.Enums.Preference.Unknown, true);
         Assert.True(result);
 
@@ -53,8 +52,8 @@ public class PreferenceServiceTests : IDisposable
     [Fact]
     public void TestGetSetValue()
     {
-        var preferences = this.SetupPreference();
-        var service = new PreferenceService(this.logger, preferences);
+        var preferences = SetupPreference();
+        var service = new PreferenceService(_logger, preferences);
         var result = service.SetValue(SharedContracts.Enums.Preference.Unknown, true);
         Assert.True(result);
         result = service.GetValue(SharedContracts.Enums.Preference.Unknown, false);
@@ -97,9 +96,9 @@ public class PreferenceServiceTests : IDisposable
         {
             mock.Setup(m => m.Get<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string?>())).Returns((string key, object defaultValue, string? sharedName) =>
             {
-                if (this.storage.ContainsKey(key))
+                if (_storage.ContainsKey(key))
                 {
-                    return this.storage[key];
+                    return _storage[key];
                 }
                 else
                 {
@@ -109,13 +108,13 @@ public class PreferenceServiceTests : IDisposable
 
             mock.Setup(m => m.Set<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string?>())).Callback((string key, object value, string? sharedName) =>
             {
-                if (this.storage.ContainsKey(key))
+                if (_storage.ContainsKey(key))
                 {
-                    this.storage[key] = value;
+                    _storage[key] = value;
                 }
                 else
                 {
-                    this.storage.Add(key, value);
+                    _storage.Add(key, value);
                 }
             });
         }

@@ -1,6 +1,6 @@
-﻿namespace De.HDBW.Apollo.Client;
+﻿using UIKit;
 
-using UIKit;
+namespace De.HDBW.Apollo.Client;
 public class Program
 {
     // This is the main entry point of the application.

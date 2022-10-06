@@ -1,7 +1,7 @@
-﻿namespace De.HDBW.Apollo.DeviceTestRunner
-{
-    using Foundation;
+﻿using Foundation;
 
+namespace De.HDBW.Apollo.DeviceTestRunner
+{
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate
     {

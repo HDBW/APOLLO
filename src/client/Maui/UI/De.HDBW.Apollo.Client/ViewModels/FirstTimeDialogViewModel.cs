@@ -1,9 +1,9 @@
-﻿namespace De.HDBW.Apollo.Client.ViewModels
-{
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.Client.Models;
-    using Microsoft.Extensions.Logging;
+﻿using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Client.ViewModels
+{
     public partial class FirstTimeDialogViewModel : BaseViewModel
     {
         public FirstTimeDialogViewModel(
@@ -18,13 +18,13 @@
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            this.OpenTutorialCommand?.NotifyCanExecuteChanged();
-            this.ContinueCommand?.NotifyCanExecuteChanged();
+            OpenTutorialCommand?.NotifyCanExecuteChanged();
+            ContinueCommand?.NotifyCanExecuteChanged();
         }
 
         private bool CanContinue()
         {
-            return !this.IsBusy;
+            return !IsBusy;
         }
 
         [CommunityToolkit.Mvvm.Input.RelayCommand(CanExecute = nameof(CanContinue))]
@@ -32,12 +32,12 @@
         {
             var result = new NavigationParameters();
             result.AddValue(NavigationParameter.Result, false);
-            this.DialogService.ClosePopup(this, result);
+            DialogService.ClosePopup(this, result);
         }
 
         private bool CanOpenTutorial()
         {
-            return !this.IsBusy;
+            return !IsBusy;
         }
 
         [CommunityToolkit.Mvvm.Input.RelayCommand(CanExecute = nameof(CanOpenTutorial))]
@@ -45,7 +45,7 @@
         {
             var result = new NavigationParameters();
             result.AddValue(NavigationParameter.Result, true);
-            this.DialogService.ClosePopup(this, result);
+            DialogService.ClosePopup(this, result);
         }
     }
 }

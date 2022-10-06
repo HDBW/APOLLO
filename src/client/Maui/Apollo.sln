@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "De.HDBW.Apollo.SharedContra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{DD9F3385-6F9A-47C4-88F1-F0AB8EC54A16}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
+		..\..\..\.editorconfig = ..\..\..\.editorconfig
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{8531B12A-0995-4276-83FA-A6401A104005}"

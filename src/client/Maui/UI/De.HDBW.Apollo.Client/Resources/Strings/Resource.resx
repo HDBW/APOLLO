@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
+    <value>Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!</value>
+  </data>
+  <data name="ExtendedSplashScreenView_Instruction2" xml:space="preserve">
+    <value>Dafür braucht Apollo Infos zu deinen beruflichen Erfahrungen von dir.</value>
+  </data>
+  <data name="ExtendedSplashScreenView_Instruction3" xml:space="preserve">
+    <value>Unsere App zeigt dir den Weg zu deinem Traumberuf!</value>
+  </data>
   <data name="FirstTimeDialog_Continue" xml:space="preserve">
     <value>direkt loslegen</value>
   </data>
@@ -128,6 +137,9 @@
   </data>
   <data name="FirstTimeDialog_Title" xml:space="preserve">
     <value>Willkommen!</value>
+  </data>
+  <data name="Global_Skip" xml:space="preserve">
+    <value>Überspringen</value>
   </data>
   <data name="MainNavigation_CertificatesAndDegrees" xml:space="preserve">
     <value>Zeugnisse und Abschlüsse</value>
@@ -155,5 +167,46 @@
   </data>
   <data name="MainNavigation_ViewTutorial" xml:space="preserve">
     <value>Tutorial anzeigen</value>
+  </data>
+  <data name="RegistrationView_RegisterUser" xml:space="preserve">
+    <value>Registrieren</value>
+  </data>
+  <data name="StartViewModel_InteractionCareer" xml:space="preserve">
+    <value>Entdecke dein Karrierepotential
+(Ist-Stand bekannt – Inspiration)</value>
+  </data>
+  <data name="StartViewModel_InteractionCV" xml:space="preserve">
+    <value>CV Generieren</value>
+  </data>
+  <data name="StartViewModel_InteractionProfile" xml:space="preserve">
+    <value>Checke dein Profil für einen Job 
+deiner Wahl</value>
+  </data>
+  <data name="StartViewModel_InteractionRetraining" xml:space="preserve">
+    <value>staatlich geförderte Umschulungs&#x2;und Weiterbildungsmaßnahme</value>
+  </data>
+  <data name="StartViewModel_InteractionSkills" xml:space="preserve">
+    <value>Lerne neue Skills</value>
+  </data>
+  <data name="UseCaseSelectionView_CreateUseCase" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="UseCase_A_Description" xml:space="preserve">
+    <value>Beschreibung des Usecase A</value>
+  </data>
+  <data name="UseCase_A_Name" xml:space="preserve">
+    <value>Usecase A</value>
+  </data>
+  <data name="UseCase_B_Description" xml:space="preserve">
+    <value>Beschreibung des Usecase B</value>
+  </data>
+  <data name="UseCase_B_Name" xml:space="preserve">
+    <value>Usecase B</value>
+  </data>
+  <data name="UseCase_C_Description" xml:space="preserve">
+    <value>Beschreibung des Usecase C</value>
+  </data>
+  <data name="UseCase_C_Name" xml:space="preserve">
+    <value>Usecase C</value>
   </data>
 </root>

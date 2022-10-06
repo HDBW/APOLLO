@@ -1,14 +1,14 @@
-﻿namespace De.HDBW.Apollo.Client.Services
-{
-    using System.Threading.Tasks;
-    using De.HDBW.Apollo.Client.Contracts;
-    using Microsoft.Extensions.Logging;
+﻿using System.Threading.Tasks;
+using De.HDBW.Apollo.Client.Contracts;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Client.Services
+{
     public class DispatcherService : IDispatcherService
     {
         public DispatcherService(ILogger<DispatcherService> logger)
         {
-            this.Logger = logger;
+            Logger = logger;
         }
 
         private ILogger Logger { get; set; }
