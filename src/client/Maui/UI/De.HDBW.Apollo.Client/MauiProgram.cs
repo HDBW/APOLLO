@@ -1,6 +1,4 @@
-﻿namespace De.HDBW.Apollo.Client;
-
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
@@ -15,6 +13,7 @@ using Microsoft.Identity.Client;
 using Serilog;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
+namespace De.HDBW.Apollo.Client;
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()

@@ -1,8 +1,8 @@
-﻿namespace De.HDBW.Apollo.Client.Models
-{
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
+namespace De.HDBW.Apollo.Client.Models
+{
     public class NavigationParameters : Dictionary<NavigationParameter, object>
     {
         public static NavigationParameters FromQueryDictionary(IDictionary<string, object> query)
@@ -26,18 +26,18 @@
 
         public void AddValue<TU>(NavigationParameter key, TU value)
         {
-            this.Remove(key);
+            Remove(key);
             if (value == null)
             {
                 return;
             }
 
-            this.Add(key, value);
+            Add(key, value);
         }
 
         public TU? GetValue<TU>(NavigationParameter key)
         {
-            if (!this.ContainsKey(key))
+            if (!ContainsKey(key))
             {
                 return default(TU);
             }

@@ -1,7 +1,7 @@
-﻿namespace De.HDBW.Apollo.DeviceTestRunner
-{
-    using UIKit;
+﻿using UIKit;
 
+namespace De.HDBW.Apollo.DeviceTestRunner
+{
     public class Program
     {
         // This is the main entry point of the application.

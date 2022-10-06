@@ -1,14 +1,14 @@
-﻿namespace De.HDBW.Apollo.Data.Helper
-{
-    using De.HDBW.Apollo.SharedContracts.Enums;
-    using De.HDBW.Apollo.SharedContracts.Helper;
-    using Microsoft.Extensions.Logging;
+﻿using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Helper;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Data.Helper
+{
     public class UseCaseBuilder : IUseCaseBuilder
     {
         public UseCaseBuilder(ILogger<UseCaseBuilder> logger)
         {
-            this.Logger = logger;
+            Logger = logger;
         }
 
         private ILogger<UseCaseBuilder> Logger { get; }
@@ -27,7 +27,7 @@
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown error while building usecase {usecase}");
+                Logger?.LogError(ex, $"Unknown error while building usecase {usecase}");
             }
 
             return Task.FromResult(result);

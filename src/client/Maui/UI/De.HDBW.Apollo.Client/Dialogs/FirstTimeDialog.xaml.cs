@@ -1,20 +1,19 @@
-namespace De.HDBW.Apollo.Client.Dialogs;
-
 using De.HDBW.Apollo.Client.ViewModels;
 
+namespace De.HDBW.Apollo.Client.Dialogs;
 public partial class FirstTimeDialog
 {
     public FirstTimeDialog(FirstTimeDialogViewModel model)
     {
-        this.InitializeComponent();
-        this.BindingContext = model;
+        InitializeComponent();
+        BindingContext = model;
     }
 
     public FirstTimeDialogViewModel? Viemodel
     {
         get
         {
-            return this.BindingContext as FirstTimeDialogViewModel;
+            return BindingContext as FirstTimeDialogViewModel;
         }
     }
 }

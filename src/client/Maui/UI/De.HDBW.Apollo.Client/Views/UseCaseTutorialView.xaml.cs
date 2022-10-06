@@ -1,27 +1,26 @@
-namespace De.HDBW.Apollo.Client.Views;
-
 using De.HDBW.Apollo.Client.ViewModels;
 using Microsoft.Maui.Controls;
 
+namespace De.HDBW.Apollo.Client.Views;
 public partial class UseCaseTutorialView
 {
     public UseCaseTutorialView(UseCaseTutorialViewModel model)
     {
-        this.InitializeComponent();
-        this.BindingContext = model;
+        InitializeComponent();
+        BindingContext = model;
     }
 
     public UseCaseTutorialViewModel? Viemodel
     {
         get
         {
-            return this.BindingContext as UseCaseTutorialViewModel;
+            return BindingContext as UseCaseTutorialViewModel;
         }
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        this.PART_Animation.IsAnimationEnabled = true;
+        PART_Animation.IsAnimationEnabled = true;
     }
 }

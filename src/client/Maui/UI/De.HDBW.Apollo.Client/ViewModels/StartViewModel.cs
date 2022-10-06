@@ -1,18 +1,18 @@
-﻿namespace De.HDBW.Apollo.Client.ViewModels
-{
-    using System.Collections.ObjectModel;
-    using CommunityToolkit.Mvvm.Input;
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.Client.Dialogs;
-    using De.HDBW.Apollo.Client.Models;
-    using De.HDBW.Apollo.SharedContracts.Enums;
-    using De.HDBW.Apollo.SharedContracts.Services;
-    using Microsoft.Extensions.Logging;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Client.ViewModels
+{
     // TODO: We need a way to navigate back to UseCaseSelection. PushToRoot
     public partial class StartViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<InteractionEntry> interactions = new ObservableCollection<InteractionEntry>();
+        private readonly ObservableCollection<InteractionEntry> _interactions = new ObservableCollection<InteractionEntry>();
 
         public StartViewModel(
             IPreferenceService preferenceService,
@@ -22,19 +22,19 @@
             ILogger<StartViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            this.PreferenceService = preferenceService;
-            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, this.HandleInteract, this.CanHandleInteract));
-            this.Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, this.HandleInteract, this.CanHandleInteract));
+            PreferenceService = preferenceService;
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, HandleInteract, CanHandleInteract));
         }
 
         public ObservableCollection<InteractionEntry> Interactions
         {
             get
             {
-                return this.interactions;
+                return _interactions;
             }
         }
 
@@ -43,7 +43,7 @@
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            this.OpenSettingsCommand?.NotifyCanExecuteChanged();
+            OpenSettingsCommand?.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenSettings), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
@@ -51,36 +51,36 @@
         {
             try
             {
-                this.IsBusy = true;
+                IsBusy = true;
                 var parameters = new NavigationParameters();
                 parameters.AddValue(NavigationParameter.Id, 0);
                 parameters.AddValue(NavigationParameter.Unknown, "Test");
-                await this.NavigationService.NavigateAsnc(Routes.EmptyView, token, parameters);
+                await NavigationService.NavigateAsnc(Routes.EmptyView, token, parameters);
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled OpenSettings in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled OpenSettings in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error in OpenSettings in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error in OpenSettings in {GetType()}.");
             }
             finally
             {
                 if (!token.IsCancellationRequested)
                 {
-                    this.IsBusy = false;
+                    IsBusy = false;
                 }
             }
         }
 
         private bool CanOpenSettings()
         {
-            return !this.IsBusy;
+            return !IsBusy;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
@@ -90,11 +90,11 @@
             {
                 var taskList = new List<Task>();
                 Task<NavigationParameters?>? dialogTask = null;
-                var isFirstTime = this.PreferenceService.GetValue(Preference.IsFirstTime, true);
+                var isFirstTime = PreferenceService.GetValue(Preference.IsFirstTime, true);
                 if (isFirstTime)
                 {
-                    this.PreferenceService.SetValue(Preference.IsFirstTime, false);
-                    dialogTask = this.DialogService.ShowPopupAsync<FirstTimeDialog, NavigationParameters>(token);
+                    PreferenceService.SetValue(Preference.IsFirstTime, false);
+                    dialogTask = DialogService.ShowPopupAsync<FirstTimeDialog, NavigationParameters>(token);
                     taskList.Add(dialogTask);
                 }
 
@@ -106,26 +106,26 @@
                 var selection = dialogTask?.Result?.GetValue<bool>(NavigationParameter.Result) ?? false;
                 if (selection)
                 {
-                    await this.NavigationService.NavigateAsnc(Routes.TutorialView, token);
+                    await NavigationService.NavigateAsnc(Routes.TutorialView, token);
                 }
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled LoadData in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled LoadData in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled LoadData in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled LoadData in {GetType()}.");
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error in LoadData in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error in LoadData in {GetType()}.");
             }
         }
 
         private bool CanHandleInteract(InteractionEntry arg)
         {
-            return !this.IsBusy;
+            return !IsBusy;
         }
 
         private Task HandleInteract(InteractionEntry arg)

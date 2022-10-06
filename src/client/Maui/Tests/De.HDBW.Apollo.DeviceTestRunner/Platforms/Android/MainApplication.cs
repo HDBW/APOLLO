@@ -1,8 +1,8 @@
-﻿namespace De.HDBW.Apollo.DeviceTestRunner
-{
-    using Android.App;
-    using Android.Runtime;
+﻿using Android.App;
+using Android.Runtime;
 
+namespace De.HDBW.Apollo.DeviceTestRunner
+{
     [Application]
     public class MainApplication : MauiApplication
     {

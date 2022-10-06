@@ -1,8 +1,7 @@
-﻿namespace De.HDBW.Apollo.Client;
-
-using Android.App;
+﻿using Android.App;
 using Android.Runtime;
 
+namespace De.HDBW.Apollo.Client;
 [Application]
 public class MainApplication : MauiApplication
 {

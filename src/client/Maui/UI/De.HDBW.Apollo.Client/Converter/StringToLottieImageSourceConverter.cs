@@ -1,9 +1,9 @@
-﻿namespace De.HDBW.Apollo.Client.Converter
-{
-    using System.Globalization;
-    using SkiaSharp.Extended.UI.Controls;
-    using SkiaSharp.Extended.UI.Controls.Converters;
+﻿using System.Globalization;
+using SkiaSharp.Extended.UI.Controls;
+using SkiaSharp.Extended.UI.Controls.Converters;
 
+namespace De.HDBW.Apollo.Client.Converter
+{
     public class StringToLottieImageSourceConverter : IValueConverter
     {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)

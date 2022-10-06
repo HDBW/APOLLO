@@ -1,19 +1,19 @@
-﻿namespace De.HDBW.Apollo.Client;
+﻿using De.HDBW.Apollo.Client.ViewModels;
 
-using De.HDBW.Apollo.Client.ViewModels;
+namespace De.HDBW.Apollo.Client;
 public partial class AppShell : Shell
 {
     public AppShell(AppShellViewModel model)
     {
-        this.InitializeComponent();
-        this.BindingContext = model;
+        InitializeComponent();
+        BindingContext = model;
     }
 
     public AppShellViewModel? Viemodel
     {
         get
         {
-            return this.BindingContext as AppShellViewModel;
+            return BindingContext as AppShellViewModel;
         }
     }
 }

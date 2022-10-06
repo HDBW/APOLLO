@@ -1,14 +1,14 @@
-﻿namespace De.HDBW.Apollo.Client.ViewModels
-{
-    using System.Collections.Generic;
-    using CommunityToolkit.Mvvm.ComponentModel;
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.Client.Models;
-    using Microsoft.Extensions.Logging;
+﻿using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
+using Microsoft.Extensions.Logging;
 
+namespace De.HDBW.Apollo.Client.ViewModels
+{
     public abstract partial class BaseViewModel : ObservableObject, IQueryAttributable
     {
-        private bool isBusy;
+        private bool _isBusy;
 
         public BaseViewModel(
             IDispatcherService dispatcherService,
@@ -17,24 +17,24 @@
             ILogger logger)
             : base()
         {
-            this.Logger = logger;
-            this.NavigationService = navigationService;
-            this.DialogService = dialogService;
-            this.DispatcherService = dispatcherService;
+            Logger = logger;
+            NavigationService = navigationService;
+            DialogService = dialogService;
+            DispatcherService = dispatcherService;
         }
 
         public bool IsBusy
         {
             get
             {
-                return this.isBusy;
+                return _isBusy;
             }
 
             set
             {
-                if (this.SetProperty(ref this.isBusy, value))
+                if (SetProperty(ref _isBusy, value))
                 {
-                    this.RefreshCommands();
+                    RefreshCommands();
                 }
             }
         }
@@ -58,7 +58,7 @@
 
         public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            this.OnPrepare(NavigationParameters.FromQueryDictionary(query));
+            OnPrepare(NavigationParameters.FromQueryDictionary(query));
         }
 
         protected virtual void OnPrepare(NavigationParameters navigationParameters)
@@ -67,38 +67,38 @@
 
         protected virtual void RefreshCommands()
         {
-            this.NavigateToRouteCommand?.NotifyCanExecuteChanged();
+            NavigateToRouteCommand?.NotifyCanExecuteChanged();
         }
 
         [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler =false, IncludeCancelCommand =false)]
         private async Task NavigateToRoute(string route, CancellationToken token)
         {
-            this.IsBusy = true;
+            IsBusy = true;
             try
             {
-               await this.NavigationService.NavigateAsnc(route, token);
+               await NavigationService.NavigateAsnc(route, token);
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled NavigateToRoute in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled NavigateToRoute in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled NavigateToRoute in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled NavigateToRoute in {GetType()}.");
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknoen Error in NavigateToRoute in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknoen Error in NavigateToRoute in {GetType()}.");
             }
             finally
             {
-                this.IsBusy = false;
+                IsBusy = false;
             }
         }
 
         private bool CanNavigateToRoute(string route)
         {
-            return !this.IsBusy && !string.IsNullOrWhiteSpace(route);
+            return !IsBusy && !string.IsNullOrWhiteSpace(route);
         }
     }
 }

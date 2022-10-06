@@ -1,26 +1,26 @@
-﻿namespace De.HDBW.Apollo.Client.Models
-{
-    using CommunityToolkit.Mvvm.ComponentModel;
-    using CommunityToolkit.Mvvm.Input;
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.SharedContracts.Enums;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.SharedContracts.Enums;
 
+namespace De.HDBW.Apollo.Client.Models
+{
     public partial class UseCaseEntry : ObservableObject, ISelectableItem<UseCaseEntry>
     {
-        private readonly UseCase useCase;
-        private bool isSelected;
+        private readonly UseCase _useCase;
+        private bool _isSelected;
 
         private UseCaseEntry(UseCase useCase, Action<UseCaseEntry> selectionChangedHandler)
         {
-            this.useCase = useCase;
-            this.SelectionChangedHandler = selectionChangedHandler;
+            _useCase = useCase;
+            SelectionChangedHandler = selectionChangedHandler;
         }
 
         public UseCase UseCase
         {
             get
             {
-                return this.useCase;
+                return _useCase;
             }
         }
 
@@ -28,7 +28,7 @@
         {
             get
             {
-                switch (this.UseCase)
+                switch (UseCase)
                 {
                     case UseCase.A:
                         return Resources.Strings.Resource.UseCase_A_Name;
@@ -49,7 +49,7 @@
         {
             get
             {
-                switch (this.UseCase)
+                switch (UseCase)
                 {
                     case UseCase.A:
                         return Resources.Strings.Resource.UseCase_A_Description;
@@ -70,14 +70,14 @@
         {
             get
             {
-                return this.isSelected;
+                return _isSelected;
             }
 
             set
             {
-                if (this.SetProperty(ref this.isSelected, value))
+                if (SetProperty(ref _isSelected, value))
                 {
-                    this.SelectionChangedHandler?.Invoke(this);
+                    SelectionChangedHandler?.Invoke(this);
                 }
             }
         }
@@ -91,14 +91,14 @@
 
         public void UpdateSelectedState(bool isSelected)
         {
-            this.isSelected = isSelected;
-            this.OnPropertyChanged(nameof(this.IsSelected));
+            _isSelected = isSelected;
+            OnPropertyChanged(nameof(IsSelected));
         }
 
         [RelayCommand]
         private void ToggleSelection()
         {
-            this.IsSelected = !this.IsSelected;
+            IsSelected = !IsSelected;
         }
     }
 }
