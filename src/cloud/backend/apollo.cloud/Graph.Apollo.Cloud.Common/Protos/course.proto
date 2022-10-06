@@ -1,0 +1,208 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/duration.proto";  
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Graph.Apollo.Cloud.Common";
+
+package course;
+
+service Course {
+	
+}
+
+message CourseRequest {
+	string language = 1;
+	
+}
+
+message CourseReply {
+	repeated Course courses = 1;
+}
+
+message Course {
+	long courseid = 1;
+	string providerid = 2;
+
+	string title = 3;
+	string shortdescription = 4;
+	string description = 5;
+	repeated string benefits = 6;
+	string targetgroup = 7;
+	repeated string instructor = 8;
+	reserved 9;	
+
+	repeated string loanoptions = 10;
+	bool loanoptionsavailable = 11;
+	repeated string loanoptionsurls = 12;
+	
+	repeated string prerequisites = 13;
+	string prerequisitesdescription = 14;
+	
+	repeated string learningobjectives = 15;
+	string learningobjectivesdescription = 16;
+	
+	repeated string learningoutcomes = 17;
+	string learningoutcomesdescription = 18;
+	
+	repeated string skills = 20;
+	repeated string escoskills = 21;
+	repeated string occupations = 19;
+	repeated string persontypes = 22;
+	repeated string linkedentities = 23;
+	repeated string qualifications = 24;
+	string keyphrases = 25;
+	string summarization = 26;
+	
+	reserved 27,28,29;
+	
+	repeated string documentsurl = 30;
+	
+	
+	timespan duration = 31;
+	CourseOccurance occurance = 32;
+	
+	string tags = 33;
+	
+	reserved 34, 35, 36, 37, 38, 39, 40;
+	
+	string bookingurl = 41;
+	string bookingoptions = 42;
+	CoursePrice price = 43;
+	bool hasgarantuedappointments = 44;
+	repeated CourseAppointments appointments = 45;
+	CourseAvailability availability = 46;
+	//course available in languages:
+	repeated string languagesavailable = 47;
+	
+	//used for app globalization
+	string language = 48;
+	
+	//todo: urltolanguageoffering
+	
+	repeated string coursemedia = 50;
+	
+	CourseType coursetype = 51;
+	
+	string trainingprovider 52;
+	string trainingproviderurl = 53;
+	string trainingproviderlogo = 54;
+	
+	string courseprovider = 55;
+	string courseproviderurl = 56;
+	string courseproviderlogo = 57;
+
+	string qualificationprovider = 58;
+	string qualificationproviderlogo = 59;
+	
+	datetime publishingdate = 60;
+	datetime lastupdated = 61;
+	datetime depricationdate = 62;
+	string depricationreason = 63;
+	datetime unpublishdate = 64;
+	
+	//history updated courses
+	course coursesuccessor = 65;
+	string coursesuccessorurl = 66;
+	string coursepredecessor = 67;
+	string coursepredecessorurl = 68;
+	
+	map<string,string> faq = 69;
+	map<string,string> metadata = 70;
+
+	repeated string parentids = 71;
+	repeated string childids = 72;
+	repeated string similarids = 73;
+	repeated string recommendedids = 74;
+
+		message Attributes{
+			string name = 1;
+			map<string, string> values = 2;
+		}
+	
+	repeated Attributes attributes = 75;
+}
+
+enum CourseType
+{
+	Unknown = 0;
+	Online = 1;
+	InPerson = 2;
+	OnAndOffline = 3;
+	InHouse = 4;
+	All = 5;
+}
+
+enum CourseAvailability
+{
+	Unknown = 0;
+	Available = 1;
+	Unavailable = 2;
+}
+
+enum CourseOccurance
+{
+	Parttime = 1;
+	Fulltime = 2;
+	Both = 3;
+}
+
+message CoursePrice
+{
+	datetime startdate = 1;
+	datetime enddate = 2;
+	float price = 3;
+	stirng currency = 4;
+}
+
+message CourseAppointments
+{
+	long appointmentid = 1;
+	long courseid = 2;
+	string bookingcode = 3;
+
+	string summary = 4;
+
+	datetime startdate = 5;
+	timeZone starttimezone = 6;
+	datetime enddate = 7;
+	timeZone endtimezone = 8;
+	
+	recurrence recurrence = 9;
+
+	string location = 10;
+	
+	CoursePrice price = 11;
+	
+	
+		message Attributes{
+			map<string, string> values = 1;
+		}
+	
+	Attributes attributes = 12;
+
+	AppointmentType type = 13;
+	CourseType appointmentcoursetype = 14;
+	
+	bool iscancelled = 15;
+	bool isbookable = 16;
+
+		message BookingContact{
+			string name = 1;
+			string email = 2;
+			string phone = 3;
+			string url = 4;
+		}
+	
+	BookingContact bookingcontact = 17;
+	repeat string bookingoptions = 18;
+	string bookingurl = 19;
+	
+}
+
+enum AppointmentType
+{
+	Unknown = 0;
+	IsGuaranteed = 1;
+}
+
