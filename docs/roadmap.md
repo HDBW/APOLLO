@@ -25,7 +25,6 @@ For released versions of the product:
 | UX/UI Mockup | October 2022 |
 | Backend Courses | October 2022 |
 | ML Pipeline Courses | November 2022 |
-| Frontend Courses | November 2022 |
 | Prototype 1 | December 2022 |
 ...
 
