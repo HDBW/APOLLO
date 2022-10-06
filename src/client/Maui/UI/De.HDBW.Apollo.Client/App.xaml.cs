@@ -1,10 +1,30 @@
-﻿namespace De.HDBW.Apollo.Client;
+﻿using De.HDBW.Apollo.Client.Views;
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Services;
 
+namespace De.HDBW.Apollo.Client;
 public partial class App : Application
 {
-    public App(AppShell shell)
+    public App(
+        ExtendedSplashScreenView splashScreenView,
+        RegistrationView registrationView,
+        UseCaseTutorialView useCaseTutorialView,
+        IPreferenceService preferenceService,
+        ISessionService sessionService)
     {
-        this.InitializeComponent();
-        this.MainPage = shell;
+        InitializeComponent();
+
+        if (preferenceService.GetValue(Preference.IsFirstTime, false))
+        {
+            MainPage = new NavigationPage(splashScreenView);
+        }
+        else if (!sessionService.HasRegisteredUser)
+        {
+            MainPage = new NavigationPage(registrationView);
+        }
+        else
+        {
+            MainPage = new NavigationPage(useCaseTutorialView);
+        }
     }
 }

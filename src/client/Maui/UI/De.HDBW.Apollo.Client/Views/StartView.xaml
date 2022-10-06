@@ -28,5 +28,7 @@
             </Image.Clip>
         </Image>
         <ImageButton Grid.Column="2" Grid.Row="0" Source="untitled.png" VerticalOptions="Center" WidthRequest="40" HeightRequest="40" Command="{Binding OpenSettingsCommand}"/>
+        <CollectionView Grid.ColumnSpan="3" Grid.Row="1" ItemsSource="{Binding Interactions}">
+        </CollectionView>
     </Grid>
 </ContentPage>

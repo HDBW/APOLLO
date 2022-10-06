@@ -1,9 +1,9 @@
-﻿namespace De.HDBW.Apollo.Data.Tests.Extensions
-{
-    using System;
-    using Microsoft.Extensions.Logging;
-    using Moq;
+﻿using System;
+using Microsoft.Extensions.Logging;
+using Moq;
 
+namespace De.HDBW.Apollo.Data.Tests.Extensions
+{
     internal static class TestExtensions
     {
         internal static ILogger<TU> SetupLogger<TU>(this object test)

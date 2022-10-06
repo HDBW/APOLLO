@@ -63,11 +63,5 @@
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_CVGenerator}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_ViewTutorial}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <Tab FlyoutItemIsVisible="False">
-        <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:StartView}">
-        </ShellContent>
-        <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:StartView}">
-        </ShellContent>
-    </Tab>
-   
+    <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:StartView}" />
 </Shell>

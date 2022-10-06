@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.UseCaseSelectionView"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewModels:UseCaseSelectionViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             IsBusy="{Binding IsBusy}">
+    <Grid RowDefinitions="*, Auto">
+        <CollectionView ItemsSource="{Binding UseCases}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type models:UseCaseEntry}">
+                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" >
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
+                        </Grid.GestureRecognizers>
+                        <CheckBox InputTransparent="True" IsChecked="{Binding IsSelected, Mode=TwoWay}" Grid.RowSpan="2" VerticalOptions="Center"/>
+                        <Label Text="{Binding DisplayUseCaseName}" Grid.Column="1" Grid.Row="0"/>
+                        <Label Text="{Binding DisplayUseCaseDescription}" Grid.Column="1" Grid.Row="1"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button
+            Grid.Row="1"
+            Text="{x:Static strings:Resource.UseCaseSelectionView_CreateUseCase}"
+            Command="{Binding CreateUseCaseCommand}" />
+    </Grid>
+</ContentPage>

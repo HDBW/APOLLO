@@ -10,7 +10,7 @@
     {
         public App()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
