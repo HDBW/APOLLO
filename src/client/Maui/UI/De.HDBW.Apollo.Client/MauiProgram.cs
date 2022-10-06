@@ -9,8 +9,10 @@ using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Serilog;
+using Serilog.Events;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace De.HDBW.Apollo.Client;
@@ -20,6 +22,7 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         SetupLogging();
+        builder.Logging.AddSerilog(dispose: true);
         Log.Information($"---------------------------------------- Application started at {DateTime.Now} ------------------------------------------");
         Log.Debug($"Model: {DeviceInfo.Current.Model}");
         Log.Debug($"Manufacturer: {DeviceInfo.Current.Manufacturer}");
@@ -77,9 +80,10 @@ public static class MauiProgram
 
         Log.Logger = new LoggerConfiguration()
 #if DEBUG
-                .MinimumLevel.Debug()
+                .MinimumLevel.Verbose()
                 .Enrich.WithMemoryUsage()
                 .Enrich.WithThreadId()
+                .WriteTo.Debug()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug, retainedFileCountLimit: 5)
 #else
                 .MinimumLevel.Debug()
@@ -90,7 +94,6 @@ public static class MauiProgram
 
     private static void SetupServices(IServiceCollection services)
     {
-        services.AddLogging();
         services.AddSingleton((s) => { return Preferences.Default; });
 
         services.AddSingleton<ISessionService, SessionService>();
@@ -116,6 +119,8 @@ public static class MauiProgram
         services.AddTransient<FirstTimeDialogViewModel>();
         services.AddTransient<EmptyView>();
         services.AddTransient<EmptyViewModel>();
+        services.AddTransient<AssessmentView>();
+        services.AddTransient<AssessmentViewModel>();
     }
 
     private static void SetupRoutes()
@@ -126,6 +131,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.UseCaseTutorialView, typeof(UseCaseTutorialView));
         Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
+        Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

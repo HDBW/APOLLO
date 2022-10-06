@@ -6,6 +6,7 @@
              Shell.NavBarIsVisible="False"
              Title="Main"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:StartViewModel"
              IsBusy="{Binding IsBusy}">
@@ -29,6 +30,16 @@
         </Image>
         <ImageButton Grid.Column="2" Grid.Row="0" Source="untitled.png" VerticalOptions="Center" WidthRequest="40" HeightRequest="40" Command="{Binding OpenSettingsCommand}"/>
         <CollectionView Grid.ColumnSpan="3" Grid.Row="1" ItemsSource="{Binding Interactions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:InteractionEntry">
+                    <Grid Padding="10" >
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{Binding Text}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
 </ContentPage>

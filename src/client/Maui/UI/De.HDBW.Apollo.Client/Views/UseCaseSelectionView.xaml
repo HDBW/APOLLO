@@ -13,7 +13,7 @@
     <Grid RowDefinitions="*, Auto">
         <CollectionView ItemsSource="{Binding UseCases}" SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type models:UseCaseEntry}">
+                <DataTemplate x:DataType="models:UseCaseEntry">
                     <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" >
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />

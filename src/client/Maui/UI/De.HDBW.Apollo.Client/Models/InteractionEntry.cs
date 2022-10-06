@@ -5,6 +5,8 @@ namespace De.HDBW.Apollo.Client.Models
 {
     public partial class InteractionEntry : ObservableObject
     {
+        private readonly object? _data;
+
         [ObservableProperty]
         private string _text;
 
@@ -12,16 +14,25 @@ namespace De.HDBW.Apollo.Client.Models
 
         private Func<InteractionEntry, Task> _navigateHandler;
 
-        private InteractionEntry(string text, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        private InteractionEntry(string text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
         {
             _text = text;
+            _data = data;
             _canNavigateHandle = canNavigateHandle;
             _navigateHandler = navigateHandler;
         }
 
-        public static InteractionEntry Import(string text, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        public static InteractionEntry Import(string text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
         {
-            return new InteractionEntry(text, navigateHandler, canNavigateHandle);
+            return new InteractionEntry(text, data, navigateHandler, canNavigateHandle);
+        }
+
+        public object? Data
+        {
+            get
+            {
+                return _data;
+            }
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigate))]

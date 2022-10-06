@@ -21,7 +21,7 @@ namespace De.HDBW.Apollo.Client.Services
 
         public async Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
-            Logger?.LogDebug($"PushToRoot to {route} with parameters: {parameters?.ToString()}.");
+            Logger?.LogDebug($"PushToRoot to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
             var result = false;
             try
@@ -49,7 +49,7 @@ namespace De.HDBW.Apollo.Client.Services
 
         public async Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
-            Logger?.LogDebug($"Navigate to {route} with parameters: {parameters?.ToString()}.");
+            Logger?.LogDebug($"Navigate to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
             var result = false;
             try
@@ -77,7 +77,7 @@ namespace De.HDBW.Apollo.Client.Services
 
         private Task NavigateOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
-            Logger?.LogDebug($"NavigateOnUI to {route} with parameters: {parameters?.ToString()}.");
+            Logger?.LogDebug($"NavigateOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
             if (Application.Current == null || Shell.Current == null)
             {
@@ -102,7 +102,7 @@ namespace De.HDBW.Apollo.Client.Services
 
         private Task PushToRootOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
-            Logger?.LogDebug($"PushToRootOnUI to {route} with parameters: {parameters?.ToString()}.");
+            Logger?.LogDebug($"PushToRootOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
             if (Application.Current == null)
             {

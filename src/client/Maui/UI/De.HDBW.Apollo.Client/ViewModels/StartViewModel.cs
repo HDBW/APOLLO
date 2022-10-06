@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
@@ -23,11 +24,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             PreferenceService = preferenceService;
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, HandleInteract, CanHandleInteract));
+            var data = new NavigationData(Routes.AssessmentView, null);
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, data, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, null, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, null, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, null, HandleInteract, CanHandleInteract));
+            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, null, HandleInteract, CanHandleInteract));
         }
 
         public ObservableCollection<InteractionEntry> Interactions
@@ -123,14 +125,22 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private bool CanHandleInteract(InteractionEntry arg)
+        private bool CanHandleInteract(InteractionEntry interaction)
         {
             return !IsBusy;
         }
 
-        private Task HandleInteract(InteractionEntry arg)
+        private async Task HandleInteract(InteractionEntry interaction)
         {
-            throw new NotImplementedException();
+            switch (interaction.Data)
+            {
+                case NavigationData navigationData:
+                    await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
+                    break;
+                default:
+                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} in {GetType()}.");
+                    break;
+            }
         }
     }
 }
