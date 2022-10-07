@@ -5,8 +5,10 @@
     "\\src\\cloud",
     "\\src\\cloud\\backend",
     "\\src\\cloud\\backend\\apollo.cloud",
-    "\\src\\cloud\\data\\occupations"
+    "\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Common",
+    "\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Common\\Models",
+    "\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Common\\Protos"
   ],
-  "SelectedNode": "\\src\\cloud\\backend\\apollo.cloud",
+  "SelectedNode": "\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Common\\Protos\\greet.proto",
   "PreviewInSolutionExplorer": false
 }
