@@ -9,6 +9,7 @@ using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Serilog;
 using SkiaSharp.Views.Maui.Controls.Hosting;
@@ -20,6 +21,8 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         SetupLogging();
+        builder.Logging.AddSerilog(dispose: true);
+        SetupSecrets(builder.Services);
         Log.Information($"---------------------------------------- Application started at {DateTime.Now} ------------------------------------------");
         Log.Debug($"Model: {DeviceInfo.Current.Model}");
         Log.Debug($"Manufacturer: {DeviceInfo.Current.Manufacturer}");
@@ -31,35 +34,45 @@ public static class MauiProgram
         Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
         SetupRoutes();
 
+        SetupB2CLogin(builder.Services);
+        SetupServices(builder.Services);
+
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
-        builder.UseSkiaSharp();
-        SetupB2CLogin(builder.Services);
-        SetupServices(builder.Services);
         return builder.Build();
+    }
+
+    private static IUserSecretsService SetupSecrets(IServiceCollection services)
+    {
+        var userSecretsService = new UserSecretsService(services.BuildServiceProvider().GetService<ILogger<UserSecretsService>>());
+        userSecretsService.LoadSecrets();
+        services.AddSingleton<IUserSecretsService>(userSecretsService);
+        B2CConstants.ApplySecrets(userSecretsService);
+        return userSecretsService;
     }
 
     private static void SetupB2CLogin(IServiceCollection services)
     {
-        var b2cClientApplicationBuilder = PublicClientApplicationBuilder.Create(Constants.ClientId)
+        var b2cClientApplicationBuilder = PublicClientApplicationBuilder.Create(B2CConstants.ClientId)
 #if ANDROID
             .WithParentActivityOrWindow(() => Platform.CurrentActivity)
 #endif
 #if WINDOWS
             .WithRedirectUri("http://localhost");
 #else
-            .WithRedirectUri($"msal{Constants.ClientId}://auth");
+            .WithRedirectUri($"msal{B2CConstants.ClientId}://auth");
 #endif
 
         services.AddSingleton<IAuthService>(new AuthServiceB2C(
             b2cClientApplicationBuilder
-                .WithIosKeychainSecurityGroup(Constants.IosKeychainSecurityGroups)
-                .WithB2CAuthority(Constants.AuthoritySignIn)
+                .WithIosKeychainSecurityGroup(B2CConstants.IosKeychainSecurityGroups)
+                .WithB2CAuthority(B2CConstants.AuthoritySignIn)
                 .Build()));
     }
 
