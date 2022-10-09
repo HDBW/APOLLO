@@ -1,5 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
+using System.Diagnostics;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Maui.Animations;
@@ -18,7 +20,7 @@ namespace app.invite_apollo.TelemetryClientTest
             _telemetryClient = new TelemetryClient(configuration);
             #region telemetry client
             //Basic Information we collect about the device
-            _telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+            _telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("INSTRUMENTATIONKEY");
             _telemetryClient.Context.Device.OemName = DeviceInfo.Manufacturer;
             _telemetryClient.Context.Device.Model = DeviceInfo.Current.Model;
             _telemetryClient.Context.Device.Type = DeviceInfo.Current.DeviceType.ToString();
@@ -44,7 +46,7 @@ namespace app.invite_apollo.TelemetryClientTest
                 _telemetryClient.Flush();
             }
             
-            //await DisplayAlert("Alert", AppInsights, "OK");
+            //await DisplayAlert("Alert", Environment.GetEnvironmentVariable("INSTRUMENTATIONKEY"), "OK");
 
             //Suggestion: TrackEvent instead? and metrics?
 
