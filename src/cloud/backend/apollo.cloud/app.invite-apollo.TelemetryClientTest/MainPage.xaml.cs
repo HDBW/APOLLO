@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Maui.Animations;
 
 namespace app.invite_apollo.TelemetryClientTest
@@ -9,10 +10,12 @@ namespace app.invite_apollo.TelemetryClientTest
     public partial class MainPage : ContentPage
     {
         int _count = 0;
-        private TelemetryClient _telemetryClient = new TelemetryClient();
+        private TelemetryClient _telemetryClient;
 
         public MainPage()
         {
+            TelemetryConfiguration configuration = TelemetryConfiguration.CreateDefault();
+            _telemetryClient = new TelemetryClient(configuration);
             #region telemetry client
             //Basic Information we collect about the device
             _telemetryClient.InstrumentationKey = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
@@ -32,10 +35,15 @@ namespace app.invite_apollo.TelemetryClientTest
 
         private async void OnCounterClicked(object sender, EventArgs e)
         {
-            //TODO: Implement Telemetry Client Message
-            _telemetryClient.TrackTrace($"{_telemetryClient.Context.Session.Id} Clicked on {nameof(sender)}:{sender.ToString()} at: {DateTime.Now.ToString()}");
-            _telemetryClient.Flush();
+            NetworkAccess accessType = Connectivity.Current.NetworkAccess;
 
+            if (accessType == NetworkAccess.Internet)
+            {
+                //TODO: Implement Telemetry Client Message
+                _telemetryClient.TrackTrace($"{_telemetryClient.Context.Session.Id} Clicked on {nameof(sender)}:{sender.ToString()} at: {DateTime.Now.ToString()}");
+                _telemetryClient.Flush();
+            }
+            
             //await DisplayAlert("Alert", AppInsights, "OK");
 
             //Suggestion: TrackEvent instead? and metrics?
