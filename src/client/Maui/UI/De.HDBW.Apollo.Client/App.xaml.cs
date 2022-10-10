@@ -1,4 +1,5 @@
-﻿using De.HDBW.Apollo.Client.Views;
+﻿using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 
