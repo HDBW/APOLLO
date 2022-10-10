@@ -1,6 +1,6 @@
 ﻿using De.HDBW.Apollo.Client.Contracts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 
 namespace De.HDBW.Apollo.Client.Services
 {
@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.Client.Services
     {
         private const string UserSecretsFileName = "secrets.json";
 
-        private JObject _secretsJObject;
+        private IConfigurationRoot _config;
 
         public UserSecretsService(ILogger<UserSecretsService>? logger)
         {
@@ -29,28 +29,13 @@ namespace De.HDBW.Apollo.Client.Services
                     }
 
                     var path = name.Split(':');
+
                     if (path.Length < 1)
                     {
                         return null;
                     }
 
-                    JToken? node = _secretsJObject[path.First()];
-                    if (node == null)
-                    {
-                        return null;
-                    }
-
-                    for (int index = 1; index < path.Length; index++)
-                    {
-                        if (node == null)
-                        {
-                            return null;
-                        }
-
-                        node = node[path[index]];
-                    }
-
-                    return node?.ToString();
+                    return _config?.GetChildren().FirstOrDefault(c => c.Key == path.First())?.Value;
                 }
                 catch (Exception ex)
                 {
@@ -67,16 +52,9 @@ namespace De.HDBW.Apollo.Client.Services
                 var assembly = GetType().Assembly;
                 using (var stream = assembly.GetManifestResourceStream($"{typeof(App).Namespace}.{UserSecretsFileName}"))
                 {
-                    if (stream == null)
-                    {
-                        return false;
-                    }
-
-                    using (var reader = new StreamReader(stream))
-                    {
-                        var json = reader.ReadToEnd();
-                        _secretsJObject = JObject.Parse(json);
-                    }
+                    _config = new ConfigurationBuilder()
+                   .AddJsonStream(stream)
+                   .Build();
                 }
 
                 return true;
