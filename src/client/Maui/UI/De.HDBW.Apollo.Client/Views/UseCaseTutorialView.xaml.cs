@@ -23,4 +23,10 @@ public partial class UseCaseTutorialView
         base.OnNavigatedTo(args);
         PART_Animation.IsAnimationEnabled = true;
     }
+
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        base.OnNavigatedFrom(args);
+        PART_Animation.IsAnimationEnabled = false;
+    }
 }
