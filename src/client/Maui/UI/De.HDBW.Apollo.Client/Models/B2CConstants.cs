@@ -5,7 +5,7 @@ namespace De.HDBW.Apollo.Client.Models
     // TODO: Transform info.plist and androidmanifest.xml
     public static class B2CConstants
     {
-        public static string ClientId
+        public static string? ClientId
         {
             get;
             private set;
@@ -15,9 +15,11 @@ namespace De.HDBW.Apollo.Client.Models
         {
             get;
             private set;
-        } = { "openid", "offline_access" };
+        }
 
-        public static string TenantName
+        = { "openid", "offline_access" };
+
+        public static string? TenantName
         {
             get;
             private set;
@@ -31,7 +33,7 @@ namespace De.HDBW.Apollo.Client.Models
             }
         }
 
-        public static string SignInPolicy
+        public static string? SignInPolicy
         {
             get;
             private set;
