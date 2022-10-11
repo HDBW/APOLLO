@@ -40,7 +40,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graph.Apollo.Cloud.Assessme
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssessmentClients", "AssessmentClients", "{40566DE6-C787-40EF-8F2F-A1C9617B233D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "assessment.client", "AssessmentsClient\assessment.client.csproj", "{FB842576-38D5-46D2-931A-3264CA30E3E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "assessment.client", "AssessmentsClient\assessment.client.csproj", "{FB842576-38D5-46D2-931A-3264CA30E3E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApolloProtobufTests", "ApolloProtobufTests\ApolloProtobufTests.csproj", "{71DEAD53-7287-4AAA-AA63-F27BC00367EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,6 +90,10 @@ Global
 		{FB842576-38D5-46D2-931A-3264CA30E3E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB842576-38D5-46D2-931A-3264CA30E3E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB842576-38D5-46D2-931A-3264CA30E3E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71DEAD53-7287-4AAA-AA63-F27BC00367EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71DEAD53-7287-4AAA-AA63-F27BC00367EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71DEAD53-7287-4AAA-AA63-F27BC00367EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71DEAD53-7287-4AAA-AA63-F27BC00367EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{D8A4482D-BD0F-416F-ADD7-BD08839CA756} = {244FEC10-2C8B-4A91-9ADA-7998B7FCF22F}
 		{40566DE6-C787-40EF-8F2F-A1C9617B233D} = {58DC75C2-BE50-4ADE-B7BD-D31B61387012}
 		{FB842576-38D5-46D2-931A-3264CA30E3E3} = {40566DE6-C787-40EF-8F2F-A1C9617B233D}
+		{71DEAD53-7287-4AAA-AA63-F27BC00367EB} = {B2CB0643-6E59-4F44-8FA0-3CDFEDD9E4FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9B9B73F-5630-42C9-B54E-D3FC8E7DA22F}
