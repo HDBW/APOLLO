@@ -2,7 +2,6 @@
 
 namespace De.HDBW.Apollo.Client.Models
 {
-    // TODO: Transform info.plist and androidmanifest.xml
     public static class B2CConstants
     {
         public static string ClientId
