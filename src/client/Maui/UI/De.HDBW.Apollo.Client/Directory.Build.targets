@@ -1,17 +1,94 @@
 ﻿<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UserSecretsFilePath Condition=" '$(OS)' == 'Windows_NT' ">$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))\AppData\Roaming\Microsoft\UserSecrets\$(UserSecretsId)\secrets.json </UserSecretsFilePath>
+    <UserSecretsFilePath Condition=" '$(OS)' == 'Unix' ">$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))/.microsoft/usersecrets/$(UserSecretsId)/secrets.json</UserSecretsFilePath>
+    <AndroidManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\Android\AndroidManifest.xml</AndroidManifestFile>
+    <AndroidManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/Android/AndroidManifest.xml</AndroidManifestFile>
+    <IOSManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\iOS\Info.plist</IOSManifestFile>
+    <IOSManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/iOS/Info.plist</IOSManifestFile>
+    <MacManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\MacCatalyst\Info.plist</MacManifestFile>
+    <MacManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/MacCatalyst/Info.plist</MacManifestFile>
+  </PropertyGroup>
+  <UsingTask
+          TaskName="InsertSecrets"
+          TaskFactory="RoslynCodeTaskFactory"
+          AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+    <ParameterGroup>
+      <InputFilename ParameterType="System.String" Required="true" />
+      <OutputFilename ParameterType="System.String" Required="true" />
+      <SecretsFilename ParameterType="System.String" Required="true" />
+      <MatchExpression ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Text.Json" />
+      <Reference Include="System.Memory" />
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.Json" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Using Namespace="System.Collections.Generic" />
+      <Code>
+        <![CDATA[
+           try{
+                using(var reader = new StreamReader(SecretsFilename))
+                {
+                  var dict = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(reader.BaseStream);
+                  var clientId = dict["ClientId"];
+                  File.WriteAllText(
+                    OutputFilename,
+                    Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, clientId)
+                    );
+                }
+           }catch(Exception ex){
+                Console.WriteLine(ex);
+                throw;
+           }
+                     ]]>
+      </Code>
+    </Task>
+  </UsingTask>
   <Target Name="AddUserSecrets"
-          BeforeTargets="PrepareForBuild"
-          Condition=" '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
-    <PropertyGroup>
-      <UserSecretsFilePath Condition=" '$(OS)' == 'Windows_NT' ">
-        $([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))\AppData\Roaming\Microsoft\UserSecrets\$(UserSecretsId)\secrets.json
-      </UserSecretsFilePath>   
-      <UserSecretsFilePath Condition=" '$(OS)' == 'Unix' ">
-        $([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))/.microsoft/usersecrets/$(UserSecretsId)/secrets.json
-      </UserSecretsFilePath>
-    </PropertyGroup>
+         BeforeTargets="PrepareForBuild"
+         Condition=" '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+    <Message Text="Os: $(TargetFramework)" />
     <ItemGroup>
       <EmbeddedResource Include="$(UserSecretsFilePath)" Condition="Exists($(UserSecretsFilePath))"/>
     </ItemGroup>
+  </Target>
+
+  <Target Name="TransformManifest-Android"
+         BeforeTargets="PrepareForBuild"
+         Condition=" '$(TargetFramework)' == 'net6.0-android' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+    <Message Text="TransformManifest $(TargetFramework)" />
+
+    <InsertSecrets
+      InputFilename="$(AndroidManifestFile)"
+      OutputFilename="$(AndroidManifestFile)"
+      SecretsFilename="$(UserSecretsFilePath)"
+      MatchExpression="YOUR_CLIENT_ID_HERE" />
+  </Target>
+  
+  <Target Name="TransformManifest-iOS"
+         BeforeTargets="PrepareForBuild"
+         Condition=" '$(TargetFramework)' == 'net6.0-ios' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+    <Message Text="TransformManifest $(TargetFramework)" />
+
+    <InsertSecrets
+      InputFilename="$(IOSManifestFile)"
+      OutputFilename="$(IOSManifestFile)"
+      SecretsFilename="$(UserSecretsFilePath)"
+      MatchExpression="YOUR_CLIENT_ID_HERE" />  
+  </Target>
+  
+  <Target Name="TransformManifest-Mac"
+         BeforeTargets="PrepareForBuild"
+         Condition=" '$(TargetFramework)' == 'net6.0-maccatalyst' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+    <Message Text="TransformManifest $(TargetFramework)" />
+    
+    <InsertSecrets
+      InputFilename="$(MacManifestFile)"
+      OutputFilename="$(MacManifestFile)"
+      SecretsFilename="$(UserSecretsFilePath)"
+      MatchExpression="YOUR_CLIENT_ID_HERE" />
   </Target>
 </Project>
