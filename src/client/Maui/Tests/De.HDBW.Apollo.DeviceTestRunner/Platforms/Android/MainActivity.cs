@@ -1,4 +1,7 @@
-﻿using Android.App;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using Android.App;
 using Android.Content.PM;
 
 namespace De.HDBW.Apollo.DeviceTestRunner
