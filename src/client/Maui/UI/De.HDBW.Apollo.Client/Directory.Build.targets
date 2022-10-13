@@ -8,11 +8,16 @@
     <IOSManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/iOS/Info.plist</IOSManifestFile>
     <MacManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\MacCatalyst\Info.plist</MacManifestFile>
     <MacManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/MacCatalyst/Info.plist</MacManifestFile>
+    
+    <JsonPeekAssembly Condition=" '$(OS)' == 'Windows_NT' ">$(NugetPackageRoot)\jsonpeek\1.1.9\build\JsonPeek.dll</JsonPeekAssembly>
+    <JsonPeekAssembly Condition=" '$(OS)' == 'Unix' ">$(NugetPackageRoot)/jsonpeek/1.1.9/build/JsonPeek.dll</JsonPeekAssembly>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="JsonPeek" Version="1.1.9" />
   </ItemGroup>
+
+  <UsingTask AssemblyFile="$(JsonPeekAssembly)" TaskName="JsonPeek" />
 
   <UsingTask
           TaskName="ReplaceFileText"
