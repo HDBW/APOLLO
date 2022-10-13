@@ -67,8 +67,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IsBusy = true;
             try
             {
-                var x = await AuthService.AcquireTokenSilent(token).ConfigureAwait(false);
-                var result = await AuthService.SignInInteractively(token).ConfigureAwait(false);
+                var x = await AuthService.AcquireTokenSilent(token);
+                if (x != null)
+                {
+                    await AuthService.LogoutAsync(token);
+                }
+
+                var result = await AuthService.SignInInteractively(token);
 
                 await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
             }
