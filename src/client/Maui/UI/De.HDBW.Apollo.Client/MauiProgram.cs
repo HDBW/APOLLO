@@ -26,6 +26,7 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        Preferences.Default.Set(Preference.AllowTelemetry.ToString(), true);
         var builder = MauiApp.CreateBuilder();
         SetupSecrets(builder.Services);
         SetupLogging();
@@ -116,24 +117,18 @@ public static class MauiProgram
     private static LoggerConfiguration UseApplicationInsights(this LoggerSinkConfiguration loggerConfiguration, TelemetryConfiguration telemetryConfiguration, ITelemetryConverter telemetryConverter, LogEventLevel restrictedToMinimumLevel = LogEventLevel.Verbose, LoggingLevelSwitch? levelSwitch = null)
     {
         var telemetryClient = new TelemetryClient(telemetryConfiguration);
-        telemetryClient = new TelemetryClient(TelemetryConstants.Configuration);
         telemetryClient.Context.Device.OemName = DeviceInfo.Manufacturer;
         telemetryClient.Context.Device.Model = DeviceInfo.Current.Model;
         telemetryClient.Context.Device.Type = DeviceInfo.Current.DeviceType.ToString();
         telemetryClient.Context.Device.OperatingSystem = DeviceInfo.Current.Platform.ToString();
-        telemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
+        telemetryClient.Context.Session.Id = TelemetryConstants.SessionId;
         return loggerConfiguration.Sink(new ApplicationInsightsSink(telemetryClient, telemetryConverter), restrictedToMinimumLevel, levelSwitch);
     }
 
     // TODO: Show dialog to get permission or if not needed return true,
     private static bool IsTelemetryEnable(LogEvent arg)
     {
-        if (!Preferences.Default.ContainsKey(Preference.AllowTelemetry.ToString()))
-        {
-            return false;
-        }
-
-        return true;
+        return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
     }
 
     private static void SetupServices(IServiceCollection services)
@@ -145,8 +140,10 @@ public static class MauiProgram
         services.AddSingleton<IPreferenceService, PreferenceService>();
         services.AddSingleton<IDispatcherService, DispatcherService>();
         services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<ISessionService, SessionService>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
+        services.AddSingleton<IFeedbackService, FeedbackService>();
 
         services.AddSingleton<AppShell>();
         services.AddSingleton<AppShellViewModel>();
