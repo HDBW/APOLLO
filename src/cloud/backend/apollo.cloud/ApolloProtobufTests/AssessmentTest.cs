@@ -23,6 +23,42 @@ namespace ApolloProtobufTests
         private List<MetaData> _questionMetaData = new();
         private AssessmentItem _assessment = CreateAssessmentItem(title: "Garten-Landschaftsbau");
 
+
+        public void ShouldBeLongId()
+        {
+            SetUp();
+            
+            AssessmentItem assi = new() { Title = "Awesome Test", Id = long.MaxValue, Ticks = DateTime.Now.Ticks };
+
+            _assessment = assi;
+
+            Assessment ass = AssessmentWrapper();
+
+            string filename = "longAssessment.bin";
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            using (var file = File.Create(filename))
+            {
+                Serializer.Serialize(file, ass);
+                file.Close();
+            }
+
+            Assessment deserializedAssessment;
+
+            using (var file = File.OpenRead(filename))
+            {
+                deserializedAssessment = Serializer.Deserialize<Assessment>(file);
+                file.Close();
+            }
+
+            //TODO: Create overlaod for Assessment to check Equals
+            Assert.IsTrue(deserializedAssessment.Value.Id.Equals(ass.Value.Id));
+        }
+
         /// <summary>
         /// Testcase: Usecase Associate Question
         /// TODO: Rewrite
