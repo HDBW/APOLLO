@@ -1,6 +1,4 @@
-﻿// Licensed to hdbw invite-apollo project under one or more agreements.
-// The invite-apollo project presents this file to you under the MIT license.
-
+﻿
 using System.Runtime.Serialization;
 using Graph.Apollo.Cloud.Common.Models.Taxonomy;
 
