@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using Microsoft.Extensions.Logging;
@@ -19,7 +22,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             AuthService = authService;
         }
 
-        private IAuthService AuthService { get; set; }
+        private IAuthService AuthService { get; }
 
         protected override void RefreshCommands()
         {
@@ -67,8 +70,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IsBusy = true;
             try
             {
-                var x = await AuthService.AcquireTokenSilent(token).ConfigureAwait(false);
-                var result = await AuthService.SignInInteractively(token).ConfigureAwait(false);
+                var x = await AuthService.AcquireTokenSilent(token);
+                if (x != null)
+                {
+                    await AuthService.LogoutAsync(token);
+                }
+
+                var result = await AuthService.SignInInteractively(token);
 
                 await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
             }

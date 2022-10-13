@@ -1,4 +1,7 @@
-﻿using System.Globalization;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.Globalization;
 using SkiaSharp.Extended.UI.Controls;
 using SkiaSharp.Extended.UI.Controls.Converters;
 

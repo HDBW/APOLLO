@@ -1,3 +1,6 @@
+// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
 using De.HDBW.Apollo.Client.ViewModels;
 using Microsoft.Maui.Controls;
 
@@ -22,5 +25,11 @@ public partial class UseCaseTutorialView
     {
         base.OnNavigatedTo(args);
         PART_Animation.IsAnimationEnabled = true;
+    }
+
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        base.OnNavigatedFrom(args);
+        PART_Animation.IsAnimationEnabled = false;
     }
 }

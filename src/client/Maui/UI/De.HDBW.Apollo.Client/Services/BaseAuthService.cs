@@ -1,4 +1,7 @@
-﻿using De.HDBW.Apollo.Client.Contracts;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using Microsoft.Identity.Client;
 
@@ -16,7 +19,7 @@ namespace De.HDBW.Apollo.Client.Services
         public Task<AuthenticationResult?> SignInInteractively(CancellationToken cancellationToken)
         {
             return _authenticationClient
-                    .AcquireTokenInteractive(Constants.Scopes)
+                    .AcquireTokenInteractive(B2CConstants.Scopes)
 #if WINDOWS
                     .WithUseEmbeddedWebView(false)
 #endif
@@ -27,14 +30,14 @@ namespace De.HDBW.Apollo.Client.Services
         {
             try
             {
-                var accounts = await _authenticationClient.GetAccountsAsync(Constants.SignInPolicy);
+                var accounts = await _authenticationClient.GetAccountsAsync(B2CConstants.SignInPolicy);
                 var firstAccount = accounts.FirstOrDefault();
                 if (firstAccount is null)
                 {
                     return null;
                 }
 
-                return await _authenticationClient.AcquireTokenSilent(Constants.Scopes, firstAccount).ExecuteAsync(cancellationToken);
+                return await _authenticationClient.AcquireTokenSilent(B2CConstants.Scopes, firstAccount).ExecuteAsync(cancellationToken);
             }
             catch (MsalUiRequiredException)
             {
