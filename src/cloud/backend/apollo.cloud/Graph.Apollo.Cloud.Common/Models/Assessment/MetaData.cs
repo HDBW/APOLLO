@@ -17,10 +17,10 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
         [DataMember(Order = 2, IsRequired = true)]
         public long Ticks { get; set; }
 
-        [DataMember(Order = 2)]
+        [DataMember(Order = 3)]
         public MetaDataType Type { get; set; }
 
-        [DataMember(Order=3)]
+        [DataMember(Order=4)]
         public string Value { get; set; }
     }
 }
