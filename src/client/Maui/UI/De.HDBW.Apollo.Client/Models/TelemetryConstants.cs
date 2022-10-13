@@ -9,6 +9,8 @@ namespace De.HDBW.Apollo.Client.Models
 
         public static TelemetryConfiguration Configuration { get; private set; } = TelemetryConfiguration.CreateDefault();
 
+        public static string SessionId { get; set; } = Guid.NewGuid().ToString();
+
         public static void ApplySecrets(UserSecretsService userSecretsService)
         {
             try
