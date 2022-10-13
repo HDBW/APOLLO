@@ -498,6 +498,89 @@ namespace ApolloProtobufTests
             //Assert.IsTrue(deserializedAssessment.Questions[0].MetaDataMetaDataRelations.Count.Equals(ass.Questions[0].MetaDataMetaDataRelations.Count));
         }
 
+        /// <summary>
+        /// Usecase Rating
+        /// </summary>
+        [Test]
+        public void ShouldGenerateRatingAssessment()
+        {
+            SetUp();
+            List<MetaData> questionsMetaData = new();
+            List<AnswerItem> answerItems = new();
+            List<MetaData> answerMetaData = new();
+
+            //section question
+
+            //TODO: Verify this should be the default layout? Had we a discussion on this? That we had a special layout for this type?
+            QuestionItem questionItem = CreateQuestion(_assessment, LayoutType.Compare, LayoutType.Default, InteractionType.SingleSelect);
+
+            var indexQuestionMeta = _questionMetaData.Count;
+
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Wie gut kannst du c#?"));
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Hint, "Bitte wähle zwischen 1 - 5"));
+
+            //set
+            _questions.Add(questionItem);
+            _questionMetaData.AddRange(questionsMetaData);
+
+            foreach (MetaData md in questionsMetaData)
+            {
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(questionItem, md));
+            }
+
+            //answer section
+            var answerIndex = _answers.Count;
+            var answerMetaIndex = _answersMetaData.Count;
+
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Integer, null));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Text, "Lesen."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Integer, null));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Text, "Schreiben."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Integer, null));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Text, "Verstehen."));
+
+            _answers.AddRange(answerItems);
+            _answersMetaData.AddRange(answerMetaData);
+
+            long count = _answerMetaDataRelations.Count;
+            int c = 0;
+
+            foreach (AnswerItem item in answerItems)
+            {
+                _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(count++, item.Id, answerMetaData[c].Id));
+                c++;
+            }
+
+            //wrap the thing up in fancy wrapping paper
+            Assessment ass = AssessmentWrapper();
+
+            string filename = "SelectionAssessment.bin";
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            using (var file = File.Create(filename))
+            {
+                Serializer.Serialize(file, ass);
+                file.Close();
+            }
+
+            Assessment deserializedAssessment;
+
+            using (var file = File.OpenRead(filename))
+            {
+                deserializedAssessment = Serializer.Deserialize<Assessment>(file);
+                file.Close();
+            }
+
+            //TODO: Create overlaod for Assessment to check Equals
+            Assert.IsTrue(deserializedAssessment.Questions.Count > 0);
+
+            //Assert.IsTrue(deserializedAssessment.Questions[0].MetaDataMetaDataRelations.Count.Equals(ass.Questions[0].MetaDataMetaDataRelations.Count));
+        }
+
         //Helper
         private void SetUp()
         {
