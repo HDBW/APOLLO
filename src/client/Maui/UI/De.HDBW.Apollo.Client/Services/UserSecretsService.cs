@@ -8,14 +8,13 @@ namespace De.HDBW.Apollo.Client.Services
     {
         private const string UserSecretsFileName = "secrets.json";
 
-        private IConfigurationRoot _config;
+        private IConfigurationRoot? _config;
 
-        public UserSecretsService(ILogger<UserSecretsService>? logger)
+        public UserSecretsService()
         {
-            Logger = logger;
         }
 
-        private ILogger<UserSecretsService>? Logger { get; }
+        public ILogger? Logger { get; set; }
 
         public string? this[string name]
         {
