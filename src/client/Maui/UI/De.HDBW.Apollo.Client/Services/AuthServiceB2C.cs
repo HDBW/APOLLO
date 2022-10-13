@@ -1,4 +1,7 @@
-﻿using Microsoft.Identity.Client;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using Microsoft.Identity.Client;
 
 namespace De.HDBW.Apollo.Client.Services
 {

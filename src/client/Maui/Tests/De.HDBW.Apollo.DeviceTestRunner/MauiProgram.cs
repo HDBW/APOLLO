@@ -1,4 +1,7 @@
-﻿using Xunit.Runners.Maui;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using Xunit.Runners.Maui;
 
 namespace De.HDBW.Apollo.DeviceTestRunner
 {

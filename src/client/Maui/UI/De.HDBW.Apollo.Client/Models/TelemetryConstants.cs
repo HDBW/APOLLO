@@ -1,4 +1,7 @@
-﻿using De.HDBW.Apollo.Client.Services;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using De.HDBW.Apollo.Client.Services;
 using Microsoft.ApplicationInsights.Extensibility;
 
 namespace De.HDBW.Apollo.Client.Models

@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;

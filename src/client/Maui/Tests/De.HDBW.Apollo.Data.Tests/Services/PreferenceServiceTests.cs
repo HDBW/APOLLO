@@ -1,3 +1,6 @@
+// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.Data.Tests.Extensions;
 using Microsoft.Extensions.Logging;
