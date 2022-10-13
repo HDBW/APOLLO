@@ -1,7 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-using Graph.Apollo.Cloud.Common.Models;
+﻿
+using Graph.Apollo.Cloud.Common.Models.Assessment;
+using Graph.Apollo.Cloud.Common.Models.Taxonomy;
 using Grpc.Core;
 using Grpc.Net.Client;
 using ProtoBuf.Grpc.Client;
@@ -15,8 +14,10 @@ class Program
         {
             var service = http.CreateGrpcService<IAssessmentService>();
 
-            AssessmentRequest assessmentrequest = new AssessmentRequest();
-            assessmentrequest.Title = "1";
+            Occupation occ = new();
+            occ.Schema = "http://data.europa.eu/esco/occupation/a10eb17a-3c78-4f7a-a1da-8f31146339d3";
+
+            AssessmentRequest assessmentrequest = new() { Occupation = occ};
 
             var response = await service.GetAssessmentsAsync(assessmentrequest);
             Console.WriteLine(response.Assessments.Count);
@@ -26,3 +27,4 @@ class Program
         Console.ReadLine();
     }
 }
+
