@@ -13,5 +13,8 @@ namespace Graph.Apollo.Cloud.Common.Models.Taxonomy
 
         [DataMember(Order = 2)]
         public string Name { get; set; }
+
+        [DataMember(Order = 3)]
+        public string Schema { get; set; }
     }
 }

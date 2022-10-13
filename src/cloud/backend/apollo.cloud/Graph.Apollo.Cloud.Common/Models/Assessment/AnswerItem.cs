@@ -24,9 +24,6 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
         public AnswerType AnswerType { get; set; }
 
         [DataMember(Order = 5, IsRequired = true)]
-        public bool CorrectAnswer { get; set; }
-
-        [DataMember(Order = 6, IsRequired = true)]
         public string Value { get; set; }
     }
 }

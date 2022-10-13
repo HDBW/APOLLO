@@ -13,6 +13,7 @@ namespace Graph.Apollo.Cloud.Common.Models.Taxonomy
     [DataContract]
     public class Skill
     {
-        
+        [DataMember(Order = 1)]
+        public string Schema { get; set; }
     }
 }
