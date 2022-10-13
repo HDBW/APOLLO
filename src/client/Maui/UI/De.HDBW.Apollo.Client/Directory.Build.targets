@@ -9,44 +9,36 @@
     <MacManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\MacCatalyst\Info.plist</MacManifestFile>
     <MacManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/MacCatalyst/Info.plist</MacManifestFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JsonPeek" Version="1.1.9" />
+  </ItemGroup>
+
   <UsingTask
-          TaskName="InsertSecrets"
+          TaskName="ReplaceFileText"
           TaskFactory="RoslynCodeTaskFactory"
           AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
     <ParameterGroup>
       <InputFilename ParameterType="System.String" Required="true" />
       <OutputFilename ParameterType="System.String" Required="true" />
-      <SecretsFilename ParameterType="System.String" Required="true" />
       <MatchExpression ParameterType="System.String" Required="true" />
+      <ReplacementText ParameterType="System.String" Required="true" />
     </ParameterGroup>
     <Task>
-      <Reference Include="System.Text.Json" />
-      <Reference Include="System.Memory" />
       <Using Namespace="System" />
       <Using Namespace="System.IO" />
-      <Using Namespace="System.Text.Json" />
       <Using Namespace="System.Text.RegularExpressions" />
-      <Using Namespace="System.Collections.Generic" />
-      <Code>
+      <Code Type="Fragment" Language="cs">
         <![CDATA[
-           try{
-                using(var reader = new StreamReader(SecretsFilename))
-                {
-                  var dict = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(reader.BaseStream);
-                  var clientId = dict["ClientId"];
-                  File.WriteAllText(
-                    OutputFilename,
-                    Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, clientId)
-                    );
-                }
-           }catch(Exception ex){
-                Console.WriteLine(ex);
-                throw;
-           }
-                     ]]>
+            File.WriteAllText(
+                OutputFilename,
+                Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, ReplacementText)
+                );
+          ]]>
       </Code>
     </Task>
   </UsingTask>
+  
   <Target Name="AddUserSecrets"
          BeforeTargets="PrepareForBuild"
          Condition=" '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
@@ -61,34 +53,47 @@
          Condition=" '$(TargetFramework)' == 'net6.0-android' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
 
-    <InsertSecrets
+    <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
+      <Output TaskParameter="Result" PropertyName="ClientId" />
+    </JsonPeek>
+
+    <ReplaceFileText
       InputFilename="$(AndroidManifestFile)"
       OutputFilename="$(AndroidManifestFile)"
-      SecretsFilename="$(UserSecretsFilePath)"
-      MatchExpression="YOUR_CLIENT_ID_HERE" />
+      MatchExpression="YOUR_CLIENT_ID_HERE"
+      ReplacementText="$(ClientId)" />
   </Target>
   
   <Target Name="TransformManifest-iOS"
          BeforeTargets="PrepareForBuild"
          Condition=" '$(TargetFramework)' == 'net6.0-ios' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
+    
+    <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
+      <Output TaskParameter="Result" PropertyName="ClientId" />
+    </JsonPeek>
 
-    <InsertSecrets
-      InputFilename="$(IOSManifestFile)"
-      OutputFilename="$(IOSManifestFile)"
-      SecretsFilename="$(UserSecretsFilePath)"
-      MatchExpression="YOUR_CLIENT_ID_HERE" />  
+    <ReplaceFileText
+     InputFilename="$(IOSManifestFile)"
+     OutputFilename="$(IOSManifestFile)"
+     MatchExpression="YOUR_CLIENT_ID_HERE"
+     ReplacementText="$(ClientId)" />
+    
   </Target>
   
   <Target Name="TransformManifest-Mac"
          BeforeTargets="PrepareForBuild"
          Condition=" '$(TargetFramework)' == 'net6.0-maccatalyst' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
+    <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
+      <Output TaskParameter="Result" PropertyName="ClientId" />
+    </JsonPeek>
+
+    <ReplaceFileText
+     InputFilename="$(MacManifestFile)"
+     OutputFilename="$(MacManifestFile)"
+     MatchExpression="YOUR_CLIENT_ID_HERE"
+     ReplacementText="$(ClientId)" />
     
-    <InsertSecrets
-      InputFilename="$(MacManifestFile)"
-      OutputFilename="$(MacManifestFile)"
-      SecretsFilename="$(UserSecretsFilePath)"
-      MatchExpression="YOUR_CLIENT_ID_HERE" />
   </Target>
 </Project>
