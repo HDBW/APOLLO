@@ -19,7 +19,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             AuthService = authService;
         }
 
-        private IAuthService AuthService { get; set; }
+        private IAuthService AuthService { get; }
 
         protected override void RefreshCommands()
         {
