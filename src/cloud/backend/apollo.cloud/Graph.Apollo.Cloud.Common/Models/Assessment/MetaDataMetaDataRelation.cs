@@ -21,7 +21,7 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
         [ForeignKey(nameof(MetaData))]
         public long SourceId { get; set; }
 
-        [DataMember(Order = 3)]
+        [DataMember(Order = 4)]
         [ForeignKey(nameof(MetaData))]
         public long TargetId { get; set; }
     }
