@@ -7,5 +7,7 @@
         IsFirstTime,
 
         DontShowAgain,
+
+        AllowTelemetry,
     }
 }

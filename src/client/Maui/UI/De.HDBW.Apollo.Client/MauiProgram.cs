@@ -7,11 +7,18 @@ using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
+using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Services;
-using Microsoft.Extensions.Logging;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Identity.Client;
 using Serilog;
+using Serilog.Configuration;
+using Serilog.Core;
+using Serilog.Events;
+using Serilog.Sinks.ApplicationInsights;
+using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace De.HDBW.Apollo.Client;
@@ -20,9 +27,10 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        SetupLogging();
-        builder.Logging.AddSerilog(dispose: true);
         SetupSecrets(builder.Services);
+        SetupLogging();
+        builder.Logging.AddSerilog(Log.Logger, dispose: true);
+
         Log.Information($"---------------------------------------- Application started at {DateTime.Now} ------------------------------------------");
         Log.Debug($"Model: {DeviceInfo.Current.Model}");
         Log.Debug($"Manufacturer: {DeviceInfo.Current.Manufacturer}");
@@ -50,10 +58,11 @@ public static class MauiProgram
 
     private static IUserSecretsService SetupSecrets(IServiceCollection services)
     {
-        var userSecretsService = new UserSecretsService(services.BuildServiceProvider().GetService<ILogger<UserSecretsService>>());
+        var userSecretsService = new UserSecretsService();
         userSecretsService.LoadSecrets();
         services.AddSingleton<IUserSecretsService>(userSecretsService);
         B2CConstants.ApplySecrets(userSecretsService);
+        TelemetryConstants.ApplySecrets(userSecretsService);
         return userSecretsService;
     }
 
@@ -88,6 +97,8 @@ public static class MauiProgram
             }
         }
 
+        var session = TelemetryConstants.Configuration;
+
         Log.Logger = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
@@ -98,7 +109,31 @@ public static class MauiProgram
                 .MinimumLevel.Debug()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug, retainedFileCountLimit: 20)
 #endif
+                .WriteTo.Conditional(IsTelemetryEnable, wt => wt.UseApplicationInsights(TelemetryConstants.Configuration, TelemetryConverter.Traces))
                 .CreateLogger();
+    }
+
+    private static LoggerConfiguration UseApplicationInsights(this LoggerSinkConfiguration loggerConfiguration, TelemetryConfiguration telemetryConfiguration, ITelemetryConverter telemetryConverter, LogEventLevel restrictedToMinimumLevel = LogEventLevel.Verbose, LoggingLevelSwitch? levelSwitch = null)
+    {
+        var telemetryClient = new TelemetryClient(telemetryConfiguration);
+        telemetryClient = new TelemetryClient(TelemetryConstants.Configuration);
+        telemetryClient.Context.Device.OemName = DeviceInfo.Manufacturer;
+        telemetryClient.Context.Device.Model = DeviceInfo.Current.Model;
+        telemetryClient.Context.Device.Type = DeviceInfo.Current.DeviceType.ToString();
+        telemetryClient.Context.Device.OperatingSystem = DeviceInfo.Current.Platform.ToString();
+        telemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
+        return loggerConfiguration.Sink(new ApplicationInsightsSink(telemetryClient, telemetryConverter), restrictedToMinimumLevel, levelSwitch);
+    }
+
+    // TODO: Show dialog to get permission or if not needed return true,
+    private static bool IsTelemetryEnable(LogEvent arg)
+    {
+        if (!Preferences.Default.ContainsKey(Preference.AllowTelemetry.ToString()))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private static void SetupServices(IServiceCollection services)
