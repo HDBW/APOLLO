@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using Graph.Apollo.Cloud.Common.Models.Assessment;
 using Graph.Apollo.Cloud.Common.Models.Assessment.Enums;
 using Graph.Apollo.Cloud.Common.Models.Taxonomy;
+using Grpc.Core;
 using ProtoBuf;
 
 namespace ApolloProtobufTests
@@ -91,7 +92,6 @@ namespace ApolloProtobufTests
             _metaDatas.Add(data);
             _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(_answerMetaDataRelations.Count + 1, answer.Id, data.Id));
 
-            //TODO: Deserialize
             //In order to deserialize the data we need to wrap it in assessment class.
             Assessment assessment = new();
             assessment.Value = _assessment;
@@ -227,7 +227,288 @@ namespace ApolloProtobufTests
         [Test]
         public void ShouldGenerateChoiceAssessment()
         {
+            SetUp();
+            List<MetaData> questionsMetaData = new();
+            List<AnswerItem> answerItems = new();
+            List<MetaData> answerMetaData = new();
+
+            //section question
+
+            QuestionItem questionItem = CreateQuestion(_assessment,LayoutType.Default,LayoutType.UniformGrid,InteractionType.MultiSelect);
+
+            var indexQuestionMeta = _questionMetaData.Count;
+
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Du säuberst die Beete eurer Kunden von Unkraut. Welche Pflansen entfernst du nicht?"));
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Bitte wähle 1 bis 3 Antworten aus."));
+
+            _questions.Add(questionItem);
+            _questionMetaData.AddRange(questionsMetaData);
+
+            foreach (MetaData md in questionsMetaData)
+            {
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(questionItem, md));
+            }
+
+            //answer section
+            var answerIndex = _answers.Count;
+            var answerMetaIndex = _answersMetaData.Count;
+
+            answerItems.Add(CreateAnswer(answerIndex++,questionItem,AnswerType.Boolean,true.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex,MetaDataType.Image, "DeutscheHecke.jpg"));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, true.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Grünzeugs.jpg"));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Salbei.jpg"));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Minze.jpg"));
+
+            _answers.AddRange(answerItems);
+            _answersMetaData.AddRange(answerMetaData);
+
+            long count = _answerMetaDataRelations.Count;
+            int c = 0;
+
+            foreach (AnswerItem item in answerItems)
+            {
+                _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(count++, item.Id, answerMetaData[c].Id));
+                c++;
+            }
+
+            //wrap the thing up in fancy wrapping paper
+            Assessment ass = AssessmentWrapper();
+
+            string filename = "ImagemapAssessment.bin";
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            using (var file = File.Create(filename))
+            {
+                Serializer.Serialize(file, ass);
+                file.Close();
+            }
+
+            Assessment deserializedAssessment;
+
+            using (var file = File.OpenRead(filename))
+            {
+                deserializedAssessment = Serializer.Deserialize<Assessment>(file);
+                file.Close();
+            }
+
+            //TODO: Create overlaod for Assessment to check Equals
+            Assert.IsTrue(deserializedAssessment.Questions.Count.Equals(ass.Questions.Count));
+        }
+
+        /// <summary>
+        /// Usecase Choice
+        /// </summary>
+        [Test]
+        public void ShouldGenerateChoiceScenario2Assessment()
+        {
+            SetUp();
+            List<MetaData> questionsMetaData = new();
+            List<AnswerItem> answerItems = new();
+            List<MetaData> answerMetaData = new();
+
+            //section question
+
+            //TODO: Verify this should be the default layout? Had we a discussion on this? That we had a special layout for this type?
+            QuestionItem questionItem = CreateQuestion(_assessment, LayoutType.Default, LayoutType.Default, InteractionType.MultiSelect);
+
+            var indexQuestionMeta = _questionMetaData.Count;
+
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Bitte wähle 1 bis 3 Antworten aus."));
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Lieferschein.jpg"));
+
+            _questions.Add(questionItem);
+            _questionMetaData.AddRange(questionsMetaData);
+
+            foreach (MetaData md in questionsMetaData)
+            {
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(questionItem, md));
+            }
+
+            //answer section
+            var answerIndex = _answers.Count;
+            var answerMetaIndex = _answersMetaData.Count;
+
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, true.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde zu wenig geliefert."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, true.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde etwas nicht geliefert."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde etwas Falsches geliefert."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde zu viel geliefert."));
+
+            _answers.AddRange(answerItems);
+            _answersMetaData.AddRange(answerMetaData);
+
+            long count = _answerMetaDataRelations.Count;
+            int c = 0;
+
+            foreach (AnswerItem item in answerItems)
+            {
+                _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(count++, item.Id, answerMetaData[c].Id));
+                c++;
+            }
+
+            //wrap the thing up in fancy wrapping paper
+            Assessment ass = AssessmentWrapper();
+
+            string filename = "Choice2Assessment.bin";
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            using (var file = File.Create(filename))
+            {
+                Serializer.Serialize(file, ass);
+                file.Close();
+            }
+
+            Assessment deserializedAssessment;
+
+            using (var file = File.OpenRead(filename))
+            {
+                deserializedAssessment = Serializer.Deserialize<Assessment>(file);
+                file.Close();
+            }
+
+            //TODO: Create overlaod for Assessment to check Equals
+            Assert.IsTrue(deserializedAssessment.Questions.Count.Equals(ass.Questions.Count));
+        }
+
+        /// <summary>
+        /// Usecase Choice 3 with labeled MetaData
+        /// </summary>
+        [Test]
+        public void ShouldGenerateChoiceScenario3Assessment()
+        {
+            SetUp();
+            List<MetaData> questionsMetaData = new();
+            List<AnswerItem> answerItems = new();
+            List<MetaData> answerMetaData = new();
+
+            //section question
+
+            //TODO: Verify this should be the default layout? Had we a discussion on this? That we had a special layout for this type?
+            QuestionItem questionItem = CreateQuestion(_assessment, LayoutType.Compare, LayoutType.Default, InteractionType.MultiSelect);
+
+            var indexQuestionMeta = _questionMetaData.Count;
+
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
+            questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Bitte wähle 1 bis 3 Antworten aus."));
+            long metaDataTarget = indexQuestionMeta++;
+            questionsMetaData.Add(CreateMetaData(metaDataTarget, MetaDataType.Text, "Lieferschein.jpg"));
             
+            long metaDataIndex = _metaDatas.Count + 1;
+            _metaDatas.Add(CreateMetaData(metaDataIndex, MetaDataType.Text,"Lieferschein"));
+
+            MetaDataMetaDataRelation mdmdr = new()
+                {
+                    Id = _metaDataMetaDataRelations.Count + 1, SourceId = metaDataIndex, TargetId = metaDataTarget,
+                    Ticks = DateTime.Now.Ticks
+                };
+
+            _metaDataMetaDataRelations.Add(mdmdr);
+
+            metaDataTarget = indexQuestionMeta++;
+            questionsMetaData.Add(CreateMetaData(metaDataTarget, MetaDataType.Image, "Bestellbestaetigung.jpg"));
+
+            metaDataIndex = _metaDatas.Count + 1;
+            _metaDatas.Add(CreateMetaData(metaDataIndex, MetaDataType.Text, "Bestellbestätigung"));
+
+            mdmdr = new()
+            {
+                Id = _metaDataMetaDataRelations.Count + 1,
+                SourceId = metaDataIndex,
+                TargetId = metaDataTarget,
+                Ticks = DateTime.Now.Ticks
+            };
+
+            _metaDataMetaDataRelations.Add(mdmdr);
+
+            _questions.Add(questionItem);
+            _questionMetaData.AddRange(questionsMetaData);
+
+            foreach (MetaData md in questionsMetaData)
+            {
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(questionItem, md));
+            }
+
+            //answer section
+            var answerIndex = _answers.Count;
+            var answerMetaIndex = _answersMetaData.Count;
+
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, true.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde zu wenig geliefert."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, true.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde etwas nicht geliefert."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde etwas Falsches geliefert."));
+            answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Es wurde zu viel geliefert."));
+
+            _answers.AddRange(answerItems);
+            _answersMetaData.AddRange(answerMetaData);
+
+            long count = _answerMetaDataRelations.Count;
+            int c = 0;
+
+            foreach (AnswerItem item in answerItems)
+            {
+                _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(count++, item.Id, answerMetaData[c].Id));
+                c++;
+            }
+
+            //wrap the thing up in fancy wrapping paper
+            Assessment ass = AssessmentWrapper();
+
+            string filename = "Choice3Assessment.bin";
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            using (var file = File.Create(filename))
+            {
+                Serializer.Serialize(file, ass);
+                file.Close();
+            }
+
+            Assessment deserializedAssessment;
+
+            using (var file = File.OpenRead(filename))
+            {
+                deserializedAssessment = Serializer.Deserialize<Assessment>(file);
+                file.Close();
+            }
+
+            //TODO: Create overlaod for Assessment to check Equals
+            Assert.IsTrue(deserializedAssessment.Questions.Count>0);
+
+            //Assert.IsTrue(deserializedAssessment.Questions[0].MetaDataMetaDataRelations.Count.Equals(ass.Questions[0].MetaDataMetaDataRelations.Count));
+        }
+
+        //Helper
+        private void SetUp()
+        {
+            _questions = new();
+            _answers = new();
+            _questionMetaDataRelations = new();
+            _answerMetaDataRelations = new();
+            _metaDataMetaDataRelations = new();
+            _answersMetaData = new();
+            _questionMetaData = new();
+            _metaDatas = new();
         }
 
         //Helper
@@ -271,8 +552,10 @@ namespace ApolloProtobufTests
                         AnswerMetaDatas = _answersMetaData,
                         AnswerMetaDataRelations = _answerMetaDataRelations,
                         QuestionMetaDataRelations = _questionMetaDataRelations,
-                        QuestionsMetaDatas = _questionMetaData
+                        QuestionsMetaDatas = _questionMetaData,
+                        MetaDataMetaDataRelations = _metaDataMetaDataRelations
                     };
+                questions.Add(q);
             }
 
             return questions;
