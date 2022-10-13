@@ -9,5 +9,6 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment.Enums
         Associate = 1,
         MultiSelect = 2,
         SingleSelect = 3,
+        Input = 4
     }
 }

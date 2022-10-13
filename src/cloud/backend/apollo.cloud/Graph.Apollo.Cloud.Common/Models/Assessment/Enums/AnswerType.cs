@@ -10,7 +10,6 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment.Enums
         String = 2,
         Integer = 3,
         Location = 4,
-        Long = 5,
-        TextInput = 6
+        Long = 5
     }
 }
