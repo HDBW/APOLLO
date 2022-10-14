@@ -5,6 +5,8 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface IDispatcherService
     {
+        void BeginInvokeOnMainThread(Action action);
+
         Task ExecuteOnMainThreadAsync(Func<Task> action, CancellationToken token);
 
         Task<TU> ExecuteOnMainThreadAsync<TU>(Func<Task<TU>> action, CancellationToken token);

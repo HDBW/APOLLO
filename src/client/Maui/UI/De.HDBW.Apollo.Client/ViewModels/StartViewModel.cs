@@ -27,7 +27,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             PreferenceService = preferenceService;
-            var data = new NavigationData(Routes.AssessmentView, null);
+
+            // TODO: Remove when we have data.
+            var assemsmentData = new NavigationParameters();
+            assemsmentData.AddValue<long?>(NavigationParameter.Id, 1);
+            var data = new NavigationData(Routes.AssessmentView, assemsmentData);
+
             Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, data, HandleInteract, CanHandleInteract));
             Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, null, HandleInteract, CanHandleInteract));
             Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, null, HandleInteract, CanHandleInteract));
@@ -54,31 +59,30 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenSettings), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task OpenSettings(CancellationToken token)
         {
-            try
+            using (var work = ScheduleWork(token))
             {
-                IsBusy = true;
-                var parameters = new NavigationParameters();
-                parameters.AddValue(NavigationParameter.Id, 0);
-                parameters.AddValue(NavigationParameter.Unknown, "Test");
-                await NavigationService.NavigateAsnc(Routes.EmptyView, token, parameters);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in OpenSettings in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                try
                 {
-                    IsBusy = false;
+                    var parameters = new NavigationParameters();
+                    parameters.AddValue(NavigationParameter.Id, 0);
+                    parameters.AddValue(NavigationParameter.Unknown, "Test");
+                    await NavigationService.NavigateAsnc(Routes.EmptyView, token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown Error in OpenSettings in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(work);
                 }
             }
         }

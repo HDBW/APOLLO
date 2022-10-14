@@ -33,28 +33,27 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
-            IsBusy = true;
-            try
+            using (var worker = ScheduleWork(token))
             {
-                await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                try
                 {
-                    IsBusy = false;
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled Skip in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled Skip in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
         }
@@ -67,40 +66,38 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
-            IsBusy = true;
-            try
+            using (var worker = ScheduleWork(token))
             {
-                var x = await AuthService.AcquireTokenSilent(token);
-                if (x != null)
+                try
                 {
-                    await AuthService.LogoutAsync(token);
+                    var x = await AuthService.AcquireTokenSilent(worker.Token);
+                    if (x != null)
+                    {
+                        await AuthService.LogoutAsync(worker.Token);
+                    }
+
+                    var result = await AuthService.SignInInteractively(worker.Token);
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, worker.Token);
                 }
-
-                var result = await AuthService.SignInInteractively(token);
-
-                await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled Register in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled Register in {GetType()}.");
-            }
-            catch (MsalException ex)
-            {
-                Logger?.LogWarning(ex, $"Error while registering user in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in Register in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                catch (OperationCanceledException)
                 {
-                    IsBusy = false;
+                    Logger?.LogDebug($"Canceled Register in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled Register in {GetType()}.");
+                }
+                catch (MsalException ex)
+                {
+                    Logger?.LogWarning(ex, $"Error while registering user in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown Error in Register in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
         }

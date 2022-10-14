@@ -28,28 +28,27 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
-            IsBusy = true;
-            try
+            using (var worker = ScheduleWork(token))
             {
-                await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                try
                 {
-                    IsBusy = false;
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled Skip in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled Skip in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
         }

@@ -5,7 +5,7 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
     /// <summary>
     /// Data Contract for client local database store
     /// </summary>
-    internal interface IEntity
+    public interface IEntity
     {
         [Key]
         public long Id { get; set; }
