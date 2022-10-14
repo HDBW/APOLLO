@@ -1,9 +1,7 @@
-
 using System.Reflection;
 using ProtoBuf.Grpc.Configuration;
-using ProtoBuf.Meta;
 
-namespace Graph.Apollo.Cloud.Assessment;
+namespace Invite.Apollo.App.Graph.Assessment;
 
 public class ServiceBinderWithServiceResolutionFromServiceCollection : ServiceBinder
 {

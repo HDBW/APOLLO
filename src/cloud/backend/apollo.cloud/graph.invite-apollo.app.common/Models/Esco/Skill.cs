@@ -7,17 +7,9 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Esco
 {
-    public class Skill : IEntity
+    [DataContract]
+    public class Skill
     {
-        public long Id { get; set; }
-        public long Ticks { get; set; }
-
-        public string EscoId { get; set; }
-
-        public string Version { get; set; }
-
-        [DataMember(Order = 5, IsRequired = true)]
-        [ForeignKey(nameof(AssessmentItem))]
-        public long AssessmentId { get; set; }
+        //TODO: Define Scope Dezember of Skill
     }
 }

@@ -18,6 +18,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public MetaDataType Type { get; set; }
 
         [DataMember(Order = 4)]
-        public string Value { get; set; }
+        public string? Value { get; set; }
     }
 }
