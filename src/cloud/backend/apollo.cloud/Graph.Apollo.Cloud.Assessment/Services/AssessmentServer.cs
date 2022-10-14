@@ -1,9 +1,7 @@
-
-
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
-using Invite.Apollo.App.Graph.Common.Models.Esco;
+using ProtoBuf.Grpc;
 
-namespace Graph.Apollo.Cloud.Assessment.Services;
+namespace Invite.Apollo.App.Graph.Assessment.Services;
 
 public class AssessmentService : IAssessmentService
 {
@@ -14,15 +12,22 @@ public class AssessmentService : IAssessmentService
         _logger = logger;
     }
 
-    ValueTask<AssessmentResult> IAssessmentService.GetAssessmentsAsync(AssessmentRequest request)
-    {
-        var result = new AssessmentResult {Assessments = new List<Common.Models.Assessment.Assessment>
-            {
-                new Common.Models.Assessment.Assessment(){Value = new AssessmentItem(){Id = 0,Ticks = DateTime.Now.Ticks, Title = "Hello 1"},Occupation = new Occupation(){Id = 1,Name = "Landschaftsshit",Schema = "http://data.europa.eu/esco/occupation/a10eb17a-3c78-4f7a-a1da-8f31146339d3"}},
-                new Common.Models.Assessment.Assessment(){Value = new AssessmentItem(){Id = 0,Ticks = DateTime.Now.Ticks, Title = "Hello 3"},Occupation = new Occupation(){Id = 1,Name = "Landschaftsshit",Schema = "http://data.europa.eu/esco/occupation/a10eb17a-3c78-4f7a-a1da-8f31146339d3"}},
-                new Common.Models.Assessment.Assessment(){Value = new AssessmentItem(){Id = 0,Ticks = DateTime.Now.Ticks, Title = "Hello 2"},Occupation = new Occupation(){Id = 1,Name = "Landschaftsshit",Schema = "http://data.europa.eu/esco/occupation/a10eb17a-3c78-4f7a-a1da-8f31146339d3"}},
-            }
-        };
-        return new ValueTask<AssessmentResult>(result);
-    }
+
+    public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request) => throw new NotImplementedException();
+
+    public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CallContext context = default) => throw new NotImplementedException();
+
+    public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+    public ValueTask<AnswerResponse> GetAnswersAsync(AssessmentRequest request) => throw new NotImplementedException();
+
+    public ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request, CallContext context = default) => throw new NotImplementedException();
+
+    public ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+    public ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request) => throw new NotImplementedException();
+
+    public ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request, CallContext context = default) => throw new NotImplementedException();
+
+    public ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
 }

@@ -36,7 +36,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     public class QuestionRequest : ICorrelationId
     {
         [DataMember(Order=1,IsRequired = true)]
-        public string CorrelationId { get; set; }
+        public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
         [ForeignKey(nameof(AssessmentItem))]
@@ -55,8 +55,15 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     [DataContract]
     public class QuestionResponse : ICorrelationId
     {
+        public QuestionResponse()
+        {
+            Questions = new List<QuestionItem>();
+            QuestionMetadata = new List<MetaData>();
+            MetaDataMetaDataRelation = new List<MetaData>();
+        }
+
         [DataMember(Order=1, IsRequired = true)]
-        public string CorrelationId { get; set; }
+        public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
         public List<QuestionItem> Questions { get; set; }

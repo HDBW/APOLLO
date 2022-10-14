@@ -10,12 +10,15 @@ namespace Invite.Apollo.App.Graph.Common.Models.Esco
     [DataContract]
     public class Occupation : IEntity
     {
+        #region Client Stuff goes here
+
         public long Id { get; set; }
         public long Ticks { get; set; }
 
-        public string EscoId { get; set; }
+        #endregion
 
-        public string Version { get; set; }
+
+        //TODO: Implement Dezember Scope
 
         //TODO: Implement Assessment Relation
     }

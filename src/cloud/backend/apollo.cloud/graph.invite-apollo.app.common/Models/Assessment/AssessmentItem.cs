@@ -9,6 +9,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     [DataContract]
     public class AssessmentItem : IEntity
     {
+        public AssessmentItem()
+        {
+            Occupations = new List<Occupation>();
+            Skills = new List<Skill>();
+        }
+
         /// <summary>
         /// Indicates unique Identifier for client database
         /// </summary>
@@ -22,8 +28,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 2)]
         public long Ticks { get; set; }
 
-        [DataMember(Order = 3)]
-        public string Title { get; set; }
+        [DataMember(Order = 3)] public string Title { get; set; } = null!;
 
         [DataMember(Order = 4)]
         public List<Occupation> Occupations { get; set; }
@@ -35,30 +40,39 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     [DataContract]
     public class AssessmentRequest : ICorrelationId
     {
-        [DataMember(Order = 1,IsRequired = true)]
-        public string CorrelationId { get; set; }
+        [DataMember(Order = 1, IsRequired = true)]
+        public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
-        public long AssessmentId { get; set; }
+        public long? AssessmentId { get; set; }
 
         [DataMember(Order = 3)]
-        public string EscoOccupationId { get; set; }
+        public string? EscoOccupationId { get; set; }
 
         [DataMember(Order = 4)]
-        public long Ticks { get; set; }
+        public long? Ticks { get; set; }
 
-        //[DataMember(Order = 3)]
-        //public CultureInfo CultureInfo { get; set; }
+        [DataMember(Order=5)]
+        public CultureInfo? CultureInfo { get; set; }
     }
 
     [DataContract]
     public class AssessmentResponse : ICorrelationId
     {
-        [DataMember(Order = 1,IsRequired = true)]
-        public string CorrelationId { get; set; }
+        public AssessmentResponse()
+        {
+            Assessments = new List<AssessmentItem>();
+        }
+
+        [DataMember(Order = 1, IsRequired = true)]
+        public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
         public List<AssessmentItem> Assessments { get; set; }
+
+        //TODO: Add Occupation
+
+        //TODO: Add Skills
     }
 
 }
