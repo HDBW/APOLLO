@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using System.Collections.ObjectModel;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -57,22 +58,22 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     {
         public QuestionResponse()
         {
-            Questions = new List<QuestionItem>();
-            QuestionMetadata = new List<MetaData>();
-            MetaDataMetaDataRelation = new List<MetaData>();
+            Questions = new Collection<QuestionItem>();
+            QuestionMetadata = new Collection<MetaData>();
+            MetaDataMetaDataRelation = new Collection<MetaData>();
         }
 
         [DataMember(Order=1, IsRequired = true)]
         public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
-        public List<QuestionItem> Questions { get; set; }
+        public Collection<QuestionItem> Questions { get; set; }
 
         [DataMember(Order = 3)]
-        public List<MetaData> QuestionMetadata { get; set; }
+        public Collection<MetaData> QuestionMetadata { get; set; }
 
         [DataMember(Order = 4)]
-        public List<MetaData> MetaDataMetaDataRelation { get; set; }
+        public Collection<MetaData> MetaDataMetaDataRelation { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
@@ -11,8 +11,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     {
         public AssessmentItem()
         {
-            Occupations = new List<Occupation>();
-            Skills = new List<Skill>();
+            Occupations = new Collection<Occupation>();
+            Skills = new Collection<Skill>();
         }
 
         /// <summary>
@@ -31,10 +31,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 3)] public string Title { get; set; } = null!;
 
         [DataMember(Order = 4)]
-        public List<Occupation> Occupations { get; set; }
+        public Collection<Occupation> Occupations { get; set; }
 
         [DataMember(Order = 5)]
-        public List<Skill> Skills { get; set; }
+        public Collection<Skill> Skills { get; set; }
     }
 
     [DataContract]
@@ -61,14 +61,14 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     {
         public AssessmentResponse()
         {
-            Assessments = new List<AssessmentItem>();
+            Assessments = new Collection<AssessmentItem>();
         }
 
         [DataMember(Order = 1, IsRequired = true)]
         public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
-        public List<AssessmentItem> Assessments { get; set; }
+        public Collection<AssessmentItem> Assessments { get; set; }
 
         //TODO: Add Occupation
 
