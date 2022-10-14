@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -63,9 +64,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 5)]
         [ForeignKey(nameof(AssessmentItem))]
         public long? AssessmentId { get; set; }
-
-        [DataMember(Order = 6)]
-        public CultureInfo? CultureInfo { get; set; }
     }
 
     [DataContract]
@@ -73,26 +71,26 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     {
         public AnswerResponse()
         {
-            Answers = new List<AnswerItem>();
-            MetaData = new List<MetaData>();
-            AnswerMetaDataRelations = new List<AnswerMetaDataRelation>();
-            MetaDataMetaDataRelations = new List<MetaDataMetaDataRelation>();
+            Answers = new Collection<AnswerItem>();
+            MetaData = new Collection<MetaData>();
+            AnswerMetaDataRelations = new Collection<AnswerMetaDataRelation>();
+            MetaDataMetaDataRelations = new Collection<MetaDataMetaDataRelation>();
         }
 
         [DataMember(Order = 1, IsRequired = true)]
         public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
-        public List<AnswerItem> Answers { get; set; }
+        public Collection<AnswerItem> Answers { get; set; }
 
         [DataMember(Order = 3)]
-        public List<MetaData> MetaData { get; set; }
+        public Collection<MetaData> MetaData { get; set; }
 
         [DataMember(Order = 4)]
-        public List<AnswerMetaDataRelation> AnswerMetaDataRelations { get; set; }
+        public Collection<AnswerMetaDataRelation> AnswerMetaDataRelations { get; set; }
 
         [DataMember(Order = 5)]
-        public List<MetaDataMetaDataRelation> MetaDataMetaDataRelations { get; set; }
+        public Collection<MetaDataMetaDataRelation> MetaDataMetaDataRelations { get; set; }
     } 
 
 
