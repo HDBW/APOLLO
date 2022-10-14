@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
+    <ProjectReference Include="..\graph.invite-apollo.app.common\Invite.Apollo.App.Graph.Common.csproj" />
   </ItemGroup>
 
 </Project>

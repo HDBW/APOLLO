@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Helpers\" />
   </ItemGroup>
 
