@@ -9,9 +9,11 @@ using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Data.Helper;
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -30,6 +32,7 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        // TODO: In case we need to request permissions, set default to false and show dialog to request permissions.
         Preferences.Default.Set(Preference.AllowTelemetry.ToString(), true);
         var builder = MauiApp.CreateBuilder();
         SetupSecrets(builder.Services);
@@ -49,7 +52,8 @@ public static class MauiProgram
 
         SetupB2CLogin(builder.Services);
         SetupServices(builder.Services);
-
+        SetupRepositories(builder.Services);
+        SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseSkiaSharp()
@@ -130,7 +134,6 @@ public static class MauiProgram
         return loggerConfiguration.Sink(new ApplicationInsightsSink(telemetryClient, telemetryConverter), restrictedToMinimumLevel, levelSwitch);
     }
 
-    // TODO: Show dialog to get permission or if not needed return true,
     private static bool IsTelemetryEnable(LogEvent arg)
     {
         return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
@@ -148,7 +151,16 @@ public static class MauiProgram
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
+    }
 
+    private static void SetupRepositories(IServiceCollection services)
+    {
+        services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
+        services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
+    }
+
+    private static void SetupViewsAndViewModels(IServiceCollection services)
+    {
         services.AddSingleton<AppShell>();
         services.AddSingleton<AppShellViewModel>();
         services.AddTransient<StartView>();

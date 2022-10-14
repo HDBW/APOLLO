@@ -10,4 +10,7 @@
 		<ProjectReference Include="..\..\..\..\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
 		<ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Exceptions\" />
+	</ItemGroup>
 </Project>

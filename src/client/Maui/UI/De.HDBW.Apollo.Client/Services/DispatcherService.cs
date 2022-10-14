@@ -16,6 +16,18 @@ namespace De.HDBW.Apollo.Client.Services
 
         private ILogger Logger { get; set; }
 
+        public void BeginInvokeOnMainThread(Action action)
+        {
+            if (MainThread.IsMainThread)
+            {
+                action.Invoke();
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(action);
+            }
+        }
+
         public Task ExecuteOnMainThreadAsync(Func<Task> action, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
