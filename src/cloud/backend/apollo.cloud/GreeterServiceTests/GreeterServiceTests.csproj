@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
     <ProjectReference Include="..\Graph.Apollo.Cloud.Greeter\Graph.Apollo.Cloud.Greeter.csproj" />
   </ItemGroup>
 

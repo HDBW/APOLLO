@@ -12,8 +12,4 @@
     <PackageReference Include="protobuf-net.Grpc" Version="1.0.177" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
-  </ItemGroup>
-
 </Project>

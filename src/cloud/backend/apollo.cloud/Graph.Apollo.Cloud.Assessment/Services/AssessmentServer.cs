@@ -1,6 +1,7 @@
 
-using Graph.Apollo.Cloud.Common.Models.Assessment;
-using Graph.Apollo.Cloud.Common.Models.Taxonomy;
+
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Esco;
 
 namespace Graph.Apollo.Cloud.Assessment.Services;
 

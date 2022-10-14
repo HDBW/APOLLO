@@ -30,7 +30,7 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
         }
 
         [DataMember(Order = 2)]
-        public List<Question> Questions { get; set; }
+        public List<QuestionItem> Questions { get; set; }
 
         [DataMember(Order = 3)]
         public List<Skill> Skills { get; set; }
