@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
-using Invite.Apollo.App.Graph.Common.Models.Course.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -10,33 +11,39 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     /// Represents the Answers to a Question in a Assessment
     /// </summary>
     [DataContract]
-    public class AnswerItem : IEntity
+    public class AnswerItem : IEntity, IBackendEntity
     {
-        #region client stuff
-        /// <summary>
-        /// Id of the Answer used for local store on the client
-        /// </summary>
-        [DataMember(Order = 1, IsRequired = true)]
+        #region Implementation of IEntity
         [Key]
+        [DataMember(Order = 1)]
         public long Id { get; set; }
 
-        /// <summary>
-        /// Indicates the latest time 
-        /// </summary>
         [DataMember(Order = 2, IsRequired = true)]
         public long Ticks { get; set; }
 
         #endregion
 
+        #region Implementation of IBackendEntity
         [DataMember(Order = 3, IsRequired = true)]
+        public long BackendId { get; set; }
+
+        [DataMember(Order = 4, IsRequired = true)]
+        public Uri Schema { get; set; } = null!;
+
+        #endregion
+
+
+        [DataMember(Order = 5, IsRequired = true)]
         [ForeignKey(nameof(QuestionItem))]
         public long QuestionId { get; set; }
         
-        [DataMember(Order = 4)]
+        [DataMember(Order = 6)]
         public AnswerType AnswerType { get; set; }
 
-        [DataMember(Order = 5, IsRequired = true)]
+        [DataMember(Order = 7, IsRequired = true)]
         public string Value { get; set; } = null!;
+
+
     }
 
     [DataContract]
@@ -51,19 +58,17 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public string CorrelationId { get; set; }
 
         [DataMember(Order=2)]
-        [ForeignKey(nameof(AnswerItem))]
-        public long? AnswerId { get; set; }
+        public long? AnswerBackendId { get; set; }
 
         [DataMember(Order = 3)]
         public long? Ticks { get; set; }
 
         [DataMember(Order = 4)]
-        [ForeignKey(nameof(QuestionItem))]
-        public long? QuestionId { get; set; }
+        public long? QuestionBackendId { get; set; }
 
         [DataMember(Order = 5)]
         [ForeignKey(nameof(AssessmentItem))]
-        public long? AssessmentId { get; set; }
+        public long? AssessmentBackendId { get; set; }
     }
 
     [DataContract]
@@ -72,7 +77,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public AnswerResponse()
         {
             Answers = new Collection<AnswerItem>();
-            MetaData = new Collection<MetaData>();
+            MetaData = new Collection<MetaDataItem>();
             AnswerMetaDataRelations = new Collection<AnswerMetaDataRelation>();
             MetaDataMetaDataRelations = new Collection<MetaDataMetaDataRelation>();
         }
@@ -84,7 +89,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public Collection<AnswerItem> Answers { get; set; }
 
         [DataMember(Order = 3)]
-        public Collection<MetaData> MetaData { get; set; }
+        public Collection<MetaDataItem> MetaData { get; set; }
 
         [DataMember(Order = 4)]
         public Collection<AnswerMetaDataRelation> AnswerMetaDataRelations { get; set; }

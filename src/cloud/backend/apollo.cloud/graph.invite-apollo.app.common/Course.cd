@@ -3,7 +3,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseAppointment" BaseTypeListCollapsed="true">
     <Position X="3.5" Y="3" Width="2" />
     <TypeIdentifier>
-      <HashCode>AgiGAEADCAACAAQAAgIBEEBnAAAACAgAgQAgIEABAiQ=</HashCode>
+      <HashCode>AAiGAEADCQACAAQAIgIBUABnCAAACAhAgQAAIEAAAiU=</HashCode>
       <FileName>Models\Course\CourseAppointment.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -43,7 +43,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseItem" BaseTypeListCollapsed="true">
     <Position X="5.75" Y="3" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>BgACAAACCQgiQEAgAAAJEEAHSCAACAgAgSAgAAABAgA=</HashCode>
+      <HashCode>BAACAAACCQgiQEAgIQAJUAAHCCAACAhAgSAkAAACAAE=</HashCode>
       <FileName>Models\Course\CourseItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -54,7 +54,6 @@
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Course\CourseItem.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseResponse" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.5" Y="5.5" Width="1.5" />
@@ -62,7 +61,6 @@
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAgAAABAAAAA=</HashCode>
       <FileName>Models\Course\CourseItem.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseSearchRequest" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.5" Y="7.25" Width="1.5" />
@@ -70,7 +68,6 @@
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Course\CourseItem.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseSearchResponse" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.5" Y="8" Width="1.5" />
@@ -78,7 +75,6 @@
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Course\CourseItem.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseLearningObjectives" BaseTypeListCollapsed="true">
     <Position X="10.25" Y="5.75" Width="2" />
@@ -96,27 +92,27 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseModules" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseModuleItem" BaseTypeListCollapsed="true">
     <Position X="1.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAGAAAAAAAAAAAAAAABAAQEAAAACAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Course\CourseModules.cs</FileName>
+      <HashCode>AAAGAAAAAAAAAAAAAAABAAQEAAAACAAAAAAAAIAAACA=</HashCode>
+      <FileName>Models\Course\CourseModuleItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CoursePrice" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CoursePriceItem" BaseTypeListCollapsed="true">
     <Position X="10.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAGAAAAAYAgAAAAABABAAAEKAAgCAAAAAAAAAAAACA=</HashCode>
-      <FileName>Models\Course\CoursePrice.cs</FileName>
+      <HashCode>AAACAAAAAQAgAAAAABABAAAEKAAgCAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CoursePriceItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.EduProvider" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.EduProviderItem" BaseTypeListCollapsed="true">
     <Position X="12.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAQAAAAAggAAAAAABAAQEAAAACAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Course\EduProvider.cs</FileName>
+      <FileName>Models\Course\EduProviderItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -131,7 +127,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.SimilarCourses" BaseTypeListCollapsed="true">
     <Position X="1.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAACAgAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAECAgAAAAQAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Course\SimilarCourses.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -144,11 +140,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseQnA" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseQnAItem" BaseTypeListCollapsed="true">
     <Position X="10" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAGAAAAAAAAAAAAAAABAAAEAAEACAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Course\CourseQnA.cs</FileName>
+      <FileName>Models\Course\CourseQnAItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -168,27 +164,27 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.MetaData" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.MetaDataItem" BaseTypeListCollapsed="true">
     <Position X="13.75" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAgAAAAAAA=</HashCode>
-      <FileName>Models\MetaData.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAAAABAAAEAAAACAAAAQAgAAAAAAA=</HashCode>
+      <FileName>Models\MetaDataItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Document" BaseTypeListCollapsed="true">
     <Position X="2.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAIAIAAAAAAAABAAAEAAAACAAgACAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAACIAIAAAAAIAABUAAHAAAACAhggCAAAAAAAAE=</HashCode>
       <FileName>Models\Document.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.QnA" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.QnAItem" BaseTypeListCollapsed="true">
     <Position X="9" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAACAAAAAAAAAABAAAEAAAACAAEAAAAAgBAAAA=</HashCode>
-      <FileName>Models\QnA.cs</FileName>
+      <FileName>Models\QnAItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -214,17 +210,17 @@
       <FileName>Models\ICorrelationId.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Invite.Apollo.App.Graph.Common.Models.IApolloGraphItem" Collapsed="true">
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.IBackendEntity" Collapsed="true">
     <Position X="14.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\IApolloGraphItem.cs</FileName>
+      <FileName>Models\IBackendEntity.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Invite.Apollo.App.Graph.Common.Models.ContentManagement.IPublishingInfo" Collapsed="true">
     <Position X="14.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAACAAAAAAAAAAAAEEADAAAAAAgAgAAgAAABAAA=</HashCode>
+      <HashCode>AAAAAAACAAAAAAAAIAAAUAADAAAAAAhAgAAAAAAAAAE=</HashCode>
       <FileName>Models\ContentManagement\IPublishingInfo.cs</FileName>
     </TypeIdentifier>
   </Interface>

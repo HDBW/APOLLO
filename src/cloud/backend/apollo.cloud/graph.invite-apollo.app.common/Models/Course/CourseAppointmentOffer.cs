@@ -7,18 +7,26 @@ using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class CourseAppointmentOffer : IEntity, IApolloGraphItem
+    public class CourseAppointmentOffer : IEntity, IBackendEntity
     {
+        #region Implementation of IEntity
         [Key]
-        [DataMember(Order = 1,IsRequired = true)]
+        [DataMember(Order = 1)]
         public long Id { get; set; }
-        [DataMember(Order = 2,IsRequired = true)]
+
+        [DataMember(Order = 2, IsRequired = true)]
         public long Ticks { get; set; }
+
+        #endregion
+
+        #region Implementation of IBackendEntity
         [DataMember(Order = 3, IsRequired = true)]
-        public string BackendId { get; set; } = null!;
+        public long BackendId { get; set; }
 
         [DataMember(Order = 4, IsRequired = true)]
         public Uri Schema { get; set; } = null!;
+
+        #endregion
 
         #region References
 
@@ -27,7 +35,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long CourseAppointmentId { get; set; }
 
         [DataMember(Order = 6, IsRequired = true)]
-        [ForeignKey(nameof(CoursePrice))]
+        [ForeignKey(nameof(CoursePriceItem))]
         public long CoursePriceId { get; set; }
 
 

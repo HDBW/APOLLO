@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class LoanOption : IEntity, IApolloGraphItem
+    public class LoanOption : IEntity, IBackendEntity
 
     {
         #region client stuff
@@ -21,7 +21,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         #region cloud stuff
 
         [DataMember(Order = 3, IsRequired = true)]
-        public string BackendId { get; set; } = null!;
+        public long BackendId { get; set; }
 
         [DataMember(Order = 4)]
         public Uri Schema { get; set; } = null!;

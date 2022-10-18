@@ -19,14 +19,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.ContentManagement
 
         public DateTime? Deleted { get; set; }
 
-        public long? Successor { get; set; }
+        public long? SuccessorId { get; set; }
 
-        public long? Predecessor { get; set; }
+        public long? PredecessorId { get; set; }
 
-        public string? SuccessorBackend { get; set; }
-        public string? PredecessorBackend { get; set; }
-
-
+        public long? SuccessorBackendId { get; set; }
+        public long? PredecessorBackendId { get; set; }
 
     }
 }

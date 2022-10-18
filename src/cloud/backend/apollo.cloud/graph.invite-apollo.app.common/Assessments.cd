@@ -3,7 +3,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AnswerItem" BaseTypeListCollapsed="true">
     <Position X="6.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAgAAQAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAABAAAEAAAACAAAAAAgAAQAAAA=</HashCode>
       <FileName>Models\Assessment\AnswerItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -11,7 +11,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AnswersRequest" BaseTypeListCollapsed="true">
     <Position X="8.25" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAAAAAACAAAAAIAAAAAAAAAAACAAAAAAAAAQAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAAAQAABAAAAACAAAAAAAAAAgAAA=</HashCode>
       <FileName>Models\Assessment\AnswerItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -27,7 +27,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AnswerMetaDataRelation">
     <Position X="6.5" Y="13" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AFACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AFACAAAAAAAAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\AnswerMetaDataRelation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -35,7 +35,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AssessmentItem" BaseTypeListCollapsed="true">
     <Position X="2.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAACAAAAAAACAEAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAEAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\AssessmentItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -43,7 +43,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AssessmentRequest" BaseTypeListCollapsed="true">
     <Position X="4.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAIAAAAAAAAAAACAAAAQAAAAAAEAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAABAAAAACAAAAQAAAAAAEAA=</HashCode>
       <FileName>Models\Assessment\AssessmentItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -67,14 +67,15 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.MetaDataMetaDataRelation">
     <Position X="6.5" Y="15" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAABAAAAACAAAAAAAAAABAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAABAABEAAAACAAAAAAAAAABAAA=</HashCode>
       <FileName>Models\Assessment\MetaDataMetaDataRelation.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.QuestionItem" BaseTypeListCollapsed="true">
     <Position X="10" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAIAAAAAAAQAIAAAAAAAAAAACAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAACAAIAAAAAAAQAIAABAAAEAAAACAAAAAAQAAAAAAA=</HashCode>
       <FileName>Models\Assessment\QuestionItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -98,7 +99,7 @@
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.QuestionMetaDataRelation">
     <Position X="10" Y="13.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAQAAAA=</HashCode>
+      <HashCode>AEACAAAAAAAAAAAAAAABAAAEAAAACAAAAAAAAAQAAAA=</HashCode>
       <FileName>Models\Assessment\QuestionMetaDataRelation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -124,7 +125,7 @@
       <FileName>Models\ICorrelationId.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="Invite.Apollo.App.Graph.Common.Models.Course.Assessment.Enums.AnswerType">
+  <Enum Name="Invite.Apollo.App.Graph.Common.Models.Assessment.Enums.AnswerType">
     <Position X="11" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAEAAQAAAAAAQAIAAAAAAAAAAgAAAAAAAAAAABA=</HashCode>

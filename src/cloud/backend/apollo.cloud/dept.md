@@ -17,7 +17,9 @@ Severity	Code	Description	Project	File	Line	Suppression State
 ### Course and Courseappointment both implement price!
 
 There is however are implementation of CourseOffer which is the relatio between courseappointment and courseprice
-This however is not scope of the december testing! See Issue #
+This however is not scope of the december testing! See Issue #141
+
+FIXME: Protobuf Reserved in protobuf-net 3 CourseItem
 
 ### Qualification Provider
 

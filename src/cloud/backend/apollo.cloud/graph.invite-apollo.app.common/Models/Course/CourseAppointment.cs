@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
@@ -9,26 +10,24 @@ using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class CourseAppointment : IEntity, IApolloGraphItem, IPublishingInfo
+    public class CourseAppointment : IEntity, IBackendEntity, IPublishingInfo
     {
 
-        #region Client Stuff
-
+        #region Implementation of IEntity
         [Key]
-        [DataMember(Order = 1,IsRequired = true)]
+        [DataMember(Order = 1)]
         public long Id { get; set; }
 
-        [DataMember(Order = 2)]
+        [DataMember(Order = 2, IsRequired = true)]
         public long Ticks { get; set; }
 
         #endregion
 
-        #region Backend Stuff
+        #region Implementation of IBackendEntity
+        [DataMember(Order = 3, IsRequired = true)]
+        public long BackendId { get; set; }
 
-        [DataMember(Order = 3,IsRequired = true)]
-        public string BackendId { get; set; } = null!;
-
-        [DataMember(Order = 4)]
+        [DataMember(Order = 4, IsRequired = true)]
         public Uri Schema { get; set; } = null!;
 
         #endregion
@@ -118,17 +117,17 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 
         [ForeignKey(nameof(CourseAppointment))]
         [DataMember(Order = 28, IsRequired = false)]
-        public long? Successor { get; set; }
+        public long? SuccessorId { get; set; }
 
         [ForeignKey(nameof(CourseAppointment))]
         [DataMember(Order = 29, IsRequired = false)]
-        public long? Predecessor { get; set; }
+        public long? PredecessorId { get; set; }
 
         [DataMember(Order = 30, IsRequired = false)] 
-        public string? SuccessorBackend { get; set; }
+        public long? SuccessorBackendId { get; set; }
 
         [DataMember(Order = 31, IsRequired = false)]
-        public string? PredecessorBackend { get; set; }
+        public long? PredecessorBackendId { get; set; }
 
         #endregion
 

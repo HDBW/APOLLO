@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class CourseMetaData : IEntity, IApolloGraphItem
+    public class CourseMetaData : IEntity, IBackendEntity
     {
         [DataMember(Order = 1, IsRequired = true)]
         public long Id { get; set; }
@@ -14,13 +14,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long Ticks { get; set; }
 
         [DataMember(Order = 3, IsRequired = true)]
-        public string BackendId { get; set; } = null!;
+        public long BackendId { get; set; }
 
         [DataMember(Order = 4)]
         public Uri Schema { get; set; } = null!;
 
         [DataMember(Order = 5)]
-        [ForeignKey(nameof(MetaData))]
+        [ForeignKey(nameof(MetaDataItem))]
         public long MetaDataId { get; set; }
 
         [DataMember(Order = 6)]
