@@ -7,6 +7,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Esco
 {
+
     [DataContract]
     public class Skill
     {

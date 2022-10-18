@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ServiceModel;
-using System.Text;
+﻿using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using ProtoBuf.Grpc;
-using ProtoBuf.Grpc.Configuration;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -34,6 +29,17 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [OperationContract]
         ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request);
 
+        /// <summary>
+        /// 
+        /// FIXME: CLS COMPLIANCE CA1014
+        /// WE USE CALLCONTEXT INSTEAD OF CLIENT AND SERVER IMPLEMENTATION TO GENERATE BOTH AT THE SAME TIME!
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns>
+        /// QuestionResponse
+        /// 
+        /// </returns>
         [OperationContract]
         ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request, CallContext context = default);
 

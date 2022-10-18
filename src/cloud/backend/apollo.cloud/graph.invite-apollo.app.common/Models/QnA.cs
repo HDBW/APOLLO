@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace Invite.Apollo.App.Graph.Common.Models.Course
+namespace Invite.Apollo.App.Graph.Common.Models
 {
-    [DataContract]
-    public class CourseModules : IEntity, IApolloGraphItem
+    public class QnA : IEntity, IApolloGraphItem
     {
         #region client stuff
         [Key]
@@ -28,14 +27,15 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 
         #endregion
 
-        [DataMember(Order=5,IsRequired = true)]
-        [ForeignKey(nameof(CourseItem))]
-        public long CourseId { get; set; }
+        [DataMember(Order = 5, IsRequired = true)]
+        public string Question { get; set; } = null!;
 
+        [DataMember(Order = 6)]
+        public string Answer { get; set; } = null!;
 
-        [DataMember(Order = 7,IsRequired = true)]
-        [ForeignKey(nameof(CourseItem))]
-        public long ModuleId { get; set; }
+        [DataMember(Order = 7)]
+        public Uri AnswerUrl { get; set; } = null!;
 
+        public CultureInfo? Language { get; set; }
     }
 }
