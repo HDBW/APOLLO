@@ -124,7 +124,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [DataMember(Order = 29, IsRequired = false)]
         public long? Predecessor { get; set; }
 
-        [DataMember(Order = 30, IsRequired = false)]
+        [DataMember(Order = 30, IsRequired = false)] 
         public string? SuccessorBackend { get; set; }
 
         [DataMember(Order = 31, IsRequired = false)]
