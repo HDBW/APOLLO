@@ -97,8 +97,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [DataMember(Order = 21)]
         public int AvailableSeats { get; set; }
 
-
-
         #region Implementation of IPublishingInfo
         [DataMember(Order = 22,IsRequired = false)]
         public DateTime? PublishingDate { get; set; }
@@ -133,5 +131,19 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public string? PredecessorBackend { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// FIXME: CourseOffer has price relation and more detail for after december scope
+        /// </summary>
+        [Obsolete]
+        [DataMember(Order = 32, IsRequired = false)]
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// FIXME: CourseOffer has price relation more detail for after december scope
+        /// </summary>
+        [Obsolete]
+        [DataMember(Order = 33, IsRequired = false)]
+        public string Currency { get; set; } = null!;
     }
 }
