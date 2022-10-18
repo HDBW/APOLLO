@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
-    public class CourseApolloLabels : IEntity, IApolloGraphItem
+    public class CourseApolloLabels : IEntity, IBackendEntity
     {
         #region Implementation of IEntity
 
@@ -19,10 +19,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         #endregion
 
 
-        #region Implementation of IApolloGraphItem
+        #region Implementation of IBackendEntity
 
         [DataMember(Order = 3, IsRequired = true)]
-        public string BackendId { get; set; } = null!;
+        public long BackendId { get; set; }
 
         [DataMember(Order = 4)]
         public Uri Schema { get; set; } = null!;

@@ -10,7 +10,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
     /// Describing the Learning Objectives of a Course
     /// </summary>
     [DataContract]
-    public class CourseLearningObjectives : IEntity, IApolloGraphItem
+    public class CourseLearningObjectives : IEntity, IBackendEntity
     {
         #region Client Implementation
 
@@ -26,7 +26,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         #region Backend Implementation
 
         [DataMember(Order = 3,IsRequired = true)]
-        public string BackendId { get; set; } = null!;
+        public long BackendId { get; set; }
 
         [DataMember(Order = 4)]
         public Uri Schema { get; set; } = null!;

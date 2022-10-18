@@ -6,28 +6,24 @@ using System.Runtime.Serialization;
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class CourseDocuments : IApolloGraphItem, IEntity
+    public class CourseDocuments : IBackendEntity, IEntity
     {
-        #region BackendStuff
+        #region Implementation of IEntity
+        [Key]
+        [DataMember(Order = 1)]
+        public long Id { get; set; }
 
-        [DataMember(Order = 1, IsRequired = true)]
-        public string BackendId { get; set; } = null!;
-
-        [DataMember(Order = 2)]
-        public Uri Schema { get; set; } = null!;
+        [DataMember(Order = 2, IsRequired = true)]
+        public long Ticks { get; set; }
 
         #endregion
 
-
-        #region ClientStuff
-
-
-        [Key]
+        #region Implementation of IBackendEntity
         [DataMember(Order = 3, IsRequired = true)]
-        public long Id { get; set; }
+        public long BackendId { get; set; }
 
         [DataMember(Order = 4, IsRequired = true)]
-        public long Ticks { get; set; }
+        public Uri Schema { get; set; } = null!;
 
         #endregion
 

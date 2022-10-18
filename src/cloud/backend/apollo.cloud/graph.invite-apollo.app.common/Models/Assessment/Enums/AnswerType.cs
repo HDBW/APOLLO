@@ -1,4 +1,4 @@
-﻿namespace Invite.Apollo.App.Graph.Common.Models.Course.Assessment.Enums
+﻿namespace Invite.Apollo.App.Graph.Common.Models.Assessment.Enums
 {
     public enum AnswerType
     {
