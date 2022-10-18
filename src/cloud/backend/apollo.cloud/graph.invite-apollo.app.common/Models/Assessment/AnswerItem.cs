@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Course.Assessment.Enums;
 
@@ -53,6 +51,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public string CorrelationId { get; set; }
 
         [DataMember(Order=2)]
+        [ForeignKey(nameof(AnswerItem))]
         public long? AnswerId { get; set; }
 
         [DataMember(Order = 3)]
