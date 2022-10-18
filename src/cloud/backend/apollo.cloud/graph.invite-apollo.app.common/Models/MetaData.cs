@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
-namespace Invite.Apollo.App.Graph.Common.Models.Assessment
+namespace Invite.Apollo.App.Graph.Common.Models
 {
     [DataContract]
     public class MetaData : IEntity

@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class CourseModules : IEntity, IApolloGraphItem
+    public class SimilarCourses : IEntity, IApolloGraphItem
     {
         #region client stuff
         [Key]
@@ -28,14 +28,19 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 
         #endregion
 
-        [DataMember(Order=5,IsRequired = true)]
-        [ForeignKey(nameof(CourseItem))]
-        public long CourseId { get; set; }
+        #region Relations
 
-
-        [DataMember(Order = 7,IsRequired = true)]
         [ForeignKey(nameof(CourseItem))]
-        public long ModuleId { get; set; }
+        [DataMember(Order = 5, IsRequired = true)]
+        public long CourseOriginId { get; set; }
+
+        [ForeignKey(nameof(CourseItem))]
+        [DataMember(Order = 6, IsRequired = true)]
+        public long CourseSimilarId { get; set; }
+
+        #endregion
+
+        //TODO: Implement Reason in the future as MetaDataRelation
 
     }
 }

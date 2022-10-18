@@ -5,8 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
-    [DataContract]
-    public class CourseModules : IEntity, IApolloGraphItem
+    public class CourseQnA : IEntity, IApolloGraphItem
     {
         #region client stuff
         [Key]
@@ -28,14 +27,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 
         #endregion
 
-        [DataMember(Order=5,IsRequired = true)]
         [ForeignKey(nameof(CourseItem))]
+        [DataMember(Order = 4)]
         public long CourseId { get; set; }
 
-
-        [DataMember(Order = 7,IsRequired = true)]
-        [ForeignKey(nameof(CourseItem))]
-        public long ModuleId { get; set; }
-
+        [ForeignKey(nameof(QnA))]
+        [DataMember(Order = 4)]
+        public long QnAId { get; set; }
     }
 }
