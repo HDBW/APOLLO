@@ -18,7 +18,7 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
         [DataMember(Order = 3)]
         public MetaDataType Type { get; set; }
 
-        [DataMember(Order=4)]
+        [DataMember(Order = 4)]
         public string Value { get; set; }
     }
 }

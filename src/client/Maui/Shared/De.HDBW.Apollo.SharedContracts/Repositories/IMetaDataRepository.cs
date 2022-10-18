@@ -5,10 +5,9 @@ using Graph.Apollo.Cloud.Common.Models.Assessment;
 
 namespace De.HDBW.Apollo.SharedContracts.Repositories
 {
-    public interface IQuestionItemRepository :
-        IRepository<QuestionItem>,
-        IDatabaseRepository<QuestionItem>
+    public interface IMetaDataRepository :
+        IRepository<MetaData>,
+        IDatabaseRepository<MetaData>
     {
-        Task<IEnumerable<QuestionItem>> GetItemsByForeignKeyAsync(long id, CancellationToken token);
     }
 }

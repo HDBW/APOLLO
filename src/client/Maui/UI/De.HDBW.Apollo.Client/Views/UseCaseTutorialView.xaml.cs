@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.Client.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.Views;
 public partial class UseCaseTutorialView

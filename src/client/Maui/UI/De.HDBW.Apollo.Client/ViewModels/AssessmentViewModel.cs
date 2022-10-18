@@ -24,6 +24,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
         public AssessmentViewModel(
             IAssessmentItemRepository assessmentItemRepository,
             IQuestionItemRepository questiontItemRepository,
+            IAnswerItemRepository answerItemRepository,
+            IMetaDataMetaDataRelationRepository metaDataMetaDataRelationRepository,
+            IAnswerMetaDataRelationRepository answerMetaDataRelationRepository,
+            IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
+            IMetaDataRepository metadataRepository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -32,24 +37,33 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             AssessmentItemRepository = assessmentItemRepository;
             QuestiontItemRepository = questiontItemRepository;
+            AnswerItemRepository = answerItemRepository;
+            MetaDataMetaDataRelationRepository = metaDataMetaDataRelationRepository;
+            AnswerMetaDataRelationRepository = answerMetaDataRelationRepository;
+            QuestionMetaDataRelationRepository = questionMetaDataRelationRepository;
+            MetadataRepository = metadataRepository;
         }
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
 
         private IQuestionItemRepository QuestiontItemRepository { get; }
 
+        private IAnswerItemRepository AnswerItemRepository { get; }
+
+        private IMetaDataMetaDataRelationRepository MetaDataMetaDataRelationRepository { get; }
+
+        private IAnswerMetaDataRelationRepository AnswerMetaDataRelationRepository { get; }
+
+        private IQuestionMetaDataRelationRepository QuestionMetaDataRelationRepository { get; }
+
+        private IMetaDataRepository MetadataRepository { get; }
+
         [RelayCommand]
         public void NextQuestion()
         {
-            var currentIndex = Questions.IndexOf(CurrentQuestion);
+            var currentIndex = CurrentQuestion != null ? Questions.IndexOf(CurrentQuestion) : 0;
             currentIndex = currentIndex + 1 >= Questions.Count ? 0 : currentIndex + 1;
             CurrentQuestion = Questions[currentIndex];
-        }
-
-        protected override async void OnPrepare(NavigationParameters navigationParameters)
-        {
-            _assessmentItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
-            await OnNavigatedTo();
         }
 
         public async override Task OnNavigatedTo()
@@ -63,7 +77,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var assessmentItem = AssessmentItemRepository.GetItemByIdAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
+                    var assessmentItem = await AssessmentItemRepository.GetItemByIdAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
+                    var questionItems = await QuestiontItemRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
+                    var questionIds = questionItems.Select(q => q.Id);
+                    var answers = await AnswerItemRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
+                    var answerIds = answers.Select(q => q.Id);
+                    var questionMetaDataRelations = await QuestionMetaDataRelationRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
+                    var answerMetaDataRelations = await AnswerMetaDataRelationRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
+                    // var metaDataMetaDataRelationRelations = await MetaDataMetaDataRelationRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
 
                     // TODO: Continue loading data.
                 }
@@ -75,8 +96,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     UnscheduleWork(worker);
                 }
+            }
+
         }
 
+        protected override async void OnPrepare(NavigationParameters navigationParameters)
+        {
+            _assessmentItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
+            await OnNavigatedTo();
         }
     }
 }

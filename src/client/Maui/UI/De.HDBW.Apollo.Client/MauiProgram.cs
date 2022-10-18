@@ -17,7 +17,6 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Serilog;
 using Serilog.Configuration;
@@ -157,6 +156,11 @@ public static class MauiProgram
     {
         services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
         services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
+        services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
+        services.AddSingleton<IQuestionMetaDataRelationRepository, QuestionMetaDataRelationRepository>();
+        services.AddSingleton<IAnswerMetaDataRelationRepository, AnswerMetaDataRelationRepository>();
+        services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
+        services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
     }
 
     private static void SetupViewsAndViewModels(IServiceCollection services)
