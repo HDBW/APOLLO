@@ -48,7 +48,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
-            using(var worker = ScheduleWork(token))
+            using (var worker = ScheduleWork(token))
             {
                 try
                 {

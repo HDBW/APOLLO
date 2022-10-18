@@ -17,7 +17,7 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
             Questions = new();
             Skills = new();
             Occupation = new();
-            }
+        }
 
         [DataMember(Order = 1)]
         public AssessmentItem Value { get; set; }
@@ -37,7 +37,7 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
 
         [DataMember(Order = 4)]
         public Occupation Occupation { get; set; }
-        
+
     }
 
     /// <summary>
@@ -96,5 +96,5 @@ namespace Graph.Apollo.Cloud.Common.Models.Assessment
         public List<Assessment> Assessments { get; set; }
     }
 
-    
+
 }

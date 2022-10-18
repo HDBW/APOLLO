@@ -11,8 +11,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public abstract partial class BaseViewModel : ObservableObject, IQueryAttributable
     {
-        private bool _isBusy;
-
         public BaseViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,

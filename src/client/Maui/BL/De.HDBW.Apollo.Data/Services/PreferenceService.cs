@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Data.Services
 
         private ILogger? Logger { get; }
 
-        private IPreferences? Preferences { get;  }
+        private IPreferences? Preferences { get; }
 
         public bool SetValue<TU>(Preference key, TU value)
         {

@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Graph.Apollo.Cloud.Common.Models.Assessment;
 
@@ -12,7 +13,9 @@ namespace De.HDBW.Apollo.Data.Repositories
         IDatabaseRepository<TU>
         where TU : IEntity, new()
     {
-        private readonly List<TU> _items = new List<TU>();
+        private IEqualityComparer<TU> _comparer = new EntityComparer<TU>();
+
+        protected readonly List<TU> _items = new List<TU>();
 
         public Task<bool> AddItemAsync(TU item, CancellationToken token)
         {
@@ -26,20 +29,25 @@ namespace De.HDBW.Apollo.Data.Repositories
 
         public Task<bool> AddOrUpdateItemAsync(TU item, CancellationToken token)
         {
-            return AddOrUpdateItemsAsync(new List<TU>() { item }, token);
+            return AddOrUpdateItemsAsync(item != null ? new List<TU>() { item } : new List<TU>(), token);
         }
 
         public Task<bool> AddOrUpdateItemsAsync(IEnumerable<TU> items, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var ids = items.Select(x => x.Id);
-            var itemsToRemove = items.Where(i => ids.Contains(i.Id)).ToList();
+            if (items == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            var ids = items.Select(x => x.Id).Distinct();
+            var itemsToRemove = _items.Where(i => ids.Contains(i.Id)).ToList();
             foreach (var item in itemsToRemove)
             {
                 _items.Remove(item);
             }
 
-            _items.AddRange(items);
+            _items.AddRange(items.Distinct(_comparer));
             return Task.FromResult(true);
         }
 
@@ -60,28 +68,34 @@ namespace De.HDBW.Apollo.Data.Repositories
         public Task<IEnumerable<TU>> GetItemsByIdsAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var result = new ReadOnlyCollection<TU>(_items.Where(i => ids.Contains(i.Id)).ToList()) as IEnumerable<TU>;
-            return Task.FromResult(result);
+            var result = new ReadOnlyCollection<TU>(new List<TU>());
+            if (ids != null)
+            {
+                result = new ReadOnlyCollection<TU>(_items.Where(i => ids.Contains(i.Id)).ToList());
+            }
+
+            return Task.FromResult(result as IEnumerable<TU>);
         }
 
         public Task<bool> RemoveItemAsync(TU item, CancellationToken token)
         {
-            return RemoveItemsByIdsAsync(new List<long>() { item.Id }, token);
+            return RemoveItemsByIdsAsync(item != null ? new List<long>() { item.Id } : new List<long>(), token);
         }
 
         public Task<bool> RemoveItemByIdAsync(long id, CancellationToken token)
         {
-            return RemoveItemsByIdsAsync(new List<long>() { id}, token);
+            return RemoveItemsByIdsAsync(new List<long>() { id }, token);
         }
 
         public Task<bool> RemoveItemsAsync(IEnumerable<TU> items, CancellationToken token)
         {
-            return RemoveItemsByIdsAsync(items.Select(i => i.Id), token);
+            return RemoveItemsByIdsAsync(items != null ? items.Select(i => i.Id) : new List<long>(), token);
         }
 
         public Task<bool> RemoveItemsByIdsAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
+            ids = ids ?? new List<long>();
             var itemsToRemove = _items.Where(i => ids.Contains(i.Id)).ToList();
             foreach (var item in itemsToRemove)
             {
@@ -91,11 +105,15 @@ namespace De.HDBW.Apollo.Data.Repositories
             return Task.FromResult(true);
         }
 
-        public Task<bool> ResetItemsAsync(IEnumerable<TU> items, CancellationToken token)
+        public Task<bool> ResetItemsAsync(IEnumerable<TU>? items, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             _items.Clear();
-            _items.AddRange(items);
+            if (items != null)
+            {
+                _items.AddRange(items.Distinct(_comparer));
+            }
+
             return Task.FromResult(true);
         }
 
@@ -108,5 +126,6 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
             return AddOrUpdateItemsAsync(items, token);
         }
+
     }
 }

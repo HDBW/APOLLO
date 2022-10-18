@@ -25,17 +25,17 @@ namespace De.HDBW.Apollo.Client.Models
             _navigateHandler = navigateHandler;
         }
 
-        public static InteractionEntry Import(string text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
-        {
-            return new InteractionEntry(text, data, navigateHandler, canNavigateHandle);
-        }
-
         public object? Data
         {
             get
             {
                 return _data;
             }
+        }
+
+        public static InteractionEntry Import(string text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        {
+            return new InteractionEntry(text, data, navigateHandler, canNavigateHandle);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigate))]
