@@ -31,6 +31,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         #endregion
 
         [DataMember(Order = 3, IsRequired = true)]
+        [ForeignKey(nameof(QuestionItem))]
         public long QuestionId { get; set; }
         
         [DataMember(Order = 4)]

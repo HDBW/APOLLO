@@ -137,7 +137,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseDocuments" BaseTypeListCollapsed="true">
-    <Position X="2" Y="9.25" Width="1.5" />
+    <Position X="1.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAGAAgAAAAAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Course\CourseDocuments.cs</FileName>
@@ -169,7 +169,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.MetaData" BaseTypeListCollapsed="true">
-    <Position X="13.75" Y="11.5" Width="1.5" />
+    <Position X="13.75" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAgAAAAAAA=</HashCode>
       <FileName>Models\MetaData.cs</FileName>
