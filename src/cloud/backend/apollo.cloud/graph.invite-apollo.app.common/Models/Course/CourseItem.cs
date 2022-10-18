@@ -13,6 +13,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
     public class CourseItem : IEntity, IApolloGraphItem, IPublishingInfo
     {
         #region client stuff
+
+        /// <summary>
+        /// The unique identifier of the appointment.
+        /// </summary>
         [Key]
         [DataMember(Order = 1)]
         public long Id { get; set; }
@@ -32,35 +36,48 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 
         #endregion
 
+        /// <summary>
+        /// The title of a course provided by the training provider
+        /// </summary>
         public string Title { get; set; } = null!;
 
         /// <summary>
-        /// Short description aka Executive Summary
+        /// A short description of the course
         /// A AI based feature which generates the key Talking points of the course
         /// </summary>
         public string ShortDescription { get; set; } = null!;
 
         /// <summary>
         /// Course Description as HTML
+        /// A description of the course
         /// </summary>
         public string Description { get; set; } = null!;
 
         /// <summary>
-        /// 
+        /// A list of person types or occupations as well as text describing the target audience.
         /// TODO: Maybe a list of PersonTypes as identified by the backend?
         /// </summary>
         public string TargetGroup { get; set; } = null!;
 
-
+        /// <summary>
+        /// Indicates the type of a course: `Unknown, Online, InPerson, OnAndOffline, InHouse, All`
+        /// </summary>
         public CourseType Type { get; set; }
 
-
+        /// <summary>
+        ///  Indicates if a course is available: Unknown, Available, Unavailable
+        /// </summary>
         //TODO: Implement Calculation for availability
         public CourseAvailability Availability { get; set; }
 
+        /// <summary>
+        /// Indicates the latest update from the training provider.
+        /// </summary>
         public DateTime LatestUpdateFromProvider { get; set; }
 
-        
+        /// <summary>
+        /// The original text provided as prerequisites as the training provider publishes the course.
+        /// </summary>
         public string PreRequisitesDescription { get; set; } = null!;
 
         //TODO: Define Scope of LearningOutcomes note backend only!
@@ -87,7 +104,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 
         /// <summary>
         /// Indicates the available Occurrences
-        /// displays if appointments are available: PartTime, Fulltime, Both
+        /// displays if appointments are available: part time, full time, both
         /// </summary>
         public OccurrenceType Occurrence { get; set; }
 
@@ -101,8 +118,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// Online, InPerson, ...
         /// </summary>
         public CourseType CourseType { get; set; }
-
-
 
         #endregion
 
@@ -121,9 +136,15 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [ForeignKey(nameof(CourseContact))]
         public long InstructorId { get; set; }
 
+        /// <summary>
+        /// The information about the training provider offering the course.
+        /// </summary>
         [ForeignKey(nameof(EduProvider))]
         public long TrainingProviderId { get; set; }
 
+        /// <summary>
+        /// The course provider offering the course via the training provider
+        /// </summary>
         [ForeignKey(nameof(EduProvider))]
         public long CourseProviderId { get; set; }
 
@@ -132,25 +153,50 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 
         //TODO: QualificationProvider
 
-        [ForeignKey(nameof(CourseItem))]
-        public long? CourseParentId { get; set; }
-
-        public string? CourseParentBackendId { get; set; }
-
         #endregion
 
         #region Publishing Stuff
 
+        /// <summary>
+        /// Content Management | The date the course was or will be published. 
+        /// </summary>
         public DateTime? PublishingDate { get; set; }
+
+        /// <summary>
+        ///  The date the course was last updated.
+        /// Note: Updates may happen to courses even though the training provider did not update the course
+        /// </summary>
         public DateTime? LatestUpdate { get; set; }
+
+        /// <summary>
+        /// The date of the course deprecation.
+        /// </summary>
         public DateTime? Deprecation { get; set; }
+
+        /// <summary>
+        ///  The reason for the course deprecation.
+        /// </summary>
         public string? DeprecationReason { get; set; }
+
+        /// <summary>
+        /// The date the course was or will be unpublished.
+        /// </summary>
         public DateTime? UnPublishingDate { get; set; }
+
+        /// <summary>
+        /// The date the course was deleted! ^_^
+        /// </summary>
         public DateTime? Deleted { get; set; }
 
+        /// <summary>
+        /// The Course replacing the current course.
+        /// </summary>
         [ForeignKey(nameof(CourseItem))]
         public long? Successor { get; set; }
 
+        /// <summary>
+        /// The Course replaced by the current course.
+        /// </summary>
         [ForeignKey(nameof(CourseItem))]
         public long? Predecessor { get; set; }
 

@@ -1,4 +1,281 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseAppointment" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgiGAEADCAACAAQAAgIBEEBnAAAACAgAgQAgIEABAiQ=</HashCode>
+      <FileName>Models\Course\CourseAppointment.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseAppointmentMetaData" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="9.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAIAAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseAppointmentMetaData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseAppointmentOffer" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAABIAgAAAAAAABAAAEAAAACAAAAAIBAIAAAAA=</HashCode>
+      <FileName>Models\Course\CourseAppointmentOffer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseBenefits" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAAABAAAEAAAACBAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseBenefits.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseContact" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGgAAAAAAAAAAAAAAhAAAEAAAACBAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseContact.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseItem" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BgACAAACCQgiQEAgAAAJEEAHSCAACAgAgSAgAAABAgA=</HashCode>
+      <FileName>Models\Course\CourseItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseRequest" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseResponse" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAgAAABAAAAA=</HashCode>
+      <FileName>Models\Course\CourseItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseSearchRequest" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseSearchResponse" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseLearningObjectives" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAgAAAAABAAAEAAAACAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseLearningObjectives.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseMetaData" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAIAAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseMetaData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseModules" BaseTypeListCollapsed="true">
+    <Position X="1.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAAABAAQEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseModules.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CoursePrice" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAYAgAAAAABABAAAEKAAgCAAAAAAAAAAAACA=</HashCode>
+      <FileName>Models\Course\CoursePrice.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.EduProvider" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAQAAAAAggAAAAAABAAQEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\EduProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.LoanOption" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAAAgAEAAABABAAAEAAAACAAAAAAAAIAAIAA=</HashCode>
+      <FileName>Models\Course\LoanOption.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.SimilarCourses" BaseTypeListCollapsed="true">
+    <Position X="1.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAACAgAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\SimilarCourses.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseDocuments" BaseTypeListCollapsed="true">
+    <Position X="2" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAgAAAAAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseDocuments.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseQnA" BaseTypeListCollapsed="true">
+    <Position X="10" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAAABAAAEAAEACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseQnA.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseAppointmentQnA" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="11.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAIAAAAAAAAABAAAEAAEACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseAppointmentQnA.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseApolloLabels" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="11" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAEAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\CourseApolloLabels.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.MetaData" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAgAAAAAAA=</HashCode>
+      <FileName>Models\MetaData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Document" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAIAIAAAAAAAABAAAEAAAACAAgACAAAAAAAAA=</HashCode>
+      <FileName>Models\Document.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.QnA" BaseTypeListCollapsed="true">
+    <Position X="9" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAACAAAAAAAAAABAAAEAAAACAAEAAAAAgBAAAA=</HashCode>
+      <FileName>Models\QnA.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.ApolloLabel">
+    <Position X="7" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAEABAAAEAAAACAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\ApolloLabel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.IEntity" Collapsed="true">
+    <Position X="14.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.ICorrelationId" Collapsed="true">
+    <Position X="14.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ICorrelationId.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.IApolloGraphItem" Collapsed="true">
+    <Position X="14.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IApolloGraphItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.ContentManagement.IPublishingInfo" Collapsed="true">
+    <Position X="14.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAACAAAAAAAAAAAAEEADAAAAAAgAgAAgAAABAAA=</HashCode>
+      <FileName>Models\ContentManagement\IPublishingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.Course.ICourseSearchService" Collapsed="true">
+    <Position X="14.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\ICourseSearchService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.Course.ICourseService" Collapsed="true">
+    <Position X="14.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\ICourseService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Invite.Apollo.App.Graph.Common.Models.Course.Enums.AppointmentType">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\Enums\AppointmentType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Invite.Apollo.App.Graph.Common.Models.Course.Enums.OccurrenceType">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Course\Enums\OccurrenceType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Invite.Apollo.App.Graph.Common.Models.Course.Enums.OfferType">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAEAACAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Course\Enums\OfferType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseAvailability">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Course\Enums\CourseAvailability.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseType">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAACAAAAEAAAAAAAAAQAAIAAAAAAABA=</HashCode>
+      <FileName>Models\Course\Enums\CourseType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
