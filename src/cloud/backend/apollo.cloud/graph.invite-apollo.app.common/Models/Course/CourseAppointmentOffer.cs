@@ -27,6 +27,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long CourseAppointmentId { get; set; }
 
         [DataMember(Order = 6, IsRequired = true)]
+        [ForeignKey(nameof(CoursePrice))]
         public long CoursePriceId { get; set; }
 
 
