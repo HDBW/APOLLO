@@ -3,13 +3,13 @@
 
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Repositories;
-using Graph.Apollo.Cloud.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models;
 
 namespace De.HDBW.Apollo.Data.Tests.Repositories
 {
-    public class MetaDataRepositoryTests : AbstractDataBaseRepositoryTest<MetaData>
+    public class MetaDataRepositoryTests : AbstractDataBaseRepositoryTest<MetaDataItem>
     {
-        protected override IRepository<MetaData> GetRepository()
+        protected override IRepository<MetaDataItem> GetRepository()
         {
             return new MetaDataRepository();
         }
