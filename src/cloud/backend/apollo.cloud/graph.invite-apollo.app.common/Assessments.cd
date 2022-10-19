@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AnswersRequest" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="8.5" Width="1.5" />
+    <Position X="14.25" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAQAABAAAAACAAAAAAAAAAgAAA=</HashCode>
       <FileName>Models\Assessment\AnswerItem.cs</FileName>
@@ -17,23 +17,23 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AnswerResponse" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="11.25" Width="1.5" />
+    <Position X="14.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAQAIAAAAAAAEAAQAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\AnswerItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AnswerMetaDataRelation">
-    <Position X="6.5" Y="13" Width="1.5" />
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AnswerMetaDataRelation" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="11.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AFACAAAAAAAAAAAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\AnswerMetaDataRelation.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AssessmentItem" BaseTypeListCollapsed="true">
-    <Position X="2.75" Y="8.5" Width="1.5" />
+    <Position X="3" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAEAAAAABAAAEAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\AssessmentItem.cs</FileName>
@@ -41,7 +41,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AssessmentRequest" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="8.5" Width="1.5" />
+    <Position X="10.25" Y="11.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAABAAAAACAAAAQAAAAAAEAA=</HashCode>
       <FileName>Models\Assessment\AssessmentItem.cs</FileName>
@@ -49,31 +49,23 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AssessmentResponse" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="10.5" Width="1.5" />
+    <Position X="10.25" Y="8.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\AssessmentItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.MetaData">
-    <Position X="8.5" Y="15" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAgAAAAAAA=</HashCode>
-      <FileName>Models\Assessment\MetaData.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.MetaDataMetaDataRelation">
-    <Position X="6.5" Y="15" Width="1.5" />
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.MetaDataMetaDataRelation" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="13.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAABAABEAAAACAAAAAAAAAABAAA=</HashCode>
       <FileName>Models\Assessment\MetaDataMetaDataRelation.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.QuestionItem" BaseTypeListCollapsed="true">
-    <Position X="10" Y="8.5" Width="1.5" />
+    <Position X="4.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAIAAAAAAAQAIAABAAAEAAAACAAAAAAQAAAAAAA=</HashCode>
       <FileName>Models\Assessment\QuestionItem.cs</FileName>
@@ -81,7 +73,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.QuestionRequest" BaseTypeListCollapsed="true">
-    <Position X="11.75" Y="8.5" Width="2.25" />
+    <Position X="12.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAIAAAAAAAAAAACAAAAAAAAAQAAAA=</HashCode>
       <FileName>Models\Assessment\QuestionItem.cs</FileName>
@@ -89,23 +81,31 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.QuestionResponse" BaseTypeListCollapsed="true">
-    <Position X="11.75" Y="10.5" Width="2.25" />
+    <Position X="12.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAACAAQAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\QuestionItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.QuestionMetaDataRelation">
-    <Position X="10" Y="13.25" Width="1.5" />
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.QuestionMetaDataRelation" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="11.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AEACAAAAAAAAAAAAAAABAAAEAAAACAAAAAAAAAQAAAA=</HashCode>
       <FileName>Models\Assessment\QuestionMetaDataRelation.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.MetaDataItem">
+    <Position X="7" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAABAAAEAAAACAAAAQAgAAAAAAA=</HashCode>
+      <FileName>Models\MetaDataItem.cs</FileName>
+    </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Invite.Apollo.App.Graph.Common.Models.Assessment.IAssessmentService">
-    <Position X="1.25" Y="6.25" Width="3.25" />
+    <Position X="0.75" Y="6.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAAAAAAAAACAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Models\Assessment\IAssessmentService.cs</FileName>
@@ -119,10 +119,17 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Invite.Apollo.App.Graph.Common.Models.ICorrelationId">
-    <Position X="0.75" Y="10" Width="1.5" />
+    <Position X="14.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ICorrelationId.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Invite.Apollo.App.Graph.Common.Models.IBackendEntity">
+    <Position X="0.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IBackendEntity.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="Invite.Apollo.App.Graph.Common.Models.Assessment.Enums.AnswerType">
