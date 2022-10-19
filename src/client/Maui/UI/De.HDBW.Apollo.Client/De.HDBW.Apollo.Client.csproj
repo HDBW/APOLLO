@@ -70,7 +70,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
 	  <ProjectReference Include="..\..\BL\De.HDBW.Apollo.Data\De.HDBW.Apollo.Data.csproj" />
 	  <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
 	</ItemGroup>
