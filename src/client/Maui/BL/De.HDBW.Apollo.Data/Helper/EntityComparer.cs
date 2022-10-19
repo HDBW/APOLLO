@@ -2,11 +2,11 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Diagnostics.CodeAnalysis;
-using Google.Protobuf.WellKnownTypes;
 using Invite.Apollo.App.Graph.Common.Models;
 
 namespace De.HDBW.Apollo.Data.Helper
 {
+    // TODO: Remove when Database layer is implemented.
     public class EntityComparer<TU> : IEqualityComparer<TU>
         where TU : IEntity, new()
     {

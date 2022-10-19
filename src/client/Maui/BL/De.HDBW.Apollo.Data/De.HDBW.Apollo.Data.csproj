@@ -7,13 +7,29 @@
 		<UseMaui>true</UseMaui>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Exceptions\**" />
+	  <Compile Remove="SampleData\NewFolder\**" />
+	  <EmbeddedResource Remove="Exceptions\**" />
+	  <EmbeddedResource Remove="SampleData\NewFolder\**" />
+	  <MauiCss Remove="Exceptions\**" />
+	  <MauiCss Remove="SampleData\NewFolder\**" />
+	  <MauiXaml Remove="Exceptions\**" />
+	  <MauiXaml Remove="SampleData\NewFolder\**" />
+	  <None Remove="Exceptions\**" />
+	  <None Remove="SampleData\NewFolder\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="SampleData\MultipleChoiceAssessment.bin" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="SampleData\MultipleChoiceAssessment.bin" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\..\..\..\cloud\backend\apollo.cloud\graph.invite-apollo.app.common\Invite.Apollo.App.Graph.Common.csproj" />
 		<ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Exceptions\" />
-	</ItemGroup>
-	<ItemGroup>
 	  <PackageReference Include="Google.Protobuf" Version="3.21.8" />
+	  <PackageReference Include="protobuf-net.Core" Version="3.1.22" />
 	</ItemGroup>
 </Project>

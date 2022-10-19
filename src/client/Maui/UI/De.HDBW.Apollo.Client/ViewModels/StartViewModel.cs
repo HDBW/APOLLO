@@ -30,7 +30,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             // TODO: Remove when we have data.
             var assemsmentData = new NavigationParameters();
-            assemsmentData.AddValue<long?>(NavigationParameter.Id, 1);
+            assemsmentData.AddValue<long?>(NavigationParameter.Id, 0);
             var data = new NavigationData(Routes.AssessmentView, assemsmentData);
 
             Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, data, HandleInteract, CanHandleInteract));
