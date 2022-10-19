@@ -1,12 +1,12 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Reflection;
-using System.Xml.Linq;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Microsoft.Extensions.Logging;
+using ProtoBuf;
 
 namespace De.HDBW.Apollo.Data.Helper
 {
@@ -65,17 +65,16 @@ namespace De.HDBW.Apollo.Data.Helper
             {
                 await ClearAllRepositoriesAsync(token).ConfigureAwait(false);
                 var fileName = string.Empty;
-                // TODO: Load bin file and de
                 switch (usecase)
                 {
                     case UseCase.A:
-                        fileName = "???";
+                        fileName = "De.HDBW.Apollo.Data.SampleData.MultipleChoiceAssessment.bin";
                         break;
                     default:
                         throw new NotSupportedException($"Usecase {usecase} is not supported by builder.");
                 }
 
-                result = await DeserializeSampleDataAndInitalizeRepositoriesAsync("????", token).ConfigureAwait(false);
+                result = await DeserializeSampleDataAndInitalizeRepositoriesAsync(fileName, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -89,9 +88,19 @@ namespace De.HDBW.Apollo.Data.Helper
         private Task<bool> DeserializeSampleDataAndInitalizeRepositoriesAsync(string fileName, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
+            AssessmentUseCases usecase = null;
+            using (var stream = GetType().Assembly.GetManifestResourceStream(fileName))
+            {
+                usecase = Serializer.Deserialize<AssessmentUseCases>(stream);
+            }
 
-            // TODO: Read bin file from ManifestResourceStream and fill the respoitories.
-            // AnswerItemRepository.ResetItemsAsync(items, token).ConfigureAwait(false);
+            AnswerItemRepository.ResetItemsAsync(usecase.AnswerItems, token).ConfigureAwait(false);
+            QuestiontItemRepository.ResetItemsAsync(usecase.QuestionItems, token).ConfigureAwait(false);
+            AssessmentItemRepository.ResetItemsAsync(usecase.AssessmentItems, token).ConfigureAwait(false);
+            MetadataRepository.ResetItemsAsync(usecase.MetaDataItems, token).ConfigureAwait(false);
+            AnswerMetaDataRelationRepository.ResetItemsAsync(usecase.AnswerMetaDataRelations, token).ConfigureAwait(false);
+            QuestionMetaDataRelationRepository.ResetItemsAsync(usecase.QuestionMetaDataRelations, token).ConfigureAwait(false);
+            MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase.MetaDataMetaDataRelations, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
 

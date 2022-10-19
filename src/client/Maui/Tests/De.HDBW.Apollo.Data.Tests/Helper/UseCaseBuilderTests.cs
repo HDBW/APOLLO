@@ -118,7 +118,7 @@ public class UseCaseBuilderTests : IDisposable
         Assert.True(answer.Any(), "Answers are empty.");
         Assert.True(questions.Any(), "Questions are empty.");
         Assert.True(answerItems.Any(), "AnswerItems are empty.");
-        Assert.True(metaDataMetaDataRelations.Any(), "MetaDataMetaDataRelations are empty.");
+        Assert.False(metaDataMetaDataRelations.Any(), "MetaDataMetaDataRelations are empty.");
         Assert.True(answerMetaDatas.Any(), "AnswerMetaDatas are empty.");
         Assert.True(questionMetas.Any(), "QuestionMetas are empty.");
         Assert.True(metadatas.Any(), "Metadatas are empty.");
