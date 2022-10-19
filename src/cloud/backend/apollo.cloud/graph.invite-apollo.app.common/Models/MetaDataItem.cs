@@ -27,10 +27,10 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
         #endregion
 
-        [DataMember(Order = 3)]
+        [DataMember(Order = 5)]
         public MetaDataType Type { get; set; }
 
-        [DataMember(Order = 4)]
+        [DataMember(Order = 6)]
         public string? Value { get; set; }
     }
 }

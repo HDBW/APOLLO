@@ -35,22 +35,22 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 1,IsRequired = false)]        
         public Collection<AssessmentItem> AssessmentItems { get; set; }
 
-        [DataMember(Order = 1, IsRequired = false)]
+        [DataMember(Order = 2, IsRequired = false)]
         public Collection<QuestionItem> QuestionItems { get; set; }
 
-        [DataMember(Order = 1, IsRequired = false)]
+        [DataMember(Order = 3, IsRequired = false)]
         public Collection<AnswerItem> AnswerItems { get; set; }
 
-        [DataMember(Order = 1, IsRequired = false)]
+        [DataMember(Order = 4, IsRequired = false)]
         public Collection<MetaDataItem> MetaDataItems { get; set; }
 
-        [DataMember(Order = 1, IsRequired = false)]
+        [DataMember(Order = 5, IsRequired = false)]
         public Collection<QuestionMetaDataRelation> QuestionMetaDataRelations { get; set; }
 
-        [DataMember(Order = 1, IsRequired = false)]
+        [DataMember(Order = 6, IsRequired = false)]
         public Collection<AnswerMetaDataRelation> AnswerMetaDataRelations { get; set; }
 
-        [DataMember(Order = 1, IsRequired = false)]
+        [DataMember(Order = 7, IsRequired = false)]
         public Collection<MetaDataMetaDataRelation> MetaDataMetaDataRelations { get; set; }
     }
 }
