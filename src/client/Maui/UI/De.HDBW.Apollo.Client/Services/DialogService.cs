@@ -46,17 +46,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled ShowPopupAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}, {typeof(TV).Name}> in {GetType()}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled ShowPopupAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}, {typeof(TV).Name}> in {GetType()}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while ShowPopupAsync in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ShowPopupAsync)}<{typeof(TU).Name}, {typeof(TV).Name}> in {GetType()}.");
             }
             finally
             {
@@ -85,17 +85,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled ShowPopupAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType()}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled ShowPopupAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType()}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while ShowPopupAsync in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType()}.");
             }
 
             return Task.CompletedTask;
@@ -117,7 +117,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while ClosePopup in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ClosePopup)}<{typeof(TV).Name}> in {GetType()}.");
             }
 
             return false;
@@ -138,7 +138,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while ClosePopup in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ClosePopup)} in {GetType()}.");
             }
 
             return false;

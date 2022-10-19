@@ -70,15 +70,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(OpenSettings)} in {GetType()}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled OpenSettings in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(OpenSettings)} in {GetType()}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown Error in OpenSettings in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenSettings)} in {GetType()}.");
                 }
                 finally
                 {
@@ -120,15 +120,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled LoadData in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled LoadData in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error in LoadData in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(LoadData)} in {GetType()}.");
             }
         }
 
@@ -145,7 +145,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
                     break;
                 default:
-                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} in {GetType()}.");
+                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType()}.");
                     break;
             }
         }
