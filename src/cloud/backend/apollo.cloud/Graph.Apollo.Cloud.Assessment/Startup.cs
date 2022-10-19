@@ -1,12 +1,9 @@
-
-using Graph.Apollo.Cloud.Assessment.Services;
-using Graph.Apollo.Cloud.Common.Models;
-using Microsoft.Extensions.Configuration;
-using ProtoBuf.Grpc.Server;
-using ProtoBuf.Grpc.Configuration;
+using Invite.Apollo.App.Graph.Assessment.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using ProtoBuf.Grpc.Configuration;
+using ProtoBuf.Grpc.Server;
 
-namespace Graph.Apollo.Cloud.Assessment;
+namespace Invite.Apollo.App.Graph.Assessment;
 
 public class Startup
 {
