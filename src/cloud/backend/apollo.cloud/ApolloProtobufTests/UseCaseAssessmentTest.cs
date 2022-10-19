@@ -19,8 +19,6 @@ namespace Invite.Apollo.App.Graph.Common.Test
         private Collection<QuestionMetaDataRelation> _questionMetaDataRelations = new();
         private Collection<AnswerMetaDataRelation> _answerMetaDataRelations = new();
         private Collection<MetaDataMetaDataRelation> _metaDataMetaDataRelations = new();
-        private Collection<MetaDataItem> _answersMetaData = new();
-        private Collection<MetaDataItem> _questionMetaData = new();
         private Collection<AssessmentItem> _assessments = new();
 
         [Test]
@@ -72,6 +70,9 @@ namespace Invite.Apollo.App.Graph.Common.Test
             // C: Eaconditions, cloze
 
             CreateMultipleChoiceQuestion(assessment);
+            //CreateAssociateAssessmentItem(assessment);
+            CreateImageMapAssessment(assessment);
+
 
             AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
                 _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
@@ -105,6 +106,90 @@ namespace Invite.Apollo.App.Graph.Common.Test
             }
 
             Assert.IsTrue(auc.QuestionItems.Count.Equals(expected.QuestionItems.Count));
+        }
+
+        //private void CreateAssociateAssessmentItem(AssessmentItem assessment)
+        //{
+        //    List<MetaDataItem> questionMetaData = new();
+        //    List<AnswerItem> answerItems = new();
+        //    List<MetaDataItem> answerMetaData = new();
+
+        //    QuestionItem question = CreateQuestion(assessment, LayoutType.UniformGrid, LayoutType.UniformGrid,
+        //        InteractionType.Associate);
+
+        //    int metaIndex = _metaData.Count - 1;
+
+        //    questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Du bist für die Rasenpflege verantwortlich. Welche Maschine setzt du für welche Aufgabe ein?"));
+        //    questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image,"Maeer.jpg"));
+        //    questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Image, "Vertikutierer.jpg"));
+        //    questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Image, "Rasenmaeher.jpg"));
+        //    questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Image,"Trimmer.jpg"));
+
+        //    foreach (MetaDataItem metaDataItem in questionMetaData)
+        //    {
+        //        _metaData.Add(metaDataItem);
+        //        _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question, metaDataItem));
+        //    }
+
+        //    int answerIndex = _answers.Count - 1;
+        //    metaIndex = _metaData.Count - 1;
+
+        //    answerItems.Add(CreateAnswer(++answerIndex,question,AnswerType.Long,))
+
+        //}
+
+        private void CreateImageMapAssessment(AssessmentItem assessment)
+        {
+            List<MetaDataItem> questionMetaData = new();
+            List<AnswerItem> answerItems = new();
+            List<MetaDataItem> answerMetaData = new();
+
+            //question section
+
+            QuestionItem question = CreateQuestion(assessment, LayoutType.Default, LayoutType.Overlay,
+                InteractionType.MultiSelect);
+
+            int metaIndex = _metaData.Count-1;
+
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Ein Schaf deiner Herde ist lahm. Du musst es einfangen, um es genauer zu Unbtersichen. An welcher Stelle packst du das Schaf an?"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Hint, "Markiere die richtige Stelle auf dem Bild."));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Sheep.jpg"));
+
+            _questions.Add(question);
+
+            foreach (MetaDataItem metaDataItem in questionMetaData)
+            {
+                _metaData.Add(metaDataItem);
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question,metaDataItem));
+            }
+
+            //section answer
+            int answerIndex = _answers.Count - 1;
+            metaIndex = _metaData.Count - 1;
+
+            answerItems.Add(CreateAnswer(++metaIndex, question, AnswerType.Boolean, true.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Point2D, "30,40"));
+            answerItems.Add(CreateAnswer(++metaIndex, question, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Point2D, "50,100"));
+            answerItems.Add(CreateAnswer(++metaIndex, question, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Point2D, "150,300"));
+            answerItems.Add(CreateAnswer(++metaIndex, question, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Point2D, "150,300"));
+
+            if (answerItems.Count == answerMetaData.Count)
+            {
+                for (int i = 0; i < answerItems.Count; i++)
+                {
+                    int count = _answerMetaDataRelations.Count-1;
+                    _answers.Add(answerItems[i]);
+                    _metaData.Add(answerMetaData[i]);
+                    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(++count, answerItems[i].Id, answerMetaData[i].Id));
+                }
+            }
+            else
+            {
+                throw new Exception("Metadata and Answers are a mess");
+            }
         }
 
         private void CreateMultipleChoiceQuestion(AssessmentItem assessment)
@@ -142,10 +227,6 @@ namespace Invite.Apollo.App.Graph.Common.Test
             answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Salbei.jpg"));
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
             answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Minze.jpg"));
-
-            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
-                _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
-
 
             if (answerItems.Count == answerMetaData.Count)
             {
@@ -268,8 +349,6 @@ namespace Invite.Apollo.App.Graph.Common.Test
             _questionMetaDataRelations = new();
             _answerMetaDataRelations = new();
             _metaDataMetaDataRelations = new();
-            _answersMetaData = new();
-            _questionMetaData = new();
             _assessments = new();
         }
 
