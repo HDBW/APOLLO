@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Google.Protobuf.WellKnownTypes;
-using Graph.Apollo.Cloud.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models;
 
 namespace De.HDBW.Apollo.Data.Helper
 {

@@ -3,7 +3,7 @@
 
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Repositories;
-using Graph.Apollo.Cloud.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace De.HDBW.Apollo.Data.Tests.Repositories
 {

@@ -6,6 +6,6 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
+	  <ProjectReference Include="..\..\..\..\cloud\backend\apollo.cloud\graph.invite-apollo.app.common\Invite.Apollo.App.Graph.Common.csproj" />
 	</ItemGroup>
 </Project>
