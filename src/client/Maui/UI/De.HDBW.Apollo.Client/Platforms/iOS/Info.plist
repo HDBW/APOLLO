@@ -37,7 +37,7 @@
 				<string>de.hdbw.apollo.client</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>msal134f5063-2bdb-4731-8232-cf4ace68999b</string>
+					<string>msalYOUR_CLIENT_ID_HERE</string>
 				</array>
 			</dict>
 		</array>
