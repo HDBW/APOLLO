@@ -17,40 +17,25 @@ namespace De.HDBW.Apollo.Client.Services
 
         public void BeginInvokeOnMainThread(Action action)
         {
-            if (MainThread.IsMainThread)
-            {
-                action.Invoke();
-            }
-            else
-            {
-                MainThread.BeginInvokeOnMainThread(action);
-            }
+            MainThread.BeginInvokeOnMainThread(action);
+        }
+
+        public Task BeginInvokeOnMainThreadAsync(Action method, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            return MainThread.InvokeOnMainThreadAsync(method);
         }
 
         public Task ExecuteOnMainThreadAsync(Func<Task> action, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            if (MainThread.IsMainThread)
-            {
-                return action.Invoke();
-            }
-            else
-            {
-                return MainThread.InvokeOnMainThreadAsync(() => action);
-            }
+            return MainThread.InvokeOnMainThreadAsync(action);
         }
 
         public Task<TU> ExecuteOnMainThreadAsync<TU>(Func<Task<TU>> action, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            if (MainThread.IsMainThread)
-            {
-                return action.Invoke();
-            }
-            else
-            {
-                return MainThread.InvokeOnMainThreadAsync(() => { return action.Invoke(); });
-            }
+            return MainThread.InvokeOnMainThreadAsync(action);
         }
     }
 }

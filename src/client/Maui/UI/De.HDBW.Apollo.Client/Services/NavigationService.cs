@@ -34,17 +34,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled PushToRootAsnc in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled PushToRootAsnc in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while PushToRootAsnc in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType()}.");
             }
 
             return result;
@@ -62,17 +62,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled NavigateAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType()}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled NavigateAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType()}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while NavigateAsync in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsnc)} in {GetType()}.");
             }
 
             return result;
@@ -95,7 +95,7 @@ namespace De.HDBW.Apollo.Client.Services
 
             if (parameters == null)
             {
-                return Shell.Current.GoToAsync(route, true);
+                return Shell.Current.GoToAsync(route, true, new Dictionary<string, object>());
             }
             else
             {

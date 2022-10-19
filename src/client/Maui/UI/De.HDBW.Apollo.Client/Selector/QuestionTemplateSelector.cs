@@ -1,10 +1,14 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Client.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+
 namespace De.HDBW.Apollo.Client.Selector
 {
     public class QuestionTemplateSelector : DataTemplateSelector
     {
+
         public DataTemplate? UniformGridTemplate { get; set; }
 
         public DataTemplate? HorizontalListTemplate { get; set; }
@@ -17,15 +21,16 @@ namespace De.HDBW.Apollo.Client.Selector
 
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
-            switch (item)
+            var question = item as QuestionEntry;
+            switch (question?.QuestionLayout)
             {
-                case string:
+                case LayoutType.UniformGrid:
                     return UniformGridTemplate;
-                case int:
+                case LayoutType.HorizontalList:
                     return HorizontalListTemplate;
-                case Visibility:
+                case LayoutType.Overlay:
                     return OverlayTemplate;
-                case FlowDirection:
+                case LayoutType.Compare:
                     return CompareTemplate;
                 default:
                     return DefaultTemplate;
