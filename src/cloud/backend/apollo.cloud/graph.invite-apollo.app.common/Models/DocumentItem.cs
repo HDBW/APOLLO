@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Invite.Apollo.App.Graph.Common.Models
 {
     [DataContract]
-    public class Document : IBackendEntity, IEntity, ICdnEntity
+    public class DocumentItem : IBackendEntity, IEntity, ICdnEntity
     {
 
         #region Implementation of IEntity

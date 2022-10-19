@@ -172,11 +172,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Document" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.DocumentItem" BaseTypeListCollapsed="true">
     <Position X="2.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAACIAIAAAAAIAABUAAHAAAACAhggCAAAAAAAAE=</HashCode>
-      <FileName>Models\Document.cs</FileName>
+      <FileName>Models\DocumentItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>

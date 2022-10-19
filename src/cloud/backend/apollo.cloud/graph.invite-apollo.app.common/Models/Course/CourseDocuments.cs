@@ -31,7 +31,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [DataMember(Order = 5,IsRequired = true)]
         public long CourseId { get; set; }
 
-        [ForeignKey(nameof(Document))]
+        [ForeignKey(nameof(DocumentItem))]
         [DataMember(Order = 7, IsRequired = true)]
         public long DocumentId { get; set; }
     }
