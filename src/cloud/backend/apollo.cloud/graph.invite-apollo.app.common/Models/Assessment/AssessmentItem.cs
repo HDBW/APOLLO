@@ -33,7 +33,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         #endregion
 
-        [DataMember(Order = 3)] public string Title { get; set; } = null!;
+        [DataMember(Order = 5)] public string Title { get; set; } = null!;
     }
 
     [DataContract]

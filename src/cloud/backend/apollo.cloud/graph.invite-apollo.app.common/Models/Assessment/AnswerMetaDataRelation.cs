@@ -29,12 +29,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         #endregion
 
-        [DataMember(Order = 3)]
+        [DataMember(Order = 5)]
         [ForeignKey(nameof(AnswerItem))]
         public long AnswerId { get; set; }
 
         [ForeignKey(nameof(MetaDataItem))]
-        [DataMember(Order = 4)]
+        [DataMember(Order = 6)]
         public long MetaDataId { get; set; }
 
 
