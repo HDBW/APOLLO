@@ -79,7 +79,7 @@ namespace De.HDBW.Apollo.Data.Helper
             catch (Exception ex)
             {
                 result = false;
-                Logger?.LogError(ex, $"Unknown error while building usecase {usecase}");
+                Logger?.LogError(ex, $"Unknown error while {nameof(BuildAsync)} in {GetType().Name}. Usecase was {usecase}");
             }
 
             return result;

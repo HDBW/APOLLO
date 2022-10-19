@@ -41,15 +41,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled Skip in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled Skip in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
                 }
                 finally
                 {
@@ -81,11 +81,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled Register in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled Register in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
                 }
                 catch (MsalException ex)
                 {
@@ -93,7 +93,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown Error in Register in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Register)} in {GetType()}.");
                 }
                 finally
                 {

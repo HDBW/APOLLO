@@ -4,6 +4,7 @@
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using Microsoft.Extensions.Logging;
 
@@ -47,9 +48,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Dictionary<string, CancellationTokenSource> Workers { get; } = new Dictionary<string, CancellationTokenSource>();
 
-        public virtual Task OnNavigatedTo() => Task.CompletedTask;
+        public virtual Task OnNavigatedToAsync() => Task.CompletedTask;
 
-        public virtual Task OnNavigatingFrom() => Task.CompletedTask;
+        public virtual Task OnNavigatingFromAsync() => Task.CompletedTask;
 
         public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
         {
@@ -108,6 +109,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
         }
 
+        protected Task ExecuteOnUIThreadAsync(Action methodeToExecute, CancellationToken token)
+        {
+            return DispatcherService.SafeExecuteOnMainThreadAsync(methodeToExecute, Logger, token);
+        }
+
         [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task NavigateToRoute(string route, CancellationToken token)
         {
@@ -120,15 +126,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled NavigateToRoute in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(NavigateToRoute)} in {GetType()}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled NavigateToRoute in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(NavigateToRoute)} in {GetType()}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknoen Error in NavigateToRoute in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(NavigateToRoute)} in {GetType()}.");
                 }
                 finally
                 {

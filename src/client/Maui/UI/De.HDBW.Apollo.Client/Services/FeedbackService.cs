@@ -33,15 +33,15 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled SendFeedBackAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(SendFeedbackAsync)} in {GetType()}.");
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled SendFeedBackAsync in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(SendFeedbackAsync)} in {GetType()}.");
             }
             catch (Exception ex)
             {
-                Logger?.LogDebug(ex, $"Unknow Error while SendFeedBackAsync in {GetType()}.");
+                Logger?.LogError(ex, $"Unknow error while {nameof(SendFeedbackAsync)} in {GetType()}.");
             }
 
             return false;
