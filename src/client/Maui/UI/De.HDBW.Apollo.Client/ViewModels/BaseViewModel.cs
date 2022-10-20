@@ -50,7 +50,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         public virtual Task OnNavigatedToAsync() => Task.CompletedTask;
 
-        public virtual Task OnNavigatingFromAsync() => Task.CompletedTask;
+        public virtual Task OnNavigatingFromAsync(bool isForwardNavigation) => Task.CompletedTask;
 
         public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
         {
