@@ -18,6 +18,8 @@ docs/.DS_Store
 *.sln.docstates
 *.lutconfig
 *.lutignore
+*.plist
+AndroidManifest.xml
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
