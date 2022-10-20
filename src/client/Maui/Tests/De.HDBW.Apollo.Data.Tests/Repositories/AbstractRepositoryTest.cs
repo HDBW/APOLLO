@@ -10,8 +10,6 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
     public abstract class AbstractRepositoryTest<TU>
         where TU : IEntity, new()
     {
-        protected abstract IRepository<TU> GetRepository();
-
         [Fact]
         public async Task TestRepositoryWithCanceledAndDisposedTokenAsync()
         {
@@ -113,5 +111,6 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
             boolResult = await repository.RemoveItemsAsync(null, CancellationToken.None).ConfigureAwait(false);
             Assert.True(boolResult);
         }
+        protected abstract IRepository<TU> GetRepository();
     }
 }

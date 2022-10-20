@@ -10,11 +10,6 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
     public abstract class AbstractDataBaseRepositoryTest<TU> : AbstractRepositoryTest<TU>
         where TU : IEntity, new()
     {
-        private IDatabaseRepository<TU> GetDataBaseRepository()
-        {
-            return GetRepository() as IDatabaseRepository<TU>;
-        }
-
         [Fact]
         public async Task TestDatabaseRepositoryWithCanceledAndDisposedTokenAsync()
         {
@@ -45,5 +40,11 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
             // UpdateItemAsync(TU item, CancellationToken token);
             // UpdateItemsAsync(IEnumerable<TU> items, CancellationToken token);
         }
+
+        private IDatabaseRepository<TU> GetDataBaseRepository()
+        {
+            return GetRepository() as IDatabaseRepository<TU>;
+        }
+
     }
 }
