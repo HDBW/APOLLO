@@ -8,7 +8,6 @@ namespace De.HDBW.Apollo.Client.Selector
 {
     public class QuestionTemplateSelector : DataTemplateSelector
     {
-
         public DataTemplate? UniformGridTemplate { get; set; }
 
         public DataTemplate? HorizontalListTemplate { get; set; }

@@ -13,9 +13,17 @@ namespace De.HDBW.Apollo.Data.Repositories
         IDatabaseRepository<TU>
         where TU : IEntity, new()
     {
-        private IEqualityComparer<TU> _comparer = new EntityComparer<TU>();
+        private readonly IEqualityComparer<TU> _comparer = new EntityComparer<TU>();
 
-        protected readonly List<TU> _items = new List<TU>();
+        private readonly List<TU> _items = new List<TU>();
+
+        protected List<TU> Items
+        {
+            get
+            {
+                return _items;
+            }
+        }
 
         public Task<bool> AddItemAsync(TU item, CancellationToken token)
         {
@@ -126,6 +134,5 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
             return AddOrUpdateItemsAsync(items, token);
         }
-
     }
 }

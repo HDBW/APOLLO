@@ -11,7 +11,6 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -75,6 +74,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 return;
             }
+
             using (var worker = ScheduleWork())
             {
                 try
@@ -149,10 +149,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        protected override async void OnPrepare(NavigationParameters navigationParameters)
+        protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             _assessmentItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
-            await Task.Run(OnNavigatedToAsync);
         }
 
         private void LoadonUIThread(
