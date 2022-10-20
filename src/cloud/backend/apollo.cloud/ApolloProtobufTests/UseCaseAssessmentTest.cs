@@ -72,6 +72,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             CreateMultipleChoiceQuestion(assessment);
             //CreateAssociateAssessmentItem(assessment);
             CreateImageMapAssessment(assessment);
+            CreateRatingQuestion(assessment);
 
 
             AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
@@ -106,6 +107,53 @@ namespace Invite.Apollo.App.Graph.Common.Test
             }
 
             Assert.IsTrue(auc.QuestionItems.Count.Equals(expected.QuestionItems.Count));
+        }
+
+        private void CreateRatingQuestion(AssessmentItem assessment)
+        {
+            List<MetaDataItem> questionMetaData = new();
+            List<AnswerItem> answerItems = new();
+            List<MetaDataItem> answerMetaData = new();
+
+            QuestionItem question = CreateQuestion(assessment, LayoutType.Default, LayoutType.Default,
+                InteractionType.SingleSelect);
+
+            int metaIndex = _metaData.Count - 1;
+
+            questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Text,"Wie gut kannst Du Schwäbisch?"));
+            questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Hint, "Bitte wähle zwischen 1 - 3"));
+
+            foreach (MetaDataItem metaDataItem in questionMetaData)
+            {
+                _metaData.Add(metaDataItem);
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question,metaDataItem));
+            }
+
+            int answerIndex = _answers.Count - 1;
+            metaIndex = _metaData.Count - 1;
+
+            answerItems.Add(CreateAnswer(++answerIndex,question,AnswerType.Integer,null));
+            answerMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Text,"Hanoi!"));
+            answerItems.Add(CreateAnswer(++answerIndex,question,AnswerType.Integer,null));
+            answerMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Text,"Hawoisch Karle, Seitenbacher!"));
+            answerItems.Add(CreateAnswer(++answerIndex,question,AnswerType.Integer,null));
+            answerMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Text,"Oz geil!"));
+
+
+            if (answerItems.Count == answerMetaData.Count)
+            {
+                for (int i = 0; i < answerItems.Count; i++)
+                {
+                    int count = _answerMetaDataRelations.Count - 1;
+                    _answers.Add(answerItems[i]);
+                    _metaData.Add(answerMetaData[i]);
+                    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(++count, answerItems[i].Id, answerMetaData[i].Id));
+                }
+            }
+            else
+            {
+                throw new Exception("Metadata and Answers are a mess");
+            }
         }
 
         //private void CreateAssociateAssessmentItem(AssessmentItem assessment)
@@ -205,7 +253,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text,
                 "Du säuberst die Beete eurer Kunden von Unkraut. Welche Pflansen entfernst du nicht?"));
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Bitte wähle 1 bis 3 Antworten aus."));
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Hint, "Bitte wähle 1 bis 3 Antworten aus."));
 
             _questions.Add(question);
 
