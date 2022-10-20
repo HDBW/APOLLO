@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -6,18 +6,6 @@
 		<Nullable>enable</Nullable>
 		<UseMaui>true</UseMaui>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Remove="Exceptions\**" />
-	  <Compile Remove="SampleData\NewFolder\**" />
-	  <EmbeddedResource Remove="Exceptions\**" />
-	  <EmbeddedResource Remove="SampleData\NewFolder\**" />
-	  <MauiCss Remove="Exceptions\**" />
-	  <MauiCss Remove="SampleData\NewFolder\**" />
-	  <MauiXaml Remove="Exceptions\**" />
-	  <MauiXaml Remove="SampleData\NewFolder\**" />
-	  <None Remove="Exceptions\**" />
-	  <None Remove="SampleData\NewFolder\**" />
-	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="SampleData\MultipleChoiceAssessment.bin" />
 	</ItemGroup>
