@@ -88,7 +88,7 @@ namespace De.HDBW.Apollo.Data.Helper
         private Task<bool> DeserializeSampleDataAndInitalizeRepositoriesAsync(string fileName, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            AssessmentUseCases usecase = null;
+            AssessmentUseCases usecase;
             using (var stream = GetType().Assembly.GetManifestResourceStream(fileName))
             {
                 usecase = Serializer.Deserialize<AssessmentUseCases>(stream);
