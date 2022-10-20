@@ -11,12 +11,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class QuestionEntry : ObservableObject
     {
+        private readonly QuestionItem _questionItem;
+        private readonly IEnumerable<MetaDataItem> _questionMetaDataItems;
         [ObservableProperty]
         private string? _imagePath;
         [ObservableProperty]
-        private ObservableCollection<AnswerEntry> _answers;
-        private QuestionItem _questionItem;
-        private IEnumerable<MetaDataItem> _questionMetaDataItems;
+        private ObservableCollection<AnswerEntry> _answers = new ObservableCollection<AnswerEntry>();
 
         private QuestionEntry(
             QuestionItem questionItem,

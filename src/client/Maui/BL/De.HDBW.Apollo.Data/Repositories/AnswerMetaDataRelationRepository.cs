@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Data.Repositories
         public Task<IEnumerable<AnswerMetaDataRelation>> GetItemsByForeignKeysAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            return Task.FromResult(new ReadOnlyCollection<AnswerMetaDataRelation>(_items?.Where(i => ids.Contains(i.AnswerId)).ToList() ?? new List<AnswerMetaDataRelation>()) as IEnumerable<AnswerMetaDataRelation>);
+            return Task.FromResult(new ReadOnlyCollection<AnswerMetaDataRelation>(Items?.Where(i => ids.Contains(i.AnswerId)).ToList() ?? new List<AnswerMetaDataRelation>()) as IEnumerable<AnswerMetaDataRelation>);
         }
     }
 }
