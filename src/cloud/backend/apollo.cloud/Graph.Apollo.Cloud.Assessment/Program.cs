@@ -1,4 +1,6 @@
 
+using Invite.Apollo.App.Graph.Assessment;
+
 namespace Graph.Apollo.Cloud.Assessment;
 
 public class Program

@@ -1,8 +1,8 @@
 ﻿
-using Graph.Apollo.Cloud.Common.Models.Assessment;
-using Graph.Apollo.Cloud.Common.Models.Taxonomy;
 using Grpc.Core;
 using Grpc.Net.Client;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Esco;
 using ProtoBuf.Grpc.Client;
 
 class Program
@@ -14,10 +14,11 @@ class Program
         {
             var service = http.CreateGrpcService<IAssessmentService>();
 
-            Occupation occ = new();
-            occ.Schema = "http://data.europa.eu/esco/occupation/a10eb17a-3c78-4f7a-a1da-8f31146339d3";
+            //TODO: Bring Occupation Back
+            //Occupation occ = new();
+            //occ.Schema = "http://data.europa.eu/esco/occupation/a10eb17a-3c78-4f7a-a1da-8f31146339d3";
 
-            AssessmentRequest assessmentrequest = new() { Occupation = occ};
+            AssessmentRequest assessmentrequest = new() {};
 
             var response = await service.GetAssessmentsAsync(assessmentrequest);
             Console.WriteLine(response.Assessments.Count);
