@@ -86,11 +86,19 @@ public static class MauiProgram
             .WithRedirectUri($"msal{B2CConstants.ClientId}://auth");
 #endif
 
-        services.AddSingleton<IAuthService>(new AuthServiceB2C(
-            b2cClientApplicationBuilder
-                .WithIosKeychainSecurityGroup(B2CConstants.IosKeychainSecurityGroups)
-                .WithB2CAuthority(B2CConstants.AuthoritySignIn)
-                .Build()));
+        try
+        {
+            services.AddSingleton<IAuthService>(new AuthServiceB2C(
+                b2cClientApplicationBuilder
+                    .WithIosKeychainSecurityGroup(B2CConstants.IosKeychainSecurityGroups)
+                    .WithB2CAuthority(B2CConstants.AuthoritySignIn)
+                    .Build()));
+        }
+        catch (Exception ex)
+        {
+            services.AddSingleton<IAuthService>(new AuthServiceB2C(null));
+            Log.Error($"Error while creating AuthServiceB2C in {nameof(MauiProgram)}. Ex {ex.Message} {ex.StackTrace}.");
+        }
     }
 
     private static void SetupLogging()
