@@ -1,7 +1,6 @@
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
-using Invite.Apollo.App.Graph.Common.Models.Esco;
 using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Test
@@ -19,6 +18,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
         private List<MetaDataItem> _questionMetaData = new();
         private AssessmentItem _assessment = CreateAssessmentItem(title: "Garten-Landschaftsbau");
 
+        /// <summary>
+        /// Note this would kill the client atm
+        /// Should be int32 max
+        /// FIXME: Client Implementation
+        /// </summary>
         [Test]
         public void ShouldBeLongId()
         {
@@ -56,98 +60,6 @@ namespace Invite.Apollo.App.Graph.Common.Test
             //TODO: Create overlaod for Assessment to check Equals
             Assert.IsTrue(deserializedAssessment.Assessments[0].Id.Equals(assi.Id));
         }
-
-        /// <summary>
-        /// Testcase: Usecase Associate Question
-        /// TODO: Rewrite
-        /// </summary>
-        //[Test]
-        //public void ShouldGenerateAssociateAssessmentItem()
-        //{
-
-        //    QuestionItem qi = CreateQuestion(assessment: _assessment, questionLayout: LayoutType.UniformGrid,
-        //        answerLayout: LayoutType.UniformGrid, interaction: InteractionType.Associate);
-        //    _questions.Add(qi);
-
-        //    MetaDataItem md = CreateMetaData(id: _metaData.Count + 1, metaType: MetaDataType.Text,
-        //        value: "Du bist für die Rasenpflege verantwortlich. Welche Maschine setzt du für welche Aufgabe ein?");
-        //    _metaData.Add(md);
-        //    _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question:qi,meta:md));
-
-        //    List<long> tmpIdsList = new();
-
-        //    //Create questions
-
-        //    MetaDataItem data = CreateMetaData(_questionMetaDataRelations.Count + 1, MetaDataType.Image, "Maeer.jpg");
-        //    _metaData.Add(data);
-        //    _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question: qi, meta: data));
-        //    tmpIdsList.Add(data.Id);
-
-        //    data = CreateMetaData(id: _metaData.Count + 1, MetaDataType.Image, "Vertikutierer.jpg");
-        //    _metaData.Add(data);
-        //    _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question: qi, meta: data));
-        //    tmpIdsList.Add(data.Id);
-
-        //    data = CreateMetaData(_metaData.Count+1, MetaDataType.Image, "Rasenmaeher.jpg");
-        //    _metaData.Add(data);
-        //    _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question: qi, meta: data));
-        //    tmpIdsList.Add(data.Id);
-
-        //    data = CreateMetaData(_metaData.Count + 1, MetaDataType.Image, "Trimmer.jpg");
-        //    _metaData.Add(data);
-        //    _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question: qi, meta: data));
-        //    tmpIdsList.Add(data.Id);
-
-        //    //Create answers
-
-        //    AnswerItem answer = CreateAnswer(id: _answers.Count + 1, question: qi, answerType: AnswerType.Long,
-        //        value: tmpIdsList[0].ToString());
-        //    _answers.Add(answer);
-        //    data = CreateMetaData(id: _metaData.Count + 1, metaType: MetaDataType.Text, "Mähen große Rasenflächen");
-        //    _metaData.Add(data);
-        //    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(id:_answerMetaDataRelations.Count+1,answerId:answer.Id,data.Id));
-
-        //    answer = CreateAnswer(id: _answers.Count + 1, question: qi, answerType: AnswerType.Long,
-        //        value: tmpIdsList[1].ToString());
-        //    _answers.Add(answer);
-        //    data = CreateMetaData(id: _metaData.Count + 1, metaType: MetaDataType.Text, "Mähen mittlere Rasenflächen");
-        //    _metaData.Add(data);
-        //    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(id: _answerMetaDataRelations.Count + 1, answerId: answer.Id, data.Id));
-
-        //    answer = CreateAnswer(_answers.Count + 1, qi, AnswerType.Long, tmpIdsList[2].ToString());
-        //    _answers.Add(answer);
-        //    data = CreateMetaData(_answerMetaDataRelations.Count + 1, MetaDataType.Text, "Vertikutiern Rasenflächen");
-        //    _metaData.Add(data);
-        //    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(_answerMetaDataRelations.Count+1, answer.Id,data.Id));
-
-        //    answer = CreateAnswer(_answers.Count + 1, qi, AnswerType.Long, tmpIdsList[3].ToString());
-        //    _answers.Add(answer);
-        //    data = CreateMetaData(_answerMetaDataRelations.Count + 1, MetaDataType.Text, "Mähen Rasenkanten");
-        //    _metaData.Add(data);
-        //    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(_answerMetaDataRelations.Count + 1, answer.Id, data.Id));
-
-        //    //Serialize stuff
-
-        //    //Make sure the file is killed!
-        //    if (File.Exists("assessmentAssociate.bin"))
-        //    {
-        //        File.Delete("assessmentAssociate.bin");
-        //    }    
-
-
-        //    using var file = File.Create("assessmentAssociate.bin");
-        //    Serializer.Serialize(file, assessment);
-        //    file.Close();
-
-        //    //Check with Data
-        //    using var readfile = File.OpenRead("assessmentAssociate.bin");
-        //    Assessment deserialized = Serializer.Deserialize<Assessment>(readfile);
-        //    file.Close();
-
-        //    //Assert.AreEqual(assessment,deserialized);
-            
-        //    Assert.IsTrue(deserialized.Value.Id.Equals(assessment.Value.Id));
-        //}
 
         /// <summary>
         /// In this usecase we have image and you can press on predefined spots like find it.
