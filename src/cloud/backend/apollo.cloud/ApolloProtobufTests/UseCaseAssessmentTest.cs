@@ -4,6 +4,7 @@ using System.Reflection;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Microsoft.VisualBasic;
 using NUnit.Framework;
 using ProtoBuf;
 using ReassureTest;
@@ -21,64 +22,45 @@ namespace Invite.Apollo.App.Graph.Common.Test
         private Collection<MetaDataMetaDataRelation> _metaDataMetaDataRelations = new();
         private Collection<AssessmentItem> _assessments = new();
 
-        [Test]
-        public void ShouldGenerateAssessmentECommerceDude()
-        {
+        //[Test]
+        //public void ShouldGenerateAssessmentECommerceDude()
+        //{
 
 
-            long assessmentBackendId = 61282;
-            AssessmentItem assessment = CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Kaufmann/-frau - E-Commerce");
+        //    long assessmentBackendId = 61282;
+        //    AssessmentItem assessment = CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Kaufmann/-frau - E-Commerce");
 
-            //TODO: push assessment
-            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
-                _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
+        //    //TODO: push assessment
+        //    AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
+        //        _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
 
-            //TODO: push to overall datastructure
-        }
+        //    //TODO: push to overall datastructure
+        //}
 
-        [Test]
-        public void ShouldGenerateAssessmentDigitalSkills()
-        {
+        //[Test]
+        //public void ShouldGenerateAssessmentDigitalSkills()
+        //{
 
 
-            long assessmentBackendId = 43384;
-            AssessmentItem assessment = CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "IT-Grundwissen");
+        //    long assessmentBackendId = 43384;
+        //    AssessmentItem assessment = CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Larissa Testdata");
 
-            //TODO: push assessment
-            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
-                _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
-
-            //TODO: push to overall datastructure
-        }
+        //    AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
+        //        _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
+        //}
 
         [Test]
-        public void ShouldOnlyGenerateAssessmentWarehouseOperator()
+        public void ShouldGenerateDevAssessment()
         {
             ClearCollections();
-
             //assessment section
 
-            long assessmentBackendId = 24323;
-            AssessmentItem assessment = CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Fachlagerist:innen");
-            _assessments.Add(assessment);
-
-            //question section
-
-            //Question Priority:
-            // A: Choice, Eafrequency, Sort, Associate, rating
-            // B: Imagemap (Single, Multiple Choice)
-            // C: Eaconditions, cloze
-
-            CreateMultipleChoiceQuestion(assessment);
-            //CreateAssociateAssessmentItem(assessment);
-            CreateImageMapAssessment(assessment);
-            CreateRatingQuestion(assessment);
-
+            CreateDevAssessment();
 
             AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
                 _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
 
-            string filename = "MultipleChoiceAssessment.bin";
+            string filename = "devassessment.bin";
 
             if (File.Exists(filename))
             {
@@ -107,6 +89,165 @@ namespace Invite.Apollo.App.Graph.Common.Test
             }
 
             Assert.IsTrue(auc.QuestionItems.Count.Equals(expected.QuestionItems.Count));
+        }
+
+        [Test]
+        public void ShouldGenerateTestAssessment()
+        {
+            ClearCollections();
+            //assessment section
+
+            CreateDevAssessment();
+
+            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
+                _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
+
+            string filename = "devassessment.bin";
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            using (var file = File.Create(filename))
+            {
+                Serializer.Serialize(file, auc);
+                file.Close();
+            }
+
+            AssessmentUseCases expected;
+
+            using (var file = File.OpenRead(filename))
+            {
+                expected = Serializer.Deserialize<AssessmentUseCases>(file);
+                file.Close();
+            }
+
+            //Debug purposes
+            Debug.WriteLine(expected.QuestionItems.Count);
+            if (expected.QuestionItems != null)
+            {
+                Assert.AreEqual(expected.AnswerItems.Count, auc.AnswerItems.Count);
+            }
+
+            Assert.IsTrue(auc.QuestionItems.Count.Equals(expected.QuestionItems.Count));
+        }
+
+        private void CreateDevAssessment()
+        {
+            long assessmentBackendId = 24323;
+            AssessmentItem assessment =
+                CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Fachlagerist:innen");
+            _assessments.Add(assessment);
+
+            //question section
+
+            //Question Priority:
+            // A: Choice, Eafrequency, Sort, Associate, rating
+            // B: Imagemap (Single, Multiple Choice)
+            // C: Eaconditions, cloze
+
+            CreateMultipleChoiceQuestion(assessment);
+            CreateChoiceCompareQuestion(assessment);
+            CreateAssociateAssessmentItem(assessment);
+            CreateImageMapAssessment(assessment);
+            CreateRatingQuestion(assessment);
+        }
+
+        //TODO: Sleep eat and repeat!!!
+        //private void CreateTestAssessment()
+        //{
+        //    long assessmentBackendId = 12345;
+        //    AssessmentItem assessment =
+        //        CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Fachlagerist:innen");
+        //    _assessments.Add(assessment);
+
+            
+        //}
+
+        private void CreateChoiceCompareQuestion(AssessmentItem assessment)
+        {
+            Collection<MetaDataItem> questionsMetaData = new();
+            Collection<AnswerItem> answerItems = new();
+            Collection<MetaDataItem> answerMetaData = new();
+            Collection<MetaDataMetaDataRelation> labelMetaData = new();
+            Collection<QuestionMetaDataRelation> questionMetaDataRelation = new();
+
+            var question = CreateQuestion(assessment, LayoutType.Compare, LayoutType.Default,
+                InteractionType.MultiSelect);
+
+            int indexQuestionMeta = _metaData.Count - 1;
+            int indexMetaMetaIndex = _metaDataMetaDataRelations.Count - 1;
+
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Hint, "Bitte wähle 1 bis 3 Antworten aus."));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+
+            //In this case we have the meta_data_metadata relation
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.jpg"));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Lieferschein!"));
+            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionMeta - 1], questionsMetaData[indexQuestionMeta]));
+            //And another one of these beauties
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.jpg"));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Bestellbestätigungsdingens!"));
+            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionMeta - 1], questionsMetaData[indexQuestionMeta]));
+
+            foreach (MetaDataItem metaDataItem in questionsMetaData)
+            {
+                _metaData.Add(metaDataItem);
+            }
+
+            foreach (QuestionMetaDataRelation metaDataRelation in questionMetaDataRelation)
+            {
+                _questionMetaDataRelations.Add(metaDataRelation);
+            }
+
+            foreach (MetaDataMetaDataRelation metaDataRelation in labelMetaData)
+            {
+                _metaDataMetaDataRelations.Add(metaDataRelation);
+            }
+
+            int answerIndex = _answers.Count - 1;
+            int metaIndex = _metaData.Count - 1;
+
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Es wurde zu wenig geliefert.!"));
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Es wurde etwas nicht geliefert."));
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Es wurde etwas Falsches geliefert."));
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, false.ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Es wurde zu viel geliefert."));
+
+            if (answerItems.Count == answerMetaData.Count)
+            {
+                for (int i = 0; i < answerItems.Count; i++)
+                {
+                    int count = _answerMetaDataRelations.Count - 1;
+                    _answers.Add(answerItems[i]);
+                    _metaData.Add(answerMetaData[i]);
+                    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(++count, answerItems[i].Id, answerMetaData[i].Id));
+                }
+            }
+            else
+            {
+                throw new Exception("Metadata and Answers are a mess");
+            }
+        }
+
+        private MetaDataMetaDataRelation CreateMetaDataMetaDataRelation(int i, MetaDataItem source, MetaDataItem target)
+        {
+            return new MetaDataMetaDataRelation()
+                {
+                    Id = i, BackendId = DateTime.Now.Ticks, Schema = CreateSchema(), SourceId = source.Id,
+                    TargetId = target.Id,
+                    Ticks = DateTime.Now.Ticks
+                };
         }
 
         private void CreateRatingQuestion(AssessmentItem assessment)
@@ -156,35 +297,63 @@ namespace Invite.Apollo.App.Graph.Common.Test
             }
         }
 
-        //private void CreateAssociateAssessmentItem(AssessmentItem assessment)
-        //{
-        //    List<MetaDataItem> questionMetaData = new();
-        //    List<AnswerItem> answerItems = new();
-        //    List<MetaDataItem> answerMetaData = new();
+        private void CreateAssociateAssessmentItem(AssessmentItem assessment)
+        {
+            List<MetaDataItem> questionMetaData = new();
+            List<AnswerItem> answerItems = new();
+            List<MetaDataItem> answerMetaData = new();
 
-        //    QuestionItem question = CreateQuestion(assessment, LayoutType.UniformGrid, LayoutType.UniformGrid,
-        //        InteractionType.Associate);
+            QuestionItem question = CreateQuestion(assessment, LayoutType.UniformGrid, LayoutType.UniformGrid,
+                InteractionType.Associate);
 
-        //    int metaIndex = _metaData.Count - 1;
+            int metaIndex = _metaData.Count - 1;
 
-        //    questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Du bist für die Rasenpflege verantwortlich. Welche Maschine setzt du für welche Aufgabe ein?"));
-        //    questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image,"Maeer.jpg"));
-        //    questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Image, "Vertikutierer.jpg"));
-        //    questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Image, "Rasenmaeher.jpg"));
-        //    questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Image,"Trimmer.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Du bist für die Rasenpflege verantwortlich. Welche Maschine setzt du für welche Aufgabe ein?"));
+            questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Hint, "Bitte ziehe die jeweilige Antwort in die richtige Abbildung"));
 
-        //    foreach (MetaDataItem metaDataItem in questionMetaData)
-        //    {
-        //        _metaData.Add(metaDataItem);
-        //        _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question, metaDataItem));
-        //    }
+            List<long> ids = new();
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Maeer.jpg"));
+            ids.Add(metaIndex);
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Vertikutierer.jpg"));
+            ids.Add(metaIndex);
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Rasenmaeher.jpg"));
+            ids.Add(metaIndex);
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Trimmer.jpg"));
+            ids.Add(metaIndex);
 
-        //    int answerIndex = _answers.Count - 1;
-        //    metaIndex = _metaData.Count - 1;
+            foreach (MetaDataItem metaDataItem in questionMetaData)
+            {
+                _metaData.Add(metaDataItem);
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question, metaDataItem));
+            }
 
-        //    answerItems.Add(CreateAnswer(++answerIndex,question,AnswerType.Long,))
+            int answerIndex = _answers.Count - 1;
+            metaIndex = _metaData.Count - 1;
 
-        //}
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Long, ids[0].ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Text, "Mähen große Rasenflächen"));
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Long, ids[1].ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Mähen mittlere Rasenflächen"));
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Long, ids[2].ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Vertikutiern Rasenflächen"));
+            answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Long, ids[3].ToString()));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Mähen Rasenkanten"));
+
+            if (answerItems.Count == answerMetaData.Count)
+            {
+                for (int i = 0; i < answerItems.Count; i++)
+                {
+                    int count = _answerMetaDataRelations.Count - 1;
+                    _answers.Add(answerItems[i]);
+                    _metaData.Add(answerMetaData[i]);
+                    _answerMetaDataRelations.Add(CreateAnswerMetaDataRelation(++count, answerItems[i].Id, answerMetaData[i].Id));
+                }
+            }
+            else
+            {
+                throw new Exception("Metadata and Answers are a mess");
+            }
+        }
 
         private void CreateImageMapAssessment(AssessmentItem assessment)
         {
@@ -249,7 +418,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             var question = CreateQuestion(assessment, LayoutType.Default, LayoutType.Overlay,
                 InteractionType.MultiSelect);
 
-            var indexQuestionMeta = _metaData.Count-1;
+            int indexQuestionMeta = _metaData.Count-1;
 
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text,
                 "Du säuberst die Beete eurer Kunden von Unkraut. Welche Pflansen entfernst du nicht?"));
@@ -319,10 +488,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 Ticks = DateTime.Now.Ticks,
             };
         }
-
-
-
-
+        
         private QuestionMetaDataRelation CreateQuestionMetaDataRelation(QuestionItem question, MetaDataItem meta)
         {
             return new()
@@ -408,6 +574,47 @@ namespace Invite.Apollo.App.Graph.Common.Test
         public void ShouldGenerateUseCaseAssessments()
         {
             
+        }
+
+        [TearDown]
+        public void ShouldGenerateAssessmentFile()
+        {
+            ClearCollections();
+            CreateDevAssessment();
+            CreateTestAssessment();
+
+            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
+                _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
+
+            string filename = "assessments.bin";
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            using (var file = File.Create(filename))
+            {
+                Serializer.Serialize(file, auc);
+                file.Close();
+            }
+
+            AssessmentUseCases expected;
+
+            using (var file = File.OpenRead(filename))
+            {
+                expected = Serializer.Deserialize<AssessmentUseCases>(file);
+                file.Close();
+            }
+
+            //Debug purposes
+            Debug.WriteLine(expected.QuestionItems.Count);
+            if (expected.QuestionItems != null)
+            {
+                Assert.AreEqual(expected.AnswerItems.Count, auc.AnswerItems.Count);
+            }
+
+            Assert.IsTrue(auc.QuestionItems.Count.Equals(expected.QuestionItems.Count));
         }
 
 
