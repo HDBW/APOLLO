@@ -95,8 +95,8 @@ public static class MauiProgram
         }
         catch (Exception ex)
         {
-            Log.Error($"Unknow Error while registering B2C Auth in {nameof(MauiProgram)}. ClientId is {B2CConstants.ClientId}. AuthoritySignIn is {B2CConstants.AuthoritySignIn}.Eror was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
-            authService = new AuthServiceB2C(null);
+            Log.Error($"Unknow Error while registering B2C Auth in {nameof(MauiProgram)}. ClientId is {B2CConstants.ClientId}. AuthoritySignIn is {B2CConstants.AuthoritySignIn}.Error was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
+            authService = new AuthServiceB2C(null!);
         }
 
         services.AddSingleton<IAuthService>(authService);
@@ -110,7 +110,7 @@ public static class MauiProgram
         }
         catch (Exception ex)
         {
-            Log.Error($"Unknow Error while AcquireTokenSilent in {nameof(MauiProgram)}.");
+            Log.Error($"Unknow Error while AcquireTokenSilent in {nameof(MauiProgram)}. Error was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
         }
 
         return hasRegisteredUser;
