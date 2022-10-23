@@ -48,8 +48,8 @@ public static class MauiProgram
         Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
         SetupRoutes();
 
-        SetupB2CLogin(builder.Services);
-        SetupServices(builder.Services);
+        var result = SetupB2CLogin(builder.Services);
+        SetupServices(builder.Services, result);
         SetupRepositories(builder.Services);
         SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
@@ -73,7 +73,7 @@ public static class MauiProgram
         return userSecretsService;
     }
 
-    private static void SetupB2CLogin(IServiceCollection services)
+    private static bool SetupB2CLogin(IServiceCollection services)
     {
         var b2cClientApplicationBuilder = PublicClientApplicationBuilder.Create(B2CConstants.ClientId)
 #if ANDROID
@@ -84,19 +84,36 @@ public static class MauiProgram
 #else
             .WithRedirectUri($"msal{B2CConstants.ClientId}://auth");
 #endif
+        IAuthService authService;
         try
         {
-            services.AddSingleton<IAuthService>(new AuthServiceB2C(
+            authService = new AuthServiceB2C(
             b2cClientApplicationBuilder
                 .WithIosKeychainSecurityGroup(B2CConstants.IosKeychainSecurityGroups)
                 .WithB2CAuthority(B2CConstants.AuthoritySignIn)
-                .Build()));
+                .Build());
         }
         catch (Exception ex)
         {
             Log.Error($"Unknow Error while registering B2C Auth in {nameof(MauiProgram)}. ClientId is {B2CConstants.ClientId}. AuthoritySignIn is {B2CConstants.AuthoritySignIn}.Eror was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
-            services.AddSingleton<IAuthService>(new AuthServiceB2C(null));
+            authService = new AuthServiceB2C(null);
         }
+
+        services.AddSingleton<IAuthService>(authService);
+        bool hasRegisteredUser = false;
+        try
+        {
+            var task = authService.AcquireTokenSilent(CancellationToken.None);
+            task.Wait();
+            var authenticationResult = task.Result;
+            hasRegisteredUser = task.Result?.Account != null;
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Unknow Error while AcquireTokenSilent in {nameof(MauiProgram)}.");
+        }
+
+        return hasRegisteredUser;
     }
 
     private static void SetupLogging()
@@ -146,15 +163,13 @@ public static class MauiProgram
         return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
     }
 
-    private static void SetupServices(IServiceCollection services)
+    private static void SetupServices(IServiceCollection services, bool hasRegisterdUser)
     {
         services.AddSingleton((s) => { return Preferences.Default; });
-
-        services.AddSingleton<ISessionService, SessionService>();
         services.AddSingleton<IPreferenceService, PreferenceService>();
         services.AddSingleton<IDispatcherService, DispatcherService>();
         services.AddSingleton<INavigationService, NavigationService>();
-        services.AddSingleton<ISessionService, SessionService>();
+        services.AddSingleton<ISessionService>(new SessionService(hasRegisterdUser));
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
@@ -173,8 +188,8 @@ public static class MauiProgram
 
     private static void SetupViewsAndViewModels(IServiceCollection services)
     {
-        services.AddSingleton<AppShell>();
-        services.AddSingleton<AppShellViewModel>();
+        services.AddTransient<AppShell>();
+        services.AddTransient<AppShellViewModel>();
         services.AddTransient<StartView>();
         services.AddTransient<StartViewModel>();
         services.AddTransient<ExtendedSplashScreenView>();
