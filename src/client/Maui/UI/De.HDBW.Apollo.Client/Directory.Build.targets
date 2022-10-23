@@ -60,7 +60,7 @@
   
   <Target Name="AddUserSecrets"
          BeforeTargets="PrepareForBuild"
-         Condition=" '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+         Condition=" '$(UserSecretsId)' != '' ">
     <Message Text="Os: $(TargetFramework)" />
     <ItemGroup>
       <EmbeddedResource Include="$(UserSecretsFilePath)" Condition="Exists($(UserSecretsFilePath))"/>
@@ -69,7 +69,7 @@
 
   <Target Name="TransformManifest-Android"
          BeforeTargets="PrepareForBuild"
-         Condition=" '$(TargetFramework)' == 'net6.0-android' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+         Condition=" '$(TargetFramework)' == 'net6.0-android' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
 
     <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
@@ -85,7 +85,7 @@
   
   <Target Name="TransformManifest-iOS"
          BeforeTargets="PrepareForBuild"
-         Condition=" '$(TargetFramework)' == 'net6.0-ios' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+         Condition=" '$(TargetFramework)' == 'net6.0-ios' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
     
     <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
@@ -102,7 +102,7 @@
   
   <Target Name="TransformManifest-Mac"
          BeforeTargets="PrepareForBuild"
-         Condition=" '$(TargetFramework)' == 'net6.0-maccatalyst' And '$(Configuration)' == 'Debug' And '$(UserSecretsId)' != '' ">
+         Condition=" '$(TargetFramework)' == 'net6.0-maccatalyst' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
     <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
       <Output TaskParameter="Result" PropertyName="ClientId" />
