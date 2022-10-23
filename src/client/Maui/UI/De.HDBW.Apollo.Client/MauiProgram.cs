@@ -85,12 +85,19 @@ public static class MauiProgram
 #else
             .WithRedirectUri($"msal{B2CConstants.ClientId}://auth");
 #endif
-
-        services.AddSingleton<IAuthService>(new AuthServiceB2C(
+        try
+        {
+            services.AddSingleton<IAuthService>(new AuthServiceB2C(
             b2cClientApplicationBuilder
                 .WithIosKeychainSecurityGroup(B2CConstants.IosKeychainSecurityGroups)
                 .WithB2CAuthority(B2CConstants.AuthoritySignIn)
                 .Build()));
+        }
+        catch(Exception ex)
+        {
+            Log.Error($"Unknow Error while registering B2C Auth in {nameof(MauiProgram)}. Eror was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
+            services.AddSingleton<IAuthService>(new AuthServiceB2C(null));
+        }
     }
 
     private static void SetupLogging()
