@@ -223,6 +223,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abmelden.
+        /// </summary>
+        public static string RegistrationView_UnRegisterUser {
+            get {
+                return ResourceManager.GetString("RegistrationView_UnRegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usecase ändern.
+        /// </summary>
+        public static string StartView_ChangeUseCase {
+            get {
+                return ResourceManager.GetString("StartView_ChangeUseCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entdecke dein Karrierepotential
         ///(Ist-Stand bekannt – Inspiration).
         /// </summary>
