@@ -31,7 +31,6 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        // TODO: In case we need to request permissions, set default to false and show dialog to request permissions.
         Preferences.Default.Set(Preference.AllowTelemetry.ToString(), true);
         var builder = MauiApp.CreateBuilder();
         SetupSecrets(builder.Services);
@@ -93,9 +92,9 @@ public static class MauiProgram
                 .WithB2CAuthority(B2CConstants.AuthoritySignIn)
                 .Build()));
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Log.Error($"Unknow Error while registering B2C Auth in {nameof(MauiProgram)}. Eror was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
+            Log.Error($"Unknow Error while registering B2C Auth in {nameof(MauiProgram)}. ClientId is {B2CConstants.ClientId}. AuthoritySignIn is {B2CConstants.AuthoritySignIn}.Eror was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
             services.AddSingleton<IAuthService>(new AuthServiceB2C(null));
         }
     }
@@ -122,7 +121,9 @@ public static class MauiProgram
                 .WriteTo.Debug()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug, retainedFileCountLimit: 5)
 #else
-                .MinimumLevel.Debug()
+                .MinimumLevel.Verbose()
+                .Enrich.WithMemoryUsage()
+                .Enrich.WithThreadId()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug, retainedFileCountLimit: 20)
 #endif
                 .WriteTo.Conditional(IsTelemetryEnable, wt => wt.UseApplicationInsights(TelemetryConstants.Configuration, TelemetryConverter.Traces))
