@@ -4,6 +4,7 @@
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 
@@ -16,18 +17,32 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             IAuthService authService,
+            ISessionService sessionService,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             AuthService = authService;
+            SessionService = sessionService;
+        }
+
+        public bool HasRegisterdUser
+        {
+            get
+            {
+                return SessionService.HasRegisteredUser;
+            }
         }
 
         private IAuthService AuthService { get; }
+
+        private ISessionService SessionService { get; }
 
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
             SkipCommand?.NotifyCanExecuteChanged();
+            RegisterCommand?.NotifyCanExecuteChanged();
+            UnRegisterCommand?.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
@@ -63,6 +78,46 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy;
         }
 
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
+        private async Task UnRegister(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var authentication = await AuthService.AcquireTokenSilent(worker.Token);
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                }
+                catch (MsalException ex)
+                {
+                    Logger?.LogWarning(ex, $"Error while unregistering user in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(UnRegister)} in {GetType()}.");
+                }
+                finally
+                {
+                    OnPropertyChanged(nameof(HasRegisterdUser));
+                    RefreshCommands();
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanUnRegister()
+        {
+            return !IsBusy && HasRegisterdUser;
+        }
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
@@ -70,13 +125,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var x = await AuthService.AcquireTokenSilent(worker.Token);
-                    if (x != null)
-                    {
-                        await AuthService.LogoutAsync(worker.Token);
-                    }
+                    var authentication = await AuthService.SignInInteractively(worker.Token);
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
 
-                    var result = await AuthService.SignInInteractively(worker.Token);
                     await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -97,6 +148,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
+                    OnPropertyChanged(nameof(HasRegisterdUser));
+                    RefreshCommands();
                     UnscheduleWork(worker);
                 }
             }
@@ -104,7 +157,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanRegister()
         {
-            return !IsBusy;
+            return !IsBusy && !HasRegisterdUser;
         }
     }
 }

@@ -45,6 +45,5 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
         {
             return GetRepository() as IDatabaseRepository<TU>;
         }
-
     }
 }

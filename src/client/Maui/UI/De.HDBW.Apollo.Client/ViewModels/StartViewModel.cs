@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    // TODO: We need a way to navigate back to UseCaseSelection. PushToRoot
     public partial class StartViewModel : BaseViewModel
     {
         private readonly ObservableCollection<InteractionEntry> _interactions = new ObservableCollection<InteractionEntry>();
@@ -88,6 +87,39 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private bool CanOpenSettings()
+        {
+            return !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanChangeUseCase), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        private async Task ChangeUseCase(CancellationToken token)
+        {
+            using (var work = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.ResetNavigationAsnc(Routes.UseCaseSelectionView, token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(work);
+                }
+            }
+        }
+
+        private bool CanChangeUseCase()
         {
             return !IsBusy;
         }
