@@ -99,6 +99,34 @@ namespace De.HDBW.Apollo.Client.Services
             return result;
         }
 
+        public async Task<bool> ResetNavigationAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
+        {
+            Logger?.LogDebug($"ResetNavigationAsnc to {route} with parameters: {parameters?.ToString() ?? "null"}.");
+            token.ThrowIfCancellationRequested();
+            var result = false;
+            try
+            {
+                await DispatcherService.ExecuteOnMainThreadAsync(() => ResetNavigationOnUIThreadAsnc(route, token, parameters), token);
+                result = true;
+            }
+            catch (OperationCanceledException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(ResetNavigationAsnc)} in {GetType()}.");
+                throw;
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(ResetNavigationAsnc)} in {GetType()}.");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(ResetNavigationAsnc)} in {GetType()}.");
+            }
+
+            return result;
+        }
+
         private async Task NavigateOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
             Logger?.LogDebug($"NavigateOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
@@ -202,6 +230,66 @@ namespace De.HDBW.Apollo.Client.Services
             }
 
             return Task.CompletedTask;
+        }
+
+        private async Task ResetNavigationOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
+        {
+            Logger?.LogDebug($"ResetNavigationOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
+            token.ThrowIfCancellationRequested();
+            if (Application.Current == null)
+            {
+                return;
+            }
+
+            var page = Routing.GetOrCreateContent(route, ServiceProvider) as Page;
+            if (page == null)
+            {
+                return;
+            }
+
+            page.NavigatedTo += NavigatedToPage;
+            page.NavigatedFrom += NavigatedFromPage;
+
+            var navigationPage = Application.Current.MainPage as NavigationPage;
+            var shell = Application.Current.MainPage as Shell;
+
+            Application.Current.MainPage = page;
+
+            if (navigationPage != null)
+            {
+                var existingPages = navigationPage.Navigation.NavigationStack.ToList();
+                foreach (var existingPage in existingPages)
+                {
+                    if (existingPage == page)
+                    {
+                        continue;
+                    }
+
+                    existingPage.NavigatedTo -= NavigatedToPage;
+                    existingPage.NavigatedFrom -= NavigatedFromPage;
+                    navigationPage.Navigation.RemovePage(existingPage);
+                    NavigatedFromPage(existingPage, null);
+                }
+            }
+
+            if (shell != null)
+            {
+                shell.Navigating -= NavigatedFromPageInShell;
+                shell.Navigated -= NavigatedToPageInShell;
+                var isNavigatingBack = true;
+                while (isNavigatingBack)
+                {
+                    var stackedPage = await shell.Navigation.PopAsync(false);
+                    if (stackedPage == null)
+                    {
+                        isNavigatingBack = false;
+                        continue;
+                    }
+
+                    NavigatedFromPageInShell(stackedPage, null);
+                    shell.Navigation.RemovePage(shell.CurrentPage);
+                }
+            }
         }
 
         private void NavigatedFromPageInShell(object? sender, ShellNavigatingEventArgs? e)
