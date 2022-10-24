@@ -119,9 +119,4 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <MauiAsset Update="Resources\Raw\animation.json">
-      <LogicalName>animation.json</LogicalName>
-    </MauiAsset>
-  </ItemGroup>
 </Project>
