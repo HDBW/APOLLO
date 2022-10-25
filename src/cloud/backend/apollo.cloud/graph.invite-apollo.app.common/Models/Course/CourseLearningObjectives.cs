@@ -41,12 +41,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long CourseId { get; set; }
 
         [DataMember(Order = 6, IsRequired = true)]
-        public string CourseIdBackend { get; set; } = null!;
+        public string CourseIdBackend { get; set; } = string.Empty;
 
         /// <summary>
         /// Probably Concept -> Move to Metadata for Description for Production
         /// </summary>
-        public string Value { get; set; } = null!;
+        [DataMember(Order = 7)]
+        public string Value { get; set; } = string.Empty;
 
         //TODO: Implement Mapping to Taxonomie
     }

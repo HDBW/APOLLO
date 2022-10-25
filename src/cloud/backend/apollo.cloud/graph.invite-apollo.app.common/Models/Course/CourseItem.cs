@@ -37,28 +37,28 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// The title of a course provided by the training provider
         /// </summary>
         [DataMember(Order = 5,IsRequired = true)]
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// A short description of the course
         /// A AI based feature which generates the key Talking points of the course
         /// </summary>
         [DataMember(Order = 6, IsRequired = false)]
-        public string ShortDescription { get; set; } = null!;
+        public string ShortDescription { get; set; } = string.Empty;
 
         /// <summary>
         /// Course Description as HTML
         /// A description of the course
         /// </summary>
         [DataMember(Order = 7, IsRequired = true)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// A list of person types or occupations as well as text describing the target audience.
         /// TODO: Maybe a list of PersonTypes as identified by the backend?
         /// </summary>
         [DataMember(Order = 8, IsRequired = false)]
-        public string TargetGroup { get; set; } = null!;
+        public string TargetGroup { get; set; } = string.Empty;
 
         /// <summary>
         /// Indicates the type of a course: `Unknown, Online, InPerson, OnAndOffline, InHouse, All`
@@ -83,7 +83,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// The original text provided as prerequisites as the training provider publishes the course.
         /// </summary>
         [DataMember(Order = 12, IsRequired = false)]
-        public string PreRequisitesDescription { get; set; } = null!;
+        public string PreRequisitesDescription { get; set; } = string.Empty;
 
         //TODO: Define Scope of LearningOutcomes note backend only!
 
@@ -98,7 +98,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// Key phrases are BiTerm Analysis of the given text
         /// </summary>
         [DataMember(Order = 13, IsRequired = false)]
-        public string KeyPhrases { get; set; } = null!;
+        public string KeyPhrases { get; set; } = string.Empty;
 
         /// <summary>
         /// Duration of the Course
@@ -138,7 +138,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public decimal? Price { get; set; }
         [Obsolete]
         [DataMember(Order = 41, IsRequired = false)]
-        public string Currency { get; set; } = null!;
+        public string Currency { get; set; } = string.Empty;
 
 
         #region relations
@@ -255,7 +255,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
     public class CourseRequest : ICorrelationId
     {
         [DataMember(Order = 1, IsRequired = true)]
-        public string CorrelationId { get; set; } = null!;
+        public string CorrelationId { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -271,7 +271,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         }
 
         [DataMember(Order = 1,IsRequired = true)]
-        public string CorrelationId { get; set; } = null!;
+        public string CorrelationId { get; set; } = string.Empty;
 
         [DataMember(Order = 2)]
         public Collection<CourseItem> Courses { get; set; }
@@ -284,13 +284,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
     public class CourseSearchRequest : ICorrelationId
     {
         [DataMember(Order = 1,IsRequired = true)]
-        public string CorrelationId { get; set; } = null!;
+        public string CorrelationId { get; set; } = string.Empty;
     }
 
     [DataContract]
     public class CourseSearchResponse : ICorrelationId
     {
         [DataMember(Order = 1, IsRequired = true)]
-        public string CorrelationId { get; set; } = null!;
+        public string CorrelationId { get; set; } = string.Empty;
     }
 }

@@ -154,16 +154,15 @@ namespace Invite.Apollo.App.Graph.Common.Test
             CreateRatingQuestion(assessment);
         }
 
-        //TODO: Sleep eat and repeat!!!
-        //private void CreateTestAssessment()
-        //{
-        //    long assessmentBackendId = 12345;
-        //    AssessmentItem assessment =
-        //        CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Fachlagerist:innen");
-        //    _assessments.Add(assessment);
+        private void CreateTestAssessment()
+        {
+            long assessmentBackendId = 12345;
+            AssessmentItem assessment =
+                CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Fachlagerist:innen");
+            _assessments.Add(assessment);
 
             
-        //}
+        }
 
         private void CreateChoiceCompareQuestion(AssessmentItem assessment)
         {
@@ -178,24 +177,28 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             int indexQuestionMeta = _metaData.Count - 1;
             int indexMetaMetaIndex = _metaDataMetaDataRelations.Count - 1;
+            int indexQuestionsMetaData = questionMetaDataRelation.Count - 1;
+            int indexLabelMetaData = labelMetaData.Count - 1;
 
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Hint, "Bitte wähle 1 bis 3 Antworten aus."));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            //index shit fucked up
 
-            //In this case we have the meta_data_metadata relation
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.jpg"));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            //questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
+            //questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[++indexQuestionsMetaData]));
+            //questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Hint, "Bitte wähle 1 bis 3 Antworten aus."));
+            //questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[++indexQuestionsMetaData]));
 
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Lieferschein!"));
-            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionMeta - 1], questionsMetaData[indexQuestionMeta]));
-            //And another one of these beauties
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.jpg"));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            ////In this case we have the meta_data_metadata relation
+            //questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.jpg"));
+            //questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[++indexQuestionsMetaData]));
 
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Bestellbestätigungsdingens!"));
-            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionMeta - 1], questionsMetaData[indexQuestionMeta]));
+            //questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Lieferschein!"));
+            //labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionsMetaData], questionsMetaData[indexQuestionsMetaData]));
+            ////And another one of these beauties
+            //questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.jpg"));
+            //questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionsMetaData]));
+
+            //questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Bestellbestätigungsdingens!"));
+            //labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionsMetaData - 1], labelMetaData[++indexLabelMetaData]));
 
             foreach (MetaDataItem metaDataItem in questionsMetaData)
             {
@@ -581,7 +584,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
         {
             ClearCollections();
             CreateDevAssessment();
-            CreateTestAssessment();
+            //CreateTestAssessment();
 
             AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
                 _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
