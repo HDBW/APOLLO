@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-using System.Security.Principal;
+using System.Security.Permissions;
 using System.Text;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
-namespace Invite.Apollo.App.Graph.Common.Models.Esco
+namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
-
-    [DataContract]
-    public class Skill : IEntity, IBackendEntity
+    public class PaymentInfo : IEntity, IBackendEntity
     {
+        public string Currency { get; set; } = string.Empty;
 
+        public decimal Minimal { get; set; }
+
+        public decimal Median { get; set; }
+
+        public decimal Maximum { get; set; }
+
+        [ForeignKey(nameof(Occupation))]
+        public long OccupationId { get; set; }
 
         #region Implementation of IEntity
+
         [Key]
         public long Id { get; set; }
         public long Ticks { get; set; }
@@ -28,7 +34,5 @@ namespace Invite.Apollo.App.Graph.Common.Models.Esco
         public Uri Schema { get; set; }
 
         #endregion
-
-        public string Value { get; set; }
     }
 }

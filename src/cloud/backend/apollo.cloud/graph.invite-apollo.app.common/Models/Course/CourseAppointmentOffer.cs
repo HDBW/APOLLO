@@ -45,7 +45,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public OfferType OfferType { get; set; }
 
         [DataMember(Order = 8)]
-        public string OfferDetails { get; set; } = null!;
+        public string OfferDetails { get; set; } = string.Empty;
 
         [DataMember(Order = 9)]
         public Uri OfferUrl { get; set; } = null!;
