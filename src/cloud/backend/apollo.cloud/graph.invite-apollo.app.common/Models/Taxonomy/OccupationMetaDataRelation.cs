@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
-using System.Security.Principal;
-using System.Text;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
-namespace Invite.Apollo.App.Graph.Common.Models.Esco
+namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
-
     [DataContract]
-    public class Skill : IEntity, IBackendEntity
+    public class OccupationMetaDataRelation : IEntity, IBackendEntity
     {
-
-
         #region Implementation of IEntity
+
         [Key]
         public long Id { get; set; }
         public long Ticks { get; set; }
@@ -25,10 +19,14 @@ namespace Invite.Apollo.App.Graph.Common.Models.Esco
         #region Implementation of IBackendEntity
 
         public long BackendId { get; set; }
-        public Uri Schema { get; set; }
+        public Uri Schema { get; set; } = null!;
 
         #endregion
 
-        public string Value { get; set; }
+        [ForeignKey(nameof(Occupation))]
+        public long OccupationId { get; set; }
+
+        [ForeignKey(nameof(Models.MetaDataItem))]
+        public long MetaDataItemId { get; set; }
     }
 }

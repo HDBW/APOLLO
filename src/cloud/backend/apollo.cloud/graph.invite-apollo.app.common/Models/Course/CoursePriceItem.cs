@@ -45,7 +45,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public decimal Price { get; set; }
 
         [DataMember(Order = 8)]
-        public string Currency { get; set; } = null!;
+        public string Currency { get; set; } = string.Empty;
 
         [DataMember(Order = 9)]
         public DateTime? StartTime { get; set; }
@@ -54,9 +54,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public DateTime? EndTime { get; set; }
 
         [DataMember(Order = 11)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = string.Empty;
 
         [DataMember(Order = 12)]
-        public string Conditions { get; set; } = null!;
+        public string Conditions { get; set; } = string.Empty;
     }
 }

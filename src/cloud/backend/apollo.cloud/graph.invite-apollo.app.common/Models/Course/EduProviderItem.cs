@@ -27,10 +27,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         #endregion
 
         [DataMember(Order = 5,IsRequired = true)]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
 
         [DataMember(Order = 6)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = string.Empty;
 
         [DataMember(Order = 7)]
         public Uri Website { get; set; } = null!;

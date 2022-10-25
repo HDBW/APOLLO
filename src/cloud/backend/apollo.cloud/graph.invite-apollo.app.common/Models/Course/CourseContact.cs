@@ -27,13 +27,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         #endregion
 
         [DataMember(Order = 5)]
-        public string ContactName { get; set; } = null!;
+        public string ContactName { get; set; } = string.Empty;
 
         [DataMember(Order = 6)]
-        public string ContactMail { get; set; } = null!;
+        public string ContactMail { get; set; } = string.Empty;
 
         [DataMember(Order = 7)]
-        public string ContactPhone { get; set; } = null!;
+        public string ContactPhone { get; set; } = string.Empty;
 
         [DataMember(Order = 8)] public Uri Url { get; set; } = null!;
 

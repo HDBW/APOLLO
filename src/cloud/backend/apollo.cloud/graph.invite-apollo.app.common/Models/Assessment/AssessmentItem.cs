@@ -33,7 +33,20 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         #endregion
 
-        [DataMember(Order = 5)] public string Title { get; set; } = null!;
+        [DataMember(Order = 5)]
+        public string Title { get; set; } = string.Empty;
+
+        [DataMember(Order = 6)]
+        public string Profession { get; set; } = string.Empty;
+
+        [DataMember(Order = 7)]
+        public string Kldb { get; set; } = string.Empty;
+
+        [DataMember(Order = 8)]
+        public string EscoOccupationId { get; set; } = string.Empty;
+
+        [DataMember(Order = 9)]
+        public AssessmentType Assessment { get; set; }
     }
 
     [DataContract]
@@ -56,6 +69,14 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     }
 
     [DataContract]
+    public enum AssessmentType
+    {
+        SkillAssessment = 0,
+        SoftSkillAssessment = 1,
+        Survey = 2
+    }
+
+    [DataContract]
     public class AssessmentResponse : ICorrelationId
     {
         public AssessmentResponse()
@@ -64,7 +85,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         }
 
         [DataMember(Order = 1, IsRequired = true)]
-        public string CorrelationId { get; set; } = null!;
+        public string CorrelationId { get; set; } = string.Empty;
 
         [DataMember(Order = 2)]
         public Collection<AssessmentItem> Assessments { get; set; }
