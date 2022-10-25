@@ -69,7 +69,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI iOS
-      run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -f:net6.0-ios -c:Release /p:ArchiveOnBuild=true /p:RuntimeIdentifier=ios-arm64 /p:CodesignKey="${{secrets.CODESIGNINGKEY}}" /p:CodesignProvision=StoreProfile /p:CodesignEntitlements=Entitlements.plist
+      run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -f:net6.0-ios -c:Release /p:ArchiveOnBuild=true /p:RuntimeIdentifier=ios-arm64 /p:CodesignKey="${{secrets.CODESIGNINGKEY}}" /p:CodesignProvision=StoreProfile /p:CodesignEntitlements=src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client/Platforms/iOS/Entitlements.plist
       #run: dotnet build src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -c Release -f net6.0-ios --no-restore /p:buildForSimulator=True /p:packageApp=True /p:ArchiveOnBuild=False
     - name: Upload iOS Artifact
       uses: actions/upload-artifact@v3.1.0
