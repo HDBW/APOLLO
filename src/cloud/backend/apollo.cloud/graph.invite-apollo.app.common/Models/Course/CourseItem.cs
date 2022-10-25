@@ -106,6 +106,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [DataMember(Order = 14, IsRequired = false)]
         public TimeSpan Duration { get; set; }
 
+        [DataMember(Order = 15, IsRequired = false)]
+        public Uri CourseUrl { get; set; } = null;
+
 
         #region Classification
 

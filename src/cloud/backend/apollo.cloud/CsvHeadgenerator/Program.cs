@@ -18,6 +18,7 @@ public class Program
         CreateSimilarCourses();
         CreateCourseModuleItem();
         CreateLoanOptions();
+        CreateLearningObjectives();
 
         //Assessment Stuff
         CreateAssessmentCsv();
@@ -27,7 +28,8 @@ public class Program
         CreateQuestionMetaDataCsv();
         CreateAnswersMetaDataCsv();
         CreateMetaDataMetaDataCsv();
-
+        //TODO: Add AssessmentScore
+        //TODO: User Profile AssessmentScore
 
     }
 
@@ -89,7 +91,7 @@ public class Program
     {
         PropertyInfo[] properties = typeof(AssessmentItem).GetProperties();
 
-        string filename = "assessment.csv";
+        string filename = "AssessmentItem.csv";
 
         CreateCsV(properties, filename);
     }
@@ -163,7 +165,7 @@ public class Program
     {
         PropertyInfo[] properties = typeof(CourseItem).GetProperties();
 
-        string filename = "course.csv";
+        string filename = "CourseItem.csv";
 
         CreateCsV(properties, filename);
     }
@@ -175,7 +177,7 @@ public class Program
         StringBuilder sbHeadDescription = new();
 
         foreach (PropertyInfo property in properties)
-        {
+         {
             sbHeadBuilder.Append($"{property.Name};");
         }
 
@@ -187,7 +189,9 @@ public class Program
         csvString.AppendLine(sbHeadBuilder.ToString());
         csvString.AppendLine(sbHeadDescription.ToString());
 
+
         File.WriteAllText(filename, csvString.ToString());
+        Console.WriteLine($"Created {filename} @ {DateTime.Now.ToUniversalTime()} : With {properties.Length} entries.");
     }
 
 
