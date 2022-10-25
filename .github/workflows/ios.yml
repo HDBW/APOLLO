@@ -29,6 +29,13 @@ jobs:
         dotnet-version: 6.0.x
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
+    - name: Init User-Secrets
+      run: |
+        dotnet user-secrets init -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "ClientId" "${{secrets.B2CCLIENTID}}"
+        dotnet user-secrets set "TenantName" "${{secrets.B2CTENANTNAME}}"
+        dotnet user-secrets set "SignInPolicy" "${{secrets.SIGNINGPOLICY}}"
+        dotnet user-secrets set "InstrumentationKey" "${{secrets.APPI_INSTUMENTATION_KEY}}"
     - name: Install the Apple certificate and provisioning profile
       env:
         BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
