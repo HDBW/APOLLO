@@ -1,0 +1,33 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: iOS Build
+
+on:
+  push:
+    branches: [ "development" ]
+  pull_request:
+    branches: [ "development" ]
+
+jobs:
+  build:
+
+    runs-on: macos-12
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Install MAUI Workload
+      run: dotnet workload install maui --ignore-failed-sources
+    - name: Restore dependencies
+      run: dotnet restore src/client/Maui/Apollo.sln
+    - name: Build MAUI iOS
+      run: dotnet build src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -c Release -f net6.0-ios --no-restore /p:buildForSimulator=True /p:packageApp=True /p:ArchiveOnBuild=False
+    - name: Upload iOS Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: mauibeach-ios-ci-build
+        path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-ios/iossimulator-x64/**/*.app
