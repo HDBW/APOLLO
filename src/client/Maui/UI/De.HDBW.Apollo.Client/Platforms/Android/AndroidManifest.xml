@@ -14,7 +14,7 @@
   <!--https://developer.android.com/training/basics/intents/package-visibility-use-cases-->
   <queries>
     <package android:name="com.azure.authenticator" />
-    <package android:name="De.HDBW.Apollo.Client" />
+    <package android:name="de.hdbw.apollo.client" />
     <package android:name="com.microsoft.windowsintune.companyportal" />
     <!-- Required for API Level 30 to make sure the app detect browsers
       (that don't support custom tabs) -->

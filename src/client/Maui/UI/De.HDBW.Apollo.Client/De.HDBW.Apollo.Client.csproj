@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net6.0-android;net6.0-ios</TargetFrameworks>
@@ -14,7 +14,7 @@
     <ApplicationTitle>De.HDBW.Apollo.Client</ApplicationTitle>
 
     <!-- App Identifier -->
-    <ApplicationId>De.HDBW.Apollo.Client</ApplicationId>
+    <ApplicationId>de.hdbw.apollo.client</ApplicationId>
     <ApplicationIdGuid>1AAEF2B7-B10F-4EA6-969F-C63389D98EBE</ApplicationIdGuid>
 
     <!-- Versions -->

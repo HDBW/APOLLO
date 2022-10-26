@@ -42,7 +42,7 @@
 		</dict>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>De.HDBW.Apollo.Client</string>
+	<string>de.hdbw.apollo.client</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>13.0</string>
 	<key>LSApplicationQueriesSchemes</key>
