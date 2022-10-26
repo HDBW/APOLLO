@@ -75,4 +75,6 @@ jobs:
       uses: actions/upload-artifact@v3.1.0
       with:
         name: apollo-ios-app
-        path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-ios/ios-arm64/**/*.*
+        path: |
+          src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-ios/ios-arm64/publish/*.ipa
+          src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-ios/ios-arm64/**/*.dSYM
