@@ -45,9 +45,9 @@ jobs:
         dotnet user-secrets set "SignInPolicy" "${{secrets.SIGNINGPOLICY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "InstrumentationKey" "${{secrets.APPI_INSTUMENTATION_KEY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
     - name: Restore Keystore
-      run: |
-        echo "${{secrets.KEYSTOREFILE}}" > release.keystore.asc
-        release.keystore.asc > $RUNNER_TEMP/Apollo.keystore
+      env:
+        BUILD_KEYSTOREFILE_BASE64: ${{ secrets.KEYSTOREFILE }}
+      run: echo -n "BUILD_KEYSTOREFILE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
     - name: Restore Dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI Android
