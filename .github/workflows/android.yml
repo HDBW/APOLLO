@@ -44,10 +44,15 @@ jobs:
         dotnet user-secrets set "TenantName" "${{secrets.B2CTENANTNAME}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "SignInPolicy" "${{secrets.SIGNINGPOLICY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "InstrumentationKey" "${{secrets.APPI_INSTUMENTATION_KEY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+    - name: Restore Keystore
+      run: |
+        echo "${{secrets.KEYSTOREFILE}}" > release.keystore.asc
+        release.keystore.asc > $RUNNER_TEMP/Apollo.keystore
     - name: Restore Dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI Android
-      run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client -c Release -f net6.0-android --no-restore
+      run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net6.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore='$RUNNER_TEMP/Apollo.keystore' /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
+      #run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client -c Release -f net6.0-android --no-restore
     - name: Upload Android Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
