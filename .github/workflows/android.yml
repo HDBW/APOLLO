@@ -50,7 +50,7 @@ jobs:
       run: |
         # create variables
         KEYSTORE_PATH=$RUNNER_TEMP/Apollo.keystore
-        echo -n "$BUILD_KEYSTOREFILE_BASE64" | base64 --decode --output '$KEYSTORE_PATH'
+        echo -n "$BUILD_KEYSTOREFILE_BASE64" | base64 --decode --output $KEYSTORE_PATH
     - name: Restore Dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI Android
