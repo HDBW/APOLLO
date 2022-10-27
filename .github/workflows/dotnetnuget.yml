@@ -30,9 +30,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore src/cloud/backend/apollo.cloud/graph.invite-apollo.app.common/Invite.Apollo.App.Graph.Common.csproj
+      run: dotnet restore src/cloud/backend/apollo.cloud/Invite.Apollo.App.sln
     - name: Build
-      run: dotnet pack src/cloud/backend/apollo.cloud/graph.invite-apollo.app.common/Invite.Apollo.App.Graph.Common.csproj --configuration Release --no-restore
+      run: dotnet pack src/cloud/backend/apollo.cloud/graph.invite-apollo.app.common/Invite.Apollo.App.Graph.Common.csproj --configuration Release
     #- name: Test
     #  run: dotnet run src/cloud/backend/apollo.cloud/Invite.Apollo.App.Graph.AssessmentService.Test --project --verbosity normal
     - name: Prep packages
