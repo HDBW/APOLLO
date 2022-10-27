@@ -103,7 +103,8 @@ public static class MauiProgram
         bool hasRegisteredUser = false;
         try
         {
-            var task = authService.AcquireTokenSilent(CancellationToken.None);
+
+            var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
             task.Wait();
             var authenticationResult = task.Result;
             hasRegisteredUser = task.Result?.Account != null;
