@@ -51,7 +51,7 @@ jobs:
         # create variables
         $KEYSTORE_PATH = Join-Path -Path $env:RUNNER_TEMP -ChildPath "Apollo.keystore";
         $encodedBytes = [System.Convert]::FromBase64String($env:BUILD_KEYSTOREFILE_BASE64); 
-        Set-Content $secretFile -Value $encodedBytes -AsByteStream;
+        Set-Content $KEYSTORE_PATH -Value $encodedBytes -AsByteStream;
     - name: Restore Dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI Android
