@@ -47,5 +47,5 @@ jobs:
       run: dotnet nuget push ${{github.workspace}}/src/cloud/backend/apollo.cloud/graph.invite-apollo.app.common/bin/Release/*.nupkg --api-key ${{ secrets.GITNUGET }} --skip-duplicate --source "github"
     - name: Cleanup
       if: always()
-      run: dotnet nuget remove source "github"
+      run: dotnet nuget remove source github
       
