@@ -45,7 +45,7 @@ jobs:
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
     - name: Setup nuget
-      run: dotnet nuget add source --username patbosc --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/HDBW/index.json"
+      run: dotnet nuget add source --username patbosc --password ${{ secrets.GITNUGET }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Init User-Secrets
       run: |
         echo ${{ github.workspace }}
