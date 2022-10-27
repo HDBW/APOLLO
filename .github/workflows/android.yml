@@ -73,3 +73,6 @@ jobs:
       with:
         name: apollo-android-app
         path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-android/*Signed.a*
+    - name: Cleanup
+      if: always()
+      run: dotnet nuget remove source github
