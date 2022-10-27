@@ -6,9 +6,6 @@
     <AndroidManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/Android/AndroidManifest.xml</AndroidManifestFile>
     <IOSManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\iOS\Info.plist</IOSManifestFile>
     <IOSManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/iOS/Info.plist</IOSManifestFile>
-    <MacManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\MacCatalyst\Info.plist</MacManifestFile>
-    <MacManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/MacCatalyst/Info.plist</MacManifestFile>
-    
     <JsonPeekAssembly Condition=" '$(OS)' == 'Windows_NT' ">$(NugetPackageRoot)\jsonpeek\1.1.9\build\JsonPeek.dll</JsonPeekAssembly>
     <JsonPeekAssembly Condition=" '$(OS)' == 'Unix' ">$(NugetPackageRoot)/jsonpeek/1.1.9/build/JsonPeek.dll</JsonPeekAssembly>
   </PropertyGroup>
@@ -97,22 +94,5 @@
      OutputFilename="$(IOSManifestFile)"
      MatchExpression="YOUR_CLIENT_ID_HERE"
      ReplacementText="$(ClientId)" />
-    
-  </Target>
-  
-  <Target Name="TransformManifest-Mac"
-         BeforeTargets="PrepareForBuild"
-         Condition=" '$(TargetFramework)' == 'net6.0-maccatalyst' And '$(UserSecretsId)' != '' ">
-    <Message Text="TransformManifest $(TargetFramework)" />
-    <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
-      <Output TaskParameter="Result" PropertyName="ClientId" />
-    </JsonPeek>
-
-    <ReplaceFileText
-     InputFilename="$(MacManifestFile)"
-     OutputFilename="$(MacManifestFile)"
-     MatchExpression="YOUR_CLIENT_ID_HERE"
-     ReplacementText="$(ClientId)" />
-    
   </Target>
 </Project>
