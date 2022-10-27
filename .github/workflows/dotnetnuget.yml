@@ -44,5 +44,5 @@ jobs:
     - name: Prep packages
       run: dotnet nuget add source --username patbosc --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Publish to GitHub packages 
-      run: dotnet nuget push ${{github.workspace}}/src/cloud/backend/apollo.cloud/graph.invite-apollo.app.common/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}  --source "github"
+      run: dotnet nuget push ${{github.workspace}}/src/cloud/backend/apollo.cloud/graph.invite-apollo.app.common/bin/Release/*.nupkg --api-key ${{ secrets.GITNUGET }}  --source "github"
       
