@@ -11,6 +11,7 @@ on:
       - '**/*.gitignore'
       - '**/*.gitattributes'
       - '**/*.yml'
+      - 'src/client/**'
   pull_request:
     branches: [ "development" ]
   workflow_dispatch:
