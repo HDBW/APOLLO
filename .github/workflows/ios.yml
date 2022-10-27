@@ -75,6 +75,8 @@ jobs:
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
+    - name: Setup nuget
+      run: dotnet nuget add source --username patbosc --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Restore dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI iOS
