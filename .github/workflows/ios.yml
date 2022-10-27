@@ -88,4 +88,4 @@ jobs:
           src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-ios/ios-arm64/**/*.dSYM
     - name: Cleanup
       if: always()
-      run: dotnet nuget remove source github
+      run: dotnet nuget remove source "github"
