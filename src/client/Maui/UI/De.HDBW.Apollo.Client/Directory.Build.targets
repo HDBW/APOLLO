@@ -60,7 +60,7 @@
          Condition=" '$(UserSecretsId)' != '' ">
     <Message Text="Os: $(TargetFramework)" />
     <ItemGroup>
-      <EmbeddedResource Include="$(UserSecretsFilePath)" Condition="Exists($(UserSecretsFilePath))"/>
+      <EmbeddedResource Include="$(TargetFramework)$(UserSecretsFilePath)" Condition="Exists($(UserSecretsFilePath))"/>
     </ItemGroup>
   </Target>
 
