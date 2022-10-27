@@ -8,6 +8,8 @@
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>6.0-all</AnalysisLevel>
     <NeutralLanguage>en-001</NeutralLanguage>
+    <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
