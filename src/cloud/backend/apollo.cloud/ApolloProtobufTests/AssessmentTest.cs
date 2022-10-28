@@ -84,7 +84,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             questionMetaData.Add(CreateMetaData(myfancyindex++, MetaDataType.Text, "Ein Schaf deiner Herde ist lahm. Du musst es einfangen, um es genauer zu Unbtersichen. An welcher Stelle packst du das Schaf an?"));
             questionMetaData.Add(CreateMetaData(myfancyindex++, MetaDataType.Hint, "Markiere die richtige Stelle auf dem Bild."));
-            questionMetaData.Add(CreateMetaData(myfancyindex++,MetaDataType.Image,"Sheep.jpg"));
+            questionMetaData.Add(CreateMetaData(myfancyindex++,MetaDataType.Image,"sheep.jpg"));
 
             //set stuff
             _questions.Add(questionItem);
@@ -187,13 +187,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
             var answerMetaIndex = _answersMetaData.Count;
 
             answerItems.Add(CreateAnswer(answerIndex++,questionItem,AnswerType.Boolean,true.ToString()));
-            answerMetaData.Add(CreateMetaData(answerMetaIndex,MetaDataType.Image, "DeutscheHecke.jpg"));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex,MetaDataType.Image, "deutschehecke.jpg"));
             answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, true.ToString()));
-            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Grünzeugs.jpg"));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "gruenzeugs.jpg"));
             answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
-            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Salbei.jpg"));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "salbei.jpg"));
             answerItems.Add(CreateAnswer(answerIndex++, questionItem, AnswerType.Boolean, false.ToString()));
-            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "Minze.jpg"));
+            answerMetaData.Add(CreateMetaData(answerMetaIndex, MetaDataType.Image, "minze.jpg"));
 
             _answers.AddRange(answerItems);
             _answersMetaData.AddRange(answerMetaData);
@@ -341,7 +341,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
             questionsMetaData.Add(CreateMetaData(indexQuestionMeta++, MetaDataType.Text, "Bitte wähle 1 bis 3 Antworten aus."));
             long metaDataTarget = indexQuestionMeta++;
-            questionsMetaData.Add(CreateMetaData(metaDataTarget, MetaDataType.Text, "Lieferschein.jpg"));
+            questionsMetaData.Add(CreateMetaData(metaDataTarget, MetaDataType.Text, "lieferschein.jpg"));
             
             long metaDataIndex = _metaData.Count + 1;
             _metaData.Add(CreateMetaData(metaDataIndex, MetaDataType.Text,"Lieferschein"));
@@ -355,7 +355,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             _metaDataMetaDataRelations.Add(mdmdr);
 
             metaDataTarget = indexQuestionMeta++;
-            questionsMetaData.Add(CreateMetaData(metaDataTarget, MetaDataType.Image, "Bestellbestaetigung.jpg"));
+            questionsMetaData.Add(CreateMetaData(metaDataTarget, MetaDataType.Image, "bestellbestaetigung.jpg"));
 
             metaDataIndex = _metaData.Count + 1;
             _metaData.Add(CreateMetaData(metaDataIndex, MetaDataType.Text, "Bestellbestätigung"));
