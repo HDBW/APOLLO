@@ -8,7 +8,7 @@ using De.HDBW.Apollo.SharedContracts.Enums;
 
 namespace De.HDBW.Apollo.Client.Models
 {
-    public partial class UseCaseEntry : ObservableObject, ISelectableItem<UseCaseEntry>
+    public partial class UseCaseEntry : ObservableObject, ISelectableEntry
     {
         private readonly UseCase _useCase;
         private bool _isSelected;

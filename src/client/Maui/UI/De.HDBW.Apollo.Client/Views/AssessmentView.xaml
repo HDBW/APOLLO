@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.AssessmentView"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:contracts="clr-namespace:De.HDBW.Apollo.Client.Contracts"
              xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:DataType="viewModels:AssessmentViewModel"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
@@ -14,12 +15,14 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ImageAnswerTemplate" x:DataType="assessmentModels:AnswerEntry">
-            <Image Source="{Binding Image}" />
+            <Grid>
+                <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" MinimumHeightRequest="50" MaximumHeightRequest="50"/>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="ImageWithTextTemplate" x:DataType="assessmentModels:AnswerEntry">
-            <Grid>
-                <Image Source="{Binding Image}" />
+            <Grid >
+                <Image Source="{Binding ImagePath}" MinimumHeightRequest="50" MaximumHeightRequest="50"/>
                 <Label Text="{Binding Text}" />
             </Grid>
         </DataTemplate>
@@ -36,224 +39,158 @@
                                            ImageWithTextTemplate="{StaticResource ImageWithTextTemplate}"
                                            PointTemplate="{StaticResource PointTemplate}"/>
 
-        <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <Grid Background="Green" VerticalOptions="FillAndExpand" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Text="{Binding Question}" Grid.Row="0"/>
-                <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1"/>
-                <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
-                <CollectionView Grid.Row="3"
-                                ItemsSource="{Binding Answers}"
-                                ItemTemplate="{StaticResource AnswersTemplateSelector}">
-                </CollectionView>
+        <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
+            <Grid Background="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
+                </Grid.GestureRecognizers>
+                <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="End" VerticalOptions="End"/>
             </Grid>
+        </DataTemplate>
+        
+        <selector:IInteractiveEntryTemplateSelector x:Key="IInteractiveEntryTemplateSelector"
+                                           DefaultTemplate="{StaticResource SelectionInteractionTemplate}"/>
+
+        <DataTemplate x:Key="DefaultAnswerLayoutTemplate">
+            <CollectionView
+                VerticalScrollBarVisibility="Never"
+                HorizontalScrollBarVisibility="Never"
+                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                ItemTemplate="{StaticResource IInteractiveEntryTemplateSelector}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="HorizontalAnswerLayoutTemplate">
+            <CollectionView
+                VerticalScrollBarVisibility="Never"
+                HorizontalScrollBarVisibility="Default"
+                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                ItemTemplate="{StaticResource IInteractiveEntryTemplateSelector}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="UniformAnswerLayoutTemplate">
+            <CollectionView
+                VerticalScrollBarVisibility="Never"
+                HorizontalScrollBarVisibility="Never"
+                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                ItemTemplate="{StaticResource IInteractiveEntryTemplateSelector}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </DataTemplate>
+        
+        <selector:AnswersLayoutTemplateSelector x:Key="AnswersLayoutTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultAnswerLayoutTemplate}"
+                                           HorizontalTemplate="{StaticResource HorizontalAnswerLayoutTemplate}"
+                                           UniformTemplate="{StaticResource UniformAnswerLayoutTemplate}" />
+        
+        <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
+            <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding Question}" Grid.Row="0"/>
+                    <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1"/>
+                    <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
+                    <StackLayout Grid.Row="3" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
         </DataTemplate>
 
         <DataTemplate x:Key="CompareQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <Grid Background="Orange" VerticalOptions="FillAndExpand" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Text="{Binding Question}" Grid.Row="0"/>
-                <Label Text="{Binding Instruction}" Grid.Row="1"/>
-                <CollectionView Grid.Row="2">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Q1</x:String>
-                            <x:String>Q2</x:String>
-                            <x:String>Q3</x:String>
-                            <x:String>Q4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-                <CollectionView Grid.Row="3">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>A1</x:String>
-                            <x:String>A2</x:String>
-                            <x:String>A3</x:String>
-                            <x:String>A4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate x:Key="HorizontalListQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <Grid Background="HotPink" VerticalOptions="FillAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Text="{Binding Question}" Grid.Row="0"/>
-                <Label Text="{Binding Instruction}" Grid.Row="1"/>
-                <CollectionView Grid.Row="2">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Q1</x:String>
-                            <x:String>Q2</x:String>
-                            <x:String>Q3</x:String>
-                            <x:String>Q4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-                <CollectionView Grid.Row="3">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>A1</x:String>
-                            <x:String>A2</x:String>
-                            <x:String>A3</x:String>
-                            <x:String>A4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-            </Grid>
+            <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
+                <Grid Background="Orange">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding Question}" Grid.Row="0"/>
+                    <Label Text="{Binding Instruction}" Grid.Row="1"/>
+                    <Grid ColumnDefinitions="*,*" Grid.Row="2">
+                        <Button Text="Test" />
+                        <Button Text="Test" Grid.Column="1" />
+                    </Grid>
+                    <CarouselView Grid.Row="3" >
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image Source="untitled.png" />
+                                </Grid>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                        <CarouselView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>A1</x:String>
+                                <x:String>A2</x:String>
+                            </x:Array>
+                        </CarouselView.ItemsSource>
+                    </CarouselView>
+                    <CollectionView Grid.Row="4">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame>
+                                    <Label Text="{Binding}" />
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>A1</x:String>
+                                <x:String>A2</x:String>
+                                <x:String>A3</x:String>
+                                <x:String>A4</x:String>
+                            </x:Array>
+                        </CollectionView.ItemsSource>
+                    </CollectionView>
+                </Grid>
+            </ScrollView>
         </DataTemplate>
 
         <DataTemplate x:Key="OverlayQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <Grid Background="Yellow" VerticalOptions="FillAndExpand" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Text="{Binding Question}" Grid.Row="0"/>
-                <Label Text="{Binding Instruction}" Grid.Row="1"/>
-                <CollectionView Grid.Row="2">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Q1</x:String>
-                            <x:String>Q2</x:String>
-                            <x:String>Q3</x:String>
-                            <x:String>Q4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-                <CollectionView Grid.Row="3">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>A1</x:String>
-                            <x:String>A2</x:String>
-                            <x:String>A3</x:String>
-                            <x:String>A4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate x:Key="UniformGridQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <Grid Background="Blue" VerticalOptions="FillAndExpand" RowSpacing="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Text="{Binding Question}" Grid.Row="0"/>
-                <Label Text="{Binding Instruction}" Grid.Row="1"/>
-                <CollectionView Grid.Row="2" ItemsLayout="VerticalGrid, 2">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Q1</x:String>
-                            <x:String>Q2</x:String>
-                            <x:String>Q3</x:String>
-                            <x:String>Q4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-                <CollectionView Grid.Row="3">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame>
-                                <Label Text="{Binding}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>A1</x:String>
-                            <x:String>A2</x:String>
-                            <x:String>A3</x:String>
-                            <x:String>A4</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
-            </Grid>
+            <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding Question}" Grid.Row="0"/>
+                    <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1"/>
+                    <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
+                    <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
         </DataTemplate>
 
         <selector:QuestionTemplateSelector x:Key="QuestionTemplateSelector"
                                            DefaultTemplate="{StaticResource DefaultQuestionTemplate}"
                                            CompareTemplate="{StaticResource CompareQuestionTemplate}"
-                                           HorizontalListTemplate="{StaticResource HorizontalListQuestionTemplate}"
-                                           OverlayTemplate="{StaticResource OverlayQuestionTemplate}"
-                                           UniformGridTemplate="{StaticResource UniformGridQuestionTemplate}"/>
+                                           OverlayTemplate="{StaticResource OverlayQuestionTemplate}"/>
     </ContentPage.Resources>
-    <Grid RowDefinitions="*,auto">
-        
-        <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}" BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" Background="Red">
+    <Grid RowDefinitions="auto,auto,*,auto">
+        <Picker Title="QuestionLayout" ItemsSource="{Binding QuestionLayouts}" SelectedItem="{Binding QuestionLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+        <Picker Grid.Row="1" Title="AnserwerLayout" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+        <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}" BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
 
         </StackLayout>
-        <Button Grid.Row="1" Text="Next" Command="{Binding NextQuestionCommand}"/>
+        <Button Grid.Row="3" Text="Next" Command="{Binding NextQuestionCommand}"/>
     </Grid>
 </ContentPage>

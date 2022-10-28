@@ -10,6 +10,7 @@ using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -20,7 +21,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ObservableCollection<QuestionEntry> _questions = new ObservableCollection<QuestionEntry>();
 
         [ObservableProperty]
+        private ObservableCollection<LayoutType> _questionLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default,LayoutType.Overlay, LayoutType.Compare };
+
+        [ObservableProperty]
+        private ObservableCollection<LayoutType> _answerLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.HorizontalList, LayoutType.UniformGrid };
+
+        [ObservableProperty]
         private QuestionEntry? _currentQuestion;
+        private LayoutType? _answerLayout;
+        private LayoutType? _questionLayout;
+
         private long? _assessmentItemId;
 
         public AssessmentViewModel(
@@ -46,6 +56,46 @@ namespace De.HDBW.Apollo.Client.ViewModels
             MetadataRepository = metadataRepository;
         }
 
+        public LayoutType? AnswerLayout
+        {
+            get
+            {
+                return _answerLayout;
+            }
+
+            set
+            {
+                if (SetProperty(ref _answerLayout, value))
+                {
+                    if (CurrentQuestion != null)
+                    {
+                        CurrentQuestion.AnswerLayout = value ?? LayoutType.Default;
+                    }
+                    OnPropertyChanged(nameof(CurrentQuestion));
+                }
+            }
+        }
+
+        public LayoutType? QuestionLayout
+        {
+            get
+            {
+                return _questionLayout;
+            }
+
+            set
+            {
+                if (SetProperty(ref _questionLayout, value))
+                {
+                    if (CurrentQuestion != null)
+                    {
+                        CurrentQuestion.QuestionLayout = value ?? LayoutType.Default;
+                    }
+                    OnPropertyChanged(nameof(CurrentQuestion));
+                }
+            }
+        }
+
         private IAssessmentItemRepository AssessmentItemRepository { get; }
 
         private IQuestionItemRepository QuestiontItemRepository { get; }
@@ -66,6 +116,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var currentIndex = CurrentQuestion != null ? Questions.IndexOf(CurrentQuestion) : 0;
             currentIndex = currentIndex + 1 >= Questions.Count ? 0 : currentIndex + 1;
             CurrentQuestion = Questions[currentIndex];
+            _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
+            _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
+            OnPropertyChanged(nameof(QuestionLayout));
+            OnPropertyChanged(nameof(AnswerLayout));
         }
 
         public async override Task OnNavigatedToAsync()
@@ -95,7 +149,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     questionMetaDataIds.AddRange(questionMetaDataRelations.Select(r => r.MetaDataId).Distinct());
                     relatedMetaDataIds.AddRange(questionMetaDataIds);
 
-                    var answerMetaDataRelations = await AnswerMetaDataRelationRepository.GetItemsByIdsAsync(questionIds, worker.Token).ConfigureAwait(false);
+                    var answerMetaDataRelations = await AnswerMetaDataRelationRepository.GetItemsByForeignKeysAsync(answerIds, worker.Token).ConfigureAwait(false);
                     answerMetaDataRelations = answerMetaDataRelations ?? new List<AnswerMetaDataRelation>();
                     answerMetaDataIds.AddRange(answerMetaDataRelations.Select(r => r.MetaDataId).Distinct());
                     relatedMetaDataIds.AddRange(answerMetaDataIds);
@@ -162,6 +216,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], answers[q], answerMetaData[q])));
             CurrentQuestion = Questions?.FirstOrDefault();
+            _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
+            _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
+            OnPropertyChanged(nameof(CurrentQuestion));
+            OnPropertyChanged(nameof(AnswerLayout));
         }
     }
 }

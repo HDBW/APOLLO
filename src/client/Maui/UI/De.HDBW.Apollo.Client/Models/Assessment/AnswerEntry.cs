@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using De.HDBW.Apollo.Client.Helper;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
@@ -47,15 +48,15 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(Image);
+                return !string.IsNullOrWhiteSpace(ImagePath);
             }
         }
 
-        public string Image
+        public string ImagePath
         {
             get
             {
-                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value ?? string.Empty;
+                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName() ?? string.Empty;
             }
         }
 

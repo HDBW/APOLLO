@@ -155,15 +155,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
         }
 
         //TODO: Sleep eat and repeat!!!
-        //private void CreateTestAssessment()
-        //{
-        //    long assessmentBackendId = 12345;
-        //    AssessmentItem assessment =
-        //        CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Fachlagerist:innen");
-        //    _assessments.Add(assessment);
-
-            
-        //}
+        private void CreateTestAssessment()
+        {
+            long assessmentBackendId = 12345;
+            AssessmentItem assessment =
+                CreateAssessmentItem(out long assessmentId, assessmentBackendId, CreateSchema(), "Fachlagerist:innen");
+            _assessments.Add(assessment);
+        }
 
         private void CreateChoiceCompareQuestion(AssessmentItem assessment)
         {
