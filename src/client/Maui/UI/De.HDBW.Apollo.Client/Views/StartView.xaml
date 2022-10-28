@@ -32,14 +32,31 @@
         </Image>
         <ImageButton Grid.Column="2" Grid.Row="0" Source="untitled.png" VerticalOptions="Center" WidthRequest="40" HeightRequest="40" Command="{Binding OpenSettingsCommand}"/>
         <Button Grid.Row="1" Grid.ColumnSpan="3" Command="{Binding ChangeUseCaseCommand}" Text="{x:Static strings:Resource.StartView_ChangeUseCase}"/>
-        <CollectionView Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding Interactions}">
+        <CollectionView Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding InteractionCategories}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:InteractionEntry">
-                    <Grid Padding="10" >
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
-                        </Grid.GestureRecognizers>
-                        <Label Text="{Binding Text}" />
+                <DataTemplate x:DataType="models:InteractionCategoryEntry">
+                    <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,auto,*" HeightRequest="200">
+                        <Label Text="{Binding HeadLine}" Grid.ColumnSpan="3"/>
+                        <Label Text="{Binding SublineLine}" Grid.Row="1"/>
+                        <Button Command="{Binding ShowMoreCommand}" Grid.Row="1" Grid.Column="1" />
+                        <CollectionView ItemsSource="{Binding Interactions}"
+                                        Grid.Row="2" Grid.ColumnSpan="3"
+                                        HorizontalScrollBarVisibility="Default"
+                                        VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:InteractionEntry">
+                                    <Grid Padding="10" WidthRequest="150" >
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
+                                        </Grid.GestureRecognizers>
+                                        <Label Text="{Binding Text}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
