@@ -168,6 +168,26 @@ csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
 dotnet_diagnostic.SX1309.severity = error
 dotnet_diagnostic.SA1309.severity = silent
 
+
+# The file header XML is invalid.
+# https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1633.md
+dotnet_diagnostic.SA1633.severity = silent
+
+# Elements should be documented.
+# https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1600.md
+dotnet_diagnostic.SA1600.severity = silent
+
+# Partial elements should be documented.
+# https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1601.md
+dotnet_diagnostic.SA1601.severity = silent
+
+# Enumeration items should be documented.
+# https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1602.md
+dotnet_diagnostic.SA1602.severity = silent
+
+# Missing XML comment for publicly visible type.
+dotnet_diagnostic.CS1591.severity = silent
+
 # C++ Files
 [*.{cpp,h,in}]
 curly_bracket_next_line = true

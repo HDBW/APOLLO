@@ -3,6 +3,8 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
@@ -16,7 +18,10 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private string? _imagePath;
         [ObservableProperty]
-        private ObservableCollection<AnswerEntry> _answers = new ObservableCollection<AnswerEntry>();
+        private ObservableCollection<IInteractiveEntry> _answers = new ObservableCollection<IInteractiveEntry>();
+
+        private LayoutType? _questionLayout;
+        private LayoutType? _answerLayout;
 
         private QuestionEntry(
             QuestionItem questionItem,
@@ -32,19 +37,26 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             _questionItem = questionItem;
             _questionMetaDataItems = questionMetaDataItems;
 
-            ImagePath = _questionMetaDataItems?.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToLower();
+            ImagePath = _questionMetaDataItems?.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName();
             OnPropertyChanged(nameof(HasImage));
-            Answers = new ObservableCollection<AnswerEntry>(answerItems.Select(a => AnswerEntry.Import(a, answerMetaDataItems[a])));
+            switch (Interaction)
+            {
+                 default:
+                    Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(AnswerEntry.Import(a, answerMetaDataItems[a]), Interaction, HandleInteraction)));
+                    break;
+            }
         }
 
         public LayoutType QuestionLayout
         {
-            get { return _questionItem.QuestionLayout; }
+            get { return _questionLayout ?? _questionItem.QuestionLayout; }
+            set { SetProperty(ref _questionLayout, value); }
         }
 
         public LayoutType AnswerLayout
         {
-            get { return _questionItem.AnswerLayout; }
+            get { return _answerLayout ??  _questionItem.AnswerLayout; }
+            set { SetProperty(ref _answerLayout, value); }
         }
 
         public InteractionType Interaction
@@ -84,5 +96,21 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             return new QuestionEntry(questionItem, questionMetaDataItems, answerItems, answerMetaDataItems);
         }
+
+        private void HandleInteraction(IInteractiveEntry entry)
+        {
+            switch (entry.Interaction)
+            {
+                case InteractionType.SingleSelect:
+                    var itemsToDeselect = Answers.Where(a => a != entry).OfType<ISelectableEntry>();
+                    foreach (var item in itemsToDeselect)
+                    {
+                        item.UpdateSelectedState(false);
+                    }
+
+                    break;
+            }
+        }
+
     }
 }

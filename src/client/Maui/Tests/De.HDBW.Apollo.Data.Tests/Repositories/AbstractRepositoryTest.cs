@@ -111,6 +111,7 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
             boolResult = await repository.RemoveItemsAsync(null, CancellationToken.None).ConfigureAwait(false);
             Assert.True(boolResult);
         }
+
         protected abstract IRepository<TU> GetRepository();
     }
 }

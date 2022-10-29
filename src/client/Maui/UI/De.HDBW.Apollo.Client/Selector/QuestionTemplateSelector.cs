@@ -8,10 +8,6 @@ namespace De.HDBW.Apollo.Client.Selector
 {
     public class QuestionTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate? UniformGridTemplate { get; set; }
-
-        public DataTemplate? HorizontalListTemplate { get; set; }
-
         public DataTemplate? OverlayTemplate { get; set; }
 
         public DataTemplate? CompareTemplate { get; set; }
@@ -23,10 +19,6 @@ namespace De.HDBW.Apollo.Client.Selector
             var question = item as QuestionEntry;
             switch (question?.QuestionLayout)
             {
-                case LayoutType.UniformGrid:
-                    return UniformGridTemplate;
-                case LayoutType.HorizontalList:
-                    return HorizontalListTemplate;
                 case LayoutType.Overlay:
                     return OverlayTemplate;
                 case LayoutType.Compare:

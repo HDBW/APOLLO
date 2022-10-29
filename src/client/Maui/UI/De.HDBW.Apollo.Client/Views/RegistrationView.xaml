@@ -2,14 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.RegistrationView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:RegistrationViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <VerticalStackLayout Padding="20">
-        <Button Text="{x:Static strings:Resource.RegistrationView_RegisterUser}" Command="{Binding RegisterCommand}"/>
+        <Button Text="{x:Static strings:Resource.RegistrationView_RegisterUser}" Command="{Binding RegisterCommand}" IsVisible="{Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>
+        <Button Text="{x:Static strings:Resource.RegistrationView_UnRegisterUser}" Command="{Binding UnRegisterCommand}" IsVisible="{Binding HasRegisterdUser}"/>
         <Button Text="{x:Static strings:Resource.Global_Skip}" Command="{Binding SkipCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

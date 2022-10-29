@@ -7,6 +7,16 @@ namespace De.HDBW.Apollo.Data.Services
 {
     public class SessionService : ISessionService
     {
+        public SessionService(bool hasRegisteredUser)
+        {
+            HasRegisteredUser = hasRegisteredUser;
+        }
+
         public bool HasRegisteredUser { get; private set; }
+
+        public void UpdateRegisteredUser(bool hasRegisteredUser)
+        {
+            HasRegisteredUser = hasRegisteredUser;
+        }
     }
 }

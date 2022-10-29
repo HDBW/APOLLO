@@ -1,0 +1,78 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Android Build
+
+on:
+  push:
+    branches: [ "development" ]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+      - '**/*.yml'
+      - 'src/cloud/**'
+  pull_request:
+    branches: [ "development" ]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+      - '**/*.yml'
+      - 'src/cloud/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+  
+env:
+  DOTNET_NOLOGO: true                     # Disable the .NET logo
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
+  DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
+  
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    name: Android Build
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Install MAUI Workload
+      run: dotnet workload install maui --ignore-failed-sources
+    - name: Setup nuget
+      run: dotnet nuget add source --username patbosc --password ${{ secrets.GITNUGET }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/HDBW/index.json"
+    - name: Init User-Secrets
+      run: |
+        echo ${{ github.workspace }}
+        dotnet user-secrets init -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "ClientId" "${{secrets.B2CCLIENTID}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "TenantName" "${{secrets.B2CTENANTNAME}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "SignInPolicy" "${{secrets.SIGNINGPOLICY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "InstrumentationKey" "${{secrets.APPI_INSTUMENTATION_KEY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+    - name: Restore Keystore
+      env:
+        BUILD_KEYSTOREFILE_BASE64: ${{ secrets.KEYSTOREFILE }}
+      run: |
+        # create variables
+        $KEYSTORE_PATH = Join-Path -Path $env:RUNNER_TEMP -ChildPath "Apollo.keystore";
+        $encodedBytes = [System.Convert]::FromBase64String($env:BUILD_KEYSTOREFILE_BASE64); 
+        Set-Content $KEYSTORE_PATH -Value $encodedBytes -AsByteStream;
+    - name: Restore Dependencies
+      run: dotnet restore src/client/Maui/Apollo.sln
+    - name: Build MAUI Android
+      run: |
+        $KEYSTORE_PATH = Join-Path -Path $env:RUNNER_TEMP -ChildPath "Apollo.keystore";
+        dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net6.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore=$KEYSTORE_PATH /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
+    - name: Upload Android Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: apollo-android-app
+        path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-android/*Signed.a*
+    - name: Cleanup
+      if: always()
+      run: dotnet nuget remove source github

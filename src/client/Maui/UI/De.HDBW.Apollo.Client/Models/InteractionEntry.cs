@@ -11,15 +11,15 @@ namespace De.HDBW.Apollo.Client.Models
         private readonly object? _data;
 
         [ObservableProperty]
-        private string _text;
+        private string? _text;
 
         private Func<InteractionEntry, bool> _canNavigateHandle;
 
         private Func<InteractionEntry, Task> _navigateHandler;
 
-        private InteractionEntry(string text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        private InteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
         {
-            _text = text;
+            Text = text;
             _data = data;
             _canNavigateHandle = canNavigateHandle;
             _navigateHandler = navigateHandler;

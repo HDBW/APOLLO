@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace De.HDBW.Apollo.Client.Contracts
 {
-    public interface ISelectableItem<TU>
+    public interface ISelectableEntry
     {
         bool IsSelected { get; set; }
 
