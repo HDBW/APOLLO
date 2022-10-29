@@ -14,7 +14,7 @@
         <CollectionView ItemsSource="{Binding UseCases}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:UseCaseEntry">
-                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" >
+                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Background="Transparent">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                         </Grid.GestureRecognizers>

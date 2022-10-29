@@ -7,23 +7,14 @@
 		<UseMaui>true</UseMaui>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="SampleData\MultipleChoiceAssessment.bin" />
-	</ItemGroup>
-	<ItemGroup>
 	  <EmbeddedResource Include="SampleData\MultipleChoiceAssessment.bin" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\cloud\backend\apollo.cloud\graph.invite-apollo.app.common\Invite.Apollo.App.Graph.Common.csproj" />
 		<ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Google.Protobuf" Version="3.21.8" />
+	  <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0" />
 	  <PackageReference Include="protobuf-net.Core" Version="3.1.22" />
-	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Include="Google.Protobuf" Version="3.21.8" />
-	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Include="Google.Protobuf" Version="3.21.8" />
 	</ItemGroup>
 </Project>
