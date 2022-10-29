@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace De.HDBW.Apollo.Client.Models
 {

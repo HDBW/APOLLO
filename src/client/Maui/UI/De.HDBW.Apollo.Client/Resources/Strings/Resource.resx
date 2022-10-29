@@ -171,6 +171,9 @@
   <data name="RegistrationView_RegisterUser" xml:space="preserve">
     <value>Registrieren</value>
   </data>
+  <data name="RegistrationView_UnRegisterUser" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
   <data name="StartViewModel_InteractionCareer" xml:space="preserve">
     <value>Entdecke dein Karrierepotential
 (Ist-Stand bekannt – Inspiration)</value>
@@ -187,6 +190,9 @@ deiner Wahl</value>
   </data>
   <data name="StartViewModel_InteractionSkills" xml:space="preserve">
     <value>Lerne neue Skills</value>
+  </data>
+  <data name="StartView_ChangeUseCase" xml:space="preserve">
+    <value>Usecase ändern</value>
   </data>
   <data name="UseCaseSelectionView_CreateUseCase" xml:space="preserve">
     <value>Erstellen</value>

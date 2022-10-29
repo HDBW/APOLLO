@@ -13,10 +13,9 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    // TODO: We need a way to navigate back to UseCaseSelection. PushToRoot
     public partial class StartViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<InteractionEntry> _interactions = new ObservableCollection<InteractionEntry>();
+        private readonly ObservableCollection<InteractionCategoryEntry> _interactionsCategories = new ObservableCollection<InteractionCategoryEntry>();
 
         public StartViewModel(
             IPreferenceService preferenceService,
@@ -33,18 +32,23 @@ namespace De.HDBW.Apollo.Client.ViewModels
             assemsmentData.AddValue<long?>(NavigationParameter.Id, 0);
             var data = new NavigationData(Routes.AssessmentView, assemsmentData);
 
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, data, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, null, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, null, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, null, HandleInteract, CanHandleInteract));
-            Interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, null, HandleInteract, CanHandleInteract));
+            for (var i = 0; i < 5; i++)
+            {
+                var interactions = new List<InteractionEntry>();
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, data, HandleInteract, CanHandleInteract));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, null, HandleInteract, CanHandleInteract));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, null, HandleInteract, CanHandleInteract));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, null, HandleInteract, CanHandleInteract));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, null, HandleInteract, CanHandleInteract));
+                InteractionCategories.Add(InteractionCategoryEntry.Import($"Headline{i}", $"Subline{i}", interactions, null, HandleShowMore, CanHandleShowMore));
+            }
         }
 
-        public ObservableCollection<InteractionEntry> Interactions
+        public ObservableCollection<InteractionCategoryEntry> InteractionCategories
         {
             get
             {
-                return _interactions;
+                return _interactionsCategories;
             }
         }
 
@@ -88,6 +92,39 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private bool CanOpenSettings()
+        {
+            return !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanChangeUseCase), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        private async Task ChangeUseCase(CancellationToken token)
+        {
+            using (var work = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.ResetNavigationAsnc(Routes.UseCaseSelectionView, token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(work);
+                }
+            }
+        }
+
+        private bool CanChangeUseCase()
         {
             return !IsBusy;
         }
@@ -148,6 +185,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType()}.");
                     break;
             }
+        }
+
+        private Task HandleShowMore(InteractionCategoryEntry arg)
+        {
+            return Task.CompletedTask;
+        }
+
+        private bool CanHandleShowMore(InteractionCategoryEntry arg)
+        {
+            return true;
         }
     }
 }
