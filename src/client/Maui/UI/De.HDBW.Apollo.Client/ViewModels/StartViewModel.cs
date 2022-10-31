@@ -2,13 +2,19 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -17,31 +23,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
     {
         private readonly ObservableCollection<InteractionCategoryEntry> _interactionsCategories = new ObservableCollection<InteractionCategoryEntry>();
 
+        [ObservableProperty]
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfile());
+
         public StartViewModel(
             IPreferenceService preferenceService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
+            ICourseItemRepository courseItemRepository,
+            IAssessmentItemRepository assessmentItemRepository,
+            IUserProfileRepository userProfileRepository,
             ILogger<StartViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             PreferenceService = preferenceService;
-
-            // TODO: Remove when we have data.
-            var assemsmentData = new NavigationParameters();
-            assemsmentData.AddValue<long?>(NavigationParameter.Id, 0);
-            var data = new NavigationData(Routes.AssessmentView, assemsmentData);
-
-            for (var i = 0; i < 5; i++)
-            {
-                var interactions = new List<InteractionEntry>();
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionProfile, data, HandleInteract, CanHandleInteract));
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCareer, null, HandleInteract, CanHandleInteract));
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionRetraining, null, HandleInteract, CanHandleInteract));
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionSkills, null, HandleInteract, CanHandleInteract));
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resource.StartViewModel_InteractionCV, null, HandleInteract, CanHandleInteract));
-                InteractionCategories.Add(InteractionCategoryEntry.Import($"Headline{i}", $"Subline{i}", interactions, null, HandleShowMore, CanHandleShowMore));
-            }
+            AssessmentItemRepository = assessmentItemRepository;
+            CourseItemRepository = courseItemRepository;
+            UserProfileRepository = userProfileRepository;
         }
 
         public ObservableCollection<InteractionCategoryEntry> InteractionCategories
@@ -53,6 +52,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private IPreferenceService PreferenceService { get; }
+
+        private IAssessmentItemRepository AssessmentItemRepository { get; }
+
+        private ICourseItemRepository CourseItemRepository { get; }
+
+        private IUserProfileRepository UserProfileRepository { get; set; }
 
         protected override void RefreshCommands()
         {
@@ -132,41 +137,86 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
         private async Task LoadData(CancellationToken token)
         {
-            try
+            using (var worker = ScheduleWork(token))
             {
-                var taskList = new List<Task>();
-                Task<NavigationParameters?>? dialogTask = null;
-                var isFirstTime = PreferenceService.GetValue(Preference.IsFirstTime, true);
-                if (isFirstTime)
+                try
                 {
-                    PreferenceService.SetValue(Preference.IsFirstTime, false);
-                    dialogTask = DialogService.ShowPopupAsync<FirstTimeDialog, NavigationParameters>(token);
-                    taskList.Add(dialogTask);
-                }
+                    var assesments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
+                    var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
+                    var userProfile = await UserProfileRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    await ExecuteOnUIThreadAsync(
+                           () => LoadonUIThread(
+                           assesments,
+                           courses,
+                           userProfile), worker.Token);
 
-                if (taskList.Any())
-                {
-                    await Task.WhenAll(taskList).ConfigureAwait(false);
-                }
+                    var taskList = new List<Task>();
+                    Task<NavigationParameters?>? dialogTask = null;
+                    var isFirstTime = PreferenceService.GetValue(Preference.IsFirstTime, true);
+                    if (isFirstTime)
+                    {
+                        PreferenceService.SetValue(Preference.IsFirstTime, false);
+                        dialogTask = DialogService.ShowPopupAsync<FirstTimeDialog, NavigationParameters>(token);
+                        taskList.Add(dialogTask);
+                    }
 
-                var selection = dialogTask?.Result?.GetValue<bool>(NavigationParameter.Result) ?? false;
-                if (selection)
+                    if (taskList.Any())
+                    {
+                        await Task.WhenAll(taskList).ConfigureAwait(false);
+                    }
+
+                    var selection = dialogTask?.Result?.GetValue<bool>(NavigationParameter.Result) ?? false;
+                    if (selection)
+                    {
+                        await NavigationService.NavigateAsnc(Routes.TutorialView, token);
+                    }
+                }
+                catch (OperationCanceledException)
                 {
-                    await NavigationService.NavigateAsnc(Routes.TutorialView, token);
+                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(LoadData)} in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
-            catch (OperationCanceledException)
+        }
+
+        private void LoadonUIThread(
+           IEnumerable<AssessmentItem> assessmentItems,
+           IEnumerable<CourseItem> courseItems,
+           UserProfile? userProfile)
+        {
+            UserProfile = userProfile != null ? UserProfileEntry.Import(userProfile) : null;
+            var interactions = new List<InteractionEntry>();
+            foreach (var assesment in assessmentItems)
             {
-                Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                var assemsmentData = new NavigationParameters();
+                assemsmentData.AddValue<long?>(NavigationParameter.Id, assesment.Id);
+                var data = new NavigationData(Routes.AssessmentView, assemsmentData);
+                interactions.Add(StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, "???", "???", "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
             }
-            catch (ObjectDisposedException)
+
+            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_TestHeadline, Resources.Strings.Resource.StartViewModel_TestSubline, interactions, null, HandleShowMore, CanHandleShowMore));
+
+            interactions = new List<InteractionEntry>();
+            foreach (var course in courseItems)
             {
-                Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                var assemsmentData = new NavigationParameters();
+                assemsmentData.AddValue<long?>(NavigationParameter.Id, course.Id);
+                var data = new NavigationData(Routes.CourseView, assemsmentData);
+                interactions.Add(StartViewInteractionEntry.Import<CourseItem>(course.Title, "???", "???", "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
             }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error while {nameof(LoadData)} in {GetType()}.");
-            }
+
+            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, null, HandleShowMore, CanHandleShowMore));
         }
 
         private bool CanHandleInteract(InteractionEntry interaction)
