@@ -4,9 +4,8 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.VisualBasic;
 
-namespace De.HDBW.Apollo.Client.Models
+namespace De.HDBW.Apollo.Client.Models.Interactions
 {
     public partial class InteractionCategoryEntry : ObservableObject
     {
