@@ -10,6 +10,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class SelectableEntry<TU> : ObservableObject, ISelectionInteractiveEntry
     {
         private bool _isSelected;
+        private InteractionType _interaction;
 
         public SelectableEntry(TU data, InteractionType interaction, Action<SelectableEntry<TU>> selectionChangedHandler)
         {
@@ -36,7 +37,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public object Data { get; }
 
-        public InteractionType Interaction { get; }
+        public InteractionType Interaction
+        {
+            get { return _interaction; }
+            set { SetProperty(ref _interaction, value); }
+        }
 
         private Action<SelectableEntry<TU>> SelectionChangedHandler { get; }
 

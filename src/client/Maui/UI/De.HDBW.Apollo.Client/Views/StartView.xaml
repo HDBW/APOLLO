@@ -4,56 +4,83 @@
              x:Class="De.HDBW.Apollo.Client.Views.StartView"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False"
-             Title="Main"
+             Shell.NavBarIsVisible="True"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:StartViewModel"
              IsBusy="{Binding IsBusy}">
+    <ContentPage.Resources>
+        <converter:EntityTypeToBrushConverter x:Key="EntityTypeToBrushConverter"
+                                              DefaultBrush="Transparent"
+                                              AssessmentItemBrush="{StaticResource Tag1Brush}"
+                                              CourseItemBrush="{StaticResource Tag2Brush}"/>
+    </ContentPage.Resources>
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding LoadDataCommand}" />
     </ContentPage.Behaviors>
-    <Grid Padding="10">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Image Grid.Column="0" Grid.Row="0" Source="untitled.png">
+        <Image HeightRequest="64" WidthRequest="64" Grid.Column="0" Grid.Row="0" Source="{Binding UserProfile.ImagePath}" Aspect="AspectFill">
             <Image.Clip>
-                <EllipseGeometry RadiusX="25" RadiusY="25" Center="25,25"/>
+                <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32"/>
             </Image.Clip>
         </Image>
-        <ImageButton Grid.Column="2" Grid.Row="0" Source="untitled.png" VerticalOptions="Center" WidthRequest="40" HeightRequest="40" Command="{Binding OpenSettingsCommand}"/>
-        <Button Grid.Row="1" Grid.ColumnSpan="3" Command="{Binding ChangeUseCaseCommand}" Text="{x:Static strings:Resource.StartView_ChangeUseCase}"/>
-        <CollectionView Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding InteractionCategories}">
+        <Grid Grid.Column="1" ColumnDefinitions="auto,*" RowDefinitions="auto, auto" Margin="8,0,0,0" VerticalOptions="Center">
+            <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold"  Grid.ColumnSpan="2"/>
+            <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
+            <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
+        </Grid>
+        <CollectionView Grid.ColumnSpan="2" Grid.Row="2" ItemsSource="{Binding InteractionCategories}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout SnapPointsType="Mandatory" SnapPointsAlignment="Start" ItemSpacing="40" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:InteractionCategoryEntry">
-                    <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,auto,*" HeightRequest="200">
-                        <Label Text="{Binding HeadLine}" Grid.ColumnSpan="3"/>
-                        <Label Text="{Binding SublineLine}" Grid.Row="1"/>
-                        <Button Command="{Binding ShowMoreCommand}" Grid.Row="1" Grid.Column="1" />
+                    <Grid RowDefinitions="auto,auto,*" ColumnDefinitions="*,auto" VerticalOptions="Fill">
+                        <Label Text="{Binding HeadLine}" TextColor="{StaticResource Primary}"  Grid.ColumnSpan="3" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+                        <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
+                        <Label Text="{Binding SublineLine}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center"/>
                         <CollectionView ItemsSource="{Binding Interactions}"
-                                        Grid.Row="2" Grid.ColumnSpan="3"
-                                        HorizontalScrollBarVisibility="Default"
-                                        VerticalScrollBarVisibility="Never">
+                                        Grid.Row="2" Grid.ColumnSpan="2"
+                                        Margin="0,8,0,0"
+                                        HorizontalScrollBarVisibility="Never"
+                                        VerticalScrollBarVisibility="Default">
                             <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal" />
+                                <GridItemsLayout Orientation="Vertical" Span="2" SnapPointsType="Mandatory" SnapPointsAlignment="Start" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="models:InteractionEntry">
-                                    <Grid Padding="10" WidthRequest="150" >
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
-                                        </Grid.GestureRecognizers>
-                                        <Label Text="{Binding Text}" />
-                                    </Grid>
+                                <DataTemplate x:DataType="models:StartViewInteractionEntry">
+                                    <Border HeightRequest="240" Margin="0,0,16,0" Padding="0" BackgroundColor="White" StrokeThickness="0">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="3" />
+                                        </Border.StrokeShape>
+                                        <Grid RowDefinitions="*,auto,auto, auto" Padding="0">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
+                                            </Grid.GestureRecognizers>
+                                            <Image Source="{Binding ImagePath}" Aspect="AspectFill" InputTransparent="True"/>
+                                            <Border Visual="{Binding HasDecorator}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="0,0,0,4" />
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding DecoratorText}"/>
+                                            </Border>
+                                            <Label Text="{Binding Text}" LineBreakMode="TailTruncation" MaxLines="2" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
+                                            <Label Text="{Binding Subline}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
+                                            <Label Text="{Binding Info}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
+                                        </Grid>
+                                    </Border>
+                                   
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>

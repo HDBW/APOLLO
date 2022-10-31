@@ -61,6 +61,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string AssessmentItem_DecoratorText {
+            get {
+                return ResourceManager.GetString("AssessmentItem_DecoratorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zertifikat.
+        /// </summary>
+        public static string CourseItem_DecoratorText {
+            get {
+                return ResourceManager.GetString("CourseItem_DecoratorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1 {
@@ -241,6 +259,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mein Ziel.
+        /// </summary>
+        public static string StartView_Goal {
+            get {
+                return ResourceManager.GetString("StartView_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entdecke dein Karrierepotential
         ///(Ist-Stand bekannt – Inspiration).
         /// </summary>
@@ -284,6 +311,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_InteractionSkills {
             get {
                 return ResourceManager.GetString("StartViewModel_InteractionSkills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erhöhe deine Jobchancen.
+        /// </summary>
+        public static string StartViewModel_LearningHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_LearningHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Lerninhalte.
+        /// </summary>
+        public static string StartViewModel_LearningSubline {
+            get {
+                return ResourceManager.GetString("StartViewModel_LearningSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teste dein Wissen.
+        /// </summary>
+        public static string StartViewModel_TestHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_TestHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Tests.
+        /// </summary>
+        public static string StartViewModel_TestSubline {
+            get {
+                return ResourceManager.GetString("StartViewModel_TestSubline", resourceCulture);
             }
         }
         
