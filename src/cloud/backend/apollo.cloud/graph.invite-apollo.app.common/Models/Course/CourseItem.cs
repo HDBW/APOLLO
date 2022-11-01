@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -249,6 +251,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long? PredecessorBackendId { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// Indication for UI only not related to Tags!
+        /// </summary>
+        [DataMember(Order = 40, IsRequired = false)]
+        public CourseTagType CourseTagType { get; set; }
     }
 
     /// <summary>
