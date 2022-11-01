@@ -11,8 +11,7 @@ public class AssessmentService : IAssessmentService
     {
         _logger = logger;
     }
-
-
+    
     public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request) => throw new NotImplementedException();
 
     public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CallContext context = default) => throw new NotImplementedException();

@@ -31,6 +31,6 @@ namespace Invite.Apollo.App.Graph.Common.Models
         public MetaDataType Type { get; set; }
 
         [DataMember(Order = 6)]
-        public string? Value { get; set; }
+        public string? Value { get; set; } = string.Empty;
     }
 }
