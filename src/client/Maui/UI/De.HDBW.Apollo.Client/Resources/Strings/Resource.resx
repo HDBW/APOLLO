@@ -261,25 +261,31 @@ deiner Wahl</value>
   <data name="StartView_Goal" xml:space="preserve">
     <value>Mein Ziel</value>
   </data>
-  <data name="UseCaseSelectionView_CreateUseCase" xml:space="preserve">
-    <value>Erstellen</value>
+  <data name="UseCaseSelectionView_Choose" xml:space="preserve">
+    <value>Wähle dein Szenario</value>
+  </data>
+  <data name="UseCaseSelectionView_ChooseDescription" xml:space="preserve">
+    <value>Definiere das Ziel, dass du mit dem Verwenden der App verfolgst.</value>
   </data>
   <data name="UseCase_A_Description" xml:space="preserve">
-    <value>Beschreibung des Usecase A</value>
+    <value>Du möchtest einen
+sicheren Job finden</value>
   </data>
   <data name="UseCase_A_Name" xml:space="preserve">
-    <value>Usecase A</value>
+    <value>Jobsuche</value>
   </data>
   <data name="UseCase_B_Description" xml:space="preserve">
-    <value>Beschreibung des Usecase B</value>
+    <value>Du möchtest neue
+Fähigkeiten erwerben</value>
   </data>
   <data name="UseCase_B_Name" xml:space="preserve">
-    <value>Usecase B</value>
+    <value>Weiterbildung</value>
   </data>
   <data name="UseCase_C_Description" xml:space="preserve">
-    <value>Beschreibung des Usecase C</value>
+    <value>Du möchtest in deinem
+Job Karriere machen</value>
   </data>
   <data name="UseCase_C_Name" xml:space="preserve">
-    <value>Usecase C</value>
+    <value>Jobaufstieg</value>
   </data>
 </root>

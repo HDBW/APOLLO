@@ -4,6 +4,8 @@
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -14,37 +16,48 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
+           IUseCaseBuilder builder,
            ILogger<UseCaseTutorialViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
+            UseCaseBuilder = builder;
         }
+
+        private UseCase UseCase { get; set; }
 
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            SkipCommand?.NotifyCanExecuteChanged();
+            CreateUseCaseCommand?.NotifyCanExecuteChanged();
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
-        private async Task Skip(CancellationToken token)
+        private IUseCaseBuilder UseCaseBuilder { get; }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateUseCase))]
+        public async Task CreateUseCase(CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
+                    if (!await UseCaseBuilder.BuildAsync(UseCase, worker.Token))
+                    {
+                        return;
+                    }
+
+                    await NavigationService.PushToRootAsnc(Routes.Shell, token);
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(CreateUseCase)} in {GetType()}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(CreateUseCase)} in {GetType()}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(CreateUseCase)} in {GetType()}.");
                 }
                 finally
                 {
@@ -53,9 +66,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private bool CanSkip()
+        public bool CanCreateUseCase()
         {
-            return !IsBusy;
+            return !IsBusy && UseCase != UseCase.Unknown;
         }
     }
 }
