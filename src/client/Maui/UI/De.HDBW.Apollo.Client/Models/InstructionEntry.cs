@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using De.HDBW.Apollo.Client.Helper;
 
 namespace De.HDBW.Apollo.Client.Models
 {
@@ -11,7 +12,10 @@ namespace De.HDBW.Apollo.Client.Models
         private string? _text;
 
         [ObservableProperty]
-        private string? _image;
+        private string? _subline;
+
+        [ObservableProperty]
+        private string? _imagePath;
 
         [ObservableProperty]
         private string? _animation;
@@ -20,13 +24,30 @@ namespace De.HDBW.Apollo.Client.Models
         {
         }
 
-        public static InstructionEntry Import(string? image, string? animation, string? text)
+        public bool HasImage
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(ImagePath);
+            }
+        }
+
+        public bool HasAnimation
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(Animation);
+            }
+        }
+
+        public static InstructionEntry Import(string? image, string? animation, string? text, string? subline)
         {
             return new InstructionEntry()
             {
                 Animation = animation,
-                Image = image,
+                ImagePath = image?.ToUniformedName(),
                 Text = text,
+                Subline = subline,
             };
         }
     }

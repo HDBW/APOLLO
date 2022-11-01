@@ -186,6 +186,7 @@ public static class MauiProgram
         services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
         services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
         services.AddSingleton<IUserProfileRepository, UserProfileRepository>();
+        services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
     }
 
     private static void SetupViewsAndViewModels(IServiceCollection services)

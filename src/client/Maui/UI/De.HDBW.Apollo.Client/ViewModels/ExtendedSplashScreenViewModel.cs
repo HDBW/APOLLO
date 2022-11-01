@@ -25,9 +25,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             PreferenceService = preferenceService;
             SessionService = sessionService;
-            Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1));
-            Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction2));
-            Instructions.Add(InstructionEntry.Import(null, "animation.json", Resources.Strings.Resource.ExtendedSplashScreenView_Instruction3));
+            Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1Detail));
+            Instructions.Add(InstructionEntry.Import(null, null, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction2, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction2Detail));
+            Instructions.Add(InstructionEntry.Import(null, null, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction3, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction3Detail));
         }
 
         public ObservableCollection<InstructionEntry> Instructions

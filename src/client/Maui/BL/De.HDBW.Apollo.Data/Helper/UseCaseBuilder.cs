@@ -1,11 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 using ProtoBuf;
@@ -24,7 +23,8 @@ namespace De.HDBW.Apollo.Data.Helper
             IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
             IMetaDataRepository metadataRepository,
             ICourseItemRepository courseItemRepository,
-            IUserProfileRepository userProfileRepository)
+            IUserProfileRepository userProfileRepository,
+            IEduProviderItemRepository eduProviderItemRepository)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
@@ -36,6 +36,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(metadataRepository);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
             ArgumentNullException.ThrowIfNull(userProfileRepository);
+            ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
 
             Logger = logger;
             AssessmentItemRepository = assessmentItemRepository;
@@ -47,6 +48,7 @@ namespace De.HDBW.Apollo.Data.Helper
             MetadataRepository = metadataRepository;
             CourseItemRepository = courseItemRepository;
             UserProfileRepository = userProfileRepository;
+            EduProviderItemRepository = eduProviderItemRepository;
         }
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
@@ -66,6 +68,8 @@ namespace De.HDBW.Apollo.Data.Helper
         private ICourseItemRepository CourseItemRepository { get; }
 
         private IUserProfileRepository UserProfileRepository { get; }
+
+        private IEduProviderItemRepository EduProviderItemRepository { get; }
 
         private ILogger<UseCaseBuilder> Logger { get; }
 
@@ -100,10 +104,10 @@ namespace De.HDBW.Apollo.Data.Helper
         private Task<bool> DeserializeSampleDataAndInitalizeRepositoriesAsync(string fileName, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            AssessmentUseCases usecase;
+            UseCaseCollections usecase;
             using (var stream = GetType().Assembly.GetManifestResourceStream(fileName))
             {
-                usecase = Serializer.Deserialize<AssessmentUseCases>(stream);
+                usecase = Serializer.Deserialize<UseCaseCollections>(stream);
             }
 
             AnswerItemRepository.ResetItemsAsync(usecase.AnswerItems, token).ConfigureAwait(false);
@@ -113,9 +117,11 @@ namespace De.HDBW.Apollo.Data.Helper
             AnswerMetaDataRelationRepository.ResetItemsAsync(usecase.AnswerMetaDataRelations, token).ConfigureAwait(false);
             QuestionMetaDataRelationRepository.ResetItemsAsync(usecase.QuestionMetaDataRelations, token).ConfigureAwait(false);
             MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase.MetaDataMetaDataRelations, token).ConfigureAwait(false);
-            UserProfileRepository.AddItemAsync(new UserProfile() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png" , Goal = "Jobsuche" }, token).ConfigureAwait(false);
-            // TODO:
-            // CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
+            EduProviderItemRepository.ResetItemsAsync(usecase.EduProviderItems, token).ConfigureAwait(false);
+            CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
+
+            UserProfileRepository.AddItemAsync(new UserProfile() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
+
             // UserProfileRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
@@ -130,6 +136,9 @@ namespace De.HDBW.Apollo.Data.Helper
             await AnswerMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await QuestionMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await MetadataRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await CourseItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await EduProviderItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await UserProfileRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
         }
     }
 }
