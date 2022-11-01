@@ -48,35 +48,34 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
-            IsBusy = true;
-            try
+            using (var worker = ScheduleWork(token))
             {
-                if (SessionService.HasRegisteredUser)
+                try
                 {
-                    await NavigationService.PushToRootAsnc(Routes.StartView, token);
+                    if (SessionService.HasRegisteredUser)
+                    {
+                        await NavigationService.PushToRootAsnc(Routes.StartView, token);
+                    }
+                    else
+                    {
+                        await NavigationService.PushToRootAsnc(Routes.RegistrationView, token);
+                    }
                 }
-                else
+                catch (OperationCanceledException)
                 {
-                    await NavigationService.PushToRootAsnc(Routes.RegistrationView, token);
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                catch (ObjectDisposedException)
                 {
-                    IsBusy = false;
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
         }

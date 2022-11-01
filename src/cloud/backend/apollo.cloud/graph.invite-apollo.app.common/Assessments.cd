@@ -104,6 +104,14 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Assessment.AssessmentScoringItem">
+    <Position X="1.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAQAAAAAAAAAAARBABEAABACAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Models\Assessment\AssessmentScoringItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="Invite.Apollo.App.Graph.Common.Models.Assessment.IAssessmentService">
     <Position X="0.75" Y="6.5" Width="3.25" />
     <TypeIdentifier>

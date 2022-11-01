@@ -43,33 +43,32 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateUseCase))]
         public async Task CreateUseCase(CancellationToken token)
         {
-            try
+            using (var worker = ScheduleWork(token))
             {
-                IsBusy = true;
-                if (!await UseCaseBuilder.BuildAsync(UseCases.First(u => u.IsSelected).UseCase, token))
+                try
                 {
-                    return;
-                }
+                    if (!await UseCaseBuilder.BuildAsync(UseCases.First(u => u.IsSelected).UseCase, worker.Token))
+                    {
+                        return;
+                    }
 
-                await NavigationService.PushToRootAsnc(Routes.Shell, token);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled CreateUseCase in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled CreateUseCase in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in CreateUseCase in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                    await NavigationService.PushToRootAsnc(Routes.Shell, token);
+                }
+                catch (OperationCanceledException)
                 {
-                    IsBusy = false;
+                    Logger?.LogDebug($"Canceled {nameof(CreateUseCase)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(CreateUseCase)} in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(CreateUseCase)} in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
         }

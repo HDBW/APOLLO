@@ -61,6 +61,78 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string AssessmentItem_DecoratorText {
+            get {
+                return ResourceManager.GetString("AssessmentItem_DecoratorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zulassung.
+        /// </summary>
+        public static string CourseTagType_Admission {
+            get {
+                return ResourceManager.GetString("CourseTagType_Admission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilnahmebescheinigung.
+        /// </summary>
+        public static string CourseTagType_AttendeeCertificate {
+            get {
+                return ResourceManager.GetString("CourseTagType_AttendeeCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zertifikat.
+        /// </summary>
+        public static string CourseTagType_Certificate {
+            get {
+                return ResourceManager.GetString("CourseTagType_Certificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurs.
+        /// </summary>
+        public static string CourseTagType_Course {
+            get {
+                return ResourceManager.GetString("CourseTagType_Course", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veranstaltung.
+        /// </summary>
+        public static string CourseTagType_InfoEvent {
+            get {
+                return ResourceManager.GetString("CourseTagType_InfoEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilqualifikation.
+        /// </summary>
+        public static string CourseTagType_PartialQualification {
+            get {
+                return ResourceManager.GetString("CourseTagType_PartialQualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qualifikation.
+        /// </summary>
+        public static string CourseTagType_Qualification {
+            get {
+                return ResourceManager.GetString("CourseTagType_Qualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1 {
@@ -223,6 +295,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abmelden.
+        /// </summary>
+        public static string RegistrationView_UnRegisterUser {
+            get {
+                return ResourceManager.GetString("RegistrationView_UnRegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usecase ändern.
+        /// </summary>
+        public static string StartView_ChangeUseCase {
+            get {
+                return ResourceManager.GetString("StartView_ChangeUseCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mein Ziel.
+        /// </summary>
+        public static string StartView_Goal {
+            get {
+                return ResourceManager.GetString("StartView_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entdecke dein Karrierepotential
         ///(Ist-Stand bekannt – Inspiration).
         /// </summary>
@@ -266,6 +365,51 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_InteractionSkills {
             get {
                 return ResourceManager.GetString("StartViewModel_InteractionSkills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erhöhe deine Jobchancen.
+        /// </summary>
+        public static string StartViewModel_LearningHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_LearningHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Lerninhalte.
+        /// </summary>
+        public static string StartViewModel_LearningSubline {
+            get {
+                return ResourceManager.GetString("StartViewModel_LearningSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teste dein Wissen.
+        /// </summary>
+        public static string StartViewModel_TestHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_TestHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Tests.
+        /// </summary>
+        public static string StartViewModel_TestSubline {
+            get {
+                return ResourceManager.GetString("StartViewModel_TestSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unbekannter Anbieter.
+        /// </summary>
+        public static string StartViewModel_UnknownProvider {
+            get {
+                return ResourceManager.GetString("StartViewModel_UnknownProvider", resourceCulture);
             }
         }
         

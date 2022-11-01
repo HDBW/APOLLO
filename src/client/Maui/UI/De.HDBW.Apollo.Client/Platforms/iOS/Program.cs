@@ -1,4 +1,7 @@
-﻿using UIKit;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using UIKit;
 
 namespace De.HDBW.Apollo.Client;
 public class Program

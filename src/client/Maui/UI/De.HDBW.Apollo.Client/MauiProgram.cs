@@ -9,9 +9,11 @@ using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Data.Helper;
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -46,16 +48,17 @@ public static class MauiProgram
         Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
         SetupRoutes();
 
-        SetupB2CLogin(builder.Services);
-        SetupServices(builder.Services);
-
+        var result = SetupB2CLogin(builder.Services);
+        SetupServices(builder.Services, result);
+        SetupRepositories(builder.Services);
+        SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
+                fonts.AddFont("NotoSerif-Regular.ttf", "NotoSerifRegular");
             });
         return builder.Build();
     }
@@ -70,7 +73,7 @@ public static class MauiProgram
         return userSecretsService;
     }
 
-    private static void SetupB2CLogin(IServiceCollection services)
+    private static bool SetupB2CLogin(IServiceCollection services)
     {
         var b2cClientApplicationBuilder = PublicClientApplicationBuilder.Create(B2CConstants.ClientId)
 #if ANDROID
@@ -81,12 +84,36 @@ public static class MauiProgram
 #else
             .WithRedirectUri($"msal{B2CConstants.ClientId}://auth");
 #endif
-
-        services.AddSingleton<IAuthService>(new AuthServiceB2C(
+        IAuthService authService;
+        try
+        {
+            authService = new AuthServiceB2C(
             b2cClientApplicationBuilder
                 .WithIosKeychainSecurityGroup(B2CConstants.IosKeychainSecurityGroups)
                 .WithB2CAuthority(B2CConstants.AuthoritySignIn)
-                .Build()));
+                .Build());
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Unknow Error while registering B2C Auth in {nameof(MauiProgram)}. ClientId is {B2CConstants.ClientId}. AuthoritySignIn is {B2CConstants.AuthoritySignIn}.Error was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
+            authService = new AuthServiceB2C(null!);
+        }
+
+        services.AddSingleton<IAuthService>(authService);
+        bool hasRegisteredUser = false;
+        try
+        {
+            var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
+            task.Wait();
+            var authenticationResult = task.Result;
+            hasRegisteredUser = task.Result?.Account != null;
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Unknow Error while AcquireTokenSilent in {nameof(MauiProgram)}. Error was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
+        }
+
+        return hasRegisteredUser;
     }
 
     private static void SetupLogging()
@@ -105,12 +132,15 @@ public static class MauiProgram
 
         Log.Logger = new LoggerConfiguration()
 #if DEBUG
-                .MinimumLevel.Debug()
+                .MinimumLevel.Verbose()
                 .Enrich.WithMemoryUsage()
                 .Enrich.WithThreadId()
+                .WriteTo.Debug()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug, retainedFileCountLimit: 5)
 #else
-                .MinimumLevel.Debug()
+                .MinimumLevel.Verbose()
+                .Enrich.WithMemoryUsage()
+                .Enrich.WithThreadId()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug, retainedFileCountLimit: 20)
 #endif
                 .WriteTo.Conditional(IsTelemetryEnable, wt => wt.UseApplicationInsights(TelemetryConstants.Configuration, TelemetryConverter.Traces))
@@ -128,28 +158,41 @@ public static class MauiProgram
         return loggerConfiguration.Sink(new ApplicationInsightsSink(telemetryClient, telemetryConverter), restrictedToMinimumLevel, levelSwitch);
     }
 
-    // TODO: Show dialog to get permission or if not needed return true,
     private static bool IsTelemetryEnable(LogEvent arg)
     {
         return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
     }
 
-    private static void SetupServices(IServiceCollection services)
+    private static void SetupServices(IServiceCollection services, bool hasRegisterdUser)
     {
-        services.AddLogging();
         services.AddSingleton((s) => { return Preferences.Default; });
-
-        services.AddSingleton<ISessionService, SessionService>();
         services.AddSingleton<IPreferenceService, PreferenceService>();
         services.AddSingleton<IDispatcherService, DispatcherService>();
         services.AddSingleton<INavigationService, NavigationService>();
-        services.AddSingleton<ISessionService, SessionService>();
+        services.AddSingleton<ISessionService>(new SessionService(hasRegisterdUser));
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
+    }
 
-        services.AddSingleton<AppShell>();
-        services.AddSingleton<AppShellViewModel>();
+    private static void SetupRepositories(IServiceCollection services)
+    {
+        services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
+        services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
+        services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
+        services.AddSingleton<IQuestionMetaDataRelationRepository, QuestionMetaDataRelationRepository>();
+        services.AddSingleton<IAnswerMetaDataRelationRepository, AnswerMetaDataRelationRepository>();
+        services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
+        services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
+        services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
+        services.AddSingleton<IUserProfileRepository, UserProfileRepository>();
+        services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
+    }
+
+    private static void SetupViewsAndViewModels(IServiceCollection services)
+    {
+        services.AddTransient<AppShell>();
+        services.AddTransient<AppShellViewModel>();
         services.AddTransient<StartView>();
         services.AddTransient<StartViewModel>();
         services.AddTransient<ExtendedSplashScreenView>();
@@ -164,6 +207,9 @@ public static class MauiProgram
         services.AddTransient<FirstTimeDialogViewModel>();
         services.AddTransient<EmptyView>();
         services.AddTransient<EmptyViewModel>();
+        services.AddTransient<AssessmentView>();
+        services.AddTransient<AssessmentViewModel>();
+        services.AddTransient<CourseViewModel>();
     }
 
     private static void SetupRoutes()
@@ -174,6 +220,8 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.UseCaseTutorialView, typeof(UseCaseTutorialView));
         Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
+        Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
+        Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
