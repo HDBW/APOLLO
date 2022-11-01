@@ -120,8 +120,26 @@
   <data name="AssessmentItem_DecoratorText" xml:space="preserve">
     <value>Test</value>
   </data>
-  <data name="CourseItem_DecoratorText" xml:space="preserve">
+  <data name="CourseTagType_Admission" xml:space="preserve">
+    <value>Zulassung</value>
+  </data>
+  <data name="CourseTagType_AttendeeCertificate" xml:space="preserve">
+    <value>Teilnahmebescheinigung</value>
+  </data>
+  <data name="CourseTagType_Certificate" xml:space="preserve">
     <value>Zertifikat</value>
+  </data>
+  <data name="CourseTagType_Course" xml:space="preserve">
+    <value>Kurs</value>
+  </data>
+  <data name="CourseTagType_InfoEvent" xml:space="preserve">
+    <value>Veranstaltung</value>
+  </data>
+  <data name="CourseTagType_PartialQualification" xml:space="preserve">
+    <value>Teilqualifikation</value>
+  </data>
+  <data name="CourseTagType_Qualification" xml:space="preserve">
+    <value>Qualifikation</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
     <value>Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!</value>
@@ -208,6 +226,9 @@ deiner Wahl</value>
   </data>
   <data name="StartViewModel_TestSubline" xml:space="preserve">
     <value>Empfohlene Tests</value>
+  </data>
+  <data name="StartViewModel_UnknownProvider" xml:space="preserve">
+    <value>Unbekannter Anbieter</value>
   </data>
   <data name="StartView_ChangeUseCase" xml:space="preserve">
     <value>Usecase ändern</value>
