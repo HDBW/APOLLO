@@ -34,8 +34,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Repository
                 {
                     string[] fields = csvFieldParser.ReadFields();
                     //TODO: Implement Assessment
-                    string Name = fields[0];
-                    string Address = fields[1];
+                    //string Name = fields[0];
+                    //string Address = fields[1];
+
+
+
                 }
 
             }

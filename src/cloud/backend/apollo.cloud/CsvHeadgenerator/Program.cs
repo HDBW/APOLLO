@@ -177,7 +177,7 @@ public class Program
         StringBuilder sbHeadDescription = new();
 
         foreach (PropertyInfo property in properties)
-         {
+        {
             sbHeadBuilder.Append($"{property.Name};");
         }
 

@@ -1,16 +1,18 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 
-namespace Invite.Apollo.App.Graph.Common.Models.Assessment
+namespace Invite.Apollo.App.Graph.Common.Models
 {
     /// <summary>
     /// TESTING PURPOSE ONLY
     /// USECASES FOR PROTOTYPE TESTING
     /// </summary>
     [DataContract]
-    public class AssessmentUseCases
+    public class UseCaseCollections
     {
-        public AssessmentUseCases(Collection<AssessmentItem> assessmentItems, Collection<QuestionItem> questionItems, Collection<AnswerItem> answerItems, Collection<MetaDataItem> metaDataItems, Collection<QuestionMetaDataRelation> questionMetaDataRelations, Collection<AnswerMetaDataRelation> answerMetaDataRelations, Collection<MetaDataMetaDataRelation> metaDataMetaDataRelations)
+        public UseCaseCollections(Collection<AssessmentItem> assessmentItems, Collection<QuestionItem> questionItems, Collection<AnswerItem> answerItems, Collection<MetaDataItem> metaDataItems, Collection<QuestionMetaDataRelation> questionMetaDataRelations, Collection<AnswerMetaDataRelation> answerMetaDataRelations, Collection<MetaDataMetaDataRelation> metaDataMetaDataRelations)
         {
             AssessmentItems = assessmentItems;
             QuestionItems = questionItems;
@@ -19,9 +21,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
             QuestionMetaDataRelations = questionMetaDataRelations;
             AnswerMetaDataRelations = answerMetaDataRelations;
             MetaDataMetaDataRelations = metaDataMetaDataRelations;
+            
         }
 
-        public AssessmentUseCases()
+        public UseCaseCollections()
         {
             AssessmentItems = new Collection<AssessmentItem>();
             QuestionItems = new Collection<QuestionItem>();
@@ -32,7 +35,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
             MetaDataMetaDataRelations = new Collection<MetaDataMetaDataRelation>();
         }
 
-        [DataMember(Order = 1,IsRequired = false)]        
+        [DataMember(Order = 1, IsRequired = false)]
         public Collection<AssessmentItem> AssessmentItems { get; set; }
 
         [DataMember(Order = 2, IsRequired = false)]
@@ -52,5 +55,17 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order = 7, IsRequired = false)]
         public Collection<MetaDataMetaDataRelation> MetaDataMetaDataRelations { get; set; }
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public Collection<CourseItem> CourseItems { get; set; }
+
+        [DataMember(Order = 9, IsRequired = false)]
+        public Collection<CourseAppointment> CourseAppointments { get; set; }
+
+        [DataMember(Order = 10, IsRequired = false)]
+        public Collection<CourseContact> CourseContacts { get; set; }
+
+        [DataMember(Order = 11, IsRequired = false)]
+        public Collection<EduProviderItem> EduProviderItems { get; set; }
     }
 }

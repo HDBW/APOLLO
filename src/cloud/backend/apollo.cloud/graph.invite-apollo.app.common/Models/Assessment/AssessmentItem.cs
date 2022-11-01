@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.Esco;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
@@ -47,6 +48,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order = 9)]
         public AssessmentType Assessment { get; set; }
+
+        [DataMember(Order = 10)]
+        public string Publisher { get; set; }
+
+        // Will be auto calculated in the future
+        [DataMember(Order = 11)]
+        public TimeSpan Duration { get; set; }
     }
 
     [DataContract]
@@ -66,14 +74,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order=5)]
         public CultureInfo? CultureInfo { get; set; }
-    }
-
-    [DataContract]
-    public enum AssessmentType
-    {
-        SkillAssessment = 0,
-        SoftSkillAssessment = 1,
-        Survey = 2
     }
 
     [DataContract]
