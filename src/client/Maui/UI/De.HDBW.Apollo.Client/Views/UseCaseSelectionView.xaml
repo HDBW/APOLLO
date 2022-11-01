@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.UseCaseSelectionView"
@@ -10,24 +9,35 @@
              x:DataType="viewModels:UseCaseSelectionViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}">
-    <Grid RowDefinitions="*, Auto">
-        <CollectionView ItemsSource="{Binding UseCases}" SelectionMode="None">
+    <Grid RowDefinitions="Auto, Auto, *" Padding="0,40,0,16">
+        <Label FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.UseCaseSelectionView_Choose}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
+        <Label Grid.Row="1" Text="{x:Static strings:Resource.UseCaseSelectionView_ChooseDescription}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="0,16"/>
+        <CollectionView Grid.Row="2" ItemsSource="{Binding UseCases}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"/>
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:UseCaseEntry">
                     <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Background="Transparent">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                         </Grid.GestureRecognizers>
-                        <CheckBox InputTransparent="True" IsChecked="{Binding IsSelected, Mode=TwoWay}" Grid.RowSpan="2" VerticalOptions="Center"/>
-                        <Label Text="{Binding DisplayUseCaseName}" Grid.Column="1" Grid.Row="0"/>
-                        <Label Text="{Binding DisplayUseCaseDescription}" Grid.Column="1" Grid.Row="1"/>
+                        <Border Grid.RowSpan="2" StrokeThickness="0" Background="{StaticResource Primary}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8,0,8,0" />
+                            </Border.StrokeShape>
+                            <Image Source="{Binding ImagePath}" Margin="25" WidthRequest="40" HeightRequest="40"/>
+                        </Border>
+                        <Border Grid.Column="1" Grid.RowSpan="2" StrokeThickness="0" Background="{StaticResource White}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0,8,0,8" />
+                            </Border.StrokeShape>
+                        </Border>
+                        <Label Text="{Binding DisplayUseCaseName}" Margin="16,0" VerticalOptions="Center" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}" Grid.Column="1" Grid.Row="0"/>
+                        <Label Text="{Binding DisplayUseCaseDescription}" Margin="16,0" VerticalOptions="Start" Style="{StaticResource Noto12}" Grid.Column="1" Grid.Row="1"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button
-            Grid.Row="1"
-            Text="{x:Static strings:Resource.UseCaseSelectionView_CreateUseCase}"
-            Command="{Binding CreateUseCaseCommand}" />
     </Grid>
 </ContentPage>
