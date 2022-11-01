@@ -4,37 +4,46 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
-    [DataContract]
-    public class UserPreferences : IEntity, IBackendEntity
+    public class AnswerItemResult : IEntity, IBackendEntity
     {
         #region Implementation of IEntity
+
         [Key]
         [DataMember(Order = 1)]
         public long Id { get; set; }
-        [DataMember(Order = 2, IsRequired = true)]
+
+        [DataMember(Order = 2)]
         public long Ticks { get; set; }
 
         #endregion
 
         #region Implementation of IBackendEntity
-        [DataMember(Order = 3, IsRequired = true)]
+
+        [DataMember()]
         public long BackendId { get; set; }
 
-        [DataMember(Order = 4)]
+        [DataMember()]
         public Uri Schema { get; set; }
 
         #endregion
 
-        /// <summary>
-        /// Frontend Mapping
-        /// </summary>
-        [DataMember(Order = 5)]
-        [ForeignKey(nameof(UserProfileItem))]
-        public string UserId { get; set; }
+        [DataMember()]
+        [ForeignKey(nameof(QuestionItem))]
+        public long QuestionItemId { get; set; }
 
-        //TODO: Preferences ???
+        [DataMember()]
+        [ForeignKey(nameof(AssessmentItem))]
+        public long AssessmentItemId { get; set; }
+
+        [DataMember()]
+        [ForeignKey(nameof(AnswerItem))]
+        public long AnswerItemId { get; set; }
+
+        [DataMember()]
+        public string Value { get; set; }
     }
 }
