@@ -119,11 +119,10 @@ namespace De.HDBW.Apollo.Data.Helper
             QuestionMetaDataRelationRepository.ResetItemsAsync(usecase.QuestionMetaDataRelations, token).ConfigureAwait(false);
             MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase.MetaDataMetaDataRelations, token).ConfigureAwait(false);
             EduProviderItemRepository.ResetItemsAsync(usecase.EduProviderItems, token).ConfigureAwait(false);
+            CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
 
             UserProfileRepository.AddItemAsync(new UserProfile() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
 
-            // TODO:
-            // CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
             // UserProfileRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
@@ -138,6 +137,9 @@ namespace De.HDBW.Apollo.Data.Helper
             await AnswerMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await QuestionMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await MetadataRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await CourseItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await EduProviderItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await UserProfileRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
         }
     }
 }
