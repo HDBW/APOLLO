@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.ExtendedSplashScreenView"
@@ -11,27 +10,28 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
-             IsBusy="{Binding IsBusy}">
-    <ContentPage.Resources>
-        <converter:StringToLottieImageSourceConverter x:Key="StringToLottieImageSourceConverter" />
-    </ContentPage.Resources>
-    <Grid Margin="20" RowDefinitions="*, auto, auto">
-        <CarouselView ItemsSource="{Binding Instructions}"
+             IsBusy="{Binding IsBusy}" Padding="0">
+    <Grid RowDefinitions="auto, *, auto, auto">
+        <Label Margin="24,40,24,8" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.ExtendedSplashScreenView_Welcome}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
+        <CarouselView Grid.Row="1" ItemsSource="{Binding Instructions}"
                   IndicatorView="indicatorView"
                   x:Name="PART_Animation">
             <CarouselView.ItemTemplate>
                 <DataTemplate x:DataType="models:InstructionEntry">
-                    <Grid RowDefinitions="auto, *" >
-                        <Label Text="{Binding Text}" />
-                        <skia:SKLottieView Source="{Binding Animation, Converter={StaticResource StringToLottieImageSourceConverter}}"  Grid.Row="1" RepeatMode="Restart" RepeatCount="-1" IsAnimationEnabled="True"  VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                    <Grid RowDefinitions="auto, *, auto" >
+                        <Label Text="{Binding Text}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="24,0,24,8"/>
+                        <Image Grid.Row="1" Source="{Binding ImagePath}"/>
+                        <Label Grid.Row="2" Text="{Binding Subline}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="24,8,24,0"/>
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
-        <IndicatorView Grid.Row="1" x:Name="indicatorView"
-                   IndicatorColor="LightGray"
-                   SelectedIndicatorColor="DarkGray"
-                   HorizontalOptions="Center"/>
-        <Button Grid.Row="2" VerticalOptions="End" Text="{x:Static strings:Resource.Global_Skip}" Command="{Binding SkipCommand}" />
+        <IndicatorView Grid.Row="2"
+                       x:Name="indicatorView"
+                       IndicatorColor="{StaticResource Primary050}"
+                       SelectedIndicatorColor="{StaticResource Primary}"
+                       HorizontalOptions="Center"
+                       Margin="24,24"/>
+        <Button Grid.Row="3" VerticalOptions="End" Text="{x:Static strings:Resource.Global_StartNow}" Command="{Binding SkipCommand}" Margin="24,24"/>
     </Grid>
 </ContentPage>
