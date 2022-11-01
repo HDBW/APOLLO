@@ -37,7 +37,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long CourseId { get; set; }
 
         [DataMember(Order = 6)]
-        public string Value { get; set; } = null!;
+        public string Value { get; set; } = string.Empty;
 
         [DataMember(Order = 7)]
         public Uri Image { get; set; } = null!;

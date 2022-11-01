@@ -48,9 +48,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public int ScoringOption { get; set; }
 
         [DataMember(Order = 9,IsRequired = true)]
-        public string OccupationResult { get; set; } = null!;
+        public string OccupationResult { get; set; } = string.Empty;
 
         [DataMember(Order = 10,IsRequired = true)]
-        public string SkillResult { get; set; } = null!;
+        public string SkillResult { get; set; } = string.Empty!;
     }
 }
