@@ -57,8 +57,8 @@ public static class MauiProgram
             .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
+                fonts.AddFont("NotoSerif-Regular.ttf", "NotoSerifRegular");
             });
         return builder.Build();
     }
@@ -184,6 +184,8 @@ public static class MauiProgram
         services.AddSingleton<IAnswerMetaDataRelationRepository, AnswerMetaDataRelationRepository>();
         services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
         services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
+        services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
+        services.AddSingleton<IUserProfileRepository, UserProfileRepository>();
     }
 
     private static void SetupViewsAndViewModels(IServiceCollection services)
@@ -206,6 +208,7 @@ public static class MauiProgram
         services.AddTransient<EmptyViewModel>();
         services.AddTransient<AssessmentView>();
         services.AddTransient<AssessmentViewModel>();
+        services.AddTransient<CourseViewModel>();
     }
 
     private static void SetupRoutes()
@@ -217,6 +220,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
         Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
+        Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

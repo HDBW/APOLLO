@@ -22,6 +22,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         private LayoutType? _questionLayout;
         private LayoutType? _answerLayout;
+        private InteractionType? _interaction;
 
         private QuestionEntry(
             QuestionItem questionItem,
@@ -33,7 +34,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             ArgumentNullException.ThrowIfNull(questionMetaDataItems);
             ArgumentNullException.ThrowIfNull(answerItems);
             ArgumentNullException.ThrowIfNull(answerMetaDataItems);
-
             _questionItem = questionItem;
             _questionMetaDataItems = questionMetaDataItems;
 
@@ -55,13 +55,27 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public LayoutType AnswerLayout
         {
-            get { return _answerLayout ??  _questionItem.AnswerLayout; }
+            get { return _answerLayout ?? _questionItem.AnswerLayout; }
             set { SetProperty(ref _answerLayout, value); }
         }
 
         public InteractionType Interaction
         {
-            get { return _questionItem.Interaction; }
+            get
+            {
+                return _interaction ?? _questionItem.Interaction;
+            }
+
+            set
+            {
+                if (SetProperty(ref _interaction, value))
+                {
+                    foreach (var answer in Answers ?? new ObservableCollection<IInteractiveEntry>())
+                    {
+                        answer.Interaction = value;
+                    }
+                }
+            }
         }
 
         public string Question

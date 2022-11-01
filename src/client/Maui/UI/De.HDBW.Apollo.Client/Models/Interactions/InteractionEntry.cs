@@ -4,7 +4,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace De.HDBW.Apollo.Client.Models
+namespace De.HDBW.Apollo.Client.Models.Interactions
 {
     public partial class InteractionEntry : ObservableObject
     {
@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Client.Models
 
         private Func<InteractionEntry, Task> _navigateHandler;
 
-        private InteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        protected InteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
         {
             Text = text;
             _data = data;
