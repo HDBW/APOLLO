@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AssessmentItem_DecoratorText" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="CourseItem_DecoratorText" xml:space="preserve">
+    <value>Zertifikat</value>
+  </data>
   <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
     <value>Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!</value>
   </data>
@@ -191,8 +197,23 @@ deiner Wahl</value>
   <data name="StartViewModel_InteractionSkills" xml:space="preserve">
     <value>Lerne neue Skills</value>
   </data>
+  <data name="StartViewModel_LearningHeadline" xml:space="preserve">
+    <value>Erhöhe deine Jobchancen</value>
+  </data>
+  <data name="StartViewModel_LearningSubline" xml:space="preserve">
+    <value>Empfohlene Lerninhalte</value>
+  </data>
+  <data name="StartViewModel_TestHeadline" xml:space="preserve">
+    <value>Teste dein Wissen</value>
+  </data>
+  <data name="StartViewModel_TestSubline" xml:space="preserve">
+    <value>Empfohlene Tests</value>
+  </data>
   <data name="StartView_ChangeUseCase" xml:space="preserve">
     <value>Usecase ändern</value>
+  </data>
+  <data name="StartView_Goal" xml:space="preserve">
+    <value>Mein Ziel</value>
   </data>
   <data name="UseCaseSelectionView_CreateUseCase" xml:space="preserve">
     <value>Erstellen</value>

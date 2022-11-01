@@ -1,10 +1,12 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 using ProtoBuf;
 
@@ -20,7 +22,9 @@ namespace De.HDBW.Apollo.Data.Helper
             IMetaDataMetaDataRelationRepository metaDataMetaDataRelationRepository,
             IAnswerMetaDataRelationRepository answerMetaDataRelationRepository,
             IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
-            IMetaDataRepository metadataRepository)
+            IMetaDataRepository metadataRepository,
+            ICourseItemRepository courseItemRepository,
+            IUserProfileRepository userProfileRepository)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
@@ -30,6 +34,8 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(answerMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(metadataRepository);
+            ArgumentNullException.ThrowIfNull(courseItemRepository);
+            ArgumentNullException.ThrowIfNull(userProfileRepository);
 
             Logger = logger;
             AssessmentItemRepository = assessmentItemRepository;
@@ -39,6 +45,8 @@ namespace De.HDBW.Apollo.Data.Helper
             AnswerMetaDataRelationRepository = answerMetaDataRelationRepository;
             QuestionMetaDataRelationRepository = questionMetaDataRelationRepository;
             MetadataRepository = metadataRepository;
+            CourseItemRepository = courseItemRepository;
+            UserProfileRepository = userProfileRepository;
         }
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
@@ -54,6 +62,10 @@ namespace De.HDBW.Apollo.Data.Helper
         private IQuestionMetaDataRelationRepository QuestionMetaDataRelationRepository { get; }
 
         private IMetaDataRepository MetadataRepository { get; }
+
+        private ICourseItemRepository CourseItemRepository { get; }
+
+        private IUserProfileRepository UserProfileRepository { get; }
 
         private ILogger<UseCaseBuilder> Logger { get; }
 
@@ -101,6 +113,10 @@ namespace De.HDBW.Apollo.Data.Helper
             AnswerMetaDataRelationRepository.ResetItemsAsync(usecase.AnswerMetaDataRelations, token).ConfigureAwait(false);
             QuestionMetaDataRelationRepository.ResetItemsAsync(usecase.QuestionMetaDataRelations, token).ConfigureAwait(false);
             MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase.MetaDataMetaDataRelations, token).ConfigureAwait(false);
+            UserProfileRepository.AddItemAsync(new UserProfile() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png" , Goal = "Jobsuche" }, token).ConfigureAwait(false);
+            // TODO:
+            // CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
+            // UserProfileRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
 

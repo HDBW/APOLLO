@@ -33,24 +33,33 @@
             </AbsoluteLayout>
         </DataTemplate>
 
-        <selector:AnswersTemplateSelector x:Key="AnswersTemplateSelector"
+        <selector:SelectionAnswersTemplateSelector x:Key="SelectionAnswersTemplateSelector"
                                            DefaultTemplate="{StaticResource DefaultAnswerTemplate}"
-                                           ImageTemplate="{StaticResource ImageAnswerTemplate}"
-                                           ImageWithTextTemplate="{StaticResource ImageWithTextTemplate}"
-                                           PointTemplate="{StaticResource PointTemplate}"/>
+                                           BooleanImageTemplate="{StaticResource ImageAnswerTemplate}"
+                                           BooleanImageWithTextTemplate="{StaticResource ImageWithTextTemplate}"
+                                           DefaultBooleanTemplate="{StaticResource DefaultAnswerTemplate}"
+                                           DefaultIntegerTemplate="{StaticResource DefaultAnswerTemplate}"
+                                           DefaultLongTemplate="{StaticResource DefaultAnswerTemplate}"
+                                           DefaultLocationTemplate="{StaticResource DefaultAnswerTemplate}"
+                                           DefaultStringTemplate="{StaticResource DefaultAnswerTemplate}"/>
 
         <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
             <Grid Background="Transparent">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                 </Grid.GestureRecognizers>
-                <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource SelectionAnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
                 <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="End" VerticalOptions="End"/>
             </Grid>
         </DataTemplate>
+
+        <DataTemplate x:Key="DefaultInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
+             <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+        </DataTemplate>
         
         <selector:IInteractiveEntryTemplateSelector x:Key="IInteractiveEntryTemplateSelector"
-                                           DefaultTemplate="{StaticResource SelectionInteractionTemplate}"/>
+                                                   DefaultTemplate="{StaticResource DefaultInteractionTemplate}"
+                                                   SelectInteractionTemplate="{StaticResource SelectionInteractionTemplate}"/>
 
         <DataTemplate x:Key="DefaultAnswerLayoutTemplate">
             <CollectionView
@@ -185,12 +194,15 @@
                                            CompareTemplate="{StaticResource CompareQuestionTemplate}"
                                            OverlayTemplate="{StaticResource OverlayQuestionTemplate}"/>
     </ContentPage.Resources>
-    <Grid RowDefinitions="auto,auto,*,auto">
-        <Picker Title="QuestionLayout" ItemsSource="{Binding QuestionLayouts}" SelectedItem="{Binding QuestionLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
-        <Picker Grid.Row="1" Title="AnserwerLayout" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
-        <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}" BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
+    <Grid RowDefinitions="auto,*,auto">
+        <StackLayout>
+            <Picker Title="Interaction" TitleColor="White" TextColor="White" ItemsSource="{Binding Interactions}" SelectedItem="{Binding Interaction, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+            <Picker Title="QuestionLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding QuestionLayouts}" SelectedItem="{Binding QuestionLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+            <Picker Title="AnserwerLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+        </StackLayout>
+        <StackLayout Grid.Row="1" BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}" BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
 
         </StackLayout>
-        <Button Grid.Row="3" Text="Next" Command="{Binding NextQuestionCommand}"/>
+        <Button Grid.Row="2" Text="Next" Command="{Binding NextQuestionCommand}"/>
     </Grid>
 </ContentPage>
