@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.Esco;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
@@ -33,7 +34,27 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         #endregion
 
-        [DataMember(Order = 5)] public string Title { get; set; } = null!;
+        [DataMember(Order = 5)]
+        public string Title { get; set; } = string.Empty;
+
+        [DataMember(Order = 6)]
+        public string Profession { get; set; } = string.Empty;
+
+        [DataMember(Order = 7)]
+        public string Kldb { get; set; } = string.Empty;
+
+        [DataMember(Order = 8)]
+        public string EscoOccupationId { get; set; } = string.Empty;
+
+        [DataMember(Order = 9)]
+        public AssessmentType Assessment { get; set; }
+
+        [DataMember(Order = 10)]
+        public string Publisher { get; set; }
+
+        // Will be auto calculated in the future
+        [DataMember(Order = 11)]
+        public TimeSpan Duration { get; set; }
     }
 
     [DataContract]
@@ -64,7 +85,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         }
 
         [DataMember(Order = 1, IsRequired = true)]
-        public string CorrelationId { get; set; } = null!;
+        public string CorrelationId { get; set; } = string.Empty;
 
         [DataMember(Order = 2)]
         public Collection<AssessmentItem> Assessments { get; set; }
