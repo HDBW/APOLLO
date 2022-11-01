@@ -20,11 +20,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
-           IUseCaseBuilder builder,
            ILogger<UseCaseTutorialViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
-            UseCaseBuilder = builder;
             UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
             UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
             UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));
@@ -38,53 +36,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private IUseCaseBuilder UseCaseBuilder { get; }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateUseCase))]
-        public async Task CreateUseCase(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    if (!await UseCaseBuilder.BuildAsync(UseCases.First(u => u.IsSelected).UseCase, worker.Token))
-                    {
-                        return;
-                    }
-
-                    await NavigationService.PushToRootAsnc(Routes.Shell, token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(CreateUseCase)} in {GetType()}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(CreateUseCase)} in {GetType()}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(CreateUseCase)} in {GetType()}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        public bool CanCreateUseCase()
-        {
-            return !IsBusy && UseCases.Any(u => u.IsSelected);
-        }
-
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            CreateUseCaseCommand?.NotifyCanExecuteChanged();
         }
 
-        private void OnUseCaseSelectionChanged(UseCaseEntry useCase)
+        private async void OnUseCaseSelectionChanged(UseCaseEntry useCase)
         {
             foreach (var item in UseCases)
             {
@@ -97,6 +54,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             RefreshCommands();
+
+            var selectedUseCase = UseCases.FirstOrDefault(u => u.IsSelected);
+            if (selectedUseCase == null)
+            {
+                return;
+            }
+
+            selectedUseCase.UpdateSelectedState(false);
+            await NavigationService.NavigateAsnc(Routes.UseCaseTutorialView, CancellationToken.None);
         }
     }
 }

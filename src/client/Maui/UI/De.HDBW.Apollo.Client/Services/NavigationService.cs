@@ -131,7 +131,7 @@ namespace De.HDBW.Apollo.Client.Services
         {
             Logger?.LogDebug($"NavigateOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
-            if (Application.Current == null || Shell.Current == null)
+            if (Application.Current == null && Shell.Current == null)
             {
                 return;
             }
