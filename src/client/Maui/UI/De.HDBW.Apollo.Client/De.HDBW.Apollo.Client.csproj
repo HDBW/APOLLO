@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net6.0-android;net6.0-ios</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
@@ -31,7 +31,7 @@
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
 
     <!-- Splash Screen -->
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F7EEE1" BaseSize="172,172" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F7EEE1" BaseSize="128,128" />
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
