@@ -70,11 +70,65 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zulassung.
+        /// </summary>
+        public static string CourseTagType_Admission {
+            get {
+                return ResourceManager.GetString("CourseTagType_Admission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilnahmebescheinigung.
+        /// </summary>
+        public static string CourseTagType_AttendeeCertificate {
+            get {
+                return ResourceManager.GetString("CourseTagType_AttendeeCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zertifikat.
         /// </summary>
-        public static string CourseItem_DecoratorText {
+        public static string CourseTagType_Certificate {
             get {
-                return ResourceManager.GetString("CourseItem_DecoratorText", resourceCulture);
+                return ResourceManager.GetString("CourseTagType_Certificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurs.
+        /// </summary>
+        public static string CourseTagType_Course {
+            get {
+                return ResourceManager.GetString("CourseTagType_Course", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veranstaltung.
+        /// </summary>
+        public static string CourseTagType_InfoEvent {
+            get {
+                return ResourceManager.GetString("CourseTagType_InfoEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilqualifikation.
+        /// </summary>
+        public static string CourseTagType_PartialQualification {
+            get {
+                return ResourceManager.GetString("CourseTagType_PartialQualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qualifikation.
+        /// </summary>
+        public static string CourseTagType_Qualification {
+            get {
+                return ResourceManager.GetString("CourseTagType_Qualification", resourceCulture);
             }
         }
         
@@ -347,6 +401,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_TestSubline {
             get {
                 return ResourceManager.GetString("StartViewModel_TestSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unbekannter Anbieter.
+        /// </summary>
+        public static string StartViewModel_UnknownProvider {
+            get {
+                return ResourceManager.GetString("StartViewModel_UnknownProvider", resourceCulture);
             }
         }
         
