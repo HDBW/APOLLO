@@ -14,6 +14,7 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -34,6 +35,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ICourseItemRepository courseItemRepository,
             IAssessmentItemRepository assessmentItemRepository,
             IUserProfileRepository userProfileRepository,
+            IEduProviderItemRepository eduProviderItemRepository,
             ILogger<StartViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -41,6 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             AssessmentItemRepository = assessmentItemRepository;
             CourseItemRepository = courseItemRepository;
             UserProfileRepository = userProfileRepository;
+            EduProviderItemRepository = eduProviderItemRepository;
         }
 
         public ObservableCollection<InteractionCategoryEntry> InteractionCategories
@@ -58,6 +61,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ICourseItemRepository CourseItemRepository { get; }
 
         private IUserProfileRepository UserProfileRepository { get; set; }
+
+        private IEduProviderItemRepository EduProviderItemRepository { get; set; }
 
         protected override void RefreshCommands()
         {
@@ -144,11 +149,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var assesments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var userProfile = await UserProfileRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
+
                     await ExecuteOnUIThreadAsync(
                            () => LoadonUIThread(
                            assesments,
                            courses,
-                           userProfile), worker.Token);
+                           userProfile,
+                           eduProviders), worker.Token);
 
                     var taskList = new List<Task>();
                     Task<NavigationParameters?>? dialogTask = null;
@@ -193,7 +201,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(
            IEnumerable<AssessmentItem> assessmentItems,
            IEnumerable<CourseItem> courseItems,
-           UserProfile? userProfile)
+           UserProfile? userProfile,
+           IEnumerable<EduProviderItem> eduProviderItems)
         {
             UserProfile = userProfile != null ? UserProfileEntry.Import(userProfile) : null;
             var interactions = new List<InteractionEntry>();
@@ -202,7 +211,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var assemsmentData = new NavigationParameters();
                 assemsmentData.AddValue<long?>(NavigationParameter.Id, assesment.Id);
                 var data = new NavigationData(Routes.AssessmentView, assemsmentData);
-                interactions.Add(StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, "???", "???", "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
+                var duration = assesment.Duration !=  TimeSpan.Zero ? string.Format("g", assesment.Duration) : string.Empty;
+                var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
+                interactions.Add(StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
             }
 
             InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_TestHeadline, Resources.Strings.Resource.StartViewModel_TestSubline, interactions, null, HandleShowMore, CanHandleShowMore));
@@ -213,7 +224,38 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var assemsmentData = new NavigationParameters();
                 assemsmentData.AddValue<long?>(NavigationParameter.Id, course.Id);
                 var data = new NavigationData(Routes.CourseView, assemsmentData);
-                interactions.Add(StartViewInteractionEntry.Import<CourseItem>(course.Title, "???", "???", "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
+
+                var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.TrainingProviderId);
+
+                var duration = course.Duration != TimeSpan.Zero ? string.Format("g", course.Duration) : string.Empty;
+                var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resource.StartViewModel_UnknownProvider;
+                var decoratorText = string.Empty;
+                switch (course.CourseTagType)
+                {
+                    case CourseTagType.AttendeeCertificate:
+                        decoratorText = Resources.Strings.Resource.CourseTagType_AttendeeCertificate;
+                        break;
+                    case CourseTagType.Admission:
+                        decoratorText = Resources.Strings.Resource.CourseTagType_Admission;
+                        break;
+                    case CourseTagType.Certificate:
+                        decoratorText = Resources.Strings.Resource.CourseTagType_Certificate;
+                        break;
+                    case CourseTagType.Course:
+                        decoratorText = Resources.Strings.Resource.CourseTagType_Course;
+                        break;
+                    case CourseTagType.InfoEvent:
+                        decoratorText = Resources.Strings.Resource.CourseTagType_InfoEvent;
+                        break;
+                    case CourseTagType.PartialQualification:
+                        decoratorText = Resources.Strings.Resource.CourseTagType_PartialQualification;
+                        break;
+                    case CourseTagType.Qualification:
+                        decoratorText = Resources.Strings.Resource.CourseTagType_Qualification;
+                        break;
+                }
+
+                interactions.Add(StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
             }
 
             InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, null, HandleShowMore, CanHandleShowMore));

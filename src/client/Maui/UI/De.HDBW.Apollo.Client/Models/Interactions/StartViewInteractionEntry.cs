@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [ObservableProperty]
         private string? _decoratorText;
 
-        private StartViewInteractionEntry(string? text, string? subline, string? info, string imagePath, Status status, Type entityType, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, Type entityType, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
             : base(text, data, navigateHandler, canNavigateHandle)
         {
             Subline = subline;
@@ -34,18 +34,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             Status = status;
             EntityType = entityType;
             ImagePath = imagePath?.ToUniformedName();
-            switch (EntityType.Name)
-            {
-                case nameof(AssessmentItem):
-                    DecoratorText = Resources.Strings.Resource.AssessmentItem_DecoratorText;
-                    break;
-                case nameof(CourseItem):
-                    DecoratorText = Resources.Strings.Resource.CourseItem_DecoratorText;
-                    break;
-                default:
-                    DecoratorText = null;
-                    break;
-            }
+            DecoratorText = decoratorText;
         }
 
         public Type EntityType { get; }
@@ -58,9 +47,9 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
-        public static InteractionEntry Import<TU>(string text, string subline, string info, string imagePath, Status status, object? data, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
+        public static InteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, object? data, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
         {
-            return new StartViewInteractionEntry(text, subline, info, imagePath, status, typeof(TU), data, handleInteract, canHandleInteract);
+            return new StartViewInteractionEntry(text, subline, decoratorText, info,imagePath, status, typeof(TU), data, handleInteract, canHandleInteract);
         }
     }
 }
