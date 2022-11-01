@@ -27,9 +27,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ObservableCollection<LayoutType> _answerLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.HorizontalList, LayoutType.UniformGrid };
 
         [ObservableProperty]
+        private ObservableCollection<InteractionType> _interactions = new ObservableCollection<InteractionType>() { InteractionType.SingleSelect, InteractionType.MultiSelect, InteractionType.Input, InteractionType.Associate };
+
+        [ObservableProperty]
         private QuestionEntry? _currentQuestion;
         private LayoutType? _answerLayout;
         private LayoutType? _questionLayout;
+        private InteractionType? _interaction;
 
         private long? _assessmentItemId;
 
@@ -71,6 +75,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         CurrentQuestion.AnswerLayout = value ?? LayoutType.Default;
                     }
+
                     OnPropertyChanged(nameof(CurrentQuestion));
                 }
             }
@@ -91,6 +96,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         CurrentQuestion.QuestionLayout = value ?? LayoutType.Default;
                     }
+
+                    OnPropertyChanged(nameof(CurrentQuestion));
+                }
+            }
+        }
+
+        public InteractionType? Interaction
+        {
+            get
+            {
+                return _interaction;
+            }
+
+            set
+            {
+                if (SetProperty(ref _interaction, value))
+                {
+                    if (CurrentQuestion != null)
+                    {
+                        CurrentQuestion.Interaction = value ?? InteractionType.Unknown;
+                    }
+
                     OnPropertyChanged(nameof(CurrentQuestion));
                 }
             }
@@ -118,8 +145,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             CurrentQuestion = Questions[currentIndex];
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
+            _interaction = CurrentQuestion?.Interaction ?? InteractionType.Unknown;
             OnPropertyChanged(nameof(QuestionLayout));
             OnPropertyChanged(nameof(AnswerLayout));
+            OnPropertyChanged(nameof(Interaction));
         }
 
         public async override Task OnNavigatedToAsync()
