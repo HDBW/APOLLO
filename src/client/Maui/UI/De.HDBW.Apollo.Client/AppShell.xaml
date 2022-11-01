@@ -21,7 +21,7 @@
                        HeightRequest="45" />
                     <Label Grid.Column="1"
                        Text="{Binding Title}"
-                       FontAttributes="Italic"
+                       Style="{StaticResource Noto16}"
                        VerticalTextAlignment="Center" />
                 </Grid>
             </DataTemplate>
@@ -34,8 +34,8 @@
                        HeightRequest="45" />
                     <Label Grid.Column="1"
                        Text="{Binding Title}"
-                       FontAttributes="Italic"
-                           Grid.Row="1"
+                       Style="{StaticResource Noto16}"
+                       Grid.Row="1"
                        VerticalTextAlignment="Center" />
                 </Grid>
             </DataTemplate>

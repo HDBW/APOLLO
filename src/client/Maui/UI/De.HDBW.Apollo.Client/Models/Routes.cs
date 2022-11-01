@@ -22,5 +22,7 @@ namespace De.HDBW.Apollo.Client.Models
         public static readonly string UseCaseSelectionView = "/UseCaseSelectionView";
 
         public static readonly string AssessmentView = "/AssessmentView";
+
+        public static readonly string CourseView = "/CourseView";
     }
 }

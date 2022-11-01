@@ -1,11 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Helper;
 using Invite.Apollo.App.Graph.Common.Models;
@@ -72,6 +67,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             get
             {
+                if (AnswerType != AnswerType.Location)
+                {
+                    return null;
+                }
+
                 if (_point != null)
                 {
                     return _point;
@@ -101,6 +101,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
                 _point = new Point(x, y);
                 return _point;
+            }
+        }
+
+        public AnswerType AnswerType
+        {
+            get
+            {
+                return _answerItem.AnswerType;
             }
         }
 
