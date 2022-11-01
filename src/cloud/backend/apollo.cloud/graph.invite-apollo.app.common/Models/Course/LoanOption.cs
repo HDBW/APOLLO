@@ -29,13 +29,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         #endregion
 
         [DataMember(Order = 5)]
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = string.Empty;
 
         [DataMember(Order = 6)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = string.Empty;
 
         [DataMember(Order = 7)]
-        public string Conditions { get; set; } = null!;
+        public string Conditions { get; set; } = string.Empty;
 
         [DataMember(Order = 8)]
         public Uri LoanOptionsUrl { get; set; } = null!;

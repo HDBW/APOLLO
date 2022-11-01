@@ -37,13 +37,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long CourseId { get; set; }
 
         [DataMember(Order = 6)]
-        public string CourseBackendId { get; set; } = null!;
+        public string CourseBackendId { get; set; } = string.Empty;
 
         [DataMember(Order = 7)]
-        public string BookingCode { get; set; } = null!;
+        public string BookingCode { get; set; } = string.Empty;
 
         [DataMember(Order = 8)]
-        public string Summary { get; set; } = null!;
+        public string Summary { get; set; } = string.Empty;
 
         [DataMember(Order = 9)]
         public DateTime? StartDate { get; set; }
@@ -63,10 +63,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// RRULE:FREQ=WEEKLY;UNTIL=20110617T065959Z
         /// </summary>
         [DataMember(Order = 11)]
-        public string Recurrence { get; set; } = null!;
+        public string Recurrence { get; set; } = string.Empty;
 
         [DataMember(Order = 12)]
-        public string Location { get; set; } = null!;
+        public string Location { get; set; } = string.Empty;
 
         [DataMember(Order = 13)]
         public bool? IsBookable { get; set; }
@@ -143,6 +143,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// </summary>
         [Obsolete]
         [DataMember(Order = 33, IsRequired = false)]
-        public string Currency { get; set; } = null!;
+        public string Currency { get; set; } = string.Empty;
     }
 }

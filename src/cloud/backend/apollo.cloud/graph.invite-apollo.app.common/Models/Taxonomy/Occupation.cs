@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
 
@@ -9,6 +11,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
     {
         #region Implementation of IEntity
 
+        [Key]
         [DataMember(Order = 1,IsRequired = false)]
         public long Id { get; set; }
 
@@ -32,5 +35,17 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 
         [DataMember(Order = 5, IsRequired = true)]
         public string Name { get; set; } = null!;
+
+        [DataMember(Order = 6, IsRequired = true)]
+        public string Code { get; set; } = null!;
+
+        [DataMember(Order = 7, IsRequired = true)]
+        public string Description { get; set; }
+
+        [DataMember(Order = 8, IsRequired = true)]
+        public string Regulations { get; set; }
+
+        [DataMember(Order = 9, IsRequired = true)]
+        public string Verticals { get; set; }
     }
 }
