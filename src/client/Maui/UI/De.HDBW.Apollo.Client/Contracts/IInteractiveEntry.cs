@@ -6,7 +6,7 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface IInteractiveEntry
     {
-        InteractionType Interaction { get; }
+        InteractionType Interaction { get; internal set; }
 
         object Data { get; }
     }
