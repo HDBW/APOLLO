@@ -133,7 +133,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!.
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1 {
             get {
@@ -142,7 +142,16 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dafür braucht Apollo Infos zu deinen beruflichen Erfahrungen von dir..
+        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction1Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction1Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction2 {
             get {
@@ -151,11 +160,39 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unsere App zeigt dir den Weg zu deinem Traumberuf!.
+        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction2Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction2Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction3 {
             get {
                 return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction3Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Willkommen zur 
+        ///Beta von Apollo.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Welcome {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Welcome", resourceCulture);
             }
         }
         
@@ -201,6 +238,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Skip {
             get {
                 return ResourceManager.GetString("Global_Skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt starten.
+        /// </summary>
+        public static string Global_StartNow {
+            get {
+                return ResourceManager.GetString("Global_StartNow", resourceCulture);
             }
         }
         
@@ -286,7 +332,34 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrieren.
+        ///   Looks up a localized string similar to Ohne Anmeldung fortfahren.
+        /// </summary>
+        public static string RegistrationView_Continue {
+            get {
+                return ResourceManager.GetString("RegistrationView_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu..
+        /// </summary>
+        public static string RegistrationView_Description {
+            get {
+                return ResourceManager.GetString("RegistrationView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt Anmelden.
+        /// </summary>
+        public static string RegistrationView_RegisterNow {
+            get {
+                return ResourceManager.GetString("RegistrationView_RegisterNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt anmelden.
         /// </summary>
         public static string RegistrationView_RegisterUser {
             get {
