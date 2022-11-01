@@ -4,8 +4,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Helper;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
-using Invite.Apollo.App.Graph.Common.Models.Course;
 
 namespace De.HDBW.Apollo.Client.Models.Interactions
 {

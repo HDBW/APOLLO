@@ -1,14 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using Android.Media;
-using Android.Window;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Client.Views;
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
-using Java.Security;
 
 namespace De.HDBW.Apollo.Client;
 public partial class App : Application
@@ -36,7 +31,7 @@ public partial class App : Application
         }
         else
         {
-            MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.UseCaseTutorialView, _serviceProvider) as Page);
+            MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.UseCaseSelectionView, _serviceProvider) as Page);
         }
     }
 }

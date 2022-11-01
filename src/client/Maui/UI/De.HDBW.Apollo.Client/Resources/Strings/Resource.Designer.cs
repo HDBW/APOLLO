@@ -487,7 +487,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung des Usecase A.
+        ///   Looks up a localized string similar to Du möchtest einen
+        ///sicheren Job finden.
         /// </summary>
         public static string UseCase_A_Description {
             get {
@@ -496,7 +497,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usecase A.
+        ///   Looks up a localized string similar to Jobsuche.
         /// </summary>
         public static string UseCase_A_Name {
             get {
@@ -505,7 +506,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung des Usecase B.
+        ///   Looks up a localized string similar to Du möchtest neue
+        ///Fähigkeiten erwerben.
         /// </summary>
         public static string UseCase_B_Description {
             get {
@@ -514,7 +516,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usecase B.
+        ///   Looks up a localized string similar to Weiterbildung.
         /// </summary>
         public static string UseCase_B_Name {
             get {
@@ -523,7 +525,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung des Usecase C.
+        ///   Looks up a localized string similar to Du möchtest in deinem
+        ///Job Karriere machen.
         /// </summary>
         public static string UseCase_C_Description {
             get {
@@ -532,7 +535,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usecase C.
+        ///   Looks up a localized string similar to Jobaufstieg.
         /// </summary>
         public static string UseCase_C_Name {
             get {
@@ -541,11 +544,20 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erstellen.
+        ///   Looks up a localized string similar to Wähle dein Szenario.
         /// </summary>
-        public static string UseCaseSelectionView_CreateUseCase {
+        public static string UseCaseSelectionView_Choose {
             get {
-                return ResourceManager.GetString("UseCaseSelectionView_CreateUseCase", resourceCulture);
+                return ResourceManager.GetString("UseCaseSelectionView_Choose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Definiere das Ziel, dass du mit dem Verwenden der App verfolgst..
+        /// </summary>
+        public static string UseCaseSelectionView_ChooseDescription {
+            get {
+                return ResourceManager.GetString("UseCaseSelectionView_ChooseDescription", resourceCulture);
             }
         }
     }
