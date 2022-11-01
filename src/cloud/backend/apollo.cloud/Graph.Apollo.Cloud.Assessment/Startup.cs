@@ -1,7 +1,12 @@
+using System.Diagnostics;
+using System.Globalization;
 using Invite.Apollo.App.Graph.Assessment.Services;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ProtoBuf.Grpc.Configuration;
 using ProtoBuf.Grpc.Server;
+using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace Invite.Apollo.App.Graph.Assessment;
 
@@ -33,7 +38,7 @@ public class Startup
         //    o.Services.MapService("Assessments.Greeter", r => r.Tags.Contains("assessment"));
         //});
         
-        services.AddApplicationInsightsTelemetry(Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
+        //services.AddApplicationInsightsTelemetry(Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,6 +47,8 @@ public class Startup
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

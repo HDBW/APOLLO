@@ -41,8 +41,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public AnswerType AnswerType { get; set; }
 
         [DataMember(Order = 7, IsRequired = true)]
-        public string Value { get; set; } = null!;
+        public string Value { get; set; } = string.Empty;
 
+        [DataMember(Order = 8)]
+        public string Publisher { get; set; } = string.Empty;
 
     }
 

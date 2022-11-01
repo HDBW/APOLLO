@@ -4,6 +4,7 @@
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 
@@ -16,45 +17,58 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             IAuthService authService,
+            ISessionService sessionService,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             AuthService = authService;
+            SessionService = sessionService;
+        }
+
+        public bool HasRegisterdUser
+        {
+            get
+            {
+                return SessionService.HasRegisteredUser;
+            }
         }
 
         private IAuthService AuthService { get; }
+
+        private ISessionService SessionService { get; }
 
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
             SkipCommand?.NotifyCanExecuteChanged();
+            RegisterCommand?.NotifyCanExecuteChanged();
+            UnRegisterCommand?.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
-            IsBusy = true;
-            try
+            using (var worker = ScheduleWork(token))
             {
-                await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled Skip in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in Skip in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                try
                 {
-                    IsBusy = false;
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
         }
@@ -64,50 +78,86 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy;
         }
 
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
+        private async Task UnRegister(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var authentication = await AuthService.AcquireTokenSilent(worker.Token);
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                }
+                catch (MsalException ex)
+                {
+                    Logger?.LogWarning(ex, $"Error while unregistering user in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(UnRegister)} in {GetType()}.");
+                }
+                finally
+                {
+                    OnPropertyChanged(nameof(HasRegisterdUser));
+                    RefreshCommands();
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanUnRegister()
+        {
+            return !IsBusy && HasRegisterdUser;
+        }
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
-            IsBusy = true;
-            try
+            using (var worker = ScheduleWork(token))
             {
-                var x = await AuthService.AcquireTokenSilent(token);
-                if (x != null)
+                try
                 {
-                    await AuthService.LogoutAsync(token);
+                    var authentication = await AuthService.SignInInteractively(worker.Token);
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, worker.Token);
                 }
-
-                var result = await AuthService.SignInInteractively(token);
-
-                await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, token);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled Register in {GetType()}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled Register in {GetType()}.");
-            }
-            catch (MsalException ex)
-            {
-                Logger?.LogWarning(ex, $"Error while registering user in {GetType()}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown Error in Register in {GetType()}.");
-            }
-            finally
-            {
-                if (!token.IsCancellationRequested)
+                catch (OperationCanceledException)
                 {
-                    IsBusy = false;
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
+                }
+                catch (MsalException ex)
+                {
+                    Logger?.LogWarning(ex, $"Error while registering user in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Register)} in {GetType()}.");
+                }
+                finally
+                {
+                    OnPropertyChanged(nameof(HasRegisterdUser));
+                    RefreshCommands();
+                    UnscheduleWork(worker);
                 }
             }
         }
 
         private bool CanRegister()
         {
-            return !IsBusy;
+            return !IsBusy && !HasRegisterdUser;
         }
     }
 }

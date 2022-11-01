@@ -6,6 +6,6 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\cloud\backend\apollo.cloud\Graph.Apollo.Cloud.Common\Graph.Apollo.Cloud.Common.csproj" />
+	  <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.1" />
 	</ItemGroup>
 </Project>
