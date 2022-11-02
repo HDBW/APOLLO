@@ -16,7 +16,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class UseCaseDescriptionViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private UserProfile? _user = new UserProfile();
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfile());
 
         [ObservableProperty]
         private string? _age;
@@ -71,11 +71,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public bool HasUser
+        public bool HasUserProfile
         {
             get
             {
-                return User != null && User.Id != 0;
+                return UserProfile != null && UserProfile.Id != 0;
             }
         }
 
@@ -208,7 +208,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void LoadonUIThread(UserProfile? user, string? age, string? job, string? scenario, string? experience, string? story, string? goal)
         {
-            User = user ?? new UserProfile();
+            UserProfile = UserProfileEntry.Import(user ?? new UserProfile());
             Age = age;
             Job = job;
             Scenario = scenario;
