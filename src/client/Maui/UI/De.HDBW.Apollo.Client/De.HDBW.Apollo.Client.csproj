@@ -41,6 +41,7 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Platforms\Android\Resources\values\styles.xml" />
     <None Remove="Resources\Images\bestellbestaetigung.jpg" />
     <None Remove="Resources\Images\deutschehecke.jpg" />
     <None Remove="Resources\Images\fallback.png" />
@@ -52,6 +53,7 @@
     <None Remove="Resources\Images\salbei.jpg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\usecase1deco.svg" />
+    <None Remove="Resources\Images\usecase1detail.svg" />
     <None Remove="Resources\Images\usecase2deco.svg" />
     <None Remove="Resources\Images\usecase3deco.svg" />
     <None Remove="Resources\Images\user1.png" />
@@ -107,7 +109,7 @@
     <MauiXaml Update="Views\UseCaseSelectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\UseCaseTutorialView.xaml">
+    <MauiXaml Update="Views\UseCaseDescriptionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
   </ItemGroup>
@@ -130,8 +132,8 @@
     <Compile Update="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UseCaseTutorialView.xaml.cs">
-      <DependentUpon>UseCaseTutorialView.xaml</DependentUpon>
+    <Compile Update="Views\UseCaseDescriptionView.xaml.cs">
+      <DependentUpon>UseCaseDescriptionView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

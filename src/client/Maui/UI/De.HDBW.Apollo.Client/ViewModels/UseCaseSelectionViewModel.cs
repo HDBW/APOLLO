@@ -2,11 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
-using De.HDBW.Apollo.SharedContracts.Helper;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -20,7 +18,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
-           ILogger<UseCaseTutorialViewModel> logger)
+           ILogger<UseCaseDescriptionViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
             UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
@@ -62,7 +60,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             selectedUseCase.UpdateSelectedState(false);
-            await NavigationService.NavigateAsnc(Routes.UseCaseTutorialView, CancellationToken.None);
+            var parameters = new NavigationParameters();
+            parameters.AddValue(NavigationParameter.Id, selectedUseCase.UseCase);
+            await NavigationService.NavigateAsnc(Routes.UseCaseDescriptionView, CancellationToken.None, parameters);
         }
     }
 }

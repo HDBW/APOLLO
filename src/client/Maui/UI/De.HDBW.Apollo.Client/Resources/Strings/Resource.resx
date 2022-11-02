@@ -160,8 +160,7 @@
     <value>Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu.</value>
   </data>
   <data name="ExtendedSplashScreenView_Welcome" xml:space="preserve">
-    <value>Willkommen zur 
-Beta von Apollo</value>
+    <value>Willkommen zur Beta von Apollo</value>
   </data>
   <data name="FirstTimeDialog_Continue" xml:space="preserve">
     <value>direkt loslegen</value>
@@ -174,6 +173,9 @@ Beta von Apollo</value>
   </data>
   <data name="FirstTimeDialog_Title" xml:space="preserve">
     <value>Willkommen!</value>
+  </data>
+  <data name="Global_Back" xml:space="preserve">
+    <value>Zurück</value>
   </data>
   <data name="Global_Skip" xml:space="preserve">
     <value>Überspringen</value>
@@ -261,6 +263,86 @@ deiner Wahl</value>
   <data name="StartView_Goal" xml:space="preserve">
     <value>Mein Ziel</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value>Dein Szenario</value>
+  </data>
+  <data name="UseCaseDescriptionView_AgeFormat" xml:space="preserve">
+    <value>Alter: {0}</value>
+  </data>
+  <data name="UseCaseDescriptionView_Experience" xml:space="preserve">
+    <value>Erfahrung</value>
+  </data>
+  <data name="UseCaseDescriptionView_Goal" xml:space="preserve">
+    <value>Ziel</value>
+  </data>
+  <data name="UseCaseDescriptionView_JobFormat" xml:space="preserve">
+    <value>Beruf: </value>
+  </data>
+  <data name="UseCaseDescriptionView_Start" xml:space="preserve">
+    <value>Szenario starten</value>
+  </data>
+  <data name="UseCaseDescriptionView_Story" xml:space="preserve">
+    <value>Story</value>
+  </data>
+  <data name="UseCaseDescriptionView_Title" xml:space="preserve">
+    <value>Dein Szenario</value>
+  </data>
+  <data name="UseCaseDetail_A_Age" xml:space="preserve">
+    <value>31</value>
+  </data>
+  <data name="UseCaseDetail_A_Experience" xml:space="preserve">
+    <value>4 Jahre Helfer in Lager &amp; Versandt
+1 Jahr Einzelhandel mit Lebensmitteln</value>
+  </data>
+  <data name="UseCaseDetail_A_Goal" xml:space="preserve">
+    <value>Job im Umkreis von 50km des Wohnorts
+Langfristig stabilere Arbeitsbedingungen</value>
+  </data>
+  <data name="UseCaseDetail_A_Job" xml:space="preserve">
+    <value>Lagerist</value>
+  </data>
+  <data name="UseCaseDetail_A_Scenario" xml:space="preserve">
+    <value>Auf Jobsuche</value>
+  </data>
+  <data name="UseCaseDetail_A_Story" xml:space="preserve">
+    <value>Du hast die letzten 5 Jahre in Jobs ohne Qualifi-kationsvorraussetzungen gearbeitet. Nun wurde dein Arbeitsvertrag nicht verlängert und du stehst erneut vor der Aufgabe eine Job zu finden. Da du keine Rücklagen besitzt bist du zwar bereit jedes Angebot anzunehmen, jedoch strebst du zukünftig stabilere Arbeitsverträge an.</value>
+  </data>
+  <data name="UseCaseDetail_B_Age" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_B_Experience" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_B_Goal" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_B_Job" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_B_Scenario" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_B_Story" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_C_Age" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_C_Experience" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_C_Goal" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_C_Job" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_C_Scenario" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCaseDetail_C_Story" xml:space="preserve">
+    <value />
+  </data>
   <data name="UseCaseSelectionView_Choose" xml:space="preserve">
     <value>Wähle dein Szenario</value>
   </data>
@@ -268,22 +350,19 @@ deiner Wahl</value>
     <value>Definiere das Ziel, dass du mit dem Verwenden der App verfolgst.</value>
   </data>
   <data name="UseCase_A_Description" xml:space="preserve">
-    <value>Du möchtest einen
-sicheren Job finden</value>
+    <value>Du möchtest einen sicheren Job finden</value>
   </data>
   <data name="UseCase_A_Name" xml:space="preserve">
     <value>Jobsuche</value>
   </data>
   <data name="UseCase_B_Description" xml:space="preserve">
-    <value>Du möchtest neue
-Fähigkeiten erwerben</value>
+    <value>Du möchtest neue Fähigkeiten erwerben</value>
   </data>
   <data name="UseCase_B_Name" xml:space="preserve">
     <value>Weiterbildung</value>
   </data>
   <data name="UseCase_C_Description" xml:space="preserve">
-    <value>Du möchtest in deinem
-Job Karriere machen</value>
+    <value>Du möchtest in deinem Job Karriere machen</value>
   </data>
   <data name="UseCase_C_Name" xml:space="preserve">
     <value>Jobaufstieg</value>

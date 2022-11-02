@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Client.Models
 
         public static readonly string RegistrationView = "/RegistrationView";
 
-        public static readonly string UseCaseTutorialView = "/UseCaseTutorialView";
+        public static readonly string UseCaseDescriptionView = "/UseCaseDescriptionView";
 
         public static readonly string UseCaseSelectionView = "/UseCaseSelectionView";
 
