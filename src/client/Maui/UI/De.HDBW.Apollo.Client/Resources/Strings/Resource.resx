@@ -276,7 +276,7 @@ deiner Wahl</value>
     <value>Ziel</value>
   </data>
   <data name="UseCaseDescriptionView_JobFormat" xml:space="preserve">
-    <value>Beruf: </value>
+    <value>Beruf: {0}</value>
   </data>
   <data name="UseCaseDescriptionView_Start" xml:space="preserve">
     <value>Szenario starten</value>

@@ -585,7 +585,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beruf: .
+        ///   Looks up a localized string similar to Beruf: {0}.
         /// </summary>
         public static string UseCaseDescriptionView_JobFormat {
             get {
