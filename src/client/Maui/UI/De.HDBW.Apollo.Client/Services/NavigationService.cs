@@ -216,6 +216,12 @@ namespace De.HDBW.Apollo.Client.Services
                 {
                     shell.Navigating += NavigatedFromPageInShell;
                     shell.Navigated += NavigatedToPageInShell;
+
+                    if (!(currentPage is Shell))
+                    {
+                        NavigatedToPage(shell, null);
+                    }
+
                     NavigatedToPageInShell(shell, null);
                 }
                 else if (page != null)

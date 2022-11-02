@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net6.0-android;net6.0-ios</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
@@ -28,7 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
-    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" BaseSize="120,120" />
 
     <!-- Splash Screen -->
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F7EEE1" BaseSize="170,170" />
@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\apollo.svg" />
     <None Remove="Resources\Images\bestellbestaetigung.jpg" />
     <None Remove="Resources\Images\deutschehecke.jpg" />
     <None Remove="Resources\Images\fallback.png" />
