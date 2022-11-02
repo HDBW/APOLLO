@@ -15,12 +15,20 @@
     </ContentPage.Resources>
     <Grid RowDefinitions="3*,7*">
         <Image Source="registrationdeco.png" Grid.Row="0" Aspect="AspectFit"/>
-        <Grid  Grid.Row="1" Padding="24" RowDefinitions="auto,auto,*, auto ,auto">
+        <Grid  Grid.Row="1" Padding="24" RowDefinitions="auto,auto,*,auto,auto,auto,auto">
             <Label FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.RegistrationView_RegisterNow}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
             <Label Grid.Row="1" Text="{x:Static strings:Resource.RegistrationView_Description}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="24,0,24,8"/>
             <Button Grid.Row="3" Text="{x:Static strings:Resource.RegistrationView_RegisterUser}" Command="{Binding RegisterCommand}" IsVisible="{Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>
             <Button Grid.Row="3" Text="{x:Static strings:Resource.RegistrationView_UnRegisterUser}" Command="{Binding UnRegisterCommand}" IsVisible="{Binding HasRegisterdUser}"/>
-            <Button Grid.Row="4" Margin="0,16" Text="{x:Static strings:Resource.RegistrationView_Continue}" Command="{Binding SkipCommand}"/>
+            <Button Grid.Row="4" Margin="0,16" Style="{StaticResource TransparentButton}" Text="{x:Static strings:Resource.RegistrationView_Continue}" Command="{Binding SkipCommand}"/>
+            <Button Grid.Row="5" Margin="0,16" Style="{StaticResource BorderButton}" Text="Test"/>
+            <StackLayout Grid.Row="6" Orientation="Horizontal">
+                <CheckBox/>
+                <CheckBox/>
+                <CheckBox/>
+                <RadioButton/>
+                <RadioButton/>
+            </StackLayout>       
         </Grid>
     </Grid>
 </ContentPage>
