@@ -91,7 +91,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return string.Format(Resources.Strings.Resource.UseCaseDescriptionView_JobFormat, Age);
+                return string.Format(Resources.Strings.Resource.UseCaseDescriptionView_JobFormat, Job);
             }
         }
 
@@ -140,7 +140,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    if (!await UseCaseBuilder.BuildAsync(UseCase, worker.Token))
+                    if (!await UseCaseBuilder.BuildAsync(UseCase, worker.Token).ConfigureAwait(false))
                     {
                         return;
                     }
@@ -209,17 +209,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(UserProfile? user, string? age, string? job, string? scenario, string? experience, string? story, string? goal)
         {
             User = user ?? new UserProfile();
-            OnPropertyChanged(nameof(HasUser));
-            OnPropertyChanged(nameof(ImagePath));
-            OnPropertyChanged(nameof(HasImage));
             Age = age;
-            OnPropertyChanged(nameof(DisplayAge));
             Job = job;
-            OnPropertyChanged(nameof(DisplayJob));
             Scenario = scenario;
             Experience = experience;
             Story = story;
             Goal = goal;
+            OnPropertyChanged((string?)null);
         }
     }
 }
