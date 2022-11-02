@@ -10,7 +10,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <!-- Display name -->
-    <ApplicationTitle>De.HDBW.Apollo.Client</ApplicationTitle>
+    <ApplicationTitle>Apollo</ApplicationTitle>
 
     <!-- App Identifier -->
     <ApplicationId>de.hdbw.apollo.client</ApplicationId>
