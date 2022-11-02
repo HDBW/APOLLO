@@ -46,6 +46,14 @@ namespace De.HDBW.Apollo.Client.Models
             }
         }
 
+        public long Id
+        {
+            get
+            {
+                return _userProfile.Id;
+            }
+        }
+
         public static UserProfileEntry Import(UserProfile userProfile)
         {
             return new UserProfileEntry(userProfile);
