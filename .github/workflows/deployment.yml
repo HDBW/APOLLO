@@ -16,8 +16,8 @@ permissions:
   contents: read
 
 jobs:
-  deployAndroid:
-    runs-on: macos-12
+  deploy-Android:
+    runs-on: ubuntu-latest
     if: ${{ github.event.inputs.deployAndroid == 'true' }}
     name: Deploy Android
     steps:
@@ -38,10 +38,10 @@ jobs:
           track: internal
           status: completed
           inAppUpdatePriority: 0
-  deployIOs:
+  deploy-IOs:
       runs-on: macos-12
       if: ${{ github.event.inputs.deployIOs == 'true' }}
-      name: Deploy Android
+      name: Deploy IOs
       steps:
       - name: Download iOS artefacts
         uses: dawidd6/action-download-artifact@v2
@@ -51,11 +51,18 @@ jobs:
           workflow_conclusion: success
           branch: development
           path: artifact
- 
-      - name: Deploy to TestFlight
-        uses: apple-actions/upload-testflight-build@v1
-        with:
-          app-path: 'artifact/apollo-ios-app/publish/De.HDBW.Apollo.Client.ipa' 
-          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+      - name: Install private API key P8
+        env:
+          PRIVATE_API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY_BASE64 }}
+          API_KEY: ${{ secrets.APPSTORE_API_KEY_ID }}
+        run: | 
+          mkdir -p ~/private_keys
+          echo -n "$PRIVATE_API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_$API_KEY.p8
+
+      - name: Upload app to TestFlight
+        env:
+          API_KEY: ${{ secrets.APPSTORE_API_KEY_ID }}
+          API_ISSUER : ${{ secrets.APPSTORE_ISSUER_ID  }}
+        run: |
+          xcrun altool --validate-app -f artifact/apollo-ios-app/publish/De.HDBW.Apollo.Client.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
+          xcrun altool --output-format xml --upload-app -f artifact/apollo-ios-app/publish/De.HDBW.Apollo.Client.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
