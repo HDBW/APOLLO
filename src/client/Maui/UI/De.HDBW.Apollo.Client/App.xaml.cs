@@ -21,7 +21,7 @@ public partial class App : Application
         _sessionService = sessionService;
         _preferenceService = preferenceService;
         InitializeComponent();
-        if (_preferenceService.GetValue(Preference.IsFirstTime, false))
+        if (_preferenceService.GetValue(Preference.IsFirstTime, true))
         {
             MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);
         }

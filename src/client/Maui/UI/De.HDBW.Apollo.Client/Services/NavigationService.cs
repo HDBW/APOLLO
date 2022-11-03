@@ -145,6 +145,12 @@ namespace De.HDBW.Apollo.Client.Services
                     return;
                 }
 
+                var queryAble = page as IQueryAttributable ?? page.BindingContext as IQueryAttributable;
+                if (queryAble != null && parameters != null)
+                {
+                    queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
+                }
+
                 page.NavigatedTo += NavigatedToPage;
                 await navigationPage.PushAsync(page, false);
                 page.NavigatedFrom += NavigatedFromPage;
@@ -176,6 +182,12 @@ namespace De.HDBW.Apollo.Client.Services
                 return Task.CompletedTask;
             }
 
+            var queryAble = page as IQueryAttributable ?? page.BindingContext as IQueryAttributable;
+            if (queryAble != null && parameters != null)
+            {
+                queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
+            }
+
             page.NavigatedTo += NavigatedToPage;
             page.NavigatedFrom += NavigatedFromPage;
 
@@ -204,6 +216,12 @@ namespace De.HDBW.Apollo.Client.Services
                 {
                     shell.Navigating += NavigatedFromPageInShell;
                     shell.Navigated += NavigatedToPageInShell;
+
+                    if (!(currentPage is Shell))
+                    {
+                        NavigatedToPage(shell, null);
+                    }
+
                     NavigatedToPageInShell(shell, null);
                 }
                 else if (page != null)
@@ -245,6 +263,12 @@ namespace De.HDBW.Apollo.Client.Services
             if (page == null)
             {
                 return;
+            }
+
+            var queryAble = page as IQueryAttributable ?? page.BindingContext as IQueryAttributable;
+            if (queryAble != null && parameters != null)
+            {
+                queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
             }
 
             page.NavigatedTo += NavigatedToPage;
