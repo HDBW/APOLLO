@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net6.0-android;net6.0-ios</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
@@ -28,7 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
-    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" BaseSize="120,120" />
 
     <!-- Splash Screen -->
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F7EEE1" BaseSize="170,170" />
@@ -41,6 +41,8 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\apollo.svg" />
     <None Remove="Resources\Images\bestellbestaetigung.jpg" />
     <None Remove="Resources\Images\deutschehecke.jpg" />
     <None Remove="Resources\Images\fallback.png" />
@@ -52,6 +54,7 @@
     <None Remove="Resources\Images\salbei.jpg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\usecase1deco.svg" />
+    <None Remove="Resources\Images\usecase1detail.svg" />
     <None Remove="Resources\Images\usecase2deco.svg" />
     <None Remove="Resources\Images\usecase3deco.svg" />
     <None Remove="Resources\Images\user1.png" />
@@ -107,7 +110,7 @@
     <MauiXaml Update="Views\UseCaseSelectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\UseCaseTutorialView.xaml">
+    <MauiXaml Update="Views\UseCaseDescriptionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
   </ItemGroup>
@@ -130,8 +133,8 @@
     <Compile Update="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UseCaseTutorialView.xaml.cs">
-      <DependentUpon>UseCaseTutorialView.xaml</DependentUpon>
+    <Compile Update="Views\UseCaseDescriptionView.xaml.cs">
+      <DependentUpon>UseCaseDescriptionView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

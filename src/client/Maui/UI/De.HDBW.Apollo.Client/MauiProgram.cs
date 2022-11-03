@@ -199,8 +199,8 @@ public static class MauiProgram
         services.AddTransient<ExtendedSplashScreenViewModel>();
         services.AddTransient<RegistrationView>();
         services.AddTransient<RegistrationViewModel>();
-        services.AddTransient<UseCaseTutorialView>();
-        services.AddTransient<UseCaseTutorialViewModel>();
+        services.AddTransient<UseCaseDescriptionView>();
+        services.AddTransient<UseCaseDescriptionViewModel>();
         services.AddTransient<UseCaseSelectionView>();
         services.AddTransient<UseCaseSelectionViewModel>();
         services.AddTransient<FirstTimeDialog>();
@@ -217,7 +217,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.ExtendedSplashScreenView, typeof(ExtendedSplashScreenView));
         Routing.RegisterRoute(Routes.Shell, typeof(AppShell));
         Routing.RegisterRoute(Routes.RegistrationView, typeof(RegistrationView));
-        Routing.RegisterRoute(Routes.UseCaseTutorialView, typeof(UseCaseTutorialView));
+        Routing.RegisterRoute(Routes.UseCaseDescriptionView, typeof(UseCaseDescriptionView));
         Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
         Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
