@@ -183,8 +183,17 @@
   <data name="Global_StartNow" xml:space="preserve">
     <value>Jetzt starten</value>
   </data>
+  <data name="MainNavigation_BetaDescription" xml:space="preserve">
+    <value>Zukünftig werden dir hier weitere Funktionen zur Verfügung stehen</value>
+  </data>
+  <data name="MainNavigation_BetaTitle" xml:space="preserve">
+    <value>Beta Version</value>
+  </data>
   <data name="MainNavigation_CertificatesAndDegrees" xml:space="preserve">
     <value>Zeugnisse und Abschlüsse</value>
+  </data>
+  <data name="MainNavigation_ChangeUseCase" xml:space="preserve">
+    <value>Szenario wechseln</value>
   </data>
   <data name="MainNavigation_CoursesFavorites" xml:space="preserve">
     <value>gemerkte Kurse</value>
@@ -195,11 +204,17 @@
   <data name="MainNavigation_EditProfile" xml:space="preserve">
     <value>Profil bearbeiten</value>
   </data>
+  <data name="MainNavigation_Feedback" xml:space="preserve">
+    <value>Feedback senden</value>
+  </data>
   <data name="MainNavigation_FieldsOfInterest" xml:space="preserve">
     <value>Interessenfelder</value>
   </data>
   <data name="MainNavigation_LearningPath" xml:space="preserve">
     <value>Lernpfad</value>
+  </data>
+  <data name="MainNavigation_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
   </data>
   <data name="MainNavigation_SettingsAndFilter" xml:space="preserve">
     <value>Einstellungen &amp; Filter</value>
