@@ -1,0 +1,51 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Deploy
+
+permissions:
+  contents: read
+
+jobs:
+   deploy:
+    runs-on: ubuntu-latest
+    name: Deploy Android
+    needs: [build]
+    steps:
+      - name: Download the build output
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: android.yml
+          workflow_conclusion: success
+          branch: development
+          path: artifact
+      - name: Deploy to PlayConsole
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: "${{secrets.SERVICE_ACCOUNT_JSON }}"
+          packageName: de.hdbw.apollo.client
+          releaseFiles: artifact/de.hdbw.apollo.client-Signed.aab
+          track: internal
+          status: completed
+          inAppUpdatePriority: 0
+  deploy:
+    runs-on: macos-12
+    name: Deploy iOS
+    if: always()
+    steps:
+      - name: Download the build output
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: ios.yml
+          workflow_conclusion: success
+          branch: development
+          path: artifact
+      - name: Deploy to TestFlight
+        uses: r0adkll/upload-testflight-build@v1
+        with:
+          app-path: 'artifact/publish/De.HDBW.Apollo.Client.ipa' 
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
