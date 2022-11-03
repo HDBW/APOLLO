@@ -14,7 +14,6 @@ jobs:
     needs: [build]
     steps:
       - name: Download Android artefacts
-        id: download-artifact
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: android.yml
@@ -22,7 +21,6 @@ jobs:
           branch: development
           path: artifact/android
       - name: Download iOS artefacts
-        id: download-artifact
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: ios.yml
