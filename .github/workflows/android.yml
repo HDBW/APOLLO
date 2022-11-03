@@ -72,9 +72,6 @@ jobs:
         with:
           name: apollo-android-app
           path: artifact
-      - name: Display structure of downloaded files
-          run: ls -R
-          working-directory: artifact
       - name: Deploy to PlayConsole
         uses: r0adkll/upload-google-play@v1
         with:
