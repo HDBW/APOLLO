@@ -10,16 +10,8 @@ on:
       - '**/*.md'
       - '**/*.gitignore'
       - '**/*.gitattributes'
-      - '**/*.yml'
-      - 'src/cloud/**'
   pull_request:
     branches: [ "development" ]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.gitignore'
-      - '**/*.gitattributes'
-      - '**/*.yml'
-      - 'src/cloud/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -44,8 +36,6 @@ jobs:
         dotnet-version: 6.0.x
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
-    - name: Setup nuget
-      run: dotnet nuget add source --username patbosc --password ${{ secrets.GITNUGET }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Init User-Secrets
       run: |
         echo ${{ github.workspace }}
@@ -59,20 +49,39 @@ jobs:
         BUILD_KEYSTOREFILE_BASE64: ${{ secrets.KEYSTOREFILE }}
       run: |
         # create variables
-        $KEYSTORE_PATH = Join-Path -Path $env:RUNNER_TEMP -ChildPath "Apollo.keystore";
-        $encodedBytes = [System.Convert]::FromBase64String($env:BUILD_KEYSTOREFILE_BASE64); 
-        Set-Content $KEYSTORE_PATH -Value $encodedBytes -AsByteStream;
+        $KEYSTORE_PATH=$RUNNER_TEMP\Apollo.keystore
+        $bytes = [Convert]::FromBase64String($BUILD_KEYSTOREFILE_BASE64)
+        [IO.File]::WriteAllBytes($KEYSTORE_PATH, $bytes)
     - name: Restore Dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI Android
-      run: |
-        $KEYSTORE_PATH = Join-Path -Path $env:RUNNER_TEMP -ChildPath "Apollo.keystore";
-        dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net6.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore=$KEYSTORE_PATH /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
+      run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net6.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore=$RUNNER_TEMP/Apollo.keystore /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
+      #run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client -c Release -f net6.0-android --no-restore
     - name: Upload Android Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
         name: apollo-android-app
         path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-android/*Signed.a*
-    - name: Cleanup
-      if: always()
-      run: dotnet nuget remove source github
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    needs: [build]
+    steps:
+      - name: Download the build output
+        uses: actions/download-artifact@v2
+        with:
+          name: apollo-android-app
+          path: artifact
+      - name: Display structure of downloaded files
+          run: ls -R
+          working-directory: artifact
+      - name: Deploy to PlayConsole
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ SERVICE_ACCOUNT_JSON }}
+          packageName: de.hdbw.apollo.client
+          releaseFiles: artifact/de.hdbw.apollo.client-Signed.aab
+          track: internal
+          status: completed
+          inAppUpdatePriority: 0
+          userFraction: 1.0
