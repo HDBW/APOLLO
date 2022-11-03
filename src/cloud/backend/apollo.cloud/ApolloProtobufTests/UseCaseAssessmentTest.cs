@@ -57,7 +57,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             CreateDevAssessment();
 
-            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
+            UseCaseCollections auc = new UseCaseCollections(_assessments, _questions, _answers, _metaData,
                 _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
 
             string filename = "devassessment.bin";
@@ -73,11 +73,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            AssessmentUseCases expected;
+            UseCaseCollections expected;
 
             using (var file = File.OpenRead(filename))
             {
-                expected = Serializer.Deserialize<AssessmentUseCases>(file);
+                expected = Serializer.Deserialize<UseCaseCollections>(file);
                 file.Close();
             }
 
@@ -99,7 +99,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             CreateDevAssessment();
 
-            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
+            UseCaseCollections auc = new UseCaseCollections(_assessments, _questions, _answers, _metaData,
                 _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
 
             string filename = "devassessment.bin";
@@ -115,11 +115,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            AssessmentUseCases expected;
+            UseCaseCollections expected;
 
             using (var file = File.OpenRead(filename))
             {
-                expected = Serializer.Deserialize<AssessmentUseCases>(file);
+                expected = Serializer.Deserialize<UseCaseCollections>(file);
                 file.Close();
             }
 
@@ -154,7 +154,6 @@ namespace Invite.Apollo.App.Graph.Common.Test
             CreateRatingQuestion(assessment);
         }
 
-        //TODO: Sleep eat and repeat!!!
         private void CreateTestAssessment()
         {
             long assessmentBackendId = 12345;
@@ -176,24 +175,33 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             int indexQuestionMeta = _metaData.Count - 1;
             int indexMetaMetaIndex = _metaDataMetaDataRelations.Count - 1;
-
+            int questionsMetaDataIndexer = questionsMetaData.Count - 1;
+            
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            ++questionsMetaDataIndexer;
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Hint, "Bitte wähle 1 bis 3 Antworten aus."));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            ++questionsMetaDataIndexer;
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
 
             //In this case we have the meta_data_metadata relation
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.jpg"));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            ++questionsMetaDataIndexer;
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
 
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Lieferschein!"));
-            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionMeta - 1], questionsMetaData[indexQuestionMeta]));
+            ++questionsMetaDataIndexer;
+            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[questionsMetaDataIndexer - 1], questionsMetaData[questionsMetaDataIndexer]));
             //And another one of these beauties
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.jpg"));
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[indexQuestionMeta]));
+            ++questionsMetaDataIndexer;
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
 
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Bestellbestätigungsdingens!"));
-            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[indexQuestionMeta - 1], questionsMetaData[indexQuestionMeta]));
+            ++questionsMetaDataIndexer;
+            labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[questionsMetaDataIndexer - 1], questionsMetaData[questionsMetaDataIndexer]));
+
+            _questions.Add(question);
 
             foreach (MetaDataItem metaDataItem in questionsMetaData)
             {
@@ -318,6 +326,8 @@ namespace Invite.Apollo.App.Graph.Common.Test
             ids.Add(metaIndex);
             questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Trimmer.jpg"));
             ids.Add(metaIndex);
+
+            _questions.Add(question);
 
             foreach (MetaDataItem metaDataItem in questionMetaData)
             {
@@ -550,6 +560,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
             assessment.BackendId = assessmentBackendId;
             assessment.Schema = schemaUri;
             assessment.Title = title;
+            assessment.Duration = TimeSpan.FromMinutes(10);
+            assessment.Publisher = "Bertelsmann Stiftung";
+            assessment.Kldb = "";
+            assessment.Profession = "";
+            assessment.Assessment = AssessmentType.SkillAssessment;
             return assessment;
         }
 
@@ -574,14 +589,14 @@ namespace Invite.Apollo.App.Graph.Common.Test
             
         }
 
-        [TearDown]
+        [Test]
         public void ShouldGenerateAssessmentFile()
         {
             ClearCollections();
             CreateDevAssessment();
-            CreateTestAssessment();
+            //CreateTestAssessment();
 
-            AssessmentUseCases auc = new AssessmentUseCases(_assessments, _questions, _answers, _metaData,
+            UseCaseCollections auc = new UseCaseCollections(_assessments, _questions, _answers, _metaData,
                 _questionMetaDataRelations, _answerMetaDataRelations, _metaDataMetaDataRelations);
 
             string filename = "assessments.bin";
@@ -597,11 +612,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            AssessmentUseCases expected;
+            UseCaseCollections expected;
 
             using (var file = File.OpenRead(filename))
             {
-                expected = Serializer.Deserialize<AssessmentUseCases>(file);
+                expected = Serializer.Deserialize<UseCaseCollections>(file);
                 file.Close();
             }
 

@@ -10,15 +10,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <!-- Display name -->
-    <ApplicationTitle>De.HDBW.Apollo.Client</ApplicationTitle>
+    <ApplicationTitle>Apollo</ApplicationTitle>
 
     <!-- App Identifier -->
     <ApplicationId>de.hdbw.apollo.client</ApplicationId>
     <ApplicationIdGuid>1AAEF2B7-B10F-4EA6-969F-C63389D98EBE</ApplicationIdGuid>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <ApplicationVersion>2</ApplicationVersion>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
@@ -28,10 +28,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
-    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1"/>
 
     <!-- Splash Screen -->
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F7EEE1" BaseSize="170,170" />
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
@@ -41,6 +41,8 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\apollo.svg" />
     <None Remove="Resources\Images\bestellbestaetigung.jpg" />
     <None Remove="Resources\Images\deutschehecke.jpg" />
     <None Remove="Resources\Images\fallback.png" />
@@ -48,7 +50,16 @@
     <None Remove="Resources\Images\info.svg" />
     <None Remove="Resources\Images\lieferschein.png" />
     <None Remove="Resources\Images\minze.jpg" />
+    <None Remove="Resources\Images\registrationdeco.svg" />
     <None Remove="Resources\Images\salbei.jpg" />
+    <None Remove="Resources\Images\send.svg" />
+    <None Remove="Resources\Images\settings.svg" />
+    <None Remove="Resources\Images\splashdeco1.svg" />
+    <None Remove="Resources\Images\usecase1deco.svg" />
+    <None Remove="Resources\Images\usecase1detail.svg" />
+    <None Remove="Resources\Images\usecase2deco.svg" />
+    <None Remove="Resources\Images\usecase3deco.svg" />
+    <None Remove="Resources\Images\user.svg" />
     <None Remove="Resources\Images\user1.png" />
     <None Remove="Resources\Images\user2.png" />
     <None Remove="Resources\Images\user3.png" />
@@ -102,7 +113,7 @@
     <MauiXaml Update="Views\UseCaseSelectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\UseCaseTutorialView.xaml">
+    <MauiXaml Update="Views\UseCaseDescriptionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
   </ItemGroup>
@@ -125,8 +136,8 @@
     <Compile Update="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UseCaseTutorialView.xaml.cs">
-      <DependentUpon>UseCaseTutorialView.xaml</DependentUpon>
+    <Compile Update="Views\UseCaseDescriptionView.xaml.cs">
+      <DependentUpon>UseCaseDescriptionView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
