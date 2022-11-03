@@ -133,7 +133,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apollo liefert dir passgenaue Weiterbildungs- und Stellenangebote!.
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1 {
             get {
@@ -142,7 +142,16 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dafür braucht Apollo Infos zu deinen beruflichen Erfahrungen von dir..
+        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction1Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction1Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction2 {
             get {
@@ -151,11 +160,38 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unsere App zeigt dir den Weg zu deinem Traumberuf!.
+        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction2Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction2Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction3 {
             get {
                 return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction3Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Willkommen zur Beta von Apollo.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Welcome {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Welcome", resourceCulture);
             }
         }
         
@@ -196,6 +232,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zurück.
+        /// </summary>
+        public static string Global_Back {
+            get {
+                return ResourceManager.GetString("Global_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Überspringen.
         /// </summary>
         public static string Global_Skip {
@@ -205,11 +250,47 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jetzt starten.
+        /// </summary>
+        public static string Global_StartNow {
+            get {
+                return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zukünftig werden dir hier weitere Funktionen zur Verfügung stehen.
+        /// </summary>
+        public static string MainNavigation_BetaDescription {
+            get {
+                return ResourceManager.GetString("MainNavigation_BetaDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beta Version.
+        /// </summary>
+        public static string MainNavigation_BetaTitle {
+            get {
+                return ResourceManager.GetString("MainNavigation_BetaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zeugnisse und Abschlüsse.
         /// </summary>
         public static string MainNavigation_CertificatesAndDegrees {
             get {
                 return ResourceManager.GetString("MainNavigation_CertificatesAndDegrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szenario wechseln.
+        /// </summary>
+        public static string MainNavigation_ChangeUseCase {
+            get {
+                return ResourceManager.GetString("MainNavigation_ChangeUseCase", resourceCulture);
             }
         }
         
@@ -241,6 +322,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feedback senden.
+        /// </summary>
+        public static string MainNavigation_Feedback {
+            get {
+                return ResourceManager.GetString("MainNavigation_Feedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interessenfelder.
         /// </summary>
         public static string MainNavigation_FieldsOfInterest {
@@ -255,6 +345,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MainNavigation_LearningPath {
             get {
                 return ResourceManager.GetString("MainNavigation_LearningPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einstellungen.
+        /// </summary>
+        public static string MainNavigation_Settings {
+            get {
+                return ResourceManager.GetString("MainNavigation_Settings", resourceCulture);
             }
         }
         
@@ -286,7 +385,34 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrieren.
+        ///   Looks up a localized string similar to Ohne Anmeldung fortfahren.
+        /// </summary>
+        public static string RegistrationView_Continue {
+            get {
+                return ResourceManager.GetString("RegistrationView_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu..
+        /// </summary>
+        public static string RegistrationView_Description {
+            get {
+                return ResourceManager.GetString("RegistrationView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt Anmelden.
+        /// </summary>
+        public static string RegistrationView_RegisterNow {
+            get {
+                return ResourceManager.GetString("RegistrationView_RegisterNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt anmelden.
         /// </summary>
         public static string RegistrationView_RegisterUser {
             get {
@@ -414,7 +540,16 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung des Usecase A.
+        ///   Looks up a localized string similar to Dein Szenario.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du möchtest einen sicheren Job finden.
         /// </summary>
         public static string UseCase_A_Description {
             get {
@@ -423,7 +558,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usecase A.
+        ///   Looks up a localized string similar to Jobsuche.
         /// </summary>
         public static string UseCase_A_Name {
             get {
@@ -432,7 +567,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung des Usecase B.
+        ///   Looks up a localized string similar to Du möchtest neue Fähigkeiten erwerben.
         /// </summary>
         public static string UseCase_B_Description {
             get {
@@ -441,7 +576,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usecase B.
+        ///   Looks up a localized string similar to Weiterbildung.
         /// </summary>
         public static string UseCase_B_Name {
             get {
@@ -450,7 +585,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung des Usecase C.
+        ///   Looks up a localized string similar to Du möchtest in deinem Job Karriere machen.
         /// </summary>
         public static string UseCase_C_Description {
             get {
@@ -459,7 +594,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usecase C.
+        ///   Looks up a localized string similar to Jobaufstieg.
         /// </summary>
         public static string UseCase_C_Name {
             get {
@@ -468,11 +603,247 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erstellen.
+        ///   Looks up a localized string similar to Alter: {0}.
         /// </summary>
-        public static string UseCaseSelectionView_CreateUseCase {
+        public static string UseCaseDescriptionView_AgeFormat {
             get {
-                return ResourceManager.GetString("UseCaseSelectionView_CreateUseCase", resourceCulture);
+                return ResourceManager.GetString("UseCaseDescriptionView_AgeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erfahrung.
+        /// </summary>
+        public static string UseCaseDescriptionView_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ziel.
+        /// </summary>
+        public static string UseCaseDescriptionView_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beruf: {0}.
+        /// </summary>
+        public static string UseCaseDescriptionView_JobFormat {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_JobFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szenario starten.
+        /// </summary>
+        public static string UseCaseDescriptionView_Start {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Story.
+        /// </summary>
+        public static string UseCaseDescriptionView_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dein Szenario.
+        /// </summary>
+        public static string UseCaseDescriptionView_Title {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 31.
+        /// </summary>
+        public static string UseCaseDetail_A_Age {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 Jahre Helfer in Lager &amp; Versandt
+        ///1 Jahr Einzelhandel mit Lebensmitteln.
+        /// </summary>
+        public static string UseCaseDetail_A_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job im Umkreis von 50km des Wohnorts
+        ///Langfristig stabilere Arbeitsbedingungen.
+        /// </summary>
+        public static string UseCaseDetail_A_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lagerist.
+        /// </summary>
+        public static string UseCaseDetail_A_Job {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Job", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auf Jobsuche.
+        /// </summary>
+        public static string UseCaseDetail_A_Scenario {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Scenario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast die letzten 5 Jahre in Jobs ohne Qualifi-kationsvorraussetzungen gearbeitet. Nun wurde dein Arbeitsvertrag nicht verlängert und du stehst erneut vor der Aufgabe eine Job zu finden. Da du keine Rücklagen besitzt bist du zwar bereit jedes Angebot anzunehmen, jedoch strebst du zukünftig stabilere Arbeitsverträge an..
+        /// </summary>
+        public static string UseCaseDetail_A_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_B_Age {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_B_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_B_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_B_Job {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Job", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_B_Scenario {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Scenario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_B_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_C_Age {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_C_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_C_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_C_Job {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Job", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_C_Scenario {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Scenario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UseCaseDetail_C_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wähle dein Szenario.
+        /// </summary>
+        public static string UseCaseSelectionView_Choose {
+            get {
+                return ResourceManager.GetString("UseCaseSelectionView_Choose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Definiere das Ziel, dass du mit dem Verwenden der App verfolgst..
+        /// </summary>
+        public static string UseCaseSelectionView_ChooseDescription {
+            get {
+                return ResourceManager.GetString("UseCaseSelectionView_ChooseDescription", resourceCulture);
             }
         }
     }

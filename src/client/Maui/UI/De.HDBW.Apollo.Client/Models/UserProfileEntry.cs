@@ -3,7 +3,6 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Helper;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models
@@ -44,6 +43,14 @@ namespace De.HDBW.Apollo.Client.Models
                 parts.Add(FirstName);
                 parts.Add(LastName);
                 return string.Join(" ", parts.Where(s => !string.IsNullOrWhiteSpace(s)));
+            }
+        }
+
+        public long Id
+        {
+            get
+            {
+                return _userProfile.Id;
             }
         }
 
