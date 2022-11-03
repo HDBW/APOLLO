@@ -48,6 +48,27 @@ namespace De.HDBW.Apollo.Client.Models
             }
         }
 
+        public string ImagePath
+        {
+            get
+            {
+                switch (UseCase)
+                {
+                    case UseCase.A:
+                        return "usecase1deco.png";
+
+                    case UseCase.B:
+                        return "usecase2deco.png";
+
+                    case UseCase.C:
+                        return "usecase3deco.png";
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
         public string DisplayUseCaseDescription
         {
             get

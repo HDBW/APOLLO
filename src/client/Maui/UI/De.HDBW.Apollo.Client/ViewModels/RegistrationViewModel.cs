@@ -52,7 +52,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, worker.Token);
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -128,7 +128,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var authentication = await AuthService.SignInInteractively(worker.Token);
                     SessionService.UpdateRegisteredUser(authentication?.Account != null);
 
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseTutorialView, worker.Token);
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
