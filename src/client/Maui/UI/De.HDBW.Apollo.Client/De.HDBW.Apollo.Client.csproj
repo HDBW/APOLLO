@@ -52,11 +52,14 @@
     <None Remove="Resources\Images\minze.jpg" />
     <None Remove="Resources\Images\registrationdeco.svg" />
     <None Remove="Resources\Images\salbei.jpg" />
+    <None Remove="Resources\Images\send.svg" />
+    <None Remove="Resources\Images\settings.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\usecase1deco.svg" />
     <None Remove="Resources\Images\usecase1detail.svg" />
     <None Remove="Resources\Images\usecase2deco.svg" />
     <None Remove="Resources\Images\usecase3deco.svg" />
+    <None Remove="Resources\Images\user.svg" />
     <None Remove="Resources\Images\user1.png" />
     <None Remove="Resources\Images\user2.png" />
     <None Remove="Resources\Images\user3.png" />

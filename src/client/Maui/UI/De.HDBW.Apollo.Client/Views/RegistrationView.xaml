@@ -21,7 +21,7 @@
                 <Label Grid.Row="1" Text="{x:Static strings:Resource.RegistrationView_Description}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="24,0,24,8"/>
                 <Button Grid.Row="3" Text="{x:Static strings:Resource.RegistrationView_RegisterUser}" Command="{Binding RegisterCommand}" IsVisible="{Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>
                 <Button Grid.Row="3" Text="{x:Static strings:Resource.RegistrationView_UnRegisterUser}" Command="{Binding UnRegisterCommand}" IsVisible="{Binding HasRegisterdUser}"/>
-                <Button Grid.Row="4" Margin="0,16,0,0" Text="{x:Static strings:Resource.RegistrationView_Continue}" Command="{Binding SkipCommand}"/>
+                <Button Grid.Row="4" Margin="0,16,0,0" Text="{x:Static strings:Resource.RegistrationView_Continue}" Style="{StaticResource SoftButton}" Command="{Binding SkipCommand}"/>
             </Grid>
         </ScrollView>
     </Grid>

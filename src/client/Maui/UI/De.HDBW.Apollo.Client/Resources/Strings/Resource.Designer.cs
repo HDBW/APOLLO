@@ -259,11 +259,38 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zukünftig werden dir hier weitere Funktionen zur Verfügung stehen.
+        /// </summary>
+        public static string MainNavigation_BetaDescription {
+            get {
+                return ResourceManager.GetString("MainNavigation_BetaDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beta Version.
+        /// </summary>
+        public static string MainNavigation_BetaTitle {
+            get {
+                return ResourceManager.GetString("MainNavigation_BetaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zeugnisse und Abschlüsse.
         /// </summary>
         public static string MainNavigation_CertificatesAndDegrees {
             get {
                 return ResourceManager.GetString("MainNavigation_CertificatesAndDegrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szenario wechseln.
+        /// </summary>
+        public static string MainNavigation_ChangeUseCase {
+            get {
+                return ResourceManager.GetString("MainNavigation_ChangeUseCase", resourceCulture);
             }
         }
         
@@ -295,6 +322,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feedback senden.
+        /// </summary>
+        public static string MainNavigation_Feedback {
+            get {
+                return ResourceManager.GetString("MainNavigation_Feedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interessenfelder.
         /// </summary>
         public static string MainNavigation_FieldsOfInterest {
@@ -309,6 +345,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MainNavigation_LearningPath {
             get {
                 return ResourceManager.GetString("MainNavigation_LearningPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einstellungen.
+        /// </summary>
+        public static string MainNavigation_Settings {
+            get {
+                return ResourceManager.GetString("MainNavigation_Settings", resourceCulture);
             }
         }
         
@@ -362,7 +407,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// </summary>
         public static string RegistrationView_RegisterNow {
             get {
-                 return ResourceManager.GetString("RegistrationView_RegisterNow", resourceCulture);
+                return ResourceManager.GetString("RegistrationView_RegisterNow", resourceCulture);
             }
         }
         

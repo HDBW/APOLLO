@@ -70,10 +70,11 @@
     </Style>
 
     <Style TargetType="Button">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="ContentLayout" Value="Left, 13"/>
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="24,8"/>
@@ -84,20 +85,20 @@
                     <VisualState x:Name="Active" />
                     <VisualState x:Name="Focused">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary700}, Dark={StaticResource Gray200}}" />
-                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary700}, Dark={StaticResource Primary700}}" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary900}, Dark={StaticResource Gray200}}" />
-                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary900}, Dark={StaticResource Primary900}}" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary050}, Dark={StaticResource Gray600}}" />
-                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary150}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary050}, Dark={StaticResource Primary050}}" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary150}, Dark={StaticResource Primary150}}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -105,11 +106,12 @@
         </Setter>
     </Style>
 
-    <Style x:Key="TransparentButton" TargetType="Button">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+    <Style x:Key="SoftButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource Background}}" />
         <Setter Property="ContentLayout" Value="Left, 13"/>
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="4"/>
@@ -140,12 +142,13 @@
     </Style>
 
     <Style x:Key="BorderButton" TargetType="Button">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource Background}}" />
-        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"/>
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"/>
         <Setter Property="ContentLayout" Value="Left, 13"/>
         <Setter Property="BorderWidth" Value="1"/>
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="24,8"/>
