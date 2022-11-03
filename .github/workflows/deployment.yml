@@ -38,7 +38,7 @@ jobs:
           inAppUpdatePriority: 0
       - name: Deploy to TestFlight
         if: always()
-        uses: r0adkll/upload-testflight-build@v1
+        uses: apple-actions/upload-testflight-build@v1
         with:
           app-path: 'artifact/iOS/publish/De.HDBW.Apollo.Client.ipa' 
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
