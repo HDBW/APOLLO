@@ -5,11 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:De.HDBW.Apollo.Client.Views"
     xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
     xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
     xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
     x:DataType="viewModels:AppShellViewModel"
     Shell.FlyoutBehavior="Flyout"
+    FlyoutBackground="{StaticResource Background}"
     Shell.MenuItemTemplate="{StaticResource MenuItemTemplateSelector}"
     >
     <Shell.Resources>
@@ -45,6 +47,19 @@
         </ResourceDictionary>
     </Shell.Resources>
     <Shell.FlyoutHeader>
+        <Grid ColumnDefinitions="Auto,10, *" Padding="24,8">
+            <Image Source="{Binding UserProfile.ImagePath}" WidthRequest="32" HeightRequest="32" Aspect="AspectFill">
+                <Image.Clip>
+                    <EllipseGeometry RadiusX="16" RadiusY="16" Center="16,16"/>
+                </Image.Clip>
+            </Image>
+            <StackLayout Grid.Column="2">
+                <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold"  Grid.ColumnSpan="2"/>
+                <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
+            </StackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+    <Shell.FlyoutFooter>
         <Grid ColumnDefinitions="Auto,10, *" Padding="5">
             <Image Source="untitled.png" WidthRequest="50" HeightRequest="50" />
             <StackLayout Grid.Column="2">
@@ -53,8 +68,8 @@
                 <Label Text="E-Mail" />
             </StackLayout>
         </Grid>
-    </Shell.FlyoutHeader>
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_EditProfile}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    </Shell.FlyoutFooter>
+    <!--<MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_EditProfile}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_FieldsOfInterest}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}"/>
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_SkillsAndBadges}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_CertificatesAndDegrees}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
@@ -62,6 +77,6 @@
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_CoursesFavorites}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_CVGenerator}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_ViewTutorial}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />-->
     <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:StartView}" />
 </Shell>
