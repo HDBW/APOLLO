@@ -10,12 +10,14 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:StartViewModel"
-             IsBusy="{Binding IsBusy}">
+             IsBusy="{Binding IsBusy}"
+             Padding="0">
     <ContentPage.Resources>
         <converter:EntityTypeToBrushConverter x:Key="EntityTypeToBrushConverter"
                                               DefaultBrush="Transparent"
                                               AssessmentItemBrush="{StaticResource Tag1Brush}"
                                               CourseItemBrush="{StaticResource Tag2Brush}"/>
+        <converter:InteractionsToMaximumHeightConverter x:Key="InteractionsToMaximumHeightConverter" />
     </ContentPage.Resources>
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding LoadDataCommand}" />
@@ -30,63 +32,61 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Image HeightRequest="64" WidthRequest="64" Grid.Column="0" Grid.Row="0" Source="{Binding UserProfile.ImagePath}" Aspect="AspectFill">
+        <Image HeightRequest="64" WidthRequest="64" Grid.Column="0" Margin="24,0,0,0" Grid.Row="0" Source="{Binding UserProfile.ImagePath}" Aspect="AspectFill">
             <Image.Clip>
                 <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32"/>
             </Image.Clip>
         </Image>
-        <Grid Grid.Column="1" ColumnDefinitions="auto,*" RowDefinitions="auto, auto" Margin="8,0,0,0" VerticalOptions="Center">
+        <Grid Grid.Column="1" ColumnDefinitions="auto,*" RowDefinitions="auto, auto" Margin="8,0,24,0" VerticalOptions="Center">
             <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold"  Grid.ColumnSpan="2"/>
             <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
             <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
         </Grid>
-        <CollectionView Grid.ColumnSpan="2" Grid.Row="2" ItemsSource="{Binding InteractionCategories}" HorizontalScrollBarVisibility="Never">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout SnapPointsType="Mandatory" SnapPointsAlignment="Start" ItemSpacing="40" Orientation="Vertical"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:InteractionCategoryEntry">
-                    <Grid RowDefinitions="auto,auto,*" ColumnDefinitions="*,50" >
-                        <Label Text="{Binding HeadLine}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
-                        <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
-                        <Label Text="{Binding SublineLine}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center"/>
-                        <CollectionView ItemsSource="{Binding Interactions}"
-                                        Grid.Row="2" Grid.ColumnSpan="2"
-                                        Margin="0,8,0,0"
-                                        HorizontalScrollBarVisibility="Never"
-                                        VerticalScrollBarVisibility="Never">
-                            <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" Span="2" SnapPointsType="Mandatory" SnapPointsAlignment="Start" />
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="models:StartViewInteractionEntry">
-                                    <Border HeightRequest="240" Margin="0,0,16,0" Padding="0" BackgroundColor="White" StrokeThickness="0">
-                                        <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="3" />
-                                        </Border.StrokeShape>
-                                        <Grid RowDefinitions="*,auto,auto, auto" Padding="0">
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
-                                            </Grid.GestureRecognizers>
-                                            <Image Source="{Binding ImagePath}" Aspect="AspectFill" InputTransparent="True"/>
-                                            <Border Visual="{Binding HasDecorator}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
-                                                <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="0,0,0,4" />
-                                                </Border.StrokeShape>
-                                                <Label Text="{Binding DecoratorText}"/>
-                                            </Border>
-                                            <Label Text="{Binding Text}" LineBreakMode="TailTruncation" MaxLines="2" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
-                                            <Label Text="{Binding Subline}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
-                                            <Label Text="{Binding Info}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
-                                        </Grid>
-                                    </Border>
-                                   
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" >
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding InteractionCategories}" Spacing="40">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:InteractionCategoryEntry">
+                        <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="*,50" Padding="24,0" >
+                            <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+                            <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
+                            <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" 
+                                            Margin="0,0,0,8"/>
+                            <CollectionView BindingContextChanged="HandleBindingContextChanged"
+                                            Grid.Row="2" Grid.ColumnSpan="2"
+                                            HorizontalScrollBarVisibility="Never"
+                                            VerticalScrollBarVisibility="Never">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:StartViewInteractionEntry">
+                                        <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="3" />
+                                            </Border.StrokeShape>
+                                            <Grid RowDefinitions="*,auto,auto, auto" Padding="0">
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
+                                                </Grid.GestureRecognizers>
+                                                <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" InputTransparent="True"/>
+                                                <Border Visual="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="0,0,0,4" />
+                                                    </Border.StrokeShape>
+                                                    <Label Text="{Binding DecoratorText}"/>
+                                                </Border>
+                                                <Label Text="{Binding Text, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="2" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
+                                                <Label Text="{Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
+                                                <Label Text="{Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>
