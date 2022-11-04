@@ -5,7 +5,6 @@ using System.Globalization;
 using De.HDBW.Apollo.Client.Converter;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Client.ViewModels;
-using Kotlin.Time;
 
 namespace De.HDBW.Apollo.Client.Views;
 public partial class StartView
