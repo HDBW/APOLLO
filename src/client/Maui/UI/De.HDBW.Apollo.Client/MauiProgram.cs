@@ -104,7 +104,7 @@ public static class MauiProgram
             var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
             task.Wait();
             var authenticationResult = task.Result;
-            hasRegisteredUser = task.Result?.Account != null;
+            hasRegisteredUser = authenticationResult?.Account != null;
         }
         catch (Exception ex)
         {

@@ -54,7 +54,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (SessionService.HasRegisteredUser)
                     {
-                        await NavigationService.PushToRootAsnc(Routes.StartView, token);
+                        await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token);
                     }
                     else
                     {
