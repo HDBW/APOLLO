@@ -56,7 +56,5 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         {
             return _canNavigateHandle?.Invoke(this) ?? false;
         }
-
-        internal static InteractionCategoryEntry Import(string v1, string v2, object value, List<InteractionEntry> interactions, Func<InteractionCategoryEntry, bool> handleShowMore, object canHandleShowMore) => throw new NotImplementedException();
     }
 }
