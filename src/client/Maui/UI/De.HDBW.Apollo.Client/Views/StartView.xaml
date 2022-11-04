@@ -56,11 +56,11 @@
                                             HorizontalScrollBarVisibility="Never"
                                             VerticalScrollBarVisibility="Never">
                                 <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" Span="2" SnapPointsType="None" />
+                                    <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="models:StartViewInteractionEntry">
-                                        <Border HeightRequest="240" Margin="0,0,16,0" BackgroundColor="White" StrokeThickness="0">
+                                        <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="3" />
                                             </Border.StrokeShape>
