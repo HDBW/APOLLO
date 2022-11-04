@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.UseCaseDescriptionView"
              NavigationPage.HasBackButton="True"
@@ -6,21 +6,19 @@
              NavigationPage.BackButtonTitle="{x:Static strings:Resource.Global_Back}"
              Title="{x:Static strings:Resource.UseCaseDescriptionView_Title}"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}"
              x:DataType="viewModels:UseCaseDescriptionViewModel" Padding="0">
     <Grid RowDefinitions="*, auto">
         <ScrollView Padding="24,0">
             <VerticalStackLayout VerticalOptions="Fill">
-                <Grid RowDefinitions="auto, auto, *, auto, auto, 40" ColumnDefinitions="*, auto" IsVisible="{Binding HasUserProfile}">
+                <Grid RowDefinitions="auto, auto, *, auto, auto, 10, 38" ColumnDefinitions="*, auto" IsVisible="{Binding HasUserProfile}">
                     <Label Text="{Binding UserProfile.FirstName}" LineBreakMode="TailTruncation" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}"/>
                     <Label Text="{Binding UserProfile.LastName}" LineBreakMode="TailTruncation" Grid.Row="1" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}"/>
                     <Label Text="{Binding DisplayAge}" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="3"/>
                     <Label Text="{Binding DisplayJob}" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="4"/>
-                    <Rectangle HeightRequest="2" StrokeThickness="0" Background="{StaticResource Primary}" Grid.Row="5" Grid.ColumnSpan="2" />
-                    <Border Margin="0,0,16,0" StrokeThickness="0" BackgroundColor="{StaticResource Background}" IsVisible="{Binding HasImage}" Grid.Column="1" Grid.RowSpan="6">
+                    <Rectangle StrokeThickness="0" Margin="0,8,0,0" Background="{StaticResource Primary}" Grid.Row="5" Grid.ColumnSpan="2" />
+                    <Border Margin="0,0,16,0" StrokeThickness="0" BackgroundColor="{StaticResource Background}" IsVisible="{Binding HasImage}" Grid.Column="1" Grid.RowSpan="7">
                         <Image Source="{Binding ImagePath}"/>
                     </Border>
                 </Grid>
