@@ -46,18 +46,15 @@
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding InteractionCategories}" Spacing="40">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:InteractionCategoryEntry">
-                        <Grid RowDefinitions="auto,auto,*" ColumnDefinitions="*,50" Padding="24,0" >
+                        <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="*,50" Padding="24,0" >
                             <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
                             <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
                             <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" 
                                             Margin="0,0,0,8"/>
-                            <CollectionView ItemsSource="{Binding Interactions, Mode=OneTime}"
-                                            BindingContextChanged="HandleBindingContextChanged"
+                            <CollectionView BindingContextChanged="HandleBindingContextChanged"
                                             Grid.Row="2" Grid.ColumnSpan="2"
                                             HorizontalScrollBarVisibility="Never"
-                                            VerticalScrollBarVisibility="Never"
-                                            MinimumHeightRequest="0"
-                                            ItemSizingStrategy="MeasureFirstItem">
+                                            VerticalScrollBarVisibility="Never">
                                 <CollectionView.ItemsLayout>
                                     <GridItemsLayout Orientation="Vertical" Span="2" SnapPointsType="None" />
                                 </CollectionView.ItemsLayout>
