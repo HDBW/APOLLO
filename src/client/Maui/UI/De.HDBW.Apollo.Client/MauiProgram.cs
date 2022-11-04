@@ -24,7 +24,6 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.ApplicationInsights;
 using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
-using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace De.HDBW.Apollo.Client;
 public static class MauiProgram
@@ -54,7 +53,6 @@ public static class MauiProgram
         SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
-            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");

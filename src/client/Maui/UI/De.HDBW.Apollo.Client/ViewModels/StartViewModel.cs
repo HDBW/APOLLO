@@ -224,6 +224,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_TestHeadline, Resources.Strings.Resource.StartViewModel_TestSubline, interactions, null, HandleShowMore, CanHandleShowMore));
+            interactions = new List<InteractionEntry>();
             foreach (var assesment in assessmentItems)
             {
                 var assemsmentData = new NavigationParameters();
@@ -242,6 +243,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_TestHeadline, Resources.Strings.Resource.StartViewModel_TestSubline, interactions, null, HandleShowMore, CanHandleShowMore));
+            interactions = new List<InteractionEntry>();
             foreach (var assesment in assessmentItems)
             {
                 var assemsmentData = new NavigationParameters();
