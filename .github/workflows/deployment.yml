@@ -36,7 +36,7 @@ jobs:
           packageName: de.hdbw.apollo.client
           releaseFiles: artifact/apollo-android-app/de.hdbw.apollo.client-Signed.aab
           track: internal
-          status: completed
+          status: draft
           inAppUpdatePriority: 0
   deploy-IOs:
       runs-on: macos-12
