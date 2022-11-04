@@ -26,6 +26,10 @@
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
   </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+    <CodesignKey>Apple Development: Lars Heinrich (827CKHW3LL)</CodesignKey>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
@@ -79,7 +83,6 @@
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.61" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
   </ItemGroup>
 
