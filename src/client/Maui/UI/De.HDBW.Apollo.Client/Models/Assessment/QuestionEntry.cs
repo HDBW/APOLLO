@@ -125,6 +125,5 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     break;
             }
         }
-
     }
 }
