@@ -136,7 +136,7 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
-            var navigationPage = Application.Current.MainPage as NavigationPage;
+            var navigationPage = Application.Current?.MainPage as NavigationPage;
             if (navigationPage != null && Shell.Current == null)
             {
                 var page = Routing.GetOrCreateContent(route, ServiceProvider) as Page;
