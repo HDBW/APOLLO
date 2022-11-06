@@ -51,6 +51,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<AssessmentViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(assessmentItemRepository);
+            ArgumentNullException.ThrowIfNull(questiontItemRepository);
+            ArgumentNullException.ThrowIfNull(answerItemRepository);
+            ArgumentNullException.ThrowIfNull(metaDataMetaDataRelationRepository);
+            ArgumentNullException.ThrowIfNull(answerMetaDataRelationRepository);
+            ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
+            ArgumentNullException.ThrowIfNull(metadataRepository);
             AssessmentItemRepository = assessmentItemRepository;
             QuestiontItemRepository = questiontItemRepository;
             AnswerItemRepository = answerItemRepository;

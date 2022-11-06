@@ -9,6 +9,7 @@ using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -39,6 +40,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<StartViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(assessmentItemRepository);
+            ArgumentNullException.ThrowIfNull(courseItemRepository);
+            ArgumentNullException.ThrowIfNull(userProfileRepository);
+            ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
             PreferenceService = preferenceService;
             AssessmentItemRepository = assessmentItemRepository;
             CourseItemRepository = courseItemRepository;

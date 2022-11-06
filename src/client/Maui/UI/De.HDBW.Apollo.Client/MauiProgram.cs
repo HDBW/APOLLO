@@ -191,23 +191,36 @@ public static class MauiProgram
     {
         services.AddTransient<AppShell>();
         services.AddTransient<AppShellViewModel>();
+
         services.AddTransient<StartView>();
         services.AddTransient<StartViewModel>();
+
         services.AddTransient<ExtendedSplashScreenView>();
         services.AddTransient<ExtendedSplashScreenViewModel>();
+
         services.AddTransient<RegistrationView>();
         services.AddTransient<RegistrationViewModel>();
+
         services.AddTransient<UseCaseDescriptionView>();
         services.AddTransient<UseCaseDescriptionViewModel>();
+
         services.AddTransient<UseCaseSelectionView>();
         services.AddTransient<UseCaseSelectionViewModel>();
+
         services.AddTransient<FirstTimeDialog>();
         services.AddTransient<FirstTimeDialogViewModel>();
+
         services.AddTransient<EmptyView>();
         services.AddTransient<EmptyViewModel>();
+
         services.AddTransient<AssessmentView>();
         services.AddTransient<AssessmentViewModel>();
+
+        services.AddTransient<CourseView>();
         services.AddTransient<CourseViewModel>();
+
+        services.AddTransient<SettingsView>();
+        services.AddTransient<SettingsViewModel>();
     }
 
     private static void SetupRoutes()
@@ -220,6 +233,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
         Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
         Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
+        Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
