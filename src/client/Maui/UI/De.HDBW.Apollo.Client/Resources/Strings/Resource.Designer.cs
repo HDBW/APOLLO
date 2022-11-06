@@ -196,6 +196,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feedback.
+        /// </summary>
+        public static string FeedbackView_Title {
+            get {
+                return ResourceManager.GetString("FeedbackView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to direkt loslegen.
         /// </summary>
         public static string FirstTimeDialog_Continue {
