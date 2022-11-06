@@ -76,7 +76,7 @@
             <Button x:Name="FeedBackButton" Padding="8,0" ImageSource="send.png" Grid.Row="2" Text="{x:Static strings:Resource.MainNavigation_Feedback}" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.FeedbackView}" />
         </Grid>
     </Shell.FlyoutFooter>
-    <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resource.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resource.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding ChangeUseCaseCommand}"/>
     <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resource.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
     <!--<MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_SkillsAndBadges}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resource.MainNavigation_CertificatesAndDegrees}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />

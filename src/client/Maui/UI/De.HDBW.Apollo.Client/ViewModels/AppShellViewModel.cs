@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -47,6 +48,41 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanChangeUseCase), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        private async Task ChangeUseCase(CancellationToken token)
+        {
+            using (var work = ScheduleWork(token))
+            {
+                try
+                {
+                    var parameters = new NavigationParameters();
+                    parameters.Add(NavigationParameter.Data, true);
+                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType()}.");
+                }
+                finally
+                {
+                    UnscheduleWork(work);
+                }
+            }
+        }
+
+        private bool CanChangeUseCase()
+        {
+            return !IsBusy;
         }
 
         private void LoadonUIThread(UserProfile? user)
