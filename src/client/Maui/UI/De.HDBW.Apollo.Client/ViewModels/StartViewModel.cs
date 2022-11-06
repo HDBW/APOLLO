@@ -36,6 +36,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IAssessmentItemRepository assessmentItemRepository,
             IUserProfileRepository userProfileRepository,
             IEduProviderItemRepository eduProviderItemRepository,
+            ISessionService sessionService,
             ILogger<StartViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -44,11 +45,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(courseItemRepository);
             ArgumentNullException.ThrowIfNull(userProfileRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
+            ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             AssessmentItemRepository = assessmentItemRepository;
             CourseItemRepository = courseItemRepository;
             UserProfileRepository = userProfileRepository;
             EduProviderItemRepository = eduProviderItemRepository;
+            SessionService = sessionService;
         }
 
         public ObservableCollection<InteractionCategoryEntry> InteractionCategories
@@ -65,84 +68,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ICourseItemRepository CourseItemRepository { get; }
 
-        private IUserProfileRepository UserProfileRepository { get; set; }
+        private IUserProfileRepository UserProfileRepository { get; }
 
-        private IEduProviderItemRepository EduProviderItemRepository { get; set; }
+        private IEduProviderItemRepository EduProviderItemRepository { get; }
 
-        protected override void RefreshCommands()
-        {
-            base.RefreshCommands();
-            OpenSettingsCommand?.NotifyCanExecuteChanged();
-        }
+        private ISessionService SessionService { get; }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenSettings), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private async Task OpenSettings(CancellationToken token)
-        {
-            using (var work = ScheduleWork(token))
-            {
-                try
-                {
-                    var parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Id, 0);
-                    parameters.AddValue(NavigationParameter.Unknown, "Test");
-                    await NavigationService.NavigateAsnc(Routes.EmptyView, token, parameters);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenSettings)} in {GetType()}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenSettings)} in {GetType()}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenSettings)} in {GetType()}.");
-                }
-                finally
-                {
-                    UnscheduleWork(work);
-                }
-            }
-        }
-
-        private bool CanOpenSettings()
-        {
-            return !IsBusy;
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanChangeUseCase), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private async Task ChangeUseCase(CancellationToken token)
-        {
-            using (var work = ScheduleWork(token))
-            {
-                try
-                {
-                    await NavigationService.ResetNavigationAsnc(Routes.UseCaseSelectionView, token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType()}.");
-                }
-                finally
-                {
-                    UnscheduleWork(work);
-                }
-            }
-        }
-
-        private bool CanChangeUseCase()
-        {
-            return !IsBusy;
-        }
+        private UseCase? UseCase { get; set; }
 
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
         private async Task LoadData(CancellationToken token)
@@ -151,6 +83,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    var useCase = SessionService.UseCase;
+                    if (UseCase == useCase)
+                    {
+                        return;
+                    }
+
                     var assesments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var userProfile = await UserProfileRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
@@ -209,7 +147,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
            UserProfile? userProfile,
            IEnumerable<EduProviderItem> eduProviderItems)
         {
-            UserProfile = userProfile != null ? UserProfileEntry.Import(userProfile) : null;
+            UserProfile = UserProfileEntry.Import(userProfile ?? new UserProfile());
+            InteractionCategories.Clear();
+
             var interactions = new List<InteractionEntry>();
             foreach (var assesment in assessmentItems)
             {

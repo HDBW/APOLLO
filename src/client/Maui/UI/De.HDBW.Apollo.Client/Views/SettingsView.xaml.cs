@@ -13,7 +13,7 @@ public partial class SettingsView
         BindingContext = model;
     }
 
-    public SettingsViewModel? Viemodel
+    public SettingsViewModel? ViewModel
     {
         get
         {

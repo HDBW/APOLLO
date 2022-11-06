@@ -5,9 +5,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -41,14 +43,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
            INavigationService navigationService,
            IDialogService dialogService,
            IUserProfileRepository userProfileRepository,
+           ISessionService sessionService,
            IUseCaseBuilder builder,
            ILogger<UseCaseDescriptionViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(builder);
             ArgumentNullException.ThrowIfNull(userProfileRepository);
+            ArgumentNullException.ThrowIfNull(sessionService);
             UseCaseBuilder = builder;
             UserProfileRepository = userProfileRepository;
+            SessionService = sessionService;
         }
 
         public string? ImagePath
@@ -97,11 +102,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private UseCase UseCase { get; set; }
+        private UseCase UseCase
+        {
+            get
+            {
+                return SessionService.UseCase ?? UseCase.Unknown;
+            }
+        }
+
+        private bool? IsUseCaseSelectionFromShell { get; set; }
 
         private IUseCaseBuilder UseCaseBuilder { get; }
 
         private IUserProfileRepository UserProfileRepository { get; }
+
+        private ISessionService SessionService { get; }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateUseCase))]
         public async Task CreateUseCase(CancellationToken token)
@@ -110,7 +125,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.PushToRootAsnc(Routes.Shell, token);
+                    if (IsUseCaseSelectionFromShell == true)
+                    {
+                        await NavigationService.PushToRootAsnc(token);
+                    }
+                    else
+                    {
+                        await NavigationService.PushToRootAsnc(Routes.Shell, token);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -205,7 +227,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             base.OnPrepare(navigationParameters);
-            UseCase = navigationParameters.GetValue<UseCase>(NavigationParameter.Id);
+            IsUseCaseSelectionFromShell = navigationParameters.GetValue<bool?>(NavigationParameter.Data);
         }
 
         private void LoadonUIThread(UserProfile? user, string? age, string? job, string? scenario, string? experience, string? story, string? goal)
