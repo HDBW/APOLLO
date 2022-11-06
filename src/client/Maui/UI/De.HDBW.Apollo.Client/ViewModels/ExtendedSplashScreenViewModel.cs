@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<ExtendedSplashScreenViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             SessionService = sessionService;
             Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1Detail));
