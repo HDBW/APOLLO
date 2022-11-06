@@ -3,6 +3,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
@@ -14,6 +15,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public SelectableEntry(TU data, InteractionType interaction, Action<SelectableEntry<TU>> selectionChangedHandler)
         {
+            ArgumentNullException.ThrowIfNull(data);
             Data = data;
             Interaction = interaction;
             SelectionChangedHandler = selectionChangedHandler;

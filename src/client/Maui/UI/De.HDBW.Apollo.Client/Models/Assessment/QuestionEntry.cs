@@ -41,7 +41,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             OnPropertyChanged(nameof(HasImage));
             switch (Interaction)
             {
-                 default:
+                default:
                     Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(AnswerEntry.Import(a, answerMetaDataItems[a]), Interaction, HandleInteraction)));
                     break;
             }

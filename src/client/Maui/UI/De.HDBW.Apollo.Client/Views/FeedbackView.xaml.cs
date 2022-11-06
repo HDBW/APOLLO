@@ -7,7 +7,7 @@ namespace De.HDBW.Apollo.Client.Views;
 
 public partial class FeedbackView
 {
-	public FeedbackView(FeedbackViewModel model)
+    public FeedbackView(FeedbackViewModel model)
     {
         InitializeComponent();
         BindingContext = model;

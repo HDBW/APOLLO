@@ -39,7 +39,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ISessionService SessionService { get; }
 
-        private bool? IsUseCaseSelectionFromShell { get;  set; }
+        private bool? IsUseCaseSelectionFromShell { get; set; }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
@@ -72,6 +72,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 return;
             }
+
             selectedUseCase.UpdateSelectedState(false);
             var parameters = new NavigationParameters();
             parameters.AddValue(NavigationParameter.Data, IsUseCaseSelectionFromShell);
