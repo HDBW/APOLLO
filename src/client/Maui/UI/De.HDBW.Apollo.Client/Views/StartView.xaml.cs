@@ -15,12 +15,22 @@ public partial class StartView
         BindingContext = model;
     }
 
-    public StartViewModel? Viemodel
+    public StartViewModel? ViewModel
     {
         get
         {
             return BindingContext as StartViewModel;
         }
+    }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
+        ViewModel?.LoadDataCommand?.Execute(null);
     }
 
     private void HandleBindingContextChanged(object sender, System.EventArgs e)

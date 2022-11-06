@@ -4,12 +4,13 @@
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    // TODO: Clear UsecaseData when navigating to this model.
     public partial class UseCaseSelectionViewModel : BaseViewModel
     {
         private readonly ObservableCollection<UseCaseEntry> _useCases = new ObservableCollection<UseCaseEntry>();
@@ -18,9 +19,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
+           ISessionService sessionService,
            ILogger<UseCaseDescriptionViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
+            SessionService = sessionService;
             UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
             UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
             UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));
@@ -32,6 +35,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 return _useCases;
             }
+        }
+
+        private ISessionService SessionService { get; }
+
+        private bool? IsUseCaseSelectionFromShell { get;  set; }
+
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            base.OnPrepare(navigationParameters);
+            IsUseCaseSelectionFromShell = navigationParameters?.GetValue<bool?>(NavigationParameter.Data);
         }
 
         protected override void RefreshCommands()
@@ -54,14 +67,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             RefreshCommands();
 
             var selectedUseCase = UseCases.FirstOrDefault(u => u.IsSelected);
+            SessionService.UpdateUseCase(selectedUseCase?.UseCase);
             if (selectedUseCase == null)
             {
                 return;
             }
-
             selectedUseCase.UpdateSelectedState(false);
             var parameters = new NavigationParameters();
-            parameters.AddValue(NavigationParameter.Id, selectedUseCase.UseCase);
+            parameters.AddValue(NavigationParameter.Data, IsUseCaseSelectionFromShell);
             await NavigationService.NavigateAsnc(Routes.UseCaseDescriptionView, CancellationToken.None, parameters);
         }
     }

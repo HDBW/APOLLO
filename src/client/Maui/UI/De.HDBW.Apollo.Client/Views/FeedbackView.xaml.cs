@@ -13,7 +13,7 @@ public partial class FeedbackView
         BindingContext = model;
     }
 
-    public FeedbackViewModel? Viemodel
+    public FeedbackViewModel? ViewModel
     {
         get
         {
