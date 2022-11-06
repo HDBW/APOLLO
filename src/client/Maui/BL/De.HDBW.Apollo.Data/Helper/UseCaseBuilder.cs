@@ -84,7 +84,7 @@ namespace De.HDBW.Apollo.Data.Helper
                 switch (usecase)
                 {
                     case UseCase.A:
-                        fileName = "De.HDBW.Apollo.Data.SampleData.MultipleChoiceAssessment.bin";
+                        fileName = "De.HDBW.Apollo.Data.SampleData.Usecase1.bin";
                         break;
                     default:
                         throw new NotSupportedException($"Usecase {usecase} is not supported by builder.");
