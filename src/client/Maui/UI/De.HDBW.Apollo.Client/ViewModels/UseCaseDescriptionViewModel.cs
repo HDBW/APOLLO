@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -45,6 +46,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
            ILogger<UseCaseDescriptionViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(builder);
+            ArgumentNullException.ThrowIfNull(userProfileRepository);
             UseCaseBuilder = builder;
             UserProfileRepository = userProfileRepository;
         }

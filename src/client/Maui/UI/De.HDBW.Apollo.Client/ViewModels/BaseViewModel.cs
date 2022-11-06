@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -19,6 +20,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger logger)
             : base()
         {
+            ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(navigationService);
+            ArgumentNullException.ThrowIfNull(dialogService);
+            ArgumentNullException.ThrowIfNull(dispatcherService);
             Logger = logger;
             NavigationService = navigationService;
             DialogService = dialogService;

@@ -240,6 +240,9 @@
   <data name="RegistrationView_UnRegisterUser" xml:space="preserve">
     <value>Abmelden</value>
   </data>
+  <data name="SettingsView_Title" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
   <data name="StartViewModel_InteractionCareer" xml:space="preserve">
     <value>Entdecke dein Karrierepotential
 (Ist-Stand bekannt – Inspiration)</value>
