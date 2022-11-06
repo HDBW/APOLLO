@@ -26,5 +26,7 @@ namespace De.HDBW.Apollo.Client.Models
         public static readonly string CourseView = "/CourseView";
 
         public static readonly string SettingsView = "/SettingsView";
+
+        public static readonly string FeedbackView = "/FeedbackView";
     }
 }
