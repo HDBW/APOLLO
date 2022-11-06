@@ -7,7 +7,11 @@
 		<UseMaui>true</UseMaui>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="SampleData\Usecase1.bin" />
+	</ItemGroup>
+	<ItemGroup>
 	  <EmbeddedResource Include="SampleData\MultipleChoiceAssessment.bin" />
+	  <EmbeddedResource Include="SampleData\Usecase1.bin" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
