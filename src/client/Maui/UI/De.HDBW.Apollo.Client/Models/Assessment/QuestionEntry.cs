@@ -102,11 +102,27 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public bool HasQuestion
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(Question);
+            }
+        }
+
         public string Instruction
         {
             get
             {
                 return _questionMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Hint)?.Value ?? string.Empty;
+            }
+        }
+
+        public bool HasInstruction
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(Instruction);
             }
         }
 
