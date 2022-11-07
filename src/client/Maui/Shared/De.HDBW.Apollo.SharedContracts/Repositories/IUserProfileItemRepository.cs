@@ -5,9 +5,9 @@ using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.SharedContracts.Repositories
 {
-    public interface IUserProfileRepository :
-        IRepository<UserProfile>,
-        IDatabaseRepository<UserProfile>
+    public interface IUserProfileItemRepository :
+        IRepository<UserProfileItem>,
+        IDatabaseRepository<UserProfileItem>
     {
     }
 }

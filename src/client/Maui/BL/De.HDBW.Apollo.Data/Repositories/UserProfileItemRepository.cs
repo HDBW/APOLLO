@@ -6,9 +6,9 @@ using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
-    public class UserProfileRepository :
-        AbstractInMemoryRepository<UserProfile>,
-        IUserProfileRepository
+    public class UserProfileItemRepository :
+        AbstractInMemoryRepository<UserProfileItem>,
+        IUserProfileItemRepository
     {
     }
 }
