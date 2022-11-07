@@ -113,7 +113,7 @@
                     </Grid.RowDefinitions>
                     <Label Text="{Binding Question}" Grid.Row="0"/>
                     <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1"/>
-                    <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
+                    <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}" />
                     <StackLayout Grid.Row="3" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
                     </StackLayout>
                 </Grid>
@@ -136,11 +136,11 @@
                         <Button Text="Test" />
                         <Button Text="Test" Grid.Column="1" />
                     </Grid>
-                    <CarouselView Grid.Row="3" >
+                    <CarouselView Grid.Row="3">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Image Source="untitled.png" />
+                                    <Image Source="untitled.png"/>
                                 </Grid>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
@@ -194,15 +194,17 @@
                                            CompareTemplate="{StaticResource CompareQuestionTemplate}"
                                            OverlayTemplate="{StaticResource OverlayQuestionTemplate}"/>
     </ContentPage.Resources>
-    <Grid RowDefinitions="auto,*,auto">
+    <Grid RowDefinitions="auto,auto,*,auto">
         <StackLayout>
             <Picker Title="Interaction" TitleColor="White" TextColor="White" ItemsSource="{Binding Interactions}" SelectedItem="{Binding Interaction, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
             <Picker Title="QuestionLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding QuestionLayouts}" SelectedItem="{Binding QuestionLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
             <Picker Title="AnserwerLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
         </StackLayout>
-        <StackLayout Grid.Row="1" BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}" BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
+
+        <ProgressBar Grid.Row="1" Progress="{Binding Progress}" />
+        <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}" BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
 
         </StackLayout>
-        <Button Grid.Row="2" Text="Next" Command="{Binding NextQuestionCommand}"/>
+        <Button Grid.Row="3" Text="Next" Command="{Binding NextQuestionCommand}"/>
     </Grid>
 </ContentPage>
