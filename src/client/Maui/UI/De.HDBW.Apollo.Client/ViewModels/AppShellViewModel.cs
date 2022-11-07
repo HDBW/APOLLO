@@ -14,21 +14,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class AppShellViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfile());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
 
         public AppShellViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            IUserProfileRepository userProfileRepository,
+            IUserProfileItemRepository userProfileItemRepository,
             ILogger<StartViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            ArgumentNullException.ThrowIfNull(userProfileRepository);
-            UserProfileRepository = userProfileRepository;
+            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
+            UserProfileItemRepository = userProfileItemRepository;
         }
 
-        private IUserProfileRepository UserProfileRepository { get; }
+        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var user = await UserProfileRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    var user = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(user), worker.Token);
                 }
                 catch (Exception ex)
@@ -85,9 +85,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy;
         }
 
-        private void LoadonUIThread(UserProfile? user)
+        private void LoadonUIThread(UserProfileItem? user)
         {
-            UserProfile = UserProfileEntry.Import(user ?? new UserProfile());
+            UserProfile = UserProfileEntry.Import(user ?? new UserProfileItem());
         }
     }
 }

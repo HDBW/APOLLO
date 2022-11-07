@@ -42,17 +42,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
-           IUserProfileRepository userProfileRepository,
+           IUserProfileItemRepository userProfileItemRepository,
            ISessionService sessionService,
            IUseCaseBuilder builder,
            ILogger<UseCaseDescriptionViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(builder);
-            ArgumentNullException.ThrowIfNull(userProfileRepository);
+            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(sessionService);
             UseCaseBuilder = builder;
-            UserProfileRepository = userProfileRepository;
+            UserProfileItemRepository = userProfileItemRepository;
             SessionService = sessionService;
         }
 
@@ -114,7 +114,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IUseCaseBuilder UseCaseBuilder { get; }
 
-        private IUserProfileRepository UserProfileRepository { get; }
+        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         private ISessionService SessionService { get; }
 
@@ -169,7 +169,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         return;
                     }
 
-                    var user = await UserProfileRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    var user = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
 
                     string? age = null;
                     string? job = null;
@@ -230,9 +230,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IsUseCaseSelectionFromShell = navigationParameters.GetValue<bool?>(NavigationParameter.Data);
         }
 
-        private void LoadonUIThread(UserProfile? user, string? age, string? job, string? scenario, string? experience, string? story, string? goal)
+        private void LoadonUIThread(UserProfileItem? user, string? age, string? job, string? scenario, string? experience, string? story, string? goal)
         {
-            UserProfile = UserProfileEntry.Import(user ?? new UserProfile());
+            UserProfile = UserProfileEntry.Import(user ?? new UserProfileItem());
             Age = age;
             Job = job;
             Scenario = scenario;
