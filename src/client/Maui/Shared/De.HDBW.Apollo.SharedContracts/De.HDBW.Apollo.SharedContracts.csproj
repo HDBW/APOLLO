@@ -6,6 +6,6 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.1" />
+	  <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.2" />
 	</ItemGroup>
 </Project>
