@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -18,7 +17,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class UseCaseDescriptionViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfile());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
 
         [ObservableProperty]
         private string? _age;
