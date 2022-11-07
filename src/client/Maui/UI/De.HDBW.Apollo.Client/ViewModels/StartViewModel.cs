@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private readonly ObservableCollection<InteractionCategoryEntry> _interactionsCategories = new ObservableCollection<InteractionCategoryEntry>();
 
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfile());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
 
         public StartViewModel(
             IPreferenceService preferenceService,
@@ -34,7 +34,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             ICourseItemRepository courseItemRepository,
             IAssessmentItemRepository assessmentItemRepository,
-            IUserProfileRepository userProfileRepository,
+            IUserProfileItemRepository userProfileItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             ISessionService sessionService,
             ILogger<StartViewModel> logger)
@@ -43,13 +43,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
-            ArgumentNullException.ThrowIfNull(userProfileRepository);
+            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
             ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             AssessmentItemRepository = assessmentItemRepository;
             CourseItemRepository = courseItemRepository;
-            UserProfileRepository = userProfileRepository;
+            UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
             SessionService = sessionService;
         }
@@ -68,7 +68,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ICourseItemRepository CourseItemRepository { get; }
 
-        private IUserProfileRepository UserProfileRepository { get; }
+        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
 
@@ -91,7 +91,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var assesments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
-                    var userProfile = await UserProfileRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    var userProfile = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
 
                     await ExecuteOnUIThreadAsync(
@@ -144,10 +144,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(
            IEnumerable<AssessmentItem> assessmentItems,
            IEnumerable<CourseItem> courseItems,
-           UserProfile? userProfile,
+           UserProfileItem? userProfile,
            IEnumerable<EduProviderItem> eduProviderItems)
         {
-            UserProfile = UserProfileEntry.Import(userProfile ?? new UserProfile());
+            UserProfile = UserProfileEntry.Import(userProfile ?? new UserProfileItem());
             InteractionCategories.Clear();
 
             var interactions = new List<InteractionEntry>();
