@@ -94,6 +94,9 @@
     <MauiXaml Update="FlyoutMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\AssessmentDescriptionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\AssessmentView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -128,6 +131,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AssessmentDescriptionView.xaml.cs">
+      <DependentUpon>AssessmentDescriptionView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\AssessmentView.xaml.cs">
       <DependentUpon>AssessmentView.xaml</DependentUpon>
