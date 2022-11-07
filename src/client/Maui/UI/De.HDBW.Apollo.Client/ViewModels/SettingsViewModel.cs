@@ -16,7 +16,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
-            ILogger<RegistrationViewModel> logger)
+            ILogger<SettingsViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(authService);

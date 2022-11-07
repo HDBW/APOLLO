@@ -117,6 +117,60 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetails" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Skill_DescriptionDetails</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Skill_DescriptionSubline" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Skill_DescriptionSubline</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Skill_DescriptionText" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Skill_DescriptionText</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Skill_DescriptionTitle" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Skill_DescriptionTitle</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails" xml:space="preserve">
+    <value>Nicht abbrechbar
+Nicht wiederholbar
+Ergebnisse werden gespeichert</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle" xml:space="preserve">
+    <value>Allgemeines zum Skilltest</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline" xml:space="preserve">
+    <value>Indurstriefachfrau/- Mann</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionText" xml:space="preserve">
+    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.
+Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle" xml:space="preserve">
+    <value>Skilltest</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Survey_DescriptionDetails" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Survey_DescriptionDetails</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Survey_DescriptionSubline" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Survey_DescriptionSubline</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Survey_DescriptionText" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Survey_DescriptionText</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Survey_DescriptionTitle" xml:space="preserve">
+    <value>AssessmentDescriptionViewModel_Survey_DescriptionTitle</value>
+  </data>
+  <data name="AssessmentDescriptionView_Start" xml:space="preserve">
+    <value>Jetzt starten</value>
+  </data>
+  <data name="AssessmentDescriptionView_Title" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="AssessmentItem_DecoratorText" xml:space="preserve">
     <value>Test</value>
   </data>
@@ -329,40 +383,40 @@ Langfristig stabilere Arbeitsbedingungen</value>
     <value>Du hast die letzten 5 Jahre in Jobs ohne Qualifi-kationsvorraussetzungen gearbeitet. Nun wurde dein Arbeitsvertrag nicht verlängert und du stehst erneut vor der Aufgabe eine Job zu finden. Da du keine Rücklagen besitzt bist du zwar bereit jedes Angebot anzunehmen, jedoch strebst du zukünftig stabilere Arbeitsverträge an.</value>
   </data>
   <data name="UseCaseDetail_B_Age" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_B_Age</value>
   </data>
   <data name="UseCaseDetail_B_Experience" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_B_Experience</value>
   </data>
   <data name="UseCaseDetail_B_Goal" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_B_Goal</value>
   </data>
   <data name="UseCaseDetail_B_Job" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_B_Job</value>
   </data>
   <data name="UseCaseDetail_B_Scenario" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_B_Scenario</value>
   </data>
   <data name="UseCaseDetail_B_Story" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_B_Story</value>
   </data>
   <data name="UseCaseDetail_C_Age" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_C_Age</value>
   </data>
   <data name="UseCaseDetail_C_Experience" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_C_Experience</value>
   </data>
   <data name="UseCaseDetail_C_Goal" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_C_Goal</value>
   </data>
   <data name="UseCaseDetail_C_Job" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_C_Job</value>
   </data>
   <data name="UseCaseDetail_C_Scenario" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_C_Scenario</value>
   </data>
   <data name="UseCaseDetail_C_Story" xml:space="preserve">
-    <value />
+    <value>UseCaseDetail_C_Story</value>
   </data>
   <data name="UseCaseSelectionView_Choose" xml:space="preserve">
     <value>Wähle dein Szenario</value>

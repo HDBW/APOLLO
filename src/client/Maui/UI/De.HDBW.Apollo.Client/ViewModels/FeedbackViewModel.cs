@@ -19,7 +19,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<AssessmentViewModel> logger)
+            ILogger<FeedbackViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);

@@ -1,0 +1,25 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.AssessmentDescriptionView"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:contracts="clr-namespace:De.HDBW.Apollo.Client.Contracts"
+             x:DataType="viewModels:AssessmentDescriptionViewModel"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resource.AssessmentDescriptionView_Title}"
+             IsBusy="{Binding IsBusy}" Padding="0">
+
+    <Grid RowDefinitions="auto, *, auto">
+        <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" HeightRequest="200" Aspect="AspectFill" Margin="24,0"/>
+        <ScrollView Grid.Row="1" Padding="24,8">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="{Binding DescriptionTitle}" Style="{StaticResource NotoSerif24}"/>
+                <Label Text="{Binding DescriptionSubline}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
+                <Label Text="{Binding DescriptionText}" Style="{StaticResource Noto16}"/>
+                <Label Text="{Binding DescriptionDetailsTitle}" Style="{StaticResource Noto16}" FontAttributes="Bold" TextColor="{StaticResource Primary900}"/>
+                <Label Text="{Binding DescriptionDetails}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Row="2" Margin="24,0,24,16" Text="{x:Static strings:Resource.AssessmentDescriptionView_Start}" Command="{Binding StartCommand}"/>
+    </Grid>
+</ContentPage>

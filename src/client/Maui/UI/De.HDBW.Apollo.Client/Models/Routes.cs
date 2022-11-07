@@ -23,6 +23,8 @@ namespace De.HDBW.Apollo.Client.Models
 
         public static readonly string AssessmentView = "/AssessmentView";
 
+        public static readonly string AssessmentDescriptionView = "/AssessmentDescriptionView";
+
         public static readonly string CourseView = "/CourseView";
 
         public static readonly string SettingsView = "/SettingsView";
