@@ -12,7 +12,7 @@ public partial class UseCaseDescriptionView
         BindingContext = model;
     }
 
-    public UseCaseDescriptionViewModel? Viemodel
+    public UseCaseDescriptionViewModel? ViewModel
     {
         get
         {

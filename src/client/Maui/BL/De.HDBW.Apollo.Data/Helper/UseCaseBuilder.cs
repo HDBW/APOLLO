@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Data.Helper
             IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
             IMetaDataRepository metadataRepository,
             ICourseItemRepository courseItemRepository,
-            IUserProfileRepository userProfileRepository,
+            IUserProfileItemRepository userProfileItemRepository,
             IEduProviderItemRepository eduProviderItemRepository)
         {
             ArgumentNullException.ThrowIfNull(logger);
@@ -35,7 +35,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(metadataRepository);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
-            ArgumentNullException.ThrowIfNull(userProfileRepository);
+            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
 
             Logger = logger;
@@ -47,7 +47,7 @@ namespace De.HDBW.Apollo.Data.Helper
             QuestionMetaDataRelationRepository = questionMetaDataRelationRepository;
             MetadataRepository = metadataRepository;
             CourseItemRepository = courseItemRepository;
-            UserProfileRepository = userProfileRepository;
+            UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
         }
 
@@ -67,7 +67,7 @@ namespace De.HDBW.Apollo.Data.Helper
 
         private ICourseItemRepository CourseItemRepository { get; }
 
-        private IUserProfileRepository UserProfileRepository { get; }
+        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
 
@@ -84,7 +84,7 @@ namespace De.HDBW.Apollo.Data.Helper
                 switch (usecase)
                 {
                     case UseCase.A:
-                        fileName = "De.HDBW.Apollo.Data.SampleData.MultipleChoiceAssessment.bin";
+                        fileName = "De.HDBW.Apollo.Data.SampleData.Usecase1.bin";
                         break;
                     default:
                         throw new NotSupportedException($"Usecase {usecase} is not supported by builder.");
@@ -120,9 +120,10 @@ namespace De.HDBW.Apollo.Data.Helper
             EduProviderItemRepository.ResetItemsAsync(usecase.EduProviderItems, token).ConfigureAwait(false);
             CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
 
-            UserProfileRepository.AddItemAsync(new UserProfile() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
+            // TODO:
+            UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
 
-            // UserProfileRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
+            // UserProfileItemRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
 
@@ -138,7 +139,7 @@ namespace De.HDBW.Apollo.Data.Helper
             await MetadataRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await CourseItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await EduProviderItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
-            await UserProfileRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await UserProfileItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
         }
     }
 }

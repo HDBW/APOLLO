@@ -23,6 +23,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<ExtendedSplashScreenViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             SessionService = sessionService;
             Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1Detail));

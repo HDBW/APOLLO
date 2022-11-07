@@ -10,5 +10,7 @@ namespace De.HDBW.Apollo.Client.Models
         Id,
 
         Result,
+
+        Data,
     }
 }

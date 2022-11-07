@@ -8,12 +8,14 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class SelectableEntry<TU> : ObservableObject, ISelectionInteractiveEntry
+        where TU : class
     {
         private bool _isSelected;
         private InteractionType _interaction;
 
         public SelectableEntry(TU data, InteractionType interaction, Action<SelectableEntry<TU>> selectionChangedHandler)
         {
+            ArgumentNullException.ThrowIfNull(data);
             Data = data;
             Interaction = interaction;
             SelectionChangedHandler = selectionChangedHandler;
@@ -54,6 +56,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             _isSelected = isSelected;
             OnPropertyChanged(nameof(IsSelected));
+        }
+
+        public TU? GetData()
+        {
+            return Data as TU;
         }
 
         [RelayCommand]

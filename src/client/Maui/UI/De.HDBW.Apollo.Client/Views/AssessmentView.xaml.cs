@@ -13,7 +13,7 @@ public partial class AssessmentView
         BindingContext = model;
     }
 
-    public AssessmentViewModel? Viemodel
+    public AssessmentViewModel? ViewModel
     {
         get
         {

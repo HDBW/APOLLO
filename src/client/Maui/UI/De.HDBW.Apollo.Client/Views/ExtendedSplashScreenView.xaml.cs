@@ -12,7 +12,7 @@ public partial class ExtendedSplashScreenView
         BindingContext = model;
     }
 
-    public ExtendedSplashScreenViewModel? Viemodel
+    public ExtendedSplashScreenViewModel? ViewModel
     {
         get
         {
