@@ -70,12 +70,12 @@
                                            DefaultStringTemplate="{StaticResource DefaultAnswerTemplate}"/>
 
         <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
-            <Grid Background="Transparent">
+            <Grid Background="Transparent" ColumnDefinitions="*, 32">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                 </Grid.GestureRecognizers>
                 <StackLayout VerticalOptions="Center" BindableLayout.ItemTemplateSelector="{StaticResource SelectionAnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
-                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="End" VerticalOptions="End"/>
+                <RadioButton Grid.Column="1" IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="End" VerticalOptions="Center"/>
             </Grid>
         </DataTemplate>
 
