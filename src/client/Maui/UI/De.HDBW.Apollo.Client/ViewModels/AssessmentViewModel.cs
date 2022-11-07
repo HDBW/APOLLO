@@ -11,6 +11,7 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -194,6 +195,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var answerItems = await AnswerItemRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
                     var answerIds = answerItems.Select(q => q.Id);
 
+                    var answerItemResults = await AnswerItemResultRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
+
                     var questionMetaDataRelations = await QuestionMetaDataRelationRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
                     questionMetaDataRelations = questionMetaDataRelations ?? new List<QuestionMetaDataRelation>();
                     questionMetaDataIds.AddRange(questionMetaDataRelations.Select(r => r.MetaDataId).Distinct());
@@ -216,6 +219,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var questionQuestionMetaDatasMapping = new Dictionary<QuestionItem, IEnumerable<MetaDataItem>>();
                     var questionAnswersMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItem>>();
+                    var questionAnswerResultMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItemResult>>();
                     var questionAnswerAnswerMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>>();
 
                     foreach (var questionItem in questionItems)
@@ -224,7 +228,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         questionQuestionMetaDatasMapping.Add(questionItem, relatedMetas.Where(m => relationIds.Contains(m.Id)).ToList());
 
                         var questionAnswers = answerItems.Where(a => a.QuestionId == questionItem.Id).ToList();
+                        var questionAnswerIds = questionAnswers.Select(a => a.Id);
                         questionAnswersMapping.Add(questionItem, questionAnswers);
+
+                        var questionAnswerResults = answerItemResults.Where(a => questionAnswerIds.Contains(a.AnswerItemId)).ToList();
+                        questionAnswerResultMapping.Add(questionItem, questionAnswerResults);
 
                         var answerAnswerMetaDatasMapping = new Dictionary<AnswerItem, IEnumerable<MetaDataItem>>();
                         questionAnswerAnswerMetaDatasMapping.Add(questionItem, answerAnswerMetaDatasMapping);
@@ -240,6 +248,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         questionItems,
                         questionQuestionMetaDatasMapping,
                         questionAnswersMapping,
+                        questionAnswerResultMapping,
                         questionAnswerAnswerMetaDatasMapping), worker.Token);
                 }
                 catch (Exception ex)
@@ -262,9 +271,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IEnumerable<QuestionItem> questions,
             Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionMetaData,
             Dictionary<QuestionItem, IEnumerable<AnswerItem>> answers,
+            Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResults,
             Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerMetaData)
         {
-            Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], answers[q], answerMetaData[q])));
+            Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], answers[q], answerResults[q], answerMetaData[q], Logger)));
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;

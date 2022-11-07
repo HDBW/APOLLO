@@ -10,6 +10,32 @@
              IsBusy="{Binding IsBusy}">
     <ContentPage.Resources>
 
+        <ControlTemplate x:Key="TabHeader">
+            <Grid RowDefinitions="30,4">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CheckedStates">
+                            <VisualState x:Name="Checked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource Primary}"/>
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="{StaticResource Primary}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Unchecked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource TextColor}"/>
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="Transparent"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Label Text="{TemplateBinding Content}" x:Name="TextLabel" HorizontalOptions="Center" />
+                <BoxView x:Name="Indicator" Grid.Row="1" Color="Transparent"/>
+            </Grid>
+        </ControlTemplate>
+
         <DataTemplate x:Key="DefaultAnswerTemplate" x:DataType="assessmentModels:AnswerEntry">
             <Label Text="{Binding Text}" />
         </DataTemplate>
@@ -27,7 +53,7 @@
             </Grid>
         </DataTemplate>
 
-         <DataTemplate x:Key="PointTemplate" x:DataType="assessmentModels:AnswerEntry">
+        <DataTemplate x:Key="PointTemplate" x:DataType="assessmentModels:AnswerEntry">
             <AbsoluteLayout WidthRequest="0" HeightRequest="0">
                 <Ellipse Margin="-5,-5,-5,-5" WidthRequest="10" HeightRequest="10" Fill="Red" />
             </AbsoluteLayout>
@@ -54,37 +80,31 @@
         </DataTemplate>
 
         <DataTemplate x:Key="DefaultInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
-             <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+            <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
         </DataTemplate>
-        
+
         <selector:IInteractiveEntryTemplateSelector x:Key="IInteractiveEntryTemplateSelector"
                                                    DefaultTemplate="{StaticResource DefaultInteractionTemplate}"
                                                    SelectInteractionTemplate="{StaticResource SelectionInteractionTemplate}"/>
 
         <DataTemplate x:Key="DefaultAnswerLayoutTemplate">
-            <CollectionView
-                VerticalScrollBarVisibility="Never"
-                HorizontalScrollBarVisibility="Never"
-                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
-                ItemTemplate="{StaticResource IInteractiveEntryTemplateSelector}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-            </CollectionView>
+            <VerticalStackLayout
+                BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                BindableLayout.ItemTemplateSelector="{StaticResource IInteractiveEntryTemplateSelector}">
+            </VerticalStackLayout>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="HorizontalAnswerLayoutTemplate">
-            <CollectionView
-                VerticalScrollBarVisibility="Never"
+            <ScrollView
                 HorizontalScrollBarVisibility="Default"
-                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
-                ItemTemplate="{StaticResource IInteractiveEntryTemplateSelector}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" />
-                </CollectionView.ItemsLayout>
-            </CollectionView>
+                VerticalScrollBarVisibility="Never">
+                <HorizontalStackLayout
+                    BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                    BindableLayout.ItemTemplateSelector="{StaticResource IInteractiveEntryTemplateSelector}">
+                </HorizontalStackLayout>
+            </ScrollView>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="UniformAnswerLayoutTemplate">
             <CollectionView
                 VerticalScrollBarVisibility="Never"
@@ -96,12 +116,12 @@
                 </CollectionView.ItemsLayout>
             </CollectionView>
         </DataTemplate>
-        
+
         <selector:AnswersLayoutTemplateSelector x:Key="AnswersLayoutTemplateSelector"
                                            DefaultTemplate="{StaticResource DefaultAnswerLayoutTemplate}"
                                            HorizontalTemplate="{StaticResource HorizontalAnswerLayoutTemplate}"
                                            UniformTemplate="{StaticResource UniformAnswerLayoutTemplate}" />
-        
+
         <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
                 <Grid>
@@ -132,9 +152,9 @@
                     </Grid.RowDefinitions>
                     <Label Text="{Binding Question}" Grid.Row="0"/>
                     <Label Text="{Binding Instruction}" Grid.Row="1"/>
-                    <Grid ColumnDefinitions="*,*" Grid.Row="2">
-                        <Button Text="Test" />
-                        <Button Text="Test" Grid.Column="1" />
+                    <Grid ColumnDefinitions="*,*" RadioButtonGroup.GroupName="Selection" Grid.Row="2">
+                        <RadioButton Content="Test1" ControlTemplate="{StaticResource TabHeader}" />
+                        <RadioButton Grid.Column="1" Content="Test1" ControlTemplate="{StaticResource TabHeader}" />
                     </Grid>
                     <CarouselView Grid.Row="3">
                         <CarouselView.ItemTemplate>
@@ -151,23 +171,8 @@
                             </x:Array>
                         </CarouselView.ItemsSource>
                     </CarouselView>
-                    <CollectionView Grid.Row="4">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame>
-                                    <Label Text="{Binding}" />
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                        <CollectionView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>A1</x:String>
-                                <x:String>A2</x:String>
-                                <x:String>A3</x:String>
-                                <x:String>A4</x:String>
-                            </x:Array>
-                        </CollectionView.ItemsSource>
-                    </CollectionView>
+                    <StackLayout Grid.Row="4" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                    </StackLayout>
                 </Grid>
             </ScrollView>
         </DataTemplate>
