@@ -19,6 +19,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger logger)
             : base()
         {
+            ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(navigationService);
+            ArgumentNullException.ThrowIfNull(dialogService);
+            ArgumentNullException.ThrowIfNull(dispatcherService);
             Logger = logger;
             NavigationService = navigationService;
             DialogService = dialogService;

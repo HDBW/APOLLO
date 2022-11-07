@@ -185,7 +185,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
 
             //In this case we have the meta_data_metadata relation
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.jpg"));
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.png"));
             ++questionsMetaDataIndexer;
             questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
 
@@ -193,7 +193,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             ++questionsMetaDataIndexer;
             labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[questionsMetaDataIndexer - 1], questionsMetaData[questionsMetaDataIndexer]));
             //And another one of these beauties
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.jpg"));
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.png"));
             ++questionsMetaDataIndexer;
             questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
 
@@ -318,13 +318,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
             questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Hint, "Bitte ziehe die jeweilige Antwort in die richtige Abbildung"));
 
             List<long> ids = new();
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Maeer.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Maeer.png"));
             ids.Add(metaIndex);
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Vertikutierer.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Vertikutierer.png"));
             ids.Add(metaIndex);
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Rasenmaeher.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Rasenmaeher.png"));
             ids.Add(metaIndex);
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Trimmer.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Trimmer.png"));
             ids.Add(metaIndex);
 
             _questions.Add(question);
@@ -378,7 +378,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Ein Schaf deiner Herde ist lahm. Du musst es einfangen, um es genauer zu Unbtersichen. An welcher Stelle packst du das Schaf an?"));
             questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Hint, "Markiere die richtige Stelle auf dem Bild."));
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Sheep.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Sheep.png"));
 
             _questions.Add(question);
 
@@ -445,13 +445,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
             var metaIndex = _metaData.Count-1;
 
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "DeutscheHecke.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "DeutscheHecke.png"));
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Grünzeugs.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Grünzeugs.png"));
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, false.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Salbei.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Salbei.png"));
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Minze.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Minze.png"));
 
             if (answerItems.Count == answerMetaData.Count)
             {

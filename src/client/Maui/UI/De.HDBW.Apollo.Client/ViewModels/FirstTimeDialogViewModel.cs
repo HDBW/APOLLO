@@ -13,7 +13,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<StartViewModel> logger)
+            ILogger<FirstTimeDialogViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
         }

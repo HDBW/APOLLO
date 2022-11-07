@@ -11,6 +11,7 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -39,7 +40,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         public AssessmentViewModel(
             IAssessmentItemRepository assessmentItemRepository,
-            IQuestionItemRepository questiontItemRepository,
+            IQuestionItemRepository questionItemRepository,
+            IAnswerItemResultRepository answerItemResultRepository,
             IAnswerItemRepository answerItemRepository,
             IMetaDataMetaDataRelationRepository metaDataMetaDataRelationRepository,
             IAnswerMetaDataRelationRepository answerMetaDataRelationRepository,
@@ -51,8 +53,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<AssessmentViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(assessmentItemRepository);
+            ArgumentNullException.ThrowIfNull(questionItemRepository);
+            ArgumentNullException.ThrowIfNull(answerItemRepository);
+            ArgumentNullException.ThrowIfNull(answerItemResultRepository);
+            ArgumentNullException.ThrowIfNull(metaDataMetaDataRelationRepository);
+            ArgumentNullException.ThrowIfNull(answerMetaDataRelationRepository);
+            ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
+            ArgumentNullException.ThrowIfNull(metadataRepository);
             AssessmentItemRepository = assessmentItemRepository;
-            QuestiontItemRepository = questiontItemRepository;
+            QuestionItemRepository = questionItemRepository;
+            AnswerItemResultRepository = answerItemResultRepository;
             AnswerItemRepository = answerItemRepository;
             MetaDataMetaDataRelationRepository = metaDataMetaDataRelationRepository;
             AnswerMetaDataRelationRepository = answerMetaDataRelationRepository;
@@ -78,6 +89,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     OnPropertyChanged(nameof(CurrentQuestion));
                 }
+            }
+        }
+
+        public double Progress
+        {
+            get
+            {
+                return CurrentQuestion != null && Questions.Count > 0 ? (((double)Questions.IndexOf(CurrentQuestion) + 1d) / (double)Questions.Count()) : 0d;
             }
         }
 
@@ -125,7 +144,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
 
-        private IQuestionItemRepository QuestiontItemRepository { get; }
+        private IQuestionItemRepository QuestionItemRepository { get; }
+
+        private IAnswerItemResultRepository AnswerItemResultRepository { get; }
 
         private IAnswerItemRepository AnswerItemRepository { get; }
 
@@ -149,6 +170,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             OnPropertyChanged(nameof(QuestionLayout));
             OnPropertyChanged(nameof(AnswerLayout));
             OnPropertyChanged(nameof(Interaction));
+            OnPropertyChanged(nameof(Progress));
         }
 
         public async override Task OnNavigatedToAsync()
@@ -163,7 +185,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var assessmentItem = await AssessmentItemRepository.GetItemByIdAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
-                    var questionItems = await QuestiontItemRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
+                    var questionItems = await QuestionItemRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
                     questionItems = questionItems ?? new List<QuestionItem>();
                     var questionIds = questionItems.Select(q => q.Id);
                     var relatedMetaDataIds = new List<long>();
@@ -172,6 +194,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var answerItems = await AnswerItemRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
                     var answerIds = answerItems.Select(q => q.Id);
+
+                    var answerItemResults = await AnswerItemResultRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
 
                     var questionMetaDataRelations = await QuestionMetaDataRelationRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
                     questionMetaDataRelations = questionMetaDataRelations ?? new List<QuestionMetaDataRelation>();
@@ -195,6 +219,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var questionQuestionMetaDatasMapping = new Dictionary<QuestionItem, IEnumerable<MetaDataItem>>();
                     var questionAnswersMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItem>>();
+                    var questionAnswerResultMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItemResult>>();
                     var questionAnswerAnswerMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>>();
 
                     foreach (var questionItem in questionItems)
@@ -203,7 +228,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         questionQuestionMetaDatasMapping.Add(questionItem, relatedMetas.Where(m => relationIds.Contains(m.Id)).ToList());
 
                         var questionAnswers = answerItems.Where(a => a.QuestionId == questionItem.Id).ToList();
+                        var questionAnswerIds = questionAnswers.Select(a => a.Id);
                         questionAnswersMapping.Add(questionItem, questionAnswers);
+
+                        var questionAnswerResults = answerItemResults.Where(a => questionAnswerIds.Contains(a.AnswerItemId)).ToList();
+                        questionAnswerResultMapping.Add(questionItem, questionAnswerResults);
 
                         var answerAnswerMetaDatasMapping = new Dictionary<AnswerItem, IEnumerable<MetaDataItem>>();
                         questionAnswerAnswerMetaDatasMapping.Add(questionItem, answerAnswerMetaDatasMapping);
@@ -219,6 +248,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         questionItems,
                         questionQuestionMetaDatasMapping,
                         questionAnswersMapping,
+                        questionAnswerResultMapping,
                         questionAnswerAnswerMetaDatasMapping), worker.Token);
                 }
                 catch (Exception ex)
@@ -241,14 +271,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IEnumerable<QuestionItem> questions,
             Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionMetaData,
             Dictionary<QuestionItem, IEnumerable<AnswerItem>> answers,
+            Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResults,
             Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerMetaData)
         {
-            Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], answers[q], answerMetaData[q])));
+            Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], answers[q], answerResults[q], answerMetaData[q], Logger)));
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
-            OnPropertyChanged(nameof(CurrentQuestion));
+            OnPropertyChanged(nameof(QuestionLayout));
             OnPropertyChanged(nameof(AnswerLayout));
+            OnPropertyChanged(nameof(Interaction));
+            OnPropertyChanged(nameof(Progress));
         }
     }
 }

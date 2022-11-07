@@ -12,11 +12,16 @@ public partial class UseCaseSelectionView
         BindingContext = model;
     }
 
-    public UseCaseSelectionViewModel? Viemodel
+    public UseCaseSelectionViewModel? ViewModel
     {
         get
         {
             return BindingContext as UseCaseSelectionViewModel;
         }
+    }
+
+    protected override bool OnBackButtonPressed()
+    {
+        return true;
     }
 }
