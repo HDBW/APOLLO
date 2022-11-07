@@ -5,14 +5,14 @@ namespace De.HDBW.Apollo.Client.Helper
 {
     public static class ImagePathHelper
     {
-        public static string ToUniformedName(this string imageName)
+        public static string? ToUniformedName(this string imageName)
         {
             imageName = imageName?.ToLower() ?? string.Empty;
             imageName = imageName.Replace("ü", "ue");
             imageName = imageName.Replace("ö", "oe");
             imageName = imageName.Replace("ä", "ae");
             imageName = imageName.Replace("ß", "ss");
-            return imageName;
+            return string.IsNullOrWhiteSpace(imageName) ? null : imageName;
         }
     }
 }

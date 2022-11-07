@@ -175,15 +175,16 @@ public static class MauiProgram
 
     private static void SetupRepositories(IServiceCollection services)
     {
+        services.AddSingleton<IUserProfileItemRepository, UserProfileItemRepository>();
         services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
         services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
+        services.AddSingleton<IAnswerItemResultRepository, AnswerItemResultRepository>();
         services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
         services.AddSingleton<IQuestionMetaDataRelationRepository, QuestionMetaDataRelationRepository>();
         services.AddSingleton<IAnswerMetaDataRelationRepository, AnswerMetaDataRelationRepository>();
         services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
         services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
         services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
-        services.AddSingleton<IUserProfileItemRepository, UserProfileItemRepository>();
         services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
     }
 
@@ -216,6 +217,9 @@ public static class MauiProgram
         services.AddTransient<AssessmentView>();
         services.AddTransient<AssessmentViewModel>();
 
+        services.AddTransient<AssessmentDescriptionView>();
+        services.AddTransient<AssessmentDescriptionViewModel>();
+
         services.AddTransient<CourseView>();
         services.AddTransient<CourseViewModel>();
 
@@ -235,6 +239,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
         Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
+        Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
         Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
         Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
         Routing.RegisterRoute(Routes.FeedbackView, typeof(FeedbackView));

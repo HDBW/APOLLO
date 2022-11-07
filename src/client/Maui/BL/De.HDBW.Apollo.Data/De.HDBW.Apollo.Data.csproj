@@ -10,7 +10,6 @@
 	  <None Remove="SampleData\Usecase1.bin" />
 	</ItemGroup>
 	<ItemGroup>
-	  <EmbeddedResource Include="SampleData\MultipleChoiceAssessment.bin" />
 	  <EmbeddedResource Include="SampleData\Usecase1.bin" />
 	</ItemGroup>
 	<ItemGroup>

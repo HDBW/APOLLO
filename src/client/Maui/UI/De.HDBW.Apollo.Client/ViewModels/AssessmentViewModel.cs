@@ -39,7 +39,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         public AssessmentViewModel(
             IAssessmentItemRepository assessmentItemRepository,
-            IQuestionItemRepository questiontItemRepository,
+            IQuestionItemRepository questionItemRepository,
+            IAnswerItemResultRepository answerItemResultRepository,
             IAnswerItemRepository answerItemRepository,
             IMetaDataMetaDataRelationRepository metaDataMetaDataRelationRepository,
             IAnswerMetaDataRelationRepository answerMetaDataRelationRepository,
@@ -52,14 +53,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
-            ArgumentNullException.ThrowIfNull(questiontItemRepository);
+            ArgumentNullException.ThrowIfNull(questionItemRepository);
             ArgumentNullException.ThrowIfNull(answerItemRepository);
+            ArgumentNullException.ThrowIfNull(answerItemResultRepository);
             ArgumentNullException.ThrowIfNull(metaDataMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(answerMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(metadataRepository);
             AssessmentItemRepository = assessmentItemRepository;
-            QuestiontItemRepository = questiontItemRepository;
+            QuestionItemRepository = questionItemRepository;
+            AnswerItemResultRepository = answerItemResultRepository;
             AnswerItemRepository = answerItemRepository;
             MetaDataMetaDataRelationRepository = metaDataMetaDataRelationRepository;
             AnswerMetaDataRelationRepository = answerMetaDataRelationRepository;
@@ -140,7 +143,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
 
-        private IQuestionItemRepository QuestiontItemRepository { get; }
+        private IQuestionItemRepository QuestionItemRepository { get; }
+
+        private IAnswerItemResultRepository AnswerItemResultRepository { get; }
 
         private IAnswerItemRepository AnswerItemRepository { get; }
 
@@ -179,7 +184,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var assessmentItem = await AssessmentItemRepository.GetItemByIdAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
-                    var questionItems = await QuestiontItemRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
+                    var questionItems = await QuestionItemRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
                     questionItems = questionItems ?? new List<QuestionItem>();
                     var questionIds = questionItems.Select(q => q.Id);
                     var relatedMetaDataIds = new List<long>();
