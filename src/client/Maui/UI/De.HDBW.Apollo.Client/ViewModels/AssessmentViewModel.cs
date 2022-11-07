@@ -88,6 +88,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public double Progress
+        {
+            get
+            {
+                return CurrentQuestion != null && Questions.Count > 0 ? (((double)Questions.IndexOf(CurrentQuestion) + 1d) / (double)Questions.Count()) : 0d;
+            }
+        }
+
         public LayoutType? QuestionLayout
         {
             get
@@ -156,6 +164,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             OnPropertyChanged(nameof(QuestionLayout));
             OnPropertyChanged(nameof(AnswerLayout));
             OnPropertyChanged(nameof(Interaction));
+            OnPropertyChanged(nameof(Progress));
         }
 
         public async override Task OnNavigatedToAsync()
@@ -254,8 +263,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
-            OnPropertyChanged(nameof(CurrentQuestion));
+            OnPropertyChanged(nameof(QuestionLayout));
             OnPropertyChanged(nameof(AnswerLayout));
+            OnPropertyChanged(nameof(Interaction));
+            OnPropertyChanged(nameof(Progress));
         }
     }
 }
