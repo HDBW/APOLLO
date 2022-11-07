@@ -122,6 +122,7 @@ namespace De.HDBW.Apollo.Data.Helper
 
             // TODO:
             UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
+
             // UserProfileItemRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
