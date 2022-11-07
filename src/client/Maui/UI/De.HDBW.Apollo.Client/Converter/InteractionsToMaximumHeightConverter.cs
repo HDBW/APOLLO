@@ -3,8 +3,6 @@
 
 using System.Globalization;
 using De.HDBW.Apollo.Client.Models.Interactions;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
-using Invite.Apollo.App.Graph.Common.Models.Course;
 
 namespace De.HDBW.Apollo.Client.Converter
 {

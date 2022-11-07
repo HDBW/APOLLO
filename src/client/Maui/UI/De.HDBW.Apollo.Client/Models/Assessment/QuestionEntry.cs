@@ -5,9 +5,12 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Helper.Assessment;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
@@ -15,6 +18,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     {
         private readonly QuestionItem _questionItem;
         private readonly IEnumerable<MetaDataItem> _questionMetaDataItems;
+        private readonly ILogger _logger;
+
         [ObservableProperty]
         private string? _imagePath;
         [ObservableProperty]
@@ -28,21 +33,32 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
             IEnumerable<AnswerItem> answerItems,
-            Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems)
+            IEnumerable<AnswerItemResult> answerResultItems,
+            Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
+            ILogger logger)
         {
             ArgumentNullException.ThrowIfNull(questionItem);
             ArgumentNullException.ThrowIfNull(questionMetaDataItems);
             ArgumentNullException.ThrowIfNull(answerItems);
+            ArgumentNullException.ThrowIfNull(answerResultItems);
             ArgumentNullException.ThrowIfNull(answerMetaDataItems);
+            ArgumentNullException.ThrowIfNull(logger);
             _questionItem = questionItem;
             _questionMetaDataItems = questionMetaDataItems;
+            _logger = logger;
 
             ImagePath = _questionMetaDataItems?.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName();
             OnPropertyChanged(nameof(HasImage));
             switch (Interaction)
             {
-                 default:
-                    Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(AnswerEntry.Import(a, answerMetaDataItems[a]), Interaction, HandleInteraction)));
+                default:
+                    Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(
+                        AnswerEntry.Import(
+                            a,
+                            answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
+                            answerMetaDataItems: answerMetaDataItems[a]),
+                        Interaction,
+                        HandleInteraction)));
                     break;
             }
         }
@@ -102,28 +118,37 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public long Id
+        {
+            get
+            {
+                return _questionItem.Id;
+            }
+        }
+
+        public bool IsCorrect
+        {
+            get
+            {
+                return Answers.Select(a => a.Data).OfType<AnswerEntry>().All(a => a.IsCorrect);
+            }
+        }
+
         public static QuestionEntry Import(
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
             IEnumerable<AnswerItem> answerItems,
-            Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems)
+            IEnumerable<AnswerItemResult> answerResultItems,
+            Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
+            ILogger logger)
         {
-            return new QuestionEntry(questionItem, questionMetaDataItems, answerItems, answerMetaDataItems);
+            return new QuestionEntry(questionItem, questionMetaDataItems, answerItems, answerResultItems, answerMetaDataItems, logger);
         }
 
         private void HandleInteraction(IInteractiveEntry entry)
         {
-            switch (entry.Interaction)
-            {
-                case InteractionType.SingleSelect:
-                    var itemsToDeselect = Answers.Where(a => a != entry).OfType<ISelectableEntry>();
-                    foreach (var item in itemsToDeselect)
-                    {
-                        item.UpdateSelectedState(false);
-                    }
-
-                    break;
-            }
+            var interaction = AnswerItemInteractionFactory.Create(entry.Interaction, this, _logger);
+            interaction?.Execute(entry);
         }
     }
 }

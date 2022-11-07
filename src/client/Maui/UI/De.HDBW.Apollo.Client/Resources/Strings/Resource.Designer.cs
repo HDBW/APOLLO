@@ -61,6 +61,162 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jetzt starten.
+        /// </summary>
+        public static string AssessmentDescriptionView_Start {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionView_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string AssessmentDescriptionView_Title {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Skill_DescriptionDetails.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Skill_DescriptionDetails {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Skill_DescriptionSubline.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Skill_DescriptionSubline {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Skill_DescriptionText.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Skill_DescriptionText {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Skill_DescriptionTitle.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Skill_DescriptionTitle {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nicht abbrechbar
+        ///Nicht wiederholbar
+        ///Ergebnisse werden gespeichert.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allgemeines zum Skilltest.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indurstriefachfrau/- Mann.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.
+        ///Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu..
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionText {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skilltest.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionDetails.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Survey_DescriptionDetails {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionSubline.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Survey_DescriptionSubline {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionText.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Survey_DescriptionText {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionTitle.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Survey_DescriptionTitle {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Test.
         /// </summary>
         public static string AssessmentItem_DecoratorText {
@@ -192,6 +348,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ExtendedSplashScreenView_Welcome {
             get {
                 return ResourceManager.GetString("ExtendedSplashScreenView_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feedback.
+        /// </summary>
+        public static string FeedbackView_Title {
+            get {
+                return ResourceManager.GetString("FeedbackView_Title", resourceCulture);
             }
         }
         
@@ -426,6 +591,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string RegistrationView_UnRegisterUser {
             get {
                 return ResourceManager.GetString("RegistrationView_UnRegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einstellungen.
+        /// </summary>
+        public static string SettingsView_Title {
+            get {
+                return ResourceManager.GetString("SettingsView_Title", resourceCulture);
             }
         }
         
@@ -722,7 +896,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_B_Age.
         /// </summary>
         public static string UseCaseDetail_B_Age {
             get {
@@ -731,7 +905,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_B_Experience.
         /// </summary>
         public static string UseCaseDetail_B_Experience {
             get {
@@ -740,7 +914,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_B_Goal.
         /// </summary>
         public static string UseCaseDetail_B_Goal {
             get {
@@ -749,7 +923,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_B_Job.
         /// </summary>
         public static string UseCaseDetail_B_Job {
             get {
@@ -758,7 +932,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_B_Scenario.
         /// </summary>
         public static string UseCaseDetail_B_Scenario {
             get {
@@ -767,7 +941,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_B_Story.
         /// </summary>
         public static string UseCaseDetail_B_Story {
             get {
@@ -776,7 +950,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_C_Age.
         /// </summary>
         public static string UseCaseDetail_C_Age {
             get {
@@ -785,7 +959,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_C_Experience.
         /// </summary>
         public static string UseCaseDetail_C_Experience {
             get {
@@ -794,7 +968,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_C_Goal.
         /// </summary>
         public static string UseCaseDetail_C_Goal {
             get {
@@ -803,7 +977,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_C_Job.
         /// </summary>
         public static string UseCaseDetail_C_Job {
             get {
@@ -812,7 +986,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_C_Scenario.
         /// </summary>
         public static string UseCaseDetail_C_Scenario {
             get {
@@ -821,7 +995,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to UseCaseDetail_C_Story.
         /// </summary>
         public static string UseCaseDetail_C_Story {
             get {

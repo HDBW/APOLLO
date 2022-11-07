@@ -68,7 +68,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="1.3.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.1" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.2" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.47.1" />
@@ -94,6 +94,9 @@
     <MauiXaml Update="FlyoutMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\AssessmentDescriptionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\AssessmentView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -106,7 +109,13 @@
     <MauiXaml Update="Views\ExtendedSplashScreenView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\FeedbackView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\RegistrationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\UseCaseSelectionView.xaml">
@@ -122,6 +131,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AssessmentDescriptionView.xaml.cs">
+      <DependentUpon>AssessmentDescriptionView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\AssessmentView.xaml.cs">
       <DependentUpon>AssessmentView.xaml</DependentUpon>
