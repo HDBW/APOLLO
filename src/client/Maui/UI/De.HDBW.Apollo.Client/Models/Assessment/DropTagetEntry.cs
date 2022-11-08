@@ -47,8 +47,19 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public int? AssociatedIndex
         {
-            get { return _associatedIndex; }
-            set { SetProperty(ref _associatedIndex, value); }
+            get
+            {
+                return _associatedIndex;
+            }
+
+            set
+            {
+                if (SetProperty(ref _associatedIndex, value))
+                {
+                    OnPropertyChanged(nameof(HasAssociation));
+                    ClearAssociationCommand.NotifyCanExecuteChanged();
+                }
+            }
         }
 
         public bool HasAssociation
@@ -80,10 +91,15 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             DropHandler?.Invoke(this);
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanClearAssociation))]
         private void ClearAssociation()
         {
             ClearHandler?.Invoke(this);
+        }
+
+        private bool CanClearAssociation()
+        {
+            return HasAssociation;
         }
     }
 }

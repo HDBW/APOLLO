@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.Client.Contracts
     {
         int IndexToAssociate { get; }
 
-        bool IsNotAssociated { get;}
+        bool IsNotAssociated { get; }
 
         bool IsAssociated { get; set; }
 

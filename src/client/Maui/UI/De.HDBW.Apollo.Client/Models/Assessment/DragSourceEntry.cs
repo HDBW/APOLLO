@@ -40,7 +40,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public int IndexToAssociate
         {
             get { return _indexToAssociate; }
-            set { SetProperty(ref _indexToAssociate, value); }
+            private set { SetProperty(ref _indexToAssociate, value); }
         }
 
         public bool IsAssociated
