@@ -26,16 +26,16 @@ public class UseCaseBuilderTests : IDisposable
     public UseCaseBuilderTests()
     {
         _logger = this.SetupLogger<UseCaseBuilder>();
-        _assessmentItemRepository = new AssessmentItemRepository();
-        _questiontItemRepository = new QuestionItemRepository();
-        _answerItemRepository = new AnswerItemRepository();
-        _metaDataMetaDataRelationRepository = new MetaDataMetaDataRelationRepository();
-        _answerMetaDataRelationRepository = new AnswerMetaDataRelationRepository();
-        _questionMetaDataRelationRepository = new QuestionMetaDataRelationRepository();
-        _metadataRepository = new MetaDataRepository();
-        _userProfileItemRepository = new UserProfileItemRepository();
-        _courseItemRepository = new CourseItemRepository();
-        _eduProviderItemRepository = new EduProviderItemRepository();
+        _assessmentItemRepository = new AssessmentItemRepository(this.SetupLogger<AssessmentItemRepository>());
+        _questiontItemRepository = new QuestionItemRepository(this.SetupLogger<QuestionItemRepository>());
+        _answerItemRepository = new AnswerItemRepository(this.SetupLogger<AnswerItemRepository>());
+        _metaDataMetaDataRelationRepository = new MetaDataMetaDataRelationRepository(this.SetupLogger<MetaDataMetaDataRelationRepository>());
+        _answerMetaDataRelationRepository = new AnswerMetaDataRelationRepository(this.SetupLogger<AnswerMetaDataRelationRepository>());
+        _questionMetaDataRelationRepository = new QuestionMetaDataRelationRepository(this.SetupLogger<QuestionMetaDataRelationRepository>());
+        _metadataRepository = new MetaDataRepository(this.SetupLogger<MetaDataRepository>());
+        _userProfileItemRepository = new UserProfileItemRepository(this.SetupLogger<UserProfileItemRepository>());
+        _courseItemRepository = new CourseItemRepository(this.SetupLogger<CourseItemRepository>());
+        _eduProviderItemRepository = new EduProviderItemRepository(this.SetupLogger<EduProviderItemRepository>());
     }
 
     public void Dispose()
