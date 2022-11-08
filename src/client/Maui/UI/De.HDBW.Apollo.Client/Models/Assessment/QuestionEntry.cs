@@ -249,9 +249,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
             try
             {
-                var source = Answers[target.AssociatedIndex.Value - 1];
-                _currentInteraction = ItemInteractionFactory.CreateInteraction(source.Interaction, this, source, _logger);
-                _currentInteraction?.Execute(target);
+                var source = Answers[target.AssociatedIndex.Value - 1] as DragSourceEntry<AnswerEntry>;
+                if (source == null)
+                {
+                    throw new NotSupportedException("Clearing association on not exiting source.");
+                }
+
+                source.IsAssociated = false;
+                target.AssociatedIndex = null;
             }
             catch (Exception ex)
             {

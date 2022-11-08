@@ -58,6 +58,12 @@ namespace De.HDBW.Apollo.Client.Helper.Assessment
                 return;
             }
 
+            if (target.ClearAssociationCommand.CanExecute(null))
+            {
+                target.ClearAssociationCommand.Execute(null);
+            }
+
+            source.IsAssociated = true;
             target.AssociatedIndex = source.IndexToAssociate;
             answer.CurrentValue = GetValueForSelectedAnswer(selectedAnswer, answer.AnswerType) !;
             Logger.LogDebug($"Set result of answer with id {answer.Id} to {answer.CurrentValue ?? "null"}.");
