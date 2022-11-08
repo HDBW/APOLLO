@@ -63,15 +63,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType().Name}.");
                 }
                 finally
                 {

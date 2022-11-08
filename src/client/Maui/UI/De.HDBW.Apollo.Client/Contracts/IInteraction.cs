@@ -3,7 +3,7 @@
 
 namespace De.HDBW.Apollo.Client.Contracts
 {
-    public interface IAnswerItemInteraction
+    public interface IInteraction
     {
         void Execute(IInteractiveEntry entry);
     }

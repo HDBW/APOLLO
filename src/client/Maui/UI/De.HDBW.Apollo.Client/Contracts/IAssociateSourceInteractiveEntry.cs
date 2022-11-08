@@ -1,14 +1,19 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 
 namespace De.HDBW.Apollo.Client.Contracts
 {
-    public interface IAssociateInteractiveEntry : IInteractiveEntry
+    public interface IAssociateSourceInteractiveEntry : IInteractiveEntry
     {
-        IRelayCommand DragSartingCommand { get; }
+        int IndexToAssociate { get; }
+
+        bool IsNotAssociated { get;}
+
+        bool IsAssociated { get; set; }
+
+        IRelayCommand DragStartingCommand { get; }
 
         IRelayCommand DropCompletedCommand { get; }
     }

@@ -55,17 +55,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
             }
 
             return result;
@@ -83,17 +83,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
             }
 
             return result;
@@ -111,17 +111,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsnc)} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsnc)} in {GetType().Name}.");
             }
 
             return result;
@@ -328,7 +328,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {NavigatedFromPage} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {NavigatedFromPage} in {GetType().Name}.");
             }
         }
 
@@ -347,7 +347,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(NavigatedToPage)} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(NavigatedToPage)} in {GetType().Name}.");
             }
         }
 

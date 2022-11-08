@@ -58,15 +58,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -92,19 +92,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType().Name}.");
                 }
                 catch (MsalException ex)
                 {
-                    Logger?.LogWarning(ex, $"Error while unregistering user in {GetType()}.");
+                    Logger?.LogWarning(ex, $"Error while unregistering user in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(UnRegister)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(UnRegister)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -134,19 +134,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType().Name}.");
                 }
                 catch (MsalException ex)
                 {
-                    Logger?.LogWarning(ex, $"Error while registering user in {GetType()}.");
+                    Logger?.LogWarning(ex, $"Error while registering user in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Register)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Register)} in {GetType().Name}.");
                 }
                 finally
                 {

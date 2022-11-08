@@ -7,7 +7,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class QuestionDetailEntry
+    public partial class QuestionDetailEntry : BindableObject
     {
         private readonly IEnumerable<MetaDataItem> _metaDatas;
 
@@ -46,6 +46,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             get
             {
                 return _metaDatas.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName();
+            }
+        }
+
+        public long Id
+        {
+            get
+            {
+                return _metaDatas.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Id ?? 0;
             }
         }
 

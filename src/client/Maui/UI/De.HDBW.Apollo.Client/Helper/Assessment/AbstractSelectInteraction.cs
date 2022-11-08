@@ -25,6 +25,7 @@ namespace De.HDBW.Apollo.Client.Helper.Assessment
 
         public virtual void Execute(IInteractiveEntry entry)
         {
+            Logger.LogDebug($"Called {nameof(Execute)} in {GetType().Name} with {entry}.");
             var selectableItems = Question.Answers.OfType<SelectableEntry<AnswerEntry>>();
             foreach (var selectable in selectableItems)
             {
