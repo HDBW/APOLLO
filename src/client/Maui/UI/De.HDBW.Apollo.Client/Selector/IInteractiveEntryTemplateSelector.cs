@@ -12,6 +12,8 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? SelectInteractionTemplate { get; set; }
 
+        public DataTemplate? AssociateInteractionTemplate { get; set; }
+
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             var entry = item as IInteractiveEntry;
@@ -22,6 +24,8 @@ namespace De.HDBW.Apollo.Client.Selector
                     case InteractionType.SingleSelect:
                     case InteractionType.MultiSelect:
                         return SelectInteractionTemplate;
+                    case InteractionType.Associate:
+                        return AssociateInteractionTemplate;
                 }
             }
 

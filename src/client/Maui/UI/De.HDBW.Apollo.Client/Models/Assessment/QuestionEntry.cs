@@ -21,9 +21,13 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private readonly ILogger _logger;
 
         [ObservableProperty]
-        private string? _imagePath;
-        [ObservableProperty]
         private ObservableCollection<IInteractiveEntry> _answers = new ObservableCollection<IInteractiveEntry>();
+
+        [ObservableProperty]
+        private ObservableCollection<IInteractiveEntry> _details = new ObservableCollection<IInteractiveEntry>();
+
+        [ObservableProperty]
+        private string? _imagePath;
 
         private LayoutType? _questionLayout;
         private LayoutType? _answerLayout;
@@ -32,6 +36,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private QuestionEntry(
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
+            IEnumerable<MetaDataItem> questionDetailMetaDataItems,
             IEnumerable<AnswerItem> answerItems,
             IEnumerable<AnswerItemResult> answerResultItems,
             Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
@@ -39,6 +44,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             ArgumentNullException.ThrowIfNull(questionItem);
             ArgumentNullException.ThrowIfNull(questionMetaDataItems);
+            ArgumentNullException.ThrowIfNull(questionDetailMetaDataItems);
             ArgumentNullException.ThrowIfNull(answerItems);
             ArgumentNullException.ThrowIfNull(answerResultItems);
             ArgumentNullException.ThrowIfNull(answerMetaDataItems);
@@ -47,10 +53,27 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             _questionMetaDataItems = questionMetaDataItems;
             _logger = logger;
 
-            ImagePath = _questionMetaDataItems?.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName();
+            var images = _questionMetaDataItems?.Where(m => m.Type == MetaDataType.Image) ?? new List<MetaDataItem>();
+            foreach (var image in images)
+            {
+                Details.Add(SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), questionItem.Interaction, null));
+            }
+
+            ImagePath = Details.OfType<SelectableEntry<QuestionDetailEntry>>().FirstOrDefault()?.GetData()?.ImagePath;
             OnPropertyChanged(nameof(HasImage));
+            OnPropertyChanged(nameof(HasDetails));
             switch (Interaction)
             {
+                case InteractionType.Associate:
+                    Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => DragableEntry<AnswerEntry>.Import(
+                        AnswerEntry.Import(
+                            a,
+                            answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
+                            answerMetaDataItems: answerMetaDataItems[a]),
+                        Interaction,
+                        HandleInteraction,
+                        HandleInteraction)));
+                    break;
                 default:
                     Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(
                         AnswerEntry.Import(
@@ -126,11 +149,19 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public bool HasDetails
+        {
+            get
+            {
+                return Details.Count > 1;
+            }
+        }
+
         public bool HasImage
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(ImagePath);
+                return !HasDetails && !string.IsNullOrWhiteSpace(ImagePath);
             }
         }
 
@@ -153,12 +184,13 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static QuestionEntry Import(
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
+            IEnumerable<MetaDataItem> questionDetailMetaDataItems,
             IEnumerable<AnswerItem> answerItems,
             IEnumerable<AnswerItemResult> answerResultItems,
             Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
             ILogger logger)
         {
-            return new QuestionEntry(questionItem, questionMetaDataItems, answerItems, answerResultItems, answerMetaDataItems, logger);
+            return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaDataItems, answerItems, answerResultItems, answerMetaDataItems, logger);
         }
 
         private void HandleInteraction(IInteractiveEntry entry)

@@ -212,20 +212,23 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     metaDataMetaDataRelationRelations = metaDataMetaDataRelationRelations ?? new List<MetaDataMetaDataRelation>();
 
                     relatedMetaDataIds.AddRange(metaDataMetaDataRelationRelations.Select(r => r.TargetId));
+                    relatedMetaDataIds.AddRange(metaDataMetaDataRelationRelations.Select(r => r.SourceId));
                     relatedMetaDataIds = relatedMetaDataIds.Distinct().ToList();
 
                     var relatedMetas = await MetadataRepository.GetItemsByIdsAsync(relatedMetaDataIds, worker.Token).ConfigureAwait(false);
                     relatedMetas = relatedMetas ?? new List<MetaDataItem>();
 
                     var questionQuestionMetaDatasMapping = new Dictionary<QuestionItem, IEnumerable<MetaDataItem>>();
+                    var questionQuestionMetaDataMetaDatasMapping = new Dictionary<QuestionItem, IEnumerable<MetaDataItem>>();
+
                     var questionAnswersMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItem>>();
                     var questionAnswerResultMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItemResult>>();
                     var questionAnswerAnswerMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>>();
-
                     foreach (var questionItem in questionItems)
                     {
                         var relationIds = questionMetaDataRelations.Where(r => r.QuestionId == questionItem.Id).Select(r => r.MetaDataId);
                         questionQuestionMetaDatasMapping.Add(questionItem, relatedMetas.Where(m => relationIds.Contains(m.Id)).ToList());
+                        questionQuestionMetaDataMetaDatasMapping.Add(questionItem, new List<MetaDataItem>());
 
                         var questionAnswers = answerItems.Where(a => a.QuestionId == questionItem.Id).ToList();
                         var questionAnswerIds = questionAnswers.Select(a => a.Id);
@@ -247,6 +250,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         () => LoadonUIThread(
                         questionItems,
                         questionQuestionMetaDatasMapping,
+                        questionQuestionMetaDataMetaDatasMapping,
                         questionAnswersMapping,
                         questionAnswerResultMapping,
                         questionAnswerAnswerMetaDatasMapping), worker.Token);
@@ -270,11 +274,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(
             IEnumerable<QuestionItem> questions,
             Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionMetaData,
+            Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionDetailMetaData,
             Dictionary<QuestionItem, IEnumerable<AnswerItem>> answers,
             Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResults,
             Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerMetaData)
         {
-            Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], answers[q], answerResults[q], answerMetaData[q], Logger)));
+            Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], questionDetailMetaData[q], answers[q], answerResults[q], answerMetaData[q], Logger)));
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
