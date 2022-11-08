@@ -59,7 +59,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 Details.Add(DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger));
             }
 
-            ImagePath = Details.OfType<SelectableEntry<QuestionDetailEntry>>().FirstOrDefault()?.GetData()?.ImagePath;
+            ImagePath = Details.OfType<DropTagetEntry<QuestionDetailEntry>>().FirstOrDefault()?.GetData()?.ImagePath;
             OnPropertyChanged(nameof(HasImage));
             OnPropertyChanged(nameof(HasDetails));
             var anserList = answerItems.ToList();
