@@ -4,7 +4,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Helper.Assessment;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
@@ -32,6 +31,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private LayoutType? _questionLayout;
         private LayoutType? _answerLayout;
         private InteractionType? _interaction;
+        private IInteraction? _currentInteraction;
 
         private QuestionEntry(
             QuestionItem questionItem,
@@ -56,23 +56,27 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             var images = _questionMetaDataItems?.Where(m => m.Type == MetaDataType.Image) ?? new List<MetaDataItem>();
             foreach (var image in images)
             {
-                Details.Add(SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), questionItem.Interaction, null));
+                Details.Add(DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger));
             }
 
             ImagePath = Details.OfType<SelectableEntry<QuestionDetailEntry>>().FirstOrDefault()?.GetData()?.ImagePath;
             OnPropertyChanged(nameof(HasImage));
             OnPropertyChanged(nameof(HasDetails));
+            var anserList = answerItems.ToList();
             switch (Interaction)
             {
                 case InteractionType.Associate:
-                    Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => DragableEntry<AnswerEntry>.Import(
+                    Answers = new ObservableCollection<IInteractiveEntry>(anserList.Select(a => DragSourceEntry<AnswerEntry>.Import(
                         AnswerEntry.Import(
                             a,
                             answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
                             answerMetaDataItems: answerMetaDataItems[a]),
+                        anserList.IndexOf(a) + 1,
+                        false,
                         Interaction,
-                        HandleInteraction,
-                        HandleInteraction)));
+                        HandleAssociateStartingInteraction,
+                        HandleAssociateCompletedInteraction,
+                        _logger)));
                     break;
                 default:
                     Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(
@@ -81,7 +85,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                             answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
                             answerMetaDataItems: answerMetaDataItems[a]),
                         Interaction,
-                        HandleInteraction)));
+                        HandleAnswerInteraction)));
                     break;
             }
         }
@@ -193,10 +197,66 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaDataItems, answerItems, answerResultItems, answerMetaDataItems, logger);
         }
 
-        private void HandleInteraction(IInteractiveEntry entry)
+        private void HandleAnswerInteraction(IInteractiveEntry entry)
         {
-            var interaction = AnswerItemInteractionFactory.Create(entry.Interaction, this, _logger);
-            interaction?.Execute(entry);
+            try
+            {
+                _currentInteraction = ItemInteractionFactory.CreateInteraction(entry.Interaction, this, entry, _logger);
+                _currentInteraction?.Execute(entry);
+                _currentInteraction = null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Unknown error while {nameof(HandleAnswerInteraction)} in {GetType().Name}.");
+            }
+        }
+
+        private void HandleAssociateCompletedInteraction(IAssociateSourceInteractiveEntry source)
+        {
+            _currentInteraction = null;
+        }
+
+        private void HandleAssociateStartingInteraction(IAssociateSourceInteractiveEntry source)
+        {
+            try
+            {
+                _currentInteraction = ItemInteractionFactory.CreateInteraction(source.Interaction, this, source, _logger);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Unknown error while {nameof(HandleAssociateStartingInteraction)} in {GetType().Name}.");
+            }
+        }
+
+        private void HandleAssociateTargetInteraction(IAssociateTargetInteractiveEntry target)
+        {
+            try
+            {
+                _currentInteraction?.Execute(target);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Unknown error while {nameof(HandleAssociateTargetInteraction)} in {GetType().Name}.");
+            }
+        }
+
+        private void HandleClearAssociateTargetInteraction(DropTagetEntry<QuestionDetailEntry> target)
+        {
+            if (!target.AssociatedIndex.HasValue)
+            {
+                return;
+            }
+
+            try
+            {
+                var source = Answers[target.AssociatedIndex.Value - 1];
+                _currentInteraction = ItemInteractionFactory.CreateInteraction(source.Interaction, this, source, _logger);
+                _currentInteraction?.Execute(target);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Unknown Error while {nameof(HandleAssociateTargetInteraction)} in {GetType().Name}.");
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.Helper.Assessment
 {
-    public class MultiSelectSelectInteraction : AbstractSelectInteraction, IAnswerItemInteraction
+    public class MultiSelectSelectInteraction : AbstractSelectInteraction, IInteraction
     {
         public MultiSelectSelectInteraction(QuestionEntry question, ILogger logger)
             : base(question, logger)
