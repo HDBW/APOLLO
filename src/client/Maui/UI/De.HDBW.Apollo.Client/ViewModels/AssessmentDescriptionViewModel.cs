@@ -142,19 +142,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Start)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Start)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Start)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Start)} in {GetType().Name}.");
                 }
                 catch (MsalException ex)
                 {
-                    Logger?.LogWarning(ex, $"Error while starting assessment in {GetType()}.");
+                    Logger?.LogWarning(ex, $"Error while starting assessment in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Start)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Start)} in {GetType().Name}.");
                 }
                 finally
                 {

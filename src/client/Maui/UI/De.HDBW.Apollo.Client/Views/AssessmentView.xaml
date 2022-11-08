@@ -95,12 +95,13 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="AssociateInteractionTemplate" x:DataType="contracts:IAssociateInteractiveEntry">
-            <Grid Background="Red" ColumnDefinitions="*, 32" >
+        <DataTemplate x:Key="AssociateInteractionTemplate" x:DataType="contracts:IAssociateSourceInteractiveEntry">
+            <Grid ColumnDefinitions="*, 32" >
                 <Grid.GestureRecognizers>
-                    <DragGestureRecognizer CanDrag="True" DragStartingCommand="{Binding DragSartingCommand}" DropCompletedCommand="{Binding DropCompletedCommand}"/>
+                    <DragGestureRecognizer CanDrag="{Binding IsNotAssociated}" DragStartingCommand="{Binding DragStartingCommand}" DropCompletedCommand="{Binding DropCompletedCommand}"/>
                 </Grid.GestureRecognizers>
                 <StackLayout InputTransparent="True" VerticalOptions="Center" BindableLayout.ItemTemplateSelector="{StaticResource SelectionAnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <Label Text="{Binding IndexToAssociate}" HorizontalOptions="End" VerticalOptions="End"/>
             </Grid>
         </DataTemplate>
 
@@ -108,15 +109,16 @@
             <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
         </DataTemplate>
 
-        <DataTemplate x:Key="DefaultQuestionDetailInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
-            <Border>
-                <Border.GestureRecognizers>
-                    <!--  DropCommand="{Binding DropCommand}" DropCommandParameter="{Binding}" -->
-                    <DropGestureRecognizer AllowDrop="True"/>
-                </Border.GestureRecognizers>
+        <DataTemplate x:Key="DefaultQuestionDetailInteractionTemplate" x:DataType="contracts:IAssociateTargetInteractiveEntry">
+            <Grid>
+                <Grid.GestureRecognizers>
+                    <DropGestureRecognizer AllowDrop="True" DropCommand="{Binding DropCommand}"/>
+                </Grid.GestureRecognizers>
                 <StackLayout InputTransparent="True" BindableLayout.ItemTemplate="{StaticResource ImageQuestionDetailTemplate}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}">
                 </StackLayout>
-            </Border>
+                <Label Text="{Binding AssociatedIndex}" HorizontalOptions="End" VerticalOptions="End"/>
+                <Button IsVisible="{Binding HasAssociation}" Command="{Binding ClearAssociationCommand}" Text="x" HorizontalOptions="End" VerticalOptions="Start"/>
+            </Grid>
            
         </DataTemplate>
         

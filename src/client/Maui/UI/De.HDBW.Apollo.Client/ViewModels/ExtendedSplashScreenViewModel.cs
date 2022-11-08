@@ -65,15 +65,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType().Name}.");
                 }
                 finally
                 {

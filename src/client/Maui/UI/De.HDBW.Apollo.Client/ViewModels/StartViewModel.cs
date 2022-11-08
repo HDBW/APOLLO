@@ -124,15 +124,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(LoadData)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error while {nameof(LoadData)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -219,7 +219,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
                     break;
                 default:
-                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType()}.");
+                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType().Name}.");
                     break;
             }
         }
