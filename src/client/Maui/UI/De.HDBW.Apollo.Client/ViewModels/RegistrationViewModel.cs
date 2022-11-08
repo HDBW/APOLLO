@@ -85,10 +85,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             using (var worker = ScheduleWork(token))
             {
+                AuthenticationResult? authentication = null;
                 try
                 {
-                    var authentication = await AuthService.AcquireTokenSilent(worker.Token);
-                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+                    authentication = await AuthService.AcquireTokenSilent(worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -108,6 +108,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     RefreshCommands();
                     UnscheduleWork(worker);
@@ -125,11 +126,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             using (var worker = ScheduleWork(token))
             {
+                AuthenticationResult? authentication = null;
                 try
                 {
-                    var authentication = await AuthService.SignInInteractively(worker.Token);
-                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
-
+                    authentication = await AuthService.SignInInteractively(worker.Token);
                     await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -150,6 +150,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     RefreshCommands();
                     UnscheduleWork(worker);

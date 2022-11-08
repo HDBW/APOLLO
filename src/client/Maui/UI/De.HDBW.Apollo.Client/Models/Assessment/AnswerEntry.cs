@@ -50,11 +50,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public string ImagePath
+        public string? ImagePath
         {
             get
             {
-                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName() ?? string.Empty;
+                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName();
             }
         }
 

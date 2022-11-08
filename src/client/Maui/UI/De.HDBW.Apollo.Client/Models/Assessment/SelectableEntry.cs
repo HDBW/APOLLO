@@ -13,7 +13,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private bool _isSelected;
         private InteractionType _interaction;
 
-        public SelectableEntry(TU data, InteractionType interaction, Action<SelectableEntry<TU>> selectionChangedHandler)
+        public SelectableEntry(TU data, InteractionType interaction, Action<SelectableEntry<TU>>? selectionChangedHandler)
         {
             ArgumentNullException.ThrowIfNull(data);
             Data = data;
@@ -45,9 +45,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             set { SetProperty(ref _interaction, value); }
         }
 
-        private Action<SelectableEntry<TU>> SelectionChangedHandler { get; }
+        private Action<SelectableEntry<TU>>? SelectionChangedHandler { get; }
 
-        public static SelectableEntry<TU> Import(TU data, InteractionType interaction, Action<SelectableEntry<TU>> selectionChangedHandler)
+        public static SelectableEntry<TU> Import(TU data, InteractionType interaction, Action<SelectableEntry<TU>>? selectionChangedHandler)
         {
             return new SelectableEntry<TU>(data, interaction, selectionChangedHandler);
         }
