@@ -10,7 +10,7 @@ namespace De.HDBW.Apollo.Client.Helper.Assessment
 {
     public static class ItemInteractionFactory
     {
-        public static IInteraction CreateInteraction(InteractionType interaction, QuestionEntry question, IInteractiveEntry entry, ILogger logger)
+        public static IInteraction? CreateInteraction(InteractionType interaction, QuestionEntry question, IInteractiveEntry entry, ILogger logger)
         {
             switch (interaction)
             {
