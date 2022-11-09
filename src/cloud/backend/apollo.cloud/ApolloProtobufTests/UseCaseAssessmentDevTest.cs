@@ -1,15 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using Grpc.Core;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Test
@@ -24,7 +17,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
         {
             CreateAssessment(out AssessmentItem item);
             item = _assessments.AddAssessmentItem(item);
-            Debug.WriteLine(item.Dump);
+            Debug.WriteLine(item.Dump());
 
             CreateMultipleChoiceQuestion(item);
             CreateChoiceCompareQuestion(item);
@@ -107,19 +100,19 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             Debug.WriteLine(question);
 
-            Debug.WriteLine(md);
-            Debug.WriteLine(mdh);
-            Debug.WriteLine(mdi);
-            Debug.WriteLine(mdi1);
-            Debug.WriteLine(mdi2);
-            Debug.WriteLine(mdi3);
+            Debug.WriteLine(md.Dump());
+            Debug.WriteLine(mdh.Dump());
+            Debug.WriteLine(mdi.Dump());
+            Debug.WriteLine(mdi1.Dump());
+            Debug.WriteLine(mdi2.Dump());
+            Debug.WriteLine(mdi3.Dump());
 
-            Debug.WriteLine(qmdr);
-            Debug.WriteLine(qmdh);
-            Debug.WriteLine(qmdi);
-            Debug.WriteLine(qmdi1);
-            Debug.WriteLine(qmdi2);
-            Debug.WriteLine(qmdi3);
+            Debug.WriteLine(qmdr.Dump());
+            Debug.WriteLine(qmdh.Dump());
+            Debug.WriteLine(qmdi.Dump());
+            Debug.WriteLine(qmdi1.Dump());
+            Debug.WriteLine(qmdi2.Dump());
+            Debug.WriteLine(qmdi3.Dump());
 
             AnswerItem answerItem = CreateAnswer(question, AnswerType.Long, mdi.Value);
             answerItem = _assessments.AddAnswerItem(answerItem);
@@ -145,23 +138,23 @@ namespace Invite.Apollo.App.Graph.Common.Test
             var amdr2 = _assessments.AddMetaDataToAnswer(answerItem2, answerMetaDataItem2);
             var amdr3 = _assessments.AddMetaDataToAnswer(answerItem3, answerMetaDataItem3);
 
-            Debug.WriteLine(answerItem.Dump);
-            Debug.WriteLine(answerItem1.Dump);
-            Debug.WriteLine(answerItem2.Dump);
-            Debug.WriteLine(answerItem3.Dump);
-            Debug.WriteLine(answerMetaDataItem.Dump);
-            Debug.WriteLine(answerMetaDataItem1.Dump);
-            Debug.WriteLine(answerMetaDataItem2.Dump);
-            Debug.WriteLine(answerMetaDataItem3.Dump);
-            Debug.WriteLine(amdr.Dump);
-            Debug.WriteLine(amdr1.Dump);
-            Debug.WriteLine(amdr2.Dump);
-            Debug.WriteLine(amdr3.Dump);
+            Debug.WriteLine(answerItem.Dump());
+            Debug.WriteLine(answerItem1.Dump());
+            Debug.WriteLine(answerItem2.Dump());
+            Debug.WriteLine(answerItem3.Dump());
+            Debug.WriteLine(answerMetaDataItem.Dump());
+            Debug.WriteLine(answerMetaDataItem1.Dump());
+            Debug.WriteLine(answerMetaDataItem2.Dump());
+            Debug.WriteLine(answerMetaDataItem3.Dump());
+            Debug.WriteLine(amdr.Dump());
+            Debug.WriteLine(amdr1.Dump());
+            Debug.WriteLine(amdr2.Dump());
+            Debug.WriteLine(amdr3.Dump());
         }
 
         private void CreateImageMapQuestion(AssessmentItem assessmentItem)
         {
-            QuestionItem questionItem = CreateQuestionItem(assessmentItem, LayoutType.Default, LayoutType.Overlay,
+            QuestionItem questionItem = CreateQuestionItem(assessmentItem, LayoutType.Overlay, LayoutType.Default,
                 InteractionType.MultiSelect);
 
             questionItem = _assessments.AddQuestionItem(questionItem);
@@ -178,13 +171,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
             var qmdH = _assessments.AddMetaDataToQuestion(questionItem, mdHint);
             var qmdI = _assessments.AddMetaDataToQuestion(questionItem, mdImage);
 
-            Debug.WriteLine(questionItem);
-            Debug.WriteLine(mdText);
-            Debug.WriteLine(mdHint);
-            Debug.WriteLine(mdImage);
-            Debug.WriteLine(qmdT);
-            Debug.WriteLine(qmdH);
-            Debug.WriteLine(qmdI);
+            Debug.WriteLine(questionItem.Dump());
+            Debug.WriteLine(mdText.Dump());
+            Debug.WriteLine(mdHint.Dump());
+            Debug.WriteLine(mdImage.Dump());
+            Debug.WriteLine(qmdT.Dump());
+            Debug.WriteLine(qmdH.Dump());
+            Debug.WriteLine(qmdI.Dump());
 
             AnswerItem answerItem = CreateAnswer(questionItem, AnswerType.Boolean, true.ToString());
             MetaDataItem answerMetaData = CreateMetaDataItem(MetaDataType.Point2D, "30,40");
@@ -210,18 +203,18 @@ namespace Invite.Apollo.App.Graph.Common.Test
             var amdr2 = _assessments.AddMetaDataToAnswer(answerItem2, answerMetaData2);
             var amdr3 = _assessments.AddMetaDataToAnswer(answerItem3, answerMetaData3);
 
-            Debug.WriteLine(answerItem);
-            Debug.WriteLine(answerMetaData);
-            Debug.WriteLine(amdr);
-            Debug.WriteLine(answerItem1);
-            Debug.WriteLine(answerMetaData1);
-            Debug.WriteLine(amdr1);
-            Debug.WriteLine(answerItem2);
-            Debug.WriteLine(answerMetaData2);
-            Debug.WriteLine(amdr2);
-            Debug.WriteLine(answerItem3);
-            Debug.WriteLine(answerMetaData3);
-            Debug.WriteLine(amdr3);
+            Debug.WriteLine(answerItem.Dump());
+            Debug.WriteLine(answerMetaData.Dump());
+            Debug.WriteLine(amdr.Dump());
+            Debug.WriteLine(answerItem1.Dump());
+            Debug.WriteLine(answerMetaData1.Dump());
+            Debug.WriteLine(amdr1.Dump());
+            Debug.WriteLine(answerItem2.Dump());
+            Debug.WriteLine(answerMetaData2.Dump());
+            Debug.WriteLine(amdr2.Dump());
+            Debug.WriteLine(answerItem3.Dump());
+            Debug.WriteLine(answerMetaData3.Dump());
+            Debug.WriteLine(amdr3.Dump());
         }
 
         private void CreateChoiceCompareQuestion(AssessmentItem assessment)
@@ -253,21 +246,21 @@ namespace Invite.Apollo.App.Graph.Common.Test
             mdit1 = _assessments.AddMetaDataItem(mdit1);
             var mdit1r = _assessments.AddLabel(mdit1, mdi1);
 
-            Debug.WriteLine(questionItem);
-            Debug.WriteLine(md);
-            Debug.WriteLine(mdr);
-            Debug.WriteLine(mdh);
-            Debug.WriteLine(mdhr);
+            Debug.WriteLine(questionItem.Dump());
+            Debug.WriteLine(md.Dump());
+            Debug.WriteLine(mdr.Dump());
+            Debug.WriteLine(mdh.Dump());
+            Debug.WriteLine(mdhr.Dump());
 
-            Debug.WriteLine(mdi);
-            Debug.WriteLine(mdit);
-            Debug.WriteLine(mdi1);
-            Debug.WriteLine(mdit1);
+            Debug.WriteLine(mdi.Dump());
+            Debug.WriteLine(mdit.Dump());
+            Debug.WriteLine(mdi1.Dump());
+            Debug.WriteLine(mdit1.Dump());
 
-            Debug.WriteLine(mdir);
-            Debug.WriteLine(mditr);
-            Debug.WriteLine(mdi1r);
-            Debug.WriteLine(mdit1r);
+            Debug.WriteLine(mdir.Dump());
+            Debug.WriteLine(mditr.Dump());
+            Debug.WriteLine(mdi1r.Dump());
+            Debug.WriteLine(mdit1r.Dump());
 
             AnswerItem answerItem = CreateAnswer(questionItem, AnswerType.Boolean, false.ToString());
             answerItem = _assessments.AddAnswerItem(answerItem);
@@ -294,18 +287,18 @@ namespace Invite.Apollo.App.Graph.Common.Test
             answerMetaDataItem3 = _assessments.AddMetaDataItem(answerMetaDataItem3);
             var amdr3 = _assessments.AddMetaDataToAnswer(answerItem3, answerMetaDataItem3);
 
-            Debug.WriteLine(answerItem);
-            Debug.WriteLine(ansMetaDataItem);
-            Debug.WriteLine(amdr);
-            Debug.WriteLine(answerItem1);
-            Debug.WriteLine(answerMetaDataItem);
-            Debug.WriteLine(amdr1);
-            Debug.WriteLine(answerItem2);
-            Debug.WriteLine(answerMetaDataItem2);
-            Debug.WriteLine(amdr2);
-            Debug.WriteLine(answerItem3);
-            Debug.WriteLine(answerMetaDataItem3);
-            Debug.WriteLine(amdr3);
+            Debug.WriteLine(answerItem.Dump());
+            Debug.WriteLine(ansMetaDataItem.Dump());
+            Debug.WriteLine(amdr.Dump());
+            Debug.WriteLine(answerItem1.Dump());
+            Debug.WriteLine(answerMetaDataItem.Dump());
+            Debug.WriteLine(amdr1.Dump());
+            Debug.WriteLine(answerItem2.Dump());
+            Debug.WriteLine(answerMetaDataItem2.Dump());
+            Debug.WriteLine(amdr2.Dump());
+            Debug.WriteLine(answerItem3.Dump());
+            Debug.WriteLine(answerMetaDataItem3.Dump());
+            Debug.WriteLine(amdr3.Dump());
         }
 
         private void CreateMultipleChoiceQuestion(AssessmentItem assessment)
@@ -327,11 +320,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             var mdrh = _assessments.AddMetaDataToQuestion(question, mdh);
 
-            Debug.WriteLine(question.Dump);
-            Debug.WriteLine(md.Dump);
-            Debug.WriteLine(mdr.Dump);
-            Debug.WriteLine(mdh.Dump);
-            Debug.WriteLine(mdrh.Dump);
+            Debug.WriteLine(question.Dump());
+            Debug.WriteLine(md.Dump());
+            Debug.WriteLine(mdr.Dump());
+            Debug.WriteLine(mdh.Dump());
+            Debug.WriteLine(mdrh.Dump());
 
             #endregion
 
@@ -376,18 +369,18 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
 
 
-            Debug.WriteLine(answerItem.Dump);
-            Debug.WriteLine(answerMetaDataItem.Dump);
-            Debug.WriteLine(amdr.Dump);
-            Debug.WriteLine(answerItem1.Dump);
-            Debug.WriteLine(answerMetaDataItem1.Dump);
-            Debug.WriteLine(amdr1.Dump);
-            Debug.WriteLine(answerItem2.Dump);
-            Debug.WriteLine(answerMetaDataItem2.Dump);
-            Debug.WriteLine(amdr2.Dump);
-            Debug.WriteLine(answerItem3.Dump);
-            Debug.WriteLine(answerMetaDataItem3.Dump);
-            Debug.WriteLine(amdr3.Dump);
+            Debug.WriteLine(answerItem.Dump());
+            Debug.WriteLine(answerMetaDataItem.Dump());
+            Debug.WriteLine(amdr.Dump());
+            Debug.WriteLine(answerItem1.Dump());
+            Debug.WriteLine(answerMetaDataItem1.Dump());
+            Debug.WriteLine(amdr1.Dump());
+            Debug.WriteLine(answerItem2.Dump());
+            Debug.WriteLine(answerMetaDataItem2.Dump());
+            Debug.WriteLine(amdr2.Dump());
+            Debug.WriteLine(answerItem3.Dump());
+            Debug.WriteLine(answerMetaDataItem3.Dump());
+            Debug.WriteLine(amdr3.Dump());
 
             #endregion
 
@@ -432,7 +425,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 {
                     Schema = CreateApolloSchema(),
                     BackendId = DateTime.Now.Ticks,
-                    AssessmentType = AssessmentType.Unknown,
+                    AssessmentType = AssessmentType.SkillAssessment,
                     Publisher = "HDBW DEV Team",
                     Duration = TimeSpan.FromMinutes(0),
                     EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
