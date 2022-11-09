@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="De.HDBW.Apollo.Client.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -53,26 +53,28 @@
         </ResourceDictionary>
     </Shell.Resources>
     <Shell.FlyoutHeader>
-        <Grid ColumnDefinitions="Auto,10, *" RowDefinitions="auto, auto" Padding="24,8">
-            <Image Source="apollo.png" Grid.ColumnSpan="3" HeightRequest="24" HorizontalOptions="Start" Margin="0,8,0,8"/>
+        <Grid ColumnDefinitions="32,10, *" RowDefinitions="auto, auto" Padding="24,8">
+            <HorizontalStackLayout Grid.ColumnSpan="3" Margin="0,8,0,8" HorizontalOptions="Start" >
+                <Image Source="apollo.png" HeightRequest="24" MaximumWidthRequest="101" Aspect="AspectFit"/>
+            </HorizontalStackLayout>
+
             <Image Source="{Binding UserProfile.ImagePath}" Grid.Row="1" WidthRequest="32" HeightRequest="32" Aspect="AspectFill">
                 <Image.Clip>
                     <EllipseGeometry RadiusX="16" RadiusY="16" Center="16,16"/>
                 </Image.Clip>
             </Image>
             <StackLayout Grid.Column="2" Grid.Row="1" >
-                <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold"  Grid.ColumnSpan="2"/>
+                <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold" Grid.ColumnSpan="2"/>
                 <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
             </StackLayout>
         </Grid>
     </Shell.FlyoutHeader>
     <Shell.FlyoutFooter>
-        <VerticalStackLayout Padding="24,8">
-            <Rectangle HeightRequest="100" Background="{StaticResource SurfaceBrush}" Margin="0,0,0,16"/>
-            <Label Text="{x:Static strings:Resource.MainNavigation_BetaTitle}" Style="{StaticResource Noto12}" FontAttributes="Bold"/>
-            <Label Text="{x:Static strings:Resource.MainNavigation_BetaDescription}" Style="{StaticResource Noto12}" Margin="0,0,0,16"/>
-            <Button ImageSource="send.png" Text="{x:Static strings:Resource.MainNavigation_Feedback}" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}"/>
-        </VerticalStackLayout>
+        <Grid RowDefinitions="auto, auto, auto" Padding="24, 8, 24, 16">
+            <Label Grid.Row="0" Text="{x:Static strings:Resource.MainNavigation_BetaTitle}" Style="{StaticResource Noto12}" FontAttributes="Bold"/>
+            <Label Grid.Row="1" Text="{x:Static strings:Resource.MainNavigation_BetaDescription}" Style="{StaticResource Noto12}" Margin="0,0,0,16"/>
+            <Button x:Name="FeedBackButton" Padding="8,0" ImageSource="send.png" Grid.Row="2" Text="{x:Static strings:Resource.MainNavigation_Feedback}" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+        </Grid>
     </Shell.FlyoutFooter>
     <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resource.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resource.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}"/>

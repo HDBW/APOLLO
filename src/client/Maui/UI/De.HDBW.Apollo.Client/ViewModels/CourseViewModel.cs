@@ -58,13 +58,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private void LoadonUIThread(CourseItem? courseItem)
-        {
-        }
-
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             _courseItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
+        }
+
+        private void LoadonUIThread(CourseItem? courseItem)
+        {
         }
     }
 }

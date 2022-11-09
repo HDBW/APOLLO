@@ -21,7 +21,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ObservableCollection<QuestionEntry> _questions = new ObservableCollection<QuestionEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<LayoutType> _questionLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default,LayoutType.Overlay, LayoutType.Compare };
+        private ObservableCollection<LayoutType> _questionLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.Overlay, LayoutType.Compare };
 
         [ObservableProperty]
         private ObservableCollection<LayoutType> _answerLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.HorizontalList, LayoutType.UniformGrid };

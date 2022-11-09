@@ -24,7 +24,6 @@ namespace De.HDBW.Apollo.Client.Selector
                     return HorizontalTemplate;
                 default:
                     return DefaultTemplate;
-
             }
         }
     }
