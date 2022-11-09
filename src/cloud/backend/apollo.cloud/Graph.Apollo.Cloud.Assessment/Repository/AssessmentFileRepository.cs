@@ -33,7 +33,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Repository
                 while (Equals(!csvFieldParser.EndOfData))
                 {
                     string[] fields = csvFieldParser.ReadFields();
-                    //TODO: Implement Assessment
+                    //TODO: Implement AssessmentType
                     //string Name = fields[0];
                     //string Address = fields[1];
 

@@ -20,7 +20,7 @@ public class Program
         CreateLoanOptions();
         CreateLearningObjectives();
 
-        //Assessment Stuff
+        //AssessmentType Stuff
         CreateAssessmentCsv();
         CreateQuestionsCsv();
         CreateAnswersCsv();
@@ -55,7 +55,7 @@ public class Program
     {
         PropertyInfo[] properties = typeof(QuestionMetaDataRelation).GetProperties();
 
-        string filename = "assessment.csv";
+        string filename = "QuestionMetaData.csv";
 
         CreateCsV(properties, filename);
     }
