@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
@@ -99,6 +94,8 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 Schema = new($"https://invite-apollo.app/{Guid.NewGuid()}"),
                 Ticks = DateTime.Now.Ticks
             };
+
+            _metaDataMetaDataRelations.Add(MetaDataMetaDataIndex,relation);
             return relation;
         }
 
