@@ -206,7 +206,12 @@ namespace De.HDBW.Apollo.Client.Services
 
                     existingPage.NavigatedTo -= NavigatedToPage;
                     existingPage.NavigatedFrom -= NavigatedFromPage;
-                    navigationPage.Navigation.RemovePage(existingPage);
+
+                    if (existingPage != navigationPage.CurrentPage)
+                    {
+                        navigationPage.Navigation.RemovePage(existingPage);
+                    }
+
                     NavigatedFromPage(existingPage, null);
                 }
 
@@ -238,7 +243,7 @@ namespace De.HDBW.Apollo.Client.Services
                 {
                     existingPage.NavigatedTo -= NavigatedToPage;
                     existingPage.NavigatedFrom -= NavigatedFromPage;
-                    if (navigationPage?.CurrentPage == existingPage)
+                    if (navigationPage?.CurrentPage != existingPage)
                     {
                         navigationPage?.Navigation?.RemovePage(existingPage);
                     }
