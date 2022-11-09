@@ -37,6 +37,7 @@
 
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}"/>
     <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}"/>
+    <SolidColorBrush x:Key="DisabledBrush" Color="{StaticResource Primary150}"/>
 
     <SolidColorBrush x:Key="Primary050Brush" Color="{StaticResource Primary050}"/>
     <SolidColorBrush x:Key="Primary100Brush" Color="{StaticResource Primary100}"/>
