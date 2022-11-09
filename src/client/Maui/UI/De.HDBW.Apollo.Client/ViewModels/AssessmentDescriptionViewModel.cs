@@ -103,7 +103,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             ImagePath = "fallback.png";
             OnPropertyChanged(nameof(HasImage));
-            switch (assessmentItem.Assessment)
+            switch (assessmentItem.AssessmentType)
             {
                 case AssessmentType.SoftSkillAssessment:
                     DescriptionTitle = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle;
