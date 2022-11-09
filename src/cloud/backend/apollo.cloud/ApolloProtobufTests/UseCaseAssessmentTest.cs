@@ -22,6 +22,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
         private Collection<MetaDataMetaDataRelation> _metaDataMetaDataRelations = new();
         private Collection<AssessmentItem> _assessments = new();
 
+        
+
+        private QuestionItem AddQuestionItem()
+        {
+            return null;
+        }
+
         //[Test]
         //public void ShouldGenerateAssessmentECommerceDude()
         //{
@@ -176,26 +183,29 @@ namespace Invite.Apollo.App.Graph.Common.Test
             int indexQuestionMeta = _metaData.Count - 1;
             int indexMetaMetaIndex = _metaDataMetaDataRelations.Count - 1;
             int questionsMetaDataIndexer = questionsMetaData.Count - 1;
-            
+            int questionMetaDataRelationIndexer = _questionMetaDataRelations.Count;
+
+
+
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Du prüfst den Liefersche der bestellten Schrauben und Schraubenmuttern auf Basis der Bestellbestätigung. Welcher Fehler ist ber der Lieferung möglicherweise passiert?"));
             ++questionsMetaDataIndexer;
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer], questionMetaDataRelation.Count + questionMetaDataRelationIndexer));
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Hint, "Bitte wähle 1 bis 3 Antworten aus."));
             ++questionsMetaDataIndexer;
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer], questionMetaDataRelation.Count + questionMetaDataRelationIndexer));
 
             //In this case we have the meta_data_metadata relation
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.jpg"));
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta,MetaDataType.Image, "Lieferschein.png"));
             ++questionsMetaDataIndexer;
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer], questionMetaDataRelation.Count + questionMetaDataRelationIndexer));
 
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Lieferschein!"));
             ++questionsMetaDataIndexer;
             labelMetaData.Add(CreateMetaDataMetaDataRelation(++indexMetaMetaIndex, questionsMetaData[questionsMetaDataIndexer - 1], questionsMetaData[questionsMetaDataIndexer]));
             //And another one of these beauties
-            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.jpg"));
+            questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Image, "Bestellbestaetigung.png"));
             ++questionsMetaDataIndexer;
-            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer]));
+            questionMetaDataRelation.Add(CreateQuestionMetaDataRelation(question, questionsMetaData[questionsMetaDataIndexer], questionMetaDataRelation.Count + questionMetaDataRelationIndexer));
 
             questionsMetaData.Add(CreateMetaData(++indexQuestionMeta, MetaDataType.Text, "Bestellbestätigungsdingens!"));
             ++questionsMetaDataIndexer;
@@ -273,7 +283,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             foreach (MetaDataItem metaDataItem in questionMetaData)
             {
                 _metaData.Add(metaDataItem);
-                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question,metaDataItem));
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question,metaDataItem, _questionMetaDataRelations.Count));
             }
 
             int answerIndex = _answers.Count - 1;
@@ -318,13 +328,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
             questionMetaData.Add(CreateMetaData(++metaIndex,MetaDataType.Hint, "Bitte ziehe die jeweilige Antwort in die richtige Abbildung"));
 
             List<long> ids = new();
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Maeer.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Maeer.png"));
             ids.Add(metaIndex);
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Vertikutierer.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Vertikutierer.png"));
             ids.Add(metaIndex);
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Rasenmaeher.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Rasenmaeher.png"));
             ids.Add(metaIndex);
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Trimmer.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Trimmer.png"));
             ids.Add(metaIndex);
 
             _questions.Add(question);
@@ -332,7 +342,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             foreach (MetaDataItem metaDataItem in questionMetaData)
             {
                 _metaData.Add(metaDataItem);
-                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question, metaDataItem));
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question, metaDataItem, _questionMetaDataRelations.Count));
             }
 
             int answerIndex = _answers.Count - 1;
@@ -368,6 +378,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             List<MetaDataItem> questionMetaData = new();
             List<AnswerItem> answerItems = new();
             List<MetaDataItem> answerMetaData = new();
+           
 
             //question section
 
@@ -378,14 +389,14 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Text, "Ein Schaf deiner Herde ist lahm. Du musst es einfangen, um es genauer zu Unbtersichen. An welcher Stelle packst du das Schaf an?"));
             questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Hint, "Markiere die richtige Stelle auf dem Bild."));
-            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Sheep.jpg"));
+            questionMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Sheep.png"));
 
             _questions.Add(question);
 
             foreach (MetaDataItem metaDataItem in questionMetaData)
             {
                 _metaData.Add(metaDataItem);
-                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question,metaDataItem));
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question,metaDataItem, _questionMetaDataRelations.Count));
             }
 
             //section answer
@@ -437,7 +448,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             foreach (MetaDataItem item in questionsMetaData)
             {
                 _metaData.Add(item);
-                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question, item));
+                _questionMetaDataRelations.Add(CreateQuestionMetaDataRelation(question, item, _questionMetaDataRelations.Count));
             }
 
             //answer section
@@ -445,13 +456,13 @@ namespace Invite.Apollo.App.Graph.Common.Test
             var metaIndex = _metaData.Count-1;
 
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "DeutscheHecke.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "DeutscheHecke.png"));
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Grünzeugs.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Gruenzeugs.png"));
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, false.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Salbei.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Salbei.png"));
             answerItems.Add(CreateAnswer(++answerIndex, question, AnswerType.Boolean, true.ToString()));
-            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Minze.jpg"));
+            answerMetaData.Add(CreateMetaData(++metaIndex, MetaDataType.Image, "Minze.png"));
 
             if (answerItems.Count == answerMetaData.Count)
             {
@@ -497,11 +508,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
             };
         }
         
-        private QuestionMetaDataRelation CreateQuestionMetaDataRelation(QuestionItem question, MetaDataItem meta)
+        private QuestionMetaDataRelation CreateQuestionMetaDataRelation(QuestionItem question, MetaDataItem meta, int index)
         {
             return new()
             {
-                Id = _questionMetaDataRelations.Count,
+                Id = index,
                 BackendId = DateTime.Now.Ticks,
                 Schema = CreateSchema(),
                 QuestionId = question.Id,
@@ -544,7 +555,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
         }
 
         /// <summary>
-        /// Helper to generate a Assessment
+        /// Helper to generate a AssessmentType
         /// </summary>
         /// <param name="assessmentId">Needed for further processing generates the assessmentId</param>
         /// <param name="assessmentBackendId">Sets the backendId</param>
@@ -564,7 +575,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             assessment.Publisher = "Bertelsmann Stiftung";
             assessment.Kldb = "";
             assessment.Profession = "";
-            assessment.Assessment = AssessmentType.SkillAssessment;
+            assessment.AssessmentType = AssessmentType.SkillAssessment;
             return assessment;
         }
 

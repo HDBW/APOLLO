@@ -47,7 +47,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public string EscoOccupationId { get; set; } = string.Empty;
 
         [DataMember(Order = 9)]
-        public AssessmentType Assessment { get; set; }
+        public AssessmentType AssessmentType { get; set; }
 
         [DataMember(Order = 10)]
         public string Publisher { get; set; }
@@ -55,6 +55,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         // Will be auto calculated in the future
         [DataMember(Order = 11)]
         public TimeSpan Duration { get; set; }
+
+        [DataMember(Order = 12)]
+        public string Description { get; set; } = string.Empty;
+
+        [DataMember(Order = 13)]
+        public string Disclaimer { get; set; }
     }
 
     [DataContract]
