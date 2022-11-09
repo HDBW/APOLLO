@@ -4,12 +4,15 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:contracts="clr-namespace:De.HDBW.Apollo.Client.Contracts"
              xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              x:DataType="viewModels:AssessmentViewModel"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}">
     <ContentPage.Resources>
 
+        <converter:QuestionDetailsToTitleConverter x:Key="QuestionDetailsToTitleConverter" />
+        
         <ControlTemplate x:Key="TabHeader">
             <Grid RowDefinitions="30,4">
                 <VisualStateManager.VisualStateGroups>
@@ -186,18 +189,17 @@
 
         <DataTemplate x:Key="CompareQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
-                
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
-                        <Label Text="{Binding Instruction}" IsVisible="{Binding HasInstruction}"/>
-                        <Grid ColumnDefinitions="*,*" RadioButtonGroup.GroupName="Selection" Grid.Row="2" IsVisible="{Binding HasDetails}">
-                            <RadioButton Content="Test1" ControlTemplate="{StaticResource TabHeader}" />
-                            <RadioButton Grid.Column="1" Content="Test1" ControlTemplate="{StaticResource TabHeader}" />
-                        </Grid>
-                        <Image Grid.Row="1" Source="{Binding ImagePath}" HeightRequest="100" IsVisible="{Binding HasImage}"/>
-                        <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
-                        </StackLayout>
-                    </VerticalStackLayout>
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
+                    <Label Text="{Binding Instruction}" IsVisible="{Binding HasInstruction}"/>
+                    <Grid ColumnDefinitions="*,*" RadioButtonGroup.GroupName="Selection" Grid.Row="2" IsVisible="{Binding HasDetails}">
+                        <RadioButton Content="{Binding Details, Converter={StaticResource QuestionDetailsToTitleConverter}, ConverterParameter=0}" ControlTemplate="{StaticResource TabHeader}" />
+                        <RadioButton Grid.Column="1" Content="{Binding Details, Converter={StaticResource QuestionDetailsToTitleConverter}, ConverterParameter=1}" ControlTemplate="{StaticResource TabHeader}" />
+                    </Grid>
+                    <Image Grid.Row="1" Source="{Binding ImagePath}" HeightRequest="100" IsVisible="{Binding HasImage}"/>
+                    <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                    </StackLayout>
+                </VerticalStackLayout>
             </ScrollView>
         </DataTemplate>
 
