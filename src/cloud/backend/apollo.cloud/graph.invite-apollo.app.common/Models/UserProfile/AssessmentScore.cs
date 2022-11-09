@@ -44,7 +44,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         public long AssessmentId { get; set; }
 
         /// <summary>
-        /// Represents the Assessment BackendId
+        /// Represents the AssessmentType BackendId
         /// </summary>
         [DataMember(Order = 7, IsRequired = true)]
         public long AssessmentBackendId { get; set; }
