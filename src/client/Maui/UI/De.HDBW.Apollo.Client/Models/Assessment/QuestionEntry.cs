@@ -10,6 +10,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
@@ -36,32 +37,55 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private QuestionEntry(
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
-            IEnumerable<MetaDataItem> questionDetailMetaDataItems,
+            Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> questionDetailMetaData,
             IEnumerable<AnswerItem> answerItems,
             IEnumerable<AnswerItemResult> answerResultItems,
             Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
+            Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> answerMetaDataMetaData,
             ILogger logger)
         {
             ArgumentNullException.ThrowIfNull(questionItem);
             ArgumentNullException.ThrowIfNull(questionMetaDataItems);
-            ArgumentNullException.ThrowIfNull(questionDetailMetaDataItems);
+            ArgumentNullException.ThrowIfNull(questionDetailMetaData);
             ArgumentNullException.ThrowIfNull(answerItems);
             ArgumentNullException.ThrowIfNull(answerResultItems);
             ArgumentNullException.ThrowIfNull(answerMetaDataItems);
+            ArgumentNullException.ThrowIfNull(answerMetaDataMetaData);
             ArgumentNullException.ThrowIfNull(logger);
             _questionItem = questionItem;
             _questionMetaDataItems = questionMetaDataItems;
             _logger = logger;
 
             var images = _questionMetaDataItems?.Where(m => m.Type == MetaDataType.Image) ?? new List<MetaDataItem>();
-            foreach (var image in images)
+            switch (Interaction)
             {
-                Details.Add(DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger));
+                case InteractionType.Associate:
+                    foreach (var image in images)
+                    {
+                        var metaData = new List<MetaDataItem>() { image };
+                        if (questionDetailMetaData.ContainsKey(image))
+                        {
+                            metaData.AddRange(questionDetailMetaData[image]);
+                        }
+
+                        Details.Add(DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger));
+                    }
+
+                    break;
+                default:
+                    foreach (var image in images)
+                    {
+                        Details.Add(SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), InteractionType.SingleSelect, null));
+                    }
+
+                    break;
             }
 
-            ImagePath = Details.OfType<DropTagetEntry<QuestionDetailEntry>>().FirstOrDefault()?.GetData()?.ImagePath;
+            var detailEntry = Details.FirstOrDefault()?.Data as QuestionDetailEntry;
+            ImagePath = !HasDetails ? detailEntry?.ImagePath : null;
             OnPropertyChanged(nameof(HasImage));
             OnPropertyChanged(nameof(HasDetails));
+
             var anserList = answerItems.ToList();
             switch (Interaction)
             {
@@ -165,7 +189,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             get
             {
-                return !HasDetails && !string.IsNullOrWhiteSpace(ImagePath);
+                return !string.IsNullOrWhiteSpace(ImagePath);
             }
         }
 
@@ -188,13 +212,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static QuestionEntry Import(
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
-            IEnumerable<MetaDataItem> questionDetailMetaDataItems,
+            Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> questionDetailMetaData,
             IEnumerable<AnswerItem> answerItems,
             IEnumerable<AnswerItemResult> answerResultItems,
             Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
+            Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> answerMetaDataMetaData,
             ILogger logger)
         {
-            return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaDataItems, answerItems, answerResultItems, answerMetaDataItems, logger);
+            return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaData, answerItems, answerResultItems, answerMetaDataItems, answerMetaDataMetaData, logger);
         }
 
         private void HandleAnswerInteraction(IInteractiveEntry entry)

@@ -13,6 +13,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -46,7 +47,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IMetaDataMetaDataRelationRepository metaDataMetaDataRelationRepository,
             IAnswerMetaDataRelationRepository answerMetaDataRelationRepository,
             IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
-            IMetaDataRepository metadataRepository,
+            IMetaDataRepository metaDataRepository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -60,7 +61,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(metaDataMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(answerMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
-            ArgumentNullException.ThrowIfNull(metadataRepository);
+            ArgumentNullException.ThrowIfNull(metaDataRepository);
             AssessmentItemRepository = assessmentItemRepository;
             QuestionItemRepository = questionItemRepository;
             AnswerItemResultRepository = answerItemResultRepository;
@@ -68,7 +69,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             MetaDataMetaDataRelationRepository = metaDataMetaDataRelationRepository;
             AnswerMetaDataRelationRepository = answerMetaDataRelationRepository;
             QuestionMetaDataRelationRepository = questionMetaDataRelationRepository;
-            MetadataRepository = metadataRepository;
+            MetaDataRepository = metaDataRepository;
         }
 
         public LayoutType? AnswerLayout
@@ -156,7 +157,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IQuestionMetaDataRelationRepository QuestionMetaDataRelationRepository { get; }
 
-        private IMetaDataRepository MetadataRepository { get; }
+        private IMetaDataRepository MetaDataRepository { get; }
 
         [RelayCommand]
         public void NextQuestion()
@@ -208,42 +209,63 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     relatedMetaDataIds.AddRange(answerMetaDataIds);
 
                     relatedMetaDataIds = relatedMetaDataIds.Distinct().ToList();
-                    var metaDataMetaDataRelationRelations = await MetaDataMetaDataRelationRepository.GetItemsByIdsAsync(relatedMetaDataIds, worker.Token).ConfigureAwait(false);
+                    var metaDataMetaDataRelationRelations = await MetaDataMetaDataRelationRepository.GetItemsBySourceIdsAsync(relatedMetaDataIds, worker.Token).ConfigureAwait(false);
                     metaDataMetaDataRelationRelations = metaDataMetaDataRelationRelations ?? new List<MetaDataMetaDataRelation>();
 
                     relatedMetaDataIds.AddRange(metaDataMetaDataRelationRelations.Select(r => r.TargetId));
                     relatedMetaDataIds.AddRange(metaDataMetaDataRelationRelations.Select(r => r.SourceId));
                     relatedMetaDataIds = relatedMetaDataIds.Distinct().ToList();
 
-                    var relatedMetas = await MetadataRepository.GetItemsByIdsAsync(relatedMetaDataIds, worker.Token).ConfigureAwait(false);
-                    relatedMetas = relatedMetas ?? new List<MetaDataItem>();
+                    var relatedMetaDatas = await MetaDataRepository.GetItemsByIdsAsync(relatedMetaDataIds, worker.Token).ConfigureAwait(false);
+                    relatedMetaDatas = relatedMetaDatas ?? new List<MetaDataItem>();
 
                     var questionQuestionMetaDatasMapping = new Dictionary<QuestionItem, IEnumerable<MetaDataItem>>();
-                    var questionQuestionMetaDataMetaDatasMapping = new Dictionary<QuestionItem, IEnumerable<MetaDataItem>>();
+                    var questionQuestionMetaDataMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>>();
 
-                    var questionAnswersMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItem>>();
-                    var questionAnswerResultMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItemResult>>();
-                    var questionAnswerAnswerMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>>();
+                    var questionAnswerItemsMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItem>>();
+                    var questionAnswerResultsMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItemResult>>();
+                    var questionAnswerItemMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>>();
+                    var questionAnswerItemMetaDataMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>>();
+
                     foreach (var questionItem in questionItems)
                     {
-                        var relationIds = questionMetaDataRelations.Where(r => r.QuestionId == questionItem.Id).Select(r => r.MetaDataId);
-                        questionQuestionMetaDatasMapping.Add(questionItem, relatedMetas.Where(m => relationIds.Contains(m.Id)).ToList());
-                        questionQuestionMetaDataMetaDatasMapping.Add(questionItem, new List<MetaDataItem>());
+                        var relationIds = questionMetaDataRelations.Where(r => r.QuestionId == questionItem.Id).Select(r => r.MetaDataId).ToList();
+                        var questionMetaDatas = relatedMetaDatas.Where(m => relationIds.Contains(m.Id)).ToList();
+                        questionQuestionMetaDatasMapping.Add(questionItem, questionMetaDatas);
+                        var questionMetaDataMetaDatasMappings = metaDataMetaDataRelationRelations.Where(m => relationIds.Contains(m.SourceId)).ToList();
+                        var metaDataMetaDataMappings = new Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>();
+                        foreach (var mapping in questionMetaDataMetaDatasMappings.GroupBy(m => m.SourceId))
+                        {
+                            var targetIds = mapping.Select(m => m.TargetId);
+                            metaDataMetaDataMappings.Add(questionMetaDatas.First(m => m.Id == mapping.Key), relatedMetaDatas.Where(m => targetIds.Contains(m.Id)).ToList());
+                        }
+
+                        questionQuestionMetaDataMetaDatasMapping.Add(questionItem, metaDataMetaDataMappings);
 
                         var questionAnswers = answerItems.Where(a => a.QuestionId == questionItem.Id).ToList();
                         var questionAnswerIds = questionAnswers.Select(a => a.Id);
-                        questionAnswersMapping.Add(questionItem, questionAnswers);
+                        questionAnswerItemsMapping.Add(questionItem, questionAnswers);
 
                         var questionAnswerResults = answerItemResults.Where(a => questionAnswerIds.Contains(a.AnswerItemId)).ToList();
-                        questionAnswerResultMapping.Add(questionItem, questionAnswerResults);
+                        questionAnswerResultsMapping.Add(questionItem, questionAnswerResults);
 
                         var answerAnswerMetaDatasMapping = new Dictionary<AnswerItem, IEnumerable<MetaDataItem>>();
-                        questionAnswerAnswerMetaDatasMapping.Add(questionItem, answerAnswerMetaDatasMapping);
+                        questionAnswerItemMetaDatasMapping.Add(questionItem, answerAnswerMetaDatasMapping);
+                        metaDataMetaDataMappings = new Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>();
                         foreach (var answerItem in questionAnswers)
                         {
-                            var answerRelationIds = answerMetaDataRelations.Where(r => r.AnswerId == answerItem.Id).Select(r => r.MetaDataId);
-                            answerAnswerMetaDatasMapping.Add(answerItem, relatedMetas.Where(m => answerRelationIds.Contains(m.Id)).ToList());
+                            var answerRelationIds = answerMetaDataRelations.Where(r => r.AnswerId == answerItem.Id).Select(r => r.MetaDataId).ToList();
+                            var anserItemMetaDatas = relatedMetaDatas.Where(m => answerRelationIds.Contains(m.Id)).ToList();
+                            answerAnswerMetaDatasMapping.Add(answerItem, anserItemMetaDatas);
+                            var anserItemMetaDataMetaDatasMappings = metaDataMetaDataRelationRelations.Where(m => relationIds.Contains(m.SourceId)).ToList();
+                            foreach (var mapping in anserItemMetaDataMetaDatasMappings.GroupBy(m => m.SourceId))
+                            {
+                                var targetIds = mapping.Select(m => m.TargetId);
+                                metaDataMetaDataMappings.Add(anserItemMetaDatas.First(m => m.Id == mapping.Key), relatedMetaDatas.Where(m => targetIds.Contains(m.Id)).ToList());
+                            }
                         }
+
+                        questionAnswerItemMetaDataMetaDatasMapping.Add(questionItem, metaDataMetaDataMappings);
                     }
 
                     await ExecuteOnUIThreadAsync(
@@ -251,9 +273,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         questionItems,
                         questionQuestionMetaDatasMapping,
                         questionQuestionMetaDataMetaDatasMapping,
-                        questionAnswersMapping,
-                        questionAnswerResultMapping,
-                        questionAnswerAnswerMetaDatasMapping), worker.Token);
+                        questionAnswerItemsMapping,
+                        questionAnswerResultsMapping,
+                        questionAnswerItemMetaDatasMapping,
+                        questionAnswerItemMetaDataMetaDatasMapping), worker.Token);
                 }
                 catch (Exception ex)
                 {
@@ -272,14 +295,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private void LoadonUIThread(
-            IEnumerable<QuestionItem> questions,
-            Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionMetaData,
-            Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionDetailMetaData,
-            Dictionary<QuestionItem, IEnumerable<AnswerItem>> answers,
-            Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResults,
-            Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerMetaData)
+            IEnumerable<QuestionItem> questionItems,
+            Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionMetaDatasMapping,
+            Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>> questionMetaDataMetaDatasMappings,
+            Dictionary<QuestionItem, IEnumerable<AnswerItem>> answerItemsMapping,
+            Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResultsMapping,
+            Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerItemMetaDatasMapping,
+            Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>> answerItemMetaDataMetaDatasMapping)
         {
-            Questions = new ObservableCollection<QuestionEntry>(questions.Select(q => QuestionEntry.Import(q, questionMetaData[q], questionDetailMetaData[q], answers[q], answerResults[q], answerMetaData[q], Logger)));
+            Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], answerItemMetaDataMetaDatasMapping[q], Logger)));
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
