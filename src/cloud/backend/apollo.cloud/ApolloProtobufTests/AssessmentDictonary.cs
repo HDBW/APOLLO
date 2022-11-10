@@ -83,14 +83,21 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
         public int AnswerMetaIndex => _answerMetaDataRelation.Count;
 
-        public MetaDataMetaDataRelation AddLabel(MetaDataItem source, MetaDataItem target)
+        /// <summary>
+        /// Add Meta Data Relation to the metaDataSource
+        /// For example a Image which is the metaDataSource can has a label which is the metaDataToReference
+        /// </summary>
+        /// <param name="metaDataSource">Meta Data which should be extended</param>
+        /// <param name="metaDataToReference">Meta Data that should be related to</param>
+        /// <returns>The relation between MetaData and MetaData as MetaDataMetaDataRelation</returns>
+        public MetaDataMetaDataRelation AddLabel(MetaDataItem metaDataSource, MetaDataItem metaDataToReference)
         {
             MetaDataMetaDataRelation relation = new MetaDataMetaDataRelation
             {
-                Id = AnswerMetaIndex,
-                BackendId = AnswerMetaIndex,
-                SourceId = source.Id,
-                TargetId = target.Id,
+                Id = MetaDataMetaDataIndex,
+                BackendId = MetaDataMetaDataIndex,
+                SourceId = metaDataSource.Id,
+                TargetId = metaDataToReference.Id,
                 Schema = new($"https://invite-apollo.app/{Guid.NewGuid()}"),
                 Ticks = DateTime.Now.Ticks
             };

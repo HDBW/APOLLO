@@ -31,21 +31,21 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [ForeignKey(nameof(AssessmentItem))]
         [DataMember(Order = 5, IsRequired = true)]
-        public long AssessmentBackendId { get; set; }
+        public long AssessmentId { get; set; }
 
         [ForeignKey(nameof(QuestionItem))]
         [DataMember(Order = 6, IsRequired = true)]
-        public long QuestionBackendId { get; set; }
+        public long QuestionId { get; set; }
 
         [ForeignKey(nameof(AnswerItem))]
         [DataMember(Order = 7, IsRequired = true)]
-        public long AnswerBackendId { get; set; }
+        public long AnswerId { get; set; }
 
         /// <summary>
-        /// Scoring Option as bitmask
+        /// Scoring Option as array of bitmasks
         /// </summary>
         [DataMember(Order =8, IsRequired = true)]
-        public int ScoringOption { get; set; }
+        public int[] ScoringOption { get; set; }
 
         [DataMember(Order = 9,IsRequired = true)]
         public string OccupationResult { get; set; } = string.Empty;
