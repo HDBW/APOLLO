@@ -1,7 +1,7 @@
 ﻿namespace Invite.Apollo.App.Graph.Assessment.Repository
 {
-    public interface IAssessmentRepository
+    public interface IRepository
     {
-        //TODO Implement here
+        
     }
 }

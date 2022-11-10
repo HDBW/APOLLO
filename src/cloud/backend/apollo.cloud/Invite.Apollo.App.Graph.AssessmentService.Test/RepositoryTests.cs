@@ -12,9 +12,7 @@ namespace Invite.Apollo.App.Graph.AssessmentService.Test
         [Test]
         public void ShouldReturnAssessmentsFromFile()
         {
-            IAssessmentRepository AssessmentRepository = new AssessmentFileRepository();
-
-            Assert.Pass();
+            
         }
     }
 
