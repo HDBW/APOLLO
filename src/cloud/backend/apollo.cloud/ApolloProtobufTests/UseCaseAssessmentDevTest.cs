@@ -23,6 +23,8 @@ namespace Invite.Apollo.App.Graph.Common.Test
             CreateChoiceCompareQuestion(item);
             CreateAssociateQuestion(item);
             CreateImageMapQuestion(item);
+            CreateRatingQuestion(item);
+            CreateUserInputQuestion(item);
 
             UseCaseCollections auc = new UseCaseCollections(_assessments.GetAssessmentItems(), _assessments.GetQuestionItems(), _assessments.GetAnswerItems(), _assessments.GetMetaDataItems(),
                 _assessments.GetQuestionMetaDataRelations(), _assessments.GetAnswerMetaDataRelations(), _assessments.GetMetaDataMetaDataRelations());
@@ -68,6 +70,133 @@ namespace Invite.Apollo.App.Graph.Common.Test
             Assert.IsTrue(auc.QuestionMetaDataRelations.Count.Equals(expected.QuestionMetaDataRelations.Count));
             Assert.IsTrue(auc.AnswerMetaDataRelations.Count.Equals(expected.AnswerMetaDataRelations.Count));
             Assert.IsTrue(auc.MetaDataMetaDataRelations.Count.Equals(expected.MetaDataMetaDataRelations.Count));
+        }
+
+        private void CreateUserInputQuestion(AssessmentItem assessment)
+        {
+            QuestionItem question = CreateQuestionItem(assessment, LayoutType.Default, LayoutType.Default,
+                InteractionType.Input);
+
+            question = _assessments.AddQuestionItem(question);
+
+            MetaDataItem md = CreateMetaDataItem(MetaDataType.Text, "Möchtest Du uns gerne persönliches Feedback geben?");
+            MetaDataItem mdh =
+                CreateMetaDataItem(MetaDataType.Hint, "Bitte nutze das Textfeld um uns Text zu schicken!");
+
+            md = _assessments.AddMetaDataItem(md);
+            mdh = _assessments.AddMetaDataItem(mdh);
+
+            var qmd = _assessments.AddMetaDataToQuestion(question, md);
+            var qmdh = _assessments.AddMetaDataToQuestion(question, mdh);
+
+            AnswerItem answer = CreateAnswer(question, AnswerType.TextBox, string.Empty);
+
+            answer = _assessments.AddAnswerItem(answer);
+
+            Debug.WriteLine(question.Dump());
+            Debug.WriteLine(md.Dump());
+            Debug.WriteLine(mdh.Dump());
+            Debug.WriteLine(qmd.Dump());
+            Debug.WriteLine(qmdh.Dump());
+            Debug.WriteLine(answer.Dump());
+
+        }
+
+        private void CreateRatingQuestion(AssessmentItem assessment)
+        {
+            //TODO: Maybe Single Select for EAFrequency?
+            QuestionItem question = CreateQuestionItem(assessment, LayoutType.Default, LayoutType.Default,
+                InteractionType.Input);
+
+            question = _assessments.AddQuestionItem(question);
+
+            MetaDataItem md = CreateMetaDataItem(MetaDataType.Text, "Wie häufig hast du schon Secrets in Git eingecheckt?");
+            MetaDataItem mdh = CreateMetaDataItem(MetaDataType.Hint, "Wähle einen Wert zwischen 0 - 5 aus?");
+
+            md = _assessments.AddMetaDataItem(md);
+            mdh = _assessments.AddMetaDataItem(mdh);
+
+            var qmd = _assessments.AddMetaDataToQuestion(question,md);
+            var qmdh = _assessments.AddMetaDataToQuestion(question, mdh);
+
+            AnswerItem answer = CreateAnswer(question, AnswerType.Integer, 0.ToString());
+            answer = _assessments.AddAnswerItem(answer);
+
+            MetaDataItem answerMetaDataItem = CreateMetaDataItem(MetaDataType.Text, "So was geht gar nicht klar!");
+            answerMetaDataItem = _assessments.AddMetaDataItem(answerMetaDataItem);
+
+            var amd = _assessments.AddMetaDataToAnswer(answer, answerMetaDataItem);
+
+
+            AnswerItem answer1 = CreateAnswer(question, AnswerType.Integer, 1.ToString());
+            answer1 = _assessments.AddAnswerItem(answer1);
+
+            MetaDataItem answerMetaDataItem1 = CreateMetaDataItem(MetaDataType.Text, "Nie");
+            answerMetaDataItem1 = _assessments.AddMetaDataItem(answerMetaDataItem1);
+
+            var amd1 = _assessments.AddMetaDataToAnswer(answer1, answerMetaDataItem1);
+
+            AnswerItem answer2 = CreateAnswer(question, AnswerType.Integer, 2.ToString());
+            answer2 = _assessments.AddAnswerItem(answer2);
+
+            MetaDataItem answerMetaDataItem2 = CreateMetaDataItem(MetaDataType.Text, "Habe davon gehört");
+            answerMetaDataItem2 = _assessments.AddMetaDataItem(answerMetaDataItem2);
+
+            var amd2 = _assessments.AddMetaDataToAnswer(answer2, answerMetaDataItem2);
+
+            AnswerItem answer3 = CreateAnswer(question, AnswerType.Integer, 3.ToString());
+            answer3 = _assessments.AddAnswerItem(answer3);
+
+            MetaDataItem answerMetaDataItem3 = CreateMetaDataItem(MetaDataType.Text, "Kann schon mal passieren");
+            answerMetaDataItem3 = _assessments.AddMetaDataItem(answerMetaDataItem3);
+
+            var amd3 = _assessments.AddMetaDataToAnswer(answer3, answerMetaDataItem3);
+
+            AnswerItem answer4 = CreateAnswer(question, AnswerType.Integer, 4.ToString());
+            answer4 = _assessments.AddAnswerItem(answer4);
+
+            MetaDataItem answerMetaDataItem4 = CreateMetaDataItem(MetaDataType.Text, "Ist mir auch schon mal passiert");
+            answerMetaDataItem4 = _assessments.AddMetaDataItem(answerMetaDataItem4);
+
+            var amd4 = _assessments.AddMetaDataToAnswer(answer4, answerMetaDataItem4);
+
+            AnswerItem answer5 = CreateAnswer(question, AnswerType.Integer, 5.ToString());
+            answer4 = _assessments.AddAnswerItem(answer5);
+
+            MetaDataItem answerMetaDataItem5 = CreateMetaDataItem(MetaDataType.Text, "Ist mir auch schon mal passiert");
+            answerMetaDataItem5 = _assessments.AddMetaDataItem(answerMetaDataItem5);
+
+            var amd5 = _assessments.AddMetaDataToAnswer(answer5, answerMetaDataItem5);
+
+            Debug.WriteLine(question.Dump());
+            Debug.WriteLine(md.Dump());
+            Debug.WriteLine(mdh.Dump());
+            Debug.WriteLine(qmd.Dump());
+            Debug.WriteLine(qmdh.Dump());
+
+            Debug.WriteLine(answer.Dump());
+            Debug.WriteLine(answerMetaDataItem.Dump());
+            Debug.WriteLine(amd.Dump());
+
+            Debug.WriteLine(answer1.Dump());
+            Debug.WriteLine(answerMetaDataItem1.Dump());
+            Debug.WriteLine(amd1.Dump());
+
+            Debug.WriteLine(answer2.Dump());
+            Debug.WriteLine(answerMetaDataItem2.Dump());
+            Debug.WriteLine(amd2.Dump());
+
+            Debug.WriteLine(answer3.Dump());
+            Debug.WriteLine(answerMetaDataItem3.Dump());
+            Debug.WriteLine(amd3.Dump());
+
+            Debug.WriteLine(answer4.Dump());
+            Debug.WriteLine(answerMetaDataItem4.Dump());
+            Debug.WriteLine(amd4.Dump());
+
+            Debug.WriteLine(answer5.Dump());
+            Debug.WriteLine(answerMetaDataItem5.Dump());
+            Debug.WriteLine(amd5.Dump());
         }
 
         private void CreateAssociateQuestion(AssessmentItem assessment)
@@ -240,11 +369,11 @@ namespace Invite.Apollo.App.Graph.Common.Test
             mdi = _assessments.AddMetaDataItem(mdi);
             var mdir = _assessments.AddMetaDataToQuestion(questionItem,mdi);
             mdit = _assessments.AddMetaDataItem(mdit);
-            var mditr = _assessments.AddLabel(mdit, mdi);
+            var mditr = _assessments.AddLabel(mdi, mdit);
             mdi1 = _assessments.AddMetaDataItem(mdi1);
             var mdi1r = _assessments.AddMetaDataToQuestion(questionItem, mdi1);
             mdit1 = _assessments.AddMetaDataItem(mdit1);
-            var mdit1r = _assessments.AddLabel(mdit1, mdi1);
+            var mdit1r = _assessments.AddLabel(mdi1, mdit1);
 
             Debug.WriteLine(questionItem.Dump());
             Debug.WriteLine(md.Dump());

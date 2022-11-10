@@ -39,10 +39,17 @@ Für Testung ist das String! Syndication!
 
 > NOTE: We also have the issue with the domain specific knowledge as well as the skills we want to present the user as lookup?
 
+> NOTE: Markdown is supported in DOTNET 7 MAUI
+
 ### Implementation for Languages missing in december Prototype!
 
 Course available in Languages are determined by the course appointments?
 Would mean no appointment no language? maybe on demand languages? Languages - Appointments
+
+### Implementation of Repositories
+Memory Repositories for Assessments contain quick and Dirty releases just us:
+ 
+- AssessmentCategory : ResultLimits
 
 ## Client
 
