@@ -62,11 +62,11 @@
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="3" />
                                             </Border.StrokeShape>
-                                            <Grid RowDefinitions="*,auto,auto, auto" Padding="0">
-                                                <Grid.GestureRecognizers>
-                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
-                                                </Grid.GestureRecognizers>
-                                                <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" InputTransparent="True"/>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
+                                            </Border.GestureRecognizers>
+                                            <Grid RowDefinitions="*,auto,auto, auto" Padding="0" InputTransparent="True">
+                                                <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill"/>
                                                 <Border IsVisible="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
                                                     <Border.StrokeShape>
                                                         <RoundRectangle CornerRadius="0,0,0,4" />
