@@ -46,7 +46,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         [Required]
         public LayoutType InteractionType { get; set; }
 
-        public List<MetaData> MetaDatas { get; set; }
+        public List<AssessmentMetaData> MetaDatas { get; set; }
 
         public List<Scores> ScoringOptions { get; set; }
     }
