@@ -75,6 +75,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 default:
                     foreach (var image in images)
                     {
+                        var metaData = new List<MetaDataItem>() { image };
+                        if (questionDetailMetaData.ContainsKey(image))
+                        {
+                            metaData.AddRange(questionDetailMetaData[image]);
+                        }
+
                         Details.Add(SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), InteractionType.SingleSelect, null));
                     }
 
