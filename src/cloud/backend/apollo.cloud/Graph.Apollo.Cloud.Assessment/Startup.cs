@@ -31,7 +31,7 @@ public class Startup
         });
 
         services.AddDbContext<AssessmentContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("AzureSql")));
 
         //services.AddSingleton<IAssessmentService, Services.AssessmentService>();
         services.TryAddSingleton(BinderConfiguration.Create(binder: new ServiceBinderWithServiceResolutionFromServiceCollection(services)));
