@@ -1,6 +1,6 @@
 ﻿namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public enum QuestionType
+    public enum AssessmentQuestionType
     {
         Unknown = 0,
         Choice = 1,

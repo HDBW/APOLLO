@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Invite.Apollo.App.Graph.Assessment.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
@@ -9,13 +10,27 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             
         }
 
-        public DbSet<Models.Assessment> Assessments { get; set; }
-        public DbSet<Models.Answer> Answers { get; set; }
-        public DbSet<Models.Asset> Assets { get; set; }
-        public DbSet<Models.MetaData> MetaDatas { get; set; }
-        public DbSet<Models.AssessmentCategory> AssessmentCategories { get; set; }
-        public DbSet<Models.Question> Questions { get; set; }
-        public DbSet<Models.Scores> Scores { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Models.AssessmentQuestion>()
+                .HasOne(q => q.Assessment)
+                .WithMany(a => a.AssessmentQuestions)
+                .HasForeignKey(q => q.AssessmentId);
 
+            modelBuilder.Entity<Models.AssessmentAnswer>()
+                .HasOne(a => a.AssessmentQuestion)
+                .WithMany(q => q.AssessmentAnswers)
+                .HasForeignKey(a => a.AssessmentQuestionId);
+
+            
+        }
+
+        public DbSet<Models.Assessment> Assessments { get; set; }
+        public DbSet<Models.AssessmentAnswer> Answers { get; set; }
+        public DbSet<Models.AssessmentAsset> Assets { get; set; }
+        public DbSet<Models.AssessmentMetaData> MetaDatas { get; set; }
+        public DbSet<Models.AssessmentCategory> AssessmentCategories { get; set; }
+        public DbSet<Models.AssessmentQuestion> Questions { get; set; }
+        public DbSet<Models.AssessmentScores> Scores { get; set; }
     }
 }
