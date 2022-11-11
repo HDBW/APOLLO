@@ -23,16 +23,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ObservableCollection<QuestionEntry> _questions = new ObservableCollection<QuestionEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<LayoutType> _questionLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.Overlay, LayoutType.Compare };
+        private ObservableCollection<LayoutType> _questionLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.Overlay, LayoutType.Compare, LayoutType.UniformGrid, LayoutType.HorizontalList };
 
         [ObservableProperty]
-        private ObservableCollection<LayoutType> _answerLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.HorizontalList, LayoutType.UniformGrid };
+        private ObservableCollection<LayoutType> _answerLayouts = new ObservableCollection<LayoutType>() { LayoutType.Default, LayoutType.Overlay, LayoutType.Compare, LayoutType.UniformGrid, LayoutType.HorizontalList };
 
         [ObservableProperty]
         private ObservableCollection<InteractionType> _interactions = new ObservableCollection<InteractionType>() { InteractionType.SingleSelect, InteractionType.MultiSelect, InteractionType.Input, InteractionType.Associate };
 
         [ObservableProperty]
         private QuestionEntry? _currentQuestion;
+
         private LayoutType? _answerLayout;
         private LayoutType? _questionLayout;
         private InteractionType? _interaction;
