@@ -222,7 +222,6 @@
         </DataTemplate>
 
         <DataTemplate x:Key="OverlayQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            
                 <Grid Margin="24,0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
