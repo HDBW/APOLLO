@@ -98,6 +98,12 @@ namespace De.HDBW.Apollo.Data.Helper
                     case UseCase.A:
                         fileName = "De.HDBW.Apollo.Data.SampleData.Usecase1.bin";
                         break;
+                    case UseCase.B:
+                        fileName = "De.HDBW.Apollo.Data.SampleData.Usecase2.bin";
+                        break;
+                    case UseCase.C:
+                        fileName = "De.HDBW.Apollo.Data.SampleData.Usecase3.bin";
+                        break;
                     default:
                         throw new NotSupportedException($"Usecase {usecase} is not supported by builder.");
                 }
