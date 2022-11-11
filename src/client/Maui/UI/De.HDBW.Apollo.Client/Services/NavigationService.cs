@@ -222,7 +222,7 @@ namespace De.HDBW.Apollo.Client.Services
             if (shell != null)
             {
                 Shell.Current.FlyoutIsPresented = false;
-                await Shell.Current.Navigation.PopToRootAsync(false);
+                await PopShellAsync(Shell.Current);
                 if (parameters == null)
                 {
                     await Shell.Current.GoToAsync(route, true);
@@ -261,6 +261,23 @@ namespace De.HDBW.Apollo.Client.Services
             }
         }
 
+        private async Task PopShellAsync(Shell shell)
+        {
+            foreach (var page in shell.Navigation.NavigationStack)
+            {
+                if (page == null)
+                {
+                    continue;
+                }
+
+                page.NavigatedTo -= NavigatedToPage;
+                page.NavigatedFrom -= NavigatedFromPage;
+                await (GetViewModel(page)?.OnNavigatingFromAsync(false) ?? Task.CompletedTask);
+            }
+
+            await Shell.Current.Navigation.PopToRootAsync(false);
+        }
+
         private async Task PushToRootOnUIThreadAsnc(CancellationToken token)
         {
             Logger?.LogDebug($"PushToRootOnUI.");
@@ -280,7 +297,7 @@ namespace De.HDBW.Apollo.Client.Services
             var shell = Application.Current.MainPage as Shell;
             if (shell != null)
             {
-                await shell.Navigation.PopToRootAsync(true);
+                await PopShellAsync(shell);
                 NavigatedToPageInShell(shell.CurrentPage, null);
                 NavigatedToPage(shell, null);
             }
@@ -314,8 +331,16 @@ namespace De.HDBW.Apollo.Client.Services
         {
             try
             {
-                bool isForwardNavigation = Navigation.NavigationStack.Count > 1
-                && Navigation.NavigationStack[^2] == sender;
+                bool isForwardNavigation = true;
+                if (Shell.Current?.CurrentPage != null)
+                {
+                    isForwardNavigation = Shell.Current?.CurrentPage == sender || (Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender);
+                }
+                else
+                {
+                    isForwardNavigation = Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender;
+                }
+
                 var page = sender as Page;
                 if (page == null)
                 {

@@ -18,6 +18,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Identity.Client;
+using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -53,6 +54,7 @@ public static class MauiProgram
         SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseMauiCompatibility()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
