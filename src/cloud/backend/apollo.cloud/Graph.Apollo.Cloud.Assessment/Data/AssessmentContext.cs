@@ -19,9 +19,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             builder.Entity<Models.Assessment>()
                 .HasIndex(t => new { t.ExternalId}).IsUnique();
 
-
-
-
             //AssesmentQuestion
             builder.Entity<Models.AssessmentQuestion>()
                 .HasKey(t => new { t.BackendId });
@@ -29,7 +26,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 .HasIndex(t => new { t.Schema }).IsUnique();
             builder.Entity<Models.AssessmentQuestion>()
                 .HasIndex(t => new { t.ExternalId }).IsUnique();
-
 
             //AssessmentAnswer
             builder.Entity<Models.AssessmentAnswer>()
@@ -47,20 +43,17 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 .WithMany(q => q.AssessmentAnswers)
                 .HasForeignKey(a => a.AssessmentQuestionId);
 
-
-
             //AssesmentCategory
             builder.Entity<Models.AssessmentCategory>()
                 .HasKey(t => new { t.BackendId });
             builder.Entity<Models.AssessmentCategory>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
-            //AssesmentCategory
+            //AssesmentScores
             builder.Entity<Models.AssessmentScores>()
                 .HasKey(t => new { t.BackendId });
             builder.Entity<Models.AssessmentScores>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
-
 
             //AssessmentAsset
             builder.Entity<Models.AssessmentAsset>()
@@ -69,19 +62,26 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 .HasIndex(t => new { t.Schema }).IsUnique();
             builder.Entity<Models.AssessmentAsset>()
                 .HasIndex(t => new { t.ExternalId }).IsUnique();
-
-
-            builder.Entity<Models.AssessmentAsset>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentAnswer>()
-                .HasIndex(t => new { t.Schema }).IsUnique();
             
-
             //AssessmentCategory
             builder.Entity<Models.AssessmentCategory>()
                 .HasKey(t => new { t.BackendId });
             builder.Entity<Models.AssessmentCategory>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
+
+
+            //AssessmentMetaData
+            builder.Entity<Models.AssessmentMetaData>()
+                .HasKey(t => new { t.BackendId });
+            builder.Entity<Models.AssessmentMetaData>()
+                .HasIndex(t => new { t.Schema }).IsUnique();
+
+            builder.Entity<Models.AssessmentMetaData>()
+                .HasOne(pt => pt.AssessmentAsset)
+                .WithMany(p => p.AssessmentMetaDatas)
+                .HasForeignKey(pt => pt.AssessmentAssetId);
+
+
 
             //AnswerHasMetaData
             builder.Entity<AssessmentAnswerHasMetaData>().HasKey(

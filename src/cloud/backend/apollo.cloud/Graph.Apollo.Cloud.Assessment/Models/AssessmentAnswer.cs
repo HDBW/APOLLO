@@ -4,7 +4,7 @@ using Invite.Apollo.App.Graph.Common.Models;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class AssesmentAnswer : IBackendEntity
+    public class AssessmentAnswer : IBackendEntity
     {
         #region Implementation of IBackendEntity
 
@@ -22,6 +22,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         [MaxLength(62)]
         public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
 
+        public long AssessmentQuestionId { get; set; }
+
         #endregion
 
         [Required]
@@ -29,6 +31,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public string Value { get; set; } = string.Empty;
 
-        public List<AssessmentMetaData> MetaDatas { get; set; }
+        public List<AssessmentAnswerHasMetaData> AssessmentAnswerHasMetaDatas { get; set; }
     }
 }
