@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Intrinsics.X86;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
@@ -19,12 +19,14 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
+        //[Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
         public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
 
         #endregion
 
+        //[Index(IsUnique = true)]
         [Required]
         public string ExternalId { get; set; } = string.Empty;
 
@@ -84,7 +86,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// </summary>
         public TimeSpan Duration { get; set; } = TimeSpan.Zero;
 
-        
         public List<AssessmentQuestion> AssessmentQuestions { get; set; }
     }
 }

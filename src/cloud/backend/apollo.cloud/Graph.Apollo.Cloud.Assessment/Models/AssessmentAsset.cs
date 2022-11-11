@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
 using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -17,14 +16,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
+        //[System.ComponentModel.DataAnnotations.Schema.Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
         public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
 
+        //public long MetaDataId { get; set; }
+        
         #endregion
 
         [Required]
         [MaxLength(64)]
+        //[System.ComponentModel.DataAnnotations.Schema.Index(IsUnique = true)]
         public string ExternalId { get; set; }
 
         public string assetName { get; set; }
@@ -33,6 +36,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public List<Uri> BlobUris { get; set; } = new();
         public List<Uri> CdnUris { get; set; } = new();
+        public List<AssessmentMetaData> AssessmentMetaDatas { get; set; }
     }
 
     public class AssetConfiguration : IEntityTypeConfiguration<AssessmentAsset>
