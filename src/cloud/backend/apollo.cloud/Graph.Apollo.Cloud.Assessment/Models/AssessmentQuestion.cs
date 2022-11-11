@@ -35,7 +35,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         public AssessmentCategory QuestionCategory { get; set; }
 
         [Required]
-        public QuestionType QuestionType { get; set; }
+        public AssessmentQuestionType QuestionType { get; set; }
 
         [Required]
         public LayoutType QuestionLayout { get; set; }
