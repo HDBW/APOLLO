@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public static class ValueConversionExtensions
+    public static class AssessmentValueConversionExtensions
     {
         public static PropertyBuilder<T> HasJsonConversion<T>(this PropertyBuilder<T> propertyBuilder) where T : class, new()
         {
