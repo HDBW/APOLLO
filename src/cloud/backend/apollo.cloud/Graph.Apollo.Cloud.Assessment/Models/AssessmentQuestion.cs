@@ -5,7 +5,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class Question : IBackendEntity
+    public class AssessmentQuestion : IBackendEntity
     {
         #region Implementation of IBackendEntity
 
@@ -18,7 +18,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
-        [Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
         public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
@@ -29,13 +28,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         public string ExternalId { get; set; } = string.Empty;
 
         [Required]
-        public Assessment Assessment { get; set; }
-
-        [Required]
         public AssessmentCategory QuestionCategory { get; set; }
 
         [Required]
-        public QuestionType QuestionType { get; set; }
+        public AssessmentQuestionType AssessmentQuestionType { get; set; }
 
         [Required]
         public LayoutType QuestionLayout { get; set; }
@@ -46,8 +42,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         [Required]
         public LayoutType InteractionType { get; set; }
 
-        public List<AssessmentMetaData> MetaDatas { get; set; }
+        public List<AssessmentScores> ScoringOptions { get; set; }
 
-        public List<Scores> ScoringOptions { get; set; }
+        public List<AssessmentAnswer> AssessmentAnswers { get; set; }
+
+        #region Relations
+
+        [Required]
+        public long AssessmentId { get; set; }
+
+        [Required]
+        public Assessment Assessment { get; set; }
+
+        #endregion
     }
 }
