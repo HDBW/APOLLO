@@ -1,7 +1,9 @@
 using System.Diagnostics;
 using System.Globalization;
+using Invite.Apollo.App.Graph.Assessment.Data;
 using Invite.Apollo.App.Graph.Assessment.Services;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ProtoBuf.Grpc.Configuration;
 using ProtoBuf.Grpc.Server;
@@ -27,6 +29,9 @@ public class Startup
 
             //TODO: https://docs.microsoft.com/en-us/aspnet/core/grpc/performance?view=aspnetcore-6.0
         });
+
+        services.AddDbContext<AssessmentContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
         //services.AddSingleton<IAssessmentService, Services.AssessmentService>();
         services.TryAddSingleton(BinderConfiguration.Create(binder: new ServiceBinderWithServiceResolutionFromServiceCollection(services)));
