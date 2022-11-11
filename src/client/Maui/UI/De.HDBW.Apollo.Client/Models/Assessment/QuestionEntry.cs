@@ -66,15 +66,18 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     metaData.AddRange(questionDetailMetaData[image]);
                 }
 
+                IInteractiveEntry? detail = null;
                 switch (Interaction)
                 {
                     case InteractionType.Associate:
-                        Details.Add(DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger));
+                        detail = DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger);
                         break;
                     default:
-                        Details.Add(SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), InteractionType.SingleSelect, null));
+                        detail = SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), InteractionType.SingleSelect, null);
                         break;
                 }
+
+                Details.Add(detail);
             }
 
             var detailEntry = Details.FirstOrDefault()?.Data as QuestionDetailEntry;
