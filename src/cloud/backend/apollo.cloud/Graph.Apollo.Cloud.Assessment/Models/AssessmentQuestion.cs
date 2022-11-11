@@ -5,7 +5,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class Question : IBackendEntity
+    public class AssessmentQuestion : IBackendEntity
     {
         #region Implementation of IBackendEntity
 
