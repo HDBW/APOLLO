@@ -19,7 +19,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
-        [Index(IsUnique = true)]
+        //[Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
         public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
@@ -85,5 +85,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// Timespan required to complete the Assessment as TimeSpan from Minutes
         /// </summary>
         public TimeSpan Duration { get; set; } = TimeSpan.Zero;
+
+        public List<AssessmentQuestion> AssessmentQuestions { get; set; }
     }
 }
