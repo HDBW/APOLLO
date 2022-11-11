@@ -3,6 +3,7 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper.Assessment;
 using Invite.Apollo.App.Graph.Common.Models;
@@ -10,6 +11,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 using Microsoft.VisualBasic;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
@@ -33,6 +35,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private LayoutType? _answerLayout;
         private InteractionType? _interaction;
         private IInteraction? _currentInteraction;
+        private int? _selectedDetailIndex;
 
         private QuestionEntry(
             QuestionItem questionItem,
@@ -80,10 +83,13 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 Details.Add(detail);
             }
 
-            var detailEntry = Details.FirstOrDefault()?.Data as QuestionDetailEntry;
-            ImagePath = !HasDetails ? detailEntry?.ImagePath : null;
-            OnPropertyChanged(nameof(HasImage));
             OnPropertyChanged(nameof(HasDetails));
+
+            _selectedDetailIndex = Details.Any() ? 0 : null;
+            if (_selectedDetailIndex.HasValue)
+            {
+                SelectDetail(_selectedDetailIndex.Value);
+            }
 
             var anserList = answerItems.ToList();
             switch (Interaction)
@@ -111,6 +117,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                         HandleAnswerInteraction)));
                     break;
             }
+
+            RefreshCommands();
         }
 
         public LayoutType QuestionLayout
@@ -140,6 +148,27 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     {
                         answer.Interaction = value;
                     }
+                }
+            }
+        }
+
+        public int? SelectedDetailIndex
+        {
+            get
+            {
+                return _selectedDetailIndex;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+
+                if (SetProperty(ref _selectedDetailIndex, value))
+                {
+                    SelectDetailCommand.Execute(_selectedDetailIndex);
                 }
             }
         }
@@ -286,6 +315,32 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             {
                 _logger.LogError(ex, $"Unknown Error while {nameof(HandleAssociateTargetInteraction)} in {GetType().Name}.");
             }
+        }
+
+        private void RefreshCommands()
+        {
+            SelectDetailCommand.NotifyCanExecuteChanged();
+        }
+
+        [RelayCommand(CanExecute = nameof(CanSelectDetail))]
+        private void SelectDetail(int index)
+        {
+            var detailEntry = Details[index].Data as QuestionDetailEntry;
+            if (QuestionLayout == LayoutType.Compare)
+            {
+                ImagePath = detailEntry?.ImagePath;
+            }
+            else
+            {
+                ImagePath = !HasDetails ? detailEntry?.ImagePath : null;
+            }
+
+            OnPropertyChanged(nameof(HasImage));
+        }
+
+        private bool CanSelectDetail(int index)
+        {
+            return index > -1 && index < Details.Count;
         }
     }
 }

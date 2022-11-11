@@ -5,7 +5,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace De.HDBW.Apollo.Client.Selector
 {
-    public class AnswersLayoutTemplateSelector : DataTemplateSelector
+    public class LayoutTypeTemplateSelector : DataTemplateSelector
     {
         public DataTemplate? DefaultTemplate { get; set; }
 
@@ -13,18 +13,34 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? HorizontalTemplate { get; set; }
 
+        public DataTemplate? CompareTemplate { get; set; }
+
+        public DataTemplate? OverlayTemplate { get; set; }
+
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             var type = item as LayoutType?;
+            DataTemplate? result;
             switch (type)
             {
                 case LayoutType.UniformGrid:
-                    return UniformTemplate;
+                    result = UniformTemplate;
+                    break;
                 case LayoutType.HorizontalList:
-                    return HorizontalTemplate;
+                    result = HorizontalTemplate;
+                    break;
+                case LayoutType.Compare:
+                    result = CompareTemplate;
+                    break;
+                case LayoutType.Overlay:
+                    result = OverlayTemplate;
+                    break;
                 default:
-                    return DefaultTemplate;
+                    result = DefaultTemplate;
+                    break;
             }
+
+            return result ?? DefaultTemplate;
         }
     }
 }
