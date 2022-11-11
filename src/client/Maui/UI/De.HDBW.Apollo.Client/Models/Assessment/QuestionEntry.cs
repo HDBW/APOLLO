@@ -57,34 +57,24 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             _logger = logger;
 
             var images = _questionMetaDataItems?.Where(m => m.Type == MetaDataType.Image) ?? new List<MetaDataItem>();
-            switch (Interaction)
+
+            foreach (var image in images)
             {
-                case InteractionType.Associate:
-                    foreach (var image in images)
-                    {
-                        var metaData = new List<MetaDataItem>() { image };
-                        if (questionDetailMetaData.ContainsKey(image))
-                        {
-                            metaData.AddRange(questionDetailMetaData[image]);
-                        }
+                var metaData = new List<MetaDataItem>() { image };
+                if (questionDetailMetaData.ContainsKey(image))
+                {
+                    metaData.AddRange(questionDetailMetaData[image]);
+                }
 
+                switch (Interaction)
+                {
+                    case InteractionType.Associate:
                         Details.Add(DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger));
-                    }
-
-                    break;
-                default:
-                    foreach (var image in images)
-                    {
-                        var metaData = new List<MetaDataItem>() { image };
-                        if (questionDetailMetaData.ContainsKey(image))
-                        {
-                            metaData.AddRange(questionDetailMetaData[image]);
-                        }
-
-                        Details.Add(SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(new List<MetaDataItem>() { image }), InteractionType.SingleSelect, null));
-                    }
-
-                    break;
+                        break;
+                    default:
+                        Details.Add(SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), InteractionType.SingleSelect, null));
+                        break;
+                }
             }
 
             var detailEntry = Details.FirstOrDefault()?.Data as QuestionDetailEntry;
