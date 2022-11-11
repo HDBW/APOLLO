@@ -257,7 +257,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             var answerRelationIds = answerMetaDataRelations.Where(r => r.AnswerId == answerItem.Id).Select(r => r.MetaDataId).ToList();
                             var anserItemMetaDatas = relatedMetaDatas.Where(m => answerRelationIds.Contains(m.Id)).ToList();
                             answerAnswerMetaDatasMapping.Add(answerItem, anserItemMetaDatas);
-                            var anserItemMetaDataMetaDatasMappings = metaDataMetaDataRelationRelations.Where(m => relationIds.Contains(m.SourceId)).ToList();
+                            var anserItemMetaDataMetaDatasMappings = metaDataMetaDataRelationRelations.Where(m => answerRelationIds.Contains(m.SourceId)).ToList();
                             foreach (var mapping in anserItemMetaDataMetaDatasMappings.GroupBy(m => m.SourceId))
                             {
                                 var targetIds = mapping.Select(m => m.TargetId);
