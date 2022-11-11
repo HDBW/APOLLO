@@ -21,6 +21,7 @@ public partial class App : Application
         _sessionService = sessionService;
         _preferenceService = preferenceService;
         InitializeComponent();
+        this.CustomizeHandler();
         if (_preferenceService.GetValue(Preference.IsFirstTime, true))
         {
             MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);
@@ -33,5 +34,19 @@ public partial class App : Application
         {
             MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.UseCaseSelectionView, _serviceProvider) as Page);
         }
+    }
+
+    private void CustomizeHandler()
+    {
+
+        Microsoft.Maui.Handlers.RadioButtonHandler.Mapper.AppendToMapping("RadioButtonCustomization", (handler, view) =>
+        {
+#if IOS
+            //handler.PlatformView.Layer += (s, e) =>
+            //{
+            //    handler.PlatformView.PerformSelector(new ObjCRuntime.Selector("selectAll"), null, 0.0f);
+            //};
+#endif
+        });
     }
 }
