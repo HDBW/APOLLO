@@ -1,10 +1,12 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 using ProtoBuf;
@@ -23,6 +25,8 @@ namespace De.HDBW.Apollo.Data.Helper
             IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
             IMetaDataRepository metadataRepository,
             ICourseItemRepository courseItemRepository,
+            ICourseContactRepository courseContactRepository,
+            ICourseAppointmentRepository courseAppointmentRepository,
             IUserProfileItemRepository userProfileItemRepository,
             IEduProviderItemRepository eduProviderItemRepository)
         {
@@ -35,6 +39,8 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(metadataRepository);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
+            ArgumentNullException.ThrowIfNull(courseContactRepository);
+            ArgumentNullException.ThrowIfNull(courseAppointmentRepository);
             ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
 
@@ -47,6 +53,8 @@ namespace De.HDBW.Apollo.Data.Helper
             QuestionMetaDataRelationRepository = questionMetaDataRelationRepository;
             MetadataRepository = metadataRepository;
             CourseItemRepository = courseItemRepository;
+            CourseContactRepository = courseContactRepository;
+            CourseAppointmentRepository = courseAppointmentRepository;
             UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
         }
@@ -66,6 +74,10 @@ namespace De.HDBW.Apollo.Data.Helper
         private IMetaDataRepository MetadataRepository { get; }
 
         private ICourseItemRepository CourseItemRepository { get; }
+
+        private ICourseContactRepository CourseContactRepository { get; }
+
+        private ICourseAppointmentRepository CourseAppointmentRepository { get; }
 
         private IUserProfileItemRepository UserProfileItemRepository { get; }
 
@@ -119,6 +131,8 @@ namespace De.HDBW.Apollo.Data.Helper
             MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase.MetaDataMetaDataRelations, token).ConfigureAwait(false);
             EduProviderItemRepository.ResetItemsAsync(usecase.EduProviderItems, token).ConfigureAwait(false);
             CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
+            CourseContactRepository.ResetItemsAsync(usecase.CourseContacts, token).ConfigureAwait(false);
+            CourseAppointmentRepository.ResetItemsAsync(usecase.CourseAppointments, token).ConfigureAwait(false);
 
             // TODO:
             UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
@@ -138,6 +152,8 @@ namespace De.HDBW.Apollo.Data.Helper
             await QuestionMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await MetadataRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await CourseItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await CourseContactRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await CourseAppointmentRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await EduProviderItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await UserProfileItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
         }
