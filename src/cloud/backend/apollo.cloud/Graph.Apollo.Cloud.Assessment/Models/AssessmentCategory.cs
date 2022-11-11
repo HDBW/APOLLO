@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Google.Protobuf.WellKnownTypes;
 using Invite.Apollo.App.Graph.Common.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
@@ -19,6 +18,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
+        //[Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
         public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
@@ -27,7 +27,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public string Title { get; set; } = string.Empty;
 
-        //public string Value { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
 
         public int Thresholds { get; set; }
     }

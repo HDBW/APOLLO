@@ -17,6 +17,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
+        //[Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
         public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
@@ -27,13 +28,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public string Value { get; set; }
 
-        #region Relations
-
+        public AssessmentAsset AssessmentAsset { get; set; }
 
         public long AssessmentAssetId { get; set; }
 
-        public AssessmentAsset AssessmentAsset { get; set; }
-
-        #endregion
+        public List<AssessmentAnswerHasMetaData> AssessmentAnswerHasMetaDatas { get; set; }
     }
 }
