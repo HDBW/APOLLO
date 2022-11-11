@@ -1,6 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.ModelConfiguration;
+using System.Net;
 using Invite.Apollo.App.Graph.Common.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
@@ -14,21 +18,35 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
-        [Index(IsUnique = true)]
+        [System.ComponentModel.DataAnnotations.Schema.Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
-        public Uri Schema { get; set; }
+        public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
 
         #endregion
 
+        [Required]
+        [MaxLength(64)]
+        [System.ComponentModel.DataAnnotations.Schema.Index(IsUnique = true)]
         public string ExternalId { get; set; }
 
         public string assetName { get; set; }
 
-        public List<Uri> file { get; set; }
+        public List<Uri> FilesUris { get; set; } = new();
 
-        public List<Uri> Blob { get; set; }
+        public List<Uri> BlobUris { get; set; } = new();
+        public List<Uri> CdnUris { get; set; } = new();
+    }
 
-        public List<Uri> Cdn { get; set; }
+    public class AssetConfiguration : IEntityTypeConfiguration<Asset>
+    {
+        public void Configure(EntityTypeBuilder<Asset> builder)
+        {
+            //TODO: Review by talisi
+            // This Converter will perform the conversion to and from Json to the desired type
+            builder.Property(e => e.FilesUris).HasJsonConversion<List<Uri>>();
+            builder.Property(e => e.BlobUris).HasJsonConversion<List<Uri>>();
+            builder.Property(e => e.CdnUris).HasJsonConversion<List<Uri>>();
+        }
     }
 }
