@@ -15,6 +15,7 @@ using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Identity.Client;
@@ -187,6 +188,8 @@ public static class MauiProgram
         services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
         services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
         services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
+        services.AddSingleton<ICourseContactRepository, CourseContactRepository>();
+        services.AddSingleton<ICourseAppointmentRepository, CourseAppointmentRepository>();
         services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
     }
 
