@@ -1,6 +1,7 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.AssessmentView"
+             xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:contracts="clr-namespace:De.HDBW.Apollo.Client.Contracts"
              xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
@@ -8,7 +9,8 @@
              x:DataType="viewModels:AssessmentViewModel"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             IsBusy="{Binding IsBusy}">
+             IsBusy="{Binding IsBusy}"
+             Padding="0">
     <ContentPage.Resources>
 
         <converter:QuestionDetailsToTitleConverter x:Key="QuestionDetailsToTitleConverter" />
@@ -112,12 +114,18 @@
             <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
         </DataTemplate>
 
-        <DataTemplate x:Key="DefaultQuestionDetailInteractionTemplate" x:DataType="contracts:IAssociateTargetInteractiveEntry">
+        <DataTemplate x:Key="DefaultQuestionDetailInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
+            <StackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="AssociateQuestionDetailInteractionTemplate" x:DataType="contracts:IAssociateTargetInteractiveEntry">
             <Grid>
                 <Grid.GestureRecognizers>
                     <DropGestureRecognizer AllowDrop="True" DropCommand="{Binding DropCommand}"/>
                 </Grid.GestureRecognizers>
-                <StackLayout InputTransparent="True" BindableLayout.ItemTemplate="{StaticResource ImageQuestionDetailTemplate}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}">
+                <StackLayout InputTransparent="True"
+                             BindableLayout.ItemTemplate="{StaticResource ImageQuestionDetailTemplate}"
+                             BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}">
                 </StackLayout>
                 <Label Text="{Binding AssociatedIndex}" HorizontalOptions="End" VerticalOptions="End"/>
                 <Button IsVisible="{Binding HasAssociation}" Command="{Binding ClearAssociationCommand}" Text="x" HorizontalOptions="End" VerticalOptions="Start"/>
@@ -149,7 +157,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="UniformAnswerLayoutTemplate">
-            <CollectionView
+            <!--<CollectionView
                 VerticalScrollBarVisibility="Never"
                 HorizontalScrollBarVisibility="Never"
                 ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
@@ -157,7 +165,10 @@
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2" />
                 </CollectionView.ItemsLayout>
-            </CollectionView>
+            </CollectionView>-->
+             <layouts:UniformGrid BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                                  BindableLayout.ItemTemplateSelector="{StaticResource IInteractiveEntryTemplateSelector}"
+                                  ColumnCount="2"/>
         </DataTemplate>
 
         <selector:AnswersLayoutTemplateSelector x:Key="AnswersLayoutTemplateSelector"
@@ -165,47 +176,54 @@
                                            HorizontalTemplate="{StaticResource HorizontalAnswerLayoutTemplate}"
                                            UniformTemplate="{StaticResource UniformAnswerLayoutTemplate}" />
 
+        <selector:QuestionDetailLayoutTemplateSelector x:Key="QuestionDetailLayoutTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultQuestionDetailInteractionTemplate}"
+                                           AssociateTemplate="{StaticResource AssociateQuestionDetailInteractionTemplate}" />
+
         <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding Question}" Grid.Row="0" IsVisible="{Binding HasQuestion}"/>
-                    <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}"/>
-                    <CollectionView ItemsSource="{Binding Details}"
-                                    HorizontalScrollBarVisibility="Never"
-                                    VerticalScrollBarVisibility="Never"
-                                    HeightRequest="200"
-                                    IsVisible="{Binding HasDetails}"
-                                    ItemTemplate="{StaticResource DefaultQuestionDetailInteractionTemplate}">
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="2" />
-                        </CollectionView.ItemsLayout>
-                    </CollectionView>
-                    <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}" />
-                    <StackLayout Grid.Row="3" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
-                    </StackLayout>
-                </VerticalStackLayout>
-            </ScrollView>
+            <VerticalStackLayout Spacing="8" Padding="24,0">
+                <Label Grid.Row="0" Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
+                <Label Grid.Row="1" Text="{Binding Instruction}" HorizontalTextAlignment="End" IsVisible="{Binding HasInstruction}"/>
+                <!--<CollectionView ItemsSource="{Binding Details}"
+                                HorizontalScrollBarVisibility="Never"
+                                VerticalScrollBarVisibility="Never"
+                                HeightRequest="200"
+                                IsVisible="{Binding HasDetails}"
+                                ItemTemplate="{StaticResource DefaultQuestionDetailInteractionTemplate}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>-->
+                <layouts:UniformGrid  Grid.Row="2"  BindableLayout.ItemsSource="{Binding Details}"
+                                ColumnCount="2"
+                                IsVisible="{Binding HasDetails}"
+                                BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailLayoutTemplateSelector}"/>
+                <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="3" IsVisible="{Binding HasImage}" />
+                <StackLayout
+                    Grid.Row="4" 
+                    BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}"
+                    BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                </StackLayout>
+            </VerticalStackLayout>
         </DataTemplate>
 
         <DataTemplate x:Key="CompareQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
-                <VerticalStackLayout Spacing="8">
+                <VerticalStackLayout Spacing="8" Margin="24,0" >
                     <Label Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
                     <Label Text="{Binding Instruction}" IsVisible="{Binding HasInstruction}"/>
-                    <Grid ColumnDefinitions="*,*" RadioButtonGroup.GroupName="Selection" Grid.Row="2" IsVisible="{Binding HasDetails}">
+                    <Grid ColumnDefinitions="*,*" RadioButtonGroup.GroupName="Selection" IsVisible="{Binding HasDetails}">
                         <RadioButton Content="{Binding Details, Converter={StaticResource QuestionDetailsToTitleConverter}, ConverterParameter=0}" ControlTemplate="{StaticResource TabHeader}" />
                         <RadioButton Grid.Column="1" Content="{Binding Details, Converter={StaticResource QuestionDetailsToTitleConverter}, ConverterParameter=1}" ControlTemplate="{StaticResource TabHeader}" />
                     </Grid>
-                    <Image Grid.Row="1" Source="{Binding ImagePath}" HeightRequest="100" IsVisible="{Binding HasImage}"/>
-                    <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                    <Image Source="{Binding ImagePath}" HeightRequest="100" IsVisible="{Binding HasImage}"/>
+                    <StackLayout  BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
                     </StackLayout>
                 </VerticalStackLayout>
-            </ScrollView>
         </DataTemplate>
 
         <DataTemplate x:Key="OverlayQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-            <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default" VerticalOptions="FillAndExpand" >
-                <Grid>
+            
+                <Grid Margin="24,0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
@@ -217,7 +235,6 @@
                     <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
                     </StackLayout>
                 </Grid>
-            </ScrollView>
         </DataTemplate>
 
         <selector:QuestionTemplateSelector x:Key="QuestionTemplateSelector"
@@ -225,17 +242,26 @@
                                            CompareTemplate="{StaticResource CompareQuestionTemplate}"
                                            OverlayTemplate="{StaticResource OverlayQuestionTemplate}"/>
     </ContentPage.Resources>
-    <Grid RowDefinitions="auto,auto,*,auto">
-        <StackLayout>
-            <Picker Title="Interaction" TitleColor="White" TextColor="White" ItemsSource="{Binding Interactions}" SelectedItem="{Binding Interaction, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
-            <Picker Title="QuestionLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding QuestionLayouts}" SelectedItem="{Binding QuestionLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
-            <Picker Title="AnserwerLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
-        </StackLayout>
 
-        <ProgressBar Grid.Row="1" Progress="{Binding Progress}" />
-        <StackLayout Grid.Row="2" BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}" BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
+    <Grid RowDefinitions="auto, auto, auto, auto, *, auto">
+        <Picker Title="Interaction" TitleColor="White" TextColor="White" ItemsSource="{Binding Interactions}" SelectedItem="{Binding Interaction, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+        <Picker Grid.Row="1" Title="QuestionLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding QuestionLayouts}" SelectedItem="{Binding QuestionLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+        <Picker Grid.Row="2" Title="AnserwerLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
 
-        </StackLayout>
-        <Button Grid.Row="3" Text="Next" Command="{Binding NextQuestionCommand}"/>
+        <ProgressBar Grid.Row="3" Progress="{Binding Progress}" />
+        <ScrollView Grid.Row="4" VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout
+                BackgroundColor="AliceBlue"
+                ChildAdded="HandleChildAdded"
+                x:Name="PART_ScrollHost"
+                BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}"
+                BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
+            </VerticalStackLayout>
+        </ScrollView>
+        
+
+        <Button Grid.Row="5" Text="Next" Command="{Binding NextQuestionCommand}"/>
     </Grid>
+
+
 </ContentPage>
