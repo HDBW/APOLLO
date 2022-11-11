@@ -4,7 +4,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class MetaData
+    public class AssessmentMetaData
     {
         #region Implementation of IBackendEntity
 
@@ -28,8 +28,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public string Value { get; set; }
 
-        public Asset Asset { get; set; }
+        public AssessmentAsset AssessmentAsset { get; set; }
 
-        public MetaData MetaDataHasMetaData { get; set; }
+        public AssessmentMetaData AssessmentMetaDataHasAssessmentMetaData { get; set; }
     }
 }

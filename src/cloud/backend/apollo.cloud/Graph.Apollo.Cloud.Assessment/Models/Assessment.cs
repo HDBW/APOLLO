@@ -26,7 +26,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         #endregion
 
-        [Index(IsUnique = true)]
+        //[Index(IsUnique = true)]
         [Required]
         public string ExternalId { get; set; } = string.Empty;
 
