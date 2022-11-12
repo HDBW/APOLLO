@@ -42,6 +42,22 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public bool HasHint
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(Hint);
+            }
+        }
+
+        public string Hint
+        {
+            get
+            {
+                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Hint)?.Value ?? string.Empty;
+            }
+        }
+
         public bool HasImage
         {
             get
