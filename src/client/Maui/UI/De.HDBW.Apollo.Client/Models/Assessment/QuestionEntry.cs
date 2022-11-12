@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper.Assessment;
+using Grpc.Core;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
@@ -73,10 +74,10 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 switch (Interaction)
                 {
                     case InteractionType.Associate:
-                        detail = DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), null, questionItem.Interaction, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger);
+                        detail = DropTagetEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), null, questionItem.Interaction, AnswerType.Unknown, HandleAssociateTargetInteraction, HandleClearAssociateTargetInteraction, _logger);
                         break;
                     default:
-                        detail = SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), InteractionType.SingleSelect, null);
+                        detail = SelectableEntry<QuestionDetailEntry>.Import(QuestionDetailEntry.Import(metaData), InteractionType.SingleSelect, AnswerType.Unknown, null);
                         break;
                 }
 
@@ -103,9 +104,20 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                         anserList.IndexOf(a) + 1,
                         false,
                         Interaction,
+                        a.AnswerType,
                         HandleAssociateStartingInteraction,
                         HandleAssociateCompletedInteraction,
                         _logger)));
+                    break;
+                case InteractionType.Input:
+                    Answers = new ObservableCollection<IInteractiveEntry>(anserList.Select(a => InputEntry<AnswerEntry>.Import(
+                       AnswerEntry.Import(
+                           a,
+                           answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
+                           answerMetaDataItems: answerMetaDataItems[a]),
+                       Interaction,
+                       a.AnswerType,
+                       HandleInteraction)));
                     break;
                 default:
                     Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(
@@ -114,7 +126,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                             answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
                             answerMetaDataItems: answerMetaDataItems[a]),
                         Interaction,
-                        HandleAnswerInteraction)));
+                        a.AnswerType,
+                        HandleInteraction)));
                     break;
             }
 
@@ -250,7 +263,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaData, answerItems, answerResultItems, answerMetaDataItems, answerMetaDataMetaData, logger);
         }
 
-        private void HandleAnswerInteraction(IInteractiveEntry entry)
+        private void HandleInteraction(IInteractiveEntry entry)
         {
             try
             {
@@ -260,7 +273,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Unknown error while {nameof(HandleAnswerInteraction)} in {GetType().Name}.");
+                _logger.LogError(ex, $"Unknown error while {nameof(HandleInteraction)} in {GetType().Name}.");
             }
         }
 
