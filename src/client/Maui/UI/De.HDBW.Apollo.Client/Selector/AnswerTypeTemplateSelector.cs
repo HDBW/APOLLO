@@ -18,15 +18,11 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? DefaultLocationTemplate { get; set; }
 
-        public DataTemplate? DefaultStringTemplate { get; set; }
-
-        public DataTemplate? DefaultIntegerTemplate { get; set; }
-
-        public DataTemplate? DefaultLongTemplate { get; set; }
-
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             var entry = item as AnswerEntry;
+
+            DataTemplate? result = null;
             if (entry != null)
             {
                 switch (entry.AnswerType)
@@ -35,27 +31,25 @@ namespace De.HDBW.Apollo.Client.Selector
 
                         if (entry.HasImage && entry.HasText)
                         {
-                            return BooleanImageWithTextTemplate;
+                            result = BooleanImageWithTextTemplate;
                         }
-
-                        if (entry.HasImage)
+                        else if (entry.HasImage)
                         {
                             return BooleanImageTemplate;
                         }
+                        else
+                        {
+                            result = DefaultBooleanTemplate;
+                        }
 
-                        return DefaultBooleanTemplate;
-                    case AnswerType.Integer:
-                        return DefaultIntegerTemplate;
-                    case AnswerType.String:
-                        return DefaultStringTemplate;
+                        break;
                     case AnswerType.Location:
-                        return DefaultLocationTemplate;
-                    case AnswerType.Long:
-                        return DefaultLongTemplate;
+                        result = DefaultLocationTemplate;
+                        break;
                 }
             }
 
-            return DefaultTemplate;
+            return result ?? DefaultTemplate;
         }
     }
 }

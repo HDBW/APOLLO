@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     {
         private readonly IEnumerable<MetaDataItem> _metaDatas;
 
-        public QuestionDetailEntry(IEnumerable<MetaDataItem> metadatas)
+        private QuestionDetailEntry(IEnumerable<MetaDataItem> metadatas)
         {
             ArgumentNullException.ThrowIfNull(metadatas);
             _metaDatas = metadatas;
