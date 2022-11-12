@@ -15,10 +15,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private InteractionType _interaction;
         private int? _associatedIndex;
 
-        public DropTagetEntry(
+        private DropTagetEntry(
             TU data,
             int? associatedIndex,
             InteractionType interaction,
+            AnswerType? answerType,
             Action<DropTagetEntry<TU>>? dropHandler,
             Action<DropTagetEntry<TU>>? clearHandler,
             ILogger logger)
@@ -29,6 +30,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             Logger = logger;
             AssociatedIndex = associatedIndex;
             Interaction = interaction;
+            AnswerType = answerType;
             DropHandler = dropHandler;
             ClearHandler = clearHandler;
         }
@@ -67,17 +69,20 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             get { return AssociatedIndex.HasValue; }
         }
 
+        public AnswerType? AnswerType { get; }
+
         private ILogger Logger { get; }
 
         public static DropTagetEntry<TU> Import(
             TU data,
             int? associatedIndex,
             InteractionType interaction,
+            AnswerType? answerType,
             Action<DropTagetEntry<TU>>? dropHandler,
             Action<DropTagetEntry<TU>>? clearHandler,
             ILogger logger)
         {
-            return new DropTagetEntry<TU>(data, associatedIndex, interaction, dropHandler, clearHandler, logger);
+            return new DropTagetEntry<TU>(data, associatedIndex, interaction, answerType, dropHandler, clearHandler, logger);
         }
 
         public TU? GetData()

@@ -16,7 +16,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private int _indexToAssociate;
         private bool _isAssociated;
 
-        public DragSourceEntry(TU data, int indexToAssociate, bool isAssociated, InteractionType interaction, Action<DragSourceEntry<TU>>? dragStartingHandler, Action<DragSourceEntry<TU>>? dropCompletedHandler, ILogger logger)
+        private DragSourceEntry(TU data, int indexToAssociate, bool isAssociated, InteractionType interaction, AnswerType? answerType,  Action<DragSourceEntry<TU>>? dragStartingHandler, Action<DragSourceEntry<TU>>? dropCompletedHandler, ILogger logger)
         {
             ArgumentNullException.ThrowIfNull(data);
             ArgumentNullException.ThrowIfNull(logger);
@@ -24,6 +24,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             IndexToAssociate = indexToAssociate;
             Logger = logger;
             Interaction = interaction;
+            AnswerType = answerType;
             IsAssociated = isAssociated;
             DragStartingHandler = dragStartingHandler;
             DropCompletedHandler = dropCompletedHandler;
@@ -67,15 +68,17 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public AnswerType? AnswerType { get; }
+
         private Action<DragSourceEntry<TU>>? DragStartingHandler { get; }
 
         private Action<DragSourceEntry<TU>>? DropCompletedHandler { get; }
 
         private ILogger Logger { get; }
 
-        public static DragSourceEntry<TU> Import(TU data, int indexToAssociate, bool isAssociated, InteractionType interaction, Action<DragSourceEntry<TU>>? dragStartingHandler, Action<DragSourceEntry<TU>>? dropCompletedHandler, ILogger logger)
+        public static DragSourceEntry<TU> Import(TU data, int indexToAssociate, bool isAssociated, InteractionType interaction, AnswerType? answerType, Action<DragSourceEntry<TU>>? dragStartingHandler, Action<DragSourceEntry<TU>>? dropCompletedHandler, ILogger logger)
         {
-            return new DragSourceEntry<TU>(data, indexToAssociate, isAssociated, interaction, dragStartingHandler, dropCompletedHandler, logger);
+            return new DragSourceEntry<TU>(data, indexToAssociate, isAssociated, interaction, answerType, dragStartingHandler, dropCompletedHandler, logger);
         }
 
         public TU? GetData()

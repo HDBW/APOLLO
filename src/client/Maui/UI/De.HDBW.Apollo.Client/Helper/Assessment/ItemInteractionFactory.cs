@@ -17,9 +17,11 @@ namespace De.HDBW.Apollo.Client.Helper.Assessment
                 case InteractionType.SingleSelect:
                     return new SingleSelectInteraction(question, logger);
                 case InteractionType.MultiSelect:
-                    return new MultiSelectSelectInteraction(question, logger);
+                    return new MultiSelectInteraction(question, logger);
                 case InteractionType.Associate:
                     return new AssociateInteraction(question, entry, logger);
+                case InteractionType.Input:
+                    return new InputInteraction(question, logger);
                 default:
                     return null;
             }
