@@ -6,7 +6,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace De.HDBW.Apollo.Client.Selector
 {
-    public class SelectionAnswersTemplateSelector : DataTemplateSelector
+    public class AnswerTypeTemplateSelector : DataTemplateSelector
     {
         public DataTemplate? DefaultTemplate { get; set; }
 
