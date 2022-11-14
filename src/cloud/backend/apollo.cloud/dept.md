@@ -51,5 +51,7 @@ Memory Repositories for Assessments contain quick and Dirty releases just us:
  
 - AssessmentCategory : ResultLimits
 
+- UserId to AnswerItemResult needs rework to get rid of uiserid
+
 ## Client
 

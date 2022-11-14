@@ -1,34 +1,34 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Google.Protobuf.WellKnownTypes;
 using Invite.Apollo.App.Graph.Common.Models;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class Asset : IBackendEntity
+    public class AssessmentCategory : IBackendEntity
     {
         #region Implementation of IBackendEntity
 
+        /// <summary>
+        /// The Id of the Backend Unique Identifier
+        /// </summary>
         [Key]
         public long BackendId { get; set; }
 
         /// <summary>
         /// Another Unique Identifier used as Uri for Services
         /// </summary>
-        [Index(IsUnique = true)]
+        //[Index(IsUnique = true)]
         [Required]
         [MaxLength(62)]
-        public Uri Schema { get; set; }
+        public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
 
         #endregion
 
-        public string ExternalId { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-        public string assetName { get; set; }
+        public string Value { get; set; } = string.Empty;
 
-        public List<Uri> file { get; set; }
-
-        public List<Uri> Blob { get; set; }
-
-        public List<Uri> Cdn { get; set; }
+        public int Thresholds { get; set; }
     }
 }
