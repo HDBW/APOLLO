@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
@@ -29,10 +30,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         #endregion
 
         [DataMember(Order = 5)]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [DataMember(Order = 6)]
-        public string Value { get; set; }
+        public int QuestionCount { get; set; }
 
         /// <summary>
         /// Threshold
@@ -40,5 +41,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         /// </summary>
         [DataMember(Order = 7)]
         public int ResultLimits { get; set; }
+
+        [ForeignKey(nameof(Course))]
+        [DataMember(Order = 8, IsRequired = true)]
+        public long CourseId { get; set; }
+
+        [DataMember(Order = 9)]
+        public string Description { get; set; } = string.Empty;
     }
 }
