@@ -10,7 +10,7 @@ namespace Invite.Apollo.App.Graph.AssessmentService.Test
         }
 
         [Test]
-        public void ShouldReturnAssessmentsFromFile()
+        public void ShouldAssessments()
         {
             
         }

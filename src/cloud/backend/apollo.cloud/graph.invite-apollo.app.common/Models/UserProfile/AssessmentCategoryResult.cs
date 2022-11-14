@@ -8,7 +8,8 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
-    public class AnswerItemResult : IEntity, IBackendEntity
+    [DataContract]
+    public class AssessmentCategoryResult : IEntity, IBackendEntity
     {
         #region Implementation of IEntity
 
@@ -16,6 +17,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         [DataMember(Order = 1)]
         public long Id { get; set; }
 
+        [Key]
         [DataMember(Order = 2)]
         public long Ticks { get; set; }
 
@@ -31,27 +33,16 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         #endregion
 
-        //TODO: Mapping Table User -> to create several other workloads
-        [DataMember(Order = 5)]
         [ForeignKey(nameof(UserProfile))]
+        [DataMember(Order = 5)]
         public long UserProfileId { get; set; }
 
         [DataMember(Order = 6)]
-        [ForeignKey(nameof(AssessmentItem))]
-        public long AssessmentItemId { get; set; }
+        [ForeignKey(nameof(AssessmentCategory))]
+        public long Category { get; set; }
 
+        //The result a user scored in a Category
         [DataMember(Order = 7)]
-        [ForeignKey(nameof(QuestionItem))]
-        public long QuestionItemId { get; set; }
-
-        [DataMember(Order = 8)]
-        [ForeignKey(nameof(AnswerItem))]
-        public long AnswerItemId { get; set; }
-
-        [DataMember(Order = 9)]
-        public string Value { get; set; }
-
-        [DataMember(Order = 10)]
-        public TimeSpan TimeUserSpent { get; set; }
+        public long Result { get; set; }
     }
 }
