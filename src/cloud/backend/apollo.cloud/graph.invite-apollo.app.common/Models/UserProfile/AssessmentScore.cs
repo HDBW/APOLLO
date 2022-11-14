@@ -14,6 +14,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         [Key]
         [DataMember(Order = 1, IsRequired = false)]
         public long Id { get; set; }
+
         [DataMember(Order = 2, IsRequired = true)]
         public long Ticks { get; set; }
 
@@ -21,10 +22,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         #region Implementation of IBackendEntity
 
-        [DataMember(Order = 3, IsRequired = true)]
         public long BackendId { get; set; }
-
-        [DataMember(Order = 4, IsRequired = true)]
         public Uri Schema { get; set; }
 
         #endregion
@@ -52,16 +50,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         [DataMember(Order = 8, IsRequired = true)]
         public string Value { get; set; }
 
-        [DataMember(Order = 9, IsRequired = true)]
-        public string ScoreOccupation { get; set; }
-
-        [DataMember(Order = 10, IsRequired = true)]
-        public string ScoreSkills { get; set; }
-
         /// <summary>
-        /// Describes the expected Scoring Relation Points to Vectors
+        /// Overall Percentage
         /// </summary>
-        [DataMember(Order = 11, IsRequired = true)]
-        public int[]? AnswerVectors { get; set; }
+        [DataMember(Order = 9)]
+        public decimal PercentageScore { get; set; }
+
+        
+
     }
 }
