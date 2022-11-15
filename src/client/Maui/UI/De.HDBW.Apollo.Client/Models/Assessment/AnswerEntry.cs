@@ -180,5 +180,10 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             return new AnswerEntry(answerItem, answerItemResult, answerMetaDataItems);
         }
+
+        public AnswerItemResult ExportResult()
+        {
+            return _answerItemResult;
+        }
     }
 }

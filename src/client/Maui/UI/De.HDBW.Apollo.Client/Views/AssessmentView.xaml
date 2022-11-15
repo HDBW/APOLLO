@@ -101,12 +101,13 @@
         <DataTemplate x:Key="IntegerInputTemplate" x:DataType="contracts:IInputInteractiveEntry">
             <VerticalStackLayout>
                 <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
-                <Grid ColumnDefinitions="*,*,*,*,*" >
+                <Grid ColumnDefinitions="*,*,*,*,*,*" >
                     <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=0}" Grid.Column="0" HorizontalOptions="Center"/>
                     <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=1}" Grid.Column="1" HorizontalOptions="Center"/>
                     <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=2}" Grid.Column="2" HorizontalOptions="Center"/>
                     <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=3}" Grid.Column="3" HorizontalOptions="Center"/>
                     <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=4}" Grid.Column="4" HorizontalOptions="Center"/>
+                    <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=5}" Grid.Column="5" HorizontalOptions="Center"/>
                 </Grid>
             </VerticalStackLayout>
         </DataTemplate>
@@ -114,7 +115,7 @@
         <DataTemplate x:Key="StringInputTemplate" x:DataType="contracts:IInputInteractiveEntry">
             <VerticalStackLayout>
                 <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
-                <Entry Text="{Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" Placeholder="{Binding Hint}" HeightRequest="50" MaxLength="1000" Keyboard="Text" ReturnType="Default"/>
+                <Entry Text="{Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" Placeholder="{Binding Hint}" MaxLength="1000" Keyboard="Text" ReturnType="Default"/>
             </VerticalStackLayout>
         </DataTemplate>
         
