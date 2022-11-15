@@ -10,8 +10,8 @@ using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.SharedContracts.Services
 {
-    public interface IAssessmentResultService
+    public interface IAssessmentScoreService
     {
-        Task<AssessmentScore> GetAssessmentScoreAsync(IEnumerable<AnswerItemResult> answerItems, CancellationToken token);
+        Task<AssessmentScore> GetAssessmentScoreAsync(IEnumerable<AnswerItemResult> answerItemResults, CancellationToken token);
     }
 }
