@@ -44,7 +44,6 @@ namespace De.HDBW.Apollo.Client.Selector
                             case AnswerType.TextBox:
                                 result = StringInputInteractionTemplate;
                                 break;
-
                         }
 
                         break;

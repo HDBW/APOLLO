@@ -1,20 +1,20 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Data.Repositories;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Services
 {
-    public class AssessmentResultService : IAssessmentResultService
+    public class AssessmentScoreService : IAssessmentScoreService
     {
-        public AssessmentResultService(
-            ILogger<AssessmentResultService>? logger,
-            QuestionItemRepository? questionItemRepository,
-            AnswerItemRepository? answerItemRepository,
-            AssessmentCategoryRepository? assessmentCategoriesRepository)
+        public AssessmentScoreService(
+            ILogger<AssessmentScoreService>? logger,
+            IQuestionItemRepository? questionItemRepository,
+            IAnswerItemRepository? answerItemRepository,
+            IAssessmentCategoryRepository? assessmentCategoriesRepository)
         {
             Logger = logger;
             QuestionItemRepository = questionItemRepository;
@@ -22,18 +22,18 @@ namespace De.HDBW.Apollo.Data.Services
             AssessmentCategoriesRepository = assessmentCategoriesRepository;
         }
 
-        private QuestionItemRepository? QuestionItemRepository { get; }
+        private IQuestionItemRepository? QuestionItemRepository { get; }
 
-        private AnswerItemRepository? AnswerItemRepository { get; }
+        private IAnswerItemRepository? AnswerItemRepository { get; }
 
-        private AssessmentCategoryRepository? AssessmentCategoriesRepository { get; }
+        private IAssessmentCategoryRepository? AssessmentCategoriesRepository { get; }
 
         private ILogger? Logger { get; }
 
-        public Task<AssessmentScore> GetAssessmentScoreAsync(IEnumerable<AnswerItemResult> answerItems, CancellationToken token)
+        public Task<AssessmentScore> GetAssessmentScoreAsync(IEnumerable<AnswerItemResult> answerItemResults, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            Logger?.Log(LogLevel.Information, new EventId(101, "GetAssessmentScore Called"), "{answerItems.Dump()}", answerItems);
+            Logger?.Log(LogLevel.Information, new EventId(101, "GetAssessmentScore Called"), "{answerItems.Dump()}", answerItemResults);
 
             AssessmentScore score = new ();
 
