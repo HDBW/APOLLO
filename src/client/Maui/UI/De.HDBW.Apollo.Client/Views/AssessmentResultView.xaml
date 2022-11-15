@@ -5,6 +5,9 @@
              x:DataType="viewModels:AssessmentResultViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resource.AssessmentResultView_Title}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding ConfirmCommand}" />
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout>
         <ProgressBar Progress="{Binding Score}" />
         <Button Command="{Binding ConfirmCommand}" Text="{x:Static strings:Resource.AssessmentResultView_CloseAssessment}" />
