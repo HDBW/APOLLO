@@ -6,6 +6,7 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -21,6 +22,41 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<AssessmentResultViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            AnswerItemResultRepository = answerItemResultRepository;
+        }
+
+        private IAnswerItemResultRepository AnswerItemResultRepository { get; }
+
+        public override async Task OnNavigatedToAsync()
+        {
+            if (!_assessmentItemId.HasValue)
+            {
+                return;
+            }
+
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var results = AnswerItemResultRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
