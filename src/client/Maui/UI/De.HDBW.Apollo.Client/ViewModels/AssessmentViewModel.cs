@@ -39,6 +39,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private InteractionType? _interaction;
 
         private long? _assessmentItemId;
+        private long _maxResultId;
 
         public AssessmentViewModel(
             IAssessmentItemRepository assessmentItemRepository,
@@ -160,21 +161,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IMetaDataRepository MetaDataRepository { get; }
 
-        [RelayCommand]
-        public void NextQuestion()
-        {
-            var currentIndex = CurrentQuestion != null ? Questions.IndexOf(CurrentQuestion) : 0;
-            currentIndex = currentIndex + 1 >= Questions.Count ? 0 : currentIndex + 1;
-            CurrentQuestion = Questions[currentIndex];
-            _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
-            _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
-            _interaction = CurrentQuestion?.Interaction ?? InteractionType.Unknown;
-            OnPropertyChanged(nameof(QuestionLayout));
-            OnPropertyChanged(nameof(AnswerLayout));
-            OnPropertyChanged(nameof(Interaction));
-            OnPropertyChanged(nameof(Progress));
-        }
-
         public async override Task OnNavigatedToAsync()
         {
             if (!_assessmentItemId.HasValue)
@@ -198,7 +184,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var answerIds = answerItems.Select(q => q.Id);
 
                     var answerItemResults = await AnswerItemResultRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
-
+                    _maxResultId = await AnswerItemResultRepository.GetNextIdAsync(worker.Token).ConfigureAwait(false);
                     var questionMetaDataRelations = await QuestionMetaDataRelationRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
                     questionMetaDataRelations = questionMetaDataRelations ?? new List<QuestionMetaDataRelation>();
                     questionMetaDataIds.AddRange(questionMetaDataRelations.Select(r => r.MetaDataId).Distinct());
@@ -226,7 +212,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var questionAnswerItemsMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItem>>();
                     var questionAnswerResultsMapping = new Dictionary<QuestionItem, IEnumerable<AnswerItemResult>>();
                     var questionAnswerItemMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>>();
-                    var questionAnswerItemMetaDataMetaDatasMapping = new Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>>();
 
                     foreach (var questionItem in questionItems)
                     {
@@ -252,21 +237,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                         var answerAnswerMetaDatasMapping = new Dictionary<AnswerItem, IEnumerable<MetaDataItem>>();
                         questionAnswerItemMetaDatasMapping.Add(questionItem, answerAnswerMetaDatasMapping);
-                        metaDataMetaDataMappings = new Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>();
                         foreach (var answerItem in questionAnswers)
                         {
                             var answerRelationIds = answerMetaDataRelations.Where(r => r.AnswerId == answerItem.Id).Select(r => r.MetaDataId).ToList();
                             var anserItemMetaDatas = relatedMetaDatas.Where(m => answerRelationIds.Contains(m.Id)).ToList();
+
                             answerAnswerMetaDatasMapping.Add(answerItem, anserItemMetaDatas);
                             var anserItemMetaDataMetaDatasMappings = metaDataMetaDataRelationRelations.Where(m => answerRelationIds.Contains(m.SourceId)).ToList();
                             foreach (var mapping in anserItemMetaDataMetaDatasMappings.GroupBy(m => m.SourceId))
                             {
                                 var targetIds = mapping.Select(m => m.TargetId);
-                                metaDataMetaDataMappings.Add(anserItemMetaDatas.First(m => m.Id == mapping.Key), relatedMetaDatas.Where(m => targetIds.Contains(m.Id)).ToList());
+                                anserItemMetaDatas.AddRange(relatedMetaDatas.Where(m => targetIds.Contains(m.Id)).ToList());
                             }
                         }
-
-                        questionAnswerItemMetaDataMetaDatasMapping.Add(questionItem, metaDataMetaDataMappings);
                     }
 
                     await ExecuteOnUIThreadAsync(
@@ -276,8 +259,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         questionQuestionMetaDataMetaDatasMapping,
                         questionAnswerItemsMapping,
                         questionAnswerResultsMapping,
-                        questionAnswerItemMetaDatasMapping,
-                        questionAnswerItemMetaDataMetaDatasMapping), worker.Token);
+                        questionAnswerItemMetaDatasMapping), worker.Token);
                 }
                 catch (Exception ex)
                 {
@@ -301,10 +283,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>> questionMetaDataMetaDatasMappings,
             Dictionary<QuestionItem, IEnumerable<AnswerItem>> answerItemsMapping,
             Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResultsMapping,
-            Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerItemMetaDatasMapping,
-            Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>> answerItemMetaDataMetaDatasMapping)
+            Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerItemMetaDatasMapping)
         {
-            Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], answerItemMetaDataMetaDatasMapping[q], Logger)));
+            Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], Logger)));
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
@@ -312,6 +293,79 @@ namespace De.HDBW.Apollo.Client.ViewModels
             OnPropertyChanged(nameof(AnswerLayout));
             OnPropertyChanged(nameof(Interaction));
             OnPropertyChanged(nameof(Progress));
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
+        private async Task NextQuestion(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var currentIndex = CurrentQuestion != null ? Questions.IndexOf(CurrentQuestion) : 0;
+
+                    var hasNextQuestion = currentIndex + 1 < Questions.Count;
+                    if (!hasNextQuestion)
+                    {
+                        if (!_assessmentItemId.HasValue)
+                        {
+                            return;
+                        }
+
+                        await SaveAssessmentAsync(worker.Token);
+
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Id, _assessmentItemId.Value);
+
+                        await NavigationService.NavigateAsnc(Routes.AssessmentResultView, worker.Token, parameters);
+                        return;
+                    }
+
+                    currentIndex = currentIndex + 1;
+                    CurrentQuestion = Questions[currentIndex];
+                    _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
+                    _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
+                    _interaction = CurrentQuestion?.Interaction ?? InteractionType.Unknown;
+                    OnPropertyChanged(nameof(QuestionLayout));
+                    OnPropertyChanged(nameof(AnswerLayout));
+                    OnPropertyChanged(nameof(Interaction));
+                    OnPropertyChanged(nameof(Progress));
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NextQuestion)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NextQuestion)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(NextQuestion)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private Task<bool> SaveAssessmentAsync(CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var itemsToUpdate = new List<AnswerItemResult>();
+            foreach (var question in Questions)
+            {
+                itemsToUpdate.AddRange(question.ExportResultes());
+            }
+
+            foreach (var item in itemsToUpdate.Where(i => i.Id < 0))
+            {
+                item.Id = _maxResultId;
+                _maxResultId = _maxResultId + 1;
+            }
+
+            return AnswerItemResultRepository.AddOrUpdateItemsAsync(itemsToUpdate, token);
         }
     }
 }
