@@ -45,7 +45,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             IEnumerable<AnswerItem> answerItems,
             IEnumerable<AnswerItemResult> answerResultItems,
             Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
-            Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> answerMetaDataMetaData,
             ILogger logger)
         {
             ArgumentNullException.ThrowIfNull(questionItem);
@@ -54,7 +53,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             ArgumentNullException.ThrowIfNull(answerItems);
             ArgumentNullException.ThrowIfNull(answerResultItems);
             ArgumentNullException.ThrowIfNull(answerMetaDataItems);
-            ArgumentNullException.ThrowIfNull(answerMetaDataMetaData);
             ArgumentNullException.ThrowIfNull(logger);
             _questionItem = questionItem;
             _questionMetaDataItems = questionMetaDataItems;
@@ -99,7 +97,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     Answers = new ObservableCollection<IInteractiveEntry>(anserList.Select(a => DragSourceEntry<AnswerEntry>.Import(
                         AnswerEntry.Import(
                             a,
-                            answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
+                            answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { Id = -1, QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
                             answerMetaDataItems: answerMetaDataItems[a]),
                         anserList.IndexOf(a) + 1,
                         false,
@@ -113,7 +111,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     Answers = new ObservableCollection<IInteractiveEntry>(anserList.Select(a => InputEntry<AnswerEntry>.Import(
                        AnswerEntry.Import(
                            a,
-                           answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
+                           answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { Id = -1, QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
                            answerMetaDataItems: answerMetaDataItems[a]),
                        Interaction,
                        a.AnswerType,
@@ -123,7 +121,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     Answers = new ObservableCollection<IInteractiveEntry>(answerItems.Select(a => SelectableEntry<AnswerEntry>.Import(
                         AnswerEntry.Import(
                             a,
-                            answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
+                            answerResultItems.FirstOrDefault(r => r.AnswerItemId == a.Id) ?? new AnswerItemResult() { Id = -1, QuestionItemId = questionItem.Id, AnswerItemId = a.Id, AssessmentItemId = questionItem.AssessmentId },
                             answerMetaDataItems: answerMetaDataItems[a]),
                         Interaction,
                         a.AnswerType,
@@ -257,10 +255,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             IEnumerable<AnswerItem> answerItems,
             IEnumerable<AnswerItemResult> answerResultItems,
             Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
-            Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> answerMetaDataMetaData,
             ILogger logger)
         {
-            return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaData, answerItems, answerResultItems, answerMetaDataItems, answerMetaDataMetaData, logger);
+            return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaData, answerItems, answerResultItems, answerMetaDataItems, logger);
+        }
+
+        public IEnumerable<AnswerItemResult> ExportResultes()
+        {
+            return Answers.Select(a => a.Data).OfType<AnswerEntry>().Select(m => m.ExportResult()).ToList();
         }
 
         private void HandleInteraction(IInteractiveEntry entry)

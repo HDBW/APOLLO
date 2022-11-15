@@ -22,5 +22,11 @@ namespace De.HDBW.Apollo.Data.Repositories
             token.ThrowIfCancellationRequested();
             return Task.FromResult(new ReadOnlyCollection<AnswerItemResult>(Items?.Where(i => i.AssessmentItemId == id).ToList() ?? new List<AnswerItemResult>()) as IEnumerable<AnswerItemResult>);
         }
+
+        public Task<long> GetNextIdAsync(CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            return Task.FromResult(Items.Any() ? Items.Max(m => m.Id) + 1 : 0);
+        }
     }
 }

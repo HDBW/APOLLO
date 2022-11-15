@@ -222,6 +222,9 @@ public static class MauiProgram
         services.AddTransient<AssessmentView>();
         services.AddTransient<AssessmentViewModel>();
 
+        services.AddTransient<AssessmentResultView>();
+        services.AddTransient<AssessmentResultViewModel>();
+
         services.AddTransient<AssessmentDescriptionView>();
         services.AddTransient<AssessmentDescriptionViewModel>();
 
@@ -245,6 +248,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
         Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
         Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
+        Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
         Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
         Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
         Routing.RegisterRoute(Routes.FeedbackView, typeof(FeedbackView));
