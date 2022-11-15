@@ -3,9 +3,11 @@
              x:Class="De.HDBW.Apollo.Client.Views.AssessmentResultView"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:AssessmentResultViewModel"
-             Title="AssessmentResultView">
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resource.AssessmentResultView_Title}">
     <VerticalStackLayout>
         <ProgressBar Progress="{Binding Score}" />
+        <Button Command="{Binding ConfirmCommand}" Text="{x:Static strings:Resource.AssessmentResultView_CloseAssessment}" />
     </VerticalStackLayout>
 </ContentPage>
 
