@@ -90,6 +90,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             _assessmentItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            ConfirmCommand?.NotifyCanExecuteChanged();
+        }
+
         private void LoadonUIThread(AssessmentScore score)
         {
             Score = (double)score.PercentageScore;
@@ -102,7 +108,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.PushToRootAsnc(token);
+                    await NavigationService.PushToRootAsnc(worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
