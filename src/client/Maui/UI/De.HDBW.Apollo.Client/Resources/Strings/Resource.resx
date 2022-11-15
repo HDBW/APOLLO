@@ -442,4 +442,10 @@ Langfristig stabilere Arbeitsbedingungen</value>
   <data name="UseCase_C_Name" xml:space="preserve">
     <value>Jobaufstieg</value>
   </data>
+  <data name="AssessmentResultView_Title" xml:space="preserve">
+    <value>Auswertung</value>
+  </data>
+  <data name="AssessmentResultView_CloseAssessment" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
 </root>
