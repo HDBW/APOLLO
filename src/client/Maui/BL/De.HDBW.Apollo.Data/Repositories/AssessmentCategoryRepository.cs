@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
-    public class AssessmentCategoriesRepository : AbstractInMemoryRepository<AssessmentCategory>,
-        IAssessmentCategoriesRepository
+    public class AssessmentCategoryRepository : AbstractInMemoryRepository<AssessmentCategory>,
+        IAssessmentCategoryRepository
     {
-        public AssessmentCategoriesRepository(ILogger logger)
+        public AssessmentCategoryRepository(ILogger logger)
             : base(logger)
         {
         }

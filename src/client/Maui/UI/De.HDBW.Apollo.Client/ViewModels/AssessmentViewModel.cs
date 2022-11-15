@@ -261,6 +261,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         questionAnswerResultsMapping,
                         questionAnswerItemMetaDatasMapping), worker.Token);
                 }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
