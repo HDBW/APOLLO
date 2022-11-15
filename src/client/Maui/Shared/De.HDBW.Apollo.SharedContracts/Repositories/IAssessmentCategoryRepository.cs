@@ -10,7 +10,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace De.HDBW.Apollo.SharedContracts.Repositories
 {
-    public interface IAssessmentCategoriesRepository :
+    public interface IAssessmentCategoryRepository :
         IRepository<AssessmentCategory>,
         IDatabaseRepository<AssessmentCategory>
     {

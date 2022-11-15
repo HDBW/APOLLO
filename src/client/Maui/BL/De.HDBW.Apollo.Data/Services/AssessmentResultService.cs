@@ -8,37 +8,42 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Services
 {
-    internal class AssessmentResultService : IAssessmentResultService
+    public class AssessmentResultService : IAssessmentResultService
     {
-        private readonly QuestionItemRepository _questions;
-        private readonly AnswerItemRepository _answers;
-        private readonly AssessmentCategoriesRepository _categorieses;
-        private readonly ILogger<AssessmentResultService> _logger;
-
         public AssessmentResultService(
             ILogger<AssessmentResultService>? logger,
-            QuestionItemRepository questions,
-            AnswerItemRepository answers,
-            AssessmentCategoriesRepository categoriesRepository)
+            QuestionItemRepository? questionItemRepository,
+            AnswerItemRepository? answerItemRepository,
+            AssessmentCategoryRepository? assessmentCategoriesRepository)
         {
-            _logger = logger;
-            _questions = questions;
-            _answers = answers;
-            _categorieses = categoriesRepository;
+            Logger = logger;
+            QuestionItemRepository = questionItemRepository;
+            AnswerItemRepository = answerItemRepository;
+            AssessmentCategoriesRepository = assessmentCategoriesRepository;
         }
 
-        public AssessmentScore GetAssessmentScore(List<AnswerItemResult> answerItems)
-        {
-            _logger.Log(LogLevel.Information, new EventId(101, "GetAssessmentScore Called"),"{answerItems.Dump()}",answerItems);
+        private QuestionItemRepository? QuestionItemRepository { get; }
 
-            AssessmentScore score = new();
+        private AnswerItemRepository? AnswerItemRepository { get; }
+
+        private AssessmentCategoryRepository? AssessmentCategoriesRepository { get; }
+
+        private ILogger? Logger { get; }
+
+        public Task<AssessmentScore> GetAssessmentScoreAsync(IEnumerable<AnswerItemResult> answerItems, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            Logger?.Log(LogLevel.Information, new EventId(101, "GetAssessmentScore Called"), "{answerItems.Dump()}", answerItems);
+
+            AssessmentScore score = new ();
 
             // TODO: Iterate over answerItems
             // TODO: Load Assessment CategoryResult
             // TODO: Create CategoryResults Collection
             AssessmentCategoryResult categoryResult = new AssessmentCategoryResult();
+
             // TODO: Calculate Assessment Score and be happy ^_^
-            return score;
+            return Task.FromResult(score);
         }
     }
 }

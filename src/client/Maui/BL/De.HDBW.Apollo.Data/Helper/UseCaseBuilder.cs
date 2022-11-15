@@ -18,8 +18,10 @@ namespace De.HDBW.Apollo.Data.Helper
         public UseCaseBuilder(
             ILogger<UseCaseBuilder> logger,
             IAssessmentItemRepository assessmentItemRepository,
+            IAssessmentCategoryRepository assessmentCategoriesRepository,
             IQuestionItemRepository questiontItemRepository,
             IAnswerItemRepository answerItemRepository,
+            IAnswerItemResultRepository answerItemResultRepository,
             IMetaDataMetaDataRelationRepository metaDataMetaDataRelationRepository,
             IAnswerMetaDataRelationRepository answerMetaDataRelationRepository,
             IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
@@ -32,8 +34,10 @@ namespace De.HDBW.Apollo.Data.Helper
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
+            ArgumentNullException.ThrowIfNull(assessmentCategoriesRepository);
             ArgumentNullException.ThrowIfNull(questiontItemRepository);
             ArgumentNullException.ThrowIfNull(answerItemRepository);
+            ArgumentNullException.ThrowIfNull(answerItemResultRepository);
             ArgumentNullException.ThrowIfNull(metaDataMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(answerMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
@@ -46,8 +50,10 @@ namespace De.HDBW.Apollo.Data.Helper
 
             Logger = logger;
             AssessmentItemRepository = assessmentItemRepository;
+            AssessmentCategoriesRepository = assessmentCategoriesRepository;
             QuestiontItemRepository = questiontItemRepository;
             AnswerItemRepository = answerItemRepository;
+            AnswerItemResultRepository = answerItemResultRepository;
             MetaDataMetaDataRelationRepository = metaDataMetaDataRelationRepository;
             AnswerMetaDataRelationRepository = answerMetaDataRelationRepository;
             QuestionMetaDataRelationRepository = questionMetaDataRelationRepository;
@@ -61,9 +67,13 @@ namespace De.HDBW.Apollo.Data.Helper
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
 
+        private IAssessmentCategoryRepository AssessmentCategoriesRepository { get; }
+
         private IQuestionItemRepository QuestiontItemRepository { get; }
 
         private IAnswerItemRepository AnswerItemRepository { get; }
+
+        private IAnswerItemResultRepository AnswerItemResultRepository { get; }
 
         private IMetaDataMetaDataRelationRepository MetaDataMetaDataRelationRepository { get; }
 
@@ -129,6 +139,7 @@ namespace De.HDBW.Apollo.Data.Helper
             }
 
             AnswerItemRepository.ResetItemsAsync(usecase.AnswerItems, token).ConfigureAwait(false);
+
             QuestiontItemRepository.ResetItemsAsync(usecase.QuestionItems, token).ConfigureAwait(false);
             AssessmentItemRepository.ResetItemsAsync(usecase.AssessmentItems, token).ConfigureAwait(false);
             MetadataRepository.ResetItemsAsync(usecase.MetaDataItems, token).ConfigureAwait(false);
@@ -144,6 +155,8 @@ namespace De.HDBW.Apollo.Data.Helper
             UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
 
             // UserProfileItemRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
+            // AssessmentCategoriesRepository.ResetItemsAsync(usecase.AssessmentCategories, token).ConfigureAwait(false);
+            // AnswerItemResultRepository.ResetItemsAsync(usecase.AnswerItemResults, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
 
@@ -151,8 +164,10 @@ namespace De.HDBW.Apollo.Data.Helper
         {
             token.ThrowIfCancellationRequested();
             await AssessmentItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await AssessmentCategoriesRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await QuestiontItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await AnswerItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await AnswerItemResultRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await MetaDataMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await AnswerMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await QuestionMetaDataRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
