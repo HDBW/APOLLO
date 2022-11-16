@@ -21,5 +21,7 @@ namespace De.HDBW.Apollo.Data.Repositories
             token.ThrowIfCancellationRequested();
             return Task.FromResult(new List<AssessmentCategory>());
         }
+
+        //tell future patric to use question as input for question
     }
 }
