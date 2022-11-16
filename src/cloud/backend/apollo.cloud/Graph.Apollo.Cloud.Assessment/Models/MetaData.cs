@@ -4,28 +4,12 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class MetaData
+    public class MetaData : BaseItem
     {
-        #region Implementation of IBackendEntity
-
-        /// <summary>
-        /// The Id of the Backend Unique Identifier
-        /// </summary>
-        [Key]
-        public long BackendId { get; set; }
-
-        /// <summary>
-        /// Another Unique Identifier used as Uri for Services
-        /// </summary>
-        //[Index(IsUnique = true)]
-        [Required]
-        [MaxLength(62)]
-        public Uri Schema { get; set; } = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
-
-        #endregion
-
+       
         public MetaDataType Type { get; set; }
 
+        //Do we need "value" - what are we going to save here? 
         public string Value { get; set; }
 
         public Asset Asset { get; set; }
@@ -33,5 +17,12 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         public long AssetId { get; set; }
 
         public List<AnswerHasMetaData> AnswerHasMetaDatas { get; set; }
+
+        public List<QuestionHasMetaData> QuestionHasMetaDatas { get; set; }
+
+        public List<MetaDataHasMetaData> SourceQuestionHasMetaDatas { get; set; }
+
+        public List<MetaDataHasMetaData> TargetMetaDataHasMetaDatas { get; set; }
+       
     }
 }
