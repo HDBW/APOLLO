@@ -219,6 +219,9 @@ public static class MauiProgram
         services.AddTransient<FirstTimeDialog>();
         services.AddTransient<FirstTimeDialogViewModel>();
 
+        services.AddTransient<CancelAssessmentDialog>();
+        services.AddTransient<CancelAssessmentDialogViewModel>();
+
         services.AddTransient<EmptyView>();
         services.AddTransient<EmptyViewModel>();
 

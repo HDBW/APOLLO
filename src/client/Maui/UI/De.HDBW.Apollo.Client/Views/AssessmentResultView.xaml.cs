@@ -25,6 +25,6 @@ public partial class AssessmentResultView : ContentPage
     {
         // Remark: Work around for nullpointer during use of BackButtonBehaviour.
         var behaviour = Shell.GetBackButtonBehavior(this);
-        //behaviour?.ClearValue(BackButtonBehavior.CommandProperty);
+        behaviour?.ClearValue(BackButtonBehavior.CommandProperty);
     }
 }
