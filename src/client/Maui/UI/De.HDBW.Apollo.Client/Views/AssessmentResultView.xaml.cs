@@ -20,4 +20,11 @@ public partial class AssessmentResultView : ContentPage
             return BindingContext as AssessmentResultViewModel;
         }
     }
+
+    protected override void OnNavigatingFrom(NavigatingFromEventArgs args)
+    {
+        // Remark: Work around for nullpointer during use of BackButtonBehaviour.
+        var behaviour = Shell.GetBackButtonBehavior(this);
+        //behaviour?.ClearValue(BackButtonBehavior.CommandProperty);
+    }
 }
