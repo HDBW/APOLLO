@@ -460,4 +460,16 @@ Langfristig stabilere Arbeitsbedingungen</value>
   <data name="CancelAssessmentDialog_Continue" xml:space="preserve">
     <value>Test beenden</value>
   </data>
+  <data name="SkipQuestionDialog_Title" xml:space="preserve">
+    <value>Frage überspringen?</value>
+  </data>
+  <data name="SkipQuestionDialog_Message" xml:space="preserve">
+    <value>Sie haben die Frage noch nicht beantwortet. Soll wirklich die Frage übersprungen werden?</value>
+  </data>
+  <data name="SkipQuestionDialog_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="SkipQuestionDialog_Continue" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
 </root>

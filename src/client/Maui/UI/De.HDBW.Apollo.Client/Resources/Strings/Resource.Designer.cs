@@ -655,6 +655,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abbrechen.
+        /// </summary>
+        public static string SkipQuestionDialog_Cancel {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiter.
+        /// </summary>
+        public static string SkipQuestionDialog_Continue {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sie haben die Frage noch nicht beantwortet. Soll wirklich die Frage übersprungen werden?.
+        /// </summary>
+        public static string SkipQuestionDialog_Message {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frage überspringen?.
+        /// </summary>
+        public static string SkipQuestionDialog_Title {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usecase ändern.
         /// </summary>
         public static string StartView_ChangeUseCase {
