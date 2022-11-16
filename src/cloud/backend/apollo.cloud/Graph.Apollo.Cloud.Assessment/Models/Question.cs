@@ -27,21 +27,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         [Required]
         public QuestionType QuestionType { get; set; }
 
-        ////Change after December       
-        //[Required]
-        //public LayoutType QuestionLayout { get; set; }
-        ////Change after December       
-        //[Required]
-        //public LayoutType AnswerLayout { get; set; }
-        ////Change after December       
-        //[Required]
-        //public LayoutType InteractionType { get; set; }
-
-        public List<MetaData> MetaDatas { get; set; }
-
-        public List<Scores> Scores { get; set; }
+        //public List<Scores> Scores { get; set; }
         
         public List<Answer> Answers { get; set; }
 
+        public List<QuestionHasMetaData> QuestionHasMetaDatas { get; set; }
     }
 }

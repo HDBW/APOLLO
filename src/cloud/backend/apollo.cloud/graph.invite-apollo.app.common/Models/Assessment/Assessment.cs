@@ -9,6 +9,7 @@ using Invite.Apollo.App.Graph.Common.Models.Esco;
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     [DataContract]
+    //TODO: Rename
     public class AssessmentItem : BaseItem
     {
         public AssessmentItem()

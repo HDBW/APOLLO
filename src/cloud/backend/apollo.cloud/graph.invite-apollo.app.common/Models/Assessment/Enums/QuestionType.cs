@@ -1,4 +1,8 @@
-﻿namespace Invite.Apollo.App.Graph.Assessment.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Invite.Apollo.App.Graph.Common.Models.Assessment.Enums
 {
     public enum QuestionType
     {

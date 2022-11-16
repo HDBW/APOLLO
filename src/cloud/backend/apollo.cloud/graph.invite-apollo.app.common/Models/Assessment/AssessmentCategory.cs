@@ -12,15 +12,16 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 5)]
         public string Title { get; set; } = string.Empty;
 
-        [DataMember(Order = 6)]
-        public int QuestionCount { get; set; }
+        //[DataMember(Order = 6)]
+        //TODO: AutoCalculate
+        //public int QuestionCount { get; set; }
 
         /// <summary>
         /// Threshold
         /// TODO: Remove before DataBase Creation
         /// </summary>
         [DataMember(Order = 7)]
-        public int ResultLimits { get; set; }
+        public int ResultLimit { get; set; }
 
         //TODO: Remove after December
         [ForeignKey(nameof(Course))]

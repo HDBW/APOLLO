@@ -70,13 +70,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// </summary>
         public string Disclaimer { get; set; }
 
-
-        
-        
         /// <summary>
         /// Esco Associated Skills
         /// </summary>
-        public List<Uri> EscoSkills { get; set; } = new();
+        public List<EscoSkill> EscoSkills { get; set; } = new();
 
         
         public List<Question> Questions { get; set; }

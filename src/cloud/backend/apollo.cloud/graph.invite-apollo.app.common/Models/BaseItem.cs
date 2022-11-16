@@ -21,8 +21,6 @@ namespace Invite.Apollo.App.Graph.Common.Models
         #endregion
 
         #region Implementation of IBackendEntity
-        [DataMember(Order = 3, IsRequired = true)]
-        public long BackendId { get; set; }
 
         [DataMember(Order = 4, IsRequired = true)]
         public Uri Schema { get; set; } = null!;
