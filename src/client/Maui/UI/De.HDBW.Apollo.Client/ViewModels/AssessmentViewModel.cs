@@ -317,6 +317,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    var questionResults = CurrentQuestion?.ExportResultes() ?? new List<AnswerItemResult>();
+                    if (questionResults.All(r => r.Value == null))
+                    {
+                        var result = await DialogService.ShowPopupAsync<SkipQuestionDialog, NavigationParameters>(worker.Token);
+                        if (!(result?.GetValue<bool?>(NavigationParameter.Result) ?? true))
+                        {
+                            return;
+                        }
+                    }
+
                     var currentIndex = CurrentQuestion != null ? Questions.IndexOf(CurrentQuestion) : 0;
 
                     var hasNextQuestion = currentIndex + 1 < Questions.Count;
