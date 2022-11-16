@@ -11,6 +11,9 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}"
              Padding="0">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.Resources>
 
         <converter:QuestionDetailsToTitleConverter x:Key="QuestionDetailsToTitleConverter" />

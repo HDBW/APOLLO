@@ -241,6 +241,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abbrechen.
+        /// </summary>
+        public static string CancelAssessmentDialog_Cancel {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test beenden.
+        /// </summary>
+        public static string CancelAssessmentDialog_Continue {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wollen Sie den Test wirklich beende? Alle Daten gehen verlohren.
+        /// </summary>
+        public static string CancelAssessmentDialog_Message {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test abbrechen.
+        /// </summary>
+        public static string CancelAssessmentDialog_Title {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zulassung.
         /// </summary>
         public static string CourseTagType_Admission {

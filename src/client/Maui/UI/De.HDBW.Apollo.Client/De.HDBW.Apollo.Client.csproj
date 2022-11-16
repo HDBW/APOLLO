@@ -130,6 +130,9 @@
     <MauiXaml Update="Views\AssessmentResultView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\CancelAssessmentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
 
   <ItemGroup>
@@ -155,6 +158,12 @@
     </Compile>
     <Compile Update="Views\UseCaseDescriptionView.xaml.cs">
       <DependentUpon>UseCaseDescriptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\CancelAssessmentDialog.xaml.cs">
+      <DependentUpon>CancelAssessmentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\FirstTimeDialog.xaml.cs">
+      <DependentUpon>FirstTimeDialog.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
