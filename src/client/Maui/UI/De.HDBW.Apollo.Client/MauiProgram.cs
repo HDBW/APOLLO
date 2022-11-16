@@ -174,12 +174,15 @@ public static class MauiProgram
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
+        services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
     }
 
     private static void SetupRepositories(IServiceCollection services)
     {
         services.AddSingleton<IUserProfileItemRepository, UserProfileItemRepository>();
         services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
+        services.AddSingleton<IAssessmentScoreRepository, AssessmentScoreRepository>();
+        services.AddSingleton<IAssessmentCategoryRepository, AssessmentCategoryRepository>();
         services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
         services.AddSingleton<IAnswerItemResultRepository, AnswerItemResultRepository>();
         services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
