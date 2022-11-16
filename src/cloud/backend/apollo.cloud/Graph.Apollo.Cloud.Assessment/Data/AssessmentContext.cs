@@ -20,82 +20,82 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 .HasIndex(t => new { t.ExternalId}).IsUnique();
 
             //AssesmentQuestion
-            builder.Entity<Models.AssessmentQuestion>()
+            builder.Entity<Models.Question>()
                 .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentQuestion>()
+            builder.Entity<Models.Question>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
-            builder.Entity<Models.AssessmentQuestion>()
+            builder.Entity<Models.Question>()
                 .HasIndex(t => new { t.ExternalId }).IsUnique();
 
             //AssessmentAnswer
-            builder.Entity<Models.AssessmentAnswer>()
+            builder.Entity<Models.Answer>()
                 .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentAnswer>()
+            builder.Entity<Models.Answer>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
-            builder.Entity<Models.AssessmentQuestion>()
+            builder.Entity<Models.Question>()
                 .HasOne(q => q.Assessment)
-                .WithMany(a => a.AssessmentQuestions)
+                .WithMany(a => a.Questions) //used to be AssessmentQuestions
                 .HasForeignKey(q => q.AssessmentId);
 
-            builder.Entity<Models.AssessmentAnswer>()
-                .HasOne(a => a.AssessmentQuestion)
-                .WithMany(q => q.AssessmentAnswers)
-                .HasForeignKey(a => a.AssessmentQuestionId);
+            builder.Entity<Models.Answer>()
+                .HasOne(a => a.Question)
+                .WithMany(q => q.Answers)
+                .HasForeignKey(a => a.QuestionId);
 
             //AssesmentCategory
-            builder.Entity<Models.AssessmentCategory>()
+            builder.Entity<Models.Category>()
                 .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentCategory>()
+            builder.Entity<Models.Category>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
             //AssesmentScores
-            builder.Entity<Models.AssessmentScores>()
+            builder.Entity<Models.Scores>()
                 .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentScores>()
+            builder.Entity<Models.Scores>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
             //AssessmentAsset
-            builder.Entity<Models.AssessmentAsset>()
+            builder.Entity<Models.Asset>()
                 .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentAsset>()
+            builder.Entity<Models.Asset>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
-            builder.Entity<Models.AssessmentAsset>()
+            builder.Entity<Models.Asset>()
                 .HasIndex(t => new { t.ExternalId }).IsUnique();
             
             //AssessmentCategory
-            builder.Entity<Models.AssessmentCategory>()
+            builder.Entity<Models.Category>()
                 .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentCategory>()
+            builder.Entity<Models.Category>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
 
             //AssessmentMetaData
-            builder.Entity<Models.AssessmentMetaData>()
+            builder.Entity<Models.MetaData>()
                 .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentMetaData>()
+            builder.Entity<Models.MetaData>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
-            builder.Entity<Models.AssessmentMetaData>()
-                .HasOne(pt => pt.AssessmentAsset)
-                .WithMany(p => p.AssessmentMetaDatas)
-                .HasForeignKey(pt => pt.AssessmentAssetId);
+            builder.Entity<Models.MetaData>()
+                .HasOne(pt => pt.Asset)
+                .WithMany(p => p.MetaDatas)
+                .HasForeignKey(pt => pt.AssetId);
 
 
 
             //AnswerHasMetaData
-            builder.Entity<AssessmentAnswerHasMetaData>().HasKey(
-                t => new { t.AnswerId, t.AssessmentMetaDataId });
+            builder.Entity<AnswerHasMetaData>().HasKey(
+                t => new { t.AnswerId, t.MetaDataId });
 
-            builder.Entity<AssessmentAnswerHasMetaData>()
-                .HasOne(pt => pt.AssessmentAnswer)
-                .WithMany(p => p.AssessmentAnswerHasMetaDatas)
+            builder.Entity<AnswerHasMetaData>()
+                .HasOne(pt => pt.Answer)
+                .WithMany(p => p.AnswerHasMetaDatas)
                 .HasForeignKey(pt => pt.AnswerId);
 
-            builder.Entity<AssessmentAnswerHasMetaData>()
-                .HasOne(pt => pt.AssessmentMetaData)
-                .WithMany(p => p.AssessmentAnswerHasMetaDatas)
-                .HasForeignKey(pt => pt.AssessmentMetaDataId);
+            builder.Entity<AnswerHasMetaData>()
+                .HasOne(pt => pt.MetaData)
+                .WithMany(p => p.AnswerHasMetaDatas)
+                .HasForeignKey(pt => pt.MetaDataId);
 
 
 
@@ -156,12 +156,12 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
         public DbSet<Models.Assessment> Assessments { get; set; }
-        public DbSet<Models.AssessmentAnswer> Answers { get; set; }
-        public DbSet<Models.AssessmentAsset> Assets { get; set; }
-        public DbSet<Models.AssessmentMetaData> MetaDatas { get; set; }
-        public DbSet<Models.AssessmentCategory> AssessmentCategories { get; set; }
-        public DbSet<Models.AssessmentQuestion> Questions { get; set; }
-        public DbSet<Models.AssessmentScores> Scores { get; set; }
+        public DbSet<Models.Answer> Answers { get; set; }
+        public DbSet<Models.Asset> Assets { get; set; }
+        public DbSet<Models.MetaData> MetaDatas { get; set; }
+        public DbSet<Models.Category> AssessmentCategories { get; set; }
+        public DbSet<Models.Question> Questions { get; set; }
+        public DbSet<Models.Scores> Scores { get; set; }
 
     }
 }
