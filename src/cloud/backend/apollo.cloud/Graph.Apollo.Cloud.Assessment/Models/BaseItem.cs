@@ -16,7 +16,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         #region Implementation of IBackendEntity
 
-        public long BackendId { get; set; }
+        //public long BackendId { get; set; }
 
         public Uri Schema { get; set; } = null!;
 

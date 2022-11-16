@@ -15,22 +15,17 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public string Value { get; set; } = string.Empty;
 
-        public int Thresholds { get; set; }
-
-        //TODO: AutoCalculate
-        public int QuestionCount { get; set; }
-
         /// <summary>
         /// Threshold
         /// TODO: Remove before DataBase Creation
         /// </summary>
-        public int ResultLimits { get; set; }
+        public int ResultLimit { get; set; }
         
         public string Description { get; set; } = string.Empty;
 
         //TODO: Remove after December
         public long CourseId { get; set; }
 
-        public CourseItem CourseItem { get; set; }
+        public List<Question> Questions { get; set; }
     }
 }

@@ -2,16 +2,14 @@
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class AnswerHasMetaData : BaseItem
+    public class QuestionHasMetaData : BaseItem
     {
         [Required]
-        public long AnswerId { get; set; }
-        public Answer Answer { get; set; }
+        public long QuestionId { get; set; }
+        public Question Question { get; set; }
 
         [Required]
         public long MetaDataId { get; set; }
         public MetaData MetaData { get; set; }
-        
-        
     }
 }

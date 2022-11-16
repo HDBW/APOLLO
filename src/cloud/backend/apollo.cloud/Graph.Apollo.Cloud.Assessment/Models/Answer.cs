@@ -17,5 +17,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         public string Value { get; set; } = string.Empty;
 
         public List<AnswerHasMetaData> AnswerHasMetaDatas { get; set; }
+
     }
 }
