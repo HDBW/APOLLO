@@ -448,4 +448,16 @@ Langfristig stabilere Arbeitsbedingungen</value>
   <data name="AssessmentResultView_CloseAssessment" xml:space="preserve">
     <value>Beenden</value>
   </data>
+  <data name="CancelAssessmentDialog_Title" xml:space="preserve">
+    <value>Test abbrechen</value>
+  </data>
+  <data name="CancelAssessmentDialog_Message" xml:space="preserve">
+    <value>Wollen Sie den Test wirklich beende? Alle Daten gehen verlohren</value>
+  </data>
+  <data name="CancelAssessmentDialog_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="CancelAssessmentDialog_Continue" xml:space="preserve">
+    <value>Test beenden</value>
+  </data>
 </root>

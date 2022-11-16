@@ -101,7 +101,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Score = (double)score.PercentageScore;
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanConfirm))]
         private async Task Confirm(CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
@@ -129,7 +129,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private bool CanSkip()
+        private bool CanConfirm()
         {
             return !IsBusy;
         }

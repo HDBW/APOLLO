@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -280,6 +281,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            CancelCommand?.NotifyCanExecuteChanged();
+        }
+
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             _assessmentItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
@@ -374,6 +381,43 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             return AnswerItemResultRepository.AddOrUpdateItemsAsync(itemsToUpdate, token);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCancel))]
+        private async Task Cancel(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var result = await DialogService.ShowPopupAsync<CancelAssessmentDialog, NavigationParameters>(worker.Token);
+                    if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
+                    {
+                        await NavigationService.PushToRootAsnc(worker.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Cancel)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Cancel)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Cancel)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanCancel()
+        {
+            return !IsBusy;
         }
     }
 }
