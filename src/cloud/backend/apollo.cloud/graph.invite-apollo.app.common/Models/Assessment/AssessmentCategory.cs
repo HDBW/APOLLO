@@ -6,28 +6,8 @@ using System.Runtime.Serialization;
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     [DataContract]
-    public class AssessmentCategory : IEntity, IBackendEntity
+    public class AssessmentCategory : BaseItem
     {
-        #region Implementation of IEntity
-
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [DataMember(Order = 2)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-
-        [DataMember(Order = 3)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4)]
-        public Uri Schema { get; set; }
-
-        #endregion
 
         [DataMember(Order = 5)]
         public string Title { get; set; } = string.Empty;
@@ -42,6 +22,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 7)]
         public int ResultLimits { get; set; }
 
+        //TODO: Remove after December
         [ForeignKey(nameof(Course))]
         [DataMember(Order = 8, IsRequired = true)]
         public long CourseId { get; set; }

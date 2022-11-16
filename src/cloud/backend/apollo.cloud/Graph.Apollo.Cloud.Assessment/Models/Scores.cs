@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class AssessmentMetaData
+    public class Scores : IBackendEntity
     {
         #region Implementation of IBackendEntity
 
@@ -24,14 +24,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         #endregion
 
-        public MetaDataType Type { get; set; }
+        [Required]
+        public int[] ScoringOption { get; set; }
 
-        public string Value { get; set; }
-
-        public AssessmentAsset AssessmentAsset { get; set; }
-
-        public long AssessmentAssetId { get; set; }
-
-        public List<AssessmentAnswerHasMetaData> AssessmentAnswerHasMetaDatas { get; set; }
+        [Required]
+        public int Skalar { get; set; }
+        
     }
 }

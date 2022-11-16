@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Google.Protobuf.WellKnownTypes;
-using Invite.Apollo.App.Graph.Common.Models;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class AssessmentCategory : IBackendEntity
+    public class MetaData
     {
         #region Implementation of IBackendEntity
 
@@ -25,10 +24,14 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         #endregion
 
-        public string Title { get; set; } = string.Empty;
+        public MetaDataType Type { get; set; }
 
-        public string Value { get; set; } = string.Empty;
+        public string Value { get; set; }
 
-        public int Thresholds { get; set; }
+        public Asset Asset { get; set; }
+
+        public long AssetId { get; set; }
+
+        public List<AnswerHasMetaData> AnswerHasMetaDatas { get; set; }
     }
 }
