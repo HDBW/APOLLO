@@ -8,7 +8,9 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
@@ -43,6 +45,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private long _maxResultId;
 
         public AssessmentViewModel(
+            IPreferenceService preferenceService,
             IAssessmentItemRepository assessmentItemRepository,
             IQuestionItemRepository questionItemRepository,
             IAnswerItemResultRepository answerItemResultRepository,
@@ -57,6 +60,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<AssessmentViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
             ArgumentNullException.ThrowIfNull(questionItemRepository);
             ArgumentNullException.ThrowIfNull(answerItemRepository);
@@ -65,6 +69,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(answerMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(questionMetaDataRelationRepository);
             ArgumentNullException.ThrowIfNull(metaDataRepository);
+
+            PreferenceService = preferenceService;
             AssessmentItemRepository = assessmentItemRepository;
             QuestionItemRepository = questionItemRepository;
             AnswerItemResultRepository = answerItemResultRepository;
@@ -146,6 +152,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        private IPreferenceService PreferenceService { get; }
+
         private IAssessmentItemRepository AssessmentItemRepository { get; }
 
         private IQuestionItemRepository QuestionItemRepository { get; }
@@ -162,6 +170,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IMetaDataRepository MetaDataRepository { get; }
 
+        private bool ShowedSkipDialog { get; set; }
+
         public async override Task OnNavigatedToAsync()
         {
             if (!_assessmentItemId.HasValue)
@@ -173,6 +183,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    ShowedSkipDialog = PreferenceService.GetValue(Preference.ShowedSkipDialog, false);
+
                     var assessmentItem = await AssessmentItemRepository.GetItemByIdAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
                     var questionItems = await QuestionItemRepository.GetItemsByForeignKeyAsync(_assessmentItemId.Value, worker.Token).ConfigureAwait(false);
                     questionItems = questionItems ?? new List<QuestionItem>();
@@ -318,9 +330,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var questionResults = CurrentQuestion?.ExportResultes() ?? new List<AnswerItemResult>();
-                    if (questionResults.All(r => r.Value == null))
+                    if (questionResults.All(r => r.Value == null) && !ShowedSkipDialog)
                     {
                         var result = await DialogService.ShowPopupAsync<SkipQuestionDialog, NavigationParameters>(worker.Token);
+                        ShowedSkipDialog = true;
+                        PreferenceService.SetValue(Preference.ShowedSkipDialog, ShowedSkipDialog);
+
                         if (!(result?.GetValue<bool?>(NavigationParameter.Result) ?? true))
                         {
                             return;
