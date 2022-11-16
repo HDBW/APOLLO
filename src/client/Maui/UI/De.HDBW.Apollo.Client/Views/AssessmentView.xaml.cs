@@ -22,6 +22,13 @@ public partial class AssessmentView
         }
     }
 
+    protected override void OnNavigatingFrom(NavigatingFromEventArgs args)
+    {
+        // Remark: Work around for nullpointer during use of BackButtonBehaviour.
+        var behaviour = Shell.GetBackButtonBehavior(this);
+        behaviour?.ClearValue(BackButtonBehavior.CommandProperty);
+    }
+
     private void HandleChildAdded(object sender, ElementEventArgs e)
     {
         var layout = sender as Layout;
@@ -38,12 +45,5 @@ public partial class AssessmentView
         }
 
         layout.MinimumHeightRequest = Math.Max(size.Request.Height, size.Minimum.Height);
-    }
-
-    protected override void OnNavigatingFrom(NavigatingFromEventArgs args)
-    {
-        // Remark: Work around for nullpointer during use of BackButtonBehaviour.
-        var behaviour = Shell.GetBackButtonBehavior(this);
-        behaviour?.ClearValue(BackButtonBehavior.CommandProperty);
     }
 }
