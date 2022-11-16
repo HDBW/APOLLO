@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {
-    public class AssessmentAsset : IBackendEntity
+    public class Asset : IBackendEntity
     {
         #region Implementation of IBackendEntity
 
@@ -36,12 +36,12 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public List<Uri> BlobUris { get; set; } = new();
         public List<Uri> CdnUris { get; set; } = new();
-        public List<AssessmentMetaData> AssessmentMetaDatas { get; set; }
+        public List<MetaData> MetaDatas { get; set; }
     }
 
-    public class AssetConfiguration : IEntityTypeConfiguration<AssessmentAsset>
+    public class AssetConfiguration : IEntityTypeConfiguration<Asset>
     {
-        public void Configure(EntityTypeBuilder<AssessmentAsset> builder)
+        public void Configure(EntityTypeBuilder<Asset> builder)
         {
             //TODO: Review by talisi
             // This Converter will perform the conversion to and from Json to the desired type
