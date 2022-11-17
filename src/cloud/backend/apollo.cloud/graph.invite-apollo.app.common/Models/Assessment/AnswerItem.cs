@@ -8,7 +8,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     /// <summary>
-    /// Represents the Answers to a Question in a Assessment
+    /// Represents the Answers to a Question in a AssessmentType
     /// </summary>
     [DataContract]
     public class AnswerItem : IEntity, IBackendEntity
@@ -42,9 +42,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order = 7, IsRequired = true)]
         public string Value { get; set; } = string.Empty;
-
-        [DataMember(Order = 8)]
-        public string Publisher { get; set; } = string.Empty;
 
     }
 
