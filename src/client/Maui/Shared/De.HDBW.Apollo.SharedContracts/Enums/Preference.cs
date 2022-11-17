@@ -12,5 +12,7 @@ namespace De.HDBW.Apollo.SharedContracts.Enums
         DontShowAgain,
 
         AllowTelemetry,
+
+        ShowedSkipDialog,
     }
 }

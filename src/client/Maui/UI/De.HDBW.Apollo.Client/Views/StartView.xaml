@@ -2,8 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="De.HDBW.Apollo.Client.Views.StartView"
-             NavigationPage.HasBackButton="False"
-             NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="True"
              xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
@@ -46,13 +44,20 @@
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding InteractionCategories}" Spacing="40">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:InteractionCategoryEntry">
-                        <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="*,50" Padding="24,0" >
+                        <Grid RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="*,50" Padding="24,0" >
                             <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
                             <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
                             <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" 
                                             Margin="0,0,0,8"/>
+                            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" BindableLayout.ItemsSource="{Binding Filters}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:FilterInteractionEntry">
+                                        <Button Text="{Binding Text}" Command="{Binding NavigateCommand}"/>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </HorizontalStackLayout>
                             <CollectionView BindingContextChanged="HandleBindingContextChanged"
-                                            Grid.Row="2" Grid.ColumnSpan="2"
+                                            Grid.Row="3" Grid.ColumnSpan="2"
                                             HorizontalScrollBarVisibility="Never"
                                             VerticalScrollBarVisibility="Never">
                                 <CollectionView.ItemsLayout>
@@ -64,12 +69,12 @@
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="3" />
                                             </Border.StrokeShape>
-                                            <Grid RowDefinitions="*,auto,auto, auto" Padding="0">
-                                                <Grid.GestureRecognizers>
-                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}" />
-                                                </Grid.GestureRecognizers>
-                                                <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" InputTransparent="True"/>
-                                                <Border Visual="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
+                                            </Border.GestureRecognizers>
+                                            <Grid RowDefinitions="*,auto,auto, auto" Padding="0" InputTransparent="True">
+                                                <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill"/>
+                                                <Border IsVisible="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
                                                     <Border.StrokeShape>
                                                         <RoundRectangle CornerRadius="0,0,0,4" />
                                                     </Border.StrokeShape>
