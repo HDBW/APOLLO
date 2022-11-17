@@ -96,6 +96,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Repository
 
         public virtual void Edit(T entity)
         {
+            //TODO: check if this could be done via this.RepositoryContext.Set<T>().Update(entity);
             EntityEntry dbEntityEntry = _context.Entry<T>(entity);
             dbEntityEntry.State = EntityState.Modified;
         }

@@ -6,6 +6,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Repository
     {
         public AssessmentRepository(AssessmentContext context) : base(context)
         {
+            //TODO: Add Logging Interception for Serilog? Do we need a sink?
         }
     }
 
