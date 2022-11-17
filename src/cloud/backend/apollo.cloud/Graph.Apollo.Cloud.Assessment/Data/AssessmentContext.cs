@@ -1,16 +1,32 @@
-﻿using System.Reflection.Emit;
-using System.Security.Cryptography.X509Certificates;
-using Invite.Apollo.App.Graph.Assessment.Models;
+﻿using Invite.Apollo.App.Graph.Assessment.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
     public class AssessmentContext : DbContext
     {
-        public AssessmentContext(DbContextOptions<AssessmentContext> options) : base(options)
+        #region DBSets
+        public DbSet<Models.Assessment> Assessments { get; set; }
+        public DbSet<Models.Answer> Answers { get; set; }
+        public DbSet<Models.Asset> Assets { get; set; }
+        public DbSet<Models.MetaData> MetaDatas { get; set; }
+        public DbSet<Models.Category> AssessmentCategories { get; set; }
+        public DbSet<Models.Question> Questions { get; set; }
+        public DbSet<Models.EscoSkill> EscoSkills { get; set; }
+        #endregion
+
+        private readonly ILoggerFactory _loggerFactory;
+
+        public AssessmentContext(DbContextOptions<AssessmentContext> options, ILoggerFactory loggerFactory) : base(options)
         {
-            
+            _loggerFactory = loggerFactory;
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(_loggerFactory);
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Assessment
@@ -125,12 +141,14 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             builder.Entity<MetaDataHasMetaData>()
                 .HasOne(pt => pt.SourceMetaData)
                 .WithMany(p => p.SourceQuestionHasMetaDatas)
-                .HasForeignKey(pt => pt.SourceMetaDataId);
+                .HasForeignKey(pt => pt.SourceMetaDataId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<MetaDataHasMetaData>()
                 .HasOne(pt => pt.TargetMetaData)
                 .WithMany(p => p.TargetMetaDataHasMetaDatas)
-                .HasForeignKey(pt => pt.TargetMetaDataId);
+                .HasForeignKey(pt => pt.TargetMetaDataId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             //Esco
@@ -145,13 +163,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             base.OnModelCreating(builder);
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<Models.Assessment> Assessments { get; set; }
-        public DbSet<Models.Answer> Answers { get; set; }
-        public DbSet<Models.Asset> Assets { get; set; }
-        public DbSet<Models.MetaData> MetaDatas { get; set; }
-        public DbSet<Models.Category> AssessmentCategories { get; set; }
-        public DbSet<Models.Question> Questions { get; set; }
-        public DbSet<Models.EscoSkill> EscoSkills{ get; set; }
 
     }
 }

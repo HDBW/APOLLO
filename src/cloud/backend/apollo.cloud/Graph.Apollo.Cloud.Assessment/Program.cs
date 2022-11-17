@@ -1,6 +1,10 @@
 
+using System;
 using System.Reflection;
 using Invite.Apollo.App.Graph.Assessment;
+using Invite.Apollo.App.Graph.Assessment.Data;
+using Microsoft.Extensions.Hosting;
+using ProtoBuf.Meta;
 using Serilog;
 using Serilog.Events;
 
@@ -10,6 +14,7 @@ public class Program
 {
     public static void Main(string[] args) 
     {
+        
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft",LogEventLevel.Information)
             .Enrich.FromLogContext()
@@ -19,7 +24,15 @@ public class Program
         try
         {
             Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Starting up!");
-            CreateHostBuilder(args).Build().Run();
+            //executes Startup
+            var host = CreateHostBuilder(args).Build();
+
+            CreateDbIfNotExists(host);
+            
+            host.Run();
+
+
+
         }
         catch (Exception exception)
         {
@@ -28,6 +41,25 @@ public class Program
         finally
         {
             Log.CloseAndFlush();
+        }
+    }
+
+    private static void CreateDbIfNotExists(IHost host)
+    {
+        using (var scope = host.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<AssessmentContext>();
+                DbInitializer.Initialize(context);
+            }
+            catch (Exception exception)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(exception, "1-An error occurred creating the DB.");
+                Log.Fatal(exception, "2-An error occurred creating the DB.");
+            }
         }
     }
 
