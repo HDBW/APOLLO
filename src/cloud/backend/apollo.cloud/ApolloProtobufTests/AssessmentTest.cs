@@ -57,7 +57,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            //TODO: Create overlaod for Assessment to check Equals
+            //TODO: Create overlaod for AssessmentType to check Equals
             Assert.IsTrue(deserializedAssessment.Assessments[0].Id.Equals(assi.Id));
         }
 
@@ -150,7 +150,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            //TODO: Create overlaod for Assessment to check Equals
+            //TODO: Create overlaod for AssessmentType to check Equals
             Assert.IsTrue(deserializedAssessment.Assessments.Count>0);
         }
 
@@ -232,7 +232,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            //TODO: Create overlaod for Assessment to check Equals
+            //TODO: Create overlaod for AssessmentType to check Equals
             Assert.IsTrue(deserializedAssessment.Assessments.Count>0);
         }
 
@@ -316,7 +316,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            //TODO: Create overlaod for Assessment to check Equals
+            //TODO: Create overlaod for AssessmentType to check Equals
             Assert.IsTrue(deserializedAssessment.Assessments.Count > 0);
         }
 
@@ -428,7 +428,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            //TODO: Create overlaod for Assessment to check Equals
+            //TODO: Create overlaod for AssessmentType to check Equals
             Assert.IsTrue(deserializedAssessment.Assessments.Count > 0);
 
             //Assert.IsTrue(deserializedAssessment.Questions[0].MetaDataMetaDataRelations.Count.Equals(ass.Questions[0].MetaDataMetaDataRelations.Count));
@@ -512,7 +512,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 file.Close();
             }
 
-            //TODO: Create overlaod for Assessment to check Equals
+            //TODO: Create overlaod for AssessmentType to check Equals
             Assert.IsTrue(deserializedAssessment.Assessments.Count > 0);
 
             //Assert.IsTrue(deserializedAssessment.Questions[0].MetaDataMetaDataRelations.Count.Equals(ass.Questions[0].MetaDataMetaDataRelations.Count));

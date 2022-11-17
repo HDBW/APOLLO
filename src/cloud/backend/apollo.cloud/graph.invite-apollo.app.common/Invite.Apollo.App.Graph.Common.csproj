@@ -10,12 +10,13 @@
     <NeutralLanguage>en-001</NeutralLanguage>
     <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
-	<Version>1.0.0.2</Version>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <FileVersion>1.0.0.5</FileVersion>
+	<Version>1.0.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="protobuf-net" Version="3.1.22" />
     <PackageReference Include="protobuf-net.BuildTools" Version="3.1.22">
       <PrivateAssets>all</PrivateAssets>
