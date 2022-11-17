@@ -13,6 +13,8 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 
         private readonly ObservableCollection<InteractionEntry> _interactions = new ObservableCollection<InteractionEntry>();
 
+        private readonly ObservableCollection<InteractionEntry> _filters = new ObservableCollection<InteractionEntry>();
+
         [ObservableProperty]
         private string? _headLine;
 
@@ -38,6 +40,14 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             get
             {
                 return _interactions;
+            }
+        }
+
+        public ObservableCollection<InteractionEntry> Filters
+        {
+            get
+            {
+                return _filters;
             }
         }
 
