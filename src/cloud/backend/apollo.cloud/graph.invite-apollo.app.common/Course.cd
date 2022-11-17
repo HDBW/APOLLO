@@ -41,9 +41,9 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.CourseItem" BaseTypeListCollapsed="true">
-    <Position X="5.75" Y="3" Width="2.25" />
+    <Position X="5.75" Y="2.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>BAACAAACCQgiQEAgIQAJUAAHCCAACAhAgSAkAAACAAE=</HashCode>
+      <HashCode>BAACAAACCQgiQEAgIQQJUAAHCCAACAhBgSAkAAACAAE=</HashCode>
       <FileName>Models\Course\CourseItem.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
