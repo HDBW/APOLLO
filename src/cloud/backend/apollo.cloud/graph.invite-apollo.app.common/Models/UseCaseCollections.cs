@@ -14,7 +14,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
     public class UseCaseCollections
     {
         /// <summary>
-        /// Assessment Overload
+        /// AssessmentType Overload
         /// </summary>
         /// <param name="assessmentItems"></param>
         /// <param name="questionItems"></param>

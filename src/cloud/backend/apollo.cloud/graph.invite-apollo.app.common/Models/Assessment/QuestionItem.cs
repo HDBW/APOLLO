@@ -41,6 +41,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order = 8)]
         public InteractionType Interaction { get; set; }
+
+        [ForeignKey(nameof(AssessmentCategory))]
+        public long Category { get; set; }
     }
 
     [DataContract]
