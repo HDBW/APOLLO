@@ -55,17 +55,45 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
+            }
+
+            return result;
+        }
+
+        public async Task<bool> PushToRootAsnc(CancellationToken token)
+        {
+            Logger?.LogDebug($"PushToRoot.");
+            token.ThrowIfCancellationRequested();
+            var result = false;
+            try
+            {
+                await DispatcherService.ExecuteOnMainThreadAsync(() => PushToRootOnUIThreadAsnc(token), token);
+                result = true;
+            }
+            catch (OperationCanceledException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                throw;
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
             }
 
             return result;
@@ -83,45 +111,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsnc)} in {GetType()}.");
-            }
-
-            return result;
-        }
-
-        public async Task<bool> ResetNavigationAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
-        {
-            Logger?.LogDebug($"ResetNavigationAsnc to {route} with parameters: {parameters?.ToString() ?? "null"}.");
-            token.ThrowIfCancellationRequested();
-            var result = false;
-            try
-            {
-                await DispatcherService.ExecuteOnMainThreadAsync(() => ResetNavigationOnUIThreadAsnc(route, token, parameters), token);
-                result = true;
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled {nameof(ResetNavigationAsnc)} in {GetType()}.");
-                throw;
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled {nameof(ResetNavigationAsnc)} in {GetType()}.");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error while {nameof(ResetNavigationAsnc)} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsnc)} in {GetType().Name}.");
             }
 
             return result;
@@ -157,6 +157,7 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
+            Shell.Current.FlyoutIsPresented = false;
             if (parameters == null)
             {
                 await Shell.Current.GoToAsync(route, true);
@@ -167,19 +168,19 @@ namespace De.HDBW.Apollo.Client.Services
             }
         }
 
-        private Task PushToRootOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
+        private async Task PushToRootOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
             Logger?.LogDebug($"PushToRootOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
             if (Application.Current == null)
             {
-                return Task.CompletedTask;
+                return;
             }
 
             var page = Routing.GetOrCreateContent(route, ServiceProvider) as Page;
             if (page == null)
             {
-                return Task.CompletedTask;
+                return;
             }
 
             var queryAble = page as IQueryAttributable ?? page.BindingContext as IQueryAttributable;
@@ -192,23 +193,62 @@ namespace De.HDBW.Apollo.Client.Services
             page.NavigatedFrom += NavigatedFromPage;
 
             var navigationPage = Application.Current.MainPage as NavigationPage;
-            if (navigationPage == null || page is Shell)
+            if (navigationPage != null && !(page is Shell))
             {
-                var shell = Application.Current.MainPage as Shell;
-                var currentPage = Application.Current.MainPage;
-                Application.Current.MainPage = page;
-                if (shell != null)
+                await navigationPage.Navigation.PushAsync(page, true);
+                var existingPages = navigationPage.Navigation.NavigationStack.ToList();
+                foreach (var existingPage in existingPages)
                 {
-                    shell.Navigating -= NavigatedFromPageInShell;
-                    shell.Navigated -= NavigatedToPageInShell;
-                    NavigatedFromPageInShell(shell, null);
+                    if (existingPage == page)
+                    {
+                        continue;
+                    }
+
+                    existingPage.NavigatedTo -= NavigatedToPage;
+                    existingPage.NavigatedFrom -= NavigatedFromPage;
+
+                    if (existingPage != navigationPage.CurrentPage)
+                    {
+                        navigationPage.Navigation.RemovePage(existingPage);
+                    }
+
+                    NavigatedFromPage(existingPage, null);
                 }
 
-                if (currentPage != null && shell == null)
+                return;
+            }
+
+            var shell = Application.Current.MainPage as Shell;
+            if (shell != null)
+            {
+                Shell.Current.FlyoutIsPresented = false;
+                await PopShellAsync(Shell.Current);
+                if (parameters == null)
                 {
-                    currentPage.NavigatedFrom -= NavigatedFromPage;
-                    currentPage.NavigatedTo -= NavigatedToPage;
-                    NavigatedFromPage(currentPage, null);
+                    await Shell.Current.GoToAsync(route, true);
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync(route, true, parameters.ToQueryDictionary());
+                }
+            }
+
+            if (page is Shell)
+            {
+                Application.Current.MainPage = page;
+                NavigatedToPage(page, null);
+
+                var existingPages = navigationPage?.Navigation?.NavigationStack?.ToList() ?? new List<Page>();
+                foreach (var existingPage in existingPages)
+                {
+                    existingPage.NavigatedTo -= NavigatedToPage;
+                    existingPage.NavigatedFrom -= NavigatedFromPage;
+                    if (navigationPage?.CurrentPage != existingPage)
+                    {
+                        navigationPage?.Navigation?.RemovePage(existingPage);
+                    }
+
+                    NavigatedFromPage(existingPage, null);
                 }
 
                 shell = Application.Current.MainPage as Shell;
@@ -216,103 +256,50 @@ namespace De.HDBW.Apollo.Client.Services
                 {
                     shell.Navigating += NavigatedFromPageInShell;
                     shell.Navigated += NavigatedToPageInShell;
-
-                    if (!(currentPage is Shell))
-                    {
-                        NavigatedToPage(shell, null);
-                    }
-
                     NavigatedToPageInShell(shell, null);
                 }
-                else if (page != null)
-                {
-                    NavigatedToPage(page, null);
-                }
             }
-            else
-            {
-                navigationPage.Navigation.PushAsync(page, true);
-                var existingPages = navigationPage.Navigation.NavigationStack.ToList();
-                foreach (var existingPage in existingPages)
-                {
-                    if (existingPage == page)
-                    {
-                        continue;
-                    }
-
-                    existingPage.NavigatedTo -= NavigatedToPage;
-                    existingPage.NavigatedFrom -= NavigatedFromPage;
-                    navigationPage.Navigation.RemovePage(existingPage);
-                    NavigatedFromPage(existingPage, null);
-                }
-            }
-
-            return Task.CompletedTask;
         }
 
-        private async Task ResetNavigationOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
+        private async Task PopShellAsync(Shell shell)
         {
-            Logger?.LogDebug($"ResetNavigationOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
+            foreach (var page in shell.Navigation.NavigationStack)
+            {
+                if (page == null)
+                {
+                    continue;
+                }
+
+                page.NavigatedTo -= NavigatedToPage;
+                page.NavigatedFrom -= NavigatedFromPage;
+                await (GetViewModel(page)?.OnNavigatingFromAsync(false) ?? Task.CompletedTask);
+            }
+
+            await Shell.Current.Navigation.PopToRootAsync(false);
+        }
+
+        private async Task PushToRootOnUIThreadAsnc(CancellationToken token)
+        {
+            Logger?.LogDebug($"PushToRootOnUI.");
             token.ThrowIfCancellationRequested();
             if (Application.Current == null)
             {
                 return;
             }
 
-            var page = Routing.GetOrCreateContent(route, ServiceProvider) as Page;
-            if (page == null)
+            var navigationPage = Application.Current.MainPage as NavigationPage;
+            if (navigationPage != null)
             {
+                await navigationPage.Navigation.PopToRootAsync(true);
                 return;
             }
 
-            var queryAble = page as IQueryAttributable ?? page.BindingContext as IQueryAttributable;
-            if (queryAble != null && parameters != null)
-            {
-                queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
-            }
-
-            page.NavigatedTo += NavigatedToPage;
-            page.NavigatedFrom += NavigatedFromPage;
-
-            var navigationPage = Application.Current.MainPage as NavigationPage;
             var shell = Application.Current.MainPage as Shell;
-
-            Application.Current.MainPage = page;
-
-            if (navigationPage != null)
-            {
-                var existingPages = navigationPage.Navigation.NavigationStack.ToList();
-                foreach (var existingPage in existingPages)
-                {
-                    if (existingPage == page)
-                    {
-                        continue;
-                    }
-
-                    existingPage.NavigatedTo -= NavigatedToPage;
-                    existingPage.NavigatedFrom -= NavigatedFromPage;
-                    navigationPage.Navigation.RemovePage(existingPage);
-                    NavigatedFromPage(existingPage, null);
-                }
-            }
-
             if (shell != null)
             {
-                shell.Navigating -= NavigatedFromPageInShell;
-                shell.Navigated -= NavigatedToPageInShell;
-                var isNavigatingBack = true;
-                while (isNavigatingBack)
-                {
-                    var stackedPage = await shell.Navigation.PopAsync(false);
-                    if (stackedPage == null)
-                    {
-                        isNavigatingBack = false;
-                        continue;
-                    }
-
-                    NavigatedFromPageInShell(stackedPage, null);
-                    shell.Navigation.RemovePage(shell.CurrentPage);
-                }
+                await PopShellAsync(shell);
+                NavigatedToPageInShell(shell.CurrentPage, null);
+                NavigatedToPage(shell, null);
             }
         }
 
@@ -344,8 +331,16 @@ namespace De.HDBW.Apollo.Client.Services
         {
             try
             {
-                bool isForwardNavigation = Navigation.NavigationStack.Count > 1
-                && Navigation.NavigationStack[^2] == sender;
+                bool isForwardNavigation = true;
+                if (Shell.Current?.CurrentPage != null)
+                {
+                    isForwardNavigation = Shell.Current?.CurrentPage == sender || (Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender);
+                }
+                else
+                {
+                    isForwardNavigation = Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender;
+                }
+
                 var page = sender as Page;
                 if (page == null)
                 {
@@ -363,7 +358,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {NavigatedFromPage} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {NavigatedFromPage} in {GetType().Name}.");
             }
         }
 
@@ -382,7 +377,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(NavigatedToPage)} in {GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(NavigatedToPage)} in {GetType().Name}.");
             }
         }
 

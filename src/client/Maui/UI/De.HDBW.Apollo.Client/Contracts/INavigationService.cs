@@ -11,6 +11,6 @@ namespace De.HDBW.Apollo.Client.Contracts
 
         Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null);
 
-        Task<bool> ResetNavigationAsnc(string route, CancellationToken token, NavigationParameters? parameters = null);
+        Task<bool> PushToRootAsnc(CancellationToken token);
     }
 }

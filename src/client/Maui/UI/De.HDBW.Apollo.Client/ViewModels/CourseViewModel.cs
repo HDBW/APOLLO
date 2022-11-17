@@ -18,13 +18,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             ICourseItemRepository courseItemRepository,
-            ILogger logger)
+            ILogger<CourseViewModel> logger)
             : base(
                 dispatcherService,
                 navigationService,
                 dialogService,
                 logger)
         {
+            ArgumentNullException.ThrowIfNull(courseItemRepository);
             CourseItemRepository = courseItemRepository;
         }
 

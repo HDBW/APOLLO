@@ -10,8 +10,6 @@ namespace De.HDBW.Apollo.Client.Selector
     {
         public DataTemplate? OverlayTemplate { get; set; }
 
-        public DataTemplate? CompareTemplate { get; set; }
-
         public DataTemplate? DefaultTemplate { get; set; }
 
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
@@ -21,8 +19,6 @@ namespace De.HDBW.Apollo.Client.Selector
             {
                 case LayoutType.Overlay:
                     return OverlayTemplate;
-                case LayoutType.Compare:
-                    return CompareTemplate;
                 default:
                     return DefaultTemplate;
             }
