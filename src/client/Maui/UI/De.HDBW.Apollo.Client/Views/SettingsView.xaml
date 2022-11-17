@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.SettingsView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             x:DataType="viewModels:SettingsViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resource.SettingsView_Title}"
+             IsBusy="{Binding IsBusy}">
+    <VerticalStackLayout>
+        <Button Text="{x:Static strings:Resource.RegistrationView_UnRegisterUser}" Command="{Binding UnRegisterCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

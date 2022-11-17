@@ -19,6 +19,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger logger)
             : base()
         {
+            ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(navigationService);
+            ArgumentNullException.ThrowIfNull(dialogService);
+            ArgumentNullException.ThrowIfNull(dispatcherService);
             Logger = logger;
             NavigationService = navigationService;
             DialogService = dialogService;
@@ -126,15 +130,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(NavigateToRoute)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(NavigateToRoute)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(NavigateToRoute)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(NavigateToRoute)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(NavigateToRoute)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(NavigateToRoute)} in {GetType().Name}.");
                 }
                 finally
                 {
