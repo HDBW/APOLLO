@@ -47,7 +47,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public long? QuestionBackendId { get; set; }
 
         [DataMember(Order = 5)]
-        [ForeignKey(nameof(AssessmentItem))]
+        [ForeignKey(nameof(Assessment))]
         public long? AssessmentBackendId { get; set; }
     }
 
