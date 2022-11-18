@@ -148,6 +148,46 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         ? (string)xlRange.Cells[i, ExcelColumnIndex.DescriptionOfWorkingProcess].Value2.ToString()
                         : string.Empty;
 
+                item.Description =
+                    (xlRange.Cells[i, ExcelColumnIndex.Description].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.Description].Value2.ToString()
+                        : string.Empty;
+
+                item.AssessmentType =
+                    (xlRange.Cells[i, ExcelColumnIndex.AssessmentType].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.AssessmentType].Value2.ToString()
+                        : string.Empty;
+
+                item.Disclaimer =
+                    (xlRange.Cells[i, ExcelColumnIndex.Disclaimer].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.Disclaimer].Value2.ToString()
+                        : string.Empty;
+
+                item.Duration =
+                    (xlRange.Cells[i, ExcelColumnIndex.Duration].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.Duration].Value2.ToString()
+                        : string.Empty;
+
+                item.EscoOccupationId =
+                    (xlRange.Cells[i, ExcelColumnIndex.EscoOccupationId].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoOccupationId].Value2.ToString()
+                        : string.Empty;
+
+                item.EscoSkills =
+                    (xlRange.Cells[i, ExcelColumnIndex.EscoSkills].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoSkills].Value2.ToString()
+                        : string.Empty;
+
+                item.Publisher =
+                    (xlRange.Cells[i, ExcelColumnIndex.Publisher].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.Publisher].Value2.ToString()
+                        : string.Empty;
+
+                item.Title =
+                    (xlRange.Cells[i, ExcelColumnIndex.Title].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.Title].Value2.ToString()
+                        : string.Empty;
+
                 items.Add(item);
 
                 //new line
@@ -204,7 +244,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             {
                 Kldb = bstAssessment.Kldb,
                 AssessmentType = AssessmentType.SkillAssessment,
-                Description = "TODO",
+                Description = bstAssessment.,
                 Disclaimer = "TODO",
                 Duration = TimeSpan.Zero,
                 EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
