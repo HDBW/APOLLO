@@ -22,6 +22,14 @@
         DescriptionOfProfession = 43,
         Kldb = 45,
         DescriptionOfPartialQualification = 46,
-        DescriptionOfWorkingProcess = 47
+        DescriptionOfWorkingProcess = 47,
+        AssessmentType = 55,
+        Description = 56,
+        Disclaimer = 57,
+        Duration = 58,
+        EscoOccupationId = 59,
+        EscoSkills = 60,
+        Publisher = 61,
+        Title = 62
     }
 }
