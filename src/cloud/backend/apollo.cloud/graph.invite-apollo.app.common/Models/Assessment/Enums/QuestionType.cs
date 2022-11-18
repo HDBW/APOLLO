@@ -15,6 +15,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment.Enums
         Eaconditions = 6,
         Imagemap = 7,
         Rating = 8,
-        Cloze = 9
+        Cloze = 9,
+        Survey
     }
 }
