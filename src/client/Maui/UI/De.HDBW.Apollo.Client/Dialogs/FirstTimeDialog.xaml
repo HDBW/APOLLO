@@ -5,10 +5,14 @@
                xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
                x:DataType="viewModels:FirstTimeDialogViewModel">
-    <VerticalStackLayout Padding="20">
-        <Label Text="{x:Static strings:Resource.FirstTimeDialog_Title}"/>
-        <Label Text="{x:Static strings:Resource.FirstTimeDialog_Message}" Margin="0,20"/>
-        <Button Text="{x:Static strings:Resource.FirstTimeDialog_OpenTutorial}" Command="{Binding OpenTutorialCommand}" Margin="0,20"/>
-        <Button Text="{x:Static strings:Resource.FirstTimeDialog_Continue}"  Command="{Binding ContinueCommand}" Margin="0,20"/>
-    </VerticalStackLayout>
+    <Frame BackgroundColor="{StaticResource Background}" Padding="20" MaximumWidthRequest="296" CornerRadius="12">
+        <VerticalStackLayout>
+            <Label Text="{x:Static strings:Resource.FirstTimeDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
+            <Label Text="{x:Static strings:Resource.FirstTimeDialog_Message}" Margin="0,0,0,24" Style="{StaticResource Noto12}"/>
+            <HorizontalStackLayout>
+                <Button Text="{x:Static strings:Resource.FirstTimeDialog_OpenTutorial}" Command="{Binding OpenTutorialCommand}" Margin="0,0,8,0"/>
+                <Button Text="{x:Static strings:Resource.FirstTimeDialog_Continue}"  Command="{Binding ContinueCommand}"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Frame>
 </toolkit:Popup>
