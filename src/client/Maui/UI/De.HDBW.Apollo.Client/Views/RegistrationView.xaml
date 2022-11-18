@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid RowDefinitions="3*,7*">
-        <Image Source="registrationdeco.png" Grid.Row="0" Aspect="AspectFit"/>
+        <Image Source="registrationdeco.svg" Grid.Row="0" Aspect="AspectFit"/>
         <ScrollView  Grid.Row="1" Padding="24,0,24,0" Margin="0,0, 0,16">
             <Grid RowDefinitions="auto,auto,*, auto ,auto">
                 <Label FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.RegistrationView_RegisterNow}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
