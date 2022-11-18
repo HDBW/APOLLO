@@ -5,11 +5,18 @@ using System.Text;
 using Invite.Apollo.App.Graph.Assessment.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
+using Invite.Apollo.App.Graph.Assessment.Data;
+using Microsoft.EntityFrameworkCore;
+using Google.Protobuf.WellKnownTypes;
+using Newtonsoft.Json.Linq;
+using Grpc.Core;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
     public static class DbInitializer
     {
+        
         public static void Initialize(AssessmentContext context)
         {
             context.Database.EnsureCreated();
@@ -20,13 +27,13 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             {
                 return; // DB has been seeded
             }
-
-            CreateAssessmentFromCsv("Data/221111_Booklet_FK_Lagerlogistik.xlsx");
+            
+            CreateAssessmentFromCsv("Data/221111_Booklet_FK_Lagerlogistik.xlsx", context);
 
 
         }
 
-        private static void CreateAssessmentFromCsv(string filename)
+        private static void CreateAssessmentFromCsv(string filename, AssessmentContext context)
         {
             if (!File.Exists(filename))
             {
@@ -188,6 +195,16 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         ? (string)xlRange.Cells[i, ExcelColumnIndex.Title].Value2.ToString()
                         : string.Empty;
 
+                item.Limit =
+                    (xlRange.Cells[i, ExcelColumnIndex.Limit].Value2 != null)
+                        ? xlRange.Cells[i, ExcelColumnIndex.Limit].Value2
+                        : -1;
+
+                item.CourseId =
+                    (xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2 != null)
+                        ? xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2
+                        : -1;
+
                 items.Add(item);
 
                 //new line
@@ -204,30 +221,150 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             }
 
+
+            Models.Assessment assessment = null;
+            if (items.Count > 0)
+                assessment = CreateAssessment(items.First(), context);
             //TODO: Add Items to Database
+
+            Category category = null;
+            Category newCategory = null;
             foreach (BstAssessment bstAssessment in items)
             {
+                
+                Question question = CreateQuestion(assessment, bstAssessment, context);
 
-                Models.Assessment assessment = CreateAssessment(bstAssessment);
+                //Category 
+                if (category == null || newCategory == null || category.Title != newCategory.Title)
+                {
+                    newCategory = new Category()
+                    {
+                        Title = bstAssessment.DescriptionOfPartialQualification,
+                        CourseId = bstAssessment.CourseId,
+                        ResultLimit = bstAssessment.Limit,
+                        Schema = CreateApolloSchema(),
+                        Ticks = DateTime.Now.Ticks
+                    };
+                    
+                }
+                newCategory.Questions.Add(question);
+                category = newCategory;
+                context.SaveChanges();
+                //Category
 
+                MetaData mdInstruction = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
+                CreateQuestionHasMetaData(mdInstruction, question, context);
+                
+                switch (bstAssessment.GetQuestionType())
+                {
+                    case QuestionType.Associate:
 
+                        MetaData md =  CreateMetaData(MetaDataType.Text,bstAssessment.ItemStem, context);
+                        MetaData md1 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_1, context);
+                        MetaData md2 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_2, context);
+                        MetaData md3 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_3, context);
+                        MetaData md4 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_4, context);
+                        
+                        CreateQuestionHasMetaData(md, question, context);
+                        CreateQuestionHasMetaData(md1, question, context);
+                        CreateQuestionHasMetaData(md2, question, context);
+                        CreateQuestionHasMetaData(md3, question, context);
+                        CreateQuestionHasMetaData(md4, question, context);
 
-                Question question = CreateQuestion(assessment, bstAssessment);
+                        //
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Answer answer = CreateAnswer(question, bstAssessment, i, context);
+                        }
 
+                        
+                        //TODO: Set via Answer and Question Type and Index as well MetaData Question has Images as well as Answer has Images
+                        break;
+                    case QuestionType.Choice:
+                        switch (bstAssessment.ItemType.ToUpper())
+                        {
 
+                            case "CHOICE":
+                                
+                                break;
+                            case "CHOICE_AP":
+                                
+                                break;
+                            case "CHOICE_QP":
+                                break;
+                            default:
+                                
+                                break;
+                        }
+                        break;
+                    case QuestionType.Imagemap:
+                        break;
+                    case QuestionType.Rating:
+                        break;
+                    case QuestionType.Sort:
+                        break;
+                    case QuestionType.Survey:
+                        break;
 
-
-
+                }
             }
 
 
         }
 
-        private static Question CreateQuestion(Models.Assessment assessment, BstAssessment bstAssessment)
+        private static MetaData CreateMetaData(MetaDataType text, string value, AssessmentContext context)
+        {
+            MetaData md = new()
+            {
+                Type = MetaDataType.Text,
+                Value = value,
+                Ticks = DateTime.Now.Ticks,
+                Schema = CreateApolloSchema()
+
+            };
+            context.MetaDatas.Add(md);
+            context.SaveChanges();
+            return md;
+        }
+
+        private static QuestionHasMetaData CreateQuestionHasMetaData(MetaData md, Question question, AssessmentContext context)
+        {
+            QuestionHasMetaData qm1 = new()
+            {
+                Ticks = DateTime.Now.Ticks,
+                Schema = CreateApolloSchema(),
+                MetaData = md,
+                Question = question,
+                QuestionId = question.Id
+            };
+            question.QuestionHasMetaDatas.Add(qm1);
+            context.SaveChanges();
+            return qm1;
+        }
+
+
+        private static Answer CreateAnswer(Question question, BstAssessment bstAssessment, int answerIndex, AssessmentContext context)
+        {
+            Answer answer = new();
+            answer.QuestionId = question.Id;
+            answer.AnswerType = bstAssessment.GetAnswerType(); ;
+            answer.Value = bstAssessment.GetAnswer(answerIndex);
+            //answerItem.BackendId = DateTime.Now.Ticks;
+            answer.Schema = CreateApolloSchema();
+            answer.Ticks = DateTime.Now.Ticks;
+            context.Answers.Add(answer);
+            context.SaveChanges();
+            return answer;
+        }
+
+        private static Question CreateQuestion(Models.Assessment assessment, BstAssessment bstAssessment, AssessmentContext context)
         {
             Question question = new()
             {
                 AssessmentId = assessment.Id,
+                Assessment = assessment,
+                ExternalId = bstAssessment.ItemId,
+                QuestionType = bstAssessment.GetQuestionType(),
                 //QuestionLayout = questionLayoutType,
                 //AnswerLayout = answerLayoutType,
                 //Interaction = interactionType,
@@ -235,16 +372,19 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Ticks = DateTime.Now.Ticks,
                 Schema = CreateApolloSchema()
             };
+            context.Questions.Add(question);
+            context.SaveChanges();
             return question;
         }
 
-        private static Models.Assessment CreateAssessment(BstAssessment bstAssessment)
+        private static Models.Assessment CreateAssessment(BstAssessment bstAssessment, AssessmentContext context)
         {
-            return new Models.Assessment
+
+            Models.Assessment assessment  = new Models.Assessment
             {
                 Kldb = bstAssessment.Kldb,
                 AssessmentType = AssessmentType.SkillAssessment,
-                Description = bstAssessment.,
+                Description = bstAssessment.Description,
                 Disclaimer = "TODO",
                 Duration = TimeSpan.Zero,
                 EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
@@ -256,12 +396,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Schema = CreateApolloSchema(),
                 Ticks = DateTime.Now.Ticks,
             };
+
+            context.Assessments.Add(assessment);
+            context.SaveChanges();
+            return assessment;
         }
 
         private static Uri CreateApolloSchema()
         {
             return new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
         }
+
+        #region Create CSV 
 
         private static void CreateMetaDataMetaDataCsv()
         {
@@ -350,5 +496,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             Console.WriteLine(
                 $"Created {filename} @ {DateTime.Now.ToUniversalTime()} : With {properties.Length} entries.");
         }
+
+        #endregion
     }
 }

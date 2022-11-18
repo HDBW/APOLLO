@@ -53,6 +53,8 @@ public class Program
             {
                 var context = services.GetRequiredService<AssessmentContext>();
                 DbInitializer.Initialize(context);
+                //DbInitializer init = new DbInitializer();
+                //init.Initialize(context);
             }
             catch (Exception exception)
             {

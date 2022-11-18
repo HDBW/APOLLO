@@ -30,6 +30,9 @@
         EscoOccupationId = 59,
         EscoSkills = 60,
         Publisher = 61,
-        Title = 62
+        Title = 62,
+        Limit = 63,
+        CourseId = 64
+
     }
 }
