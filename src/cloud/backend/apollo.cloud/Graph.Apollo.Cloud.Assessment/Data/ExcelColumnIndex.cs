@@ -32,7 +32,10 @@
         Publisher = 61,
         Title = 62,
         Limit = 63,
-        CourseId = 64
+        CourseId = 64,
+        QuestionHasPicture = 65,
+        AnswerHasPicture = 66,
+        AmountAnswers = 67
 
     }
 }
