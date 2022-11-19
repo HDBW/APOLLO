@@ -59,6 +59,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         public string Title { get; set; }
         public long CourseId { get; set; }
         public int Limit { get; set; }
+        public int QuestionHasPictures { get; set; }
+        public int AnswerHasPicture { get; set; }
+        public int AmountAnswers { get; set; }
 
         //TODO: Verify Mapping between Bst Data and DTO Schema
         public AnswerType GetAnswerType()
