@@ -27,8 +27,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             {
                 return; // DB has been seeded
             }
-            
-            CreateAssessmentFromCsv("Data/221111_Booklet_FK_Lagerlogistik.xlsx", context);
+
+            string filepath = System.AppDomain.CurrentDomain.BaseDirectory +
+                              "Data/221111_Booklet_FK_Lagerlogistik.xlsx";
+            CreateAssessmentFromCsv(filepath, context);
 
 
         }
@@ -203,6 +205,21 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 item.CourseId =
                     (xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2 != null)
                         ? xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2
+                        : -1;
+
+                item.QuestionHasPictures =
+                    (xlRange.Cells[i, ExcelColumnIndex.QuestionHasPicture].Value2 != null)
+                        ? xlRange.Cells[i, ExcelColumnIndex.QuestionHasPicture].Value2
+                        : -1;
+
+                item.AnswerHasPicture =
+                    (xlRange.Cells[i, ExcelColumnIndex.AnswerHasPicture].Value2 != null)
+                        ? xlRange.Cells[i, ExcelColumnIndex.AnswerHasPicture].Value2
+                        : -1;
+
+                item.AmountAnswers =
+                    (xlRange.Cells[i, ExcelColumnIndex.AmountAnswers].Value2 != null)
+                        ? xlRange.Cells[i, ExcelColumnIndex.AmountAnswers].Value2
                         : -1;
 
                 items.Add(item);
