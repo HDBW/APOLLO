@@ -24,6 +24,9 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [ObservableProperty]
         private string? _decoratorText;
 
+        [ObservableProperty]
+        private bool _isFiltered;
+
         private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, Type entityType, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
             : base(text, data, navigateHandler, canNavigateHandle)
         {

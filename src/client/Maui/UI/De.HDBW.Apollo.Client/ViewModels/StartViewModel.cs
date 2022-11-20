@@ -13,6 +13,7 @@ using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -23,6 +24,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class StartViewModel : BaseViewModel
     {
         private readonly ObservableCollection<InteractionCategoryEntry> _interactionsCategories = new ObservableCollection<InteractionCategoryEntry>();
+
+        private readonly Dictionary<InteractionEntry, object> _filtermappings = new Dictionary<InteractionEntry, object>();
 
         [ObservableProperty]
         private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
@@ -75,6 +78,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ISessionService SessionService { get; }
 
         private UseCase? UseCase { get; set; }
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            foreach (var group in InteractionCategories)
+            {
+                group.RefreshCommands();
+            }
+        }
 
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
         private async Task LoadData(CancellationToken token)
@@ -151,19 +163,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
             InteractionCategories.Clear();
 
             var interactions = new List<InteractionEntry>();
+            var filters = new List<InteractionEntry>();
             foreach (var assesment in assessmentItems)
             {
+                if (!filters.Any(f => ((AssessmentType)f.Data) == assesment.AssessmentType))
+                {
+                    filters.Add(FilterInteractionEntry.Import<AssessmentType>(assesment.AssessmentType.ToString(), assesment.AssessmentType, HandleFilter, CanHandleFilter));
+                }
+
                 var assemsmentData = new NavigationParameters();
                 assemsmentData.AddValue<long?>(NavigationParameter.Id, assesment.Id);
                 var data = new NavigationData(Routes.AssessmentDescriptionView, assemsmentData);
                 var duration = assesment.Duration != TimeSpan.Zero ? string.Format("g", assesment.Duration) : string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
-                interactions.Add(StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
+                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract);
+                interactions.Add(interaction);
+                _filtermappings.Add(interaction, assesment.AssessmentType);
             }
 
-            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_TestHeadline, Resources.Strings.Resource.StartViewModel_TestSubline, interactions, null, HandleShowMore, CanHandleShowMore));
+            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_TestHeadline, Resources.Strings.Resource.StartViewModel_TestSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
 
             interactions = new List<InteractionEntry>();
+            filters = new List<InteractionEntry>();
             foreach (var course in courseItems)
             {
                 var assemsmentData = new NavigationParameters();
@@ -200,10 +221,54 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         break;
                 }
 
-                interactions.Add(StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
+                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract);
+                interactions.Add(interaction);
+                _filtermappings.Add(interaction, course.CourseType);
             }
 
-            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, null, HandleShowMore, CanHandleShowMore));
+            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
+        }
+
+        private bool CanHandleFilter(InteractionEntry interaction)
+        {
+            return !IsBusy;
+        }
+
+        private Task HandleFilter(InteractionEntry interaction)
+        {
+            var filterEntry = interaction as FilterInteractionEntry;
+            var group = InteractionCategories.FirstOrDefault(i => i.Filters.Contains(interaction));
+            if (filterEntry == null || group == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            filterEntry.IsSelected = !filterEntry.IsSelected;
+            var selectedFilters = group.Filters.OfType<FilterInteractionEntry>().Where(f => f.IsSelected);
+            var items = group.Interactions.OfType<StartViewInteractionEntry>();
+
+            switch (interaction.Data)
+            {
+                case AssessmentType type:
+                    foreach (var item in items)
+                    {
+                        item.IsFiltered = IsFilteredByAssessmentType(_filtermappings[item] as AssessmentType?, selectedFilters.Select(f => f.Data).OfType<AssessmentType>().ToList());
+                    }
+
+                    break;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private bool IsFilteredByAssessmentType(AssessmentType? assessmentType, IList<AssessmentType> selectedAssessmentTypes)
+        {
+            if (!assessmentType.HasValue || !selectedAssessmentTypes.Any())
+            {
+                return true;
+            }
+
+            return !selectedAssessmentTypes.Contains(assessmentType.Value);
         }
 
         private bool CanHandleInteract(InteractionEntry interaction)
