@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace De.HDBW.Apollo.Client.Models.Interactions
 {
@@ -25,7 +26,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 
         private Func<InteractionCategoryEntry, Task> _navigateHandler;
 
-        private InteractionCategoryEntry(string? headLine, string? sublineLine, List<InteractionEntry> interactions, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
+        private InteractionCategoryEntry(string? headLine, string? sublineLine, List<InteractionEntry> interactions, List<InteractionEntry> filters, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
         {
             HeadLine = headLine;
             SublineLine = sublineLine;
@@ -33,6 +34,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             _interactions = new ObservableCollection<InteractionEntry>(interactions ?? new List<InteractionEntry>());
             _canNavigateHandle = canNavigateHandle;
             _navigateHandler = navigateHandler;
+            _filters = new ObservableCollection<InteractionEntry>(filters);
         }
 
         public ObservableCollection<InteractionEntry> Interactions
@@ -51,9 +53,23 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
-        public static InteractionCategoryEntry Import(string? headLine, string? sublineLine, List<InteractionEntry> interactions, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
+        public static InteractionCategoryEntry Import(string? headLine, string? sublineLine, List<InteractionEntry> interactions, List<InteractionEntry> filters, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
         {
-            return new InteractionCategoryEntry(headLine, sublineLine, interactions, data, navigateHandler, canNavigateHandle);
+            return new InteractionCategoryEntry(headLine, sublineLine, interactions, filters, data, navigateHandler, canNavigateHandle);
+        }
+
+        public void RefreshCommands()
+        {
+            ShowMoreCommand?.NotifyCanExecuteChanged();
+            foreach (var filter in Filters)
+            {
+                filter.NavigateCommand?.NotifyCanExecuteChanged();
+            }
+
+            foreach (var interaction in Interactions)
+            {
+                interaction.NavigateCommand?.NotifyCanExecuteChanged();
+            }
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShowMore), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]

@@ -84,6 +84,12 @@
                                                 <Label Text="{Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
                                                 <Label Text="{Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
                                             </Grid>
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsFiltered}" Value="True">
+                                                    <Setter Property="Opacity"  Value="0.3" />
+                                                    <!-- Multiple Setter elements are allowed -->
+                                                </DataTrigger>
+                                            </Border.Triggers>
                                         </Border>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
