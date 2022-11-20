@@ -4,15 +4,16 @@
                x:Class="De.HDBW.Apollo.Client.Dialogs.CancelAssessmentDialog"
                xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+               Color="{StaticResource Background}"
                x:DataType="viewModels:CancelAssessmentDialogViewModel">
-    <Frame BackgroundColor="{StaticResource Background}" Padding="20" MaximumWidthRequest="296" CornerRadius="12">
-        <VerticalStackLayout>
+    <Grid RowDefinitions="*, auto, 20">
+        <VerticalStackLayout Padding="20">
             <Label Text="{x:Static strings:Resource.CancelAssessmentDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
-            <Label Text="{x:Static strings:Resource.CancelAssessmentDialog_Message}" Margin="0,0,0,24" Style="{StaticResource Noto12}"/>
-            <HorizontalStackLayout>
-                <Button Text="{x:Static strings:Resource.CancelAssessmentDialog_Cancel}" Command="{Binding CancelCommand}" Margin="0,0,8,0"/>
-                <Button Text="{x:Static strings:Resource.CancelAssessmentDialog_Continue}"  Command="{Binding ContinueCommand}"/>
-            </HorizontalStackLayout>
+            <Label Text="{x:Static strings:Resource.CancelAssessmentDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
         </VerticalStackLayout>
-    </Frame>    
+        <Grid ColumnDefinitions="*,8,*" Grid.Row="1">
+            <Button Text="{x:Static strings:Resource.CancelAssessmentDialog_Cancel}" Command="{Binding CancelCommand}" />
+            <Button Text="{x:Static strings:Resource.CancelAssessmentDialog_Continue}"  Command="{Binding ContinueCommand}" Grid.Column="2"/>
+        </Grid>
+    </Grid>
 </toolkit:Popup>
