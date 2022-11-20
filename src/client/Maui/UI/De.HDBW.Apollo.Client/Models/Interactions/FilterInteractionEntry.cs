@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
     public partial class FilterInteractionEntry : InteractionEntry
     {
         [ObservableProperty]
-        private bool _isSelected = true;
+        private bool _isSelected;
 
         private FilterInteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
             : base(text, data, navigateHandler, canNavigateHandle)
