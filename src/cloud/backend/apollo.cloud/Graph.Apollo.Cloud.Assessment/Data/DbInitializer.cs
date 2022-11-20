@@ -238,7 +238,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             }
 
-
             Models.Assessment assessment = null;
             if (items.Count > 0)
                 assessment = CreateAssessment(items.First(), context);
@@ -262,7 +261,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         Schema = CreateApolloSchema(),
                         Ticks = DateTime.Now.Ticks
                     };
-                    
                 }
                 newCategory.Questions.Add(question);
                 category = newCategory;
@@ -288,10 +286,12 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         CreateQuestionHasMetaData(md3, question, context);
                         CreateQuestionHasMetaData(md4, question, context);
 
-                        //
-                        for (int i = 0; i < 4; i++)
+                        //TODO: Implement Metadata as well
+                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
                         {
                             Answer answer = CreateAnswer(question, bstAssessment, i, context);
+
+
                         }
 
                         
@@ -300,17 +300,34 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     case QuestionType.Choice:
                         switch (bstAssessment.ItemType.ToUpper())
                         {
-
                             case "CHOICE":
-                                
+                                MetaData qmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                                MetaData qmdh = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
+                                CreateQuestionHasMetaData(qmd, question,context);
+                                CreateQuestionHasMetaData(qmdh, question,context);
+                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                                {
+                                    Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
+                                }
                                 break;
                             case "CHOICE_AP":
-                                
+                                MetaData qapmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemType, context);
+                                MetaData qapmdh = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
+                                CreateQuestionHasMetaData(qapmd, question, context);
+                                CreateQuestionHasMetaData(qapmdh, question, context);
                                 break;
                             case "CHOICE_QP":
+                                MetaData cmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                                MetaData cmd1 = CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1,
+                                    context);
+                                MetaData cmd2 = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
+                                CreateQuestionHasMetaData(cmd, question, context);
+                                CreateQuestionHasMetaData(cmd1, question, context);
+                                CreateQuestionHasMetaData(cmd2, question, context);
+                                //TODO: Store Choice Amount
                                 break;
                             default:
-                                
+                                //TODO: move choice and choice ap to default?
                                 break;
                         }
                         break;
@@ -364,9 +381,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         {
             Answer answer = new();
             answer.QuestionId = question.Id;
-            answer.AnswerType = bstAssessment.GetAnswerType(); ;
+            answer.AnswerType = bstAssessment.GetAnswerType();
             answer.Value = bstAssessment.GetAnswer(answerIndex);
-            //answerItem.BackendId = DateTime.Now.Ticks;
+            //answer.BackendId = DateTime.Now.Ticks;
             answer.Schema = CreateApolloSchema();
             answer.Ticks = DateTime.Now.Ticks;
             context.Answers.Add(answer);
@@ -376,19 +393,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
         private static Question CreateQuestion(Models.Assessment assessment, BstAssessment bstAssessment, AssessmentContext context)
         {
-            Question question = new()
-            {
-                AssessmentId = assessment.Id,
-                Assessment = assessment,
-                ExternalId = bstAssessment.ItemId,
-                QuestionType = bstAssessment.GetQuestionType(),
-                //QuestionLayout = questionLayoutType,
-                //AnswerLayout = answerLayoutType,
-                //Interaction = interactionType,
-                //BackendId = DateTime.Now.Ticks,
-                Ticks = DateTime.Now.Ticks,
-                Schema = CreateApolloSchema()
-            };
+            Question question = new();
+            question.AssessmentId = assessment.Id;
+            question.Assessment = assessment;
+            question.ExternalId = bstAssessment.ItemId;
+            question.QuestionType = bstAssessment.GetQuestionType();
+            //TODO: Set via Mapping
+            //question.//QuestionLayout = questionLayoutType,
+            //question.//AnswerLayout = answerLayoutType,
+            //question.//Interaction = interactionType,
+            question.Ticks = DateTime.Now.Ticks;
+            question.Schema = CreateApolloSchema();
+
             context.Questions.Add(question);
             context.SaveChanges();
             return question;
