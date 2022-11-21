@@ -262,7 +262,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skilltests sind nur einmalig durchführbar und können nicht wiederholt werden..
+        ///   Looks up a localized string similar to Tests sind nur einmalig durchführbar und können nicht wiederholt werden..
         /// </summary>
         public static string CancelAssessmentDialog_Message {
             get {
