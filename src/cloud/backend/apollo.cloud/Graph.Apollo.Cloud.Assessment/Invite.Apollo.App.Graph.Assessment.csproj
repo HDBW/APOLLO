@@ -26,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Data\221111_Booklet_FK_Lagerlogistik.xlsx">
+    <Content Include="Data\221111_Booklet_FK_Lagerlogistik.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

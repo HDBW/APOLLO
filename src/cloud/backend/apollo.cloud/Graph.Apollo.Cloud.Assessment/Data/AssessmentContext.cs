@@ -9,6 +9,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         public DbSet<Models.Assessment> Assessments { get; set; }
         public DbSet<Models.Answer> Answers { get; set; }
         public DbSet<Models.Asset> Assets { get; set; }
+
+        public DbSet<Models.Category> Categories { get; set; }
         public DbSet<Models.MetaData> MetaDatas { get; set; }
         public DbSet<Models.Category> AssessmentCategories { get; set; }
         public DbSet<Models.Question> Questions { get; set; }

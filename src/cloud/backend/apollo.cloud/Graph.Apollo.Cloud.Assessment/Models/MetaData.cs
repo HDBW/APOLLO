@@ -12,9 +12,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         //Do we need "value" - what are we going to save here? 
         public string Value { get; set; }
 
-        public Asset Asset { get; set; }
+        public Asset? Asset { get; set; }
 
-        public long AssetId { get; set; }
+        public long? AssetId { get; set; }
 
         public List<AnswerHasMetaData> AnswerHasMetaDatas { get; set; }
 
