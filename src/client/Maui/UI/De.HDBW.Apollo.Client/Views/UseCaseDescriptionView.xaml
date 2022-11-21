@@ -13,18 +13,21 @@
              x:DataType="viewModels:UseCaseDescriptionViewModel" Padding="0">
     <Grid RowDefinitions="*, auto">
         <ScrollView Padding="24,0">
-            <VerticalStackLayout VerticalOptions="Fill">
-                <Grid RowDefinitions="auto, auto, *, auto, auto, 10, 38" ColumnDefinitions="*, auto" IsVisible="{Binding HasUserProfile}">
-                    <Label Text="{Binding UserProfile.FirstName}" LineBreakMode="TailTruncation" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}"/>
-                    <Label Text="{Binding UserProfile.LastName}" LineBreakMode="TailTruncation" Grid.Row="1" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}"/>
+            <VerticalStackLayout>
+                <Grid RowDefinitions="64, auto, *, auto, auto, 10, 38" ColumnDefinitions="*, auto" IsVisible="{Binding HasUserProfile}">
+                    <Image Source="{Binding UserProfile.ImagePath}" HeightRequest="64" WidthRequest="64" HorizontalOptions="Start">
+                        <Image.Clip>
+                            <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32"/>
+                        </Image.Clip>
+                    </Image>
+                    <Label Text="{Binding UserProfile.FirstName}" Margin="0,8,0,0" LineBreakMode="TailTruncation" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" Grid.Row="1"/>
                     <Label Text="{Binding DisplayAge}" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="3"/>
-                    <Label Text="{Binding DisplayJob}" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="4"/>
+                    <Label Text="{Binding DisplayLocation}" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="4"/>
                     <Rectangle StrokeThickness="0" Margin="0,8,0,0" Background="{StaticResource Primary}" Grid.Row="5" Grid.ColumnSpan="2" />
                     <Border Margin="0,0,16,0" StrokeThickness="0" BackgroundColor="{StaticResource Background}" IsVisible="{Binding HasImage}" Grid.Column="1" Grid.RowSpan="7">
                         <Image Source="{Binding ImagePath}"/>
                     </Border>
                 </Grid>
-                <Label Text="{Binding Scenario}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" Margin="0,0,0,16"/>
                 <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Experience}" Style="{StaticResource Noto16}" Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
                 <Label Text="{Binding Experience}" Style="{StaticResource Noto12}" Margin="0,0,0,24"/>
                 <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Story}" Style="{StaticResource Noto16}"  Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>

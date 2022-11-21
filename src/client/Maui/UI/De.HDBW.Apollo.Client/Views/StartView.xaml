@@ -27,20 +27,21 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Image HeightRequest="64" WidthRequest="64" Grid.Column="0" Margin="24,0,0,0" Grid.Row="0" Source="{Binding UserProfile.ImagePath}" Aspect="AspectFill">
+        <Frame Grid.ColumnSpan="2" CornerRadius="8" BackgroundColor="{StaticResource Surface}" Margin="12,0"/>
+        <Image HeightRequest="64" WidthRequest="64" Grid.Column="0" Margin="24,8,0,8" Grid.Row="0" Source="{Binding UserProfile.ImagePath}" Aspect="AspectFill">
             <Image.Clip>
-                <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32"/>
+                <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32" />
             </Image.Clip>
         </Image>
-        <Grid Grid.Column="1" ColumnDefinitions="auto,*" RowDefinitions="auto, auto" Margin="8,0,24,0" VerticalOptions="Center">
+        <Grid Grid.Column="1" ColumnDefinitions="auto,*" RowDefinitions="auto, auto" Margin="8,8,24,8" VerticalOptions="Center">
             <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold"  Grid.ColumnSpan="2"/>
             <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
             <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
         </Grid>
-        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" >
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="2">
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding InteractionCategories}" Spacing="40">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:InteractionCategoryEntry">

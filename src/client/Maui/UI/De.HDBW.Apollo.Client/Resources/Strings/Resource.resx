@@ -196,22 +196,22 @@ Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu 
     <value>Qualifikation</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut.</value>
+    <value>Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction1Detail" xml:space="preserve">
-    <value>Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu.</value>
+    <value>Entdecke passende Weiterbildungen</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction2" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut.</value>
+    <value>Erkenne Trends in deinem Berufsfeld und sei immer auf dem neuesten Stand</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction2Detail" xml:space="preserve">
-    <value>Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu.</value>
+    <value>Halte dein Wissen aktuell</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction3" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut.</value>
+    <value>Teste dein Wissen und analysiere deine Fähigkeiten</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction3Detail" xml:space="preserve">
-    <value>Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu.</value>
+    <value>Entfalte dein Potential</value>
   </data>
   <data name="ExtendedSplashScreenView_Welcome" xml:space="preserve">
     <value>Willkommen zur Beta von Apollo</value>
@@ -350,8 +350,8 @@ deiner Wahl</value>
   <data name="UseCaseDescriptionView_Goal" xml:space="preserve">
     <value>Ziel</value>
   </data>
-  <data name="UseCaseDescriptionView_JobFormat" xml:space="preserve">
-    <value>Beruf: {0}</value>
+  <data name="UseCaseDescriptionView_LocationFormat" xml:space="preserve">
+    <value>Ort: {0}</value>
   </data>
   <data name="UseCaseDescriptionView_Start" xml:space="preserve">
     <value>Szenario starten</value>
@@ -370,50 +370,46 @@ deiner Wahl</value>
 1 Jahr Einzelhandel mit Lebensmitteln</value>
   </data>
   <data name="UseCaseDetail_A_Goal" xml:space="preserve">
-    <value>Job im Umkreis von 50km des Wohnorts
+    <value>Job im Bereich Lager
 Langfristig stabilere Arbeitsbedingungen</value>
   </data>
-  <data name="UseCaseDetail_A_Job" xml:space="preserve">
-    <value>Lagerist</value>
-  </data>
-  <data name="UseCaseDetail_A_Scenario" xml:space="preserve">
-    <value>Auf Jobsuche</value>
+  <data name="UseCaseDetail_A_Location" xml:space="preserve">
+    <value>Ludwigsburg</value>
   </data>
   <data name="UseCaseDetail_A_Story" xml:space="preserve">
-    <value>Du hast die letzten 5 Jahre in Jobs ohne Qualifi-kationsvorraussetzungen gearbeitet. Nun wurde dein Arbeitsvertrag nicht verlängert und du stehst erneut vor der Aufgabe eine Job zu finden. Da du keine Rücklagen besitzt bist du zwar bereit jedes Angebot anzunehmen, jedoch strebst du zukünftig stabilere Arbeitsverträge an.</value>
+    <value>Du hast in den letzten vier Jahren in einem großen Versandlager gearbeitet. Deine Aufgabe war es, Waren aus dem Lager für Lieferaufträge zusammenzustellen. Vorher hast du eine Ausbildung im Einzelhandel angefangen, jedoch abgebrochen. Dein Unternehmen hat beschlossen, den Standort zu schließen. Du bist auf der Suche nach einem neuen Job im Bereich Lager.</value>
   </data>
   <data name="UseCaseDetail_B_Age" xml:space="preserve">
-    <value>UseCaseDetail_B_Age</value>
+    <value>42</value>
   </data>
   <data name="UseCaseDetail_B_Experience" xml:space="preserve">
-    <value>UseCaseDetail_B_Experience</value>
+    <value>3 Jahre Ausbildung Kauffrau im Einzelhandel
+19 Jahre Erfahrung im Einzelhandel</value>
   </data>
   <data name="UseCaseDetail_B_Goal" xml:space="preserve">
-    <value>UseCaseDetail_B_Goal</value>
+    <value>Weiterbildung im Bereich E-Commerce
+Anschlussfähig bleiben und neue Bereiche entdecken</value>
   </data>
-  <data name="UseCaseDetail_B_Job" xml:space="preserve">
-    <value>UseCaseDetail_B_Job</value>
-  </data>
-  <data name="UseCaseDetail_B_Scenario" xml:space="preserve">
-    <value>UseCaseDetail_B_Scenario</value>
+  <data name="UseCaseDetail_B_Location" xml:space="preserve">
+    <value>München</value>
   </data>
   <data name="UseCaseDetail_B_Story" xml:space="preserve">
-    <value>UseCaseDetail_B_Story</value>
+    <value>Du arbeitest seit 22 Jahren im Einzelhandel. Dein Betrieb hat in den letzten Jahren neben dem Geschäft vor Ort auch den Online-Handel weiter ausgebaut. Um anschlussfähig zu bleiben, möchtest du dich im Bereich E-Commerce weiterbilden.</value>
   </data>
   <data name="UseCaseDetail_C_Age" xml:space="preserve">
-    <value>UseCaseDetail_C_Age</value>
+    <value>36</value>
   </data>
   <data name="UseCaseDetail_C_Experience" xml:space="preserve">
-    <value>UseCaseDetail_C_Experience</value>
+    <value>3 Jahre Ausbildung Fachinformatikerin
+1 Jahr Weiterbildung IHK Techniker IT
+10 Jahre Erfahrung Systemintegration</value>
   </data>
   <data name="UseCaseDetail_C_Goal" xml:space="preserve">
-    <value>UseCaseDetail_C_Goal</value>
+    <value>Berufliche Weiterentwicklung
+Weiterbildung zur IT Projektleiterin</value>
   </data>
-  <data name="UseCaseDetail_C_Job" xml:space="preserve">
-    <value>UseCaseDetail_C_Job</value>
-  </data>
-  <data name="UseCaseDetail_C_Scenario" xml:space="preserve">
-    <value>UseCaseDetail_C_Scenario</value>
+  <data name="UseCaseDetail_C_Location" xml:space="preserve">
+    <value>Augsburg</value>
   </data>
   <data name="UseCaseDetail_C_Story" xml:space="preserve">
     <value>UseCaseDetail_C_Story</value>
@@ -422,13 +418,13 @@ Langfristig stabilere Arbeitsbedingungen</value>
     <value>Wähle dein Szenario</value>
   </data>
   <data name="UseCaseSelectionView_ChooseDescription" xml:space="preserve">
-    <value>Definiere das Ziel, dass du mit dem Verwenden der App verfolgst.</value>
+    <value>Die Inhalte der Beta passen sich an dein gewähltes Ziel an.</value>
   </data>
   <data name="UseCase_A_Description" xml:space="preserve">
     <value>Du möchtest einen sicheren Job finden</value>
   </data>
   <data name="UseCase_A_Name" xml:space="preserve">
-    <value>Jobsuche</value>
+    <value>Arbeitssuche</value>
   </data>
   <data name="UseCase_B_Description" xml:space="preserve">
     <value>Du möchtest neue Fähigkeiten erwerben</value>
@@ -440,7 +436,7 @@ Langfristig stabilere Arbeitsbedingungen</value>
     <value>Du möchtest in deinem Job Karriere machen</value>
   </data>
   <data name="UseCase_C_Name" xml:space="preserve">
-    <value>Jobaufstieg</value>
+    <value>Karriereaufstieg</value>
   </data>
   <data name="AssessmentResultView_Title" xml:space="preserve">
     <value>Auswertung</value>

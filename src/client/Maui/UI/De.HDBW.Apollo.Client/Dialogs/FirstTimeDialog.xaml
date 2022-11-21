@@ -6,13 +6,13 @@
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
                Color="{StaticResource Background}"
                x:DataType="viewModels:FirstTimeDialogViewModel">
-    <Grid RowDefinitions="*, auto, 20">
+    <Grid RowDefinitions="*, auto, 20" x:Name="Part_Root">
         <VerticalStackLayout Padding="20">
             <Label Text="{x:Static strings:Resource.FirstTimeDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
             <Label Text="{x:Static strings:Resource.FirstTimeDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
         </VerticalStackLayout>
         <Grid ColumnDefinitions="*,8,*" Grid.Row="1">
-            <Button Text="{x:Static strings:Resource.FirstTimeDialog_OpenTutorial}" Command="{Binding OpenTutorialCommand}" />
+            <Button Text="{x:Static strings:Resource.FirstTimeDialog_OpenTutorial}" Style="{StaticResource SoftButton}" Command="{Binding OpenTutorialCommand}" />
             <Button Text="{x:Static strings:Resource.FirstTimeDialog_Continue}"  Command="{Binding ContinueCommand}" Grid.Column="2"/>
         </Grid>
     </Grid>

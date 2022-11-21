@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
@@ -115,6 +114,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var taskList = new List<Task>();
                     Task<NavigationParameters?>? dialogTask = null;
+
+                    /*
                     var isFirstTime = PreferenceService.GetValue(Preference.IsFirstTime, true);
                     if (isFirstTime)
                     {
@@ -122,6 +123,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         dialogTask = DialogService.ShowPopupAsync<FirstTimeDialog, NavigationParameters>(token);
                         taskList.Add(dialogTask);
                     }
+                    */
 
                     if (taskList.Any())
                     {

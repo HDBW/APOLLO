@@ -40,7 +40,7 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </VisualStateManager.VisualStateGroups>
-                <Label Text="{TemplateBinding Content}" x:Name="TextLabel" HorizontalOptions="Center" VerticalTextAlignment="Center"/>
+                <Label Text="{TemplateBinding Content}" x:Name="TextLabel" HorizontalOptions="Center" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation"/>
                 <BoxView x:Name="Indicator" Grid.Row="1" Color="Transparent"/>
             </Grid>
         </ControlTemplate>
@@ -127,7 +127,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="DefaultQuestionDetailInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
-            <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource AnswersTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+            <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
         </DataTemplate>
 
         <DataTemplate x:Key="AssociateQuestionDetailInteractionTemplate" x:DataType="contracts:IAssociateTargetInteractiveEntry">
