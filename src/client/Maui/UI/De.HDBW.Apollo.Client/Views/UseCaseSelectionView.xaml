@@ -24,11 +24,11 @@
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                         </Grid.GestureRecognizers>
-                        <Border Grid.RowSpan="2" StrokeThickness="0" Background="{StaticResource Primary}">
+                        <Border Grid.RowSpan="2" StrokeThickness="0" Background="{StaticResource White}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="8,0,8,0" />
                             </Border.StrokeShape>
-                            <Image Source="{Binding ImagePath}" Margin="25" WidthRequest="40" HeightRequest="40"/>
+                            <Image Source="{Binding ImagePath}" Margin="4" WidthRequest="72" HeightRequest="72"/>
                         </Border>
                         <Border Grid.Column="1" Grid.RowSpan="2" StrokeThickness="0" Background="{StaticResource White}">
                             <Border.StrokeShape>

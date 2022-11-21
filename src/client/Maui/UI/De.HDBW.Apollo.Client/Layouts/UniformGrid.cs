@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Microsoft.Maui.Controls.Compatibility;
+﻿using Microsoft.Maui.Controls.Compatibility;
 
 namespace De.HDBW.Apollo.Client.Layouts
 {

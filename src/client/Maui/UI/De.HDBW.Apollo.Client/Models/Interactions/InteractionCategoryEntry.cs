@@ -4,7 +4,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace De.HDBW.Apollo.Client.Models.Interactions
 {
