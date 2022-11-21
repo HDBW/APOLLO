@@ -12,17 +12,17 @@
              IsBusy="{Binding IsBusy}"
              x:DataType="viewModels:UseCaseDescriptionViewModel" Padding="0">
     <Grid RowDefinitions="*, auto">
-        <ScrollView Padding="24,0">
-            <VerticalStackLayout>
+        <ScrollView Padding="24,0" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout SizeChanged="HandleSizeChanged">
                 <Grid RowDefinitions="64, auto, *, auto, auto, 10, 38" ColumnDefinitions="*, auto" IsVisible="{Binding HasUserProfile}">
                     <Image Source="{Binding UserProfile.ImagePath}" HeightRequest="64" WidthRequest="64" HorizontalOptions="Start">
                         <Image.Clip>
                             <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32"/>
                         </Image.Clip>
                     </Image>
-                    <Label Text="{Binding UserProfile.FirstName}" Margin="0,8,0,0" LineBreakMode="TailTruncation" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" Grid.Row="1"/>
-                    <Label Text="{Binding DisplayAge}" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="3"/>
-                    <Label Text="{Binding DisplayLocation}" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="4"/>
+                    <Label Text="{Binding UserProfile.FirstName}" MaxLines="1" Margin="0,8,0,0" LineBreakMode="TailTruncation" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" Grid.Row="1"/>
+                    <Label Text="{Binding DisplayAge}" MaxLines="1"  Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="3"/>
+                    <Label Text="{Binding DisplayLocation}" MaxLines="1" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="4"/>
                     <Rectangle StrokeThickness="0" Margin="0,8,0,0" Background="{StaticResource Primary}" Grid.Row="5" Grid.ColumnSpan="2" />
                     <Border Margin="0,0,16,0" StrokeThickness="0" BackgroundColor="{StaticResource Background}" IsVisible="{Binding HasImage}" Grid.Column="1" Grid.RowSpan="7">
                         <Image Source="{Binding ImagePath}"/>

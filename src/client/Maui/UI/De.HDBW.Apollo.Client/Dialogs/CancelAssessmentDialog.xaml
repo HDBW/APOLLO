@@ -12,7 +12,7 @@
             <Label Text="{x:Static strings:Resource.CancelAssessmentDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
         </VerticalStackLayout>
         <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform 0, Android=8}">
-            <Button Text="{x:Static strings:Resource.CancelAssessmentDialog_Cancel}" Style="{StaticResource SoftButton}"  Command="{Binding CancelCommand}" />
+            <Button Text="{x:Static strings:Resource.CancelAssessmentDialog_Cancel}" Style="{StaticResource BorderButton}"  Command="{Binding CancelCommand}" />
             <Button Text="{x:Static strings:Resource.CancelAssessmentDialog_Continue}"  Command="{Binding ContinueCommand}" Grid.Column="2"/>
         </Grid>
     </Grid>
