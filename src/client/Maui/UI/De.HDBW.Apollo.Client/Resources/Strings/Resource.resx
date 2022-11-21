@@ -452,7 +452,7 @@ Langfristig stabilere Arbeitsbedingungen</value>
     <value>Bist du dir sicher, dass du den Test beenden möchtest?</value>
   </data>
   <data name="CancelAssessmentDialog_Message" xml:space="preserve">
-    <value>Skilltests sind nur einmalig durchführbar und können nicht wiederholt werden.</value>
+    <value>Tests sind nur einmalig durchführbar und können nicht wiederholt werden.</value>
   </data>
   <data name="CancelAssessmentDialog_Cancel" xml:space="preserve">
     <value>Fortfahren</value>
