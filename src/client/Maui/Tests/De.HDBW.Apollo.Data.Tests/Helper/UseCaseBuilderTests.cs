@@ -4,7 +4,6 @@
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Tests.Extensions;
-using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Microsoft.Extensions.Logging;
 using Xunit;

@@ -16,7 +16,6 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {

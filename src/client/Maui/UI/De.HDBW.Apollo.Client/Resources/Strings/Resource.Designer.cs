@@ -343,7 +343,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
+        ///   Looks up a localized string similar to Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1 {
             get {
@@ -352,7 +352,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        ///   Looks up a localized string similar to Entdecke passende Weiterbildungen.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1Detail {
             get {
@@ -361,7 +361,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
+        ///   Looks up a localized string similar to Erkenne Trends in deinem Berufsfeld und sei immer auf dem neuesten Stand.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction2 {
             get {
@@ -370,7 +370,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        ///   Looks up a localized string similar to Halte dein Wissen aktuell.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction2Detail {
             get {
@@ -379,7 +379,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut..
+        ///   Looks up a localized string similar to Teste dein Wissen und analysiere deine Fähigkeiten.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction3 {
             get {
@@ -388,7 +388,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu..
+        ///   Looks up a localized string similar to Entfalte dein Potential.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction3Detail {
             get {
@@ -822,7 +822,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jobsuche.
+        ///   Looks up a localized string similar to Arbeitssuche.
         /// </summary>
         public static string UseCase_A_Name {
             get {
@@ -858,7 +858,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jobaufstieg.
+        ///   Looks up a localized string similar to Karriereaufstieg.
         /// </summary>
         public static string UseCase_C_Name {
             get {
@@ -894,11 +894,11 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beruf: {0}.
+        ///   Looks up a localized string similar to Ort: {0}.
         /// </summary>
-        public static string UseCaseDescriptionView_JobFormat {
+        public static string UseCaseDescriptionView_LocationFormat {
             get {
-                return ResourceManager.GetString("UseCaseDescriptionView_JobFormat", resourceCulture);
+                return ResourceManager.GetString("UseCaseDescriptionView_LocationFormat", resourceCulture);
             }
         }
         
@@ -949,7 +949,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Job im Umkreis von 50km des Wohnorts
+        ///   Looks up a localized string similar to Job im Bereich Lager
         ///Langfristig stabilere Arbeitsbedingungen.
         /// </summary>
         public static string UseCaseDetail_A_Goal {
@@ -959,25 +959,16 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lagerist.
+        ///   Looks up a localized string similar to Ludwigsburg.
         /// </summary>
-        public static string UseCaseDetail_A_Job {
+        public static string UseCaseDetail_A_Location {
             get {
-                return ResourceManager.GetString("UseCaseDetail_A_Job", resourceCulture);
+                return ResourceManager.GetString("UseCaseDetail_A_Location", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auf Jobsuche.
-        /// </summary>
-        public static string UseCaseDetail_A_Scenario {
-            get {
-                return ResourceManager.GetString("UseCaseDetail_A_Scenario", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast die letzten 5 Jahre in Jobs ohne Qualifi-kationsvorraussetzungen gearbeitet. Nun wurde dein Arbeitsvertrag nicht verlängert und du stehst erneut vor der Aufgabe eine Job zu finden. Da du keine Rücklagen besitzt bist du zwar bereit jedes Angebot anzunehmen, jedoch strebst du zukünftig stabilere Arbeitsverträge an..
+        ///   Looks up a localized string similar to Du hast in den letzten vier Jahren in einem großen Versandlager gearbeitet. Deine Aufgabe war es, Waren aus dem Lager für Lieferaufträge zusammenzustellen. Vorher hast du eine Ausbildung im Einzelhandel angefangen, jedoch abgebrochen. Dein Unternehmen hat beschlossen, den Standort zu schließen. Du bist auf der Suche nach einem neuen Job im Bereich Lager..
         /// </summary>
         public static string UseCaseDetail_A_Story {
             get {
@@ -986,7 +977,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_B_Age.
+        ///   Looks up a localized string similar to 42.
         /// </summary>
         public static string UseCaseDetail_B_Age {
             get {
@@ -995,7 +986,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_B_Experience.
+        ///   Looks up a localized string similar to 3 Jahre Ausbildung Kauffrau im Einzelhandel
+        ///19 Jahre Erfahrung im Einzelhandel.
         /// </summary>
         public static string UseCaseDetail_B_Experience {
             get {
@@ -1004,7 +996,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_B_Goal.
+        ///   Looks up a localized string similar to Weiterbildung im Bereich E-Commerce
+        ///Anschlussfähig bleiben und neue Bereiche entdecken.
         /// </summary>
         public static string UseCaseDetail_B_Goal {
             get {
@@ -1013,25 +1006,16 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_B_Job.
+        ///   Looks up a localized string similar to München.
         /// </summary>
-        public static string UseCaseDetail_B_Job {
+        public static string UseCaseDetail_B_Location {
             get {
-                return ResourceManager.GetString("UseCaseDetail_B_Job", resourceCulture);
+                return ResourceManager.GetString("UseCaseDetail_B_Location", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_B_Scenario.
-        /// </summary>
-        public static string UseCaseDetail_B_Scenario {
-            get {
-                return ResourceManager.GetString("UseCaseDetail_B_Scenario", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_B_Story.
+        ///   Looks up a localized string similar to Du arbeitest seit 22 Jahren im Einzelhandel. Dein Betrieb hat in den letzten Jahren neben dem Geschäft vor Ort auch den Online-Handel weiter ausgebaut. Um anschlussfähig zu bleiben, möchtest du dich im Bereich E-Commerce weiterbilden..
         /// </summary>
         public static string UseCaseDetail_B_Story {
             get {
@@ -1040,7 +1024,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_C_Age.
+        ///   Looks up a localized string similar to 36.
         /// </summary>
         public static string UseCaseDetail_C_Age {
             get {
@@ -1049,7 +1033,9 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_C_Experience.
+        ///   Looks up a localized string similar to 3 Jahre Ausbildung Fachinformatikerin
+        ///1 Jahr Weiterbildung IHK Techniker IT
+        ///10 Jahre Erfahrung Systemintegration.
         /// </summary>
         public static string UseCaseDetail_C_Experience {
             get {
@@ -1058,7 +1044,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_C_Goal.
+        ///   Looks up a localized string similar to Berufliche Weiterentwicklung
+        ///Weiterbildung zur IT Projektleiterin.
         /// </summary>
         public static string UseCaseDetail_C_Goal {
             get {
@@ -1067,20 +1054,11 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_C_Job.
+        ///   Looks up a localized string similar to Augsburg.
         /// </summary>
-        public static string UseCaseDetail_C_Job {
+        public static string UseCaseDetail_C_Location {
             get {
-                return ResourceManager.GetString("UseCaseDetail_C_Job", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_C_Scenario.
-        /// </summary>
-        public static string UseCaseDetail_C_Scenario {
-            get {
-                return ResourceManager.GetString("UseCaseDetail_C_Scenario", resourceCulture);
+                return ResourceManager.GetString("UseCaseDetail_C_Location", resourceCulture);
             }
         }
         
@@ -1103,7 +1081,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Definiere das Ziel, dass du mit dem Verwenden der App verfolgst..
+        ///   Looks up a localized string similar to Die Inhalte der Beta passen sich an dein gewähltes Ziel an..
         /// </summary>
         public static string UseCaseSelectionView_ChooseDescription {
             get {
