@@ -36,6 +36,5 @@
         QuestionHasPicture = 65,
         AnswerHasPicture = 66,
         AmountAnswers = 67
-
     }
 }

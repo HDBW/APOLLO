@@ -27,6 +27,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [ForeignKey(nameof(AssessmentCategory))]
         public long Category { get; set; }
+
+        public string ScoringOption { get; set; } = string.Empty;
     }
 
     [DataContract]
