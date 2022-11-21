@@ -101,7 +101,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             return result;
         }
 
-        public string GetAnswer(int answerIndex)
+        public string GetHTMLDistractorPrimary(int answerIndex)
         {
             string result;
             switch (answerIndex)
@@ -117,6 +117,31 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     break;
                 case 3:
                     result = HTMLDistractorPrimary_4;
+                    break;
+                default:
+                    result = string.Empty;
+                    break;
+            }
+
+            return result;
+        }
+
+        public string GetHTMLDistractorSecondary(int answerIndex)
+        {
+            string result;
+            switch (answerIndex)
+            {
+                case 0:
+                    result = HTMLDistractorSecondary_1;
+                    break;
+                case 1:
+                    result = HTMLDistractorSecondary_2;
+                    break;
+                case 2:
+                    result = HTMLDistractorSecondary_3;
+                    break;
+                case 3:
+                    result = HTMLDistractorSecondary_4;
                     break;
                 default:
                     result = string.Empty;
