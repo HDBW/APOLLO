@@ -5,11 +5,9 @@
 
         public Task<IEnumerable<Models.Assessment>> GetAllAssessmentsAsync();
 
-        public Task<IEnumerable<Models.Assessment>> GetAssessmentByIdAsync(long assessmentId);
+        public Task<Models.Assessment> GetAssessmentByIdAsync(long assessmentId);
 
-        public Task<IEnumerable<Models.Assessment>> GetAssessmentByOccupation(string occupation);
-
-        public Task<IQueryable<Models.Assessment>> FindAllAssessmentsAsync();
+        public Task<IEnumerable<Models.Assessment>> GetAssessmentsByOccupation(string occupation);
 
         public void CreateAssessment(Models.Assessment assessment);
 
