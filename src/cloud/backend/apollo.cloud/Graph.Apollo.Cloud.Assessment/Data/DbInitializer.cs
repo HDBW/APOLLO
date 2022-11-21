@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Google.Protobuf.WellKnownTypes;
 using Newtonsoft.Json.Linq;
 using Grpc.Core;
+using Serilog;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
@@ -233,9 +234,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //    Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
 
                 //add useful things here!
-
-
-
             }
 
             Models.Assessment assessment = null;
@@ -286,45 +284,58 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         CreateQuestionHasMetaData(md3, question, context);
                         CreateQuestionHasMetaData(md4, question, context);
 
-                        //TODO: Implement Metadata as well
                         for (int i = 0; i < bstAssessment.AmountAnswers; i++)
                         {
                             Answer answer = CreateAnswer(question, bstAssessment, i, context);
-
-
+                            MetaData answerMetaData =
+                                CreateMetaData(MetaDataType.Text, bstAssessment.GetHTMLDistractorPrimary(i), context);
+                            AnswerHasMetaData answerHasMetaData =
+                                CreateAnswerHasMetaData(answerMetaData, answer, context);
                         }
-
                         
-                        //TODO: Set via Answer and Question Type and Index as well MetaData Question has Images as well as Answer has Images
                         break;
                     case QuestionType.Choice:
                         switch (bstAssessment.ItemType.ToUpper())
                         {
                             case "CHOICE":
                                 MetaData qmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                                MetaData qmdh = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
                                 CreateQuestionHasMetaData(qmd, question,context);
-                                CreateQuestionHasMetaData(qmdh, question,context);
                                 for (int i = 0; i < bstAssessment.AmountAnswers; i++)
                                 {
                                     Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
+                                    MetaData tempAnswerMetaData = CreateMetaData(MetaDataType.Text,
+                                        bstAssessment.GetHTMLDistractorPrimary(i), context);
+                                    AnswerHasMetaData tempAnswerHasMetaData = CreateAnswerHasMetaData(tempAnswerMetaData, tempAnswer, context);
                                 }
                                 break;
                             case "CHOICE_AP":
                                 MetaData qapmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemType, context);
-                                MetaData qapmdh = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
                                 CreateQuestionHasMetaData(qapmd, question, context);
-                                CreateQuestionHasMetaData(qapmdh, question, context);
+
+                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                                {
+                                    Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
+                                    MetaData tempAnswerMetaData = CreateMetaData(MetaDataType.Image,
+                                        bstAssessment.GetHTMLDistractorPrimary(i), context);
+                                    AnswerHasMetaData tempAnswerHasMetaData =
+                                        CreateAnswerHasMetaData(tempAnswerMetaData, tempAnswer, context);
+                                }
                                 break;
                             case "CHOICE_QP":
                                 MetaData cmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
                                 MetaData cmd1 = CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1,
                                     context);
-                                MetaData cmd2 = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
                                 CreateQuestionHasMetaData(cmd, question, context);
                                 CreateQuestionHasMetaData(cmd1, question, context);
-                                CreateQuestionHasMetaData(cmd2, question, context);
-                                //TODO: Store Choice Amount
+
+                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                                {
+                                    Answer temAnswer = CreateAnswer(question, bstAssessment, i, context);
+                                    MetaData temMetaData = CreateMetaData(MetaDataType.Text, bstAssessment.GetHTMLDistractorPrimary(i),
+                                        context);
+                                    AnswerHasMetaData temAnswerHasMetaData =
+                                        CreateAnswerHasMetaData(temMetaData, temAnswer, context);
+                                }
                                 break;
                             default:
                                 //TODO: move choice and choice ap to default?
@@ -332,14 +343,45 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         }
                         break;
                     case QuestionType.Imagemap:
+                        MetaData mdText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        MetaData mdImage =
+                            CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1, context);
+
+                        CreateQuestionHasMetaData(mdText, question, context);
+                        CreateQuestionHasMetaData(mdImage, question, context);
+
+                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                        {
+                            Answer a = CreateAnswer(question, bstAssessment, i, context);
+                            MetaData amd = CreateMetaData(MetaDataType.Point2D, bstAssessment.GetHTMLDistractorPrimary(i), context);
+                            AnswerHasMetaData ahmd = CreateAnswerHasMetaData(amd,a,context);
+                        }
                         break;
                     case QuestionType.Rating:
+                        //TODO: Add Position and Pole Description to MetaData?
+                        //Problem of Tomorrow Patric
+
                         break;
                     case QuestionType.Sort:
+                        MetaData tempData = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        var tempQuestionMetaData = CreateQuestionHasMetaData(tempData, question, context);
+
+                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                        {
+                            Answer answerItem = CreateAnswer(question, bstAssessment, i, context);
+                            MetaData answerMetaDataItem = CreateMetaData(MetaDataType.Text,
+                                bstAssessment.GetHTMLDistractorPrimary(i), context);
+                            AnswerHasMetaData amdi = CreateAnswerHasMetaData(answerMetaDataItem, answerItem, context);
+                            MetaData ansMetaDataStartPosition = CreateMetaData(MetaDataType.Position,i.ToString(), context);
+                            AnswerHasMetaData amdipos =
+                                CreateAnswerHasMetaData(ansMetaDataStartPosition, answerItem, context);
+                        }
+
                         break;
                     case QuestionType.Survey:
+                        //TODO: Add Position and Pole Description to MetaData?
+                        //Problem of Tomorrow Patric
                         break;
-
                 }
             }
 
@@ -376,13 +418,56 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             return qm1;
         }
 
+        private static AnswerHasMetaData CreateAnswerHasMetaData(MetaData md, Answer answer, AssessmentContext context)
+        {
+            AnswerHasMetaData qm1 = new()
+            {
+                Ticks = DateTime.Now.Ticks,
+                Schema = CreateApolloSchema(),
+                MetaData = md,
+                Answer = answer,
+                AnswerId = answer.Id
+            };
+            answer.AnswerHasMetaDatas.Add(qm1);
+            context.SaveChanges();
+            return qm1;
+        }
+
 
         private static Answer CreateAnswer(Question question, BstAssessment bstAssessment, int answerIndex, AssessmentContext context)
         {
             Answer answer = new();
             answer.QuestionId = question.Id;
             answer.AnswerType = bstAssessment.GetAnswerType();
-            answer.Value = bstAssessment.GetAnswer(answerIndex);
+
+            //TODO: !!! Value is wrong !!!
+            var questionType = bstAssessment.GetQuestionType();
+            var somevalue = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
+            string resultvector = bstAssessment.ScoringOption_1;
+            var strReplace = resultvector.Replace(" ", "");
+            var result = strReplace.Split('-');
+
+            switch (questionType)
+            {
+                case QuestionType.Associate:
+                    answer.Value = bstAssessment.GetHTMLDistractorSecondary(answerIndex);
+                    break;
+                case QuestionType.Choice:
+                    answer.Value = Convert.ToBoolean(Convert.ToInt16(result[answerIndex])).ToString();
+                    break;
+                case QuestionType.Imagemap:
+                    answer.Value = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
+                    break;
+                case QuestionType.Binary:
+                    answer.Value = Convert.ToBoolean(Convert.ToInt16(result[answerIndex])).ToString();
+                    break;
+                case QuestionType.Sort:
+                    answer.Value = result[answerIndex].ToString();
+                    break;
+                //TODO: Rating Implementation
+            }
+
+            answer.Value = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
             //answer.BackendId = DateTime.Now.Ticks;
             answer.Schema = CreateApolloSchema();
             answer.Ticks = DateTime.Now.Ticks;
