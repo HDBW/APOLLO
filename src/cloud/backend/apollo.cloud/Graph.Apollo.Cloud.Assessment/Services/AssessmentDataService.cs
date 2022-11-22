@@ -49,7 +49,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             _metaDataHasMetaDataRepository = metaDataHasMetaDataRepository;
         }
 
-        //TODO: Do the DTO Mapping here
+        
         //TODO: https://victorakpan.com/blog/ef-core-inmemory-and-dependency-injection-in-console-app
 
         #region Implementation of IAssessmentDataService
@@ -165,8 +165,13 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public async Task<IEnumerable<QuestionItem>> GetAllQuestionItemsAsync()
         {
             var questions = await GetAllQuestionsAsync();
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Question, QuestionItem>());
-            //TODO: Overwrite Layout shit
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<Models.Question, QuestionItem>()
+                    .ForMember(dest => dest.AnswerLayout, opt => opt.MapFrom<AnswerLayoutResolver>())
+                    .ForMember(dest => dest.QuestionLayout, opt => opt.MapFrom<QuestionLayoutResolver>())
+                    .ForMember(dest => dest.Interaction, opt => opt.MapFrom<InteractionTypeResolver>())
+                );
+
             var mapper = new Mapper(config);
             List<QuestionItem> questionItems = new();
             foreach (var item in questions)
@@ -179,8 +184,12 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public async Task<QuestionItem> GetQuestionItemByIdAsync(long assessmentId)
         {
             var question = await GetQuestionByIdAsync(assessmentId);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Question, QuestionItem>());
-            //TODO: Overwrite Layout shit
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<Models.Question, QuestionItem>()
+                    .ForMember(dest => dest.AnswerLayout, opt => opt.MapFrom<AnswerLayoutResolver>())
+                    .ForMember(dest => dest.QuestionLayout, opt => opt.MapFrom<QuestionLayoutResolver>())
+                    .ForMember(dest => dest.Interaction, opt => opt.MapFrom<InteractionTypeResolver>())
+            );
             var mapper = new Mapper(config);
             return mapper.Map<QuestionItem>(question);
         }
@@ -221,8 +230,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public async Task<IEnumerable<AnswerItem>> GetAllAnswerItemsAsync()
         {
             var answers = await GetAllAnswersAsync();
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Answer, AnswerItem>());
-            //TODO: Overwrite shit
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Answer, AnswerItem>()
+                .ForMember(dest => dest.AnswerType, opt => opt.MapFrom<AnswerTypeResolver>()));
+
             var mapper = new Mapper(config);
             List<AnswerItem> answerItems = new();
             foreach (Answer answer in answers)
@@ -235,8 +245,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public async Task<AnswerItem> GetAnswerItemByIdAsync(long question)
         {
             var answer = await GetAnswersByQuestionIdAsync(question);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Answer, AnswerItem>());
-            //TODO: Overwrite Layout shit
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Answer, AnswerItem>()
+                .ForMember(dest => dest.AnswerType, opt => opt.MapFrom<AnswerTypeResolver>()));
+
             var mapper = new Mapper(config);
             return mapper.Map<AnswerItem>(answer);
         }
@@ -277,7 +288,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var metaData = await GetAllMetaDataAsync();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.MetaData, MetaDataItem>());
-            //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<MetaDataItem> metaDataItems = new();
             foreach (MetaData data in metaData)
@@ -291,7 +301,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var metaData = await GetMetaDataByIdAsync(metadataId);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.MetaData, MetaDataItem>());
-            //TODO: Overwrite Layout shit
             var mapper = new Mapper(config);
             return mapper.Map<MetaDataItem>(metaData);
         }
@@ -333,7 +342,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var answerHasMetaData = await GetAllAnswerHasMetaDataAsync();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.AnswerHasMetaData, AnswerMetaDataRelation>());
-            //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AnswerMetaDataRelation> metaDataItems = new();
             foreach (AnswerHasMetaData data in answerHasMetaData)
@@ -347,7 +355,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var answerHasMetaData = await GetAnswerHasMetaDataByAnswerIdAsync(answerId);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.AnswerHasMetaData, AnswerMetaDataRelation>());
-            //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AnswerMetaDataRelation> metaDataItems = new();
             foreach (AnswerHasMetaData data in answerHasMetaData)
@@ -394,7 +401,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var questionHasMetaData = await GetAllQuestionHasMetaDataAsync();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.QuestionHasMetaData, QuestionMetaDataRelation>());
-            //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<QuestionMetaDataRelation> metaDataItems = new();
             foreach (QuestionHasMetaData data in questionHasMetaData)
@@ -408,7 +414,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var questionHasMetaData = await GetQuestionHasMetaDataByQuestionIdAsync(questionId);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.QuestionHasMetaData, QuestionMetaDataRelation>());
-            //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<QuestionMetaDataRelation> metaDataItems = new();
             foreach (QuestionHasMetaData data in questionHasMetaData)
@@ -452,7 +457,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var metaDataHasMetaData = await GetAllMetaDataHasMetaDataAsync();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.MetaDataHasMetaData, MetaDataMetaDataRelation>());
-            //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<MetaDataMetaDataRelation> metaDataItems = new();
             foreach (Models.MetaDataHasMetaData data in metaDataHasMetaData)
