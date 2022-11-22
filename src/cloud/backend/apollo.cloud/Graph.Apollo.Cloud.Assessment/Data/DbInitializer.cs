@@ -32,7 +32,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             //string filepath = System.AppDomain.CurrentDomain.BaseDirectory +
             //                  "Data/221111_Booklet_FK_Lagerlogistik.xlsx";
-            string filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\221111_Booklet_FK_Lagerlogistik.xlsx");
+            string filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Booklet_FK_Lagerlogistik.xlsx");
+            System.Console.WriteLine(filepath);
+            CreateAssessmentFromCsv(filepath, context);
+
+            filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Digitale_Kompetenzen.xlsx");
             System.Console.WriteLine(filepath);
             CreateAssessmentFromCsv(filepath, context);
 
@@ -528,14 +532,14 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Kldb = bstAssessment.Kldb,
                 AssessmentType = AssessmentType.SkillAssessment,
                 Description = bstAssessment.Description,
-                Disclaimer = "TODO",
+                Disclaimer = bstAssessment.Disclaimer,
                 Duration = TimeSpan.Zero,
                 EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
                 EscoSkills = new List<EscoSkill>(),
                 ExternalId = bstAssessment.ItemId,
                 Profession = bstAssessment.DescriptionOfProfession,
-                Publisher = String.Empty,
-                Title = String.Empty,
+                Publisher = "Bertelsmann Stiftung",
+                Title = bstAssessment.Title,
                 Schema = CreateApolloSchema(),
                 Ticks = DateTime.Now.Ticks,
             };
