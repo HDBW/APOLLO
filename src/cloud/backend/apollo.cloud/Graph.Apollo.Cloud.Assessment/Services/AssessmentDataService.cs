@@ -9,22 +9,7 @@ using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext
 namespace Invite.Apollo.App.Graph.Assessment.Services
 {
     public class AssessmentDataService :
-        IAssessmentDataService,
-        IAssessmentDtoDataService,
-        IQuestionDataService,
-        IQuestionDtoDataService,
-        IAnswerDataService,
-        IAnswerDtoDataService,
-        IMetaDataDataService,
-        IMetaDataDtoDataService,
-        IAnswerHasMetaDataDataService,
-        IAnswerHasMetaDataDtoDataService,
-        IQuestionHasMetaDataDataService,
-        IQuestionHasMetaDataDtoDataService,
-        IMetaDataHasMetaDataDataService,
-        IMetaDataHasMetaDataDtoDataService,
-        ICategoryDataService,
-        ICategoryDtoDataService
+        IDataService
     {
         //Implement logger
         private readonly ILogger<AssessmentDataService> _logger;
