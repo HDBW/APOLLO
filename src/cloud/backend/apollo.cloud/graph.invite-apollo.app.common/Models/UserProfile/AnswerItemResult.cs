@@ -1,35 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
-using System.Text;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
-    public class AnswerItemResult : IEntity, IBackendEntity
+    public class AnswerItemResult : BaseItem
     {
-        #region Implementation of IEntity
-
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [DataMember(Order = 2)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-
-        [DataMember(Order = 3)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4)]
-        public Uri Schema { get; set; }
-
-        #endregion
 
         //TODO: Mapping Table User -> to create several other workloads
         [DataMember(Order = 5)]

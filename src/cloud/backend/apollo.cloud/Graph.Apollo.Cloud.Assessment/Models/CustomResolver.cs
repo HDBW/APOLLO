@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
-using AutoMapper.Execution;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
