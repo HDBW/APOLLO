@@ -51,6 +51,7 @@
 	<string>13.0</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+        <string>mailto</string>
 		<string>msauthv2</string>
 		<string>msauthv3</string>
 	</array>

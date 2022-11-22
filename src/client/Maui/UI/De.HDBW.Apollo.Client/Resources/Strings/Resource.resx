@@ -468,4 +468,38 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="SkipQuestionDialog_Continue" xml:space="preserve">
     <value>Überspringen</value>
   </data>
+  <data name="SettingsView_Imprint" xml:space="preserve">
+    <value>Impressum</value>
+  </data>
+  <data name="SettingsView_ImprintUri" xml:space="preserve">
+    <value>https://www.invite-apollo.app/Imprint</value>
+  </data>
+  <data name="SettingsView_Privacy" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="SettingsView_PrivacyUri" xml:space="preserve">
+    <value>https://www.invite-apollo.app/privacy</value>
+  </data>
+  <data name="SettingsView_Terms" xml:space="preserve">
+    <value>Nutzungsbedingungen</value>
+  </data>
+  <data name="SettingsView_TermsUri" xml:space="preserve">
+    <value>https://www.invite-apollo.app/terms</value>
+  </data>
+  <data name="SettingsView_EmailBody" xml:space="preserve">
+    <value>Hallo Apollo.
+</value>
+  </data>
+  <data name="SettingsView_EmailSubject" xml:space="preserve">
+    <value>Anregungen oder Wunsch</value>
+  </data>
+  <data name="SettingsView_QuestionDescription" xml:space="preserve">
+    <value>Hilf uns die Zukunft der Bildung zu gestalten.</value>
+  </data>
+  <data name="SettingsView_QuestionEmail" xml:space="preserve">
+    <value>martin.mailman@lorem.de</value>
+  </data>
+  <data name="SettingsView_Questions" xml:space="preserve">
+    <value>Anregungen oder Wünsche?</value>
+  </data>
 </root>
