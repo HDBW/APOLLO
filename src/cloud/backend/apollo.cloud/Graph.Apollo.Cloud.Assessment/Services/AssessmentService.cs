@@ -6,13 +6,22 @@ namespace Invite.Apollo.App.Graph.Assessment.Services;
 public class AssessmentService : IAssessmentService
 {
     private readonly ILogger<AssessmentService> _logger;
+    private readonly IDataService _assessmentDataService;
 
-    public AssessmentService(ILogger<AssessmentService> logger)
+    //TODO: Implement Collections
+
+
+    public AssessmentService(ILogger<AssessmentService> logger, IDataService assessmentDataService)
     {
         _logger = logger;
+        _assessmentDataService = assessmentDataService;
     }
-    
-    public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request) => throw new NotImplementedException();
+
+
+    public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request)
+    {
+        return new ValueTask<AssessmentResponse>();
+    }
 
     public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CallContext context = default) => throw new NotImplementedException();
 
