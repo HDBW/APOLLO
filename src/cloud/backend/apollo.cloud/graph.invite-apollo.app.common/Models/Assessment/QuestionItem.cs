@@ -31,7 +31,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public string ScoringOption { get; set; } = string.Empty;
 
         [DataMember(Order = 11)]
-        public string Scalar { get; set; }
+        public int Scalar { get; set; }
     }
 
     [DataContract]
