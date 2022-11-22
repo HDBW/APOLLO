@@ -88,6 +88,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Repository
             return query;
         }
 
+        //https://learn.microsoft.com/en-us/ef/core/performance/efficient-updating
+        //https://learn.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.changetracking.propertyentry.ismodified?view=efcore-6.0#microsoft-entityframeworkcore-changetracking-propertyentry-ismodified
+        //https://learn.microsoft.com/en-us/ef/core/querying/tracking?source=recommendations
+        //https://learn.microsoft.com/en-us/ef/core/change-tracking/miscellaneous
+        //https://learn.microsoft.com/en-us/ef/core/logging-events-diagnostics/
         public virtual void Add(T entity)
         {
             EntityEntry dbEntityEntry = _context.Entry<T>(entity);
