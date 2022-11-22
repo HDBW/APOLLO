@@ -22,7 +22,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         IQuestionHasMetaDataDataService,
         IQuestionHasMetaDataDtoDataService,
         IMetaDataHasMetaDataDataService,
-        IMetaDataHasMetaDataDtoDataService
+        IMetaDataHasMetaDataDtoDataService,
+        ICategoryDataService,
+        ICategoryDtoDataService
     {
         //Implement logger
         private readonly ILogger<AssessmentDataService> _logger;
@@ -471,6 +473,62 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public void EditMetaDataMetaDataRelation(MetaDataMetaDataRelation metaDataHasMetaData) => throw new NotImplementedException();
 
         public void DeleteMetaDataMetaDataRelation(MetaDataMetaDataRelation metaDataHasMetaData) => throw new NotImplementedException();
+
+        #endregion
+
+        #region Implementation of ICategoryDataService
+
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync() => await _categoryRepository.GetAllAsync();
+
+        public async Task<Category> GetCategoryByIdAsync(long categoryId) =>
+            await _categoryRepository.GetSingleAsync(categoryId);
+
+        public void CreateCategory(Category category) => _categoryRepository.Add(category);
+
+        public void EditCategory(Category category)
+        {
+            _categoryRepository.Edit(category);
+            _categoryRepository.Commit();
+        }
+
+        public void DeleteCategory(Category category)
+        {
+            _categoryRepository.Delete(category);
+            _categoryRepository.Commit();
+        }
+
+        #endregion
+
+        #region Implementation of ICategoryDtoDataService
+
+        public async Task<IEnumerable<AssessmentCategory>> GetAllAssessmentCategoriesAsync()
+        {
+            var categories = await GetAllCategoriesAsync();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Category, AssessmentCategory>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<AssessmentCategory> assessmentCategories = new();
+            foreach (var categoryItem in categories)
+            {
+                assessmentCategories.Add(mapper.Map<AssessmentCategory>(categoryItem));
+            }
+            return assessmentCategories;
+        }
+
+        public async Task<AssessmentCategory> GetAssessmentCategoryByIdAsync(long categoryId)
+        {
+            var cat = GetCategoryByIdAsync(categoryId);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Category, AssessmentCategory>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            return mapper.Map<AssessmentCategory>(cat);
+        }
+
+        public void CreateAssessmentCategory(AssessmentCategory category) => throw new NotImplementedException();
+
+        public void EditAssessmentCategory(AssessmentCategory category) => throw new NotImplementedException();
+
+        public void DeleteAssessmentCategory(AssessmentCategory category) => throw new NotImplementedException();
 
         #endregion
     }
