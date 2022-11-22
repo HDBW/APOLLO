@@ -454,7 +454,7 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Fortfahren</value>
   </data>
   <data name="CancelAssessmentDialog_Continue" xml:space="preserve">
-    <value>Test abbrechen</value>
+    <value>Test beenden</value>
   </data>
   <data name="SkipQuestionDialog_Title" xml:space="preserve">
     <value>Bist du dir sicher, dass du diese Frage überspringen möchtest?</value>

@@ -7,13 +7,13 @@
                Color="{StaticResource Background}"
                x:DataType="viewModels:SkipQuestionDialogViewModel">
     <Grid RowDefinitions="*, auto, 20" Padding="0" x:Name="Part_Root">
-        <VerticalStackLayout Padding="20">
-            <Label Text="{x:Static strings:Resource.SkipQuestionDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
-            <Label Text="{x:Static strings:Resource.SkipQuestionDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
+        <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}">
+            <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.SkipQuestionDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
+            <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.SkipQuestionDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
         </VerticalStackLayout>
-        <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform 0, Android=8}">
-            <Button Text="{x:Static strings:Resource.SkipQuestionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{Binding CancelCommand}" />
-            <Button Text="{x:Static strings:Resource.SkipQuestionDialog_Continue}"  Command="{Binding ContinueCommand}" Grid.Column="2"/>
+        <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
+            <Button Text="{x:Static strings:Resource.SkipQuestionDialog_Continue}" Style="{StaticResource BorderButton}" Command="{Binding ContinueCommand}" />
+            <Button Text="{x:Static strings:Resource.SkipQuestionDialog_Cancel}"  Command="{Binding CancelCommand}" Grid.Column="2"/>
         </Grid>
     </Grid>
 </toolkit:Popup>
