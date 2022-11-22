@@ -3,8 +3,6 @@ using Invite.Apollo.App.Graph.Assessment.Models;
 using Invite.Apollo.App.Graph.Assessment.Repository;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
-using Microsoft.EntityFrameworkCore;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services
 {

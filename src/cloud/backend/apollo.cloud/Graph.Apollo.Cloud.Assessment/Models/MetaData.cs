@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+﻿using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {

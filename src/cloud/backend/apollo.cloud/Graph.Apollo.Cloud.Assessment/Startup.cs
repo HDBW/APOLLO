@@ -1,14 +1,11 @@
 using System.Diagnostics;
-using System.Globalization;
 using Invite.Apollo.App.Graph.Assessment.Data;
 using Invite.Apollo.App.Graph.Assessment.Logs;
 using Invite.Apollo.App.Graph.Assessment.Services;
-using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ProtoBuf.Grpc.Configuration;
 using ProtoBuf.Grpc.Server;
-using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace Invite.Apollo.App.Graph.Assessment;
@@ -55,6 +52,14 @@ public class Startup
             options.EnableSensitiveDataLogging();
         });
         Trace.TraceInformation($"ef writing on database {Configuration.GetConnectionString("AzureSql")}");
+
+        services.AddDbContext<CourseContext>(options =>
+        {
+            options.UseSqlServer(Configuration.GetConnectionString("CourseSql")).LogTo(Log.Logger.Information, LogLevel.Information, null);
+            options.EnableSensitiveDataLogging();
+        });
+        Trace.TraceInformation($"ef writing on database {Configuration.GetConnectionString("CourseSql")}");
+
         #endregion
 
 
