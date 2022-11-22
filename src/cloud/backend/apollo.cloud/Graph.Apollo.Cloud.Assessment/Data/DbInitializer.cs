@@ -380,7 +380,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         break;
                     case QuestionType.Rating:
                         //TODO: Add Position and Pole Description to MetaData?
-                        //Problem of Tomorrow Patric
+                        MetaData questionText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        QuestionHasMetaData qhmd = CreateQuestionHasMetaData(questionText, question, context);
+
+
+
 
                         break;
                     case QuestionType.Sort:
@@ -511,6 +515,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             question.Category = category;
             question.CategoryId = category.CourseId;
             question.ScoringOption = bstAssessment.ScoringOption_1.Replace(" ","");
+            question.Scalar = bstAssessment.Credit_ScoringOption_1.ToString();
             //TODO: Set via Mapping
             //question.//QuestionLayout = questionLayoutType,
             //question.//AnswerLayout = answerLayoutType,
