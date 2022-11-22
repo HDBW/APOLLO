@@ -53,12 +53,12 @@ public class Startup
         });
         Trace.TraceInformation($"ef writing on database {Configuration.GetConnectionString("AzureSql")}");
 
-        services.AddDbContext<CourseContext>(options =>
-        {
-            options.UseSqlServer(Configuration.GetConnectionString("CourseSql")).LogTo(Log.Logger.Information, LogLevel.Information, null);
-            options.EnableSensitiveDataLogging();
-        });
-        Trace.TraceInformation($"ef writing on database {Configuration.GetConnectionString("CourseSql")}");
+        //services.AddDbContext<CourseContext>(options =>
+        //{
+        //    options.UseSqlServer(Configuration.GetConnectionString("CourseSql")).LogTo(Log.Logger.Information, LogLevel.Information, null);
+        //    options.EnableSensitiveDataLogging();
+        //});
+        //Trace.TraceInformation($"ef writing on database {Configuration.GetConnectionString("CourseSql")}");
 
         #endregion
 

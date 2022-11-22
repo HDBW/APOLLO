@@ -1,5 +1,4 @@
-﻿using Invite.Apollo.App.Graph.Assessment.Models;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
+﻿using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services
 {
