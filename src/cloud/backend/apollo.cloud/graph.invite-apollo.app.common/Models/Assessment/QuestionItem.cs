@@ -23,10 +23,15 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 8)]
         public InteractionType Interaction { get; set; }
 
+        [DataMember(Order = 9)]
         [ForeignKey(nameof(AssessmentCategory))]
         public long Category { get; set; }
 
+        [DataMember(Order = 10)]
         public string ScoringOption { get; set; } = string.Empty;
+
+        [DataMember(Order = 11)]
+        public string Scalar { get; set; }
     }
 
     [DataContract]

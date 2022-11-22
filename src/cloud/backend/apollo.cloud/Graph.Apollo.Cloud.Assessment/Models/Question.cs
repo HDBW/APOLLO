@@ -24,7 +24,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         [Required]
         public QuestionType QuestionType { get; set; }
 
-        public string ScoringOption { get; set; }
+        public string ScoringOption { get; set; } 
+
+        public string Scalar { get; set; }
 
         //public List<Scores> Scores { get; set; }
         
