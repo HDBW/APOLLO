@@ -15,8 +15,6 @@ public class AssessmentService : IAssessmentService
 
     private UseCaseCollections _collections;
 
-    //TODO: Implement Collections
-
 
     public AssessmentService(ILogger<AssessmentService> logger, IDataService assessmentDataService)
     {
