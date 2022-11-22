@@ -8,26 +8,9 @@ using System;
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     [DataContract]
-    public class QuestionItem : IEntity, IBackendEntity
+    public class QuestionItem : BaseItem
     {
-        #region Implementation of IEntity
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
 
-        [DataMember(Order = 2, IsRequired = true)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-        [DataMember(Order = 3, IsRequired = true)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4, IsRequired = true)]
-        public Uri Schema { get; set; } = null!;
-
-        #endregion
 
         [DataMember(Order = 5, IsRequired = true)]
         [ForeignKey(nameof(AssessmentItem))]
@@ -44,6 +27,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [ForeignKey(nameof(AssessmentCategory))]
         public long Category { get; set; }
+
+        public string ScoringOption { get; set; } = string.Empty;
     }
 
     [DataContract]

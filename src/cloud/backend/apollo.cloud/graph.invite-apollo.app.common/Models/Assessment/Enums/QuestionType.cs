@@ -1,6 +1,10 @@
-﻿namespace Invite.Apollo.App.Graph.Assessment.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Invite.Apollo.App.Graph.Common.Models.Assessment.Enums
 {
-    public enum AssessmentQuestionType
+    public enum QuestionType
     {
         Unknown = 0,
         Choice = 1,
@@ -12,6 +16,6 @@
         Imagemap = 7,
         Rating = 8,
         Cloze = 9,
-        Textbox = 10
+        Survey
     }
 }
