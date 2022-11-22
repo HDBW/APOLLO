@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
@@ -37,14 +35,11 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 1,IsRequired = true)]
         public string CorrelationId { get; set; }
 
-        [DataMember(Order=2)]
-        public long? AnswerBackendId { get; set; }
+
 
         [DataMember(Order = 3)]
         public long? Ticks { get; set; }
 
-        [DataMember(Order = 4)]
-        public long? QuestionBackendId { get; set; }
 
         [DataMember(Order = 5)]
         [ForeignKey(nameof(AssessmentItem))]
