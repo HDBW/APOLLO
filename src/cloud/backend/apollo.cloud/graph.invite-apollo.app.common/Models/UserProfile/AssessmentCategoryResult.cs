@@ -9,29 +9,8 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
     [DataContract]
-    public class AssessmentCategoryResult : IEntity, IBackendEntity
+    public class AssessmentCategoryResult : BaseItem
     {
-        #region Implementation of IEntity
-
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [Key]
-        [DataMember(Order = 2)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-
-        [DataMember(Order = 3)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4)]
-        public Uri Schema { get; set; }
-
-        #endregion
 
         [ForeignKey(nameof(UserProfile))]
         [DataMember(Order = 5)]

@@ -1,33 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class LoanOption : IEntity, IBackendEntity
+    public class LoanOption : BaseItem
 
     {
-        #region client stuff
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [DataMember(Order = 2)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region cloud stuff
-
-        [DataMember(Order = 3, IsRequired = true)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4)]
-        public Uri Schema { get; set; } = null!;
-
-        #endregion
-
         [DataMember(Order = 5)]
         public string Title { get; set; } = string.Empty;
 
