@@ -1,10 +1,6 @@
-
-using System;
 using System.Reflection;
 using Invite.Apollo.App.Graph.Assessment;
 using Invite.Apollo.App.Graph.Assessment.Data;
-using Microsoft.Extensions.Hosting;
-using ProtoBuf.Meta;
 using Serilog;
 using Serilog.Events;
 
@@ -27,12 +23,9 @@ public class Program
             //executes Startup
             var host = CreateHostBuilder(args).Build();
 
-            CreateDbIfNotExists(host);
+            CreateAssessmentDbIfNotExists(host);
             
             host.Run();
-
-
-
         }
         catch (Exception exception)
         {
@@ -44,7 +37,7 @@ public class Program
         }
     }
 
-    private static void CreateDbIfNotExists(IHost host)
+    private static void CreateAssessmentDbIfNotExists(IHost host)
     {
         using (var scope = host.Services.CreateScope())
         {
@@ -64,6 +57,28 @@ public class Program
             }
         }
     }
+
+    private static void CreateCourseDbIfNotExists(IHost host)
+    {
+        using (var scope = host.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<CourseContext>();
+                DbInitializer.Initialize(context);
+                //DbInitializer init = new DbInitializer();
+                //init.Initialize(context);
+            }
+            catch (Exception exception)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(exception, "1-An error occurred creating the DB.");
+                Log.Fatal(exception, "2-An error occurred creating the DB.");
+            }
+        }
+    }
+
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
