@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
-using Invite.Apollo.App.Graph.Common.Models.Esco;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -50,9 +48,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     {
         [DataMember(Order = 1, IsRequired = true)]
         public string CorrelationId { get; set; } = null!;
-
-        [DataMember(Order = 2)]
-        public long? AssessmentBackendId { get; set; }
 
         [DataMember(Order = 3)]
         public string? EscoOccupationId { get; set; }

@@ -13,12 +13,43 @@ using Newtonsoft.Json.Linq;
 using Grpc.Core;
 using Serilog;
 using System;
+using System.Globalization;
+using Invite.Apollo.App.Graph.Assessment.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
     public static class DbInitializer
     {
-        
+
+        public static void Initialize(CourseContext context)
+        {
+            context.Database.EnsureCreated();
+
+
+            // Look for any students.
+            if (context.Courses.Any())
+            {
+                return; // DB has been seeded
+            }
+
+
+            foreach (Course course in EduProvider.CourseList.Values)
+            {
+                context.Courses.Add(course);
+               
+                
+            }
+            foreach (Contact contact in EduProvider.Contacts.Values)
+            {
+                context.CourseContacts.Add(contact);
+            }
+
+            context.SaveChanges();
+            
+        }
+
         public static void Initialize(AssessmentContext context)
         {
             context.Database.EnsureCreated();
@@ -53,6 +84,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = null;
             List<BstAssessment> items = new();
+
+            #region Read from CSV into items
 
             try
             {
@@ -242,8 +275,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             {
                 xlWorkbook.Close();
             }
-            
-            
+
+            #endregion
+
             Models.Assessment assessment = null;
             if (items.Count > 0)
                 assessment = CreateAssessment(items.First(), context);

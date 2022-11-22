@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment

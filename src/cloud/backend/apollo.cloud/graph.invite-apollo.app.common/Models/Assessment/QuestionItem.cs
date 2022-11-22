@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using System.Collections.ObjectModel;
-using System;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
