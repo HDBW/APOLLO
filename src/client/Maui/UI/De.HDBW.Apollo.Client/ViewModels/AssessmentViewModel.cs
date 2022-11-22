@@ -417,6 +417,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var result = await DialogService.ShowPopupAsync<CancelAssessmentDialog, NavigationParameters>(worker.Token);
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
+                        await SaveAssessmentAsync(worker.Token);
                         await NavigationService.PushToRootAsnc(worker.Token);
                     }
                 }
