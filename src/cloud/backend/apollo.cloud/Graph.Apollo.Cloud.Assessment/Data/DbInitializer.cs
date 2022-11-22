@@ -47,7 +47,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             }
 
             context.SaveChanges();
-            
         }
 
         public static void Initialize(AssessmentContext context)
@@ -430,8 +429,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         }
                         break;
                     case QuestionType.Rating:
-                        //TODO: Add Position and Pole Description to MetaData?
-                        //Problem of Tomorrow Patric
                         MetaData questionText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
                         QuestionHasMetaData qhmd = CreateQuestionHasMetaData(questionText, question, context);
                         for (int i = 0; i < bstAssessment.AmountAnswers; i++)
@@ -559,7 +556,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //TODO: Rating Implementation
             }
 
-            answer.Value = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
+            //answer.Value = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
             //answer.BackendId = DateTime.Now.Ticks;
             answer.Schema = CreateApolloSchema();
             answer.Ticks = DateTime.Now.Ticks;
