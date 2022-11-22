@@ -13,7 +13,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
 
         [DataMember(Order = 5, IsRequired = true)]
-        [ForeignKey(nameof(Assessment))]
+        [ForeignKey(nameof(AssessmentItem))]
         public long AssessmentId { get; set; }
 
         [DataMember(Order = 6)]
@@ -38,7 +38,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public string CorrelationId { get; set; } = string.Empty;
 
         [DataMember(Order = 2)]
-        [ForeignKey(nameof(Assessment))]
+        [ForeignKey(nameof(AssessmentItem))]
         public long? AssessmentId { get; set; }
 
         [DataMember(Order = 3)]

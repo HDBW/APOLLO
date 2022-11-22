@@ -135,11 +135,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             //MetaDataHasMetaData
             builder.Entity<MetaDataHasMetaData>().HasKey(
                 t => new { t.Id });
-
-            builder.Entity<MetaDataHasMetaData>().HasIndex(
-                t => new { t.SourceMetaDataId, t.TargetMetaDataId}).IsUnique();
-            //IsClustered() ?
-
+            
             builder.Entity<MetaDataHasMetaData>()
                 .HasOne(pt => pt.SourceMetaData)
                 .WithMany(p => p.SourceQuestionHasMetaDatas)
@@ -152,6 +148,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 .HasForeignKey(pt => pt.TargetMetaDataId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<MetaDataHasMetaData>().HasIndex(
+                t => new { t.SourceMetaDataId, t.TargetMetaDataId }).IsUnique();
 
             //Esco
             builder.Entity<EscoSkill>().HasKey(

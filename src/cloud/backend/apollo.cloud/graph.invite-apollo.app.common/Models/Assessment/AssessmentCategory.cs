@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -24,7 +25,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public int ResultLimit { get; set; }
 
         //TODO: Remove after December
-        [ForeignKey(nameof(Course))]
+        [ForeignKey(nameof(CourseItem))]
         [DataMember(Order = 8, IsRequired = true)]
         public long CourseId { get; set; }
 
