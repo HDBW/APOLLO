@@ -22,6 +22,7 @@ public partial class UseCaseDescriptionView
 
     private void HandleSizeChanged(object sender, System.EventArgs e)
     {
+#if IOS
         var layout = sender as Layout;
         if (layout == null)
         {
@@ -36,5 +37,6 @@ public partial class UseCaseDescriptionView
         }
 
         layout.MinimumHeightRequest = Math.Max(size.Request.Height, size.Minimum.Height);
+#endif
     }
 }

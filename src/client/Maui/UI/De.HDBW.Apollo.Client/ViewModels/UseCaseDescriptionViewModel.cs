@@ -201,7 +201,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             break;
                     }
 
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, age, location,experience, story, goal), worker.Token);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, age, location, experience, story, goal), worker.Token);
                 }
                 catch (Exception ex)
                 {
