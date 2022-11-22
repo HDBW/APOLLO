@@ -13,6 +13,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             { "Biwe", 0 }, { "bbw", 1 }, { "TüV Rheinland Akademie",2 },
         };
 
+        public static Dictionary<long, Contact> Contacts = new Dictionary<long, Contact>() { { 0, new Contact() } };
+
         public static Dictionary<long, Course> CourseList = new Dictionary<long, Course>()
         {
             {
