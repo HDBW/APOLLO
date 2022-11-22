@@ -10,7 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\221111_Booklet_FK_Lagerlogistik.xlsx" />
+    <None Remove="Data\Booklet_FK_Lagerlogistik.xlsx" />
+    <None Remove="Data\Digitale_Kompetenzen.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Data\221111_Booklet_FK_Lagerlogistik.xlsx">
+    <Content Include="Data\Digitale_Kompetenzen.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Booklet_FK_Lagerlogistik.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
