@@ -52,6 +52,7 @@
     <None Remove="Resources\Images\gruenzeugs.jpg" />
     <None Remove="Resources\Images\info.svg" />
     <None Remove="Resources\Images\lieferschein.png" />
+    <None Remove="Resources\Images\mail.svg" />
     <None Remove="Resources\Images\minze.jpg" />
     <None Remove="Resources\Images\registrationdeco.svg" />
     <None Remove="Resources\Images\salbei.jpg" />

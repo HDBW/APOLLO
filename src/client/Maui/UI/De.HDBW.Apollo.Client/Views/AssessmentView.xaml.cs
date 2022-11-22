@@ -30,6 +30,7 @@ public partial class AssessmentView
 
     private void HandleChildAdded(object sender, ElementEventArgs e)
     {
+#if IOS
         var layout = sender as Layout;
         if (layout == null)
         {
@@ -44,5 +45,6 @@ public partial class AssessmentView
         }
 
         layout.MinimumHeightRequest = Math.Max(size.Request.Height, size.Minimum.Height);
+#endif
     }
 }

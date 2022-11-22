@@ -649,6 +649,106 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hallo Apollo.
+        ///.
+        /// </summary>
+        public static string SettingsView_EmailBody {
+            get {
+                return ResourceManager.GetString("SettingsView_EmailBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anregungen oder Wunsch.
+        /// </summary>
+        public static string SettingsView_EmailSubject {
+            get {
+                return ResourceManager.GetString("SettingsView_EmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Impressum.
+        /// </summary>
+        public static string SettingsView_Imprint {
+            get {
+                return ResourceManager.GetString("SettingsView_Imprint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.invite-apollo.app/Imprint.
+        /// </summary>
+        public static string SettingsView_ImprintUri {
+            get {
+                return ResourceManager.GetString("SettingsView_ImprintUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datenschutz.
+        /// </summary>
+        public static string SettingsView_Privacy {
+            get {
+                return ResourceManager.GetString("SettingsView_Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.invite-apollo.app/privacy.
+        /// </summary>
+        public static string SettingsView_PrivacyUri {
+            get {
+                return ResourceManager.GetString("SettingsView_PrivacyUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hilf uns die Zukunft der Bildung zu gestalten..
+        /// </summary>
+        public static string SettingsView_QuestionDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_QuestionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to martin.mailman@lorem.de.
+        /// </summary>
+        public static string SettingsView_QuestionEmail {
+            get {
+                return ResourceManager.GetString("SettingsView_QuestionEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anregungen oder Wünsche?.
+        /// </summary>
+        public static string SettingsView_Questions {
+            get {
+                return ResourceManager.GetString("SettingsView_Questions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nutzungsbedingungen.
+        /// </summary>
+        public static string SettingsView_Terms {
+            get {
+                return ResourceManager.GetString("SettingsView_Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.invite-apollo.app/terms.
+        /// </summary>
+        public static string SettingsView_TermsUri {
+            get {
+                return ResourceManager.GetString("SettingsView_TermsUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Einstellungen.
         /// </summary>
         public static string SettingsView_Title {

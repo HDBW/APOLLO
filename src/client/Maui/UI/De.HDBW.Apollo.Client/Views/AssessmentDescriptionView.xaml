@@ -13,7 +13,7 @@
             <VerticalStackLayout Spacing="8">
                 <Label Text="{Binding DescriptionTitle}" Style="{StaticResource NotoSerif24}"/>
                 <Label Text="{Binding DescriptionSubline}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
-                <Label Text="{Binding DescriptionText}" Style="{StaticResource Noto16}"/>
+                <Label Text="{Binding DescriptionText}" Style="{StaticResource Noto16}" />
                 <Label Text="{Binding DescriptionDetailsTitle}" Style="{StaticResource Noto16}" FontAttributes="Bold" TextColor="{StaticResource Primary900}"/>
                 <Label Text="{Binding DescriptionDetails}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}"/>
             </VerticalStackLayout>

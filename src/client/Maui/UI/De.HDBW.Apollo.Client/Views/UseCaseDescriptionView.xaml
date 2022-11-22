@@ -31,7 +31,7 @@
                 <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Experience}" Style="{StaticResource Noto16}" Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
                 <Label Text="{Binding Experience}" Style="{StaticResource Noto12}" Margin="0,0,0,24"/>
                 <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Story}" Style="{StaticResource Noto16}"  Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
-                <Label Text="{Binding Story}" Style="{StaticResource Noto12}" Margin="0,0,0,24"/>
+                <Label Text="{Binding Story}" Style="{StaticResource Noto12}" Margin="0,0,0,24" />
                 <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Goal}" Style="{StaticResource Noto16}"  Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
                 <Label Text="{Binding Goal}" Style="{StaticResource Noto12}" Margin="0,0,0,24"/>
             </VerticalStackLayout>

@@ -28,6 +28,11 @@
     <intent>
       <action android:name="android.support.customtabs.action.CustomTabsService" />
     </intent>
+    <!-- Required for API Level 30 to make sure the app can mailto -->
+    <intent>
+      <action android:name="android.intent.action.SENDTO" />
+      <data android:scheme="mailto" />
+    </intent>
   </queries>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
