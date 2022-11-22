@@ -2,47 +2,30 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     [DataContract]
-    public class AssessmentCategory : IEntity, IBackendEntity
+    public class AssessmentCategory : BaseItem
     {
-        #region Implementation of IEntity
-
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [DataMember(Order = 2)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-
-        [DataMember(Order = 3)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4)]
-        public Uri Schema { get; set; }
-
-        #endregion
 
         [DataMember(Order = 5)]
         public string Title { get; set; } = string.Empty;
 
-        [DataMember(Order = 6)]
-        public int QuestionCount { get; set; }
+        //[DataMember(Order = 6)]
+        //TODO: AutoCalculate
+        //public int QuestionCount { get; set; }
 
         /// <summary>
         /// Threshold
         /// TODO: Remove before DataBase Creation
         /// </summary>
         [DataMember(Order = 7)]
-        public int ResultLimits { get; set; }
+        public int ResultLimit { get; set; }
 
-        [ForeignKey(nameof(Course))]
+        //TODO: Remove after December
+        [ForeignKey(nameof(CourseItem))]
         [DataMember(Order = 8, IsRequired = true)]
         public long CourseId { get; set; }
 

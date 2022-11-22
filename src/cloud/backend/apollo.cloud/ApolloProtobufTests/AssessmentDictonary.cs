@@ -54,7 +54,8 @@ namespace Invite.Apollo.App.Graph.Common.Test
         {
             QuestionMetaDataRelation relation = new QuestionMetaDataRelation
                 {
-                    Id = QuestionMetaDataIndex, BackendId = QuestionMetaDataIndex,
+                    Id = QuestionMetaDataIndex,
+                    //BackendId = QuestionMetaDataIndex,
                     MetaDataId = meta.Id,
                     QuestionId = question.Id,
                     Schema = new($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -71,7 +72,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             AnswerMetaDataRelation relation = new AnswerMetaDataRelation
             {
                 Id = AnswerMetaIndex,
-                BackendId = AnswerMetaIndex,
+                //BackendId = AnswerMetaIndex,
                 MetaDataId = meta.Id,
                 AnswerId = answer.Id,
                 Schema = new($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -95,7 +96,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             MetaDataMetaDataRelation relation = new MetaDataMetaDataRelation
             {
                 Id = MetaDataMetaDataIndex,
-                BackendId = MetaDataMetaDataIndex,
+                //BackendId = MetaDataMetaDataIndex,
                 SourceId = metaDataSource.Id,
                 TargetId = metaDataToReference.Id,
                 Schema = new($"https://invite-apollo.app/{Guid.NewGuid()}"),

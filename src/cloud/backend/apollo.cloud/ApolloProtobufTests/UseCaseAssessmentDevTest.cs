@@ -281,9 +281,9 @@ namespace Invite.Apollo.App.Graph.Common.Test
             Debug.WriteLine(amdr3.Dump());
         }
 
-        private void CreateImageMapQuestion(AssessmentItem assessmentItem)
+        private void CreateImageMapQuestion(AssessmentItem assessment)
         {
-            QuestionItem questionItem = CreateQuestionItem(assessmentItem, LayoutType.Overlay, LayoutType.Default,
+            QuestionItem questionItem = CreateQuestionItem(assessment, LayoutType.Overlay, LayoutType.Default,
                 InteractionType.MultiSelect);
 
             questionItem = _assessments.AddQuestionItem(questionItem);
@@ -521,7 +521,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             answerItem.QuestionId = question.Id;
             answerItem.AnswerType = answertype;
             answerItem.Value = value;
-            answerItem.BackendId = DateTime.Now.Ticks;
+            //answerItem.BackendId = DateTime.Now.Ticks;
             answerItem.Schema = CreateApolloSchema();
             answerItem.Ticks = DateTime.Now.Ticks;
             return answerItem;
@@ -529,8 +529,8 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
         private MetaDataItem CreateMetaDataItem(MetaDataType type, string value)
         {
-            MetaDataItem md = new() { Type = type, Value = value, Ticks = DateTime.Now.Ticks, Schema = CreateApolloSchema(),
-                BackendId = DateTime.Now.Ticks
+            MetaDataItem md = new() { Type = type, Value = value, Ticks = DateTime.Now.Ticks, Schema = CreateApolloSchema()
+                //, BackendId = DateTime.Now.Ticks
             };
             return md;
         }
@@ -541,7 +541,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 {
                     AssessmentId = assessment.Id, QuestionLayout = questionLayoutType, AnswerLayout = answerLayoutType,
                     Interaction = interactionType,
-                    BackendId = DateTime.Now.Ticks,
+                    //BackendId = DateTime.Now.Ticks,
                     Ticks = DateTime.Now.Ticks,
                     Schema = CreateApolloSchema()
                 };
@@ -553,7 +553,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             item = new()
                 {
                     Schema = CreateApolloSchema(),
-                    BackendId = DateTime.Now.Ticks,
+                    //BackendId = DateTime.Now.Ticks,
                     AssessmentType = AssessmentType.SkillAssessment,
                     Publisher = "HDBW DEV Team",
                     Duration = TimeSpan.FromMinutes(0),
