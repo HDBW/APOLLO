@@ -308,7 +308,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !entry.IsFavorite;
         }
 
-        private Task HandleMakeFavorite(StartViewInteractionEntry entry)
+        private async Task HandleMakeFavorite(StartViewInteractionEntry entry)
         {
            entry.IsFavorite = true;
         }
