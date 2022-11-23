@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
-using AutoMapper.Execution;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
@@ -10,47 +8,49 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
     {
         public AnswerType Resolve(Answer source, AnswerItem destination, AnswerType destMember, ResolutionContext context)
         {
-            AnswerType type = new();
-            switch (source.Question.QuestionType)
+            AnswerType type = AnswerType.Unknown;
+            if (source.Question != null)
             {
-                case QuestionType.Unknown:
-                    type = AnswerType.Unknown;
-                    break;
-                case QuestionType.Choice:
-                    type = AnswerType.Boolean;
-                    break;
-                case QuestionType.Sort:
-                    type = AnswerType.Long;
-                    break;
-                case QuestionType.Associate:
-                    type = AnswerType.Long;
-                    break;
-                case QuestionType.Binary:
-                    type = AnswerType.Boolean;
-                    break;
-                case QuestionType.Eafrequency:
-                    type = AnswerType.Integer;
-                    break;
-                case QuestionType.Eaconditions:
-                    type = AnswerType.Integer;
-                    break;
-                case QuestionType.Imagemap:
-                    type = AnswerType.Location;
-                    break;
-                case QuestionType.Rating:
-                    type = AnswerType.Integer;
-                    break;
-                case QuestionType.Cloze:
-                    type = AnswerType.String;
-                    break;
-                case QuestionType.Survey:
-                    type = AnswerType.String;
-                    break;
-                default:
-                    type = AnswerType.Unknown;
-                    break;
+                switch (source.Question.QuestionType)
+                {
+                    case QuestionType.Unknown:
+                        type = AnswerType.Unknown;
+                        break;
+                    case QuestionType.Choice:
+                        type = AnswerType.Boolean;
+                        break;
+                    case QuestionType.Sort:
+                        type = AnswerType.Long;
+                        break;
+                    case QuestionType.Associate:
+                        type = AnswerType.Long;
+                        break;
+                    case QuestionType.Binary:
+                        type = AnswerType.Boolean;
+                        break;
+                    case QuestionType.Eafrequency:
+                        type = AnswerType.Integer;
+                        break;
+                    case QuestionType.Eaconditions:
+                        type = AnswerType.Integer;
+                        break;
+                    case QuestionType.Imagemap:
+                        type = AnswerType.Location;
+                        break;
+                    case QuestionType.Rating:
+                        type = AnswerType.Integer;
+                        break;
+                    case QuestionType.Cloze:
+                        type = AnswerType.String;
+                        break;
+                    case QuestionType.Survey:
+                        type = AnswerType.String;
+                        break;
+                    default:
+                        type = AnswerType.Unknown;
+                        break;
+                }
             }
-
             return type;
         }
     }
@@ -60,6 +60,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         public LayoutType Resolve(Question source, QuestionItem destination, LayoutType destMember, ResolutionContext context)
         {
             LayoutType type = new();
+
             switch (source.QuestionType)
             {
                 case QuestionType.Unknown:

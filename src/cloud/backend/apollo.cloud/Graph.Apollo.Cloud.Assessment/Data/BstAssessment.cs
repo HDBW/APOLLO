@@ -62,6 +62,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         public int QuestionHasPictures { get; set; }
         public int AnswerHasPicture { get; set; }
         public int AmountAnswers { get; set; }
+        public string DescriptionOfSkills { get; set; }
+        public string EscoId { get; set; }
+        public string SubjectArea { get; set; }
 
         //TODO: Verify Mapping between Bst Data and DTO Schema
         public AnswerType GetAnswerType()

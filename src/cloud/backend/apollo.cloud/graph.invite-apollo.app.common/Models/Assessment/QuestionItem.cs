@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using System.Collections.ObjectModel;
-using System;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -25,10 +24,15 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 8)]
         public InteractionType Interaction { get; set; }
 
+        [DataMember(Order = 9)]
         [ForeignKey(nameof(AssessmentCategory))]
-        public long Category { get; set; }
+        public long CategoryId { get; set; }
 
+        [DataMember(Order = 10)]
         public string ScoringOption { get; set; } = string.Empty;
+
+        [DataMember(Order = 11)]
+        public int Scalar { get; set; }
     }
 
     [DataContract]

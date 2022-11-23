@@ -1,10 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Intrinsics.X86;
-using System.Runtime.Serialization;
-using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
-using Microsoft.ApplicationInsights.DataContracts;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {

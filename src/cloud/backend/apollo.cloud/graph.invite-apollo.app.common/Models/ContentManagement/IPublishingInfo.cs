@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Dynamic;
-using System.Security.Permissions;
 
 namespace Invite.Apollo.App.Graph.Common.Models.ContentManagement
 {
@@ -23,8 +21,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.ContentManagement
 
         public long? PredecessorId { get; set; }
 
-        public long? SuccessorBackendId { get; set; }
-        public long? PredecessorBackendId { get; set; }
 
     }
 }

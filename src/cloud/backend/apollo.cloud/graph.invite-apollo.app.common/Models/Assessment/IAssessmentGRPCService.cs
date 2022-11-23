@@ -6,19 +6,13 @@ using ProtoBuf.Grpc;
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     [ServiceContract(Name = "AssessmentService")]
-    public interface IAssessmentService
+    public interface IAssessmentGRPCService
     {
         [OperationContract]
         ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request);
 
         [OperationContract]
-        ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CallContext context = default);
-
-        [OperationContract]
-        ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CancellationToken cancellationToken = default);
-
-        [OperationContract]
-        ValueTask<AnswerResponse> GetAnswersAsync(AssessmentRequest request);
+        ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request);
 
         [OperationContract]
         ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request, CallContext context = default);
