@@ -12,7 +12,7 @@ public partial class FirstTimeDialog
         BindingContext = model;
     }
 
-    public FirstTimeDialogViewModel? Viemodel
+    public FirstTimeDialogViewModel? ViewModel
     {
         get
         {

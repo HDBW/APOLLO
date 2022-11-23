@@ -21,6 +21,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(authService);
+            ArgumentNullException.ThrowIfNull(sessionService);
             AuthService = authService;
             SessionService = sessionService;
         }
@@ -56,15 +58,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -83,29 +85,30 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             using (var worker = ScheduleWork(token))
             {
+                AuthenticationResult? authentication = null;
                 try
                 {
-                    var authentication = await AuthService.AcquireTokenSilent(worker.Token);
-                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+                    authentication = await AuthService.AcquireTokenSilent(worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(UnRegister)} in {GetType().Name}.");
                 }
                 catch (MsalException ex)
                 {
-                    Logger?.LogWarning(ex, $"Error while unregistering user in {GetType()}.");
+                    Logger?.LogWarning(ex, $"Error while unregistering user in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(UnRegister)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(UnRegister)} in {GetType().Name}.");
                 }
                 finally
                 {
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     RefreshCommands();
                     UnscheduleWork(worker);
@@ -123,31 +126,31 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             using (var worker = ScheduleWork(token))
             {
+                AuthenticationResult? authentication = null;
                 try
                 {
-                    var authentication = await AuthService.SignInInteractively(worker.Token);
-                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
-
+                    authentication = await AuthService.SignInInteractively(worker.Token);
                     await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType().Name}.");
                 }
                 catch (MsalException ex)
                 {
-                    Logger?.LogWarning(ex, $"Error while registering user in {GetType()}.");
+                    Logger?.LogWarning(ex, $"Error while registering user in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Register)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Register)} in {GetType().Name}.");
                 }
                 finally
                 {
+                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     RefreshCommands();
                     UnscheduleWork(worker);

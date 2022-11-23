@@ -23,6 +23,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<ExtendedSplashScreenViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             SessionService = sessionService;
             Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1, Resources.Strings.Resource.ExtendedSplashScreenView_Instruction1Detail));
@@ -54,7 +56,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (SessionService.HasRegisteredUser)
                     {
-                        await NavigationService.PushToRootAsnc(Routes.StartView, token);
+                        await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token);
                     }
                     else
                     {
@@ -63,15 +65,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(Skip)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Skip)} in {GetType().Name}.");
                 }
                 finally
                 {

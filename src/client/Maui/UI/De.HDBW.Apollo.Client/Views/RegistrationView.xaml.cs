@@ -12,7 +12,7 @@ public partial class RegistrationView
         BindingContext = model;
     }
 
-    public RegistrationViewModel? Viemodel
+    public RegistrationViewModel? ViewModel
     {
         get
         {
