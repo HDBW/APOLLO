@@ -67,7 +67,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long BookingContact { get; set; }
 
         [DataMember(Order = 19)]
-        public Uri BookingUrl { get; set; } = null!;
+        public Uri? BookingUrl { get; set; } = null!;
 
         [DataMember(Order = 20)]
         public string Language { get; set; } = null!;
