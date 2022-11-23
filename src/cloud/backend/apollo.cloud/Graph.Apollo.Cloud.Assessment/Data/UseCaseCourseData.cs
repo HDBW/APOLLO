@@ -8,9 +8,9 @@ using Invite.Apollo.App.Graph.Common.Models.Course;
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
 
-    public class EduProvider
+    public class UseCaseCourseData
     {
-        public EduProvider()
+        public UseCaseCourseData()
         {
             //course biwe setup tq lager
             Appointment appointment = Appointments[0];
@@ -28,19 +28,106 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             appointment = Appointments[3];
             course = CourseList[0];
             SetCourseAppointmentRelations(appointment, course);
+
+
+            List<Course> usecaseCourseLists = new List<Course>();
+
+
+            for (int j = 0; j < 2; j++)
+                SetContactCourseRelations(course, Contacts[j]);
+
+
+            //TODO: Add other UseCases and Courses
+            //Usecase 1 
+            for (int i = 0; i < 20; i++)
+            {
+                if(CourseList.ContainsKey(i))
+                    usecaseCourseLists.Add(CourseList[i]);
+            }
+
+            for (int i = 60; i < 80; i++)
+            {
+                if (CourseList.ContainsKey(i))
+                    usecaseCourseLists.Add(CourseList[i]);
+            }
+
+            usecaseCourses.Add(0,usecaseCourseLists);
+
+            System.Console.WriteLine(ProviderList.Count);
+
+
         }
 
-        private static void SetCourseAppointmentRelations(Appointment appointment, Course course)
+        private void SetCourseAppointmentRelations(Appointment appointment, Course course)
         {
             appointment.Course = course;
             appointment.CourseId = course.Id;
             course.Appointments.Add(appointment);
         }
 
+        private int CourseContactCounter = 0;
+        private void SetContactCourseRelations(Course course, Contact contact)
+        {
+            if (course.CourseContacts == null)
+                course.CourseContacts = new List<CourseHasContacts>();
+
+            CourseHasContacts courseHasContacts = new CourseHasContacts()
+            {
+                Ticks = DateTime.Now.Ticks,
+                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                Course = course,
+                Contact = contact,
+                Id = CourseContactCounter++,
+                ContactId = contact.Id,
+                CourseId = course.Id,
+            };
+            course.CourseContacts.Add(courseHasContacts);
+            if (contact.CourseContacts == null)
+                contact.CourseContacts = new List<CourseHasContacts>();
+
+            contact.CourseContacts.Add(courseHasContacts);
+        }
+
         public static Dictionary<string, long> provider = new Dictionary<string, long>()
         {
             { "Biwe", 0 }, { "bbw", 1 }, { "TüV Rheinland Akademie",2 },
         };
+
+        public List<EduProviderItem> ProviderList = new List<EduProviderItem>()
+        {
+            new EduProviderItem()
+            {
+                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                Ticks = DateTime.Now.Ticks,
+                Name = "BBQ Bildung und Berufliche Qualifizierung gGmbH",
+                Description = "TODO",
+                Logo = new Uri("https://invite-apollo.app/TODO"),
+                Id = provider["Biwe"],
+                Website = new Uri("https://www.biwe-bbq.de/")
+            },
+            new EduProviderItem()
+            {
+                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                Ticks = DateTime.Now.Ticks,
+                Name = "bbw Weiterbildung",
+                Description = "TODO",
+                Logo = new Uri("https://invite-apollo.app/TODO"),
+                Id = provider["bbw"],
+                Website = new Uri("https://www.bbw-weiterbildung.de/")
+            },
+            new EduProviderItem()
+            {
+                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                Ticks = DateTime.Now.Ticks,
+                Name = "TÜV Rheinland Akademie GmbH",
+                Description = "TODO",
+                Logo = new Uri("https://invite-apollo.app/TODO"),
+                Id = provider["TüV Rheinland Akademie"],
+                Website = new Uri("https://akademie.tuv.com/")
+            }
+
+        };
+
 
         public Dictionary<long, Contact> Contacts = new Dictionary<long, Contact>()
         {
@@ -52,75 +139,86 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
                 Url = new Uri("https://www.biwe-bbq.de/ueber-uns/vor-ort/stuttgart-mittlerer-pfad")}},
             { 1, new Contact() { Id = 1,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
+                ContactMail = "TODO@todo.de",
+                ContactName = "TODO",
+                ContactPhone = "000000 1111111",
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")}},
-            { 2, new Contact() { Id = 2,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")}},
-            { 3, new Contact() {Id = 3,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")}},
-            { 4, new Contact() {Id = 4,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")}},
-            { 5, new Contact() {Id = 5,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")}},
-            { 6, new Contact() {Id = 6,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")}},
-            { 7, new Contact() {Id = 7,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")}},
-            { 8, new Contact() { Id = 8,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")
-            }},
-            { 9, new Contact() { Id = 9,
-                ContactMail = "",
-                ContactName = "",
-                ContactPhone = "",
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Url = new Uri("")
-            }}
-
-
+                Url = new Uri("https://www.biwe-bbq.de/ueber-uns/vor-ort/stuttgart-mittlerer-pfad")}},
+            //{ 2, new Contact() { Id = 2,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://www.biwe-bbq.de/ueber-uns/vor-ort/stuttgart-mittlerer-pfad")}},
+            //{ 3, new Contact() {Id = 3,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://www.biwe-bbq.de/ueber-uns/vor-ort/stuttgart-mittlerer-pfad")}},
+            //{ 4, new Contact() {Id = 4,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://invite-apollo.app/TODO")}},
+            //{ 5, new Contact() {Id = 5,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://invite-apollo.app/TODO")}},
+            //{ 6, new Contact() {Id = 6,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://invite-apollo.app/TODO")}},
+            //{ 7, new Contact() {Id = 7,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://invite-apollo.app/TODO")}},
+            //{ 8, new Contact() { Id = 8,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://invite-apollo.app/TODO")}},
+            //{ 9, new Contact() { Id = 9,
+            //    ContactMail = "",
+            //    ContactName = "",
+            //    ContactPhone = "",
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Url = new Uri("https://invite-apollo.app/TODO")}}
 
         };
 
+
+
+        /// <summary>
+        /// Ids 0 - 59 biwe
+        /// Ids 0 - 19 biwe UseCase 1
+        /// Ids 20 - 39 biwe UseCase 2
+        /// Ids 40 - 59 biwe UseCase 3
+        /// 
+        /// Ids 60 - 119 bbw
+        /// Ids 60 - 79 bbw UseCase 1
+        /// Ids 60 - 79 bbw UseCase 2
+        /// Ids 60 - 79 bbw UseCase 3
+        /// 
+        /// Ids 120 - 179 tüv
+        /// </summary>
         public Dictionary<long, Course> CourseList = new Dictionary<long, Course>()
         {
             {
@@ -130,7 +228,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 Availability = CourseAvailability.Available,
                                 Appointments = new List<Appointment>(),
                                 CourseContacts = new List<CourseHasContacts>(),
-                                CourseProviderId = 0,
+                                CourseProviderId = provider["Biwe"],
                                 CourseTagType = CourseTagType.PartialQualification,
                                 //Je nach Präferenz/Filter kann Angebot in Präsenz oder online stattfinden. (Wichtig: Falls Präsenz, dann Wohnort von Adrian entsprechend anpassen!)
                                 CourseType = CourseType.InPerson,
@@ -154,7 +252,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 PreRequisitesDescription = "Mindestens Sprachniveau B1 (wünschenswert B2), hohe Lernmotivation und Konzentrationsfähigkeit, Kommunikationsfähigkeit, Führerschein. Die Eignung wird in einem persönlichen Beratungsgespräch geprüft",
                                 ShortDescription = "Mit der Teilqualifizierung können Sie Schritt für Schritt in sechs Etappen den Berufsabschluss Fachkraft für Lagerlogistik (m/w/d) erreichen. Bei erfolgreicher Kompetenzfeststellung erhalten Sie nach jeder Etappe ein Zertifikat inklusive Kompetenzfeststellungsergebnis, das bundesweit anerkannt ist. Sie haben die Möglichkeit, sich zur Externenprüfung bei der zuständigen Kammer anzumelden und damit den Berufsabschluss zu erwerben.",
                                 TargetGroup = "Arbeitssuchende und Beschäftigte, die keinen oder einen fachfremden Berufsabschluss haben und sich weiter qualifizieren möchten und einen anerkannten Berufsabschluss anstreben.",
-                                TrainingProviderId = EduProvider.provider["Biwe"],
+                                TrainingProviderId = UseCaseCourseData.provider["Biwe"],
                                 Title = "Fachkraft für Lagerlogistik (m/w/d) - TQ/ETAPP",
                                 LearningOutcomes = "Die TQ unterstützt Sie beim Einstieg in den Beruf Fachkraft für Lagerlogistik (m/w/d) und gibt Ihnen die Chance auf einen höher qualifizierten Arbeitsplatz. Überschaubare Lernphasen durch fachspezifische Ausrichtung der einzelnen Module, ermöglichen ein flexibles Lernen.",
                                 Benefits = "Bei erfolgreicher Kompetenzfeststellung erhalten Sie nach jedem Modul ein Zertifikat inklusive Kompetenzfeststellungsergebnis, das bundesweit anerkannt ist.",
@@ -163,13 +261,13 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 }
 
             },
-            { 1, new Course() {
+            { 60, new Course() {
                                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
                                 Ticks = DateTime.Now.Ticks,
                                 Availability = CourseAvailability.Available,
                                 Appointments = new List<Appointment>(),
                                 CourseContacts = new List<CourseHasContacts>(),
-                                CourseProviderId = 0,
+                                CourseProviderId = provider["bbw"],
                                 CourseTagType = CourseTagType.PartialQualification,
                                 //Vollzeit, Online am jew. Standort in Bayern mit Lernprozessbegleiter*in oder mit Zustimmung Kostenträger „von zu Hause“
                                 CourseType = CourseType.InPerson,
@@ -188,7 +286,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 PreRequisitesDescription = "Mindestens Sprachniveau B1 (wünschenswert B2), hohe Lernmotivation und Konzentrationsfähigkeit, Kommunikationsfähigkeit, Führerschein. Die Eignung wird in einem persönlichen Beratungsgespräch geprüft",
                                 ShortDescription = "Die TQdigital unterstützt Sie beim Einstieg in den Beruf Fachlagerist (m/d/w) und gibt Ihnen die Chance auf einen höher qualifizierten Arbeitsplatz. Überschaubare Lernphasen durch fachspezifische Ausrichtung der einzelnen Module, ermöglichen ein flexibles Lernen.\r\nOb einzelne Module oder Berufsabschluss – mit unseren Teilqualifizierungen (TQ) können Sie sich flexibel weiterbilden.\r\n\r\nJedes einzelne TQ-Modul qualifiziert Sie gezielt für einen spezifischen Einsatzbereich eines Ausbildungsberufs. Alle Module zusammen bilden in Theorie und Praxis das gesamte Berufsbild ab. Wenn Sie alle Einzelteile abgeschlossen haben, können Sie im Anschluss mit einer Externenprüfung der IHK den Berufsabschluss erreichen.\r\n",
                                 TargetGroup = "Arbeitssuchende und Beschäftigte, die keinen oder einen fachfremden Berufsabschluss haben und sich weiter qualifizieren möchten und einen anerkannten Berufsabschluss anstreben.",
-                                TrainingProviderId = EduProvider.provider["bbw"],
+                                TrainingProviderId = UseCaseCourseData.provider["bbw"],
                                 Title = "FACHLAGERIST*IN – TQdigital"
                             }}
         };
@@ -204,72 +302,72 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Id = 0,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                AppointmentType = AppointmentType.Unknow,
-                AvailableSeats = -1,
-                BookingContact = 0,
-                BookingUrl = new Uri(""),
+                //AppointmentType = AppointmentType.Unknow,
+                //AvailableSeats = -1,
+                //BookingContact = 0,
+                //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
                 Course = null,
                 BookingCode = String.Empty,
-                Location = "Stuttgart",
-                OccurrenceType = OccurrenceType.FullTime,
-                Type = CourseType.InPerson,
-                StartDate = new DateTime(2023, 01, 02),
-                Language = "DE-DE",
+                //Location = "Stuttgart",
+                //OccurrenceType = OccurrenceType.FullTime,
+                //Type = CourseType.InPerson,
+                //StartDate = new DateTime(2023, 01, 02),
+                //Language = "DE-DE",
                 Summary = "",
             }},
             {1,new Appointment() {
                 Id = 1,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                AppointmentType = AppointmentType.Unknow,
-                AvailableSeats = -1,
-                BookingContact = 0,
-                BookingUrl = new Uri(""),
+                //AppointmentType = AppointmentType.Unknow,
+                //AvailableSeats = -1,
+                //BookingContact = 0,
+                //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
                 Course = null,
                 BookingCode = String.Empty,
-                Location = "Stuttgart",
-                OccurrenceType = OccurrenceType.FullTime,
-                Type = CourseType.InPerson,
-                StartDate = new DateTime(2023, 02, 06),
-                Language = "DE-DE",
+                //Location = "Stuttgart",
+                //OccurrenceType = OccurrenceType.FullTime,
+                //Type = CourseType.InPerson,
+                //StartDate = new DateTime(2023, 02, 06),
+                //Language = "DE-DE",
                 Summary = "",
             }},
             {2,new Appointment() {
                 Id = 2,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                AppointmentType = AppointmentType.Unknow,
-                AvailableSeats = -1,
-                BookingContact = 0,
-                BookingUrl = new Uri(""),
+                //AppointmentType = AppointmentType.Unknow,
+                //AvailableSeats = -1,
+                //BookingContact = 0,
+                //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
                 Course = null,
                 BookingCode = String.Empty,
-                Location = "Stuttgart",
-                OccurrenceType = OccurrenceType.FullTime,
-                Type = CourseType.InPerson,
-                StartDate = new DateTime(2023, 03, 06),
-                Language = "DE-DE",
+                //Location = "Stuttgart",
+                //OccurrenceType = OccurrenceType.FullTime,
+                //Type = CourseType.InPerson,
+                //StartDate = new DateTime(2023, 03, 06),
+                //Language = "DE-DE",
                 Summary = "",
             }},
             {3,new Appointment() {
                 Id = 3,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                AppointmentType = AppointmentType.Unknow,
-                AvailableSeats = -1,
-                BookingContact = 0,
-                BookingUrl = new Uri(""),
+                //AppointmentType = AppointmentType.Unknow,
+                //AvailableSeats = -1,
+                //BookingContact = 0,
+                //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
                 Course = null,
                 BookingCode = String.Empty,
-                Location = "Stuttgart",
-                OccurrenceType = OccurrenceType.FullTime,
-                Type = CourseType.InPerson,
-                StartDate = new DateTime(2023, 04, 03),
-                Language = "DE-DE",
+                //Location = "Stuttgart",
+                //OccurrenceType = OccurrenceType.FullTime,
+                //Type = CourseType.InPerson,
+                //StartDate = new DateTime(2023, 04, 03),
+                //Language = "DE-DE",
                 Summary = "",
             }}
         };
@@ -283,6 +381,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
          */
 
         public Dictionary<int, List<Course>> usecaseCourses = new Dictionary<int, List<Course>>();
+        public Dictionary<int, List<CourseContact>> useCaseContacts = new Dictionary<int, List<CourseContact>>();
+        
 
     }
 }

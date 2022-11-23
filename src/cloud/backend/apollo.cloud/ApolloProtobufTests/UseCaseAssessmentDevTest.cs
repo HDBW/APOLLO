@@ -12,6 +12,25 @@ namespace Invite.Apollo.App.Graph.Common.Test
     {
         private AssessmentDictonary _assessments = new AssessmentDictonary();
 
+
+
+        [Test]
+        public void DeserializeBinFiles()
+        {
+           
+            string filename =
+                "C:\\Users\\PatricBoscolo\\source\\gh\\APOLLO\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Assessment\\usecase1.bin";
+
+            UseCaseCollections expected;
+
+            using (var file = File.OpenRead(filename))
+            {
+                expected = Serializer.Deserialize<UseCaseCollections>(file);
+                file.Close();
+            }
+        }
+
+
         [Test]
         public void ShouldGenerateAssessmentBinFiles()
         {
@@ -49,6 +68,8 @@ namespace Invite.Apollo.App.Graph.Common.Test
             }
 
             UseCaseCollections expected;
+
+            string filename1 = "usecase1.bin";
 
             using (var file = File.OpenRead(filename))
             {

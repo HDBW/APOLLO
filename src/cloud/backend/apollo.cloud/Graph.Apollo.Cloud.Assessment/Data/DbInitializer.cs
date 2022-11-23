@@ -34,15 +34,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 return; // DB has been seeded
             }
 
-            EduProvider eduProvider = new EduProvider();
+            UseCaseCourseData useCaseCourseData = new UseCaseCourseData();
 
-            foreach (Course course in eduProvider.CourseList.Values)
+            foreach (Course course in useCaseCourseData.CourseList.Values)
             {
                 context.Courses.Add(course);
                
                 
             }
-            foreach (Contact contact in eduProvider.Contacts.Values)
+            foreach (Contact contact in useCaseCourseData.Contacts.Values)
             {
                 context.CourseContacts.Add(contact);
             }
