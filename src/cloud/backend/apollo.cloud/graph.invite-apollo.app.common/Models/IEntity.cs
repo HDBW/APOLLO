@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ProtoBuf;
+
 
 namespace Invite.Apollo.App.Graph.Common.Models
 {

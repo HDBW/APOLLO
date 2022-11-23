@@ -1,7 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
-using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
@@ -27,7 +24,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         [Required]
         public QuestionType QuestionType { get; set; }
 
-        public string ScoringOption { get; set; }
+        public string ScoringOption { get; set; } 
+
+        public int Scalar { get; set; }
 
         //public List<Scores> Scores { get; set; }
         

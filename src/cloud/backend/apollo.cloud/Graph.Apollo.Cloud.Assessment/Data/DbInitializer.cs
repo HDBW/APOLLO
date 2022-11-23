@@ -13,12 +13,43 @@ using Newtonsoft.Json.Linq;
 using Grpc.Core;
 using Serilog;
 using System;
+using System.Globalization;
+using Invite.Apollo.App.Graph.Assessment.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
     public static class DbInitializer
     {
-        
+
+        public static void Initialize(CourseContext context)
+        {
+            context.Database.EnsureCreated();
+
+
+            // Look for any students.
+            if (context.Courses.Any())
+            {
+                return; // DB has been seeded
+            }
+
+            EduProvider eduProvider = new EduProvider();
+
+            foreach (Course course in eduProvider.CourseList.Values)
+            {
+                context.Courses.Add(course);
+               
+                
+            }
+            foreach (Contact contact in eduProvider.Contacts.Values)
+            {
+                context.CourseContacts.Add(contact);
+            }
+
+            context.SaveChanges();
+        }
+
         public static void Initialize(AssessmentContext context)
         {
             context.Database.EnsureCreated();
@@ -32,7 +63,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             //string filepath = System.AppDomain.CurrentDomain.BaseDirectory +
             //                  "Data/221111_Booklet_FK_Lagerlogistik.xlsx";
-            string filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\221111_Booklet_FK_Lagerlogistik.xlsx");
+            string filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Booklet_FK_Lagerlogistik.xlsx");
+            System.Console.WriteLine(filepath);
+            CreateAssessmentFromCsv(filepath, context);
+
+            filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Digitale_Kompetenzen.xlsx");
             System.Console.WriteLine(filepath);
             CreateAssessmentFromCsv(filepath, context);
 
@@ -49,6 +84,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = null;
             List<BstAssessment> items = new();
+
+            #region Read from CSV into items
 
             try
             {
@@ -185,6 +222,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                             ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoOccupationId].Value2.ToString()
                             : string.Empty;
 
+                    item.SubjectArea = (xlRange.Cells[i, ExcelColumnIndex.SubjectArea].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.SubjectArea].Value2.ToString()
+                        : string.Empty;
+
+                    item.DescriptionOfSkills = (xlRange.Cells[i, ExcelColumnIndex.DescriptionOfSkills].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.DescriptionOfSkills].Value2.ToString()
+                        : string.Empty;
+
+                    item.EscoId = (xlRange.Cells[i, ExcelColumnIndex.EscoId].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoId].Value2.ToString()
+                        : string.Empty;
+
                     item.EscoSkills =
                         (xlRange.Cells[i, ExcelColumnIndex.EscoSkills].Value2 != null)
                             ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoSkills].Value2.ToString()
@@ -238,8 +287,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             {
                 xlWorkbook.Close();
             }
-            
-            
+
+            #endregion
+
             Models.Assessment assessment = null;
             if (items.Count > 0)
                 assessment = CreateAssessment(items.First(), context);
@@ -261,9 +311,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     {
                         Title = bstAssessment.DescriptionOfPartialQualification,
                         CourseId = bstAssessment.CourseId,
+                        EscoId = bstAssessment.EscoId,
                         ResultLimit = bstAssessment.Limit,
                         Schema = CreateApolloSchema(),
-                        Ticks = DateTime.Now.Ticks
+                        Ticks = DateTime.Now.Ticks,
+                        Subject = bstAssessment.SubjectArea,
+                        Description = bstAssessment.DescriptionOfSkills
+                        //TODO: @talisi please add minima and maxima to excel
+                        //Maximum = ,
+                        //Minimum = 
                     };
                     categoryTitle = newCategoryTitle;
                     context.SaveChanges();
@@ -276,7 +332,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Question question = CreateQuestion(assessment, bstAssessment, category, context);
                 if (!categoryTitle.Equals(String.Empty) && category.Questions != null)
                     Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Category {category.Title} has Questions {category.Questions.Count}");
-
                 
                 //category.Questions.Add(question);
                 
@@ -375,9 +430,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         }
                         break;
                     case QuestionType.Rating:
-                        //TODO: Add Position and Pole Description to MetaData?
-                        //Problem of Tomorrow Patric
-
+                        MetaData questionText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        QuestionHasMetaData qhmd = CreateQuestionHasMetaData(questionText, question, context);
+                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                        {
+                            Answer answerItem = CreateAnswer(question, bstAssessment, i, context);
+                            MetaData answerMetaData = CreateMetaData(MetaDataType.Text,bstAssessment.GetHTMLDistractorPrimary(i), context);
+                            AnswerHasMetaData answerHasMeta =
+                                CreateAnswerHasMetaData(answerMetaData, answerItem, context);
+                        }
                         break;
                     case QuestionType.Sort:
                         MetaData tempData = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
@@ -461,7 +522,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             answer.QuestionId = question.Id;
             answer.AnswerType = bstAssessment.GetAnswerType();
 
-            //TODO: !!! Value is wrong !!!
             var questionType = bstAssessment.GetQuestionType();
             var somevalue = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
             string resultvector = bstAssessment.ScoringOption_1;
@@ -485,10 +545,19 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 case QuestionType.Sort:
                     answer.Value = result[answerIndex].ToString();
                     break;
+                case QuestionType.Rating:
+                    answer.Value = result[answerIndex].ToString();
+                    break;
+                case QuestionType.Eafrequency:
+                    answer.Value = result[answerIndex].ToString();
+                    break;
+                case QuestionType.Survey:
+                    answer.Value = result[answerIndex].ToString();
+                    break;
                 //TODO: Rating Implementation
             }
 
-            answer.Value = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
+            //answer.Value = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
             //answer.BackendId = DateTime.Now.Ticks;
             answer.Schema = CreateApolloSchema();
             answer.Ticks = DateTime.Now.Ticks;
@@ -507,6 +576,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             question.Category = category;
             question.CategoryId = category.CourseId;
             question.ScoringOption = bstAssessment.ScoringOption_1.Replace(" ","");
+            question.Scalar = bstAssessment.Credit_ScoringOption_1;
             //TODO: Set via Mapping
             //question.//QuestionLayout = questionLayoutType,
             //question.//AnswerLayout = answerLayoutType,
@@ -528,14 +598,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Kldb = bstAssessment.Kldb,
                 AssessmentType = AssessmentType.SkillAssessment,
                 Description = bstAssessment.Description,
-                Disclaimer = "TODO",
+                Disclaimer = bstAssessment.Disclaimer,
                 Duration = TimeSpan.Zero,
                 EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
                 EscoSkills = new List<EscoSkill>(),
                 ExternalId = bstAssessment.ItemId,
                 Profession = bstAssessment.DescriptionOfProfession,
-                Publisher = String.Empty,
-                Title = String.Empty,
+                //TODO: Change for Survey
+                Publisher = "Bertelsmann Stiftung",
+                Title = bstAssessment.Title,
                 Schema = CreateApolloSchema(),
                 Ticks = DateTime.Now.Ticks,
             };

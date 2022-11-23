@@ -3,28 +3,10 @@ using Invite.Apollo.App.Graph.Assessment.Models;
 using Invite.Apollo.App.Graph.Assessment.Repository;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
-using Microsoft.EntityFrameworkCore;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services
 {
-    public class AssessmentDataService :
-        IAssessmentDataService,
-        IAssessmentDtoDataService,
-        IQuestionDataService,
-        IQuestionDtoDataService,
-        IAnswerDataService,
-        IAnswerDtoDataService,
-        IMetaDataDataService,
-        IMetaDataDtoDataService,
-        IAnswerHasMetaDataDataService,
-        IAnswerHasMetaDataDtoDataService,
-        IQuestionHasMetaDataDataService,
-        IQuestionHasMetaDataDtoDataService,
-        IMetaDataHasMetaDataDataService,
-        IMetaDataHasMetaDataDtoDataService,
-        ICategoryDataService,
-        ICategoryDtoDataService
+    public class AssessmentDataService : IDataService
     {
         //Implement logger
         private readonly ILogger<AssessmentDataService> _logger;

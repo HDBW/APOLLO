@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
-using Invite.Apollo.App.Graph.Common.Models.Esco;
+using ProtoBuf;
+using ProtoBuf.Grpc;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -36,7 +35,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         // Will be auto calculated in the future
         [DataMember(Order = 11)]
-        public TimeSpan Duration { get; set; }
+        public string Duration { get; set; }
 
         [DataMember(Order = 12)]
         public string Description { get; set; } = string.Empty;
@@ -52,16 +51,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         public string CorrelationId { get; set; } = null!;
 
         [DataMember(Order = 2)]
-        public long? AssessmentBackendId { get; set; }
-
-        [DataMember(Order = 3)]
         public string? EscoOccupationId { get; set; }
 
-        [DataMember(Order = 4)]
+        [DataMember(Order = 3)]
         public long? Ticks { get; set; }
-
-        [DataMember(Order=5)]
-        public CultureInfo? CultureInfo { get; set; }
     }
 
     [DataContract]
