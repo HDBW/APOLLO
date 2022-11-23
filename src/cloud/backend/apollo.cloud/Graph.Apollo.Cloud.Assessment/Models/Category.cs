@@ -19,5 +19,11 @@
         public long CourseId { get; set; }
 
         public List<Question> Questions { get; set; }
+
+        public string EscoId { get; set; }
+
+        public string Minimum { get; set; }
+        public string Maximum { get; set; }
+        public string Subject { get; set; }
     }
 }
