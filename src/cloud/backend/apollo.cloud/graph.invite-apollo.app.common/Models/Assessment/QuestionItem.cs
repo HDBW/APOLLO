@@ -7,31 +7,39 @@ using ProtoBuf;
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     [DataContract]
+    [ProtoContract]
     public class QuestionItem : BaseItem
     {
 
 
         [DataMember(Order = 5, IsRequired = true)]
+        [ProtoMember(1)]
         [ForeignKey(nameof(AssessmentItem))]
         public long AssessmentId { get; set; }
 
         [DataMember(Order = 6)]
+        [ProtoMember(2)]
         public LayoutType QuestionLayout { get; set; }
 
         [DataMember(Order = 7)]
+        [ProtoMember(3)]
         public LayoutType AnswerLayout { get; set; }
 
         [DataMember(Order = 8)]
+        [ProtoMember(4)]
         public InteractionType Interaction { get; set; }
 
         [DataMember(Order = 9)]
+        [ProtoMember(5)]
         [ForeignKey(nameof(AssessmentCategory))]
         public long CategoryId { get; set; }
 
         [DataMember(Order = 10)]
+        [ProtoMember(6)]
         public string ScoringOption { get; set; } = string.Empty;
 
         [DataMember(Order = 11)]
+        [ProtoMember(7)]
         public int Scalar { get; set; }
     }
 

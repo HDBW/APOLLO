@@ -10,6 +10,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
     /// Represents the Answers to a Question in a AssessmentType
     /// </summary>
     [DataContract]
+    [ProtoContract]
     public class AnswerItem : BaseItem
     {
 
