@@ -6,8 +6,7 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services
 {
-    public class AssessmentDataService :
-        IDataService
+    public class AssessmentDataService : IDataService
     {
         //Implement logger
         private readonly ILogger<AssessmentDataService> _logger;

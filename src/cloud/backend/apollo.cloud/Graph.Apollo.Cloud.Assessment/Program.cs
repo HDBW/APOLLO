@@ -1,6 +1,8 @@
 using System.Reflection;
 using Invite.Apollo.App.Graph.Assessment;
 using Invite.Apollo.App.Graph.Assessment.Data;
+using Invite.Apollo.App.Graph.Assessment.Models;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 
@@ -45,6 +47,27 @@ public class Program
             try
             {
                 var context = services.GetRequiredService<AssessmentContext>();
+
+                
+                //foreach (Invite.Apollo.App.Graph.Assessment.Models.Assessment contextAssessment in context.Assessments)
+                //{
+
+                //    context.Assessments
+                //        .Include(assessment => assessment.Questions)
+                //        .ThenInclude(question => question.QuestionHasMetaDatas)
+                //        .Include(assessment => assessment.Questions)
+                //        .ThenInclude(question => question.Answers)
+                //        .ThenInclude(answer => answer.AnswerHasMetaDatas)
+                //        .Include(assessment => assessment.EscoSkills).ToList();
+
+                     
+                //    int qc = 0;
+                //    if(contextAssessment.Questions!=null)
+                //        qc= contextAssessment.Questions.Count();
+
+                //    Log.Information($"{contextAssessment.Title} : Questions.Count:{qc}");
+                //}
+
                 DbInitializer.Initialize(context);
                 //DbInitializer init = new DbInitializer();
                 //init.Initialize(context);

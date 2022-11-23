@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
@@ -111,8 +112,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// <summary>
         /// Course Language the description of the course is in language
         /// </summary>
+        /// TODO: CultureInfo
         [DataMember(Order = 18, IsRequired = false)]
-        public CultureInfo Language { get; set; } = null!;
+        public string Language { get; set; } = null!;
 
 
         #endregion

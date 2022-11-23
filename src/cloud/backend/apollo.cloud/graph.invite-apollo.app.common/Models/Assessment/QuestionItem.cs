@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using System.Collections.ObjectModel;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -25,7 +26,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order = 9)]
         [ForeignKey(nameof(AssessmentCategory))]
-        public long Category { get; set; }
+        public long CategoryId { get; set; }
 
         [DataMember(Order = 10)]
         public string ScoringOption { get; set; } = string.Empty;
