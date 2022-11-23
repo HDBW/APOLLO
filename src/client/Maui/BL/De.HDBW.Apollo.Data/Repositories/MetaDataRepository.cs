@@ -3,6 +3,7 @@
 
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
+using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
@@ -10,5 +11,9 @@ namespace De.HDBW.Apollo.Data.Repositories
         AbstractInMemoryRepository<MetaDataItem>,
         IMetaDataRepository
     {
+        public MetaDataRepository(ILogger<MetaDataRepository> logger)
+            : base(logger)
+        {
+        }
     }
 }

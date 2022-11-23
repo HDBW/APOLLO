@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
+using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
@@ -16,6 +17,13 @@ namespace De.HDBW.Apollo.Data.Repositories
         private readonly IEqualityComparer<TU> _comparer = new EntityComparer<TU>();
 
         private readonly List<TU> _items = new List<TU>();
+
+        public AbstractInMemoryRepository(ILogger logger)
+        {
+            Logger = logger;
+        }
+
+        protected ILogger Logger { get; set; }
 
         protected List<TU> Items
         {
@@ -120,6 +128,11 @@ namespace De.HDBW.Apollo.Data.Repositories
             if (items != null)
             {
                 _items.AddRange(items.Distinct(_comparer));
+
+                if (_items.Count != items?.Count())
+                {
+                    Logger.LogWarning($"ResetItemsAsync with not distinct items int {GetType().Name}. Removed items {string.Join(", ", items?.Where(i => !_items.Contains(i)).Select(i => i.Id) ?? new List<long>())}");
+                }
             }
 
             return Task.FromResult(true);

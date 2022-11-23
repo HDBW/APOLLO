@@ -21,9 +21,9 @@ namespace De.HDBW.Apollo.Client.Models
         [ObservableProperty]
         private string? _goal;
 
-        private UserProfile _userProfile;
+        private UserProfileItem _userProfile;
 
-        private UserProfileEntry(UserProfile userProfile)
+        private UserProfileEntry(UserProfileItem userProfile)
         {
             ArgumentNullException.ThrowIfNull(userProfile);
 
@@ -54,7 +54,7 @@ namespace De.HDBW.Apollo.Client.Models
             }
         }
 
-        public static UserProfileEntry Import(UserProfile userProfile)
+        public static UserProfileEntry Import(UserProfileItem userProfile)
         {
             return new UserProfileEntry(userProfile);
         }

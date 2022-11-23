@@ -3,6 +3,8 @@
              x:Class="De.HDBW.Apollo.Client.Views.UseCaseDescriptionView"
              NavigationPage.HasBackButton="True"
              NavigationPage.HasNavigationBar="True"
+             Shell.NavBarIsVisible="True"
+             Shell.FlyoutBehavior="Disabled"
              NavigationPage.BackButtonTitle="{x:Static strings:Resource.Global_Back}"
              Title="{x:Static strings:Resource.UseCaseDescriptionView_Title}"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"

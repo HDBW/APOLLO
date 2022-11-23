@@ -44,11 +44,11 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
         {
             var repository = GetRepository();
             var result = await repository.GetItemsAsync(CancellationToken.None).ConfigureAwait(false);
-            Assert.False(result.Any(), $"Repository {repository.GetType()} is not empty.");
+            Assert.False(result.Any(), $"Repository {repository.GetType().Name} is not empty.");
             var item = Activator.CreateInstance<TU>();
             item.Id = 1;
             var boolResult = await repository.AddItemAsync(item, CancellationToken.None).ConfigureAwait(false);
-            Assert.True(boolResult, $"Repository {repository.GetType()} is did not add item.");
+            Assert.True(boolResult, $"Repository {repository.GetType().Name} is did not add item.");
             result = await repository.GetItemsAsync(CancellationToken.None).ConfigureAwait(false);
             Assert.Single(result, item);
             var itemResult = await repository.GetItemByIdAsync(0, CancellationToken.None).ConfigureAwait(false);
@@ -70,7 +70,7 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
             var item1 = Activator.CreateInstance<TU>();
             item1.Id = 1;
             boolResult = await repository.AddItemAsync(item1, CancellationToken.None).ConfigureAwait(false);
-            Assert.True(boolResult, $"Repository {repository.GetType()} is did not add item.");
+            Assert.True(boolResult, $"Repository {repository.GetType().Name} is did not add item.");
             result = await repository.GetItemsAsync(CancellationToken.None).ConfigureAwait(false);
             Assert.Single(result);
             Assert.Equal(item1, result.First());
