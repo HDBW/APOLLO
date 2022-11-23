@@ -133,5 +133,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
         [DataMember(Order = 13,IsRequired = false)]
         public Collection<AssessmentCategory> AssessmentCategories { get; set; }
+
+        public object Appointments { get; set; }
     }
 }
