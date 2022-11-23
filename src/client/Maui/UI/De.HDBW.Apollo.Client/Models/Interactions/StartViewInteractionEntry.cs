@@ -11,9 +11,9 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 {
     public partial class StartViewInteractionEntry : InteractionEntry
     {
-        private readonly Func<StartViewInteractionEntry, Task> _makeFavoriteHandler;
+        private readonly Func<StartViewInteractionEntry, Task> _handleToggleIsFavorite;
 
-        private readonly Func<StartViewInteractionEntry, bool> _canMakeFavoriteHandler;
+        private readonly Func<StartViewInteractionEntry, bool> _canHandleToggleIsFavorite;
 
         [ObservableProperty]
         private Status _status;
@@ -35,11 +35,11 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 
         private bool _isFavorite;
 
-        private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, Type entityType, object? data, Func<StartViewInteractionEntry, Task> makeFavoriteHandler, Func<StartViewInteractionEntry, bool> canMakeFavoriteHandler, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, Type entityType, object? data, Func<StartViewInteractionEntry, Task> handleToggleIsFavorite, Func<StartViewInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
             : base(text, data, navigateHandler, canNavigateHandle)
         {
-            _makeFavoriteHandler = makeFavoriteHandler;
-            _canMakeFavoriteHandler = canMakeFavoriteHandler;
+            _handleToggleIsFavorite = handleToggleIsFavorite;
+            _canHandleToggleIsFavorite = canHandleToggleIsFavorite;
             Subline = subline;
             Info = info;
             Status = status;
@@ -69,25 +69,25 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             {
                 if (SetProperty(ref _isFavorite, value))
                 {
-                    MakeFavoriteCommand?.NotifyCanExecuteChanged();
+                    ToggleIsFavoriteCommand?.NotifyCanExecuteChanged();
                 }
             }
         }
 
-        public static InteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, object? data, Func<StartViewInteractionEntry, Task> makeFavoriteHandler, Func<StartViewInteractionEntry, bool> canMakeFavoriteHandler, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
+        public static InteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, object? data, Func<StartViewInteractionEntry, Task> handleToggleIsFavorite, Func<StartViewInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
         {
-            return new StartViewInteractionEntry(text, subline, decoratorText, info, imagePath, status, typeof(TU), data, makeFavoriteHandler, canMakeFavoriteHandler, handleInteract, canHandleInteract);
+            return new StartViewInteractionEntry(text, subline, decoratorText, info, imagePath, status, typeof(TU), data, handleToggleIsFavorite, canHandleToggleIsFavorite, handleInteract, canHandleInteract);
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanMakeFavorite))]
-        private Task MakeFavorite()
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]
+        private Task ToggleIsFavorite()
         {
-            return _makeFavoriteHandler?.Invoke(this) ?? Task.CompletedTask;
+            return _handleToggleIsFavorite?.Invoke(this) ?? Task.CompletedTask;
         }
 
-        private bool CanMakeFavorite()
+        private bool CanToggleIsFavorite()
         {
-            return _canMakeFavoriteHandler?.Invoke(this) ?? false;
+            return _canHandleToggleIsFavorite?.Invoke(this) ?? false;
         }
     }
 }

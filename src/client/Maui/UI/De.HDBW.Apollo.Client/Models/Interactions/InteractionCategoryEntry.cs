@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 
         private Func<InteractionCategoryEntry, Task> _navigateHandler;
 
-        private InteractionCategoryEntry(string? headLine, string? sublineLine, List<InteractionEntry> interactions, List<InteractionEntry> filters, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
+        protected InteractionCategoryEntry(string? headLine, string? sublineLine, List<InteractionEntry> interactions, List<InteractionEntry> filters, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
         {
             HeadLine = headLine;
             SublineLine = sublineLine;
@@ -44,11 +44,35 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
+        public bool HasInteractions
+        {
+            get
+            {
+                return Interactions?.Any() ?? false;
+            }
+        }
+
+        public bool HasNoInteractions
+        {
+            get
+            {
+                return !HasInteractions;
+            }
+        }
+
         public ObservableCollection<InteractionEntry> Filters
         {
             get
             {
                 return _filters;
+            }
+        }
+
+        public bool HasFilters
+        {
+            get
+            {
+                return Filters?.Any() ?? false;
             }
         }
 

@@ -128,7 +128,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             Subject = subject,
                             Body = body,
                             BodyFormat = EmailBodyFormat.PlainText,
-                            To = new List<string>(recipients)
+                            To = new List<string>(recipients),
                         };
 
                         await Email.Default.ComposeAsync(message);
