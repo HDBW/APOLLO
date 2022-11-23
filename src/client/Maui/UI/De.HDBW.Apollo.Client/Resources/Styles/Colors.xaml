@@ -21,7 +21,6 @@
     <Color x:Key="Tag1">#F9E58C</Color>
     <Color x:Key="Tag2">#CEE6F9</Color>
 
-    <Color x:Key="Transparent100">#00FFFFFF</Color>
     <Color x:Key="Secondary">#FAB141</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
     <Color x:Key="White">White</Color>
@@ -37,6 +36,7 @@
 
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}"/>
     <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}"/>
+    <SolidColorBrush x:Key="DisabledBrush" Color="{StaticResource Primary150}"/>
 
     <SolidColorBrush x:Key="Primary050Brush" Color="{StaticResource Primary050}"/>
     <SolidColorBrush x:Key="Primary100Brush" Color="{StaticResource Primary100}"/>
@@ -52,7 +52,6 @@
     <SolidColorBrush x:Key="Tag1Brush" Color="{StaticResource Tag1}"/>
     <SolidColorBrush x:Key="Tag2Brush" Color="{StaticResource Tag2}"/>
 
-    <SolidColorBrush x:Key="Transparent100Brush" Color="{StaticResource Transparent100}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>

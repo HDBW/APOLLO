@@ -10,7 +10,7 @@ public partial class CourseView : ContentView
         BindingContext = model;
     }
 
-    public CourseViewModel? Viemodel
+    public CourseViewModel? ViewModel
     {
         get
         {
