@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.Client.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotSupportedException($"Binding two way is not supported in {GetType()}");
+            throw new NotSupportedException($"Binding two way is not supported in {GetType().Name}");
         }
     }
 }

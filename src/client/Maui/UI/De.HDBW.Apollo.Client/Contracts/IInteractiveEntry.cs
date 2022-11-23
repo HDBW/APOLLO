@@ -8,6 +8,8 @@ namespace De.HDBW.Apollo.Client.Contracts
     {
         InteractionType Interaction { get; internal set; }
 
+        AnswerType? AnswerType { get; }
+
         object Data { get; }
     }
 }

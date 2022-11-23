@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private readonly ObservableCollection<InteractionCategoryEntry> _interactionsCategories = new ObservableCollection<InteractionCategoryEntry>();
 
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfile());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
 
         public StartViewModel(
             IPreferenceService preferenceService,
@@ -34,16 +34,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             ICourseItemRepository courseItemRepository,
             IAssessmentItemRepository assessmentItemRepository,
-            IUserProfileRepository userProfileRepository,
+            IUserProfileItemRepository userProfileItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
+            ISessionService sessionService,
             ILogger<StartViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(assessmentItemRepository);
+            ArgumentNullException.ThrowIfNull(courseItemRepository);
+            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
+            ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
+            ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             AssessmentItemRepository = assessmentItemRepository;
             CourseItemRepository = courseItemRepository;
-            UserProfileRepository = userProfileRepository;
+            UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
+            SessionService = sessionService;
         }
 
         public ObservableCollection<InteractionCategoryEntry> InteractionCategories
@@ -60,84 +68,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ICourseItemRepository CourseItemRepository { get; }
 
-        private IUserProfileRepository UserProfileRepository { get; set; }
+        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
-        private IEduProviderItemRepository EduProviderItemRepository { get; set; }
+        private IEduProviderItemRepository EduProviderItemRepository { get; }
 
-        protected override void RefreshCommands()
-        {
-            base.RefreshCommands();
-            OpenSettingsCommand?.NotifyCanExecuteChanged();
-        }
+        private ISessionService SessionService { get; }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenSettings), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private async Task OpenSettings(CancellationToken token)
-        {
-            using (var work = ScheduleWork(token))
-            {
-                try
-                {
-                    var parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Id, 0);
-                    parameters.AddValue(NavigationParameter.Unknown, "Test");
-                    await NavigationService.NavigateAsnc(Routes.EmptyView, token, parameters);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenSettings)} in {GetType()}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenSettings)} in {GetType()}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenSettings)} in {GetType()}.");
-                }
-                finally
-                {
-                    UnscheduleWork(work);
-                }
-            }
-        }
-
-        private bool CanOpenSettings()
-        {
-            return !IsBusy;
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanChangeUseCase), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private async Task ChangeUseCase(CancellationToken token)
-        {
-            using (var work = ScheduleWork(token))
-            {
-                try
-                {
-                    await NavigationService.ResetNavigationAsnc(Routes.UseCaseSelectionView, token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType()}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType()}.");
-                }
-                finally
-                {
-                    UnscheduleWork(work);
-                }
-            }
-        }
-
-        private bool CanChangeUseCase()
-        {
-            return !IsBusy;
-        }
+        private UseCase? UseCase { get; set; }
 
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
         private async Task LoadData(CancellationToken token)
@@ -146,9 +83,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    var useCase = SessionService.UseCase;
+                    if (UseCase == useCase)
+                    {
+                        return;
+                    }
+
                     var assesments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
-                    var userProfile = await UserProfileRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    var userProfile = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
 
                     await ExecuteOnUIThreadAsync(
@@ -181,15 +124,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType()}.");
+                    Logger?.LogDebug($"Canceled {nameof(LoadData)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(LoadData)} in {GetType()}.");
+                    Logger?.LogError(ex, $"Unknown error while {nameof(LoadData)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -201,16 +144,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(
            IEnumerable<AssessmentItem> assessmentItems,
            IEnumerable<CourseItem> courseItems,
-           UserProfile? userProfile,
+           UserProfileItem? userProfile,
            IEnumerable<EduProviderItem> eduProviderItems)
         {
-            UserProfile = userProfile != null ? UserProfileEntry.Import(userProfile) : null;
+            UserProfile = UserProfileEntry.Import(userProfile ?? new UserProfileItem());
+            InteractionCategories.Clear();
+
             var interactions = new List<InteractionEntry>();
             foreach (var assesment in assessmentItems)
             {
                 var assemsmentData = new NavigationParameters();
                 assemsmentData.AddValue<long?>(NavigationParameter.Id, assesment.Id);
-                var data = new NavigationData(Routes.AssessmentView, assemsmentData);
+                var data = new NavigationData(Routes.AssessmentDescriptionView, assemsmentData);
                 var duration = assesment.Duration != TimeSpan.Zero ? string.Format("g", assesment.Duration) : string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
                 interactions.Add(StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract));
@@ -274,7 +219,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
                     break;
                 default:
-                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType()}.");
+                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType().Name}.");
                     break;
             }
         }

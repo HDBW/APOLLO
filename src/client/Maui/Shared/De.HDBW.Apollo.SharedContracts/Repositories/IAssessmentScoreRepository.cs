@@ -5,9 +5,10 @@ using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.SharedContracts.Repositories
 {
-    public interface IUserProfileRepository :
-        IRepository<UserProfile>,
-        IDatabaseRepository<UserProfile>
+    public interface IAssessmentScoreRepository :
+        IRepository<AssessmentScore>,
+        IDatabaseRepository<AssessmentScore>
     {
+        Task<AssessmentScore?> GetItemByForeignKeyAsync(long id, CancellationToken token);
     }
 }
