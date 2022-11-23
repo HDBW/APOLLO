@@ -1,7 +1,4 @@
 ﻿using Invite.Apollo.App.Graph.Common.Models;
-using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 
 namespace Invite.Apollo.App.Graph.Assessment.Models
 {

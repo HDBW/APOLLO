@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Course;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
@@ -31,5 +30,17 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order = 9)]
         public string Description { get; set; } = string.Empty;
+
+        [DataMember(Order = 10, IsRequired = false)]
+        public string EscoId { get; set; } = string.Empty;
+
+        [DataMember(Order = 11, IsRequired = false)]
+        public string Minimum { get; set; } = string.Empty;
+
+        [DataMember(Order = 12, IsRequired = false)]
+        public string Maximum { get; set; } = string.Empty;
+
+        [DataMember(Order = 13, IsRequired = false)]
+        public string Subject { get; set; } = string.Empty;
     }
 }

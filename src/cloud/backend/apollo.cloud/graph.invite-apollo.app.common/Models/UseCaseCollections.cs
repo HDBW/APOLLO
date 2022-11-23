@@ -3,6 +3,8 @@ using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using ProtoBuf;
+
 
 namespace Invite.Apollo.App.Graph.Common.Models
 {
@@ -49,13 +51,15 @@ namespace Invite.Apollo.App.Graph.Common.Models
         /// <param name="courseContacts"></param>
         /// <param name="courseAppointments"></param>
         /// <param name="courseItems"></param>
+        /// <param name="assessmentCategories"></param>
         public UseCaseCollections(Collection<AssessmentItem> assessmentItems, Collection<QuestionItem> questionItems,
             Collection<AnswerItem> answerItems, Collection<MetaDataItem> metaDataItems,
             Collection<QuestionMetaDataRelation> questionMetaDataRelations,
             Collection<AnswerMetaDataRelation> answerMetaDataRelations,
             Collection<MetaDataMetaDataRelation> metaDataMetaDataRelations, UserProfileItem userProfile,
             Collection<EduProviderItem> eduProviderItems, Collection<CourseContact> courseContacts,
-            Collection<CourseAppointment> courseAppointments, Collection<CourseItem> courseItems)
+            Collection<CourseAppointment> courseAppointments, Collection<CourseItem> courseItems,
+            Collection<AssessmentCategory> assessmentCategories)
         {
             AssessmentItems = assessmentItems;
             QuestionItems = questionItems;
@@ -69,6 +73,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
             CourseContacts = courseContacts;
             CourseAppointments = courseAppointments;
             CourseItems = courseItems;
+            AssessmentCategories = assessmentCategories;
         }
 
         /// <summary>
@@ -125,5 +130,8 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
         [DataMember(Order = 12, IsRequired = false)]
         public UserProfileItem UserProfile { get; set; }
+
+        [DataMember(Order = 13,IsRequired = false)]
+        public Collection<AssessmentCategory> AssessmentCategories { get; set; }
     }
 }
