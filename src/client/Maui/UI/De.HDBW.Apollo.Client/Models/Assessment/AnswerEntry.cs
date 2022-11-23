@@ -6,21 +6,24 @@ using De.HDBW.Apollo.Client.Helper;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class AnswerEntry : ObservableObject
     {
-        private AnswerItem _answerItem;
-        private IEnumerable<MetaDataItem> _answerMetaDataItems;
+        private readonly AnswerItem _answerItem;
+        private readonly IEnumerable<MetaDataItem> _answerMetaDataItems;
+        private readonly AnswerItemResult _answerItemResult;
         private Point? _point;
 
-        private AnswerEntry(AnswerItem answerItem, IEnumerable<MetaDataItem> answerMetaDataItems)
+        private AnswerEntry(AnswerItem answerItem, AnswerItemResult answerItemResult, IEnumerable<MetaDataItem> answerMetaDataItems)
         {
             ArgumentNullException.ThrowIfNull(answerItem);
             ArgumentNullException.ThrowIfNull(answerMetaDataItems);
             _answerItem = answerItem;
             _answerMetaDataItems = answerMetaDataItems;
+            _answerItemResult = answerItemResult;
         }
 
         public bool HasText
@@ -39,6 +42,22 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public bool HasHint
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(Hint);
+            }
+        }
+
+        public string Hint
+        {
+            get
+            {
+                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Hint)?.Value ?? string.Empty;
+            }
+        }
+
         public bool HasImage
         {
             get
@@ -47,11 +66,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public string ImagePath
+        public string? ImagePath
         {
             get
             {
-                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName() ?? string.Empty;
+                return _answerMetaDataItems.FirstOrDefault(m => m.Type == MetaDataType.Image)?.Value?.ToUniformedName();
             }
         }
 
@@ -112,9 +131,59 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public static AnswerEntry Import(AnswerItem answerItem, IEnumerable<MetaDataItem> answerMetaDataItems)
+        public AnswerItemResult Result
         {
-            return new AnswerEntry(answerItem, answerMetaDataItems);
+            get
+            {
+                return _answerItemResult;
+            }
+        }
+
+        public long Id
+        {
+            get
+            {
+                return _answerItem.Id;
+            }
+        }
+
+        public string Value
+        {
+            get
+            {
+                return _answerItem.Value;
+            }
+        }
+
+        public string CurrentValue
+        {
+            get
+            {
+                return _answerItemResult.Value;
+            }
+
+            set
+            {
+                _answerItemResult.Value = value;
+            }
+        }
+
+        public bool IsCorrect
+        {
+            get
+            {
+                return string.Equals(Value, CurrentValue);
+            }
+        }
+
+        public static AnswerEntry Import(AnswerItem answerItem, AnswerItemResult answerItemResult, IEnumerable<MetaDataItem> answerMetaDataItems)
+        {
+            return new AnswerEntry(answerItem, answerItemResult, answerMetaDataItems);
+        }
+
+        public AnswerItemResult ExportResult()
+        {
+            return _answerItemResult;
         }
     }
 }

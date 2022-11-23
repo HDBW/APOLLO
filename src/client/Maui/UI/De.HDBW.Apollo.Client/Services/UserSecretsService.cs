@@ -54,6 +54,11 @@ namespace De.HDBW.Apollo.Client.Services
                 var assembly = GetType().Assembly;
                 using (var stream = assembly.GetManifestResourceStream($"{typeof(App).Namespace}.{UserSecretsFileName}"))
                 {
+                    if (stream == null || !stream.CanRead)
+                    {
+                        return false;
+                    }
+
                     _config = new ConfigurationBuilder()
                    .AddJsonStream(stream)
                    .Build();

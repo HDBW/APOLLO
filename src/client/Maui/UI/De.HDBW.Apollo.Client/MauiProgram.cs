@@ -15,9 +15,11 @@ using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Identity.Client;
+using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -53,6 +55,7 @@ public static class MauiProgram
         SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseMauiCompatibility()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
@@ -104,7 +107,7 @@ public static class MauiProgram
             var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
             task.Wait();
             var authenticationResult = task.Result;
-            hasRegisteredUser = task.Result?.Account != null;
+            hasRegisteredUser = authenticationResult?.Account != null;
         }
         catch (Exception ex)
         {
@@ -171,19 +174,25 @@ public static class MauiProgram
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
+        services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
     }
 
     private static void SetupRepositories(IServiceCollection services)
     {
+        services.AddSingleton<IUserProfileItemRepository, UserProfileItemRepository>();
         services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
+        services.AddSingleton<IAssessmentScoreRepository, AssessmentScoreRepository>();
+        services.AddSingleton<IAssessmentCategoryRepository, AssessmentCategoryRepository>();
         services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
+        services.AddSingleton<IAnswerItemResultRepository, AnswerItemResultRepository>();
         services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
         services.AddSingleton<IQuestionMetaDataRelationRepository, QuestionMetaDataRelationRepository>();
         services.AddSingleton<IAnswerMetaDataRelationRepository, AnswerMetaDataRelationRepository>();
         services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
         services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
         services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
-        services.AddSingleton<IUserProfileRepository, UserProfileRepository>();
+        services.AddSingleton<ICourseContactRepository, CourseContactRepository>();
+        services.AddSingleton<ICourseAppointmentRepository, CourseAppointmentRepository>();
         services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
     }
 
@@ -191,23 +200,51 @@ public static class MauiProgram
     {
         services.AddTransient<AppShell>();
         services.AddTransient<AppShellViewModel>();
+
         services.AddTransient<StartView>();
         services.AddTransient<StartViewModel>();
+
         services.AddTransient<ExtendedSplashScreenView>();
         services.AddTransient<ExtendedSplashScreenViewModel>();
+
         services.AddTransient<RegistrationView>();
         services.AddTransient<RegistrationViewModel>();
+
         services.AddTransient<UseCaseDescriptionView>();
         services.AddTransient<UseCaseDescriptionViewModel>();
+
         services.AddTransient<UseCaseSelectionView>();
         services.AddTransient<UseCaseSelectionViewModel>();
+
         services.AddTransient<FirstTimeDialog>();
         services.AddTransient<FirstTimeDialogViewModel>();
+
+        services.AddTransient<CancelAssessmentDialog>();
+        services.AddTransient<CancelAssessmentDialogViewModel>();
+
+        services.AddTransient<SkipQuestionDialog>();
+        services.AddTransient<SkipQuestionDialogViewModel>();
+
         services.AddTransient<EmptyView>();
         services.AddTransient<EmptyViewModel>();
+
         services.AddTransient<AssessmentView>();
         services.AddTransient<AssessmentViewModel>();
+
+        services.AddTransient<AssessmentResultView>();
+        services.AddTransient<AssessmentResultViewModel>();
+
+        services.AddTransient<AssessmentDescriptionView>();
+        services.AddTransient<AssessmentDescriptionViewModel>();
+
+        services.AddTransient<CourseView>();
         services.AddTransient<CourseViewModel>();
+
+        services.AddTransient<SettingsView>();
+        services.AddTransient<SettingsViewModel>();
+
+        services.AddTransient<FeedbackView>();
+        services.AddTransient<FeedbackViewModel>();
     }
 
     private static void SetupRoutes()
@@ -219,7 +256,11 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
         Routing.RegisterRoute(Routes.StartView, typeof(StartView));
         Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
+        Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
+        Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
         Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
+        Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
+        Routing.RegisterRoute(Routes.FeedbackView, typeof(FeedbackView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

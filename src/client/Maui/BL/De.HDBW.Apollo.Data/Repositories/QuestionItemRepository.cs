@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
@@ -11,6 +12,11 @@ namespace De.HDBW.Apollo.Data.Repositories
         AbstractInMemoryRepository<QuestionItem>,
         IQuestionItemRepository
     {
+        public QuestionItemRepository(ILogger<QuestionItemRepository> logger)
+            : base(logger)
+        {
+        }
+
         public Task<IEnumerable<QuestionItem>> GetItemsByForeignKeyAsync(long id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
