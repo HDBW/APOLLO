@@ -86,8 +86,18 @@
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                 </Grid.GestureRecognizers>
-                <StackLayout VerticalOptions="Center" BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
-                <RadioButton Grid.Column="1" IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource White}" Background="{StaticResource White}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8"/>
+                    </Border.StrokeShape>                    
+                </Border>
+                <StackLayout VerticalOptions="Center" Margin="12,12,6,12" BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <RadioButton Grid.Column="1" Margin="0,12,12,12" IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                        <Setter TargetName="PART_Bd" Property="Border.Stroke" Value="{StaticResource Primary}" />
+                    </DataTrigger>
+                </Grid.Triggers>
             </Grid>
         </DataTemplate>
 

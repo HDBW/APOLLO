@@ -59,6 +59,9 @@
     <None Remove="Resources\Images\send.svg" />
     <None Remove="Resources\Images\settings.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
+    <None Remove="Resources\Images\stardashed.svg" />
+    <None Remove="Resources\Images\staroutline.svg" />
+    <None Remove="Resources\Images\timer.svg" />
     <None Remove="Resources\Images\usecase1deco.svg" />
     <None Remove="Resources\Images\usecase1detail.svg" />
     <None Remove="Resources\Images\usecase2deco.svg" />
