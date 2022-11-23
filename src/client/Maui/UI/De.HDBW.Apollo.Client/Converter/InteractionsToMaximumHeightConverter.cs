@@ -3,8 +3,6 @@
 
 using System.Globalization;
 using De.HDBW.Apollo.Client.Models.Interactions;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
-using Invite.Apollo.App.Graph.Common.Models.Course;
 
 namespace De.HDBW.Apollo.Client.Converter
 {
@@ -30,7 +28,7 @@ namespace De.HDBW.Apollo.Client.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotSupportedException($"Twoway Binding not supported in {GetType()}.");
+            throw new NotSupportedException($"Twoway Binding not supported in {GetType().Name}.");
         }
     }
 }

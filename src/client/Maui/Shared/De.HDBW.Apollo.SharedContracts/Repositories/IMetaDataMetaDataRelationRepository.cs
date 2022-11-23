@@ -9,5 +9,6 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         IRepository<MetaDataMetaDataRelation>,
         IDatabaseRepository<MetaDataMetaDataRelation>
     {
+        Task<IEnumerable<MetaDataMetaDataRelation>> GetItemsBySourceIdsAsync(IEnumerable<long> ids, CancellationToken token);
     }
 }
