@@ -61,11 +61,11 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jetzt starten.
+        ///   Looks up a localized string similar to *Kann nur einmalig ausgeführt werden.
         /// </summary>
-        public static string AssessmentDescriptionView_Start {
+        public static string AssessmentDescriptionView_OnlyOnce {
             get {
-                return ResourceManager.GetString("AssessmentDescriptionView_Start", resourceCulture);
+                return ResourceManager.GetString("AssessmentDescriptionView_OnlyOnce", resourceCulture);
             }
         }
         
@@ -79,140 +79,38 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac vel, cras in iaculis libero. Vulputate sit sem vel quisque ut eu bibendum mauris..
+        ///   Looks up a localized string similar to {0} Minuten.
         /// </summary>
-        public static string AssessmentDescriptionViewModel_Skill_DescriptionDetails {
+        public static string AssessmentDescriptionViewModel_DurationFormat {
             get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionDetails", resourceCulture);
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_DurationFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitte lies jede Aussage aufmerksam durch und überlege, inwiefern sie auf dich zutrifft..
+        ///   Looks up a localized string similar to Test starten*.
         /// </summary>
-        public static string AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle {
+        public static string AssessmentDescriptionViewModel_Skill_Start {
             get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle", resourceCulture);
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_Start", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Digitale Kompetenzen.
+        ///   Looks up a localized string similar to Test starten*.
         /// </summary>
-        public static string AssessmentDescriptionViewModel_Skill_DescriptionSubline {
+        public static string AssessmentDescriptionViewModel_SoftSkill_Start {
             get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionSubline", resourceCulture);
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_Start", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner digitalen Kompetenzen teilnehmen..
+        ///   Looks up a localized string similar to Umfrage starten*.
         /// </summary>
-        public static string AssessmentDescriptionViewModel_Skill_DescriptionText {
+        public static string AssessmentDescriptionViewModel_Survey_Start {
             get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Selbsttest.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_Skill_DescriptionTitle {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_DescriptionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nicht abbrechbar
-        ///Nicht wiederholbar
-        ///Ergebnisse werden gespeichert.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Allgemeines zum Skilltest.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Indurstriefachfrau/- Mann.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.
-        ///Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu..
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionText {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Skilltest.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionDetails.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_Survey_DescriptionDetails {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionSubline.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_Survey_DescriptionSubline {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionSubline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionText.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_Survey_DescriptionText {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AssessmentDescriptionViewModel_Survey_DescriptionTitle.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_Survey_DescriptionTitle {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_DescriptionTitle", resourceCulture);
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_Start", resourceCulture);
             }
         }
         

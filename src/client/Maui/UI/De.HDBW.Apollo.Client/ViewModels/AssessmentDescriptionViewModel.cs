@@ -24,16 +24,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _descriptionTitle;
 
         [ObservableProperty]
-        private string? _descriptionSubline;
-
-        [ObservableProperty]
         private string? _descriptionText;
 
         [ObservableProperty]
-        private string? _descriptionDetailsTitle;
+        private string? _descriptionDetails;
 
         [ObservableProperty]
-        private string? _descriptionDetails;
+        private string? _startText;
+
+        [ObservableProperty]
+        private string? _duration;
 
         public AssessmentDescriptionViewModel(
             IAssessmentItemRepository assessmentItemRepository,
@@ -103,28 +103,20 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             ImagePath = "fallback.png";
             OnPropertyChanged(nameof(HasImage));
+            DescriptionTitle = assessmentItem.Title;
+            DescriptionText = assessmentItem.Description;
+            DescriptionDetails = assessmentItem.Disclaimer;
+            Duration = string.Format(Resources.Strings.Resource.AssessmentDescriptionViewModel_DurationFormat, assessmentItem.Duration.TotalMinutes);
             switch (assessmentItem.AssessmentType)
             {
                 case AssessmentType.SoftSkillAssessment:
-                    DescriptionTitle = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle;
-                    DescriptionSubline = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline;
-                    DescriptionText = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_DescriptionText;
-                    DescriptionDetailsTitle = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle;
-                    DescriptionDetails = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails;
+                    StartText = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_Start;
                     break;
                 case AssessmentType.SkillAssessment:
-                    DescriptionTitle = Resources.Strings.Resource.AssessmentDescriptionViewModel_Skill_DescriptionTitle;
-                    DescriptionSubline = Resources.Strings.Resource.AssessmentDescriptionViewModel_Skill_DescriptionSubline;
-                    DescriptionText = Resources.Strings.Resource.AssessmentDescriptionViewModel_Skill_DescriptionText;
-                    DescriptionDetailsTitle = Resources.Strings.Resource.AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle;
-                    DescriptionDetails = Resources.Strings.Resource.AssessmentDescriptionViewModel_Skill_DescriptionDetails;
+                    StartText = Resources.Strings.Resource.AssessmentDescriptionViewModel_Skill_Start;
                     break;
                 case AssessmentType.Survey:
-                    DescriptionTitle = Resources.Strings.Resource.AssessmentDescriptionViewModel_Survey_DescriptionTitle;
-                    DescriptionSubline = Resources.Strings.Resource.AssessmentDescriptionViewModel_Survey_DescriptionSubline;
-                    DescriptionText = Resources.Strings.Resource.AssessmentDescriptionViewModel_Survey_DescriptionText;
-                    DescriptionDetailsTitle = Resources.Strings.Resource.AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle;
-                    DescriptionDetails = Resources.Strings.Resource.AssessmentDescriptionViewModel_Survey_DescriptionDetails;
+                    StartText = Resources.Strings.Resource.AssessmentDescriptionViewModel_Survey_Start;
                     break;
             }
         }

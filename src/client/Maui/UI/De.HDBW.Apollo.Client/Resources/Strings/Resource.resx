@@ -117,56 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetails" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac vel, cras in iaculis libero. Vulputate sit sem vel quisque ut eu bibendum mauris.</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle" xml:space="preserve">
-    <value>Bitte lies jede Aussage aufmerksam durch und überlege, inwiefern sie auf dich zutrifft.</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionSubline" xml:space="preserve">
-    <value>Digitale Kompetenzen</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionText" xml:space="preserve">
-    <value>Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner digitalen Kompetenzen teilnehmen.</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionTitle" xml:space="preserve">
-    <value>Selbsttest</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails" xml:space="preserve">
-    <value>Nicht abbrechbar
-Nicht wiederholbar
-Ergebnisse werden gespeichert</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle" xml:space="preserve">
-    <value>Allgemeines zum Skilltest</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline" xml:space="preserve">
-    <value>Indurstriefachfrau/- Mann</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionText" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.
-Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle" xml:space="preserve">
-    <value>Skilltest</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionDetails" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionDetails</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionSubline" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionSubline</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionText" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionText</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionTitle</value>
-  </data>
-  <data name="AssessmentDescriptionView_Start" xml:space="preserve">
-    <value>Jetzt starten</value>
+  <data name="AssessmentDescriptionView_OnlyOnce" xml:space="preserve">
+    <value>*Kann nur einmalig ausgeführt werden</value>
   </data>
   <data name="AssessmentDescriptionView_Title" xml:space="preserve">
     <value>Information</value>
@@ -513,5 +465,17 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="StartViewModel_FavoriteAssessmentSubline" xml:space="preserve">
     <value>Erreiche deine Ziele</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Skill_Start" xml:space="preserve">
+    <value>Test starten*</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_SoftSkill_Start" xml:space="preserve">
+    <value>Test starten*</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Survey_Start" xml:space="preserve">
+    <value>Umfrage starten*</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_DurationFormat" xml:space="preserve">
+    <value>{0} Minuten</value>
   </data>
 </root>
