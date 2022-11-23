@@ -71,7 +71,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             string filename1 = "usecase1.bin";
 
-            using (var file = File.OpenRead(filename))
+            using (var file = File.OpenRead(filename1))
             {
                 expected = Serializer.Deserialize<UseCaseCollections>(file);
                 file.Close();
