@@ -2,7 +2,7 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Views;
 
-public partial class CourseView : ContentView
+public partial class CourseView
 {
     public CourseView(CourseViewModel model)
     {

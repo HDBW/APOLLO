@@ -79,15 +79,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Minuten.
-        /// </summary>
-        public static string AssessmentDescriptionViewModel_DurationFormat {
-            get {
-                return ResourceManager.GetString("AssessmentDescriptionViewModel_DurationFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Test starten*.
         /// </summary>
         public static string AssessmentDescriptionViewModel_Skill_Start {
@@ -354,6 +345,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Back {
             get {
                 return ResourceManager.GetString("Global_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Minuten.
+        /// </summary>
+        public static string Global_DurationFormat {
+            get {
+                return ResourceManager.GetString("Global_DurationFormat", resourceCulture);
             }
         }
         
@@ -712,36 +712,36 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Sobald du Inhalte favorisierst werden sie hier erscheinen..
         /// </summary>
-        public static string StartViewModel_FavoriteAssessmentDescriptionText {
+        public static string StartView_NoFavoritesDescription {
             get {
-                return ResourceManager.GetString("StartViewModel_FavoriteAssessmentDescriptionText", resourceCulture);
+                return ResourceManager.GetString("StartView_NoFavoritesDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Du hast noch keine Favoriten gesetzt.
         /// </summary>
-        public static string StartViewModel_FavoriteAssessmentDescriptionTitle {
+        public static string StartView_NoFavoritesTitle {
             get {
-                return ResourceManager.GetString("StartViewModel_FavoriteAssessmentDescriptionTitle", resourceCulture);
+                return ResourceManager.GetString("StartView_NoFavoritesTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Erreiche deine Ziele.
         /// </summary>
-        public static string StartViewModel_FavoriteAssessmentSubline {
+        public static string StartViewModel_FavoritesHeadline {
             get {
-                return ResourceManager.GetString("StartViewModel_FavoriteAssessmentSubline", resourceCulture);
+                return ResourceManager.GetString("StartViewModel_FavoritesHeadline", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Deine Favoriten.
         /// </summary>
-        public static string StartViewModel_FavoriteAssessmentTitle {
+        public static string StartViewModel_FavoritesSubline {
             get {
-                return ResourceManager.GetString("StartViewModel_FavoriteAssessmentTitle", resourceCulture);
+                return ResourceManager.GetString("StartViewModel_FavoritesSubline", resourceCulture);
             }
         }
         
@@ -756,75 +756,29 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CV Generieren.
+        ///   Looks up a localized string similar to Sobald du Inhalte favorisierst werden sie hier erscheinen..
         /// </summary>
-        public static string StartViewModel_InteractionCV {
+        public static string StartViewModel_NoFavoritesText {
             get {
-                return ResourceManager.GetString("StartViewModel_InteractionCV", resourceCulture);
+                return ResourceManager.GetString("StartViewModel_NoFavoritesText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checke dein Profil für einen Job 
-        ///deiner Wahl.
+        ///   Looks up a localized string similar to Du hast noch keine Favoriten gesetzt.
         /// </summary>
-        public static string StartViewModel_InteractionProfile {
+        public static string StartViewModel_NoFavoritesTitle {
             get {
-                return ResourceManager.GetString("StartViewModel_InteractionProfile", resourceCulture);
+                return ResourceManager.GetString("StartViewModel_NoFavoritesTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to staatlich geförderte Umschulungsund Weiterbildungsmaßnahme.
+        ///   Looks up a localized string similar to Empfohlene Inhalte.
         /// </summary>
-        public static string StartViewModel_InteractionRetraining {
+        public static string StartViewModel_RecomondationsSubline {
             get {
-                return ResourceManager.GetString("StartViewModel_InteractionRetraining", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lerne neue Skills.
-        /// </summary>
-        public static string StartViewModel_InteractionSkills {
-            get {
-                return ResourceManager.GetString("StartViewModel_InteractionSkills", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erhöhe deine Jobchancen.
-        /// </summary>
-        public static string StartViewModel_LearningHeadline {
-            get {
-                return ResourceManager.GetString("StartViewModel_LearningHeadline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Empfohlene Lerninhalte.
-        /// </summary>
-        public static string StartViewModel_LearningSubline {
-            get {
-                return ResourceManager.GetString("StartViewModel_LearningSubline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Teste dein Wissen.
-        /// </summary>
-        public static string StartViewModel_TestHeadline {
-            get {
-                return ResourceManager.GetString("StartViewModel_TestHeadline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Empfohlene Tests.
-        /// </summary>
-        public static string StartViewModel_TestSubline {
-            get {
-                return ResourceManager.GetString("StartViewModel_TestSubline", resourceCulture);
+                return ResourceManager.GetString("StartViewModel_RecomondationsSubline", resourceCulture);
             }
         }
         
@@ -834,6 +788,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_UnknownProvider {
             get {
                 return ResourceManager.GetString("StartViewModel_UnknownProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erhöhe deine Jobchancen.
+        /// </summary>
+        public static string StartViewModel_UseCaseA_RecomondationsHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_UseCaseA_RecomondationsHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lerne neue Fähigkeiten.
+        /// </summary>
+        public static string StartViewModel_UseCaseB_RecomondationsHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_UseCaseB_RecomondationsHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschleunige deinen Aufstieg.
+        /// </summary>
+        public static string StartViewModel_UseCaseC_RecomondationsHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_UseCaseC_RecomondationsHeadline", resourceCulture);
             }
         }
         

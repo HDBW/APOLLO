@@ -256,31 +256,6 @@
     <value>Entdecke dein Karrierepotential
 (Ist-Stand bekannt – Inspiration)</value>
   </data>
-  <data name="StartViewModel_InteractionCV" xml:space="preserve">
-    <value>CV Generieren</value>
-  </data>
-  <data name="StartViewModel_InteractionProfile" xml:space="preserve">
-    <value>Checke dein Profil für einen Job 
-deiner Wahl</value>
-  </data>
-  <data name="StartViewModel_InteractionRetraining" xml:space="preserve">
-    <value>staatlich geförderte Umschulungs&#x2;und Weiterbildungsmaßnahme</value>
-  </data>
-  <data name="StartViewModel_InteractionSkills" xml:space="preserve">
-    <value>Lerne neue Skills</value>
-  </data>
-  <data name="StartViewModel_LearningHeadline" xml:space="preserve">
-    <value>Erhöhe deine Jobchancen</value>
-  </data>
-  <data name="StartViewModel_LearningSubline" xml:space="preserve">
-    <value>Empfohlene Lerninhalte</value>
-  </data>
-  <data name="StartViewModel_TestHeadline" xml:space="preserve">
-    <value>Teste dein Wissen</value>
-  </data>
-  <data name="StartViewModel_TestSubline" xml:space="preserve">
-    <value>Empfohlene Tests</value>
-  </data>
   <data name="StartViewModel_UnknownProvider" xml:space="preserve">
     <value>Unbekannter Anbieter</value>
   </data>
@@ -454,16 +429,16 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="SettingsView_Questions" xml:space="preserve">
     <value>Anregungen oder Wünsche?</value>
   </data>
-  <data name="StartViewModel_FavoriteAssessmentDescriptionText" xml:space="preserve">
+  <data name="StartViewModel_NoFavoritesText" xml:space="preserve">
     <value>Sobald du Inhalte favorisierst werden sie hier erscheinen.</value>
   </data>
-  <data name="StartViewModel_FavoriteAssessmentDescriptionTitle" xml:space="preserve">
+  <data name="StartViewModel_NoFavoritesTitle" xml:space="preserve">
     <value>Du hast noch keine Favoriten gesetzt</value>
   </data>
-  <data name="StartViewModel_FavoriteAssessmentTitle" xml:space="preserve">
+  <data name="StartViewModel_FavoritesSubline" xml:space="preserve">
     <value>Deine Favoriten</value>
   </data>
-  <data name="StartViewModel_FavoriteAssessmentSubline" xml:space="preserve">
+  <data name="StartViewModel_FavoritesHeadline" xml:space="preserve">
     <value>Erreiche deine Ziele</value>
   </data>
   <data name="AssessmentDescriptionViewModel_Skill_Start" xml:space="preserve">
@@ -475,7 +450,25 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="AssessmentDescriptionViewModel_Survey_Start" xml:space="preserve">
     <value>Umfrage starten*</value>
   </data>
-  <data name="AssessmentDescriptionViewModel_DurationFormat" xml:space="preserve">
+  <data name="Global_DurationFormat" xml:space="preserve">
     <value>{0} Minuten</value>
+  </data>
+  <data name="StartView_NoFavoritesDescription" xml:space="preserve">
+    <value>Sobald du Inhalte favorisierst werden sie hier erscheinen.</value>
+  </data>
+  <data name="StartView_NoFavoritesTitle" xml:space="preserve">
+    <value>Du hast noch keine Favoriten gesetzt</value>
+  </data>
+  <data name="StartViewModel_RecomondationsSubline" xml:space="preserve">
+    <value>Empfohlene Inhalte</value>
+  </data>
+  <data name="StartViewModel_UseCaseA_RecomondationsHeadline" xml:space="preserve">
+    <value>Erhöhe deine Jobchancen</value>
+  </data>
+  <data name="StartViewModel_UseCaseB_RecomondationsHeadline" xml:space="preserve">
+    <value>Lerne neue Fähigkeiten</value>
+  </data>
+  <data name="StartViewModel_UseCaseC_RecomondationsHeadline" xml:space="preserve">
+    <value>Beschleunige deinen Aufstieg</value>
   </data>
 </root>
