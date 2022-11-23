@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
@@ -11,7 +12,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
     {
 
         [DataMember(Order = 5, IsRequired = false)]
-        public CultureInfo CultureInfo { get; set; } = null!;
+        /// TODO: CultureInfo
+        public string CultureInfo { get; set; } = null!;
 
         [DataMember(Order = 6, IsRequired = true)]
         public string Name { get; set; } = null!;

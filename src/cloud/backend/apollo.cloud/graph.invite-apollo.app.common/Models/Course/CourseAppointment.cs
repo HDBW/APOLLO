@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
@@ -69,7 +70,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public Uri BookingUrl { get; set; } = null!;
 
         [DataMember(Order = 20)]
-        public CultureInfo Language { get; set; } = null!;
+        public string Language { get; set; } = null!;
 
         [DataMember(Order = 21)]
         public int AvailableSeats { get; set; }

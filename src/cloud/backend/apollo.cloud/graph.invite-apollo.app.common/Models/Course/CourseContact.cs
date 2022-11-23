@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {

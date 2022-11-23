@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
+using ProtoBuf;
+
 
 namespace Invite.Apollo.App.Graph.Common.Models
 {
@@ -15,7 +17,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
         [DataMember(Order = 7)]
         public Uri AnswerUrl { get; set; } = null!;
-
-        public CultureInfo? Language { get; set; }
+        /// TODO: CultureInfo
+        public string? Language { get; set; }
     }
 }

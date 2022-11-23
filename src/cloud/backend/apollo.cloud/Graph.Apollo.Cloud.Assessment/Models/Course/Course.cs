@@ -82,7 +82,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Models.Course
 
         /// <summary>
         /// Course Language the description of the course is in language
-        public CultureInfo Language { get; set; } = null!;
+        /// TODO: CultureInfo
+        public string Language { get; set; } = null!;
 
         /// <summary>
         /// Indicates the type of the course

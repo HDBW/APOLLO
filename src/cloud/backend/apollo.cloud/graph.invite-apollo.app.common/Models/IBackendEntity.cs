@@ -1,4 +1,6 @@
 ﻿using System;
+using ProtoBuf;
+
 
 namespace Invite.Apollo.App.Graph.Common.Models
 {

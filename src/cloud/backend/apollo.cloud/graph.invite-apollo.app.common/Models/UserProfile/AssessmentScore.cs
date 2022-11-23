@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
@@ -24,13 +22,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         [ForeignKey(nameof(AssessmentItem))]
         public long AssessmentId { get; set; }
 
-        [DataMember(Order = 8, IsRequired = true)]
+        [DataMember(Order = 7, IsRequired = true)]
         public string Value { get; set; }
 
         /// <summary>
         /// Overall Percentage
         /// </summary>
-        [DataMember(Order = 9)]
+        [DataMember(Order = 8)]
         public decimal PercentageScore { get; set; }
 
         

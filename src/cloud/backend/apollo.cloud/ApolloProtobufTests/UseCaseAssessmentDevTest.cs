@@ -556,7 +556,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                     //BackendId = DateTime.Now.Ticks,
                     AssessmentType = AssessmentType.SkillAssessment,
                     Publisher = "HDBW DEV Team",
-                    Duration = TimeSpan.FromMinutes(0),
+                    Duration = TimeSpan.FromMinutes(0).ToString(),
                     EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
                     Kldb = "43412",
                     Profession = "Developer",
