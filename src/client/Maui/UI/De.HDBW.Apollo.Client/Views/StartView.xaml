@@ -50,7 +50,7 @@
                             <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
                             <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" 
                                             Margin="0,0,0,8"/>
-                            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" BindableLayout.ItemsSource="{Binding Filters}">
+                            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" BindableLayout.ItemsSource="{Binding Filters}" Margin="0,0,0,8">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="models:FilterInteractionEntry">
                                         <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}">
