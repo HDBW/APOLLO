@@ -1,7 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Helper;
 
@@ -9,6 +11,10 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 {
     public partial class StartViewInteractionEntry : InteractionEntry
     {
+        private readonly Func<StartViewInteractionEntry, Task> _makeFavoriteHandler;
+
+        private readonly Func<StartViewInteractionEntry, bool> _canMakeFavoriteHandler;
+
         [ObservableProperty]
         private Status _status;
 
@@ -27,9 +33,13 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [ObservableProperty]
         private bool _isFiltered;
 
-        private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, Type entityType, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
+        private bool _isFavorite;
+
+        private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, Type entityType, object? data, Func<StartViewInteractionEntry, Task> makeFavoriteHandler, Func<StartViewInteractionEntry, bool> canMakeFavoriteHandler, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
             : base(text, data, navigateHandler, canNavigateHandle)
         {
+            _makeFavoriteHandler = makeFavoriteHandler;
+            _canMakeFavoriteHandler = canMakeFavoriteHandler;
             Subline = subline;
             Info = info;
             Status = status;
@@ -48,9 +58,36 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
-        public static InteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, object? data, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
+        public bool IsFavorite
         {
-            return new StartViewInteractionEntry(text, subline, decoratorText, info, imagePath, status, typeof(TU), data, handleInteract, canHandleInteract);
+            get
+            {
+                return _isFavorite;
+            }
+
+            set
+            {
+                if (SetProperty(ref _isFavorite, value))
+                {
+                    MakeFavoriteCommand?.NotifyCanExecuteChanged();
+                }
+            }
+        }
+
+        public static InteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, object? data, Func<StartViewInteractionEntry, Task> makeFavoriteHandler, Func<StartViewInteractionEntry, bool> canMakeFavoriteHandler, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
+        {
+            return new StartViewInteractionEntry(text, subline, decoratorText, info, imagePath, status, typeof(TU), data, makeFavoriteHandler, canMakeFavoriteHandler, handleInteract, canHandleInteract);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanMakeFavorite))]
+        private Task MakeFavorite()
+        {
+            return _makeFavoriteHandler?.Invoke(this) ?? Task.CompletedTask;
+        }
+
+        private bool CanMakeFavorite()
+        {
+            return _canMakeFavoriteHandler?.Invoke(this) ?? false;
         }
     }
 }

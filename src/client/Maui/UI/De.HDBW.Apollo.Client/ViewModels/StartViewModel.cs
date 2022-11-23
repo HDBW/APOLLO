@@ -178,7 +178,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var data = new NavigationData(Routes.AssessmentDescriptionView, assemsmentData);
                 var duration = assesment.Duration != TimeSpan.Zero ? string.Format("g", assesment.Duration) : string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
-                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, duration, "fallback.png", Status.Unknown, data, HandleMakeFavorite, CanHandleMakeFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
                 _filtermappings.Add(interaction, assesment.AssessmentType);
             }
@@ -223,10 +223,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         break;
                 }
 
-                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, "fallback.png", Status.Unknown, data, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, "fallback.png", Status.Unknown, data, HandleMakeFavorite, CanHandleMakeFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
                 _filtermappings.Add(interaction, course.CourseType);
             }
+
+            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
 
             InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
         }
@@ -291,14 +293,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private Task HandleShowMore(InteractionCategoryEntry arg)
+        private Task HandleShowMore(InteractionCategoryEntry entry)
         {
             return Task.CompletedTask;
         }
 
-        private bool CanHandleShowMore(InteractionCategoryEntry arg)
+        private bool CanHandleShowMore(InteractionCategoryEntry entry)
         {
             return true;
+        }
+
+        private bool CanHandleMakeFavorite(StartViewInteractionEntry entry)
+        {
+            return !entry.IsFavorite;
+        }
+
+        private Task HandleMakeFavorite(StartViewInteractionEntry entry)
+        {
+           entry.IsFavorite = true;
         }
     }
 }
