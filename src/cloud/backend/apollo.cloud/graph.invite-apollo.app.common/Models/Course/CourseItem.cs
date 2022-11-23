@@ -75,8 +75,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [DataMember(Order = 13, IsRequired = false)]
         public string PreRequisitesDescription { get; set; } = string.Empty;
 
-        //TODO: Define Scope of LearningOutcomes note backend only!
-
         //TODO: Define Scope of Skills and EscoSkills
 
         //TODO: Define Scope of Occupations
@@ -116,12 +114,12 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [DataMember(Order = 18, IsRequired = false)]
         public string Language { get; set; } = null!;
 
-
         #endregion
 
+        //TODO: Define Scope of LearningOutcomes note backend only!
+        [DataMember(Order = 19, IsRequired = false)]
+        public string LearningOutcomes { get; set; }
         
-       
-
 
         #region relations
 
@@ -147,6 +145,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [ForeignKey(nameof(EduProviderItem))]
         public long CourseProviderId { get; set; }
 
+        [DataMember(Order = 23, IsRequired = false)]
+        public string Benefits { get; set; }
 
         //TODO: QualificationProvider
 
@@ -221,8 +221,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public decimal? Price { get; set; }
         [Obsolete]
         [DataMember(Order = 42, IsRequired = false)]
-        public string Currency { get; set; } = string.Empty;
+        public string Currency { get; set; } = "€";
 
+        [DataMember(Order = 43, IsRequired = false)]
+        public string LoanOptions { get; set; }
+
+        [DataMember(Order = 44, IsRequired = false)]
+        public string Skills { get; set; }
     }
 
     /// <summary>

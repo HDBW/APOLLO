@@ -176,6 +176,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Models.Course
 
         public List<Appointment> Appointments { get; set; }
         public List<CourseHasContacts> CourseContacts { get; set; }
+        public string LearningOutcomes { get; set; }
+        public string Benefits { get; set; }
+        public string LoanOptions { get; set; }
+        public string Skills { get; set; }
     }
 
 }

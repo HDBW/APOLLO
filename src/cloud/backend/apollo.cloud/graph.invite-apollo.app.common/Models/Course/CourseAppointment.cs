@@ -73,7 +73,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public string Language { get; set; } = null!;
 
         [DataMember(Order = 21)]
-        public int AvailableSeats { get; set; }
+        public int? AvailableSeats { get; set; }
 
         #region Implementation of IPublishingInfo
         [DataMember(Order = 22,IsRequired = false)]
