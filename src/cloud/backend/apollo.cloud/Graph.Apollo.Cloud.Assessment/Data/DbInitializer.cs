@@ -39,8 +39,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             foreach (Course course in useCaseCourseData.CourseList.Values)
             {
                 context.Courses.Add(course);
-               
-                
             }
             foreach (Contact contact in useCaseCourseData.Contacts.Values)
             {
@@ -345,10 +343,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     case QuestionType.Associate:
 
                         MetaData md =  CreateMetaData(MetaDataType.Text,bstAssessment.ItemStem, context);
-                        MetaData md1 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_1, context);
-                        MetaData md2 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_2, context);
-                        MetaData md3 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_3, context);
-                        MetaData md4 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_4, context);
+                        MetaData md1 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_1.ToLower(), context);
+                        MetaData md2 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_2.ToLower(), context);
+                        MetaData md3 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_3.ToLower(), context);
+                        MetaData md4 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_4.ToLower(), context);
                         
                         CreateQuestionHasMetaData(md, question, context);
                         CreateQuestionHasMetaData(md1, question, context);
@@ -381,21 +379,23 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 }
                                 break;
                             case "CHOICE_AP":
-                                MetaData qapmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemType, context);
+                                MetaData qapmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
                                 CreateQuestionHasMetaData(qapmd, question, context);
 
                                 for (int i = 0; i < bstAssessment.AmountAnswers; i++)
                                 {
+                                    string picture = bstAssessment.GetHTMLDistractorPrimary(i).ToLower();
                                     Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
                                     MetaData tempAnswerMetaData = CreateMetaData(MetaDataType.Image,
-                                        bstAssessment.GetHTMLDistractorPrimary(i), context);
+                                        picture, context);
                                     AnswerHasMetaData tempAnswerHasMetaData =
                                         CreateAnswerHasMetaData(tempAnswerMetaData, tempAnswer, context);
                                 }
                                 break;
                             case "CHOICE_QP":
+                                string qpPicture = bstAssessment.ImageResourceName1.ToLower();
                                 MetaData cmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                                MetaData cmd1 = CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1,
+                                MetaData cmd1 = CreateMetaData(MetaDataType.Image, qpPicture,
                                     context);
                                 CreateQuestionHasMetaData(cmd, question, context);
                                 CreateQuestionHasMetaData(cmd1, question, context);
@@ -417,7 +417,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     case QuestionType.Imagemap:
                         MetaData mdText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
                         MetaData mdImage =
-                            CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1, context);
+                            CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1.ToLower(), context);
 
                         CreateQuestionHasMetaData(mdText, question, context);
                         CreateQuestionHasMetaData(mdImage, question, context);
@@ -466,11 +466,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
         }
 
-        private static MetaData CreateMetaData(MetaDataType text, string value, AssessmentContext context)
+        private static MetaData CreateMetaData(MetaDataType type, string value, AssessmentContext context)
         {
             MetaData md = new()
             {
-                Type = MetaDataType.Text,
+                Type = type,
                 Value = value,
                 Ticks = DateTime.Now.Ticks,
                 Schema = CreateApolloSchema()
