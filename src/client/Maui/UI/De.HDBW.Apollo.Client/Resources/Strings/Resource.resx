@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetails" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionDetails</value>
+    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac vel, cras in iaculis libero. Vulputate sit sem vel quisque ut eu bibendum mauris.</value>
   </data>
   <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle</value>
+    <value>Bitte lies jede Aussage aufmerksam durch und überlege, inwiefern sie auf dich zutrifft.</value>
   </data>
   <data name="AssessmentDescriptionViewModel_Skill_DescriptionSubline" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionSubline</value>
+    <value>Digitale Kompetenzen</value>
   </data>
   <data name="AssessmentDescriptionViewModel_Skill_DescriptionText" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionText</value>
+    <value>Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner digitalen Kompetenzen teilnehmen.</value>
   </data>
   <data name="AssessmentDescriptionViewModel_Skill_DescriptionTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionTitle</value>
+    <value>Selbsttest</value>
   </data>
   <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails" xml:space="preserve">
     <value>Nicht abbrechbar
@@ -501,5 +501,17 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="SettingsView_Questions" xml:space="preserve">
     <value>Anregungen oder Wünsche?</value>
+  </data>
+  <data name="StartViewModel_FavoriteAssessmentDescriptionText" xml:space="preserve">
+    <value>Sobald du Inhalte favorisierst werden sie hier erscheinen.</value>
+  </data>
+  <data name="StartViewModel_FavoriteAssessmentDescriptionTitle" xml:space="preserve">
+    <value>Du hast noch keine Favoriten gesetzt</value>
+  </data>
+  <data name="StartViewModel_FavoriteAssessmentTitle" xml:space="preserve">
+    <value>Deine Favoriten</value>
+  </data>
+  <data name="StartViewModel_FavoriteAssessmentSubline" xml:space="preserve">
+    <value>Erreiche deine Ziele</value>
   </data>
 </root>

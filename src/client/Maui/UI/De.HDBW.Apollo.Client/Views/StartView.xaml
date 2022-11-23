@@ -30,7 +30,7 @@
             <RowDefinition Height="8" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Frame Grid.ColumnSpan="2" CornerRadius="8" BackgroundColor="{StaticResource Surface}" Margin="12,0"/>
+        <Frame Grid.ColumnSpan="2" CornerRadius="8" BackgroundColor="{StaticResource Surface}" BorderColor="Transparent" Margin="12,0"/>
         <Image HeightRequest="64" WidthRequest="64" Grid.Column="0" Margin="24,8,0,8" Grid.Row="0" Source="{Binding UserProfile.ImagePath}" Aspect="AspectFill">
             <Image.Clip>
                 <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32" />
@@ -50,10 +50,22 @@
                             <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
                             <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" 
                                             Margin="0,0,0,8"/>
-                            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" BindableLayout.ItemsSource="{Binding Filters}">
+                            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" BindableLayout.ItemsSource="{Binding Filters}" Margin="0,0,0,8">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="models:FilterInteractionEntry">
-                                        <Button Text="{Binding Text}" Command="{Binding NavigateCommand}"/>
+                                        <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}">
+                                            <Button.Triggers>
+                                                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                                    <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
+                                                    <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Background}" />
+                                                    <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
+                                                    <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
+                                                </DataTrigger>
+                                            </Button.Triggers>
+                                        </Button>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </HorizontalStackLayout>
