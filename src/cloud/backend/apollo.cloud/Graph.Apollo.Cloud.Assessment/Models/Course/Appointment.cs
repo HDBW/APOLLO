@@ -39,7 +39,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Models.Course
         public OccurrenceType OccurrenceType { get; set; }
         public long BookingContact { get; set; }
         public Uri BookingUrl { get; set; } = null!;
-        public CultureInfo Language { get; set; } = null!;
+        //TODO: CultureInfo
+        public string Language { get; set; } = null!;
         public int AvailableSeats { get; set; }
 
         #region Implementation of IPublishingInfo

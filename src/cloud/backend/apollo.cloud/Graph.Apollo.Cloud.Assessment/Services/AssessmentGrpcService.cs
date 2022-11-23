@@ -7,15 +7,15 @@ using ProtoBuf.Grpc;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services;
 
-public class AssessmentService : IAssessmentService
+public class AssessmentGrpcService : IAssessmentGRPCService
 {
-    private readonly ILogger<AssessmentService> _logger;
+    private readonly ILogger<AssessmentGrpcService> _logger;
     private readonly IDataService _assessmentDataService;
 
     private UseCaseCollections _collections;
 
 
-    public AssessmentService(ILogger<AssessmentService> logger, IDataService assessmentDataService)
+    public AssessmentGrpcService(ILogger<AssessmentGrpcService> logger, IDataService assessmentDataService)
     {
         _logger = logger;
         _assessmentDataService = assessmentDataService;
@@ -55,22 +55,22 @@ public class AssessmentService : IAssessmentService
 
     public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request)
     {
-        return new ValueTask<AssessmentResponse>();
+        AssessmentResponse response = new AssessmentResponse
+            {
+                Assessments = _collections.AssessmentItems, CorrelationId = request.CorrelationId
+            };
+        return new ValueTask<AssessmentResponse>(response);
     }
 
-    public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CallContext context = default) => throw new NotImplementedException();
+    public async ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request) => throw new NotImplementedException();
 
-    public ValueTask<AssessmentResponse> GetAssessmentsAsync(AssessmentRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+    public async ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request, CallContext context = default) => throw new NotImplementedException();
 
-    public ValueTask<AnswerResponse> GetAnswersAsync(AssessmentRequest request) => throw new NotImplementedException();
+    public async ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
-    public ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request, CallContext context = default) => throw new NotImplementedException();
+    public async ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request) => throw new NotImplementedException();
 
-    public ValueTask<AnswerResponse> GetAnswersAsync(AnswersRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+    public async ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request, CallContext context = default) => throw new NotImplementedException();
 
-    public ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request) => throw new NotImplementedException();
-
-    public ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request, CallContext context = default) => throw new NotImplementedException();
-
-    public ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+    public async ValueTask<QuestionResponse> GetQuestionsAsync(QuestionRequest request, CancellationToken cancellationToken = default) => throw new NotImplementedException();
 }

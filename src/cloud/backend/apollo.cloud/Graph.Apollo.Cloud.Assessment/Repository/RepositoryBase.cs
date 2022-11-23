@@ -19,6 +19,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Repository
         public RepositoryBase(AssessmentContext context)
         {
             _context = context;
+            _context.Set<T>().Load();
             dbSet = _context.Set<T>();
         }
 

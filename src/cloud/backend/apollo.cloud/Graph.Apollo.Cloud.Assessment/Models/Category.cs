@@ -22,8 +22,8 @@
 
         public string EscoId { get; set; }
 
-        public string Minimum { get; set; }
-        public string Maximum { get; set; }
-        public string Subject { get; set; }
+        public string Minimum { get; set; } = string.Empty;
+        public string Maximum { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
     }
 }
