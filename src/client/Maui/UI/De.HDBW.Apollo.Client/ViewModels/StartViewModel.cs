@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -100,6 +101,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         return;
                     }
 
+                    UseCase = useCase;
                     var assesments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var userProfile = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
@@ -176,28 +178,35 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var assemsmentData = new NavigationParameters();
                 assemsmentData.AddValue<long?>(NavigationParameter.Id, assesment.Id);
                 var data = new NavigationData(Routes.AssessmentDescriptionView, assemsmentData);
-                var duration = assesment.Duration != TimeSpan.Zero ? string.Format("g", assesment.Duration) : string.Empty;
+                if (TimeSpan.TryParse(assesment.Duration, CultureInfo.InvariantCulture, out TimeSpan duration))
+                {
+                    duration = TimeSpan.Zero;
+                }
+
+                var durationString = duration != TimeSpan.Zero ? string.Format(Resources.Strings.Resource.Global_DurationFormat, duration.TotalMinutes) : string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
-                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, duration, "fallback.png", Status.Unknown, data, HandleMakeFavorite, CanHandleMakeFavorite, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", Status.Unknown, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
                 _filtermappings.Add(interaction, assesment.AssessmentType);
             }
 
-            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_TestHeadline, Resources.Strings.Resource.StartViewModel_TestSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
-
-            interactions = new List<InteractionEntry>();
-            filters = new List<InteractionEntry>();
             foreach (var course in courseItems)
             {
-                var assemsmentData = new NavigationParameters();
-                assemsmentData.AddValue<long?>(NavigationParameter.Id, course.Id);
-                var data = new NavigationData(Routes.CourseView, assemsmentData);
+                if (!filters.Any(f => ((CourseType)f.Data) == course.CourseType))
+                {
+                    filters.Add(FilterInteractionEntry.Import<CourseType>(course.CourseType.ToString(), course.CourseType, HandleFilter, CanHandleFilter));
+                }
+
+                var courseData = new NavigationParameters();
+                courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
+                var data = new NavigationData(Routes.CourseView, courseData);
 
                 var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.TrainingProviderId);
 
-                var duration = course.Duration != TimeSpan.Zero ? string.Format("g", course.Duration) : string.Empty;
+                var duration = course.Duration != TimeSpan.Zero ? string.Format(Resources.Strings.Resource.Global_DurationFormat, course.Duration.TotalMinutes) : string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resource.StartViewModel_UnknownProvider;
                 var decoratorText = string.Empty;
+                var image = "placeholdercontinuingeducation.png";
                 switch (course.CourseTagType)
                 {
                     case CourseTagType.AttendeeCertificate:
@@ -213,6 +222,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         decoratorText = Resources.Strings.Resource.CourseTagType_Course;
                         break;
                     case CourseTagType.InfoEvent:
+                        image = "placeholderinfoevent.png";
                         decoratorText = Resources.Strings.Resource.CourseTagType_InfoEvent;
                         break;
                     case CourseTagType.PartialQualification:
@@ -223,14 +233,33 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         break;
                 }
 
-                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, "fallback.png", Status.Unknown, data, HandleMakeFavorite, CanHandleMakeFavorite, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
                 _filtermappings.Add(interaction, course.CourseType);
             }
 
-            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
+            var headline = string.Empty;
+            if (UseCase.HasValue)
+            {
+                switch (UseCase.Value)
+                {
+                    case SharedContracts.Enums.UseCase.A:
+                        headline = Resources.Strings.Resource.StartViewModel_UseCaseA_RecomondationsHeadline;
+                        break;
+                    case SharedContracts.Enums.UseCase.B:
+                        headline = Resources.Strings.Resource.StartViewModel_UseCaseB_RecomondationsHeadline;
+                        break;
+                    case SharedContracts.Enums.UseCase.C:
+                        headline = Resources.Strings.Resource.StartViewModel_UseCaseC_RecomondationsHeadline;
+                        break;
+                }
+            }
 
-            InteractionCategories.Add(InteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_LearningHeadline, Resources.Strings.Resource.StartViewModel_LearningSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
+            InteractionCategories.Add(InteractionCategoryEntry.Import(headline, Resources.Strings.Resource.StartViewModel_RecomondationsSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
+
+            interactions = new List<InteractionEntry>();
+            filters = new List<InteractionEntry>();
+            InteractionCategories.Add(FavoriteInteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_FavoritesHeadline, Resources.Strings.Resource.StartViewModel_FavoritesSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
         }
 
         private bool CanHandleFilter(InteractionEntry interaction)
@@ -249,20 +278,42 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             filterEntry.IsSelected = !filterEntry.IsSelected;
             var selectedFilters = group.Filters.OfType<FilterInteractionEntry>().Where(f => f.IsSelected);
+            var assessmentFilters = selectedFilters.Select(f => f.Data).OfType<AssessmentType>().ToList();
+            var courseFilters = selectedFilters.Select(f => f.Data).OfType<CourseType>().ToList();
             var items = group.Interactions.OfType<StartViewInteractionEntry>();
-
-            switch (interaction.Data)
+            foreach (var item in items)
             {
-                case AssessmentType type:
-                    foreach (var item in items)
-                    {
-                        item.IsFiltered = IsFilteredByAssessmentType(_filtermappings[item] as AssessmentType?, selectedFilters.Select(f => f.Data).OfType<AssessmentType>().ToList());
-                    }
+                if (!selectedFilters.Any())
+                {
+                    item.IsFiltered = false;
+                    continue;
+                }
 
-                    break;
+                if (item.EntityType == typeof(AssessmentItem) && assessmentFilters.Any())
+                {
+                    item.IsFiltered = IsFilteredByAssessmentType(_filtermappings[item] as AssessmentType?, assessmentFilters);
+                }
+                else if (item.EntityType == typeof(CourseItem) && courseFilters.Any())
+                {
+                    item.IsFiltered = IsFilteredByCourseType(_filtermappings[item] as CourseType?, courseFilters);
+                }
+                else
+                {
+                    item.IsFiltered = true;
+                }
             }
 
             return Task.CompletedTask;
+        }
+
+        private bool IsFilteredByCourseType(CourseType? courseType, List<CourseType> selectedCourseType)
+        {
+            if (!courseType.HasValue || !selectedCourseType.Any())
+            {
+                return true;
+            }
+
+            return !selectedCourseType.Contains(courseType.Value);
         }
 
         private bool IsFilteredByAssessmentType(AssessmentType? assessmentType, IList<AssessmentType> selectedAssessmentTypes)
@@ -303,14 +354,63 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
+        private bool CanHandleToggleIsFavorite(StartViewInteractionEntry entry)
+        {
+            return entry != null;
+        }
+
+        private Task HandleToggleIsFavorite(StartViewInteractionEntry entry)
+        {
+            if (entry.IsFavorite)
+            {
+                return HandleRemoveFavorite(entry);
+            }
+            else
+            {
+                return HandleMakeFavorite(entry);
+            }
+        }
+
         private bool CanHandleMakeFavorite(StartViewInteractionEntry entry)
         {
             return !entry.IsFavorite;
         }
 
-        private async Task HandleMakeFavorite(StartViewInteractionEntry entry)
+        private Task HandleMakeFavorite(StartViewInteractionEntry entry)
         {
-           entry.IsFavorite = true;
+            var favoriteInteraction = InteractionCategories.OfType<FavoriteInteractionCategoryEntry>().FirstOrDefault();
+            if (favoriteInteraction == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            entry.IsFavorite = true;
+            InteractionCategories.Remove(favoriteInteraction);
+            favoriteInteraction.AddInteraction(entry);
+            InteractionCategories.Add(favoriteInteraction);
+
+            return Task.CompletedTask;
+        }
+
+        private bool CanHandleRemoveFavorite(StartViewInteractionEntry entry)
+        {
+            return !entry.IsFavorite;
+        }
+
+        private Task HandleRemoveFavorite(StartViewInteractionEntry entry)
+        {
+            var favoriteInteraction = InteractionCategories.OfType<FavoriteInteractionCategoryEntry>().FirstOrDefault();
+            if (favoriteInteraction == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            entry.IsFavorite = false;
+            InteractionCategories.Remove(favoriteInteraction);
+            favoriteInteraction.RemoveInteraction(entry);
+            InteractionCategories.Add(favoriteInteraction);
+
+            return Task.CompletedTask;
         }
     }
 }

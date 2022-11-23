@@ -4,6 +4,7 @@
              x:Class="De.HDBW.Apollo.Client.Views.StartView"
              Shell.NavBarIsVisible="True"
              xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
@@ -16,6 +17,124 @@
                                               AssessmentItemBrush="{StaticResource Tag1Brush}"
                                               CourseItemBrush="{StaticResource Tag2Brush}"/>
         <converter:InteractionsToMaximumHeightConverter x:Key="InteractionsToMaximumHeightConverter" />
+
+        <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:StartViewInteractionEntry">
+            <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="3" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
+                </Border.GestureRecognizers>
+                <Grid RowDefinitions="*,auto,auto, auto" Padding="0" ColumnDefinitions="*, 28">
+                    <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" Grid.ColumnSpan="2" InputTransparent="True"/>
+                    <Border InputTransparent="True" IsVisible="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0,0,0,4" />
+                        </Border.StrokeShape>
+                        <Label Text="{Binding DecoratorText}" LineBreakMode="TailTruncation"/>
+                    </Border>
+                    <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="2" Command="{Binding ToggleIsFavoriteCommand}" Source="staroutline.png" VerticalOptions="Start">
+                        <ImageButton.Triggers>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsFavorite}" Value="True">
+                                <Setter Property="Source"  Value="star.png" />
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Text, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="2" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
+                </Grid>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding IsFiltered}" Value="True">
+                        <Setter Property="Opacity"  Value="0.3" />
+                        <!-- Multiple Setter elements are allowed -->
+                    </DataTrigger>
+                </Border.Triggers>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultInteractionCategoryEntryTemplate" x:DataType="models:InteractionCategoryEntry">
+            <Grid RowDefinitions="auto,auto,auto,auto" Padding="24,0" >
+                <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+                <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" Margin="0,0,0,8"/>
+                <HorizontalStackLayout IsVisible="{Binding HasFilters}" Grid.Row="2" BindableLayout.ItemsSource="{Binding Filters}" Margin="0,0,0,8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:FilterInteractionEntry">
+                            <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
+                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Background}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <CollectionView BindingContextChanged="HandleBindingContextChanged"
+                                            Grid.Row="3"
+                                            HorizontalScrollBarVisibility="Never"
+                                            VerticalScrollBarVisibility="Never"
+                                            ItemTemplate="{StaticResource DefaultInteractionEntry}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="FavoriteInteractionCategoryEntryTemplate" x:DataType="models:InteractionCategoryEntry">
+            <Grid RowDefinitions="auto,auto,auto,auto" Padding="24,0" >
+                <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+                <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" Margin="0,0,0,8"/>
+                <HorizontalStackLayout IsVisible="{Binding HasFilters}" Grid.Row="2" BindableLayout.ItemsSource="{Binding Filters}" Margin="0,0,0,8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:FilterInteractionEntry">
+                            <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
+                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Background}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <CollectionView BindingContextChanged="HandleBindingContextChanged"
+                                            x:Name="PART_Items"
+                                            MinimumHeightRequest="240"
+                                            Grid.Row="3"
+                                            HorizontalScrollBarVisibility="Never"
+                                            VerticalScrollBarVisibility="Never"
+                                            ItemTemplate="{StaticResource DefaultInteractionEntry}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+
+                <Grid IsVisible="{Binding HasNoInteractions}" RowDefinitions="*,auto, auto" RowSpacing="8" HeightRequest="240" Grid.Row="3">
+                    <Image Source="stardashed.png" />
+                    <Label Text="{x:Static strings:Resource.StartView_NoFavoritesTitle}" Style="{StaticResource Noto12}" LineBreakMode="WordWrap" VerticalOptions="Center" FontAttributes="Bold" Grid.Row="1"/>
+                    <Label Text="{x:Static strings:Resource.StartView_NoFavoritesDescription}" VerticalOptions="Center" Grid.Row="2" LineBreakMode="WordWrap"/>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+        <selector:InteractionCategoryTemplateSelector x:Key="InteractionCategoryTemplateSelector"
+                                                      DefaultTemplate="{StaticResource DefaultInteractionCategoryEntryTemplate}"
+                                                      FavoriteTemplate="{StaticResource FavoriteInteractionCategoryEntryTemplate}" />
     </ContentPage.Resources>
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding LoadDataCommand}" />
@@ -41,75 +160,11 @@
             <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
             <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
         </Grid>
-        <ScrollView Grid.ColumnSpan="2" Grid.Row="2">
-            <VerticalStackLayout BindableLayout.ItemsSource="{Binding InteractionCategories}" Spacing="40">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="models:InteractionCategoryEntry">
-                        <Grid RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="*,50" Padding="24,0" >
-                            <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
-                            <ImageButton Command="{Binding ShowMoreCommand}" Margin="8,0,0,0" Grid.Row="0" Grid.Column="1" IsOpaque="True" Source="info.png"/>
-                            <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" 
-                                            Margin="0,0,0,8"/>
-                            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" BindableLayout.ItemsSource="{Binding Filters}" Margin="0,0,0,8">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="models:FilterInteractionEntry">
-                                        <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}">
-                                            <Button.Triggers>
-                                                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                                    <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Primary}" />
-                                                    <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
-                                                    <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Background}" />
-                                                    <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
-                                                    <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
-                                                </DataTrigger>
-                                            </Button.Triggers>
-                                        </Button>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </HorizontalStackLayout>
-                            <CollectionView BindingContextChanged="HandleBindingContextChanged"
-                                            Grid.Row="3" Grid.ColumnSpan="2"
-                                            HorizontalScrollBarVisibility="Never"
-                                            VerticalScrollBarVisibility="Never">
-                                <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="models:StartViewInteractionEntry">
-                                        <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >
-                                            <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="3" />
-                                            </Border.StrokeShape>
-                                            <Border.GestureRecognizers>
-                                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
-                                            </Border.GestureRecognizers>
-                                            <Grid RowDefinitions="*,auto,auto, auto" Padding="0" InputTransparent="True">
-                                                <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill"/>
-                                                <Border IsVisible="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
-                                                    <Border.StrokeShape>
-                                                        <RoundRectangle CornerRadius="0,0,0,4" />
-                                                    </Border.StrokeShape>
-                                                    <Label Text="{Binding DecoratorText}"/>
-                                                </Border>
-                                                <Label Text="{Binding Text, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="2" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
-                                                <Label Text="{Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
-                                                <Label Text="{Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
-                                            </Grid>
-                                            <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding IsFiltered}" Value="True">
-                                                    <Setter Property="Opacity"  Value="0.3" />
-                                                    <!-- Multiple Setter elements are allowed -->
-                                                </DataTrigger>
-                                            </Border.Triggers>
-                                        </Border>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </Grid>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16">
+            <VerticalStackLayout
+                BindableLayout.ItemsSource="{Binding InteractionCategories}"
+                BindableLayout.ItemTemplateSelector="{StaticResource InteractionCategoryTemplateSelector}"
+                Spacing="40">
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

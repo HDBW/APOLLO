@@ -61,7 +61,7 @@ namespace De.HDBW.Apollo.Data.Services
             foreach (QuestionItem question in questions)
             {
                 // load question specific information just as answers and results
-                var questionCategory = await AssessmentCategoriesRepository.GetItemByIdAsync(question.Category, token).ConfigureAwait(false);
+                var questionCategory = await AssessmentCategoriesRepository.GetItemByIdAsync(question.CategoryId, token).ConfigureAwait(false);
                 List<long> questionIds = new () { question.Id };
                 var answers = await AnswerItemRepository.GetItemsByForeignKeysAsync(questionIds, token).ConfigureAwait(false);
 
