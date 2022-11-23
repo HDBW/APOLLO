@@ -42,8 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "invite.apollo.app", "invite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "invite.apollo.app", "invite-apollo.app\invite.apollo.app.csproj", "{459AE2D0-398D-4860-BDA3-2CA9B33E09A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "assessmnet.nuget.client", "assessmnet.nuget.client\assessmnet.nuget.client.csproj", "{6C584B92-7A55-40B2-96BE-A52D47A3ECE7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,10 +80,6 @@ Global
 		{459AE2D0-398D-4860-BDA3-2CA9B33E09A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{459AE2D0-398D-4860-BDA3-2CA9B33E09A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{459AE2D0-398D-4860-BDA3-2CA9B33E09A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C584B92-7A55-40B2-96BE-A52D47A3ECE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C584B92-7A55-40B2-96BE-A52D47A3ECE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C584B92-7A55-40B2-96BE-A52D47A3ECE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C584B92-7A55-40B2-96BE-A52D47A3ECE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,7 +98,6 @@ Global
 		{E9896365-6B06-46DE-B9CE-A0519F0AEEFD} = {40566DE6-C787-40EF-8F2F-A1C9617B233D}
 		{C1CB01E0-5C1C-4FFD-B3D6-5E17DFB7815B} = {01BD7490-9679-4EB6-BAD9-91EFDCDE2EB6}
 		{459AE2D0-398D-4860-BDA3-2CA9B33E09A8} = {C1CB01E0-5C1C-4FFD-B3D6-5E17DFB7815B}
-		{6C584B92-7A55-40B2-96BE-A52D47A3ECE7} = {40566DE6-C787-40EF-8F2F-A1C9617B233D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9B9B73F-5630-42C9-B54E-D3FC8E7DA22F}
