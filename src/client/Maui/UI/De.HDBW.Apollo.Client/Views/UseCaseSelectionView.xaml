@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.UseCaseSelectionView"
              NavigationPage.HasBackButton="False"
@@ -24,19 +24,14 @@
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                         </Grid.GestureRecognizers>
-                        <Border Grid.RowSpan="2" StrokeThickness="0" Background="{StaticResource White}">
+                        <Border Grid.RowSpan="2" Grid.ColumnSpan="2" StrokeThickness="0" Background="{StaticResource White}">
                             <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8,0,8,0" />
-                            </Border.StrokeShape>
-                            <Image Source="{Binding ImagePath}" Margin="4" WidthRequest="72" HeightRequest="72"/>
-                        </Border>
-                        <Border Grid.Column="1" Grid.RowSpan="2" StrokeThickness="0" Background="{StaticResource White}">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="0,8,0,8" />
+                                <RoundRectangle CornerRadius="8" />
                             </Border.StrokeShape>
                         </Border>
+                        <Image Source="{Binding ImagePath}" Grid.RowSpan="2" HorizontalOptions="Start" Margin="8" WidthRequest="72" HeightRequest="72"/>
                         <Label Text="{Binding DisplayUseCaseName}" Margin="16,0" VerticalOptions="Center" TextColor="{StaticResource Primary900}" Style="{StaticResource Noto16}" Grid.Column="1" Grid.Row="0"/>
-                        <Label Text="{Binding DisplayUseCaseDescription}" Margin="16,0" VerticalOptions="Start" Style="{StaticResource Noto12}" Grid.Column="1" Grid.Row="1"/>
+                        <Label Text="{Binding DisplayUseCaseDescription}" Margin="16,0,16,4" VerticalOptions="Start" Style="{StaticResource Noto12}" Grid.Column="1" Grid.Row="1"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
