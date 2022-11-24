@@ -109,6 +109,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public string DisplayProgress
+        {
+            get
+            {
+                return CurrentQuestion != null && Questions.Count > 0 ? $"{Questions.IndexOf(CurrentQuestion) + 1d} / {Questions.Count()}" : "0 / 0";
+            }
+        }
+
+
         public LayoutType? QuestionLayout
         {
             get
@@ -319,6 +328,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             OnPropertyChanged(nameof(AnswerLayout));
             OnPropertyChanged(nameof(Interaction));
             OnPropertyChanged(nameof(Progress));
+            OnPropertyChanged(nameof(DisplayProgress));
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
@@ -369,6 +379,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     OnPropertyChanged(nameof(AnswerLayout));
                     OnPropertyChanged(nameof(Interaction));
                     OnPropertyChanged(nameof(Progress));
+                    OnPropertyChanged(nameof(DisplayProgress));
                 }
                 catch (OperationCanceledException)
                 {

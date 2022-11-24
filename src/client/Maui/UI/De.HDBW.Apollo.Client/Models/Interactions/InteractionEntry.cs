@@ -13,16 +13,12 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [ObservableProperty]
         private string? _text;
 
-        private Func<InteractionEntry, bool> _canNavigateHandle;
-
-        private Func<InteractionEntry, Task> _navigateHandler;
-
         protected InteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
         {
             Text = text;
             _data = data;
-            _canNavigateHandle = canNavigateHandle;
-            _navigateHandler = navigateHandler;
+            CanNavigateHandle = canNavigateHandle;
+            NavigateHandler = navigateHandler;
         }
 
         public object? Data
@@ -33,6 +29,10 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
+        protected Func<InteractionEntry, bool> CanNavigateHandle { get; }
+
+        protected Func<InteractionEntry, Task> NavigateHandler { get; }
+
         public static InteractionEntry Import(string text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
         {
             return new InteractionEntry(text, data, navigateHandler, canNavigateHandle);
@@ -41,12 +41,12 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigate))]
         private Task Navigate()
         {
-            return _navigateHandler?.Invoke(this) ?? Task.CompletedTask;
+            return NavigateHandler?.Invoke(this) ?? Task.CompletedTask;
         }
 
         private bool CanNavigate()
         {
-            return _canNavigateHandle?.Invoke(this) ?? false;
+            return CanNavigateHandle?.Invoke(this) ?? false;
         }
     }
 }
