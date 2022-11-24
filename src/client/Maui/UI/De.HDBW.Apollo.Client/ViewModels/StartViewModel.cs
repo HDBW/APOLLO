@@ -192,9 +192,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             foreach (var course in courseItems)
             {
-                if (!filters.Any(f => ((CourseType)f.Data) == course.CourseType))
+                if (!filters.Any(f => ((CourseTagType)f.Data) == course.CourseTagType))
                 {
-                    filters.Add(FilterInteractionEntry.Import<CourseType>(course.CourseType.ToString(), course.CourseType, HandleFilter, CanHandleFilter));
+                    filters.Add(FilterInteractionEntry.Import<CourseTagType>(course.CourseTagType.ToString(), course.CourseTagType, HandleFilter, CanHandleFilter));
                 }
 
                 var courseData = new NavigationParameters();
@@ -235,7 +235,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
-                _filtermappings.Add(interaction, course.CourseType);
+                _filtermappings.Add(interaction, course.CourseTagType);
             }
 
             var headline = string.Empty;
@@ -279,7 +279,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             filterEntry.IsSelected = !filterEntry.IsSelected;
             var selectedFilters = group.Filters.OfType<FilterInteractionEntry>().Where(f => f.IsSelected);
             var assessmentFilters = selectedFilters.Select(f => f.Data).OfType<AssessmentType>().ToList();
-            var courseFilters = selectedFilters.Select(f => f.Data).OfType<CourseType>().ToList();
+            var courseFilters = selectedFilters.Select(f => f.Data).OfType<CourseTagType>().ToList();
             var items = group.Interactions.OfType<StartViewInteractionEntry>();
             foreach (var item in items)
             {
@@ -295,7 +295,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 else if (item.EntityType == typeof(CourseItem) && courseFilters.Any())
                 {
-                    item.IsFiltered = IsFilteredByCourseType(_filtermappings[item] as CourseType?, courseFilters);
+                    item.IsFiltered = IsFilteredByCourseTagType(_filtermappings[item] as CourseTagType?, courseFilters);
                 }
                 else
                 {
@@ -306,14 +306,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return Task.CompletedTask;
         }
 
-        private bool IsFilteredByCourseType(CourseType? courseType, List<CourseType> selectedCourseType)
+        private bool IsFilteredByCourseTagType(CourseTagType? courseTagType, List<CourseTagType> selectedCourseTagType)
         {
-            if (!courseType.HasValue || !selectedCourseType.Any())
+            if (!courseTagType.HasValue || !selectedCourseTagType.Any())
             {
                 return true;
             }
 
-            return !selectedCourseType.Contains(courseType.Value);
+            return !selectedCourseTagType.Contains(courseTagType.Value);
         }
 
         private bool IsFilteredByAssessmentType(AssessmentType? assessmentType, IList<AssessmentType> selectedAssessmentTypes)
@@ -386,7 +386,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             entry.IsFavorite = true;
             InteractionCategories.Remove(favoriteInteraction);
-            favoriteInteraction.AddInteraction(entry);
+            var interaction = entry.Clone() as InteractionEntry;
+            favoriteInteraction.AddInteraction(interaction);
             InteractionCategories.Add(favoriteInteraction);
 
             return Task.CompletedTask;
@@ -399,16 +400,38 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Task HandleRemoveFavorite(StartViewInteractionEntry entry)
         {
+            var category = InteractionCategories.FirstOrDefault(c => c.Interactions.Contains(entry));
             var favoriteInteraction = InteractionCategories.OfType<FavoriteInteractionCategoryEntry>().FirstOrDefault();
-            if (favoriteInteraction == null)
+
+            if (favoriteInteraction == null || category == null)
             {
                 return Task.CompletedTask;
             }
 
-            entry.IsFavorite = false;
-            InteractionCategories.Remove(favoriteInteraction);
-            favoriteInteraction.RemoveInteraction(entry);
-            InteractionCategories.Add(favoriteInteraction);
+            var sourceEntry = entry;
+            if (favoriteInteraction == category)
+            {
+                category = InteractionCategories.FirstOrDefault(c => c.Interactions.OfType<StartViewInteractionEntry>().Any(i => i.Data == entry.Data));
+                sourceEntry = category?.Interactions.OfType<StartViewInteractionEntry>().First(i => i.Data == entry.Data);
+            }
+            else
+            {
+                entry = favoriteInteraction.Interactions.OfType<StartViewInteractionEntry>().First(i => i.Data == entry.Data);
+            }
+
+            if (sourceEntry == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            sourceEntry.IsFavorite = false;
+
+            if (favoriteInteraction.Interactions.Contains(entry))
+            {
+                InteractionCategories.Remove(favoriteInteraction);
+                favoriteInteraction.RemoveInteraction(entry);
+                InteractionCategories.Add(favoriteInteraction);
+            }
 
             return Task.CompletedTask;
         }
