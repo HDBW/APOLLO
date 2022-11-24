@@ -3,12 +3,14 @@
 
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -37,6 +39,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             ICourseItemRepository courseItemRepository,
             IAssessmentItemRepository assessmentItemRepository,
+            IAnswerItemResultRepository answerItemResultRepository,
             IUserProfileItemRepository userProfileItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             ISessionService sessionService,
@@ -45,12 +48,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
+            ArgumentNullException.ThrowIfNull(answerItemResultRepository);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
             ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
             ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             AssessmentItemRepository = assessmentItemRepository;
+            AnswerItemResultRepository = answerItemResultRepository;
             CourseItemRepository = courseItemRepository;
             UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
@@ -68,6 +73,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IPreferenceService PreferenceService { get; }
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
+
+        private IAnswerItemResultRepository AnswerItemResultRepository { get; }
 
         private ICourseItemRepository CourseItemRepository { get; }
 
@@ -96,20 +103,27 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var useCase = SessionService.UseCase;
+                    var assessments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
+                    var assessmentIds = assessments.Select(a => a.Id).ToList();
+                    var assessmentResults = await AnswerItemResultRepository.GetItemsByForeignKeysAsync(assessmentIds, worker.Token).ConfigureAwait(false);
                     if (UseCase == useCase)
                     {
+                        await ExecuteOnUIThreadAsync(
+                           () => LoadonUIThread(
+                           assessmentIds,
+                           assessmentResults), worker.Token);
                         return;
                     }
 
                     UseCase = useCase;
-                    var assesments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var userProfile = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
 
                     await ExecuteOnUIThreadAsync(
                            () => LoadonUIThread(
-                           assesments,
+                           assessments,
+                           assessmentResults,
                            courses,
                            userProfile,
                            eduProviders), worker.Token);
@@ -125,7 +139,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         dialogTask = DialogService.ShowPopupAsync<FirstTimeDialog, NavigationParameters>(token);
                         taskList.Add(dialogTask);
                     }
-                    */
 
                     if (taskList.Any())
                     {
@@ -137,6 +150,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         await NavigationService.NavigateAsnc(Routes.TutorialView, token);
                     }
+                    */
                 }
                 catch (OperationCanceledException)
                 {
@@ -157,8 +171,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        private void LoadonUIThread(IEnumerable<long> assessmentIds, IEnumerable<AnswerItemResult> assessmentResults)
+        {
+            foreach (var category in InteractionCategories)
+            {
+                foreach (var interaction in category.Interactions.OfType<StartViewInteractionEntry>().Where(i => i.EntityType == typeof(AssessmentItem)))
+                {
+                    var navigationData = interaction.Data as NavigationData;
+                    if (navigationData == null)
+                    {
+                        continue;
+                    }
+
+                    var id = navigationData.Parameters?.GetValue<long?>(NavigationParameter.Id);
+                    var status = id.HasValue && assessmentResults.Any(r => r.AssessmentItemId == id.Value) ? Status.Processed : Status.Unknown;
+                    interaction.Status = status;
+                }
+            }
+        }
+
         private void LoadonUIThread(
            IEnumerable<AssessmentItem> assessmentItems,
+           IEnumerable<AnswerItemResult> assessmentResults,
            IEnumerable<CourseItem> courseItems,
            UserProfileItem? userProfile,
            IEnumerable<EduProviderItem> eduProviderItems)
@@ -172,7 +206,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 if (!filters.Any(f => ((AssessmentType)f.Data) == assesment.AssessmentType))
                 {
-                    filters.Add(FilterInteractionEntry.Import<AssessmentType>(assesment.AssessmentType.ToString(), assesment.AssessmentType, HandleFilter, CanHandleFilter));
+                    filters.Add(FilterInteractionEntry.Import(assesment.AssessmentType.ToString(), assesment.AssessmentType, HandleFilter, CanHandleFilter));
                 }
 
                 var assemsmentData = new NavigationParameters();
@@ -185,7 +219,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var durationString = duration != TimeSpan.Zero ? string.Format(Resources.Strings.Resource.Global_DurationFormat, duration.TotalMinutes) : string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
-                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", Status.Unknown, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var status = (assessmentResults?.Any(r => r.AnswerItemId == assesment.Id) ?? false) ? Status.Processed : Status.Unknown;
+                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
                 _filtermappings.Add(interaction, assesment.AssessmentType);
             }
@@ -194,7 +229,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 if (!filters.Any(f => ((CourseTagType)f.Data) == course.CourseTagType))
                 {
-                    filters.Add(FilterInteractionEntry.Import<CourseTagType>(course.CourseTagType.ToString(), course.CourseTagType, HandleFilter, CanHandleFilter));
+                    filters.Add(FilterInteractionEntry.Import(course.CourseTagType.ToString(), course.CourseTagType, HandleFilter, CanHandleFilter));
                 }
 
                 var courseData = new NavigationParameters();

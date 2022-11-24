@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\completed.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
     <None Remove="Resources\Images\placeholdertest.svg" />
