@@ -387,7 +387,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             entry.IsFavorite = true;
             InteractionCategories.Remove(favoriteInteraction);
             var interaction = entry.Clone() as InteractionEntry;
-            favoriteInteraction.AddInteraction(interaction);
+            favoriteInteraction.AddInteraction(interaction!);
             InteractionCategories.Add(favoriteInteraction);
 
             return Task.CompletedTask;
