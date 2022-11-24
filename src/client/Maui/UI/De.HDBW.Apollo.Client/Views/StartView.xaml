@@ -28,6 +28,9 @@
                 </Border.GestureRecognizers>
                 <Grid RowDefinitions="*,auto,auto, auto" Padding="0" ColumnDefinitions="*, 28">
                     <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" Grid.ColumnSpan="2" InputTransparent="True"/>
+                    <Border Grid.ColumnSpan="2" InputTransparent="True" Background="{StaticResource DisabledGradientBrush}" StrokeThickness="0">
+                        <Image Source="completed.png" />
+                    </Border>
                     <Border InputTransparent="True" IsVisible="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="0,0,0,4" />

@@ -1,7 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Enums;
@@ -85,6 +85,16 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             {
                 _isFavorite = IsFavorite,
             };
+        }
+
+        protected override bool CanNavigate()
+        {
+            if (Status == Status.Processed)
+            {
+                return false;
+            }
+
+            return base.CanNavigate();
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]

@@ -44,7 +44,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             return NavigateHandler?.Invoke(this) ?? Task.CompletedTask;
         }
 
-        private bool CanNavigate()
+        protected virtual bool CanNavigate()
         {
             return CanNavigateHandle?.Invoke(this) ?? false;
         }
