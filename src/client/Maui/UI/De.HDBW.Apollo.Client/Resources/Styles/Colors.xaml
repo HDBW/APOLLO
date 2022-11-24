@@ -77,8 +77,8 @@
 
     <LinearGradientBrush x:Key="DisabledGradientBrush" EndPoint="0,1">
         <GradientStop Color="#000000"
-                          Offset="0.1" />
+                          Offset="0.3" />
         <GradientStop Color="#00000000"
-                          Offset="1.0" />
+                          Offset="0.9" />
     </LinearGradientBrush>
 </ResourceDictionary>
