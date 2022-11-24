@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class QuestionEntry : ObservableObject
     {
         private readonly QuestionItem _questionItem;
-        private readonly IEnumerable<MetaDataItem> _questionMetaDataItems;
+        private readonly IEnumerable<MetaDataItem> _questionMetaDataItems = new List<MetaDataItem>();
         private readonly ILogger _logger;
 
         [ObservableProperty]
