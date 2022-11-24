@@ -192,6 +192,7 @@ public static class MauiProgram
         services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
         services.AddSingleton<ICourseContactRepository, CourseContactRepository>();
         services.AddSingleton<ICourseAppointmentRepository, CourseAppointmentRepository>();
+        services.AddSingleton<ICourseContactRelationRepository, CourseContactRelationRepository>();
         services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
     }
 
