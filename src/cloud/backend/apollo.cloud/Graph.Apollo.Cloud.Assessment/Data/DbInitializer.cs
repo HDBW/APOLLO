@@ -27,25 +27,25 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         {
             context.Database.EnsureCreated();
 
+            //TODO: CourseContext Fix it!!!
+            //// Look for any students.
+            //if (context.Courses.Any())
+            //{
+            //    return; // DB has been seeded
+            //}
 
-            // Look for any students.
-            if (context.Courses.Any())
-            {
-                return; // DB has been seeded
-            }
+            //UseCaseCourseData useCaseCourseData = new UseCaseCourseData();
 
-            UseCaseCourseData useCaseCourseData = new UseCaseCourseData();
+            //foreach (CourseItem course in useCaseCourseData.CourseList.Values)
+            //{
+            //    context.Courses.Add(course);
+            //}
+            //foreach (Contact contact in useCaseCourseData.Contacts.Values)
+            //{
+            //    context.CourseContacts.Add(contact);
+            //}
 
-            foreach (Course course in useCaseCourseData.CourseList.Values)
-            {
-                context.Courses.Add(course);
-            }
-            foreach (Contact contact in useCaseCourseData.Contacts.Values)
-            {
-                context.CourseContacts.Add(contact);
-            }
-
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         public static void Initialize(AssessmentContext context)
