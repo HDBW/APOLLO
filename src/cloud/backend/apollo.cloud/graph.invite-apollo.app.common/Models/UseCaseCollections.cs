@@ -93,6 +93,9 @@ namespace Invite.Apollo.App.Graph.Common.Models
             CourseContacts = new Collection<CourseContact>();
             CourseAppointments = new Collection<CourseAppointment>();
             CourseItems = new Collection<CourseItem>();
+            AssessmentCategories = new Collection<AssessmentCategory>();
+            AssessmentItems = new Collection<AssessmentItem>();
+            CourseContactRelations = new Collection<CourseContactRelation>();
         }
 
         [DataMember(Order = 1, IsRequired = false)]
@@ -134,6 +137,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
         [DataMember(Order = 13,IsRequired = false)]
         public Collection<AssessmentCategory> AssessmentCategories { get; set; }
 
-        public object Appointments { get; set; }
+        [DataMember(Order = 14, IsRequired = false)]
+        public Collection<CourseContactRelation> CourseContactRelations { get; set; }
     }
 }
