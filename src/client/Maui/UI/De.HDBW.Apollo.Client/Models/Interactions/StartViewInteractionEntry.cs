@@ -9,7 +9,7 @@ using De.HDBW.Apollo.Client.Helper;
 
 namespace De.HDBW.Apollo.Client.Models.Interactions
 {
-    public partial class StartViewInteractionEntry : InteractionEntry
+    public partial class StartViewInteractionEntry : InteractionEntry, ICloneable
     {
         private readonly Func<StartViewInteractionEntry, Task> _handleToggleIsFavorite;
 
@@ -77,6 +77,14 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         public static InteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, object? data, Func<StartViewInteractionEntry, Task> handleToggleIsFavorite, Func<StartViewInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
         {
             return new StartViewInteractionEntry(text, subline, decoratorText, info, imagePath, status, typeof(TU), data, handleToggleIsFavorite, canHandleToggleIsFavorite, handleInteract, canHandleInteract);
+        }
+
+        public object Clone()
+        {
+            return new StartViewInteractionEntry(Text, Subline, DecoratorText, Info, ImagePath!, Status, EntityType, Data, _handleToggleIsFavorite, _canHandleToggleIsFavorite, NavigateHandler, CanNavigateHandle)
+            {
+                _isFavorite = IsFavorite,
+            };
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]
