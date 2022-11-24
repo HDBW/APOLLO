@@ -524,7 +524,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// </summary>
         public static string RegistrationView_RegisterNow {
             get {
-
                 return ResourceManager.GetString("RegistrationView_RegisterNow", resourceCulture);
             }
         }
