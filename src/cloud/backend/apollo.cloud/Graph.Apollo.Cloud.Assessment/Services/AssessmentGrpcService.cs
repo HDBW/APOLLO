@@ -39,7 +39,11 @@ public class AssessmentGrpcService : IAssessmentGRPCService
             QuestionMetaDataRelations = new Collection<QuestionMetaDataRelation>(_assessmentDataService.GetAllQuestionMetaDataRelationsAsync().Result.ToList()),
             CourseItems = new Collection<CourseItem>(GetAllCourseItems(0, useCaseCourseData)),
             //CourseContacts = new Collection<CourseContact>(useCaseCourseData.useCaseContacts[0]),
+            CourseContacts = new Collection<CourseContact>(GetAllCourseContacts(0, useCaseCourseData)),
             EduProviderItems = new Collection<EduProviderItem>(useCaseCourseData.ProviderList),
+            CourseAppointments = new Collection<CourseAppointment>(GetAllAppointments(0,useCaseCourseData)),
+            CourseContactRelations = new Collection<CourseContactRelation>(GetAllCourseContactsRelations(0, useCaseCourseData))
+
             //Appointments = new Collection<CourseAppointment>(GetAllAppointments(useCaseCourseData))
             //TODO: Courses
         };
@@ -64,17 +68,32 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         }
     }
 
-    private List<CourseAppointment> GetAllAppointments(UseCaseCourseData useCaseCourseData)
+    private List<CourseContactRelation> GetAllCourseContactsRelations(int useCase, UseCaseCourseData useCaseCourseData)
     {
-        var config = new MapperConfiguration(cfg => cfg.CreateMap<Appointment, CourseAppointment>());
-        Mapper mapper = new(config);
-        List<CourseAppointment> list = new();
-        foreach (var item in useCaseCourseData.Appointments)
-        {
-            list.Add(mapper.Map<CourseAppointment>(item));
-        }
+        //TODO: Implement useCase
+        return useCaseCourseData.CourseContactRelations.Values.ToList();
+    }
 
-        return list;
+    private List<CourseContact> GetAllCourseContacts(int useCase, UseCaseCourseData useCaseCourseData)
+    {
+        //TODO: Implement a query for useCases
+        return useCaseCourseData.Contacts.Values.ToList();
+    }
+
+    private List<CourseAppointment> GetAllAppointments(int useCase, UseCaseCourseData useCaseCourseData)
+    {
+        //var config = new MapperConfiguration(cfg => cfg.CreateMap<Appointment, CourseAppointment>());
+        //Mapper mapper = new(config);
+        //List<CourseAppointment> list = new();
+        //foreach (var item in useCaseCourseData.Appointments)
+        //{
+        //    list.Add(mapper.Map<CourseAppointment>(item));
+        //}
+
+        //return list;
+
+        //TODO: a query to determine the usecases would be awesome?
+        return useCaseCourseData.Appointments.Values.ToList();
     }
 
     //private IList<CourseContact> GetAllCourseContacts(int useCase, UseCaseCourseData useCaseCourseData)

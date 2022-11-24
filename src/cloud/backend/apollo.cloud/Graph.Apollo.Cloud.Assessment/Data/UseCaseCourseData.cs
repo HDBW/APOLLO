@@ -12,9 +12,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
     {
         public UseCaseCourseData()
         {
+            CourseContactRelations = new();
             //course biwe setup tq lager
-            Appointment appointment = Appointments[0];
-            Course course = CourseList[0];
+            CourseAppointment appointment = Appointments[0];
+            CourseItem course = CourseList[0];
             SetCourseAppointmentRelations(appointment, course);
 
             appointment = Appointments[1];
@@ -30,7 +31,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             SetCourseAppointmentRelations(appointment, course);
 
 
-            List<Course> usecaseCourseLists = new List<Course>();
+            List<CourseItem> usecaseCourseLists = new List<CourseItem>();
 
 
             for (int j = 0; j < 2; j++)
@@ -58,35 +59,39 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
         }
 
-        private void SetCourseAppointmentRelations(Appointment appointment, Course course)
+        private void SetCourseAppointmentRelations(CourseAppointment appointment, CourseItem course)
         {
-            appointment.Course = course;
             appointment.CourseId = course.Id;
-            course.Appointments.Add(appointment);
         }
 
-        private int CourseContactCounter = 0;
-        private void SetContactCourseRelations(Course course, Contact contact)
+        private void SetContactCourseRelations(CourseItem course, CourseContact contact)
         {
-            if (course.CourseContacts == null)
-                course.CourseContacts = new List<CourseHasContacts>();
+            //if (course.CourseContacts == null)
+            //    course.CourseContacts = new List<CourseHasContacts>();
 
-            CourseHasContacts courseHasContacts = new CourseHasContacts()
-            {
-                Ticks = DateTime.Now.Ticks,
-                Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
-                Course = course,
-                Contact = contact,
-                Id = CourseContactCounter++,
-                ContactId = contact.Id,
-                CourseId = course.Id,
-            };
-            course.CourseContacts.Add(courseHasContacts);
-            if (contact.CourseContacts == null)
-                contact.CourseContacts = new List<CourseHasContacts>();
+            //CourseHasContacts courseHasContacts = new CourseHasContacts()
+            //{
+            //    Ticks = DateTime.Now.Ticks,
+            //    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+            //    Course = course,
+            //    Contact = contact,
+            //    Id = CourseContactCounter++,
+            //    ContactId = contact.Id,
+            //    CourseId = course.Id,
+            //};
+            //course.CourseContacts.Add(courseHasContacts);
+            //if (contact.CourseContacts == null)
+            //    contact.CourseContacts = new List<CourseHasContacts>();
 
-            contact.CourseContacts.Add(courseHasContacts);
+            //contact.CourseContacts.Add(courseHasContacts);
+            int index = CourseContactRelations.Count;
+            CourseContactRelations.Add(index, new CourseContactRelation{Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"), Ticks = DateTime.Now.Ticks, Id = index, CourseContactId = contact.Id, CourseId = course.Id});
         }
+
+        /// <summary>
+        /// Is a n:m mapper between courses and course contacts
+        /// </summary>
+        public Dictionary<long, CourseContactRelation> CourseContactRelations { get; set; }
 
         public static Dictionary<string, long> provider = new Dictionary<string, long>()
         {
@@ -129,16 +134,16 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         };
 
 
-        public Dictionary<long, Contact> Contacts = new Dictionary<long, Contact>()
+        public Dictionary<long, CourseContact> Contacts = new Dictionary<long, CourseContact>()
         {
-            { 0, new Contact() { Id = 0,
+            { 0, new CourseContact() { Id = 0,
                 ContactMail = "info-stuttgart@biwe.de",
                 ContactName = "BBQ Stuttgart",
                 ContactPhone = "0711 252875-19",
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
                 Url = new Uri("https://www.biwe-bbq.de/ueber-uns/vor-ort/stuttgart-mittlerer-pfad")}},
-            { 1, new Contact() { Id = 1,
+            { 1, new CourseContact() { Id = 1,
                 ContactMail = "TODO@todo.de",
                 ContactName = "TODO",
                 ContactPhone = "000000 1111111",
@@ -219,15 +224,13 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         /// 
         /// Ids 120 - 179 tüv
         /// </summary>
-        public Dictionary<long, Course> CourseList = new Dictionary<long, Course>()
+        public Dictionary<long, CourseItem> CourseList = new Dictionary<long, CourseItem>()
         {
             {
-                0, new Course() {
+                0, new CourseItem() {
                                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
                                 Ticks = DateTime.Now.Ticks,
                                 Availability = CourseAvailability.Available,
-                                Appointments = new List<Appointment>(),
-                                CourseContacts = new List<CourseHasContacts>(),
                                 CourseProviderId = provider["Biwe"],
                                 CourseTagType = CourseTagType.PartialQualification,
                                 //Je nach Präferenz/Filter kann Angebot in Präsenz oder online stattfinden. (Wichtig: Falls Präsenz, dann Wohnort von Adrian entsprechend anpassen!)
@@ -261,12 +264,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 }
 
             },
-            { 60, new Course() {
+            { 60, new CourseItem() {
                                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
                                 Ticks = DateTime.Now.Ticks,
                                 Availability = CourseAvailability.Available,
-                                Appointments = new List<Appointment>(),
-                                CourseContacts = new List<CourseHasContacts>(),
                                 CourseProviderId = provider["bbw"],
                                 CourseTagType = CourseTagType.PartialQualification,
                                 //Vollzeit, Online am jew. Standort in Bayern mit Lernprozessbegleiter*in oder mit Zustimmung Kostenträger „von zu Hause“
@@ -296,9 +297,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         /// Ids 20 - 39 bbw
         /// Ids 40 - 59 tüv
         /// </summary>
-        public Dictionary<long, Appointment> Appointments = new Dictionary<long, Appointment>()
+        public Dictionary<long, CourseAppointment> Appointments = new Dictionary<long, CourseAppointment>()
         {
-            {0,new Appointment() {
+            {0,new CourseAppointment() {
                 Id = 0,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -307,7 +308,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //BookingContact = 0,
                 //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
-                Course = null,
                 BookingCode = String.Empty,
                 //Location = "Stuttgart",
                 //OccurrenceType = OccurrenceType.FullTime,
@@ -316,7 +316,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //Language = "DE-DE",
                 Summary = "",
             }},
-            {1,new Appointment() {
+            {1,new CourseAppointment() {
                 Id = 1,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -325,7 +325,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //BookingContact = 0,
                 //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
-                Course = null,
                 BookingCode = String.Empty,
                 //Location = "Stuttgart",
                 //OccurrenceType = OccurrenceType.FullTime,
@@ -334,7 +333,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //Language = "DE-DE",
                 Summary = "",
             }},
-            {2,new Appointment() {
+            {2,new CourseAppointment() {
                 Id = 2,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -343,7 +342,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //BookingContact = 0,
                 //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
-                Course = null,
                 BookingCode = String.Empty,
                 //Location = "Stuttgart",
                 //OccurrenceType = OccurrenceType.FullTime,
@@ -352,7 +350,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //Language = "DE-DE",
                 Summary = "",
             }},
-            {3,new Appointment() {
+            {3,new CourseAppointment() {
                 Id = 3,
                 Ticks = DateTime.Now.Ticks,
                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -361,7 +359,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //BookingContact = 0,
                 //BookingUrl = new Uri("https://invite-apollo.app/TODO"),
                 CourseId = -1,
-                Course = null,
                 BookingCode = String.Empty,
                 //Location = "Stuttgart",
                 //OccurrenceType = OccurrenceType.FullTime,
@@ -380,7 +377,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
          *
          */
 
-        public Dictionary<int, List<Course>> usecaseCourses = new Dictionary<int, List<Course>>();
+        public Dictionary<int, List<CourseItem>> usecaseCourses = new Dictionary<int, List<CourseItem>>();
         public Dictionary<int, List<CourseContact>> useCaseContacts = new Dictionary<int, List<CourseContact>>();
         
 
