@@ -117,7 +117,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-
         public LayoutType? QuestionLayout
         {
             get
