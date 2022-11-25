@@ -10,6 +10,7 @@
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}"
+             Shell.FlyoutBehavior="Disabled"
              Padding="0">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding CancelCommand}" />

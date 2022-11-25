@@ -1,10 +1,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.CourseView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="De.HDBW.Apollo.Client.Views.CourseView"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             x:DataType="viewModels:CourseViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             IsBusy="{Binding IsBusy}" Padding="0">
+    <Grid RowDefinitions="auto, 60, *, auto, auto">
+        <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" HeightRequest="200" Aspect="AspectFill" Grid.RowSpan="2"/>
+        <Border BackgroundColor="{StaticResource Background}" StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="0" Margin="12,0"  Grid.RowSpan="2" Grid.Row="1" />
+        <ScrollView Grid.Row="1" Padding="24,12" Grid.RowSpan="2" BackgroundColor="Transparent" >
+            <VerticalStackLayout Spacing="16" >
+                <Label Text="{Binding Title}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
+                <Label Text="{Binding Description}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <Label Text="{x:Static strings:Resource.CourseView_PreRequisites}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Text="{Binding PreRequisitesDescription}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <Label Text="{x:Static strings:Resource.CourseView_LearningOutcomes}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Text="{Binding LearningOutcomes}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <Label Text="{Binding Skills}" TextType="Html" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <HorizontalStackLayout Spacing="8">
+                    <Image Source="timer.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="{Binding Duration}" Style="{StaticResource Noto16}"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
