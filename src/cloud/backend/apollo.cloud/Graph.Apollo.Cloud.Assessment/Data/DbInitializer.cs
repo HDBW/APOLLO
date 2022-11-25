@@ -5,18 +5,7 @@ using System.Text;
 using Invite.Apollo.App.Graph.Assessment.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Diagnostics;
-using Invite.Apollo.App.Graph.Assessment.Data;
-using Microsoft.EntityFrameworkCore;
-using Google.Protobuf.WellKnownTypes;
-using Newtonsoft.Json.Linq;
-using Grpc.Core;
 using Serilog;
-using System;
-using System.Globalization;
-using Invite.Apollo.App.Graph.Assessment.Models.Course;
-using Invite.Apollo.App.Graph.Common.Models.Course;
-using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
@@ -548,6 +537,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             }
             catch (Exception e)
             {
+                //TODO: Check if Finalization queue is reached when exception occurs
                 throw new Exception("AHHHHHH Excel Workbook Stuff", e);
             }
             finally
