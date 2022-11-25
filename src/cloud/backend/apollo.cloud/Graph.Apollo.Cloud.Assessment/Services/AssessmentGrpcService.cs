@@ -6,6 +6,7 @@ using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Assessment.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Newtonsoft.Json;
 using ProtoBuf;
 using ProtoBuf.Grpc;
@@ -43,6 +44,8 @@ public class AssessmentGrpcService : IAssessmentGRPCService
             EduProviderItems = new Collection<EduProviderItem>(useCaseCourseData.ProviderList),
             CourseAppointments = new Collection<CourseAppointment>(GetAllAppointments(0,useCaseCourseData)),
             CourseContactRelations = new Collection<CourseContactRelation>(GetAllCourseContactsRelations(0, useCaseCourseData))
+            //surveyCollection = new Collection<AssessmentItem>(_assessmentDataService.GetAssessmentItemsByType(AssessmentType.Survey).Result.ToList())
+
 
             //Appointments = new Collection<CourseAppointment>(GetAllAppointments(useCaseCourseData))
             //TODO: Courses

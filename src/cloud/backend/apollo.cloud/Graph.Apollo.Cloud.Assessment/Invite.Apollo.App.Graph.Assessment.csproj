@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="Data\Booklet_FK_Lagerlogistik.xlsx" />
     <None Remove="Data\Digitale_Kompetenzen.xlsx" />
+    <None Remove="Data\UseCaseCourseData.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Booklet_FK_Lagerlogistik.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\UseCaseCourseData.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
