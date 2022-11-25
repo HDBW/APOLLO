@@ -16,9 +16,6 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         private readonly Func<StartViewInteractionEntry, bool> _canHandleToggleIsFavorite;
 
         [ObservableProperty]
-        private Status _status;
-
-        [ObservableProperty]
         private string? _subline;
 
         [ObservableProperty]
@@ -34,6 +31,8 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         private bool _isFiltered;
 
         private bool _isFavorite;
+
+        private Status _status;
 
         private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, Type entityType, object? data, Func<StartViewInteractionEntry, Task> handleToggleIsFavorite, Func<StartViewInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
             : base(text, data, navigateHandler, canNavigateHandle)
@@ -71,6 +70,30 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
                 {
                     ToggleIsFavoriteCommand?.NotifyCanExecuteChanged();
                 }
+            }
+        }
+
+        public Status Status
+        {
+            get
+            {
+                return _status;
+            }
+
+            set
+            {
+                if (SetProperty(ref _status, value))
+                {
+                    OnPropertyChanged(nameof(IsProcessed));
+                }
+            }
+        }
+
+        public bool IsProcessed
+        {
+            get
+            {
+                return Status == Status.Processed;
             }
         }
 
