@@ -139,5 +139,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
         [DataMember(Order = 14, IsRequired = false)]
         public Collection<CourseContactRelation> CourseContactRelations { get; set; }
+
+        public Collection<AssessmentItem> surveyCollection { get; set; }
     }
 }
