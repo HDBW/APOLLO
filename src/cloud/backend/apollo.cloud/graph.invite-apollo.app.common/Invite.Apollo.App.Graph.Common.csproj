@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AssemblyVersion>1.0.0.9</AssemblyVersion>
-    <FileVersion>1.0.0.8</FileVersion>
+    <FileVersion>1.0.0.9</FileVersion>
 	<Version>1.0.0.9</Version>
   </PropertyGroup>
 
