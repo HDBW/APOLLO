@@ -471,4 +471,16 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="StartViewModel_UseCaseC_RecomondationsHeadline" xml:space="preserve">
     <value>Beschleunige deinen Aufstieg</value>
   </data>
+  <data name="CourseView_Benefits" xml:space="preserve">
+    <value>Vorteile</value>
+  </data>
+  <data name="CourseView_Contact" xml:space="preserve">
+    <value>Ansprechpartner</value>
+  </data>
+  <data name="CourseView_LearningOutcomes" xml:space="preserve">
+    <value>Ergebnis</value>
+  </data>
+  <data name="CourseView_PreRequisites" xml:space="preserve">
+    <value>Vorraussetzungen</value>
+  </data>
 </root>
