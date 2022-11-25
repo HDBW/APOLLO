@@ -53,7 +53,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             context.Database.EnsureCreated();
 
 
-            // Look for any students.
+            //// Look for any students.
             if (context.Assessments.Any())
             {
                 return; // DB has been seeded
@@ -61,7 +61,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             //string filepath = System.AppDomain.CurrentDomain.BaseDirectory +
             //                  "Data/221111_Booklet_FK_Lagerlogistik.xlsx";
-            string filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Booklet_FK_Lagerlogistik.xlsx");
+
+            string filepath = String.Empty;
+
+            filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\UseCaseCourseData.xlsx");
+            System.Console.WriteLine(filepath);
+            CreateAssessmentFromCsv(filepath, context);
+
+
+            filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Booklet_FK_Lagerlogistik.xlsx");
             System.Console.WriteLine(filepath);
             CreateAssessmentFromCsv(filepath, context);
 
@@ -79,8 +87,274 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 throw new FileNotFoundException("Expected File not found", filename);
             }
 
+            //Excel.Application xlApp = new Excel.Application();
+            //Excel.Workbook xlWorkbook = null;
+            List<BstAssessment> items = GetAssessmentsfromExcelWorkbook(filename);
+
+            Models.Assessment assessment = null;
+            if (items.Count > 0)
+                assessment = CreateAssessment(items.First(), context);
+            //TODO: Add Items to Database
+
+            Category category = new Category();
+            String categoryTitle  = String.Empty;
+            string newCategoryTitle = String.Empty;
+
+            //need for Survey & RATING
+            //Question lastQuestion = null;  
+            //MetaData lastQuestionText = null;
+            //QuestionHasMetaData lastqhmd = null;
+
+
+            Question question = null;
+            MetaData mdInstruction = null;
+            foreach (BstAssessment bstAssessment in items)
+            {
+                
+
+
+                if (bstAssessment.GetQuestionType().Equals(QuestionType.Rating) ||
+                    bstAssessment.GetQuestionType().Equals(QuestionType.Survey))
+                {
+                    newCategoryTitle = bstAssessment.SubjectArea;
+                    if (categoryTitle.Equals(String.Empty) || !categoryTitle.Equals(newCategoryTitle))
+                    {
+                        category = CreateCategory(newCategoryTitle, bstAssessment, context);
+                        categoryTitle = newCategoryTitle;
+
+                        question = CreateQuestion(assessment, bstAssessment, category, context);
+                        if (!categoryTitle.Equals(String.Empty) && category.Questions != null)
+                            Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Category {category.Title} has Questions {category.Questions.Count}");
+
+                        mdInstruction = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
+                        CreateQuestionHasMetaData(mdInstruction, question, context);
+                    }
+
+                }
+                else
+                {
+                    newCategoryTitle = bstAssessment.DescriptionOfPartialQualification;
+                    //Category 
+                    if (categoryTitle.Equals(String.Empty) || !categoryTitle.Equals(newCategoryTitle))
+                    {
+                        category = CreateCategory(newCategoryTitle, bstAssessment, context);
+                        categoryTitle = newCategoryTitle;
+                    }
+                    //Category
+
+                    question = CreateQuestion(assessment, bstAssessment, category, context);
+                    if (!categoryTitle.Equals(String.Empty) && category.Questions != null)
+                        Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Category {category.Title} has Questions {category.Questions.Count}");
+
+                    mdInstruction = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
+                    CreateQuestionHasMetaData(mdInstruction, question, context);
+                }
+                    
+               
+
+                
+                
+                switch (bstAssessment.GetQuestionType())
+                {
+                    #region Associate
+                    case QuestionType.Associate:
+                        
+                        if (question == null)
+                            throw new NullReferenceException();
+
+                        MetaData md =  CreateMetaData(MetaDataType.Text,bstAssessment.ItemStem, context);
+                        MetaData md1 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_1.ToLower(), context);
+                        MetaData md2 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_2.ToLower(), context);
+                        MetaData md3 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_3.ToLower(), context);
+                        MetaData md4 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_4.ToLower(), context);
+                        
+                        CreateQuestionHasMetaData(md, question, context);
+                        CreateQuestionHasMetaData(md1, question, context);
+                        CreateQuestionHasMetaData(md2, question, context);
+                        CreateQuestionHasMetaData(md3, question, context);
+                        CreateQuestionHasMetaData(md4, question, context);
+
+                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                        {
+                            Answer answer = CreateAnswer(question, bstAssessment, i, context);
+                            MetaData answerMetaData =
+                                CreateMetaData(MetaDataType.Text, bstAssessment.GetHTMLDistractorPrimary(i), context);
+                            AnswerHasMetaData answerHasMetaData =
+                                CreateAnswerHasMetaData(answerMetaData, answer, context);
+                        }
+                        
+                        break;
+                    #endregion
+
+                    #region Choice
+                    case QuestionType.Choice:
+                        
+                        if (question == null)
+                            throw new NullReferenceException();
+                        switch (bstAssessment.ItemType.ToUpper())
+                        {
+                            case "CHOICE":
+                                MetaData qmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                                CreateQuestionHasMetaData(qmd, question,context);
+                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                                {
+                                    Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
+                                    MetaData tempAnswerMetaData = CreateMetaData(MetaDataType.Text,
+                                        bstAssessment.GetHTMLDistractorPrimary(i), context);
+                                    AnswerHasMetaData tempAnswerHasMetaData = CreateAnswerHasMetaData(tempAnswerMetaData, tempAnswer, context);
+                                }
+                                break;
+                            case "CHOICE_AP":
+                                MetaData qapmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                                CreateQuestionHasMetaData(qapmd, question, context);
+
+                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                                {
+                                    string picture = bstAssessment.GetHTMLDistractorPrimary(i).ToLower();
+                                    Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
+                                    MetaData tempAnswerMetaData = CreateMetaData(MetaDataType.Image,
+                                        picture, context);
+                                    AnswerHasMetaData tempAnswerHasMetaData =
+                                        CreateAnswerHasMetaData(tempAnswerMetaData, tempAnswer, context);
+                                }
+                                break;
+                            case "CHOICE_QP":
+                                string qpPicture = bstAssessment.ImageResourceName1.ToLower();
+                                MetaData cmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                                MetaData cmd1 = CreateMetaData(MetaDataType.Image, qpPicture,
+                                    context);
+                                CreateQuestionHasMetaData(cmd, question, context);
+                                CreateQuestionHasMetaData(cmd1, question, context);
+
+                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                                {
+                                    Answer temAnswer = CreateAnswer(question, bstAssessment, i, context);
+                                    MetaData temMetaData = CreateMetaData(MetaDataType.Text, bstAssessment.GetHTMLDistractorPrimary(i),
+                                        context);
+                                    AnswerHasMetaData temAnswerHasMetaData =
+                                        CreateAnswerHasMetaData(temMetaData, temAnswer, context);
+                                }
+                                break;
+                            default:
+                                //TODO: move choice and choice ap to default?
+                                break;
+                        }
+                        break;
+                    #endregion
+                    case QuestionType.Imagemap:
+                        //}
+                        if (question == null)
+                            throw new NullReferenceException();
+                        MetaData mdText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        MetaData mdImage =
+                            CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1.ToLower(), context);
+
+                        CreateQuestionHasMetaData(mdText, question, context);
+                        CreateQuestionHasMetaData(mdImage, question, context);
+
+                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                        {
+                            Answer a = CreateAnswer(question, bstAssessment, i, context);
+                            MetaData amd = CreateMetaData(MetaDataType.Point2D, bstAssessment.GetHTMLDistractorPrimary(i), context);
+                            AnswerHasMetaData ahmd = CreateAnswerHasMetaData(amd,a,context);
+                        }
+                        break;
+
+                    #region Rating
+                    case QuestionType.Rating:
+                        
+                        if (question == null)
+                            throw new NullReferenceException();
+
+
+                        Answer answerItemRating = CreateAnswer(question, bstAssessment, 0, context);
+                        MetaData answerMetaDataRating = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        AnswerHasMetaData answerHasMetaRating = CreateAnswerHasMetaData(answerMetaDataRating, answerItemRating, context);
+
+
+                        //MetaData questionText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        //QuestionHasMetaData qhmd = CreateQuestionHasMetaData(questionText, question, context);
+                        //for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                        //{
+                        //    Answer answerItem = CreateAnswer(question, bstAssessment, i, context);
+                        //    MetaData answerMetaData = CreateMetaData(MetaDataType.Text,bstAssessment.GetHTMLDistractorPrimary(i), context);
+                        //    AnswerHasMetaData answerHasMeta =
+                        //        CreateAnswerHasMetaData(answerMetaData, answerItem, context);
+                        //}
+                        break;
+                    #endregion
+
+                    #region Sort
+                    case QuestionType.Sort:
+                        MetaData tempData = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        var tempQuestionMetaData = CreateQuestionHasMetaData(tempData, question, context);
+
+                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
+                        {
+                            Answer answerItem = CreateAnswer(question, bstAssessment, i, context);
+                            MetaData answerMetaDataItem = CreateMetaData(MetaDataType.Text,
+                                bstAssessment.GetHTMLDistractorPrimary(i), context);
+                            AnswerHasMetaData amdi = CreateAnswerHasMetaData(answerMetaDataItem, answerItem, context);
+                            MetaData ansMetaDataStartPosition = CreateMetaData(MetaDataType.Position,i.ToString(), context);
+                            AnswerHasMetaData amdipos =
+                                CreateAnswerHasMetaData(ansMetaDataStartPosition, answerItem, context);
+                        }
+
+                        break;
+                    #endregion
+
+                    #region Survey
+                    case QuestionType.Survey:
+                        //TODO: Add Position and Pole Description to MetaData?
+                        //Problem of Tomorrow Patric
+
+                        if (question == null)
+                            throw new NullReferenceException();
+
+                        //Skala
+                        Answer answerItemSurvey = CreateAnswer(question, bstAssessment, 0, context);
+                        MetaData answerMetaDataSurvey = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
+                        AnswerHasMetaData answerHasMetaSurvey = CreateAnswerHasMetaData(answerMetaDataSurvey, answerItemSurvey, context);
+                        //Textinput
+                        Answer answerItemSurveyText = CreateAnswer(question, bstAssessment, 0, context);
+                        MetaData answerMetaDataSurveyText = CreateMetaData(MetaDataType.Text, "Freitext", context);
+                        AnswerHasMetaData answerHasMetaSurveyText = CreateAnswerHasMetaData(answerMetaDataSurveyText, answerItemSurveyText, context);
+
+                        break;
+                    #endregion
+                }
+            }
+
+
+        }
+
+        private static Category CreateCategory(string categoryTitle, BstAssessment bstAssessment, AssessmentContext context)
+        {
+
+            Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Create New Category {categoryTitle}");
+            Category category = new Category()
+            {
+                Title = categoryTitle,
+                CourseId = bstAssessment.CourseId,
+                EscoId = bstAssessment.EscoId,
+                ResultLimit = bstAssessment.Limit,
+                Schema = CreateApolloSchema(),
+                Ticks = DateTime.Now.Ticks,
+                Subject = bstAssessment.SubjectArea,
+                Description = bstAssessment.DescriptionOfSkills
+                //TODO: @talisi please add minima and maxima to excel
+                //Maximum = ,
+                //Minimum = 
+            };
+            context.SaveChanges();
+            return category;
+        }
+
+        private static List<BstAssessment> GetAssessmentsfromExcelWorkbook(string filename)
+        {
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = null;
+
             List<BstAssessment> items = new();
 
             #region Read from CSV into items
@@ -93,11 +367,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
                 var rowCount = xlRange.Rows.Count;
                 var colCount = xlRange.Columns.Count;
-                
+
                 //this is pointer stuff for iterating over the excel columns and rows
                 for (int i = 2; i <= rowCount; i++)
                 {
-
                     BstAssessment item = new();
 
                     item.ItemId = (xlRange.Cells[i, ExcelColumnIndex.ItemId].Value2 != null)
@@ -251,7 +524,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndex.Limit].Value2.ToString())
                         : default;
 
-                    
+
                     item.CourseId = Convert.ToInt64(
                         (xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2 != null)
                             ? xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2
@@ -271,11 +544,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         : default;
 
                     items.Add(item);
-
                 }
-
-
-
             }
             catch (Exception e)
             {
@@ -288,182 +557,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             #endregion
 
-            Models.Assessment assessment = null;
-            if (items.Count > 0)
-                assessment = CreateAssessment(items.First(), context);
-            //TODO: Add Items to Database
-
-            Category category = new Category();
-            String categoryTitle  = String.Empty;
-            string newCategoryTitle = String.Empty;
-            foreach (BstAssessment bstAssessment in items)
-            {
-                newCategoryTitle = bstAssessment.DescriptionOfPartialQualification;
-                //Category 
-                if (categoryTitle.Equals(String.Empty) || !categoryTitle.Equals(newCategoryTitle))
-                {
-                    
-                    
-                    Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Create New Category {category.Title}");
-                    category = new Category()
-                    {
-                        Title = bstAssessment.DescriptionOfPartialQualification,
-                        CourseId = bstAssessment.CourseId,
-                        EscoId = bstAssessment.EscoId,
-                        ResultLimit = bstAssessment.Limit,
-                        Schema = CreateApolloSchema(),
-                        Ticks = DateTime.Now.Ticks,
-                        Subject = bstAssessment.SubjectArea,
-                        Description = bstAssessment.DescriptionOfSkills
-                        //TODO: @talisi please add minima and maxima to excel
-                        //Maximum = ,
-                        //Minimum = 
-                    };
-                    categoryTitle = newCategoryTitle;
-                    context.SaveChanges();
-
-                    
-
-                }
-                //Category
-
-                Question question = CreateQuestion(assessment, bstAssessment, category, context);
-                if (!categoryTitle.Equals(String.Empty) && category.Questions != null)
-                    Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Category {category.Title} has Questions {category.Questions.Count}");
-                
-                //category.Questions.Add(question);
-                
-                context.SaveChanges();
-
-                MetaData mdInstruction = CreateMetaData(MetaDataType.Hint, bstAssessment.Instruction, context);
-                CreateQuestionHasMetaData(mdInstruction, question, context);
-                
-                switch (bstAssessment.GetQuestionType())
-                {
-                    case QuestionType.Associate:
-
-                        MetaData md =  CreateMetaData(MetaDataType.Text,bstAssessment.ItemStem, context);
-                        MetaData md1 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_1.ToLower(), context);
-                        MetaData md2 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_2.ToLower(), context);
-                        MetaData md3 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_3.ToLower(), context);
-                        MetaData md4 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_4.ToLower(), context);
-                        
-                        CreateQuestionHasMetaData(md, question, context);
-                        CreateQuestionHasMetaData(md1, question, context);
-                        CreateQuestionHasMetaData(md2, question, context);
-                        CreateQuestionHasMetaData(md3, question, context);
-                        CreateQuestionHasMetaData(md4, question, context);
-
-                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
-                        {
-                            Answer answer = CreateAnswer(question, bstAssessment, i, context);
-                            MetaData answerMetaData =
-                                CreateMetaData(MetaDataType.Text, bstAssessment.GetHTMLDistractorPrimary(i), context);
-                            AnswerHasMetaData answerHasMetaData =
-                                CreateAnswerHasMetaData(answerMetaData, answer, context);
-                        }
-                        
-                        break;
-                    case QuestionType.Choice:
-                        switch (bstAssessment.ItemType.ToUpper())
-                        {
-                            case "CHOICE":
-                                MetaData qmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                                CreateQuestionHasMetaData(qmd, question,context);
-                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
-                                {
-                                    Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
-                                    MetaData tempAnswerMetaData = CreateMetaData(MetaDataType.Text,
-                                        bstAssessment.GetHTMLDistractorPrimary(i), context);
-                                    AnswerHasMetaData tempAnswerHasMetaData = CreateAnswerHasMetaData(tempAnswerMetaData, tempAnswer, context);
-                                }
-                                break;
-                            case "CHOICE_AP":
-                                MetaData qapmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                                CreateQuestionHasMetaData(qapmd, question, context);
-
-                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
-                                {
-                                    string picture = bstAssessment.GetHTMLDistractorPrimary(i).ToLower();
-                                    Answer tempAnswer = CreateAnswer(question, bstAssessment, i, context);
-                                    MetaData tempAnswerMetaData = CreateMetaData(MetaDataType.Image,
-                                        picture, context);
-                                    AnswerHasMetaData tempAnswerHasMetaData =
-                                        CreateAnswerHasMetaData(tempAnswerMetaData, tempAnswer, context);
-                                }
-                                break;
-                            case "CHOICE_QP":
-                                string qpPicture = bstAssessment.ImageResourceName1.ToLower();
-                                MetaData cmd = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                                MetaData cmd1 = CreateMetaData(MetaDataType.Image, qpPicture,
-                                    context);
-                                CreateQuestionHasMetaData(cmd, question, context);
-                                CreateQuestionHasMetaData(cmd1, question, context);
-
-                                for (int i = 0; i < bstAssessment.AmountAnswers; i++)
-                                {
-                                    Answer temAnswer = CreateAnswer(question, bstAssessment, i, context);
-                                    MetaData temMetaData = CreateMetaData(MetaDataType.Text, bstAssessment.GetHTMLDistractorPrimary(i),
-                                        context);
-                                    AnswerHasMetaData temAnswerHasMetaData =
-                                        CreateAnswerHasMetaData(temMetaData, temAnswer, context);
-                                }
-                                break;
-                            default:
-                                //TODO: move choice and choice ap to default?
-                                break;
-                        }
-                        break;
-                    case QuestionType.Imagemap:
-                        MetaData mdText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                        MetaData mdImage =
-                            CreateMetaData(MetaDataType.Image, bstAssessment.ImageResourceName1.ToLower(), context);
-
-                        CreateQuestionHasMetaData(mdText, question, context);
-                        CreateQuestionHasMetaData(mdImage, question, context);
-
-                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
-                        {
-                            Answer a = CreateAnswer(question, bstAssessment, i, context);
-                            MetaData amd = CreateMetaData(MetaDataType.Point2D, bstAssessment.GetHTMLDistractorPrimary(i), context);
-                            AnswerHasMetaData ahmd = CreateAnswerHasMetaData(amd,a,context);
-                        }
-                        break;
-                    case QuestionType.Rating:
-                        MetaData questionText = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                        QuestionHasMetaData qhmd = CreateQuestionHasMetaData(questionText, question, context);
-                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
-                        {
-                            Answer answerItem = CreateAnswer(question, bstAssessment, i, context);
-                            MetaData answerMetaData = CreateMetaData(MetaDataType.Text,bstAssessment.GetHTMLDistractorPrimary(i), context);
-                            AnswerHasMetaData answerHasMeta =
-                                CreateAnswerHasMetaData(answerMetaData, answerItem, context);
-                        }
-                        break;
-                    case QuestionType.Sort:
-                        MetaData tempData = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
-                        var tempQuestionMetaData = CreateQuestionHasMetaData(tempData, question, context);
-
-                        for (int i = 0; i < bstAssessment.AmountAnswers; i++)
-                        {
-                            Answer answerItem = CreateAnswer(question, bstAssessment, i, context);
-                            MetaData answerMetaDataItem = CreateMetaData(MetaDataType.Text,
-                                bstAssessment.GetHTMLDistractorPrimary(i), context);
-                            AnswerHasMetaData amdi = CreateAnswerHasMetaData(answerMetaDataItem, answerItem, context);
-                            MetaData ansMetaDataStartPosition = CreateMetaData(MetaDataType.Position,i.ToString(), context);
-                            AnswerHasMetaData amdipos =
-                                CreateAnswerHasMetaData(ansMetaDataStartPosition, answerItem, context);
-                        }
-
-                        break;
-                    case QuestionType.Survey:
-                        //TODO: Add Position and Pole Description to MetaData?
-                        //Problem of Tomorrow Patric
-                        break;
-                }
-            }
-
-
+            return items;
         }
 
         private static MetaData CreateMetaData(MetaDataType type, string value, AssessmentContext context)
@@ -523,7 +617,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             answer.AnswerType = bstAssessment.GetAnswerType();
 
             var questionType = bstAssessment.GetQuestionType();
-            var somevalue = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
+            //var somevalue = bstAssessment.GetHTMLDistractorPrimary(answerIndex);
             string resultvector = bstAssessment.ScoringOption_1;
             var strReplace = resultvector.Replace(" ", "");
             var result = strReplace.Split('-');
@@ -546,13 +640,16 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     answer.Value = result[answerIndex].ToString();
                     break;
                 case QuestionType.Rating:
-                    answer.Value = result[answerIndex].ToString();
+                    //answer.Value = result[answerIndex].ToString();
+                    answer.Value = bstAssessment.ItemStem;
                     break;
                 case QuestionType.Eafrequency:
-                    answer.Value = result[answerIndex].ToString();
+                    //answer.Value = result[answerIndex].ToString();
+                    answer.Value = bstAssessment.ItemStem;
                     break;
                 case QuestionType.Survey:
-                    answer.Value = result[answerIndex].ToString();
+                    //answer.Value = result[answerIndex].ToString();
+                    answer.Value = bstAssessment.ItemStem;
                     break;
                 //TODO: Rating Implementation
             }

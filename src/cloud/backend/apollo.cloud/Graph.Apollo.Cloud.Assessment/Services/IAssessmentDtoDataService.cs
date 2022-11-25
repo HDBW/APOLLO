@@ -1,4 +1,5 @@
 ﻿using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services
 {
@@ -7,6 +8,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public Task<IEnumerable<AssessmentItem>> GetAllAssessmentItemsAsync();
 
         public Task<AssessmentItem> GetAssessmentItemByIdAsync(long assessmentId);
+
+        public Task<IEnumerable<AssessmentItem>> GetAssessmentItemsByType(AssessmentType type);
 
         public Task<IEnumerable<AssessmentItem>> GetAssessmentsByOccupation(string occupation);
 
