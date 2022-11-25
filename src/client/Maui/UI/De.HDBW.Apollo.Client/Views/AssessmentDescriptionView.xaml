@@ -5,6 +5,7 @@
              x:DataType="viewModels:AssessmentDescriptionViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resource.AssessmentDescriptionView_Title}"
+             Shell.FlyoutBehavior="Disabled"
              IsBusy="{Binding IsBusy}" Padding="0">
 
     <Grid RowDefinitions="auto, 60, *, auto, auto">

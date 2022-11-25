@@ -9,5 +9,6 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
        IRepository<CourseContactRelation>,
        IDatabaseRepository<CourseContactRelation>
     {
+        Task<IEnumerable<CourseContactRelation>> GetItemsByForeignKeyAsync(long value, CancellationToken token);
     }
 }

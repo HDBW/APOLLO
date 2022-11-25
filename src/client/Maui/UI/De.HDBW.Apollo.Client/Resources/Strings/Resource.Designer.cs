@@ -232,6 +232,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vorteile.
+        /// </summary>
+        public static string CourseView_Benefits {
+            get {
+                return ResourceManager.GetString("CourseView_Benefits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ansprechpartner.
+        /// </summary>
+        public static string CourseView_Contact {
+            get {
+                return ResourceManager.GetString("CourseView_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ergebnis.
+        /// </summary>
+        public static string CourseView_LearningOutcomes {
+            get {
+                return ResourceManager.GetString("CourseView_LearningOutcomes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vorraussetzungen.
+        /// </summary>
+        public static string CourseView_PreRequisites {
+            get {
+                return ResourceManager.GetString("CourseView_PreRequisites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1 {
