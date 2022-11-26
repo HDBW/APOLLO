@@ -190,5 +190,35 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             return result;
         }
+
+        public AssessmentType GetAssessmentType()
+        {
+            AssessmentType result;
+            switch (AssessmentType.ToUpper())
+            {
+                case "SKILL":
+                    result = Common.Models.Assessment.Enums.AssessmentType.SkillAssessment;
+                    break;
+                case "SOFTSKILL":
+                    result = Common.Models.Assessment.Enums.AssessmentType.SoftSkillAssessment;
+                    break;
+                case "EXPERIENCE":
+                    result = Common.Models.Assessment.Enums.AssessmentType.ExperienceAssessment;
+                    break;
+                case "CLOZE":
+                    result = Common.Models.Assessment.Enums.AssessmentType.Cloze;
+                    break;
+                case "SURVEY":
+                    result = Common.Models.Assessment.Enums.AssessmentType.Survey;
+                    break;
+                default:
+                    result = Common.Models.Assessment.Enums.AssessmentType.Unknown;
+                    break;
+            }
+
+            return result;
+        }
     }
+
+
 }
