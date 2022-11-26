@@ -3,6 +3,8 @@ using Invite.Apollo.App.Graph.Assessment.Models;
 using Invite.Apollo.App.Graph.Assessment.Repository;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services
 {
@@ -46,6 +48,12 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             return await _assessmentRepository.GetSingleAsync(assessmentId);
         }
 
+        public async Task<IEnumerable<Models.Assessment>> GetAssessmentByType(AssessmentType type)
+        {
+            return await _assessmentRepository.FindByAsync(a => a.AssessmentType.Equals(type));
+
+        }
+
 
         public async Task<IEnumerable<Models.Assessment>> GetAssessmentsByOccupation(string occupation) =>
             await _assessmentRepository.FindByAsync(assessment => assessment.EscoOccupationId.Equals(occupation));
@@ -74,6 +82,20 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         async Task<IEnumerable<AssessmentItem>> IAssessmentDtoDataService.GetAssessmentsByOccupation(string occupation)
         {
             var assessments = await GetAssessmentsByOccupation(occupation);
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Assessment, AssessmentItem>());
+            Mapper mapper = new(config);
+            List<AssessmentItem> assessmentItems = new();
+            foreach (var assessment in assessments)
+            {
+                assessmentItems.Add(mapper.Map<AssessmentItem>(assessment));
+            }
+
+            return assessmentItems;
+        }
+        public async Task<IEnumerable<AssessmentItem>> GetAssessmentItemsByType(AssessmentType type)
+        {
+            var assessments = await GetAssessmentByType(type);
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Assessment, AssessmentItem>());
             Mapper mapper = new(config);
