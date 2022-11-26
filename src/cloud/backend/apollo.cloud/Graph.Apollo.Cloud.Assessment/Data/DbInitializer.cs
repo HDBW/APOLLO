@@ -256,7 +256,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                             throw new NullReferenceException();
 
 
-                        Answer answerItemRating = CreateAnswer(question, bstAssessment, 0, context);
+                        //Answer answerItemRating = CreateAnswer(question, bstAssessment, 0, context);
+                        Answer answerItemRating =
+                            CreateSurveyAnswer(question, AnswerType.Integer, bstAssessment, context);
                         MetaData answerMetaDataRating = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
                         AnswerHasMetaData answerHasMetaRating = CreateAnswerHasMetaData(answerMetaDataRating, answerItemRating, context);
 
@@ -295,17 +297,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     #region Survey
                     case QuestionType.Survey:
                         //TODO: Add Position and Pole Description to MetaData?
-                        //Problem of Tomorrow Patric
 
                         if (question == null)
                             throw new NullReferenceException();
 
                         //Skala
-                        Answer answerItemSurvey = CreateAnswer(question, bstAssessment, 0, context);
+                        //TODO: Fix auto assigning later in CreateAnswer
+                        Answer answerItemSurvey = CreateSurveyAnswer(question, AnswerType.Integer, bstAssessment, context);
                         MetaData answerMetaDataSurvey = CreateMetaData(MetaDataType.Text, bstAssessment.ItemStem, context);
                         AnswerHasMetaData answerHasMetaSurvey = CreateAnswerHasMetaData(answerMetaDataSurvey, answerItemSurvey, context);
                         //Textinput
-                        Answer answerItemSurveyText = CreateAnswer(question, bstAssessment, 0, context);
+                        //TODO: Fix auto assigning later in CreateAnswer
+                        Answer answerItemSurveyText = CreateSurveyAnswer(question, AnswerType.String, bstAssessment, context);
                         MetaData answerMetaDataSurveyText = CreateMetaData(MetaDataType.Text, "Freitext", context);
                         AnswerHasMetaData answerHasMetaSurveyText = CreateAnswerHasMetaData(answerMetaDataSurveyText, answerItemSurveyText, context);
 
@@ -599,6 +602,36 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             return qm1;
         }
 
+        private static Answer CreateSurveyAnswer(Question question, AnswerType answerType, BstAssessment bstAssessment, AssessmentContext context)
+        {
+            Answer answer = new();
+            answer.AnswerType = answerType;
+            answer.Question = question;
+            answer.QuestionId = question.Id;
+
+            if (answerType.Equals(AnswerType.Integer))
+            {
+                string resultvector = bstAssessment.ScoringOption_1;
+                string result = resultvector.Replace(" ", "");
+
+                answer.Value = result;
+            }
+            else if(answerType.Equals(AnswerType.String))
+            {
+                string result = "TXT INPUT EXPECTED";
+                answer.Value = result;
+            }
+            else
+            {
+                answer.Value = "";
+            }
+
+            answer.Schema = CreateApolloSchema();
+            answer.Ticks = DateTime.Now.Ticks;
+            context.Answers.Add(answer);
+            context.SaveChanges();
+            return answer;
+        }
 
         private static Answer CreateAnswer(Question question, BstAssessment bstAssessment, int answerIndex, AssessmentContext context)
         {
@@ -631,15 +664,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     break;
                 case QuestionType.Rating:
                     //answer.Value = result[answerIndex].ToString();
-                    answer.Value = bstAssessment.ItemStem;
+                    answer.Value = strReplace;
                     break;
                 case QuestionType.Eafrequency:
                     //answer.Value = result[answerIndex].ToString();
-                    answer.Value = bstAssessment.ItemStem;
+                    answer.Value = strReplace;
                     break;
                 case QuestionType.Survey:
                     //answer.Value = result[answerIndex].ToString();
-                    answer.Value = bstAssessment.ItemStem;
+                    answer.Value = "SURVEY";
                     break;
                 //TODO: Rating Implementation
             }
@@ -683,16 +716,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             Models.Assessment assessment  = new Models.Assessment
             {
                 Kldb = bstAssessment.Kldb,
-                AssessmentType = AssessmentType.SkillAssessment,
+                AssessmentType = bstAssessment.GetAssessmentType(),
                 Description = bstAssessment.Description,
                 Disclaimer = bstAssessment.Disclaimer,
-                Duration = TimeSpan.Zero,
+                Duration = TimeSpan.FromMinutes(double.Parse(bstAssessment.Duration)),
                 EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
                 EscoSkills = new List<EscoSkill>(),
                 ExternalId = bstAssessment.ItemId,
                 Profession = bstAssessment.DescriptionOfProfession,
-                //TODO: Change for Survey
-                Publisher = "Bertelsmann Stiftung",
+                Publisher = bstAssessment.Publisher,
                 Title = bstAssessment.Title,
                 Schema = CreateApolloSchema(),
                 Ticks = DateTime.Now.Ticks,
