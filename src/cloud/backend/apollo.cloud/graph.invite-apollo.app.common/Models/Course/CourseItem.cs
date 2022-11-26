@@ -89,7 +89,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public string KeyPhrases { get; set; } = string.Empty;
 
         /// <summary>
-        /// Duration of the Course
+        /// Duration of the Course in hours
         /// </summary>
         [DataMember(Order = 15, IsRequired = false)]
         public TimeSpan Duration { get; set; }
