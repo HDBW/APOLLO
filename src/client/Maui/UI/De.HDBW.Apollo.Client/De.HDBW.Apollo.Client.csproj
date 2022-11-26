@@ -166,6 +166,9 @@
     <MauiXaml Update="Dialogs\SkipQuestionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\MessageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
 
   <ItemGroup>
@@ -199,6 +202,9 @@
       <DependentUpon>FirstTimeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Update="Dialogs\SkipQuestionDialog.xaml.cs">
+      <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
