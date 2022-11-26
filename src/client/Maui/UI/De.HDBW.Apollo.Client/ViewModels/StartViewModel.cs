@@ -204,6 +204,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var filters = new List<InteractionEntry>();
             foreach (var assesment in assessmentItems)
             {
+                if (assesment.AssessmentType == AssessmentType.Survey)
+                {
+                    continue;
+                }
+
                 if (!filters.Any(f => ((AssessmentType)f.Data) == assesment.AssessmentType))
                 {
                     filters.Add(FilterInteractionEntry.Import(assesment.AssessmentType.ToString(), assesment.AssessmentType, HandleFilter, CanHandleFilter));
