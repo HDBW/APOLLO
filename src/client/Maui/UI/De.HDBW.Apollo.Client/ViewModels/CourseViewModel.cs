@@ -5,7 +5,9 @@ using System.Collections.ObjectModel;
 using System.Security.Policy;
 using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -156,6 +158,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public string DisplayPrice
+        {
+            get
+            {
+                var parts = new List<string>();
+                parts.Add((Price ?? 0).ToString());
+                parts.Add(Currency ?? string.Empty);
+                return string.Join("", parts.Where(s => !string.IsNullOrWhiteSpace(s)));
+            }
+        }
+
         private ICourseItemRepository CourseItemRepository { get; }
 
         private ICourseAppointmentRepository CourseAppointmentRepository { get; }
@@ -213,6 +226,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             _courseItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            ShowLoanOptionsCommand?.NotifyCanExecuteChanged();
+            OpenCourseCommand?.NotifyCanExecuteChanged();
+        }
+
         private void LoadonUIThread(
             CourseItem? courseItem,
             IEnumerable<CourseAppointment> courseAppointments,
@@ -221,12 +241,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IEnumerable<(string Link, string Text)> skills)
         {
             ImagePath = "placeholdercontinuingeducation.png";
-            //*
+            OnPropertyChanged(nameof(HasImage));
             Title = courseItem?.Title;
-            //*
             Description = courseItem?.Description;
             ShortDescription = courseItem?.ShortDescription;
             TargetGroup = courseItem?.TargetGroup;
+
             //*
             CourseType = courseItem?.CourseType;
             Availability = courseItem?.Availability;
@@ -237,6 +257,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             CourseUrl = courseItem?.CourseUrl;
             Occurrence = courseItem?.Occurrence;
             Language = courseItem?.Language;
+
             //*
             LearningOutcomes = courseItem?.LearningOutcomes;
             InstructorId = courseItem?.InstructorId;
@@ -245,7 +266,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             TrainingProviderId = courseItem?.TrainingProviderId;
             CourseProviderId = courseItem?.CourseProviderId;
 
-            //*
             Benefits = courseItem?.Benefits;
             PublishingDate = courseItem?.PublishingDate;
             LatestUpdate = courseItem?.LatestUpdate;
@@ -256,8 +276,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             SuccessorId = courseItem?.SuccessorId;
             PredecessorId = courseItem?.PredecessorId;
             CourseTagType = courseItem?.CourseTagType;
+
             Price = courseItem?.Price;
             Currency = courseItem?.Currency;
+
+            OnPropertyChanged(nameof(DisplayPrice));
             LoanOptions = courseItem?.LoanOptions;
             Skills = new ObservableCollection<InteractionEntry>(skills?.Select(s => InteractionEntry.Import(s.Text, s.Link, OpenSkill, CanOpenSkill)) ?? new List<InteractionEntry>());
         }
@@ -314,6 +337,74 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 Logger?.LogError(ex, $"Unknown error in {nameof(OpenSkill)} in {GetType().Name}.");
             }
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenCourse))]
+        private async Task OpenCourse(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await Browser.Default.OpenAsync(CourseUrl!, BrowserLaunchMode.SystemPreferred);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenCourse)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenCourse)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenCourse)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenCourse()
+        {
+            return !IsBusy && CourseUrl != null;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShowLoanOptions))]
+        private async Task ShowLoanOptions(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var parameters = new NavigationParameters();
+                    parameters.AddValue(NavigationParameter.Data, LoanOptions);
+                    await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(worker.Token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ShowLoanOptions)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ShowLoanOptions)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(ShowLoanOptions)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanShowLoanOptions()
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(LoanOptions);
         }
     }
 }

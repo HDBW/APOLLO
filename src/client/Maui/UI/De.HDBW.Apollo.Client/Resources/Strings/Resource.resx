@@ -483,4 +483,14 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="CourseView_PreRequisites" xml:space="preserve">
     <value>Vorraussetzungen</value>
   </data>
+  <data name="CourseView_LoanOptions" xml:space="preserve">
+    <value>Finanzierungsoptionen anzeigen</value>
+  </data>
+  <data name="CourseView_VisitVendor" xml:space="preserve">
+    <value>Zum Anbieter</value>
+  </data>
+   <data name="Global_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  
 </root>

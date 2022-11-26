@@ -26,22 +26,35 @@ namespace De.HDBW.Apollo.Client.Services
 
         private IDispatcherService DispatcherService { get; }
 
-        public async Task<TV?> ShowPopupAsync<TU, TV>(CancellationToken token)
+        public async Task<TV?> ShowPopupAsync<TU, TV, TW>(CancellationToken token, TW parameters)
             where TU : Popup
             where TV : NavigationParameters
+            where TW : NavigationParameters?
         {
             token.ThrowIfCancellationRequested();
             Popup? popup = null;
             try
             {
                 popup = ServiceProvider.GetService<TU>();
+
                 if (popup == null || Shell.Current?.CurrentPage == null)
                 {
                     throw new NotSupportedException();
                 }
 
                 RegisterDialog(popup);
-                var result = await DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current.CurrentPage.ShowPopupAsync(popup), token);
+                var result = await DispatcherService.ExecuteOnMainThreadAsync(
+                    () =>
+                {
+                    var queryAble = popup as IQueryAttributable ?? popup.BindingContext as IQueryAttributable;
+                    if (queryAble != null && parameters != null)
+                    {
+                        queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
+                    }
+
+                    return Shell.Current.CurrentPage.ShowPopupAsync(popup);
+                }, token);
+
                 return result as TV;
             }
             catch (OperationCanceledException)
@@ -67,6 +80,13 @@ namespace De.HDBW.Apollo.Client.Services
             }
 
             return null;
+        }
+
+        public Task<TV?> ShowPopupAsync<TU, TV>(CancellationToken token)
+            where TU : Popup
+            where TV : NavigationParameters
+        {
+            return ShowPopupAsync<TU, TV, NavigationParameters?>(token, null);
         }
 
         public Task ShowPopupAsync<TU>(CancellationToken token)

@@ -225,6 +225,9 @@ public static class MauiProgram
         services.AddTransient<SkipQuestionDialog>();
         services.AddTransient<SkipQuestionDialogViewModel>();
 
+        services.AddTransient<MessageDialog>();
+        services.AddTransient<MessageDialogViewModel>();
+
         services.AddTransient<EmptyView>();
         services.AddTransient<EmptyViewModel>();
 
