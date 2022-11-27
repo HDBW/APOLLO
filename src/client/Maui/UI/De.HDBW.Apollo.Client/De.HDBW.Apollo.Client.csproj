@@ -46,10 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\completed.svg" />
+    <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
     <None Remove="Resources\Images\placeholdertest.svg" />
+    <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
     <None Remove="Resources\Images\fallback.png" />
@@ -96,6 +99,7 @@
     <None Remove="Resources\Images\user.svg" />
     <None Remove="Resources\Images\user2.svg" />
     <None Remove="Resources\Images\user3.svg" />
+    <None Remove="Resources\Images\watch.svg" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,20 +2,20 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Security.Policy;
+using System.Globalization;
 using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Converter;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Models.Course;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -45,6 +45,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private CourseType? _courseType;
 
         [ObservableProperty]
+        private string? _displayCourseType;
+
+        [ObservableProperty]
         private CourseAvailability? _availability;
 
         [ObservableProperty]
@@ -61,6 +64,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         [ObservableProperty]
         private OccurrenceType? _occurrence;
+
+        [ObservableProperty]
+        private string? _displayOccurrence;
 
         [ObservableProperty]
         private string? _language;
@@ -117,10 +123,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _loanOptions;
 
         [ObservableProperty]
+        private EduProviderItem? _trainingProvider;
+
+        [ObservableProperty]
+        private EduProviderItem? _courseProvider;
+
+        [ObservableProperty]
+        private CourseContact? _instructor;
+
+        [ObservableProperty]
+        private CourseContact? _contact;
+
+        [ObservableProperty]
         private ObservableCollection<InteractionEntry> _skills = new ObservableCollection<InteractionEntry>();
 
         [ObservableProperty]
+        private ObservableCollection<CourseAppointmentEntry> _courseAppointments = new ObservableCollection<CourseAppointmentEntry>();
+
+        [ObservableProperty]
         private string? _imagePath;
+
+        [ObservableProperty]
+        private string? _decoratorText;
 
         public CourseViewModel(
             IDispatcherService dispatcherService,
@@ -166,6 +190,59 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 parts.Add((Price ?? 0).ToString());
                 parts.Add(Currency ?? string.Empty);
                 return string.Join("", parts.Where(s => !string.IsNullOrWhiteSpace(s)));
+            }
+        }
+
+        public bool HasInstructor
+        {
+            get
+            {
+                return Instructor != null;
+            }
+        }
+
+        public bool HasTrainingProvider
+        {
+            get
+            {
+                return TrainingProvider != null;
+            }
+        }
+
+        public string? DisplayTrainingProvider
+        {
+            get
+            {
+                return TrainingProvider?.Name;
+            }
+        }
+
+        public string? DisplayDuration
+        {
+            get
+            {
+                if (!Duration.HasValue)
+                {
+                    return null;
+                }
+
+                return string.Format(Resources.Strings.Resource.Global_DurationFormatHours, Duration.Value.TotalHours);
+            }
+        }
+
+        public bool HasCourseProvider
+        {
+            get
+            {
+                return CourseProvider != null;
+            }
+        }
+
+        public bool HasContact
+        {
+            get
+            {
+                return Contact != null;
             }
         }
 
@@ -241,30 +318,44 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IEnumerable<(string Link, string Text)> skills)
         {
             ImagePath = "placeholdercontinuingeducation.png";
+            IValueConverter converter = new CourseTagTypeToStringConverter();
+            DecoratorText = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
             OnPropertyChanged(nameof(HasImage));
             Title = courseItem?.Title;
-            Description = courseItem?.Description;
-            ShortDescription = courseItem?.ShortDescription;
+            Description = courseItem?.Description?.Trim();
+            ShortDescription = courseItem?.ShortDescription.Trim();
             TargetGroup = courseItem?.TargetGroup;
+            CourseAppointments = new ObservableCollection<CourseAppointmentEntry>(courseAppointments?.Select(e => CourseAppointmentEntry.Import(e)) ?? new List<CourseAppointmentEntry>());
 
-            //*
             CourseType = courseItem?.CourseType;
+            converter = new CourseTypeToStringConverter();
+            DisplayCourseType = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
+
             Availability = courseItem?.Availability;
             LatestUpdateFromProvider = courseItem?.LatestUpdateFromProvider;
             PreRequisitesDescription = courseItem?.PreRequisitesDescription;
             KeyPhrases = courseItem?.KeyPhrases;
             Duration = courseItem?.Duration;
+            OnPropertyChanged(nameof(DisplayDuration));
+
             CourseUrl = courseItem?.CourseUrl;
             Occurrence = courseItem?.Occurrence;
+            converter = new OccurrenceTypeToStringConverter();
+            DisplayOccurrence = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
             Language = courseItem?.Language;
 
-            //*
             LearningOutcomes = courseItem?.LearningOutcomes;
             InstructorId = courseItem?.InstructorId;
+            Instructor = contacts.FirstOrDefault(c => c.Id == InstructorId);
+            OnPropertyChanged(nameof(HasInstructor));
 
-            //*
             TrainingProviderId = courseItem?.TrainingProviderId;
+            TrainingProvider = eduProviders.FirstOrDefault(c => c.Id == TrainingProviderId);
+            OnPropertyChanged(nameof(HasTrainingProvider));
+            OnPropertyChanged(nameof(DisplayTrainingProvider));
             CourseProviderId = courseItem?.CourseProviderId;
+            CourseProvider = eduProviders.FirstOrDefault(c => c.Id == CourseProviderId);
+            OnPropertyChanged(nameof(HasCourseProvider));
 
             Benefits = courseItem?.Benefits;
             PublishingDate = courseItem?.PublishingDate;
@@ -279,8 +370,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             Price = courseItem?.Price;
             Currency = courseItem?.Currency;
-
             OnPropertyChanged(nameof(DisplayPrice));
+            Contact = contacts.FirstOrDefault(c => c != Instructor);
+            OnPropertyChanged(nameof(HasContact));
+
             LoanOptions = courseItem?.LoanOptions;
             Skills = new ObservableCollection<InteractionEntry>(skills?.Select(s => InteractionEntry.Import(s.Text, s.Link, OpenSkill, CanOpenSkill)) ?? new List<InteractionEntry>());
         }

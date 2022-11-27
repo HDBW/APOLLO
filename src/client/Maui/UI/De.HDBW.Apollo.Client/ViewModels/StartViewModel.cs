@@ -129,9 +129,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                            eduProviders), worker.Token);
 
                     var taskList = new List<Task>();
-                    Task<NavigationParameters?>? dialogTask = null;
-
                     /*
+                    Task<NavigationParameters?>? dialogTask = null;
                     var isFirstTime = PreferenceService.GetValue(Preference.IsFirstTime, true);
                     if (isFirstTime)
                     {
