@@ -489,8 +489,34 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="CourseView_VisitVendor" xml:space="preserve">
     <value>Zum Anbieter</value>
   </data>
-   <data name="Global_Close" xml:space="preserve">
+  <data name="Global_Close" xml:space="preserve">
     <value>Schließen</value>
   </data>
-  
+  <data name="CourseType_All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="CourseType_InHouse" xml:space="preserve">
+    <value>Vorort</value>
+  </data>
+  <data name="CourseType_InPerson" xml:space="preserve">
+    <value>Persönlich</value>
+  </data>
+  <data name="CourseType_OnAndOffline" xml:space="preserve">
+    <value>Online und Vorort</value>
+  </data>
+  <data name="CourseType_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="CourseView_TargetGroup" xml:space="preserve">
+    <value>Zielgruppe</value>
+  </data>
+  <data name="Global_DurationFormatHours" xml:space="preserve">
+    <value>{0} Stunden</value>
+  </data>
+  <data name="OccurrenceType_FullTime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="OccurrenceType_PartTime" xml:space="preserve">
+    <value>Teilzeit</value>
+  </data>
 </root>
