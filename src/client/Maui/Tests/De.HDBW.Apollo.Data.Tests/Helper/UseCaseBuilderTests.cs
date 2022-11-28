@@ -4,7 +4,6 @@
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Tests.Extensions;
-using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -26,6 +25,7 @@ public class UseCaseBuilderTests : IDisposable
     private readonly CourseItemRepository _courseItemRepository;
     private readonly CourseContactRepository _courseContactRepository;
     private readonly CourseAppointmentRepository _courseAppointmentRepository;
+    private readonly CourseContactRelationRepository _courseContactRelationRepository;
     private readonly EduProviderItemRepository _eduProviderItemRepository;
 
     public UseCaseBuilderTests()
@@ -44,6 +44,7 @@ public class UseCaseBuilderTests : IDisposable
         _courseItemRepository = new CourseItemRepository(this.SetupLogger<CourseItemRepository>());
         _courseContactRepository = new CourseContactRepository(this.SetupLogger<CourseContactRepository>());
         _courseAppointmentRepository = new CourseAppointmentRepository(this.SetupLogger<CourseAppointmentRepository>());
+        _courseContactRelationRepository = new CourseContactRelationRepository(this.SetupLogger<CourseContactRelationRepository>());
         _eduProviderItemRepository = new EduProviderItemRepository(this.SetupLogger<EduProviderItemRepository>());
     }
 
@@ -57,59 +58,62 @@ public class UseCaseBuilderTests : IDisposable
         UseCaseBuilder? useCaseBuilder = null;
         var ctor = typeof(UseCaseBuilder).GetConstructors().FirstOrDefault();
         var parameters = ctor.GetParameters();
-        var ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
+        var ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[0].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[1].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, null, null, null, null, null, null, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[2].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, null, null, null, null, null, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, null, null, null, null, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[3].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, null, null, null, null, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, null, null, null, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[4].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, null, null, null, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, null, null, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[5].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, null, null, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, null, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[6].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, null, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, null, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[7].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, null, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, null, null, null, null, null, null, null, null));
         Assert.Equal(parameters[8].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, null, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, null, null, null, null, null, null, null));
         Assert.Equal(parameters[9].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, null, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, null, null, null, null, null, null));
         Assert.Equal(parameters[10].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, null, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, null, null, null, null, null));
         Assert.Equal(parameters[11].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, null, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, null, null, null, null));
         Assert.Equal(parameters[12].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, null, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, null, null, null));
         Assert.Equal(parameters[13].Name, ex.ParamName);
 
-        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository,_courseAppointmentRepository, _userProfileItemRepository, null));
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _courseContactRelationRepository, null, null));
         Assert.Equal(parameters[14].Name, ex.ParamName);
 
-        useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _userProfileItemRepository, _eduProviderItemRepository);
+        ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _courseContactRelationRepository, _userProfileItemRepository, null));
+        Assert.Equal(parameters[15].Name, ex.ParamName);
+
+        useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _courseContactRelationRepository, _userProfileItemRepository, _eduProviderItemRepository);
         Assert.NotNull(useCaseBuilder);
     }
 
     [Fact]
     public async Task TestBuildAsyncWithCanceledTokenAsync()
     {
-        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _userProfileItemRepository, _eduProviderItemRepository);
+        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _courseContactRelationRepository, _userProfileItemRepository, _eduProviderItemRepository);
         using (var cts = new CancellationTokenSource())
         {
             cts.Cancel();
@@ -120,7 +124,7 @@ public class UseCaseBuilderTests : IDisposable
     [Fact]
     public async Task TestBuildAsyncDisposedTokenAsync()
     {
-        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _userProfileItemRepository, _eduProviderItemRepository);
+        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _courseContactRelationRepository, _userProfileItemRepository, _eduProviderItemRepository);
         using (var cts = new CancellationTokenSource())
         {
             cts.Dispose();
@@ -131,7 +135,7 @@ public class UseCaseBuilderTests : IDisposable
     [Fact]
     public async Task TestBuildAsyncWithUnknownUseCaseAsync()
     {
-        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _userProfileItemRepository, _eduProviderItemRepository);
+        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _courseContactRelationRepository, _userProfileItemRepository, _eduProviderItemRepository);
         var token = default(CancellationToken);
         var result = await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.Unknown, token).ConfigureAwait(false);
         Assert.False(result);
@@ -140,7 +144,7 @@ public class UseCaseBuilderTests : IDisposable
     [Fact]
     public async Task TestBuildAsyncWithUseCaseAAsync()
     {
-        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _userProfileItemRepository, _eduProviderItemRepository);
+        var useCaseBuilder = new UseCaseBuilder(_logger, _assessmentItemRepository, _assessmentCategoryRepository, _questiontItemRepository, _answerItemRepository, _answerItemResultRepository, _metaDataMetaDataRelationRepository, _answerMetaDataRelationRepository, _questionMetaDataRelationRepository, _metadataRepository, _courseItemRepository, _courseContactRepository, _courseAppointmentRepository, _courseContactRelationRepository, _userProfileItemRepository, _eduProviderItemRepository);
         var token = default(CancellationToken);
         var result = await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.A, token).ConfigureAwait(false);
         Assert.True(result);

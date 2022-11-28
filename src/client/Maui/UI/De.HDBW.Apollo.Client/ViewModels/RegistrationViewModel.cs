@@ -110,7 +110,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     SessionService.UpdateRegisteredUser(authentication?.Account != null);
                     OnPropertyChanged(nameof(HasRegisterdUser));
-                    RefreshCommands();
                     UnscheduleWork(worker);
                 }
             }
@@ -152,7 +151,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     SessionService.UpdateRegisteredUser(authentication?.Account != null);
                     OnPropertyChanged(nameof(HasRegisterdUser));
-                    RefreshCommands();
                     UnscheduleWork(worker);
                 }
             }

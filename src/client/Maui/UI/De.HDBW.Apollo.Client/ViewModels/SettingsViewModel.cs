@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Resources;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
@@ -66,7 +67,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 finally
                 {
                     OnPropertyChanged(nameof(HasRegisterdUser));
-                    RefreshCommands();
                     UnscheduleWork(worker);
                 }
             }
@@ -75,6 +75,117 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool CanUnRegister()
         {
             return !IsBusy && HasRegisterdUser;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenTerms))]
+        private Task OpenTerms(CancellationToken token)
+        {
+            return OpenUrlAsync(Resources.Strings.Resource.SettingsView_TermsUri, token);
+        }
+
+        private bool CanOpenTerms()
+        {
+            return !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenPrivacy))]
+        private Task OpenPrivacy(CancellationToken token)
+        {
+            return OpenUrlAsync(Resources.Strings.Resource.SettingsView_PrivacyUri, token);
+        }
+
+        private bool CanOpenPrivacy()
+        {
+            return !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenImprint))]
+        private Task OpenImprint(CancellationToken token)
+        {
+            return OpenUrlAsync(Resources.Strings.Resource.SettingsView_ImprintUri, token);
+        }
+
+        private bool CanOpenImprint()
+        {
+            return !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenMail))]
+        private async Task OpenMail(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (Email.Default.IsComposeSupported)
+                    {
+                        string subject = Resources.Strings.Resource.SettingsView_EmailSubject;
+                        string body = Resources.Strings.Resource.SettingsView_EmailBody;
+                        string[] recipients = new[] { Resources.Strings.Resource.SettingsView_QuestionEmail };
+
+                        var message = new EmailMessage
+                        {
+                            Subject = subject,
+                            Body = body,
+                            BodyFormat = EmailBodyFormat.PlainText,
+                            To = new List<string>(recipients),
+                        };
+
+                        await Email.Default.ComposeAsync(message);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenMail()
+        {
+            return !IsBusy;
+        }
+
+        private async Task OpenUrlAsync(string url, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (!await Launcher.TryOpenAsync(url))
+                    {
+                        Logger?.LogWarning($"Unabled to open url {url} in {GetType().Name}.");
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
     }
 }
