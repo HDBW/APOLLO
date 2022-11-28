@@ -304,6 +304,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             base.RefreshCommands();
             CancelCommand?.NotifyCanExecuteChanged();
+            NextQuestionCommand?.NotifyCanExecuteChanged();
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
