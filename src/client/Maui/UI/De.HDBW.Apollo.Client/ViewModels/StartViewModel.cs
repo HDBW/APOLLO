@@ -3,14 +3,13 @@
 
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Converter;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
-using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -201,8 +200,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             var interactions = new List<InteractionEntry>();
             var filters = new List<InteractionEntry>();
+            IValueConverter converter = new AssessmentTypeToStringConverter();
             foreach (var assesment in assessmentItems)
             {
+                var filterText = converter.Convert(assesment, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
                 if (assesment.AssessmentType == AssessmentType.Survey)
                 {
                     continue;
@@ -210,7 +211,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 if (!filters.Any(f => ((AssessmentType)f.Data) == assesment.AssessmentType))
                 {
-                    filters.Add(FilterInteractionEntry.Import(assesment.AssessmentType.ToString(), assesment.AssessmentType, HandleFilter, CanHandleFilter));
+                    filters.Add(FilterInteractionEntry.Import(filterText, assesment.AssessmentType, HandleFilter, CanHandleFilter));
                 }
 
                 var assemsmentData = new NavigationParameters();
@@ -229,11 +230,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 _filtermappings.Add(interaction, assesment.AssessmentType);
             }
 
+            converter = new CourseTagTypeToStringConverter();
             foreach (var course in courseItems)
             {
+                var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
+
                 if (!filters.Any(f => ((CourseTagType)f.Data) == course.CourseTagType))
                 {
-                    filters.Add(FilterInteractionEntry.Import(course.CourseTagType.ToString(), course.CourseTagType, HandleFilter, CanHandleFilter));
+                    filters.Add(FilterInteractionEntry.Import(decoratorText, course.CourseTagType, HandleFilter, CanHandleFilter));
                 }
 
                 var courseData = new NavigationParameters();
@@ -244,31 +248,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var duration = course.Duration != TimeSpan.Zero ? string.Format(Resources.Strings.Resource.Global_DurationFormat, course.Duration.TotalMinutes) : string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resource.StartViewModel_UnknownProvider;
-                var decoratorText = string.Empty;
                 var image = "placeholdercontinuingeducation.png";
                 switch (course.CourseTagType)
                 {
-                    case CourseTagType.AttendeeCertificate:
-                        decoratorText = Resources.Strings.Resource.CourseTagType_AttendeeCertificate;
-                        break;
-                    case CourseTagType.Admission:
-                        decoratorText = Resources.Strings.Resource.CourseTagType_Admission;
-                        break;
-                    case CourseTagType.Certificate:
-                        decoratorText = Resources.Strings.Resource.CourseTagType_Certificate;
-                        break;
-                    case CourseTagType.Course:
-                        decoratorText = Resources.Strings.Resource.CourseTagType_Course;
-                        break;
                     case CourseTagType.InfoEvent:
                         image = "placeholderinfoevent.png";
-                        decoratorText = Resources.Strings.Resource.CourseTagType_InfoEvent;
-                        break;
-                    case CourseTagType.PartialQualification:
-                        decoratorText = Resources.Strings.Resource.CourseTagType_PartialQualification;
-                        break;
-                    case CourseTagType.Qualification:
-                        decoratorText = Resources.Strings.Resource.CourseTagType_Qualification;
                         break;
                 }
 
