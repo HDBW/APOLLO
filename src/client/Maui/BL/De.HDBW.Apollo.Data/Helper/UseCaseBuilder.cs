@@ -1,11 +1,12 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Data.Repositories;
+using System.Collections.ObjectModel;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
@@ -29,6 +30,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ICourseItemRepository courseItemRepository,
             ICourseContactRepository courseContactRepository,
             ICourseAppointmentRepository courseAppointmentRepository,
+            ICourseContactRelationRepository courseContactRelationRepository,
             IUserProfileItemRepository userProfileItemRepository,
             IEduProviderItemRepository eduProviderItemRepository)
         {
@@ -45,6 +47,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(courseItemRepository);
             ArgumentNullException.ThrowIfNull(courseContactRepository);
             ArgumentNullException.ThrowIfNull(courseAppointmentRepository);
+            ArgumentNullException.ThrowIfNull(courseContactRelationRepository);
             ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
 
@@ -61,6 +64,7 @@ namespace De.HDBW.Apollo.Data.Helper
             CourseItemRepository = courseItemRepository;
             CourseContactRepository = courseContactRepository;
             CourseAppointmentRepository = courseAppointmentRepository;
+            CourseContactRelationRepository = courseContactRelationRepository;
             UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
         }
@@ -93,6 +97,8 @@ namespace De.HDBW.Apollo.Data.Helper
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
 
+        private ICourseContactRelationRepository CourseContactRelationRepository { get; }
+
         private ILogger<UseCaseBuilder> Logger { get; }
 
         public async Task<bool> BuildAsync(UseCase usecase, CancellationToken token)
@@ -119,6 +125,20 @@ namespace De.HDBW.Apollo.Data.Helper
                 }
 
                 result = await DeserializeSampleDataAndInitalizeRepositoriesAsync(fileName, token).ConfigureAwait(false);
+                switch (usecase)
+                {
+                    case UseCase.A:
+                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Job finden" }, token).ConfigureAwait(false);
+                        break;
+                    case UseCase.B:
+                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Kerstin", LastName = string.Empty, Image = "user2.png", Goal = "Weiterbildung" }, token).ConfigureAwait(false);
+                        break;
+                    case UseCase.C:
+                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Arwa", LastName = string.Empty, Image = "user3.png", Goal = "Karriereaufstieg" }, token).ConfigureAwait(false);
+                        break;
+                    default:
+                        throw new NotSupportedException($"Usecase {usecase} is not supported by builder.");
+                }
             }
             catch (Exception ex)
             {
@@ -138,24 +158,20 @@ namespace De.HDBW.Apollo.Data.Helper
                 usecase = Serializer.Deserialize<UseCaseCollections>(stream);
             }
 
-            AnswerItemRepository.ResetItemsAsync(usecase.AnswerItems, token).ConfigureAwait(false);
+            AnswerItemRepository.ResetItemsAsync(usecase?.AnswerItems, token).ConfigureAwait(false);
+            QuestiontItemRepository.ResetItemsAsync(usecase?.QuestionItems, token).ConfigureAwait(false);
+            AssessmentItemRepository.ResetItemsAsync(usecase?.AssessmentItems, token).ConfigureAwait(false);
+            MetadataRepository.ResetItemsAsync(usecase?.MetaDataItems, token).ConfigureAwait(false);
+            AnswerMetaDataRelationRepository.ResetItemsAsync(usecase?.AnswerMetaDataRelations, token).ConfigureAwait(false);
+            QuestionMetaDataRelationRepository.ResetItemsAsync(usecase?.QuestionMetaDataRelations, token).ConfigureAwait(false);
+            MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase?.MetaDataMetaDataRelations, token).ConfigureAwait(false);
+            EduProviderItemRepository.ResetItemsAsync(usecase?.EduProviderItems, token).ConfigureAwait(false);
+            CourseItemRepository.ResetItemsAsync(usecase?.CourseItems, token).ConfigureAwait(false);
+            CourseContactRepository.ResetItemsAsync(usecase?.CourseContacts, token).ConfigureAwait(false);
+            CourseAppointmentRepository.ResetItemsAsync(usecase?.CourseAppointments, token).ConfigureAwait(false);
+            AssessmentCategoriesRepository.ResetItemsAsync(usecase?.AssessmentCategories, token).ConfigureAwait(false);
+            CourseContactRelationRepository.ResetItemsAsync(usecase?.CourseContactRelations, token).ConfigureAwait(false);
 
-            QuestiontItemRepository.ResetItemsAsync(usecase.QuestionItems, token).ConfigureAwait(false);
-            AssessmentItemRepository.ResetItemsAsync(usecase.AssessmentItems, token).ConfigureAwait(false);
-            MetadataRepository.ResetItemsAsync(usecase.MetaDataItems, token).ConfigureAwait(false);
-            AnswerMetaDataRelationRepository.ResetItemsAsync(usecase.AnswerMetaDataRelations, token).ConfigureAwait(false);
-            QuestionMetaDataRelationRepository.ResetItemsAsync(usecase.QuestionMetaDataRelations, token).ConfigureAwait(false);
-            MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase.MetaDataMetaDataRelations, token).ConfigureAwait(false);
-            EduProviderItemRepository.ResetItemsAsync(usecase.EduProviderItems, token).ConfigureAwait(false);
-            CourseItemRepository.ResetItemsAsync(usecase.CourseItems, token).ConfigureAwait(false);
-            CourseContactRepository.ResetItemsAsync(usecase.CourseContacts, token).ConfigureAwait(false);
-            CourseAppointmentRepository.ResetItemsAsync(usecase.CourseAppointments, token).ConfigureAwait(false);
-
-            // TODO:
-            UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Jobsuche" }, token).ConfigureAwait(false);
-
-            // UserProfileItemRepository.ResetItemsAsync(usecase.UserProfile, token).ConfigureAwait(false);
-            // AssessmentCategoriesRepository.ResetItemsAsync(usecase.AssessmentCategories, token).ConfigureAwait(false);
             // AnswerItemResultRepository.ResetItemsAsync(usecase.AnswerItemResults, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
@@ -177,6 +193,8 @@ namespace De.HDBW.Apollo.Data.Helper
             await CourseAppointmentRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await EduProviderItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await UserProfileItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await AssessmentCategoriesRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await CourseContactRelationRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
         }
     }
 }

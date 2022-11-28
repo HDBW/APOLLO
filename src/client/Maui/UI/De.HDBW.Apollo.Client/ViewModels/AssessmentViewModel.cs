@@ -16,7 +16,6 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -107,6 +106,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get
             {
                 return CurrentQuestion != null && Questions.Count > 0 ? (((double)Questions.IndexOf(CurrentQuestion) + 1d) / (double)Questions.Count()) : 0d;
+            }
+        }
+
+        public string DisplayProgress
+        {
+            get
+            {
+                return CurrentQuestion != null && Questions.Count > 0 ? $"{Questions.IndexOf(CurrentQuestion) + 1d} / {Questions.Count()}" : "0 / 0";
             }
         }
 
@@ -320,6 +327,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             OnPropertyChanged(nameof(AnswerLayout));
             OnPropertyChanged(nameof(Interaction));
             OnPropertyChanged(nameof(Progress));
+            OnPropertyChanged(nameof(DisplayProgress));
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
@@ -370,6 +378,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     OnPropertyChanged(nameof(AnswerLayout));
                     OnPropertyChanged(nameof(Interaction));
                     OnPropertyChanged(nameof(Progress));
+                    OnPropertyChanged(nameof(DisplayProgress));
                 }
                 catch (OperationCanceledException)
                 {
@@ -418,6 +427,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var result = await DialogService.ShowPopupAsync<CancelAssessmentDialog, NavigationParameters>(worker.Token);
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
+                        await SaveAssessmentAsync(worker.Token);
                         await NavigationService.PushToRootAsnc(worker.Token);
                     }
                 }

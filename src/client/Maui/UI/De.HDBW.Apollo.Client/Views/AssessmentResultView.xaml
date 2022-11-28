@@ -4,7 +4,8 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:AssessmentResultViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resource.AssessmentResultView_Title}">
+             Title="{x:Static strings:Resource.AssessmentResultView_Title}"
+             Shell.FlyoutBehavior="Disabled">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding ConfirmCommand}" />
     </Shell.BackButtonBehavior>
