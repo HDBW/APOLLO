@@ -133,6 +133,51 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lückentext.
+        /// </summary>
+        public static string AssessmentType_Cloze {
+            get {
+                return ResourceManager.GetString("AssessmentType_Cloze", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erfahrungen.
+        /// </summary>
+        public static string AssessmentType_ExperienceAssessment {
+            get {
+                return ResourceManager.GetString("AssessmentType_ExperienceAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bewertung.
+        /// </summary>
+        public static string AssessmentType_SkillAssessment {
+            get {
+                return ResourceManager.GetString("AssessmentType_SkillAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SoftSkills.
+        /// </summary>
+        public static string AssessmentType_SoftSkillAssessment {
+            get {
+                return ResourceManager.GetString("AssessmentType_SoftSkillAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Umfrage.
+        /// </summary>
+        public static string AssessmentType_Survey {
+            get {
+                return ResourceManager.GetString("AssessmentType_Survey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fortfahren.
         /// </summary>
         public static string CancelAssessmentDialog_Cancel {
