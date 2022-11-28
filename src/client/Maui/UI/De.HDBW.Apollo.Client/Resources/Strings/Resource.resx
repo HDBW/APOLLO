@@ -534,4 +534,22 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="AssessmentType_Survey" xml:space="preserve">
     <value>Umfrage</value>
   </data>
+  <data name="CourseView_Skills" xml:space="preserve">
+    <value>ESCO-Skills</value>
+  </data>
+  <data name="CourseView_Title" xml:space="preserve">
+    <value>Kursinformationen</value>
+  </data>
+  <data name="FeedbackView_Submit" xml:space="preserve">
+    <value>Senden</value>
+  </data>
+  <data name="Global_Next" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="IntegerInput_Negative" xml:space="preserve">
+    <value>Trifft garnicht zu</value>
+  </data>
+  <data name="IntegerInput_Positive" xml:space="preserve">
+    <value>Trifft voll zu</value>
+  </data>
 </root>

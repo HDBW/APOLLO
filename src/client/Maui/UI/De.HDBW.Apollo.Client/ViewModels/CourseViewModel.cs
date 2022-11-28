@@ -193,6 +193,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public bool HasPrice
+        {
+            get
+            {
+                return Price.HasValue;
+            }
+        }
+
         public bool HasInstructor
         {
             get
@@ -371,6 +379,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Price = courseItem?.Price;
             Currency = courseItem?.Currency;
             OnPropertyChanged(nameof(DisplayPrice));
+            OnPropertyChanged(nameof(HasPrice));
             Contact = contacts.FirstOrDefault(c => c != Instructor);
             OnPropertyChanged(nameof(HasContact));
 

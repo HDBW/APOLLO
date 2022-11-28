@@ -367,11 +367,29 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ESCO-Skills.
+        /// </summary>
+        public static string CourseView_Skills {
+            get {
+                return ResourceManager.GetString("CourseView_Skills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zielgruppe.
         /// </summary>
         public static string CourseView_TargetGroup {
             get {
                 return ResourceManager.GetString("CourseView_TargetGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kursinformationen.
+        /// </summary>
+        public static string CourseView_Title {
+            get {
+                return ResourceManager.GetString("CourseView_Title", resourceCulture);
             }
         }
         
@@ -444,6 +462,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ExtendedSplashScreenView_Welcome {
             get {
                 return ResourceManager.GetString("ExtendedSplashScreenView_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senden.
+        /// </summary>
+        public static string FeedbackView_Submit {
+            get {
+                return ResourceManager.GetString("FeedbackView_Submit", resourceCulture);
             }
         }
         
@@ -529,6 +556,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Weiter.
+        /// </summary>
+        public static string Global_Next {
+            get {
+                return ResourceManager.GetString("Global_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Überspringen.
         /// </summary>
         public static string Global_Skip {
@@ -543,6 +579,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_StartNow {
             get {
                 return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trifft garnicht zu.
+        /// </summary>
+        public static string IntegerInput_Negative {
+            get {
+                return ResourceManager.GetString("IntegerInput_Negative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trifft voll zu.
+        /// </summary>
+        public static string IntegerInput_Positive {
+            get {
+                return ResourceManager.GetString("IntegerInput_Positive", resourceCulture);
             }
         }
         

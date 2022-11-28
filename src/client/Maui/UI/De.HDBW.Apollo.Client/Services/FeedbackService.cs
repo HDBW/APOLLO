@@ -23,10 +23,14 @@ namespace De.HDBW.Apollo.Client.Services
 
         public async Task<bool> SendFeedbackAsync(string feedback, CancellationToken token)
         {
+            if (string.IsNullOrEmpty(feedback))
+            {
+                throw new ArgumentNullException(nameof(feedback));
+            }
+
             token.ThrowIfCancellationRequested();
             try
             {
-                // TODO: Serialize not empty Assessment into single message and trace it.
                 _telemetryClient.TrackTrace(feedback);
                 await _telemetryClient.FlushAsync(token).ConfigureAwait(false);
                 return true;
