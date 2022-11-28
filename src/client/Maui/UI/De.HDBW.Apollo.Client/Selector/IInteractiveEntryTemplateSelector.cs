@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 
 namespace De.HDBW.Apollo.Client.Selector

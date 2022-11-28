@@ -23,10 +23,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _age;
 
         [ObservableProperty]
-        private string? _job;
-
-        [ObservableProperty]
-        private string? _scenario;
+        private string? _location;
 
         [ObservableProperty]
         private string? _experience;
@@ -63,6 +60,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     case UseCase.A:
                         return "usecase1detail.png";
+                    case UseCase.B:
+                        return "usecase2detail.png";
+                    case UseCase.C:
+                        return "usecase3detail.png";
                     default:
                         return null;
                 }
@@ -93,11 +94,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public string DisplayJob
+        public string DisplayLocation
         {
             get
             {
-                return string.Format(Resources.Strings.Resource.UseCaseDescriptionView_JobFormat, Job);
+                return string.Format(Resources.Strings.Resource.UseCaseDescriptionView_LocationFormat, Location);
             }
         }
 
@@ -171,8 +172,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var user = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
 
                     string? age = null;
-                    string? job = null;
-                    string? scenario = null;
+                    string? location = null;
                     string? experience = null;
                     string? story = null;
                     string? goal = null;
@@ -180,31 +180,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         case UseCase.A:
                             age = Resources.Strings.Resource.UseCaseDetail_A_Age;
-                            job = Resources.Strings.Resource.UseCaseDetail_A_Job;
-                            scenario = Resources.Strings.Resource.UseCaseDetail_A_Scenario;
+                            location = Resources.Strings.Resource.UseCaseDetail_A_Location;
                             experience = Resources.Strings.Resource.UseCaseDetail_A_Experience;
                             story = Resources.Strings.Resource.UseCaseDetail_A_Story;
                             goal = Resources.Strings.Resource.UseCaseDetail_A_Goal;
                             break;
                         case UseCase.B:
                             age = Resources.Strings.Resource.UseCaseDetail_B_Age;
-                            job = Resources.Strings.Resource.UseCaseDetail_B_Job;
-                            scenario = Resources.Strings.Resource.UseCaseDetail_B_Scenario;
+                            location = Resources.Strings.Resource.UseCaseDetail_B_Location;
                             experience = Resources.Strings.Resource.UseCaseDetail_B_Experience;
                             story = Resources.Strings.Resource.UseCaseDetail_B_Story;
                             goal = Resources.Strings.Resource.UseCaseDetail_B_Goal;
                             break;
                         case UseCase.C:
                             age = Resources.Strings.Resource.UseCaseDetail_C_Age;
-                            job = Resources.Strings.Resource.UseCaseDetail_C_Job;
-                            scenario = Resources.Strings.Resource.UseCaseDetail_C_Scenario;
+                            location = Resources.Strings.Resource.UseCaseDetail_C_Location;
                             experience = Resources.Strings.Resource.UseCaseDetail_C_Experience;
                             story = Resources.Strings.Resource.UseCaseDetail_C_Story;
                             goal = Resources.Strings.Resource.UseCaseDetail_C_Goal;
                             break;
                     }
 
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, age, job, scenario, experience, story, goal), worker.Token);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, age, location, experience, story, goal), worker.Token);
                 }
                 catch (Exception ex)
                 {
@@ -229,12 +226,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IsUseCaseSelectionFromShell = navigationParameters.GetValue<bool?>(NavigationParameter.Data);
         }
 
-        private void LoadonUIThread(UserProfileItem? user, string? age, string? job, string? scenario, string? experience, string? story, string? goal)
+        private void LoadonUIThread(UserProfileItem? user, string? age, string? location, string? experience, string? story, string? goal)
         {
             UserProfile = UserProfileEntry.Import(user ?? new UserProfileItem());
             Age = age;
-            Job = job;
-            Scenario = scenario;
+            Location = location;
             Experience = experience;
             Story = story;
             Goal = goal;

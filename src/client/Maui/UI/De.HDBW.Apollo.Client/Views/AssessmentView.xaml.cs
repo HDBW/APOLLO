@@ -1,7 +1,6 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Views;
@@ -31,6 +30,7 @@ public partial class AssessmentView
 
     private void HandleChildAdded(object sender, ElementEventArgs e)
     {
+#if IOS
         var layout = sender as Layout;
         if (layout == null)
         {
@@ -45,5 +45,6 @@ public partial class AssessmentView
         }
 
         layout.MinimumHeightRequest = Math.Max(size.Request.Height, size.Minimum.Height);
+#endif
     }
 }
