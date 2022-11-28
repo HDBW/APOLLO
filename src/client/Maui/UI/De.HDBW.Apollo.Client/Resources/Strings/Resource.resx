@@ -519,4 +519,19 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="OccurrenceType_PartTime" xml:space="preserve">
     <value>Teilzeit</value>
   </data>
+  <data name="AssessmentType_Cloze" xml:space="preserve">
+    <value>Lückentext</value>
+  </data>
+  <data name="AssessmentType_ExperienceAssessment" xml:space="preserve">
+    <value>Erfahrungen</value>
+  </data>
+  <data name="AssessmentType_SkillAssessment" xml:space="preserve">
+    <value>Bewertung</value>
+  </data>
+  <data name="AssessmentType_SoftSkillAssessment" xml:space="preserve">
+    <value>SoftSkills</value>
+  </data>
+  <data name="AssessmentType_Survey" xml:space="preserve">
+    <value>Umfrage</value>
+  </data>
 </root>
