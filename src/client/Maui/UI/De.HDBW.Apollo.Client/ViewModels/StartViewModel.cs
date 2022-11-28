@@ -183,6 +183,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var id = navigationData.Parameters?.GetValue<long?>(NavigationParameter.Id);
                     var status = id.HasValue && assessmentResults.Any(r => r.AssessmentItemId == id.Value) ? Status.Processed : Status.Unknown;
+                    interaction.Status = Status.Processed;
                     interaction.Status = status;
                 }
             }
