@@ -55,7 +55,7 @@ public partial class StartView
             doubleValue = (double)value;
         }
 
-        view.HeightRequest = doubleValue;
+        view.HeightRequest = Math.Max(doubleValue, view.MinimumHeightRequest);
         view.ItemsSource = model.Interactions;
     }
 }

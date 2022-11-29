@@ -117,56 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetails" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionDetails</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionDetailsTitle</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionSubline" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionSubline</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionText" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionText</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_DescriptionTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Skill_DescriptionTitle</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionDetails" xml:space="preserve">
-    <value>Nicht abbrechbar
-Nicht wiederholbar
-Ergebnisse werden gespeichert</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionDetailsTitle" xml:space="preserve">
-    <value>Allgemeines zum Skilltest</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionSubline" xml:space="preserve">
-    <value>Indurstriefachfrau/- Mann</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionText" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.
-Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_DescriptionTitle" xml:space="preserve">
-    <value>Skilltest</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionDetails" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionDetails</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionDetailsTitle</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionSubline" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionSubline</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionText" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionText</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_DescriptionTitle" xml:space="preserve">
-    <value>AssessmentDescriptionViewModel_Survey_DescriptionTitle</value>
-  </data>
-  <data name="AssessmentDescriptionView_Start" xml:space="preserve">
-    <value>Jetzt starten</value>
+  <data name="AssessmentDescriptionView_OnlyOnce" xml:space="preserve">
+    <value>*Kann nur einmalig ausgeführt werden</value>
   </data>
   <data name="AssessmentDescriptionView_Title" xml:space="preserve">
     <value>Information</value>
@@ -196,22 +148,22 @@ Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu 
     <value>Qualifikation</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut.</value>
+    <value>Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction1Detail" xml:space="preserve">
-    <value>Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu.</value>
+    <value>Entdecke passende Weiterbildungen</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction2" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut.</value>
+    <value>Erkenne Trends in deinem Berufsfeld und sei immer auf dem neuesten Stand</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction2Detail" xml:space="preserve">
-    <value>Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu.</value>
+    <value>Halte dein Wissen aktuell</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction3" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut.</value>
+    <value>Teste dein Wissen und analysiere deine Fähigkeiten</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction3Detail" xml:space="preserve">
-    <value>Morbi viverra in tempor maecenas ullamcorper tellus risus adipiscing elit eu.</value>
+    <value>Entfalte dein Potential</value>
   </data>
   <data name="ExtendedSplashScreenView_Welcome" xml:space="preserve">
     <value>Willkommen zur Beta von Apollo</value>
@@ -304,31 +256,6 @@ Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu 
     <value>Entdecke dein Karrierepotential
 (Ist-Stand bekannt – Inspiration)</value>
   </data>
-  <data name="StartViewModel_InteractionCV" xml:space="preserve">
-    <value>CV Generieren</value>
-  </data>
-  <data name="StartViewModel_InteractionProfile" xml:space="preserve">
-    <value>Checke dein Profil für einen Job 
-deiner Wahl</value>
-  </data>
-  <data name="StartViewModel_InteractionRetraining" xml:space="preserve">
-    <value>staatlich geförderte Umschulungs&#x2;und Weiterbildungsmaßnahme</value>
-  </data>
-  <data name="StartViewModel_InteractionSkills" xml:space="preserve">
-    <value>Lerne neue Skills</value>
-  </data>
-  <data name="StartViewModel_LearningHeadline" xml:space="preserve">
-    <value>Erhöhe deine Jobchancen</value>
-  </data>
-  <data name="StartViewModel_LearningSubline" xml:space="preserve">
-    <value>Empfohlene Lerninhalte</value>
-  </data>
-  <data name="StartViewModel_TestHeadline" xml:space="preserve">
-    <value>Teste dein Wissen</value>
-  </data>
-  <data name="StartViewModel_TestSubline" xml:space="preserve">
-    <value>Empfohlene Tests</value>
-  </data>
   <data name="StartViewModel_UnknownProvider" xml:space="preserve">
     <value>Unbekannter Anbieter</value>
   </data>
@@ -350,8 +277,8 @@ deiner Wahl</value>
   <data name="UseCaseDescriptionView_Goal" xml:space="preserve">
     <value>Ziel</value>
   </data>
-  <data name="UseCaseDescriptionView_JobFormat" xml:space="preserve">
-    <value>Beruf: {0}</value>
+  <data name="UseCaseDescriptionView_LocationFormat" xml:space="preserve">
+    <value>Ort: {0}</value>
   </data>
   <data name="UseCaseDescriptionView_Start" xml:space="preserve">
     <value>Szenario starten</value>
@@ -370,50 +297,46 @@ deiner Wahl</value>
 1 Jahr Einzelhandel mit Lebensmitteln</value>
   </data>
   <data name="UseCaseDetail_A_Goal" xml:space="preserve">
-    <value>Job im Umkreis von 50km des Wohnorts
+    <value>Job im Bereich Lager
 Langfristig stabilere Arbeitsbedingungen</value>
   </data>
-  <data name="UseCaseDetail_A_Job" xml:space="preserve">
-    <value>Lagerist</value>
-  </data>
-  <data name="UseCaseDetail_A_Scenario" xml:space="preserve">
-    <value>Auf Jobsuche</value>
+  <data name="UseCaseDetail_A_Location" xml:space="preserve">
+    <value>Ludwigsburg</value>
   </data>
   <data name="UseCaseDetail_A_Story" xml:space="preserve">
-    <value>Du hast die letzten 5 Jahre in Jobs ohne Qualifi-kationsvorraussetzungen gearbeitet. Nun wurde dein Arbeitsvertrag nicht verlängert und du stehst erneut vor der Aufgabe eine Job zu finden. Da du keine Rücklagen besitzt bist du zwar bereit jedes Angebot anzunehmen, jedoch strebst du zukünftig stabilere Arbeitsverträge an.</value>
+    <value>Du hast in den letzten vier Jahren in einem großen Versandlager gearbeitet. Deine Aufgabe war es, Waren aus dem Lager für Lieferaufträge zusammenzustellen. Vorher hast du eine Ausbildung im Einzelhandel angefangen, jedoch abgebrochen. Dein Unternehmen hat beschlossen, den Standort zu schließen. Du bist auf der Suche nach einem neuen Job im Bereich Lager.</value>
   </data>
   <data name="UseCaseDetail_B_Age" xml:space="preserve">
-    <value>UseCaseDetail_B_Age</value>
+    <value>42</value>
   </data>
   <data name="UseCaseDetail_B_Experience" xml:space="preserve">
-    <value>UseCaseDetail_B_Experience</value>
+    <value>3 Jahre Ausbildung Kauffrau im Einzelhandel
+19 Jahre Erfahrung im Einzelhandel</value>
   </data>
   <data name="UseCaseDetail_B_Goal" xml:space="preserve">
-    <value>UseCaseDetail_B_Goal</value>
+    <value>Weiterbildung im Bereich E-Commerce
+Anschlussfähig bleiben und neue Bereiche entdecken</value>
   </data>
-  <data name="UseCaseDetail_B_Job" xml:space="preserve">
-    <value>UseCaseDetail_B_Job</value>
-  </data>
-  <data name="UseCaseDetail_B_Scenario" xml:space="preserve">
-    <value>UseCaseDetail_B_Scenario</value>
+  <data name="UseCaseDetail_B_Location" xml:space="preserve">
+    <value>München</value>
   </data>
   <data name="UseCaseDetail_B_Story" xml:space="preserve">
-    <value>UseCaseDetail_B_Story</value>
+    <value>Du arbeitest seit 22 Jahren im Einzelhandel. Dein Betrieb hat in den letzten Jahren neben dem Geschäft vor Ort auch den Online-Handel weiter ausgebaut. Um anschlussfähig zu bleiben, möchtest du dich im Bereich E-Commerce weiterbilden.</value>
   </data>
   <data name="UseCaseDetail_C_Age" xml:space="preserve">
-    <value>UseCaseDetail_C_Age</value>
+    <value>36</value>
   </data>
   <data name="UseCaseDetail_C_Experience" xml:space="preserve">
-    <value>UseCaseDetail_C_Experience</value>
+    <value>3 Jahre Ausbildung Fachinformatikerin
+1 Jahr Weiterbildung IHK Techniker IT
+10 Jahre Erfahrung Systemintegration</value>
   </data>
   <data name="UseCaseDetail_C_Goal" xml:space="preserve">
-    <value>UseCaseDetail_C_Goal</value>
+    <value>Berufliche Weiterentwicklung
+Weiterbildung zur IT Projektleiterin</value>
   </data>
-  <data name="UseCaseDetail_C_Job" xml:space="preserve">
-    <value>UseCaseDetail_C_Job</value>
-  </data>
-  <data name="UseCaseDetail_C_Scenario" xml:space="preserve">
-    <value>UseCaseDetail_C_Scenario</value>
+  <data name="UseCaseDetail_C_Location" xml:space="preserve">
+    <value>Augsburg</value>
   </data>
   <data name="UseCaseDetail_C_Story" xml:space="preserve">
     <value>UseCaseDetail_C_Story</value>
@@ -422,13 +345,13 @@ Langfristig stabilere Arbeitsbedingungen</value>
     <value>Wähle dein Szenario</value>
   </data>
   <data name="UseCaseSelectionView_ChooseDescription" xml:space="preserve">
-    <value>Definiere das Ziel, dass du mit dem Verwenden der App verfolgst.</value>
+    <value>Die Inhalte der Beta passen sich an dein gewähltes Ziel an.</value>
   </data>
   <data name="UseCase_A_Description" xml:space="preserve">
     <value>Du möchtest einen sicheren Job finden</value>
   </data>
   <data name="UseCase_A_Name" xml:space="preserve">
-    <value>Jobsuche</value>
+    <value>Arbeitssuche</value>
   </data>
   <data name="UseCase_B_Description" xml:space="preserve">
     <value>Du möchtest neue Fähigkeiten erwerben</value>
@@ -440,7 +363,7 @@ Langfristig stabilere Arbeitsbedingungen</value>
     <value>Du möchtest in deinem Job Karriere machen</value>
   </data>
   <data name="UseCase_C_Name" xml:space="preserve">
-    <value>Jobaufstieg</value>
+    <value>Karriereaufstieg</value>
   </data>
   <data name="AssessmentResultView_Title" xml:space="preserve">
     <value>Auswertung</value>
@@ -449,27 +372,166 @@ Langfristig stabilere Arbeitsbedingungen</value>
     <value>Beenden</value>
   </data>
   <data name="CancelAssessmentDialog_Title" xml:space="preserve">
-    <value>Test abbrechen</value>
+    <value>Bist du dir sicher, dass du den Test beenden möchtest?</value>
   </data>
   <data name="CancelAssessmentDialog_Message" xml:space="preserve">
-    <value>Wollen Sie den Test wirklich beende? Alle Daten gehen verlohren</value>
+    <value>Tests sind nur einmalig durchführbar und können nicht wiederholt werden.</value>
   </data>
   <data name="CancelAssessmentDialog_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Fortfahren</value>
   </data>
   <data name="CancelAssessmentDialog_Continue" xml:space="preserve">
     <value>Test beenden</value>
   </data>
   <data name="SkipQuestionDialog_Title" xml:space="preserve">
-    <value>Frage überspringen?</value>
+    <value>Bist du dir sicher, dass du diese Frage überspringen möchtest?</value>
   </data>
   <data name="SkipQuestionDialog_Message" xml:space="preserve">
-    <value>Sie haben die Frage noch nicht beantwortet. Soll wirklich die Frage übersprungen werden?</value>
+    <value>Jede Frage ist nur einmalig durchführbar und Antworten können nicht korrigiert werden</value>
   </data>
   <data name="SkipQuestionDialog_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Antwort wählen</value>
   </data>
   <data name="SkipQuestionDialog_Continue" xml:space="preserve">
-    <value>Weiter</value>
+    <value>Überspringen</value>
+  </data>
+  <data name="SettingsView_Imprint" xml:space="preserve">
+    <value>Impressum</value>
+  </data>
+  <data name="SettingsView_ImprintUri" xml:space="preserve">
+    <value>https://www.invite-apollo.app/Imprint</value>
+  </data>
+  <data name="SettingsView_Privacy" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="SettingsView_PrivacyUri" xml:space="preserve">
+    <value>https://www.invite-apollo.app/privacy</value>
+  </data>
+  <data name="SettingsView_Terms" xml:space="preserve">
+    <value>Nutzungsbedingungen</value>
+  </data>
+  <data name="SettingsView_TermsUri" xml:space="preserve">
+    <value>https://www.invite-apollo.app/terms</value>
+  </data>
+  <data name="SettingsView_EmailBody" xml:space="preserve">
+    <value>Hallo Apollo.
+</value>
+  </data>
+  <data name="SettingsView_EmailSubject" xml:space="preserve">
+    <value>Anregungen oder Wunsch</value>
+  </data>
+  <data name="SettingsView_QuestionDescription" xml:space="preserve">
+    <value>Hilf uns die Zukunft der Bildung zu gestalten.</value>
+  </data>
+  <data name="SettingsView_QuestionEmail" xml:space="preserve">
+    <value>martin.mailman@lorem.de</value>
+  </data>
+  <data name="SettingsView_Questions" xml:space="preserve">
+    <value>Anregungen oder Wünsche?</value>
+  </data>
+  <data name="StartViewModel_NoFavoritesText" xml:space="preserve">
+    <value>Sobald du Inhalte favorisierst werden sie hier erscheinen.</value>
+  </data>
+  <data name="StartViewModel_NoFavoritesTitle" xml:space="preserve">
+    <value>Du hast noch keine Favoriten gesetzt</value>
+  </data>
+  <data name="StartViewModel_FavoritesSubline" xml:space="preserve">
+    <value>Deine Favoriten</value>
+  </data>
+  <data name="StartViewModel_FavoritesHeadline" xml:space="preserve">
+    <value>Erreiche deine Ziele</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Skill_Start" xml:space="preserve">
+    <value>Test starten*</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_SoftSkill_Start" xml:space="preserve">
+    <value>Test starten*</value>
+  </data>
+  <data name="AssessmentDescriptionViewModel_Survey_Start" xml:space="preserve">
+    <value>Umfrage starten*</value>
+  </data>
+  <data name="Global_DurationFormat" xml:space="preserve">
+    <value>{0} Minuten</value>
+  </data>
+  <data name="StartView_NoFavoritesDescription" xml:space="preserve">
+    <value>Sobald du Inhalte favorisierst werden sie hier erscheinen.</value>
+  </data>
+  <data name="StartView_NoFavoritesTitle" xml:space="preserve">
+    <value>Du hast noch keine Favoriten gesetzt</value>
+  </data>
+  <data name="StartViewModel_RecomondationsSubline" xml:space="preserve">
+    <value>Empfohlene Inhalte</value>
+  </data>
+  <data name="StartViewModel_UseCaseA_RecomondationsHeadline" xml:space="preserve">
+    <value>Erhöhe deine Jobchancen</value>
+  </data>
+  <data name="StartViewModel_UseCaseB_RecomondationsHeadline" xml:space="preserve">
+    <value>Lerne neue Fähigkeiten</value>
+  </data>
+  <data name="StartViewModel_UseCaseC_RecomondationsHeadline" xml:space="preserve">
+    <value>Beschleunige deinen Aufstieg</value>
+  </data>
+  <data name="CourseView_Benefits" xml:space="preserve">
+    <value>Vorteile</value>
+  </data>
+  <data name="CourseView_Contact" xml:space="preserve">
+    <value>Ansprechpartner</value>
+  </data>
+  <data name="CourseView_LearningOutcomes" xml:space="preserve">
+    <value>Ergebnis</value>
+  </data>
+  <data name="CourseView_PreRequisites" xml:space="preserve">
+    <value>Vorraussetzungen</value>
+  </data>
+  <data name="CourseView_LoanOptions" xml:space="preserve">
+    <value>Finanzierungsoptionen anzeigen</value>
+  </data>
+  <data name="CourseView_VisitVendor" xml:space="preserve">
+    <value>Zum Anbieter</value>
+  </data>
+  <data name="Global_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="CourseType_All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="CourseType_InHouse" xml:space="preserve">
+    <value>Vorort</value>
+  </data>
+  <data name="CourseType_InPerson" xml:space="preserve">
+    <value>Persönlich</value>
+  </data>
+  <data name="CourseType_OnAndOffline" xml:space="preserve">
+    <value>Online und Vorort</value>
+  </data>
+  <data name="CourseType_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="CourseView_TargetGroup" xml:space="preserve">
+    <value>Zielgruppe</value>
+  </data>
+  <data name="Global_DurationFormatHours" xml:space="preserve">
+    <value>{0} Stunden</value>
+  </data>
+  <data name="OccurrenceType_FullTime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="OccurrenceType_PartTime" xml:space="preserve">
+    <value>Teilzeit</value>
+  </data>
+  <data name="AssessmentType_Cloze" xml:space="preserve">
+    <value>Lückentext</value>
+  </data>
+  <data name="AssessmentType_ExperienceAssessment" xml:space="preserve">
+    <value>Erfahrungen</value>
+  </data>
+  <data name="AssessmentType_SkillAssessment" xml:space="preserve">
+    <value>Bewertung</value>
+  </data>
+  <data name="AssessmentType_SoftSkillAssessment" xml:space="preserve">
+    <value>SoftSkills</value>
+  </data>
+  <data name="AssessmentType_Survey" xml:space="preserve">
+    <value>Umfrage</value>
   </data>
 </root>

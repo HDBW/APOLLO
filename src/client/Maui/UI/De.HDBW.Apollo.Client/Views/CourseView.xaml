@@ -1,10 +1,109 @@
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.CourseView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-</ContentView>
+             x:Class="De.HDBW.Apollo.Client.Views.CourseView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:courseModels="clr-namespace:De.HDBW.Apollo.Client.Models.Course"
+             x:DataType="viewModels:CourseViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             IsBusy="{Binding IsBusy}" Padding="0">
+    <Grid RowDefinitions="auto, 60, *, auto, auto">
+        <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" HeightRequest="200" Aspect="AspectFill" Grid.RowSpan="2"/>
+        <Border InputTransparent="True" Background="{StaticResource Tag2Brush}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,0,4" />
+            </Border.StrokeShape>
+            <Label Text="{Binding DecoratorText}" LineBreakMode="TailTruncation"/>
+        </Border>
+        <Border BackgroundColor="{StaticResource Background}" StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="0" Margin="12,0"  Grid.RowSpan="2" Grid.Row="1" />
+        <ScrollView Grid.Row="1" Padding="12,0,12,12" Grid.RowSpan="2" BackgroundColor="Transparent" Margin="0,12,0,0">
+            <VerticalStackLayout Spacing="8" SizeChanged="HandleSizeChanged">
+                <Label Margin="12,0" Text="{Binding Title}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
+                <Label Text="{Binding Description}" Margin="12,0" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <Label Text="{x:Static strings:Resource.CourseView_TargetGroup}" Margin="12,0" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Text="{Binding TargetGroup}" Margin="12,0" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <HorizontalStackLayout Spacing="8" Margin="12,0">
+                    <Image Source="provider.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="{Binding DisplayTrainingProvider}" Style="{StaticResource Noto16}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="8" Margin="12,0">
+                    <Image Source="timer.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="{Binding DisplayDuration}" Style="{StaticResource Noto16}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="8" Margin="12,0">
+                    <Image Source="watch.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="{Binding DisplayOccurrence}" Style="{StaticResource Noto16}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="8" Margin="12,0">
+                    <Image Source="calendar.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Start"/>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding CourseAppointments}" ChildAdded="HandleChildAdded">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="courseModels:CourseAppointmentEntry">
+                                <Label Text="{Binding DisplayAppointment}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                <Label Margin="12,0" Padding="5,2" Text="{Binding DisplayCourseType}" HorizontalOptions="Start" Background="{StaticResource Surface}" LineBreakMode="WordWrap"/>
+                <Label Margin="12,0" Text="{x:Static strings:Resource.CourseView_PreRequisites}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Margin="12,0" Text="{Binding PreRequisitesDescription}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <Label Margin="12,0" Text="{x:Static strings:Resource.CourseView_LearningOutcomes}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Margin="12,0" Text="{Binding LearningOutcomes}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <VerticalStackLayout Margin="12,0" BindableLayout.ItemsSource="{Binding Skills}" ChildAdded="HandleChildAdded" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:InteractionEntry">
+                            <Border StrokeThickness="0" Background="Transparent">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
+                                </Border.GestureRecognizers>
+                                <Label Text="{Binding Text}" Style="{StaticResource Noto16}" TextDecorations="Underline" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap" />
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Label Margin="12,0" Text="{x:Static strings:Resource.CourseView_Benefits}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Margin="12,0" Text="{Binding Benefits}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+                <Grid RowDefinitions="auto,auto,auto">
+                    <Border Grid.RowSpan="3" StrokeThickness="0" BackgroundColor="{StaticResource Surface}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5" />
+                        </Border.StrokeShape>
+                    </Border>
+                    <Label Text="{Binding DisplayPrice}" Margin="12,8" Style="{StaticResource NotoSerif32}"/>
+                    <Label TextDecorations="Underline" Grid.Row="1" Text="{x:Static strings:Resource.CourseView_LoanOptions}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary }" Margin="12,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ShowLoanOptionsCommand}"  />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Button Grid.Row="2" Command="{Binding OpenCourseCommand}" Text="{x:Static strings:Resource.CourseView_VisitVendor}" Margin="12,8"/>
+                </Grid>
+                <Label IsVisible="{Binding HasContact}" Margin="12,0" Text="{x:Static strings:Resource.CourseView_Contact}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <HorizontalStackLayout IsVisible="{Binding HasContact}" Spacing="8" Margin="12,0">
+                    <Image Source="user.png" WidthRequest="24" HeightRequest="24">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Label Text="{Binding Contact.ContactName}" Style="{StaticResource Noto16}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout IsVisible="{Binding HasContact}" Spacing="8" Margin="12,0">
+                    <Image Source="phone.png" WidthRequest="24" HeightRequest="24" >
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Label Text="{Binding Contact.ContactPhone}" Style="{StaticResource Noto16}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout IsVisible="{Binding HasContact}" Spacing="8" Margin="12,0">
+                    <Image Source="mail.png" WidthRequest="24" HeightRequest="24">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Label Text="{Binding Contact.ContactMail}" Style="{StaticResource Noto16}"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
