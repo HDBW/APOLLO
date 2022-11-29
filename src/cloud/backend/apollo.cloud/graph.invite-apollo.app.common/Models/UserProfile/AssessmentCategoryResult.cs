@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
     [DataContract]
+    [ProtoContract]
     public class AssessmentCategoryResult : BaseItem
     {
 
@@ -18,7 +20,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         [DataMember(Order = 6)]
         [ForeignKey(nameof(AssessmentCategory))]
-        public long Category { get; set; }
+        public long CategoryId { get; set; }
 
         //The result a user scored in a Category
         [DataMember(Order = 7)]
