@@ -55,7 +55,7 @@ public partial class StartView
         {
             doubleValue = (double)value;
             var rows = doubleValue / 240d;
-            doubleValue += ((int)Math.Floor(rows) * 16);
+            doubleValue += (int)Math.Floor(rows) * 16;
         }
 
         view.MaximumHeightRequest = Math.Max(doubleValue, view.MinimumHeightRequest);
