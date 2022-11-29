@@ -27,7 +27,7 @@ namespace De.HDBW.Apollo.Client.Converter
         {
             if (value == null || value == BindableProperty.UnsetValue)
             {
-                return null;
+                return Binding.DoNothing;
             }
 
             if (!bool.TryParse(value.ToString(), out bool currentValue) ||
@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client.Converter
                 return false;
             }
 
-            return currentValue ? index : null;
+            return currentValue ? index : Binding.DoNothing;
         }
     }
 }
