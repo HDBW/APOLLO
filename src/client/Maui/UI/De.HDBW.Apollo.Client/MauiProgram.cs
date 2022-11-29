@@ -184,6 +184,7 @@ public static class MauiProgram
         services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
         services.AddSingleton<IAssessmentScoreRepository, AssessmentScoreRepository>();
         services.AddSingleton<IAssessmentCategoryRepository, AssessmentCategoryRepository>();
+        services.AddSingleton<IAssessmentCategoryResultRepository, AssessmentCategoryResultRepository>();
         services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
         services.AddSingleton<IAnswerItemResultRepository, AnswerItemResultRepository>();
         services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
