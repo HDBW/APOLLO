@@ -41,6 +41,10 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
         [DataMember(Order = 11)]
         [ProtoMember(7)]
         public int Scalar { get; set; }
+
+        [DataMember(Order = 12, IsRequired = true)]
+        [ProtoMember(8)]
+        public QuestionType QuestionType { get; set; }
     }
 
     [DataContract]
