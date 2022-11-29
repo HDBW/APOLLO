@@ -29,6 +29,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
@@ -173,6 +176,9 @@
     <MauiXaml Update="Dialogs\MessageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\ConfirmDataUsageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
 
   <ItemGroup>
@@ -211,6 +217,9 @@
     <Compile Update="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Dialogs\ConfirmDataUsageDialog.xaml.cs">
+      <DependentUpon>ConfirmDataUsageDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Resource.resx">
@@ -218,5 +227,4 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionDeHDBWApolloClientHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>
