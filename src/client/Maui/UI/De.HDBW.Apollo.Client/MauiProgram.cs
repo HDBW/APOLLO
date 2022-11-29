@@ -47,7 +47,7 @@ public static class MauiProgram
         Log.Debug($"Platform: {DeviceInfo.Current.Platform}");
         Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
         SetupRoutes();
-
+        SetupHandler();
         var result = SetupB2CLogin(builder.Services);
         SetupServices(builder.Services, result);
         SetupRepositories(builder.Services);
@@ -271,5 +271,16 @@ public static class MauiProgram
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
         Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
+    }
+
+    private static void SetupHandler()
+    {
+        /*Microsoft.Maui.Handlers.ButtonHandler.TextButtonMapper.AppendToMapping("TextColor", (handler, view) =>
+        {
+#if IOS
+            handler.PlatformView.SetTitleColor(UIKit.UIColor.Green, UIKit.UIControlState.Highlighted);
+#endif
+        });
+        */
     }
 }

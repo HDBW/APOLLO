@@ -67,11 +67,11 @@
                             <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}" Padding="5">
                                 <Button.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="Background" Value="{StaticResource Primary}" />
                                         <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
-                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Background}" />
+                                        <Setter TargetName="PART_Button" Property="Background" Value="{StaticResource Background}" />
                                         <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
                                         <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
                                     </DataTrigger>
