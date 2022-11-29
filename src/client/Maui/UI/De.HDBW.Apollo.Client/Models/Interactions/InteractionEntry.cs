@@ -38,15 +38,16 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             return new InteractionEntry(text, data, navigateHandler, canNavigateHandle);
         }
 
+        protected virtual bool CanNavigate()
+        {
+            return CanNavigateHandle?.Invoke(this) ?? false;
+        }
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigate))]
         private Task Navigate()
         {
             return NavigateHandler?.Invoke(this) ?? Task.CompletedTask;
         }
 
-        protected virtual bool CanNavigate()
-        {
-            return CanNavigateHandle?.Invoke(this) ?? false;
-        }
     }
 }
