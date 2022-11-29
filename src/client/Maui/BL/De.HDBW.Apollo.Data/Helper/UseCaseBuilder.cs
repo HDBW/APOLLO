@@ -20,6 +20,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ILogger<UseCaseBuilder> logger,
             IAssessmentItemRepository assessmentItemRepository,
             IAssessmentCategoryRepository assessmentCategoriesRepository,
+            IAssessmentCategoryResultRepository assessmentCategoryResultRepository,
             IQuestionItemRepository questionItemRepository,
             IAnswerItemRepository answerItemRepository,
             IAnswerItemResultRepository answerItemResultRepository,
@@ -37,6 +38,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
             ArgumentNullException.ThrowIfNull(assessmentCategoriesRepository);
+            ArgumentNullException.ThrowIfNull(assessmentCategoryResultRepository);
             ArgumentNullException.ThrowIfNull(questionItemRepository);
             ArgumentNullException.ThrowIfNull(answerItemRepository);
             ArgumentNullException.ThrowIfNull(answerItemResultRepository);
@@ -54,6 +56,7 @@ namespace De.HDBW.Apollo.Data.Helper
             Logger = logger;
             AssessmentItemRepository = assessmentItemRepository;
             AssessmentCategoriesRepository = assessmentCategoriesRepository;
+            AssessmentCategoryResultRepository = assessmentCategoryResultRepository;
             QuestionItemRepository = questionItemRepository;
             AnswerItemRepository = answerItemRepository;
             AnswerItemResultRepository = answerItemResultRepository;
@@ -72,6 +75,8 @@ namespace De.HDBW.Apollo.Data.Helper
         private IAssessmentItemRepository AssessmentItemRepository { get; }
 
         private IAssessmentCategoryRepository AssessmentCategoriesRepository { get; }
+
+        private IAssessmentCategoryResultRepository AssessmentCategoryResultRepository { get; }
 
         private IQuestionItemRepository QuestionItemRepository { get; }
 
@@ -171,7 +176,8 @@ namespace De.HDBW.Apollo.Data.Helper
             CourseAppointmentRepository.ResetItemsAsync(usecase?.CourseAppointments, token).ConfigureAwait(false);
             AssessmentCategoriesRepository.ResetItemsAsync(usecase?.AssessmentCategories, token).ConfigureAwait(false);
             CourseContactRelationRepository.ResetItemsAsync(usecase?.CourseContactRelations, token).ConfigureAwait(false);
-            // TODO:
+
+            // AssessmentCategoryResultRepository.ResetItemsAsync(usecase?.AssessmentCategoryResults, token).ConfigureAwait(false);
             // AnswerItemResultRepository.ResetItemsAsync(usecase.AnswerItemResults, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
@@ -181,6 +187,7 @@ namespace De.HDBW.Apollo.Data.Helper
             token.ThrowIfCancellationRequested();
             await AssessmentItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await AssessmentCategoriesRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
+            await AssessmentCategoryResultRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await QuestionItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await AnswerItemRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
             await AnswerItemResultRepository.ResetItemsAsync(null, token).ConfigureAwait(false);
