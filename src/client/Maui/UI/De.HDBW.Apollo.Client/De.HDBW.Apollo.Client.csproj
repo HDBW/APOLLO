@@ -108,7 +108,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="2.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.10" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.12" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.48.0" />
