@@ -26,6 +26,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         [DataMember(Order = 7)]
         public long Result { get; set; }
 
-
+        [DataMember(Order = 8)]
+        public long CourseId { get; set; }
     }
 }
