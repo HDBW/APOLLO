@@ -189,7 +189,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var parts = new List<string>();
                 parts.Add((Price ?? 0).ToString());
                 parts.Add(Currency ?? string.Empty);
-                return string.Join("", parts.Where(s => !string.IsNullOrWhiteSpace(s)));
+                return string.Join(string.Empty, parts.Where(s => !string.IsNullOrWhiteSpace(s)));
             }
         }
 

@@ -552,4 +552,19 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="IntegerInput_Positive" xml:space="preserve">
     <value>Trifft voll zu</value>
   </data>
+  <data name="ConfirmDataUsageDialog_Title" xml:space="preserve">
+    <value>Wir benötigen Ihre Zustimmung</value>
+  </data>
+ <data name="ConfirmDataUsageDialog_Message" xml:space="preserve">
+    <value>Mit Ihrer Anmeldung stimmen Sie einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Beta zu. Die Anmeldung kann in den Einstellungen der App jeder Zeit wiederrufen werden.</value>
+  </data>
+  <data name="ConfirmDataUsageDialog_Agree" xml:space="preserve">
+    <value>Ich stimme zu.</value>
+  </data>
+  <data name="ConfirmDataUsageDialog_Continue" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+   <data name="ConfirmDataUsageDialog_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
 </root>

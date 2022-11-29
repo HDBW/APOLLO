@@ -37,7 +37,8 @@ namespace De.HDBW.Apollo.Client.Services
             {
                 popup = ServiceProvider.GetService<TU>();
 
-                if (popup == null || Shell.Current?.CurrentPage == null)
+                var rootPage = Shell.Current?.CurrentPage ?? Application.Current?.MainPage;
+                if (popup == null || rootPage == null)
                 {
                     throw new NotSupportedException();
                 }
@@ -52,7 +53,7 @@ namespace De.HDBW.Apollo.Client.Services
                         queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
                     }
 
-                    return Shell.Current.CurrentPage.ShowPopupAsync(popup);
+                    return rootPage.ShowPopupAsync(popup);
                 }, token);
 
                 return result as TV;

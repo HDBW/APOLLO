@@ -228,6 +228,9 @@ public static class MauiProgram
         services.AddTransient<SkipQuestionDialog>();
         services.AddTransient<SkipQuestionDialogViewModel>();
 
+        services.AddTransient<ConfirmDataUsageDialog>();
+        services.AddTransient<ConfirmDataUsageDialogViewModel>();
+
         services.AddTransient<MessageDialog>();
         services.AddTransient<MessageDialogViewModel>();
 

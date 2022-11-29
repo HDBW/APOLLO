@@ -3,6 +3,7 @@
 
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
@@ -128,8 +129,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
-                    authentication = await AuthService.SignInInteractively(worker.Token);
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
+                    var result = await DialogService.ShowPopupAsync<ConfirmDataUsageDialog, NavigationParameters>(worker.Token);
+                    if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
+                    {
+                        authentication = await AuthService.SignInInteractively(worker.Token);
+                        await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
