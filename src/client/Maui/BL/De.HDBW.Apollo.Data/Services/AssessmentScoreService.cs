@@ -49,7 +49,7 @@ namespace De.HDBW.Apollo.Data.Services
             token.ThrowIfCancellationRequested();
 
             // retrive assessmentId
-            long assessmentId = answerItemResults.FirstOrDefault()!.AssessmentItemId;
+            long assessmentId = answerItemResults.FirstOrDefault() !.AssessmentItemId;
 
             // TODO: Iterate over answerItems and create Category result
             var questions = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentId, token).ConfigureAwait(false);
@@ -76,7 +76,7 @@ namespace De.HDBW.Apollo.Data.Services
                 {
                     results.Add(new AssessmentCategoryResult
                     {
-                        Category = questionCategory?.Id ?? -1,
+                        CategoryId = questionCategory?.Id ?? -1,
                         Result = 0,
                         UserProfileId = userId,
                     });
