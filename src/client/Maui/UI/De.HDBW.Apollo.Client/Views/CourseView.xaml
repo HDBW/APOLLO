@@ -30,7 +30,7 @@
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Spacing="8" Margin="12,0">
                     <Image Source="timer.png" WidthRequest="24" HeightRequest="24"/>
-                    <Label Text="{Binding DisplayDuration}" Style="{StaticResource Noto16}"/>
+                    <Label Text="{Binding Duration}" Style="{StaticResource Noto16}"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Spacing="8" Margin="12,0">
                     <Image Source="watch.png" WidthRequest="24" HeightRequest="24"/>
