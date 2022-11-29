@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Security.Principal;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -96,6 +97,8 @@ namespace Invite.Apollo.App.Graph.Common.Models
             AssessmentCategories = new Collection<AssessmentCategory>();
             AssessmentItems = new Collection<AssessmentItem>();
             CourseContactRelations = new Collection<CourseContactRelation>();
+            AssessmentCategoryResults = new Collection<AssessmentCategoryResult>();
+            AnswerItemResults = new Collection<AnswerItemResult>();
         }
 
         [DataMember(Order = 1, IsRequired = false)]
@@ -140,6 +143,10 @@ namespace Invite.Apollo.App.Graph.Common.Models
         [DataMember(Order = 14, IsRequired = false)]
         public Collection<CourseContactRelation> CourseContactRelations { get; set; }
 
-        public Collection<AssessmentItem> surveyCollection { get; set; }
+        [DataMember(Order = 15, IsRequired = false)]
+        public Collection<AssessmentCategoryResult> AssessmentCategoryResults { get; set; }
+
+        [DataMember(Order = 16, IsRequired = false)]
+        public Collection<AnswerItemResult> AnswerItemResults { get; set; }
     }
 }
