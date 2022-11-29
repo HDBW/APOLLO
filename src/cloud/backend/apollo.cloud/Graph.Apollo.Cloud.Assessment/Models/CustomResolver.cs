@@ -44,7 +44,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
                         type = AnswerType.String;
                         break;
                     case QuestionType.Survey:
-                        type = AnswerType.String;
+                        //TODO: Don´t like implementation °_°
+                        type = source.AnswerType;
                         break;
                     default:
                         type = AnswerType.Unknown;
