@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
@@ -26,6 +27,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         [DataMember(Order = 7)]
         public long Result { get; set; }
 
+        [ForeignKey(nameof(CourseItem))]
         [DataMember(Order = 8)]
         public long CourseId { get; set; }
     }
