@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 
         private Func<InteractionCategoryEntry, Task> _navigateHandler;
 
-        private InteractionCategoryEntry(string? headLine, string? sublineLine, List<InteractionEntry> interactions, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
+        protected InteractionCategoryEntry(string? headLine, string? sublineLine, List<InteractionEntry> interactions, List<InteractionEntry> filters, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
         {
             HeadLine = headLine;
             SublineLine = sublineLine;
@@ -33,6 +33,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             _interactions = new ObservableCollection<InteractionEntry>(interactions ?? new List<InteractionEntry>());
             _canNavigateHandle = canNavigateHandle;
             _navigateHandler = navigateHandler;
+            _filters = new ObservableCollection<InteractionEntry>(filters);
         }
 
         public ObservableCollection<InteractionEntry> Interactions
@@ -40,6 +41,22 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             get
             {
                 return _interactions;
+            }
+        }
+
+        public bool HasInteractions
+        {
+            get
+            {
+                return Interactions?.Any() ?? false;
+            }
+        }
+
+        public bool HasNoInteractions
+        {
+            get
+            {
+                return !HasInteractions;
             }
         }
 
@@ -51,9 +68,31 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
-        public static InteractionCategoryEntry Import(string? headLine, string? sublineLine, List<InteractionEntry> interactions, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
+        public bool HasFilters
         {
-            return new InteractionCategoryEntry(headLine, sublineLine, interactions, data, navigateHandler, canNavigateHandle);
+            get
+            {
+                return Filters?.Any() ?? false;
+            }
+        }
+
+        public static InteractionCategoryEntry Import(string? headLine, string? sublineLine, List<InteractionEntry> interactions, List<InteractionEntry> filters, object? data, Func<InteractionCategoryEntry, Task> navigateHandler, Func<InteractionCategoryEntry, bool> canNavigateHandle)
+        {
+            return new InteractionCategoryEntry(headLine, sublineLine, interactions, filters, data, navigateHandler, canNavigateHandle);
+        }
+
+        public void RefreshCommands()
+        {
+            ShowMoreCommand?.NotifyCanExecuteChanged();
+            foreach (var filter in Filters)
+            {
+                filter.NavigateCommand?.NotifyCanExecuteChanged();
+            }
+
+            foreach (var interaction in Interactions)
+            {
+                interaction.NavigateCommand?.NotifyCanExecuteChanged();
+            }
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShowMore), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]

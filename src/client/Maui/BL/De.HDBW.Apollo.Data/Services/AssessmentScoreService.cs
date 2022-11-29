@@ -1,7 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
@@ -62,7 +61,7 @@ namespace De.HDBW.Apollo.Data.Services
             foreach (QuestionItem question in questions)
             {
                 // load question specific information just as answers and results
-                var questionCategory = await AssessmentCategoriesRepository.GetItemByIdAsync(question.Category, token).ConfigureAwait(false);
+                var questionCategory = await AssessmentCategoriesRepository.GetItemByIdAsync(question.CategoryId, token).ConfigureAwait(false);
                 List<long> questionIds = new () { question.Id };
                 var answers = await AnswerItemRepository.GetItemsByForeignKeysAsync(questionIds, token).ConfigureAwait(false);
 

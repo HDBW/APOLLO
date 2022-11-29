@@ -18,7 +18,7 @@
 
     <!-- Versions -->
     <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>4</ApplicationVersion>
+    <ApplicationVersion>5</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
@@ -38,6 +38,7 @@
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
+    
     <MauiFont Include="Resources\Fonts\*" />
 
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
@@ -45,33 +46,66 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\calendar.svg" />
+    <None Remove="Resources\Images\completed.svg" />
+    <None Remove="Resources\Images\phone.svg" />
+    <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
+    <None Remove="Resources\Images\placeholderinfoevent.svg" />
+    <None Remove="Resources\Images\placeholdertest.svg" />
+    <None Remove="Resources\Images\provider.svg" />
+    <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
-    <None Remove="Resources\Images\bestellbestaetigung.jpg" />
-    <None Remove="Resources\Images\deutschehecke.jpg" />
     <None Remove="Resources\Images\fallback.png" />
-    <None Remove="Resources\Images\gruenzeugs.jpg" />
     <None Remove="Resources\Images\info.svg" />
     <None Remove="Resources\Images\lieferschein.png" />
-    <None Remove="Resources\Images\minze.jpg" />
+    <None Remove="Resources\Images\mail.svg" />
     <None Remove="Resources\Images\registrationdeco.svg" />
-    <None Remove="Resources\Images\salbei.jpg" />
     <None Remove="Resources\Images\send.svg" />
     <None Remove="Resources\Images\settings.svg" />
+    <None Remove="Resources\Images\sk34a02_karton_eingerissen.png" />
+    <None Remove="Resources\Images\sk34b01_sicherheitshinweis_schuhe.png" />
+    <None Remove="Resources\Images\sk34b02_pfuetze_gabelstapler.png" />
+    <None Remove="Resources\Images\sk34b03_hubwagen_a1.png" />
+    <None Remove="Resources\Images\sk34b03_hubwagen_d1.png" />
+    <None Remove="Resources\Images\sk34b03_hubwagen_d2.png" />
+    <None Remove="Resources\Images\sk34b03_hubwagen_d3.png" />
+    <None Remove="Resources\Images\sk34b04_zeichen_zerbrechlich.png" />
+    <None Remove="Resources\Images\sk34c01_keine_hitze.png" />
+    <None Remove="Resources\Images\sk34c01_nicht_rollen.png" />
+    <None Remove="Resources\Images\sk34c01_nicht_stapeln.png" />
+    <None Remove="Resources\Images\sk34c01_waren_aufrecht.png" />
+    <None Remove="Resources\Images\sk34c03_regaltraeger_zeichnung.png" />
+    <None Remove="Resources\Images\sk34d03_regalbezeichnung.png" />
+    <None Remove="Resources\Images\sk34e01_folie.png" />
+    <None Remove="Resources\Images\sk34e01_luftpolsterfolie.png" />
+    <None Remove="Resources\Images\sk34e01_pappkarton.png" />
+    <None Remove="Resources\Images\sk34e01_zeitung.png" />
+    <None Remove="Resources\Images\sk34e03_folie.png" />
+    <None Remove="Resources\Images\sk34e03_spannband.png" />
+    <None Remove="Resources\Images\sk34e03_spanngurt.png" />
+    <None Remove="Resources\Images\sk34e03_tape.png" />
+    <None Remove="Resources\Images\sk34f04_karte.png" />
+    <None Remove="Resources\Images\sk34g01_nettobedarfsrechnung.png" />
+    <None Remove="Resources\Images\sk34g03_vergleichsmatrix.png" />
     <None Remove="Resources\Images\splashdeco1.svg" />
+    <None Remove="Resources\Images\star.svg" />
+    <None Remove="Resources\Images\stardashed.svg" />
+    <None Remove="Resources\Images\staroutline.svg" />
+    <None Remove="Resources\Images\timer.svg" />
     <None Remove="Resources\Images\usecase1deco.svg" />
     <None Remove="Resources\Images\usecase1detail.svg" />
     <None Remove="Resources\Images\usecase2deco.svg" />
     <None Remove="Resources\Images\usecase3deco.svg" />
     <None Remove="Resources\Images\user.svg" />
-    <None Remove="Resources\Images\user1.png" />
-    <None Remove="Resources\Images\user2.png" />
-    <None Remove="Resources\Images\user3.png" />
+    <None Remove="Resources\Images\user2.svg" />
+    <None Remove="Resources\Images\user3.svg" />
+    <None Remove="Resources\Images\watch.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="2.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.5" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.9" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.48.0" />
@@ -136,6 +170,9 @@
     <MauiXaml Update="Dialogs\SkipQuestionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\MessageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
 
   <ItemGroup>
@@ -169,6 +206,9 @@
       <DependentUpon>FirstTimeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Update="Dialogs\SkipQuestionDialog.xaml.cs">
+      <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
