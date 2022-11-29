@@ -150,6 +150,8 @@ public static class MauiProgram
     private static LoggerConfiguration UseApplicationInsights(this LoggerSinkConfiguration loggerConfiguration, TelemetryConfiguration telemetryConfiguration, ITelemetryConverter telemetryConverter, LogEventLevel restrictedToMinimumLevel = LogEventLevel.Verbose, LoggingLevelSwitch? levelSwitch = null)
     {
         var telemetryClient = new TelemetryClient(telemetryConfiguration);
+        telemetryClient.Context.Location.Ip = "0.0.0.0";
+
         telemetryClient.Context.Device.OemName = DeviceInfo.Manufacturer;
         telemetryClient.Context.Device.Model = DeviceInfo.Current.Model;
         telemetryClient.Context.Device.Type = DeviceInfo.Current.DeviceType.ToString();
