@@ -186,12 +186,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var assessmentItems = await AssessmentItemRepository.GetItemByAssessmentTypeAsync(AssessmentType.Survey, worker.Token).ConfigureAwait(false);
-                    if (assessmentItems == null)
+                    var assessmentItem = assessmentItems?.FirstOrDefault();
+                    if (assessmentItem == null)
                     {
                         return;
                     }
 
-                    var assessmentItem = assessmentItems.FirstOrDefault();
                     var questionItems = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentItem.Id, worker.Token).ConfigureAwait(false);
                     questionItems = questionItems ?? new List<QuestionItem>();
                     var questionIds = questionItems.Select(q => q.Id);
@@ -445,7 +445,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         }
 
                         var results = question.ExportResultes();
-                        var answers = question.Answers.Select(a => a.Data as AnswerEntry);
+                        var answers = question.Answers.Select(a => a.Data).OfType<AnswerEntry>();
                         foreach (var answer in answers)
                         {
                             if (answer.HasText)

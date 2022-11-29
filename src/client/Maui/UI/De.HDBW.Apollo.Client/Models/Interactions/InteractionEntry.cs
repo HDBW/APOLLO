@@ -48,6 +48,5 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         {
             return NavigateHandler?.Invoke(this) ?? Task.CompletedTask;
         }
-
     }
 }
