@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _provider;
 
         [ObservableProperty]
-        private TimeSpan? _duration;
+        private string? _duration;
 
         [ObservableProperty]
         private string? _targetGroup;
@@ -225,19 +225,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public string? DisplayDuration
-        {
-            get
-            {
-                if (!Duration.HasValue)
-                {
-                    return null;
-                }
-
-                return string.Format(Resources.Strings.Resource.Global_DurationFormatHours, Duration.Value.TotalHours);
-            }
-        }
-
         public bool HasCourseProvider
         {
             get
@@ -344,7 +331,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             PreRequisitesDescription = courseItem?.PreRequisitesDescription;
             KeyPhrases = courseItem?.KeyPhrases;
             Duration = courseItem?.Duration;
-            OnPropertyChanged(nameof(DisplayDuration));
 
             CourseUrl = courseItem?.CourseUrl;
             Occurrence = courseItem?.Occurrence;
