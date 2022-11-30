@@ -11,10 +11,11 @@ public partial class ConfirmDataUsageDialog
     {
         InitializeComponent();
         var view = FindByName("Part_Root") as View;
-        if (view != null && Shell.Current != null)
+        var page = Shell.Current ?? Application.Current?.MainPage;
+        if (view != null && page != null)
         {
-            view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
-            view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
+            view.MaximumWidthRequest = page.Width - 16;
+            view.MaximumHeightRequest = page.Height - 16;
         }
 
         BindingContext = model;
