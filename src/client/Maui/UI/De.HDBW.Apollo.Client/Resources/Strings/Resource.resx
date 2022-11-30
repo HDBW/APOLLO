@@ -293,8 +293,8 @@
     <value>31</value>
   </data>
   <data name="UseCaseDetail_A_Experience" xml:space="preserve">
-    <value>4 Jahre Helfer in Lager &amp; Versandt
-1 Jahr Einzelhandel mit Lebensmitteln</value>
+    <value>4 Jahre Lager und Kommissionierung
+1 Jahr Einzelhandel im Lebensmittelbereich</value>
   </data>
   <data name="UseCaseDetail_A_Goal" xml:space="preserve">
     <value>Job im Bereich Lager
@@ -339,7 +339,7 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Augsburg</value>
   </data>
   <data name="UseCaseDetail_C_Story" xml:space="preserve">
-    <value>UseCaseDetail_C_Story</value>
+    <value>Du hast zehn Jahre Erfahrung als Fachinformatikerin. Neben deiner Arbeit hast du verschiedene Möglichkeiten wahrgenommen, um dich weiterzubilden und auf dem Laufenden zu bleiben. Nun willst du den nächsten Schritt in deiner Karriere gehen. Du bist auf der Suche nach einer Qualifizierung, um eine Führungsposition zu übernehmen.</value>
   </data>
   <data name="UseCaseSelectionView_Choose" xml:space="preserve">
     <value>Wähle dein Szenario</value>
@@ -555,7 +555,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="ConfirmDataUsageDialog_Title" xml:space="preserve">
     <value>Wir benötigen Ihre Zustimmung</value>
   </data>
- <data name="ConfirmDataUsageDialog_Message" xml:space="preserve">
+  <data name="ConfirmDataUsageDialog_Message" xml:space="preserve">
     <value>Mit Ihrer Anmeldung stimmen Sie einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Beta zu. Die Anmeldung kann in den Einstellungen der App jeder Zeit wiederrufen werden.</value>
   </data>
   <data name="ConfirmDataUsageDialog_Agree" xml:space="preserve">
@@ -564,7 +564,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="ConfirmDataUsageDialog_Continue" xml:space="preserve">
     <value>Weiter</value>
   </data>
-   <data name="ConfirmDataUsageDialog_Cancel" xml:space="preserve">
+  <data name="ConfirmDataUsageDialog_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
 </root>
