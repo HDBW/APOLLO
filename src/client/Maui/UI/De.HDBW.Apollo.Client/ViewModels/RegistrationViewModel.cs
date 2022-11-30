@@ -89,6 +89,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
+                    await AuthService.SignInInteractively(worker.Token);
                     authentication = await AuthService.AcquireTokenSilent(worker.Token);
                 }
                 catch (OperationCanceledException)
