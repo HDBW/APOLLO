@@ -25,7 +25,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         //The result a user scored in a Category
         [DataMember(Order = 7)]
-        public long Result { get; set; }
+        public decimal Result { get; set; }
 
         [ForeignKey(nameof(CourseItem))]
         [DataMember(Order = 8)]

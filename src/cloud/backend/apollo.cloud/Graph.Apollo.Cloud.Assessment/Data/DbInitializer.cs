@@ -608,6 +608,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             answer.AnswerType = answerType;
             answer.Question = question;
             answer.QuestionId = question.Id;
+            answer.Scalar = bstAssessment.Credit_ScoringOption_1;
 
             if (answerType.Equals(AnswerType.Integer))
             {
