@@ -23,6 +23,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 
         [DataMember(Order = 7, IsRequired = true)]
         public string Value { get; set; } = string.Empty;
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public int? Scalar { get; set; }
         
     }
 
