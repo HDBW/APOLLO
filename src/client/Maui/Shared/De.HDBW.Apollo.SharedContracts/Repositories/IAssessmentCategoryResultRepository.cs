@@ -10,5 +10,7 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         IDatabaseRepository<AssessmentCategoryResult>
     {
         Task<IEnumerable<AssessmentCategoryResult>> GetItemsByForeignKeyAsync(long id, CancellationToken token);
+
+        int Count();
     }
 }

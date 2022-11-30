@@ -21,5 +21,10 @@ namespace De.HDBW.Apollo.Data.Repositories
             token.ThrowIfCancellationRequested();
             return Task.FromResult(Items.FirstOrDefault(i => i.AssessmentId == id));
         }
+
+        public int Count()
+        {
+            return Items.Count();
+        }
     }
 }
