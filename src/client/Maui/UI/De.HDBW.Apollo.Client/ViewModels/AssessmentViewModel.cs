@@ -429,7 +429,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
                         await SaveAssessmentAsync(worker.Token);
-                        await NavigationService.PushToRootAsnc(worker.Token);
+                        if (!_assessmentItemId.HasValue)
+                        {
+                            await NavigationService.PushToRootAsnc(worker.Token);
+                            return;
+                        }
+
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Id, _assessmentItemId.Value);
+
+                        await NavigationService.NavigateAsnc(Routes.AssessmentResultView, worker.Token, parameters);
                     }
                 }
                 catch (OperationCanceledException)
