@@ -567,4 +567,16 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="ConfirmDataUsageDialog_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="AssessmentResultView_Description" xml:space="preserve">
+    <value>Im Rahmen der Testversion zeigen wir dir hier dein vorläufiges Ergebnis. Wie du im Vergleich zu anderen abschneidest, erfährst du in der finalen Version der App!</value>
+  </data>
+  <data name="AssessmentResultView_Headline" xml:space="preserve">
+    <value>Deine Analyse</value>
+  </data>
+  <data name="AssessmentResultView_RecommendationHeadline" xml:space="preserve">
+    <value>Lerne neue Fähigkeiten</value>
+  </data>
+  <data name="AssessmentResultView_RecommendationDescription" xml:space="preserve">
+    <value>Empfohlene Inhalte</value>
+  </data>
 </root>

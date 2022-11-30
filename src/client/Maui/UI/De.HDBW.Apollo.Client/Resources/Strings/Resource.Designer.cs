@@ -124,6 +124,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Im Rahmen der Testversion zeigen wir dir hier dein vorläufiges Ergebnis. Wie du im Vergleich zu anderen abschneidest, erfährst du in der finalen Version der App!.
+        /// </summary>
+        public static string AssessmentResultView_Description {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deine Analyse.
+        /// </summary>
+        public static string AssessmentResultView_Headline {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Inhalte.
+        /// </summary>
+        public static string AssessmentResultView_RecommendationDescription {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_RecommendationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lerne neue Fähigkeiten.
+        /// </summary>
+        public static string AssessmentResultView_RecommendationHeadline {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_RecommendationHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auswertung.
         /// </summary>
         public static string AssessmentResultView_Title {
