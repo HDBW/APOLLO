@@ -16,5 +16,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 
         public List<AnswerHasMetaData> AnswerHasMetaDatas { get; set; }
 
+        public int Scalar { get; set; }
     }
 }
