@@ -22,5 +22,7 @@ namespace De.HDBW.Apollo.Data.Repositories
             token.ThrowIfCancellationRequested();
             return Task.FromResult(new ReadOnlyCollection<AssessmentCategoryResult>(Items?.Where(i => i.CategoryId == id).ToList() ?? new List<AssessmentCategoryResult>()) as IEnumerable<AssessmentCategoryResult>);
         }
+
+        public int Count() => Items.Count;
     }
 }
