@@ -3,10 +3,8 @@
 
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.SharedContracts.Repositories;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
