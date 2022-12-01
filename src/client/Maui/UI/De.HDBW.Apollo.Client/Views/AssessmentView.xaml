@@ -109,7 +109,7 @@
                     </Border.StrokeShape>                    
                 </Border>
                 <StackLayout VerticalOptions="Center" Margin="12,12,0,12" BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
-                <RadioButton Grid.Column="1" Margin="0,12,0,12" IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" Grid.Column="1" Margin="0,12,0,12" IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Grid.Triggers>
                     <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
                         <Setter TargetName="PART_Bd" Property="Border.Stroke" Value="{StaticResource Primary}" />
@@ -139,12 +139,12 @@
             <VerticalStackLayout>
                 <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
                 <Grid ColumnDefinitions="*,*,*,*,*,*" >
-                    <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=0}" Grid.Column="0" HorizontalOptions="Start"/>
-                    <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=1}" Grid.Column="1" HorizontalOptions="Center"/>
-                    <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=2}" Grid.Column="2" HorizontalOptions="Center"/>
-                    <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=3}" Grid.Column="3" HorizontalOptions="Center"/>
-                    <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=4}" Grid.Column="4" HorizontalOptions="Center"/>
-                    <RadioButton IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=5}" Grid.Column="5" HorizontalOptions="End"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=0}" Grid.Column="0" HorizontalOptions="Start"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=1}" Grid.Column="1" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=2}" Grid.Column="2" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=3}" Grid.Column="3" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=4}" Grid.Column="4" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=5}" Grid.Column="5" HorizontalOptions="End"/>
                 </Grid>
                 <Grid ColumnDefinitions="auto,*,auto">
                     <Label Text="{x:Static strings:Resource.IntegerInput_Negative}" Style="{StaticResource  Noto12}" TextColor="{StaticResource Primary}"/>
