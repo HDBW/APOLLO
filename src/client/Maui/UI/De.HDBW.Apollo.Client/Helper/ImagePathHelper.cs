@@ -12,6 +12,11 @@ namespace De.HDBW.Apollo.Client.Helper
             imageName = imageName.Replace("ö", "oe");
             imageName = imageName.Replace("ä", "ae");
             imageName = imageName.Replace("ß", "ss");
+            if (string.IsNullOrWhiteSpace(Path.GetExtension(imageName)))
+            {
+                return null;
+            }
+
             return string.IsNullOrWhiteSpace(imageName) ? null : imageName;
         }
     }
