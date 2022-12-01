@@ -78,5 +78,4 @@ public partial class StartView
         var view = sender as VisualElement;
         view?.SetBinding(Border.IsVisibleProperty, new Binding("IsProcessed"));
     }
-
 }
