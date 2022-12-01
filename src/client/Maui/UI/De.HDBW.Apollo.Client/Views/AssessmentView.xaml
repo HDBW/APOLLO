@@ -77,13 +77,19 @@
                                            />
 
         <DataTemplate x:Key="ImageQuestionDetailTemplate" x:DataType="assessmentModels:QuestionDetailEntry">
-            <Grid>
+            <Grid MinimumHeightRequest="100" Background="{StaticResource Surface}">
+                <Grid.Clip>
+                    <RoundRectangleGeometry CornerRadius="5" />
+                </Grid.Clip>
                 <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" MaximumHeightRequest="200"/>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="DefaultQuestionDetailTemplate" x:DataType="assessmentModels:QuestionDetailEntry">
-            <Grid>
+            <Grid MinimumHeightRequest="100" Background="{StaticResource Surface}">
+                <Grid.Clip>
+                    <RoundRectangleGeometry CornerRadius="5" />
+                </Grid.Clip>
                 <Label Text="{Binding Text}" />
             </Grid>
         </DataTemplate>
@@ -168,7 +174,6 @@
                     <DropGestureRecognizer AllowDrop="True" DropCommand="{Binding DropCommand}"/>
                 </Grid.GestureRecognizers>
 
-                <!-- TODO Add SElector -->
                 <StackLayout InputTransparent="True"
                              BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailTemplateSelector}"
                              BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}">
