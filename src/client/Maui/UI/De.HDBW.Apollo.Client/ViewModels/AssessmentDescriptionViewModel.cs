@@ -36,6 +36,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private string? _duration;
 
+        [ObservableProperty]
+        private string? _decoratorText;
+
         public AssessmentDescriptionViewModel(
             IAssessmentItemRepository assessmentItemRepository,
             IDispatcherService dispatcherService,
@@ -103,6 +106,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(AssessmentItem assessmentItem)
         {
             ImagePath = "placeholdertest.png";
+            DecoratorText = Resources.Strings.Resource.AssessmentItem_DecoratorText;
             OnPropertyChanged(nameof(HasImage));
             DescriptionTitle = assessmentItem.Title;
             DescriptionText = assessmentItem.Description;
