@@ -77,6 +77,7 @@ namespace De.HDBW.Apollo.Data.Helper
         private IAssessmentCategoryRepository AssessmentCategoriesRepository { get; }
 
         private IAssessmentCategoryResultRepository AssessmentCategoryResultRepository { get; }
+
         private IAssessmentScoreRepository AssessmentScoreRepository { get; }
 
         private IQuestionItemRepository QuestionItemRepository { get; }
