@@ -278,12 +278,12 @@ public static class MauiProgram
 
     private static void SetupHandler()
     {
-        /*Microsoft.Maui.Handlers.ButtonHandler.TextButtonMapper.AppendToMapping("TextColor", (handler, view) =>
+        Microsoft.Maui.Handlers.RadioButtonHandler.ViewMapper.AppendToMapping("TextColor", (handler, view) =>
         {
 #if IOS
-            handler.PlatformView.SetTitleColor(UIKit.UIColor.Green, UIKit.UIControlState.Highlighted);
+            var root = handler.PlatformView as View;
 #endif
         });
-        */
+
     }
 }
