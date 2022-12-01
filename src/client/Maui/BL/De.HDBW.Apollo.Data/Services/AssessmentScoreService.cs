@@ -202,7 +202,6 @@ namespace De.HDBW.Apollo.Data.Services
                     }
                     j--;
                 }
-                Logger?.Log(LogLevel.Information, new EventId(1001, $"AssessmentScoreService:GetBitMaskFromString"), "Binary Vector for Question {questionId} : {ToBinary(vector)}", questionScoringOption);
                 return vector;
             }
             return vector;
