@@ -53,7 +53,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
         /// <summary>
         /// Expected Minutes (Duration) to take the Assessment
         /// </summary>
-        public TimeSpan Duration { get; set; }
+        public String Duration { get; set; }
 
         /// <summary>
         /// The Description of the Assessment as Markdown or HTML

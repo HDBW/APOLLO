@@ -152,22 +152,88 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                             throw new NullReferenceException();
 
                         MetaData md =  CreateMetaData(MetaDataType.Text,bstAssessment.ItemStem, context);
-                        MetaData md1 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_1.ToLower(), context);
-                        MetaData md2 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_2.ToLower(), context);
-                        MetaData md3 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_3.ToLower(), context);
-                        MetaData md4 = CreateMetaData(MetaDataType.Image, bstAssessment.HTMLDistractorSecondary_4.ToLower(), context);
-                        
+                        MetaDataType MetaQuestionType = MetaDataType.Text;
+
+
+                        if (bstAssessment.QuestionHasPictures > 0)
+                        {
+                            MetaQuestionType = MetaDataType.Image;
+                            
+                        }
+
+                        MetaData md1 = CreateMetaData(MetaQuestionType, bstAssessment.HTMLDistractorSecondary_1.ToLower(), context);
+                        MetaData md2 = CreateMetaData(MetaQuestionType, bstAssessment.HTMLDistractorSecondary_2.ToLower(), context);
+                        MetaData md3 = CreateMetaData(MetaQuestionType, bstAssessment.HTMLDistractorSecondary_3.ToLower(), context);
+                        MetaData md4 = CreateMetaData(MetaQuestionType, bstAssessment.HTMLDistractorSecondary_4.ToLower(), context);
+
                         CreateQuestionHasMetaData(md, question, context);
                         CreateQuestionHasMetaData(md1, question, context);
                         CreateQuestionHasMetaData(md2, question, context);
                         CreateQuestionHasMetaData(md3, question, context);
                         CreateQuestionHasMetaData(md4, question, context);
 
+                        MetaDataType MetaAnswerType =  MetaDataType.Text;
+                        var scores = bstAssessment.ScoringOption_1.Split(" - ");
+                        Dictionary<int, MetaData> result  = new();
+                        for (int i = 0; i < scores.Length; i ++)
+                        {
+                            var number = scores[i][0];
+                            var c = scores[i][1];
+                            MetaData mdResult = new();
+                            switch (number)
+                            {
+                                case '1':
+                                    mdResult = md1;
+                                    break;
+                                case '2':
+                                    mdResult = md2;
+                                    break;
+                                case '3':
+                                    mdResult = md3;
+                                    break;
+                                case '4':
+                                    mdResult = md4;
+                                    break;
+                                default:
+                                    break;
+                            }
+
+
+                            switch (c)
+                            {
+                                case 'a':
+                                    result.Add(1, mdResult);
+                                    break;
+                                case 'b':
+                                    result.Add(2, mdResult);
+                                    break;
+                                case 'c':
+                                    result.Add(3, mdResult);
+                                    break;
+                                case 'd':
+                                    result.Add(4, mdResult);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                                
+
+                        }
+
                         for (int i = 0; i < bstAssessment.AmountAnswers; i++)
                         {
-                            Answer answer = CreateAnswer(question, bstAssessment, i, context);
+                            if (bstAssessment.AnswerHasPicture > 0)
+                            {
+                                MetaAnswerType = MetaDataType.Image;
+
+                            }
+
+
+                            
+                            Answer answer = CreateAnswer(question, bstAssessment, i, context, metaDataId: result[i+1].Id.ToString());
                             MetaData answerMetaData =
-                                CreateMetaData(MetaDataType.Text, bstAssessment.GetHTMLDistractorPrimary(i), context);
+                                CreateMetaData(MetaAnswerType, bstAssessment.GetHTMLDistractorPrimary(i), context);
                             AnswerHasMetaData answerHasMetaData =
                                 CreateAnswerHasMetaData(answerMetaData, answer, context);
                         }
@@ -634,7 +700,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             return answer;
         }
 
-        private static Answer CreateAnswer(Question question, BstAssessment bstAssessment, int answerIndex, AssessmentContext context)
+        private static Answer CreateAnswer(Question question, BstAssessment bstAssessment, int answerIndex, AssessmentContext context, string metaDataId = "-1")
         {
             Answer answer = new();
             answer.QuestionId = question.Id;
@@ -649,7 +715,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             switch (questionType)
             {
                 case QuestionType.Associate:
-                    answer.Value = bstAssessment.GetHTMLDistractorSecondary(answerIndex);
+                    //TODO: Extract Scoreoption answerindex ??
+
+                    //answer.Value = bstAssessment.GetHTMLDistractorSecondary(answerIndex);
+                    answer.Value = metaDataId;
                     break;
                 case QuestionType.Choice:
                     answer.Value = Convert.ToBoolean(Convert.ToInt16(result[answerIndex])).ToString();
@@ -720,7 +789,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 AssessmentType = bstAssessment.GetAssessmentType(),
                 Description = bstAssessment.Description,
                 Disclaimer = bstAssessment.Disclaimer,
-                Duration = TimeSpan.FromMinutes(double.Parse(bstAssessment.Duration)),
+                Duration = bstAssessment.Duration,
                 EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
                 EscoSkills = new List<EscoSkill>(),
                 ExternalId = bstAssessment.ItemId,
