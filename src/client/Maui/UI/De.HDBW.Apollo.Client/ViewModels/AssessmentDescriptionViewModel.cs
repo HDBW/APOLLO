@@ -36,6 +36,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private string? _duration;
 
+        [ObservableProperty]
+        private string? _decoratorText;
+
         public AssessmentDescriptionViewModel(
             IAssessmentItemRepository assessmentItemRepository,
             IDispatcherService dispatcherService,
@@ -103,16 +106,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(AssessmentItem assessmentItem)
         {
             ImagePath = "placeholdertest.png";
+            DecoratorText = Resources.Strings.Resource.AssessmentItem_DecoratorText;
             OnPropertyChanged(nameof(HasImage));
             DescriptionTitle = assessmentItem.Title;
             DescriptionText = assessmentItem.Description;
             DescriptionDetails = assessmentItem.Disclaimer;
-            if (TimeSpan.TryParse(assessmentItem.Duration, CultureInfo.InvariantCulture, out TimeSpan duration))
-            {
-                duration = TimeSpan.Zero;
-            }
-
-            Duration = string.Format(Resources.Strings.Resource.Global_DurationFormat, duration.TotalMinutes);
+            Duration = string.Format(Resources.Strings.Resource.Global_DurationFormat, !string.IsNullOrWhiteSpace(assessmentItem.Duration) ? assessmentItem.Duration : 0);
             switch (assessmentItem.AssessmentType)
             {
                 case AssessmentType.SoftSkillAssessment:

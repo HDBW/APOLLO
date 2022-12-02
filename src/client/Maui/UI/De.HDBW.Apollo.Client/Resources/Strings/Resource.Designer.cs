@@ -124,6 +124,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Im Rahmen der Testversion zeigen wir dir hier dein vorläufiges Ergebnis. Wie du im Vergleich zu anderen abschneidest, erfährst du in der finalen Version der App!.
+        /// </summary>
+        public static string AssessmentResultView_Description {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deine Analyse.
+        /// </summary>
+        public static string AssessmentResultView_Headline {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Inhalte.
+        /// </summary>
+        public static string AssessmentResultView_RecommendationDescription {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_RecommendationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lerne neue Fähigkeiten.
+        /// </summary>
+        public static string AssessmentResultView_RecommendationHeadline {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_RecommendationHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auswertung.
         /// </summary>
         public static string AssessmentResultView_Title {
@@ -210,6 +246,51 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string CancelAssessmentDialog_Title {
             get {
                 return ResourceManager.GetString("CancelAssessmentDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ich stimme zu..
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Agree {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Agree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abbrechen.
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Cancel {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiter.
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Continue {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mit Ihrer Anmeldung stimmen Sie einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Beta zu. Die Anmeldung kann in den Einstellungen der App jeder Zeit wiederrufen werden..
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Message {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wir benötigen Ihre Zustimmung.
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Title {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Title", resourceCulture);
             }
         }
         
@@ -367,11 +448,29 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ESCO-Skills.
+        /// </summary>
+        public static string CourseView_Skills {
+            get {
+                return ResourceManager.GetString("CourseView_Skills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zielgruppe.
         /// </summary>
         public static string CourseView_TargetGroup {
             get {
                 return ResourceManager.GetString("CourseView_TargetGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kursinformationen.
+        /// </summary>
+        public static string CourseView_Title {
+            get {
+                return ResourceManager.GetString("CourseView_Title", resourceCulture);
             }
         }
         
@@ -444,6 +543,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ExtendedSplashScreenView_Welcome {
             get {
                 return ResourceManager.GetString("ExtendedSplashScreenView_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senden.
+        /// </summary>
+        public static string FeedbackView_Submit {
+            get {
+                return ResourceManager.GetString("FeedbackView_Submit", resourceCulture);
             }
         }
         
@@ -529,6 +637,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Weiter.
+        /// </summary>
+        public static string Global_Next {
+            get {
+                return ResourceManager.GetString("Global_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Überspringen.
         /// </summary>
         public static string Global_Skip {
@@ -543,6 +660,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_StartNow {
             get {
                 return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trifft garnicht zu.
+        /// </summary>
+        public static string IntegerInput_Negative {
+            get {
+                return ResourceManager.GetString("IntegerInput_Negative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trifft voll zu.
+        /// </summary>
+        public static string IntegerInput_Positive {
+            get {
+                return ResourceManager.GetString("IntegerInput_Positive", resourceCulture);
             }
         }
         
@@ -1143,8 +1278,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 4 Jahre Helfer in Lager &amp; Versandt
-        ///1 Jahr Einzelhandel mit Lebensmitteln.
+        ///   Looks up a localized string similar to 4 Jahre Lager und Kommissionierung
+        ///1 Jahr Einzelhandel im Lebensmittelbereich.
         /// </summary>
         public static string UseCaseDetail_A_Experience {
             get {
@@ -1267,7 +1402,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UseCaseDetail_C_Story.
+        ///   Looks up a localized string similar to Du hast zehn Jahre Erfahrung als Fachinformatikerin. Neben deiner Arbeit hast du verschiedene Möglichkeiten wahrgenommen, um dich weiterzubilden und auf dem Laufenden zu bleiben. Nun willst du den nächsten Schritt in deiner Karriere gehen. Du bist auf der Suche nach einer Qualifizierung, um eine Führungsposition zu übernehmen..
         /// </summary>
         public static string UseCaseDetail_C_Story {
             get {

@@ -183,6 +183,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var id = navigationData.Parameters?.GetValue<long?>(NavigationParameter.Id);
                     var status = id.HasValue && assessmentResults.Any(r => r.AssessmentItemId == id.Value) ? Status.Processed : Status.Unknown;
+                    interaction.Status = Status.Processed;
                     interaction.Status = status;
                 }
             }
@@ -217,12 +218,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var assemsmentData = new NavigationParameters();
                 assemsmentData.AddValue<long?>(NavigationParameter.Id, assesment.Id);
                 var data = new NavigationData(Routes.AssessmentDescriptionView, assemsmentData);
-                if (TimeSpan.TryParse(assesment.Duration, CultureInfo.InvariantCulture, out TimeSpan duration))
-                {
-                    duration = TimeSpan.Zero;
-                }
 
-                var durationString = duration != TimeSpan.Zero ? string.Format(Resources.Strings.Resource.Global_DurationFormat, duration.TotalMinutes) : string.Empty;
+                var durationString = string.Format(Resources.Strings.Resource.Global_DurationFormat, !string.IsNullOrWhiteSpace(assesment.Duration) ? assesment.Duration : 0);
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
                 var status = (assessmentResults?.Any(r => r.AnswerItemId == assesment.Id) ?? false) ? Status.Processed : Status.Unknown;
                 var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
@@ -246,7 +243,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.TrainingProviderId);
 
-                var duration = course.Duration != TimeSpan.Zero ? string.Format(Resources.Strings.Resource.Global_DurationFormat, course.Duration.TotalMinutes) : string.Empty;
+                var duration = course.Duration ?? string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resource.StartViewModel_UnknownProvider;
                 var image = "placeholdercontinuingeducation.png";
                 switch (course.CourseTagType)

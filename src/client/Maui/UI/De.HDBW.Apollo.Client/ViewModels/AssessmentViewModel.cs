@@ -304,6 +304,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             base.RefreshCommands();
             CancelCommand?.NotifyCanExecuteChanged();
+            NextQuestionCommand?.NotifyCanExecuteChanged();
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
@@ -319,7 +320,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResultsMapping,
             Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerItemMetaDatasMapping)
         {
-            Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], Logger)));
+            Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], Logger)).OrderBy(q => q.SortIndex));
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;
@@ -428,7 +429,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
                         await SaveAssessmentAsync(worker.Token);
-                        await NavigationService.PushToRootAsnc(worker.Token);
+                        if (!_assessmentItemId.HasValue)
+                        {
+                            await NavigationService.PushToRootAsnc(worker.Token);
+                            return;
+                        }
+
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Id, _assessmentItemId.Value);
+
+                        await NavigationService.NavigateAsnc(Routes.AssessmentResultView, worker.Token, parameters);
                     }
                 }
                 catch (OperationCanceledException)
