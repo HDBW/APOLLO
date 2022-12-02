@@ -9,6 +9,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class InputEntry<TU> : ObservableObject, IInputInteractiveEntry
          where TU : AnswerEntry
     {
+        private static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
         private string? _value;
         private InteractionType _interaction;
 
@@ -19,6 +20,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             Interaction = interaction;
             AnswerType = answerType;
             ValueChangedHandler = valueChangedHandler;
+            SortIndex = s_random.Next(1000);
         }
 
         public string? Value
@@ -54,6 +56,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             get { return _interaction; }
             set { SetProperty(ref _interaction, value); }
         }
+
+        public int SortIndex { get; }
 
         private Action<InputEntry<TU>>? ValueChangedHandler { get; }
 

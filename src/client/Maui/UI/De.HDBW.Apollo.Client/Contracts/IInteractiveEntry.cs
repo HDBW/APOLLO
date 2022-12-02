@@ -11,5 +11,7 @@ namespace De.HDBW.Apollo.Client.Contracts
         AnswerType? AnswerType { get; }
 
         object Data { get; }
+
+        int SortIndex { get; }
     }
 }
