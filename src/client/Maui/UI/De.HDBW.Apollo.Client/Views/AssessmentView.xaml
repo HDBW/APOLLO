@@ -97,7 +97,7 @@
         <selector:QuestionDetailTemplateSelector x:Key="QuestionDetailTemplateSelector"
                                            DefaultTemplate="{StaticResource DefaultQuestionDetailTemplate}"
                                            ImageTemplate ="{StaticResource ImageQuestionDetailTemplate}"/>
-        
+
         <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
             <Grid Background="Transparent" ColumnDefinitions="*, 40">
                 <Grid.GestureRecognizers>
@@ -106,7 +106,7 @@
                 <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" Background="{StaticResource White}" InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8"/>
-                    </Border.StrokeShape>                    
+                    </Border.StrokeShape>
                 </Border>
                 <StackLayout VerticalOptions="Center" Margin="12,12,0,12" BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
                 <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" Grid.Column="1" Margin="0,12,0,12" IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -159,7 +159,7 @@
                 <Entry Text="{Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" Placeholder="{Binding Hint}" MaxLength="1000" Keyboard="Text" ReturnType="Default"/>
             </VerticalStackLayout>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="DefaultInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
             <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
         </DataTemplate>
@@ -183,9 +183,9 @@
                 </Frame>
                 <Button IsVisible="{Binding HasAssociation}" Margin="0,4,4,0" Style="{StaticResource BorderButton}" Padding="0" WidthRequest="24" HeightRequest="24" CornerRadius="12" Command="{Binding ClearAssociationCommand}" Text="X" HorizontalOptions="End" VerticalOptions="Start"/>
             </Grid>
-           
+
         </DataTemplate>
-        
+
         <selector:IInteractiveEntryTemplateSelector x:Key="IInteractiveEntryTemplateSelector"
                                                    DefaultTemplate="{StaticResource DefaultInteractionTemplate}"
                                                    SelectInteractionTemplate="{StaticResource SelectionInteractionTemplate}"
@@ -214,7 +214,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="UniformAnswerLayoutTemplate">
-             <layouts:UniformGrid BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+            <layouts:UniformGrid BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
                                   BindableLayout.ItemTemplateSelector="{StaticResource IInteractiveEntryTemplateSelector}"
                                   ColumnCount="2"/>
         </DataTemplate>
@@ -273,7 +273,7 @@
         <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
             <VerticalStackLayout Spacing="8" Padding="24,0">
                 <Label Grid.Row="0" Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
-                <Label Grid.Row="1" Text="{Binding Instruction}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}" LineBreakMode="TailTruncation" IsVisible="{Binding HasInstruction}"/>
+                <Label Grid.Row="1" Text="{Binding Instruction}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}" MaxLines="3" LineBreakMode="WordWrap" IsVisible="{Binding HasInstruction}"/>
                 <StackLayout
                     Grid.Row="2" 
                     BindableLayout.ItemTemplateSelector="{StaticResource QuestionLayoutTemplateSelector}"
@@ -289,18 +289,18 @@
         </DataTemplate>
 
         <DataTemplate x:Key="OverlayQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
-                <Grid Margin="24,0" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Label Text="{Binding Question}" Grid.Row="0" IsVisible="{Binding HasQuestion}"/>
-                    <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}"/>
-                    <Image x:Name="PART_Image" Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
-                    <StackLayout Grid.Row="2" HeightRequest="200" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
-                    </StackLayout>
-                </Grid>
+            <Grid Margin="24,0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Label Text="{Binding Question}" Grid.Row="0" IsVisible="{Binding HasQuestion}"/>
+                <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}" MaxLines="3" LineBreakMode="WordWrap" />
+                <Image x:Name="PART_Image" Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
+                <StackLayout Grid.Row="2" HeightRequest="200" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                </StackLayout>
+            </Grid>
         </DataTemplate>
 
         <selector:QuestionTemplateSelector x:Key="QuestionTemplateSelector"
