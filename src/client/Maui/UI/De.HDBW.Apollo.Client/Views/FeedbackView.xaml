@@ -1,15 +1,319 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.FeedbackView"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-             x:DataType="viewModels:FeedbackViewModel"
-             Shell.FlyoutBehavior="Disabled"
+             xmlns:contracts="clr-namespace:De.HDBW.Apollo.Client.Contracts"
+             xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             x:DataType="viewModels:FeedbackViewModel"
              Title="{x:Static strings:Resource.FeedbackView_Title}"
-             IsBusy="{Binding IsBusy}">
-    <VerticalStackLayout>
-       
-    </VerticalStackLayout>
+             Shell.FlyoutBehavior="Disabled"
+             IsBusy="{Binding IsBusy}"
+             Padding="0">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
+    <ContentPage.Resources>
+
+        <converter:QuestionDetailsToTitleConverter x:Key="QuestionDetailsToTitleConverter" />
+        <converter:IntEqualToBooleanConverter x:Key="IntEqualToBooleanConverter" />
+
+        <ControlTemplate x:Key="TabHeader">
+            <Grid RowDefinitions="30,4">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CheckedStates">
+                            <VisualState x:Name="Checked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource Primary}"/>
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="{StaticResource Primary}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Unchecked">
+                                <VisualState.Setters>
+                                    <Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource TextColor}"/>
+                                    <Setter TargetName="Indicator" Property="BoxView.Color" Value="Transparent"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Label Text="{TemplateBinding Content}" x:Name="TextLabel" HorizontalOptions="Center" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation"/>
+                <BoxView x:Name="Indicator" Grid.Row="1" Color="Transparent"/>
+            </Grid>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="DefaultAnswerEntryTemplate" x:DataType="assessmentModels:AnswerEntry">
+            <Label Text="{Binding Text}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="ImageAnswerEntryTemplate" x:DataType="assessmentModels:AnswerEntry">
+            <Grid>
+                <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" MaximumHeightRequest="200"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="LocationAnswerEntryTemplate" x:DataType="assessmentModels:AnswerEntry">
+            <AbsoluteLayout WidthRequest="0" HeightRequest="0">
+                <Ellipse Margin="-5,-5,-5,-5" WidthRequest="10" HeightRequest="10" Fill="Red" />
+            </AbsoluteLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ImageWithTextAnswerEntryTemplate" x:DataType="assessmentModels:AnswerEntry">
+            <Grid>
+                <Image Source="{Binding ImagePath}" MaximumHeightRequest="200"/>
+                <Label Text="{Binding Text}" />
+            </Grid>
+        </DataTemplate>
+
+        <selector:AnswerTypeTemplateSelector x:Key="DefaultAnswerTypeTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultAnswerEntryTemplate}"
+                                           DefaultLocationTemplate ="{StaticResource LocationAnswerEntryTemplate}"
+                                           BooleanImageTemplate="{StaticResource ImageAnswerEntryTemplate}"
+                                           BooleanImageWithTextTemplate="{StaticResource ImageWithTextAnswerEntryTemplate}"
+                                           />
+
+        <DataTemplate x:Key="ImageQuestionDetailTemplate" x:DataType="assessmentModels:QuestionDetailEntry">
+            <Grid>
+                <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" MaximumHeightRequest="200"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultQuestionDetailTemplate" x:DataType="assessmentModels:QuestionDetailEntry">
+            <Grid>
+                <Label Text="{Binding Text}" />
+            </Grid>
+        </DataTemplate>
+
+        <selector:QuestionDetailTemplateSelector x:Key="QuestionDetailTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultQuestionDetailTemplate}"
+                                           ImageTemplate ="{StaticResource ImageQuestionDetailTemplate}"/>
+
+        <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
+            <Grid Background="Transparent" ColumnDefinitions="*, 40">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
+                </Grid.GestureRecognizers>
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" Background="{StaticResource White}" InputTransparent="True">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8"/>
+                    </Border.StrokeShape>
+                </Border>
+                <StackLayout VerticalOptions="Center" Margin="12,12,0,12" BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" Grid.Column="1" Margin="0,12,0,12" IsChecked="{Binding IsSelected, Mode=TwoWay}" InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                        <Setter TargetName="PART_Bd" Property="Border.Stroke" Value="{StaticResource Primary}" />
+                    </DataTrigger>
+                </Grid.Triggers>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AssociateInteractionTemplate" x:DataType="contracts:IAssociateSourceInteractiveEntry">
+            <Grid ColumnDefinitions="*, 32" >
+                <Grid.GestureRecognizers>
+                    <DragGestureRecognizer CanDrag="{Binding IsNotAssociated}" DragStartingCommand="{Binding DragStartingCommand}" DropCompletedCommand="{Binding DropCompletedCommand}"/>
+                </Grid.GestureRecognizers>
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Primary}" Background="{StaticResource White}" InputTransparent="True">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8"/>
+                    </Border.StrokeShape>
+                </Border>
+                <StackLayout Margin="12,12,6,12" InputTransparent="True" VerticalOptions="Center" BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <Frame Grid.Column="1" Margin="0,0,8,8" HorizontalOptions="End" VerticalOptions="End" CornerRadius="12" WidthRequest="16" HeightRequest="16" Padding="0" BorderColor="{StaticResource Primary}">
+                    <Label Text="{Binding IndexToAssociate}" HorizontalOptions="Center" FontAttributes="Bold" Style="{StaticResource Noto10}"/>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="IntegerInputTemplate" x:DataType="contracts:IInputInteractiveEntry">
+            <VerticalStackLayout>
+                <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <Grid ColumnDefinitions="*,*,*,*,*,*" >
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=0}" Grid.Column="0" HorizontalOptions="Start"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=1}" Grid.Column="1" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=2}" Grid.Column="2" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=3}" Grid.Column="3" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=4}" Grid.Column="4" HorizontalOptions="Center"/>
+                    <RadioButton ControlTemplate="{StaticResource RadioButtonTemplate}" IsChecked="{Binding Value, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=5}" Grid.Column="5" HorizontalOptions="End"/>
+                </Grid>
+                <Grid ColumnDefinitions="auto,*,auto">
+                    <Label Text="{x:Static strings:Resource.IntegerInput_Negative}" Style="{StaticResource  Noto12}" TextColor="{StaticResource Primary}"/>
+                    <Label Grid.Column="2" Text="{x:Static strings:Resource.IntegerInput_Positive}" Style="{StaticResource  Noto12}" TextColor="{StaticResource Primary}"/>
+                </Grid>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="StringInputTemplate" x:DataType="contracts:IInputInteractiveEntry">
+            <VerticalStackLayout>
+                <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+                <Entry Text="{Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" Placeholder="{Binding Hint}" MaxLength="1000" Keyboard="Text" ReturnType="Default"/>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
+            <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultQuestionDetailInteractionTemplate" x:DataType="contracts:IInteractiveEntry">
+            <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="AssociateQuestionDetailInteractionTemplate" x:DataType="contracts:IAssociateTargetInteractiveEntry">
+            <Grid>
+                <Grid.GestureRecognizers>
+                    <DropGestureRecognizer AllowDrop="True" DropCommand="{Binding DropCommand}"/>
+                </Grid.GestureRecognizers>
+                <StackLayout InputTransparent="True"
+                             BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailTemplateSelector}"
+                             BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}">
+                </StackLayout>
+                <Frame Margin="0,0,8,8" HorizontalOptions="End" VerticalOptions="End" CornerRadius="16" WidthRequest="16" HeightRequest="16" Padding="0" BorderColor="{StaticResource Primary}">
+                    <Label Text="{Binding AssociatedIndex}" HorizontalOptions="Center" FontAttributes="Bold" Style="{StaticResource Noto10}"/>
+                </Frame>
+                <Button IsVisible="{Binding HasAssociation}" Margin="0,4,4,0" Style="{StaticResource BorderButton}" Padding="0" WidthRequest="24" HeightRequest="24" CornerRadius="12" Command="{Binding ClearAssociationCommand}" Text="X" HorizontalOptions="End" VerticalOptions="Start"/>
+            </Grid>
+
+        </DataTemplate>
+
+        <selector:IInteractiveEntryTemplateSelector x:Key="IInteractiveEntryTemplateSelector"
+                                                   DefaultTemplate="{StaticResource DefaultInteractionTemplate}"
+                                                   SelectInteractionTemplate="{StaticResource SelectionInteractionTemplate}"
+                                                   IntegerInputInteractionTemplate="{StaticResource IntegerInputTemplate}"
+                                                   StringInputInteractionTemplate="{StaticResource StringInputTemplate}"
+                                                   AssociateInteractionTemplate="{StaticResource AssociateInteractionTemplate}"/>
+
+        <DataTemplate x:Key="DefaultAnswerLayoutTemplate">
+            <VerticalStackLayout
+                Spacing="8"
+                BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                BindableLayout.ItemTemplateSelector="{StaticResource IInteractiveEntryTemplateSelector}">
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HorizontalAnswerLayoutTemplate">
+            <ScrollView
+                HorizontalScrollBarVisibility="Default"
+                VerticalScrollBarVisibility="Never">
+                <HorizontalStackLayout
+                    Spacing="8" 
+                    BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                    BindableLayout.ItemTemplateSelector="{StaticResource IInteractiveEntryTemplateSelector}">
+                </HorizontalStackLayout>
+            </ScrollView>
+        </DataTemplate>
+
+        <DataTemplate x:Key="UniformAnswerLayoutTemplate">
+            <layouts:UniformGrid BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Answers}"
+                                  BindableLayout.ItemTemplateSelector="{StaticResource IInteractiveEntryTemplateSelector}"
+                                  ColumnCount="2"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="UniformQuestionLayoutTemplate">
+            <layouts:UniformGrid BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Details}"
+                                ColumnCount="2"
+                                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=HasDetails}"
+                                BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailLayoutTemplateSelector}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HorizontalQuestionLayoutTemplate">
+            <ScrollView
+                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=HasDetails}"
+                HorizontalScrollBarVisibility="Default"
+                VerticalScrollBarVisibility="Never">
+                <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Details}"
+                               BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailLayoutTemplateSelector}"/>
+            </ScrollView>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CompareQuestionLayoutTemplate">
+            <Grid ColumnDefinitions="*,*" RadioButtonGroup.GroupName="Selection" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=HasDetails}">
+                <RadioButton IsChecked="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=SelectedDetailIndex, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=0}"
+                             Content="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Details, Converter={StaticResource QuestionDetailsToTitleConverter}, ConverterParameter=0}"
+                             ControlTemplate="{StaticResource TabHeader}" />
+                <RadioButton IsChecked="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=SelectedDetailIndex, Mode=TwoWay, Converter={StaticResource IntEqualToBooleanConverter}, ConverterParameter=1}"
+                             Grid.Column="1"
+                             Content="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Details, Converter={StaticResource QuestionDetailsToTitleConverter}, ConverterParameter=1}"
+                             ControlTemplate="{StaticResource TabHeader}" />
+            </Grid>
+
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultQuestionLayoutTemplate">
+            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Details}"
+                                IsVisible="{Binding  Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=HasDetails}"
+                                BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailLayoutTemplateSelector}"/>
+        </DataTemplate>
+
+        <selector:LayoutTypeTemplateSelector x:Key="AnswersLayoutTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultAnswerLayoutTemplate}"
+                                           HorizontalTemplate="{StaticResource HorizontalAnswerLayoutTemplate}"
+                                           UniformTemplate="{StaticResource UniformAnswerLayoutTemplate}" />
+
+        <selector:LayoutTypeTemplateSelector x:Key="QuestionLayoutTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultQuestionLayoutTemplate}"
+                                           HorizontalTemplate="{StaticResource HorizontalQuestionLayoutTemplate}"
+                                           UniformTemplate="{StaticResource UniformQuestionLayoutTemplate}"
+                                           CompareTemplate="{StaticResource CompareQuestionLayoutTemplate}"/>
+
+        <selector:QuestionDetailLayoutTemplateSelector x:Key="QuestionDetailLayoutTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultQuestionDetailInteractionTemplate}"
+                                           AssociateTemplate="{StaticResource AssociateQuestionDetailInteractionTemplate}" />
+
+        <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
+            <VerticalStackLayout Spacing="8" Padding="24,0">
+                <Label Grid.Row="0" Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
+                <Label Grid.Row="1" Text="{Binding Instruction}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}" MaxLines="3" LineBreakMode="WordWrap" IsVisible="{Binding HasInstruction}"/>
+                <StackLayout
+                    Grid.Row="2" 
+                    BindableLayout.ItemTemplateSelector="{StaticResource QuestionLayoutTemplateSelector}"
+                    BindableLayout.ItemsSource="{Binding QuestionLayout, Converter={StaticResource SingleItemListConverter}}">
+                </StackLayout>
+                <Image Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="3" IsVisible="{Binding HasImage}" />
+                <StackLayout
+                    Grid.Row="4" 
+                    BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}"
+                    BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                </StackLayout>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="OverlayQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
+            <Grid Margin="24,0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Label Text="{Binding Question}" Grid.Row="0" IsVisible="{Binding HasQuestion}"/>
+                <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}" MaxLines="3" LineBreakMode="WordWrap" />
+                <Image x:Name="PART_Image" Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
+                <StackLayout Grid.Row="2" HeightRequest="200" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
+                </StackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <selector:QuestionTemplateSelector x:Key="QuestionTemplateSelector"
+                                           DefaultTemplate="{StaticResource DefaultQuestionTemplate}"
+                                           OverlayTemplate="{StaticResource OverlayQuestionTemplate}"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="auto, *, auto" ColumnDefinitions="*, auto">
+        <ProgressBar Margin="24,8,8,8" Progress="{Binding Progress}" VerticalOptions="Center"/>
+        <Label  Grid.Column="1" Margin="0,0,14,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" Background="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="1" VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout
+                ChildAdded="HandleChildAdded"
+                x:Name="PART_ScrollHost"
+                BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}"
+                BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button IsVisible="{Binding ShowNextButton}" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resource.Global_Next}" Command="{Binding NextQuestionCommand}" Margin="24,0,24,16"/>
+        <Button  IsVisible="{Binding ShowSubmitButton}" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resource.FeedbackView_Submit}" Command="{Binding SubmitCommand}" Margin="24,0,24,16"/>
+    </Grid>
 </ContentPage>

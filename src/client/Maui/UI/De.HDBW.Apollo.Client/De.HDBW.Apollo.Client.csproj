@@ -18,7 +18,7 @@
 
     <!-- Versions -->
     <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>5</ApplicationVersion>
+    <ApplicationVersion>6</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
@@ -27,6 +27,9 @@
     <NeutralLanguage>de</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
   <ItemGroup>
@@ -53,6 +56,7 @@
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
     <None Remove="Resources\Images\placeholdertest.svg" />
     <None Remove="Resources\Images\provider.svg" />
+    <None Remove="Resources\Images\resultdeco.svg" />
     <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
     <None Remove="Resources\Images\fallback.png" />
@@ -105,7 +109,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="2.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.9" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.13" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.48.0" />
@@ -173,6 +177,9 @@
     <MauiXaml Update="Dialogs\MessageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\ConfirmDataUsageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
 
   <ItemGroup>
@@ -211,6 +218,9 @@
     <Compile Update="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Dialogs\ConfirmDataUsageDialog.xaml.cs">
+      <DependentUpon>ConfirmDataUsageDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Resource.resx">
@@ -218,5 +228,4 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionDeHDBWApolloClientHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>

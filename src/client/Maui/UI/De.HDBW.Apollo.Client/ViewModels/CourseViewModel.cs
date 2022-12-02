@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _provider;
 
         [ObservableProperty]
-        private TimeSpan? _duration;
+        private string? _duration;
 
         [ObservableProperty]
         private string? _targetGroup;
@@ -189,7 +189,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var parts = new List<string>();
                 parts.Add((Price ?? 0).ToString());
                 parts.Add(Currency ?? string.Empty);
-                return string.Join("", parts.Where(s => !string.IsNullOrWhiteSpace(s)));
+                return string.Join(string.Empty, parts.Where(s => !string.IsNullOrWhiteSpace(s)));
+            }
+        }
+
+        public bool HasPrice
+        {
+            get
+            {
+                return Price.HasValue;
             }
         }
 
@@ -214,19 +222,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get
             {
                 return TrainingProvider?.Name;
-            }
-        }
-
-        public string? DisplayDuration
-        {
-            get
-            {
-                if (!Duration.HasValue)
-                {
-                    return null;
-                }
-
-                return string.Format(Resources.Strings.Resource.Global_DurationFormatHours, Duration.Value.TotalHours);
             }
         }
 
@@ -336,7 +331,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             PreRequisitesDescription = courseItem?.PreRequisitesDescription;
             KeyPhrases = courseItem?.KeyPhrases;
             Duration = courseItem?.Duration;
-            OnPropertyChanged(nameof(DisplayDuration));
 
             CourseUrl = courseItem?.CourseUrl;
             Occurrence = courseItem?.Occurrence;
@@ -371,6 +365,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Price = courseItem?.Price;
             Currency = courseItem?.Currency;
             OnPropertyChanged(nameof(DisplayPrice));
+            OnPropertyChanged(nameof(HasPrice));
             Contact = contacts.FirstOrDefault(c => c != Instructor);
             OnPropertyChanged(nameof(HasContact));
 

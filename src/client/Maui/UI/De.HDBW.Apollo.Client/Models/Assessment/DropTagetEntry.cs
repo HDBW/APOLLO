@@ -12,6 +12,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class DropTagetEntry<TU> : ObservableObject, IAssociateTargetInteractiveEntry
         where TU : class
     {
+        private static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
         private InteractionType _interaction;
         private int? _associatedIndex;
 
@@ -33,6 +34,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             AnswerType = answerType;
             DropHandler = dropHandler;
             ClearHandler = clearHandler;
+            SortIndex = s_random.Next(1000);
         }
 
         public object Data { get; }
@@ -72,6 +74,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public AnswerType? AnswerType { get; }
 
         private ILogger Logger { get; }
+
+        public int SortIndex { get; }
 
         public static DropTagetEntry<TU> Import(
             TU data,

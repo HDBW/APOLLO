@@ -5,6 +5,7 @@ using System.Globalization;
 using De.HDBW.Apollo.Client.Converter;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Client.ViewModels;
+using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.Views;
 public partial class StartView
@@ -25,6 +26,17 @@ public partial class StartView
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
+#if IOS
+        var handler = Handler as Microsoft.Maui.Handlers.PageHandler;
+        var renderer = handler?.ViewController as UIKit.UIViewController;
+        var gesture = renderer?.NavigationController?.InteractivePopGestureRecognizer;
+        if (gesture == null)
+        {
+            return;
+        }
+
+        gesture.Enabled = true;
+#endif
         if (!IsLoaded)
         {
             return;
@@ -53,9 +65,17 @@ public partial class StartView
         if (value is double)
         {
             doubleValue = (double)value;
+            var rows = doubleValue / 240d;
+            doubleValue += (int)Math.Floor(rows) * 16;
         }
 
-        view.HeightRequest = Math.Max(doubleValue, view.MinimumHeightRequest);
+        view.MaximumHeightRequest = Math.Max(doubleValue, view.MinimumHeightRequest);
         view.ItemsSource = model.Interactions;
+    }
+
+    private void HandleStateChanged(object sender, EventArgs e)
+    {
+        var view = sender as VisualElement;
+        view?.SetBinding(Border.IsVisibleProperty, new Binding("IsProcessed"));
     }
 }

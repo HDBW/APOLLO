@@ -10,6 +10,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class SelectableEntry<TU> : ObservableObject, ISelectionInteractiveEntry
         where TU : class
     {
+        private static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
         private bool _isSelected;
         private InteractionType _interaction;
 
@@ -20,6 +21,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             AnswerType = answerType;
             Interaction = interaction;
             SelectionChangedHandler = selectionChangedHandler;
+            SortIndex = s_random.Next(1000);
         }
 
         public bool IsSelected
@@ -49,6 +51,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public AnswerType? AnswerType { get; }
 
         private Action<SelectableEntry<TU>>? SelectionChangedHandler { get; }
+
+        public int SortIndex { get; }
 
         public static SelectableEntry<TU> Import(TU data, InteractionType interaction, AnswerType? answerType, Action<SelectableEntry<TU>>? selectionChangedHandler)
         {

@@ -72,7 +72,7 @@
     <Style TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
         <Setter Property="LineBreakMode" Value="TailTruncation" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="ContentLayout" Value="Left, 13"/>
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
         <Setter Property="FontAttributes" Value="Bold"/>
@@ -83,22 +83,15 @@
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Active" />
-                    <VisualState x:Name="Focused">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary700}, Dark={StaticResource Primary700}}" />
-                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
-                        </VisualState.Setters>
-                    </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary900}, Dark={StaticResource Primary900}}" />
+                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Primary900}, Dark={StaticResource Primary900}}" />
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary050}, Dark={StaticResource Primary050}}" />
+                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Primary050}, Dark={StaticResource Primary050}}" />
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary150}, Dark={StaticResource Primary150}}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -110,7 +103,7 @@
     <Style x:Key="SoftButton" TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="LineBreakMode" Value="TailTruncation" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource Background}}" />
+        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource Background}}" />
         <Setter Property="ContentLayout" Value="Left, 13"/>
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
         <Setter Property="FontAttributes" Value="Bold"/>
@@ -121,15 +114,9 @@
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Active" />
-                    <VisualState x:Name="Focused">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary100}, Dark={StaticResource Primary100}}" />
-                        </VisualState.Setters>
-                    </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary300}, Dark={StaticResource Primary300}}" />
+                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Primary300}, Dark={StaticResource Primary300}}" />
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -146,7 +133,7 @@
     <Style x:Key="BorderButton" TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="LineBreakMode" Value="TailTruncation" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource Background}}" />
+        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource Background}}" />
         <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"/>
         <Setter Property="ContentLayout" Value="Left, 13"/>
         <Setter Property="BorderWidth" Value="1"/>
@@ -159,21 +146,15 @@
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Active" />
-                    <VisualState x:Name="Focused">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary100}, Dark={StaticResource Primary100}}" />
-                        </VisualState.Setters>
-                    </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary300}, Dark={StaticResource Primary300}}" />
+                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Primary300}, Dark={StaticResource Primary300}}" />
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary050}, Dark={StaticResource Primary050}}" />
+                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Primary050}, Dark={StaticResource Primary050}}" />
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary200}, Dark={StaticResource Primary200}}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -357,12 +338,57 @@
         </Setter>
     </Style>
 
+    <ControlTemplate x:Key="RadioButtonTemplate">
+        <Grid ColumnDefinitions="auto,*" >
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter TargetName="Button" Property="Ellipse.Stroke" Value="#6B5F77" />
+                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Fill" Value="#6B5F77" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter TargetName="Button" Property="Ellipse.Stroke" Value="#420A98" />
+                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Fill" Value="#420A98" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked" />
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+            <Ellipse x:Name="Button"
+                    Stroke="#404040"
+                    StrokeThickness="2"
+                    InputTransparent="True"
+                    Fill="White"
+                    WidthRequest="21"
+                    HeightRequest="21"
+                    Aspect="Uniform"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            <Ellipse x:Name="CheckedIndicator"
+                    Fill="White"
+                    InputTransparent="True"
+                    WidthRequest="11"
+                    HeightRequest="11"
+                    Aspect="Uniform"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="{TemplateBinding Path=Padding}"/>
+        </Grid>
+    </ControlTemplate>
+
     <Style TargetType="RadioButton">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}" />
-        <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="VisualStateManager.VisualStateGroups">
+        <!--<Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal"/>
@@ -386,7 +412,7 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateGroupList>
-        </Setter>
+        </Setter>-->
     </Style>
 
     <Style TargetType="RefreshView">
