@@ -16,6 +16,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class QuestionEntry : ObservableObject
     {
+        private static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
         private readonly QuestionItem _questionItem;
         private readonly IEnumerable<MetaDataItem> _questionMetaDataItems = new List<MetaDataItem>();
         private readonly ILogger _logger;
@@ -55,6 +56,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             _questionMetaDataItems = questionMetaDataItems;
             _logger = logger;
 
+            SortIndex = s_random.Next(1000);
             var questionMetaDataItemsList = _questionMetaDataItems?.ToList() ?? new List<MetaDataItem>();
             var firstTextMetaData = questionMetaDataItemsList.FirstOrDefault(m => m.Type == MetaDataType.Text);
             var index = firstTextMetaData != null ? questionMetaDataItemsList.IndexOf(firstTextMetaData) + 1 : 0;
@@ -83,6 +85,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 Details.Add(detail);
             }
 
+            Details = new ObservableCollection<IInteractiveEntry>(Details.OrderBy(d => d.SortIndex));
             OnPropertyChanged(nameof(HasDetails));
 
             _selectedDetailIndex = Details.Any() ? 0 : null;
@@ -130,8 +133,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     break;
             }
 
+            Answers = new ObservableCollection<IInteractiveEntry>(Answers.OrderBy(a => a.SortIndex));
             RefreshCommands();
         }
+
+        public int SortIndex { get; }
 
         public LayoutType QuestionLayout
         {

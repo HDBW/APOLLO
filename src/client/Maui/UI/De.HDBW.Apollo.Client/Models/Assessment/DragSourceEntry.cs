@@ -12,6 +12,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class DragSourceEntry<TU> : ObservableObject, IAssociateSourceInteractiveEntry
         where TU : class
     {
+        private static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
         private InteractionType _interaction;
         private int _indexToAssociate;
         private bool _isAssociated;
@@ -28,6 +29,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             IsAssociated = isAssociated;
             DragStartingHandler = dragStartingHandler;
             DropCompletedHandler = dropCompletedHandler;
+            SortIndex = s_random.Next(1000);
         }
 
         public object Data { get; }
@@ -69,6 +71,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         }
 
         public AnswerType? AnswerType { get; }
+
+        public int SortIndex { get; }
 
         private Action<DragSourceEntry<TU>>? DragStartingHandler { get; }
 
