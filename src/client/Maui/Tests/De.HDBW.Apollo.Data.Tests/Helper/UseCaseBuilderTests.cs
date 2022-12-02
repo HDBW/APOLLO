@@ -50,7 +50,6 @@ public class UseCaseBuilderTests : IDisposable
         _courseAppointmentRepository = new CourseAppointmentRepository(this.SetupLogger<CourseAppointmentRepository>());
         _courseContactRelationRepository = new CourseContactRelationRepository(this.SetupLogger<CourseContactRelationRepository>());
         _eduProviderItemRepository = new EduProviderItemRepository(this.SetupLogger<EduProviderItemRepository>());
-        _assessmentScoreRespository = new AssessmentScoreRepository(this.SetupLogger<AssessmentScoreRepository>());
     }
 
     public void Dispose()
