@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
@@ -68,9 +69,7 @@ namespace De.HDBW.Apollo.Data.Services
             // TODO: Iterate over answerItems and create Category result
             var questions = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentId, token).ConfigureAwait(false);
             IEnumerable<QuestionItem> questionItems = questions.ToList();
-            Dictionary<long, int> maxScoreDictionary = questions.GroupBy(c => c.CategoryId)
-                .ToDictionary(c => c.Key, c => c.Sum(s => s.Scalar));
-
+            Dictionary<long, int> maxScoreDictionary = new();
             // set the score data now that we have some information
             score.AssessmentId = assessmentId;
             score.UserId = userId;
@@ -96,7 +95,6 @@ namespace De.HDBW.Apollo.Data.Services
                 // NOTE: !!! Important set the CourseId of the category to the result !!!
                 categoryResult.CourseId = category.CourseId;
                 var categoryQuestions = questions.Where(x => x.CategoryId.Equals(category.Id));
-                Dictionary<long, int> userScores = new ();
                 int scores = 0;
 
                 foreach (var categoryQuestion in categoryQuestions)
@@ -104,6 +102,12 @@ namespace De.HDBW.Apollo.Data.Services
                     switch (categoryQuestion.QuestionType)
                     {
                         case QuestionType.Choice:
+
+                            maxScoreDictionary = maxScoreDictionary.Union(questions
+                                                                            .GroupBy(c => c.CategoryId)
+                                                                            .ToDictionary(c => c.Key, c => c.Sum(s => s.Scalar)))
+                                                                   .ToDictionary(k => k.Key, v => v.Value);
+
                             int expected = GetBitMaskFromString(categoryQuestion.ScoringOption, categoryQuestion.Id);
 
                             var categoryQuestionAnswers = await AnswerItemRepository.GetItemsByForeignKeysAsync(new List<long> { categoryQuestion.Id }, token);
@@ -134,6 +138,21 @@ namespace De.HDBW.Apollo.Data.Services
 
                             break;
                         case QuestionType.Associate:
+                            var associateAnswers = await AnswerItemRepository.GetItemsByForeignKeysAsync(new List<long> { categoryQuestion.Id }, token);
+                            scores = 1;
+                            foreach (AnswerItem answerItem in associateAnswers)
+                            {
+                                // TODO: Check if there is a answeritem for the answer, compare results and calculate bitmask
+                                var userAnswer = answerItemResults.Where(a => a.AnswerItemId.Equals(answerItem.Id));
+                                if (userAnswer != null)
+                                {
+                                    if (answerItem.Value == null || !answerItem.Value.Equals(userAnswer.First().Value))
+                                    {
+                                        scores = 0;
+                                    }
+                                }
+                            }
+
                             break;
                         case QuestionType.Rating:
                             // rating question atm has a different structure so we need to look out for the answers instead?
@@ -145,7 +164,7 @@ namespace De.HDBW.Apollo.Data.Services
 
                             Dictionary<long, int> tmpDictionary = answerItems
                                                                         .GroupBy(c => c.QuestionId)
-                                                                        .ToDictionary(ca => ca.Key,
+                                                                        .ToDictionary(ca => category.Id,
                                                                                       ca => ca.Where(s => s.Scalar > 0)
                                                                                                                     .Sum(s => s.Scalar * 5).GetValueOrDefault(0));
 
@@ -157,8 +176,10 @@ namespace De.HDBW.Apollo.Data.Services
                                 var userAnswer = answerItemResults.Where(a => a.AnswerItemId.Equals(item.Id));
                                 if (userAnswer != null && item != null)
                                 {
+                                    Debug.WriteLine($"Score ADD Value:{Convert.ToInt32(userAnswer.First().Value)} * {Convert.ToInt32(item.Scalar)}" );
                                     // The value of the answeritem should be the index which should be the indication vector, these are a lot of should bes will see.
-                                    scores += Convert.ToInt32(userAnswer.First().Value) * Convert.ToInt32(item.Scalar) * 5;
+                                    scores += Convert.ToInt32(userAnswer.First().Value) * Convert.ToInt32(item.Scalar);
+                                    Debug.WriteLine($"Score NEW Value:{scores}");
                                 }
                             }
 
@@ -168,7 +189,9 @@ namespace De.HDBW.Apollo.Data.Services
                     }
                 }
 
+                Debug.WriteLine($"category.Result:{(100 * scores)} / {maxScoreDictionary[category.Id]}");
                 categoryResult.Result = (100 * scores) / maxScoreDictionary[category.Id];
+                Debug.WriteLine($"category.Result:{categoryResult.Result}");
                 results.Add(categoryResult); // REVIEW: DO WE NEED IT?
                 await AssessmentCategoryResultsRepository.AddItemAsync(categoryResult, token);
             }
@@ -206,7 +229,7 @@ namespace De.HDBW.Apollo.Data.Services
                     j--;
                 }
 
-                Logger?.Log(LogLevel.Information, new EventId(1001, $"AssessmentScoreService:GetBitMaskFromString"), "Binary Vector for Question {questionId} : {ToBinary(vector)}", questionScoringOption);
+                Logger?.Log(LogLevel.Information, new EventId(1001, "AssessmentScoreService:GetBitMaskFromString"), $"Binary Vector for Question {questionId} : {ToBinary(vector)}");
                 return vector;
             }
 
