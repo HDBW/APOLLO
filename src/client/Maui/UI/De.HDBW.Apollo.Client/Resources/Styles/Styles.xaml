@@ -342,50 +342,47 @@
         <Grid ColumnDefinitions="auto,*" >
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroupList>
-                     <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal"/>
-                    <VisualState x:Name="Disabled">
-                        <VisualState.Setters>
-                            <Setter TargetName="Button" Property="Ellipse.Stroke" Value="{AppThemeBinding Light={StaticResource Primary150}, Dark={StaticResource Primary150}}" />
-                            <Setter TargetName="CheckedIndicator" Property="Ellipse.Stroke" Value="{AppThemeBinding Light={StaticResource Primary150}, Dark={StaticResource Primary150}}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter TargetName="Button" Property="Ellipse.Stroke" Value="{AppThemeBinding Light={StaticResource Primary150}, Dark={StaticResource Primary150}}" />
+                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Fill" Value="{AppThemeBinding Light={StaticResource Primary150}, Dark={StaticResource Primary150}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
                     <VisualStateGroup x:Name="CheckedStates">
                         <VisualState x:Name="Checked">
                             <VisualState.Setters>
                                 <Setter TargetName="Button" Property="Ellipse.Stroke" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
-                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Opacity" Value="1" />
+                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Fill" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
                             </VisualState.Setters>
                         </VisualState>
-
                         <VisualState x:Name="Unchecked">
                             <VisualState.Setters>
-                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Opacity" Value="0" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
             <Ellipse x:Name="Button"
-                                     Stroke="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray600}}"
-                                     StrokeThickness="2"
-                                     InputTransparent="True"
-                                     Fill="White"
-                                     WidthRequest="21"
-                                     HeightRequest="21"
-                                     Aspect="Uniform"
-                                     HorizontalOptions="Center"
-                                     VerticalOptions="Center" />
+                    Stroke="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray600}}"
+                    StrokeThickness="2"
+                    InputTransparent="True"
+                    Fill="White"
+                    WidthRequest="21"
+                    HeightRequest="21"
+                    Aspect="Uniform"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
             <Ellipse x:Name="CheckedIndicator"
-                                     Fill="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
-                                     InputTransparent="True"
-                                     WidthRequest="11"
-                                     HeightRequest="11"
-                                     Opacity="0"
-                                     Aspect="Uniform"
-                                     HorizontalOptions="Center"
-                                     VerticalOptions="Center" />
+                    Fill="White"
+                    InputTransparent="True"
+                    WidthRequest="11"
+                    HeightRequest="11"
+                    Aspect="Uniform"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
             <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="{TemplateBinding Path=Padding}"/>
         </Grid>
     </ControlTemplate>
