@@ -37,11 +37,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ICourseItemRepository courseItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             IDispatcherService dispatcherService,
+            ISessionService sessionService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<AssessmentResultViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            SessionService = sessionService;
             AnswerItemResultRepository = answerItemResultRepository;
             AssessmentScoreRepository = assessmentScoreRepository;
             AssessmentResultService = assessmentResultService;
@@ -69,6 +71,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ICourseItemRepository CourseItemRepository { get; }
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
+
+        private ISessionService SessionService { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -139,11 +143,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void LoadonUIThread(AssessmentScore score, IEnumerable<CourseItem> courseItems, IEnumerable<EduProviderItem> eduProviderItems)
         {
-            Score = (double)score.PercentageScore;
+            Score = (double)score.PercentageScore / 100d;
             var converter = new CourseTagTypeToStringConverter();
             var interactions = new List<InteractionEntry>();
             foreach (var course in courseItems)
             {
+                course.UnPublishingDate = null;
                 var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
 
                 var courseData = new NavigationParameters();
@@ -162,7 +167,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         break;
                 }
 
-                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, course.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
                 Interactions = new ObservableCollection<InteractionEntry>(interactions);
                 OnPropertyChanged(nameof(HasInteractions));
@@ -227,6 +232,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Task HandleToggleIsFavorite(StartViewInteractionEntry entry)
         {
+            if (entry.IsFavorite)
+            {
+                SessionService.RemoveFavorite(entry.EntityId, entry.EntityType);
+            }
+            else
+            {
+                SessionService.AddFavorite(entry.EntityId, entry.EntityType);
+            }
             return Task.CompletedTask;
         }
     }

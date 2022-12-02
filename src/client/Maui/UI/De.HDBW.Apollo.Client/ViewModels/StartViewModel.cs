@@ -105,17 +105,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var assessments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var assessmentIds = assessments.Select(a => a.Id).ToList();
                     var assessmentResults = await AnswerItemResultRepository.GetItemsByForeignKeysAsync(assessmentIds, worker.Token).ConfigureAwait(false);
-                    if (UseCase == useCase)
-                    {
-                        await ExecuteOnUIThreadAsync(
-                           () => LoadonUIThread(
-                           assessmentIds,
-                           assessmentResults), worker.Token);
-                        return;
-                    }
-
                     UseCase = useCase;
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
+                    courses = courses.Where(c => !c.UnPublishingDate.HasValue).ToList();
                     var userProfile = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
 
@@ -128,6 +120,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                            eduProviders), worker.Token);
 
                     var taskList = new List<Task>();
+
                     /*
                     Task<NavigationParameters?>? dialogTask = null;
                     var isFirstTime = PreferenceService.GetValue(Preference.IsFirstTime, true);
@@ -169,26 +162,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private void LoadonUIThread(IEnumerable<long> assessmentIds, IEnumerable<AnswerItemResult> assessmentResults)
-        {
-            foreach (var category in InteractionCategories)
-            {
-                foreach (var interaction in category.Interactions.OfType<StartViewInteractionEntry>().Where(i => i.EntityType == typeof(AssessmentItem)))
-                {
-                    var navigationData = interaction.Data as NavigationData;
-                    if (navigationData == null)
-                    {
-                        continue;
-                    }
-
-                    var id = navigationData.Parameters?.GetValue<long?>(NavigationParameter.Id);
-                    var status = id.HasValue && assessmentResults.Any(r => r.AssessmentItemId == id.Value) ? Status.Processed : Status.Unknown;
-                    interaction.Status = Status.Processed;
-                    interaction.Status = status;
-                }
-            }
-        }
-
         private void LoadonUIThread(
            IEnumerable<AssessmentItem> assessmentItems,
            IEnumerable<AnswerItemResult> assessmentResults,
@@ -202,6 +175,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var interactions = new List<InteractionEntry>();
             var filters = new List<InteractionEntry>();
             IValueConverter converter = new AssessmentTypeToStringConverter();
+            var favorites = new List<StartViewInteractionEntry>();
             foreach (var assesment in assessmentItems)
             {
                 var filterText = converter.Convert(assesment, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
@@ -222,7 +196,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var durationString = string.Format(Resources.Strings.Resource.Global_DurationFormat, !string.IsNullOrWhiteSpace(assesment.Duration) ? assesment.Duration : 0);
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
                 var status = (assessmentResults?.Any(r => r.AnswerItemId == assesment.Id) ?? false) ? Status.Processed : Status.Unknown;
-                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, assesment.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == assesment.Id && f.Type == typeof(AssessmentItem));
+                if (((StartViewInteractionEntry)interaction).IsFavorite)
+                {
+                    favorites.Add((StartViewInteractionEntry)interaction);
+                }
+
                 interactions.Add(interaction);
                 _filtermappings.Add(interaction, assesment.AssessmentType);
             }
@@ -253,7 +233,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         break;
                 }
 
-                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, course.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == course.Id && f.Type == typeof(CourseItem));
+                if (((StartViewInteractionEntry)interaction).IsFavorite)
+                {
+                    favorites.Add((StartViewInteractionEntry)interaction);
+                }
+
                 interactions.Add(interaction);
                 _filtermappings.Add(interaction, course.CourseTagType);
             }
@@ -279,7 +265,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             interactions = new List<InteractionEntry>();
             filters = new List<InteractionEntry>();
-            InteractionCategories.Add(FavoriteInteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_FavoritesHeadline, Resources.Strings.Resource.StartViewModel_FavoritesSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
+            var favoriteInteractionCategoryEntry = FavoriteInteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_FavoritesHeadline, Resources.Strings.Resource.StartViewModel_FavoritesSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore);
+            AddFavorites((FavoriteInteractionCategoryEntry)favoriteInteractionCategoryEntry, favorites);
+            InteractionCategories.Add(favoriteInteractionCategoryEntry);
         }
 
         private bool CanHandleFilter(InteractionEntry interaction)
@@ -398,19 +386,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Task HandleMakeFavorite(StartViewInteractionEntry entry)
         {
+            entry.IsFavorite = true;
+            SessionService.AddFavorite(entry.EntityId, entry.EntityType);
             var favoriteInteraction = InteractionCategories.OfType<FavoriteInteractionCategoryEntry>().FirstOrDefault();
             if (favoriteInteraction == null)
             {
                 return Task.CompletedTask;
             }
 
-            entry.IsFavorite = true;
             InteractionCategories.Remove(favoriteInteraction);
             var interaction = entry.Clone() as InteractionEntry;
             favoriteInteraction.AddInteraction(interaction!);
             InteractionCategories.Add(favoriteInteraction);
-
             return Task.CompletedTask;
+        }
+
+        private void AddFavorites(FavoriteInteractionCategoryEntry favoriteInteraction, IEnumerable<StartViewInteractionEntry> entries)
+        {
+            foreach (var entry in entries)
+            {
+                var interaction = entry.Clone() as InteractionEntry;
+                favoriteInteraction.AddInteraction(interaction!);
+            }
         }
 
         private bool CanHandleRemoveFavorite(StartViewInteractionEntry entry)
@@ -445,7 +442,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             sourceEntry.IsFavorite = false;
-
+            SessionService.RemoveFavorite(sourceEntry.EntityId, sourceEntry.EntityType);
             if (favoriteInteraction.Interactions.Contains(entry))
             {
                 InteractionCategories.Remove(favoriteInteraction);
