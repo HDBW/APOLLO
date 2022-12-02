@@ -55,14 +55,18 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             _questionMetaDataItems = questionMetaDataItems;
             _logger = logger;
 
-            var images = _questionMetaDataItems?.Where(m => m.Type == MetaDataType.Image) ?? new List<MetaDataItem>();
+            var questionMetaDataItemsList = _questionMetaDataItems?.ToList() ?? new List<MetaDataItem>();
+            var firstTextMetaData = questionMetaDataItemsList.FirstOrDefault(m => m.Type == MetaDataType.Text);
+            var index = firstTextMetaData != null ? questionMetaDataItemsList.IndexOf(firstTextMetaData) + 1 : 0;
 
-            foreach (var image in images)
+            var detailMetaDatas = _questionMetaDataItems?.Skip(index).Where(m => m.Type == MetaDataType.Image || m.Type == MetaDataType.Text) ?? new List<MetaDataItem>();
+
+            foreach (var detailMetaData in detailMetaDatas)
             {
-                var metaData = new List<MetaDataItem>() { image };
-                if (questionDetailMetaData.ContainsKey(image))
+                var metaData = new List<MetaDataItem>() { detailMetaData };
+                if (questionDetailMetaData.ContainsKey(detailMetaData))
                 {
-                    metaData.AddRange(questionDetailMetaData[image]);
+                    metaData.AddRange(questionDetailMetaData[detailMetaData]);
                 }
 
                 IInteractiveEntry? detail = null;
