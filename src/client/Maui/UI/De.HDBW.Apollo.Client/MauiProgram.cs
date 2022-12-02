@@ -18,6 +18,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Identity.Client;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Serilog;
 using Serilog.Configuration;
@@ -47,7 +48,7 @@ public static class MauiProgram
         Log.Debug($"Platform: {DeviceInfo.Current.Platform}");
         Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
         SetupRoutes();
-
+        SetupHandler();
         var result = SetupB2CLogin(builder.Services);
         SetupServices(builder.Services, result);
         SetupRepositories(builder.Services);
@@ -150,6 +151,8 @@ public static class MauiProgram
     private static LoggerConfiguration UseApplicationInsights(this LoggerSinkConfiguration loggerConfiguration, TelemetryConfiguration telemetryConfiguration, ITelemetryConverter telemetryConverter, LogEventLevel restrictedToMinimumLevel = LogEventLevel.Verbose, LoggingLevelSwitch? levelSwitch = null)
     {
         var telemetryClient = new TelemetryClient(telemetryConfiguration);
+        telemetryClient.Context.Location.Ip = "0.0.0.0";
+
         telemetryClient.Context.Device.OemName = DeviceInfo.Manufacturer;
         telemetryClient.Context.Device.Model = DeviceInfo.Current.Model;
         telemetryClient.Context.Device.Type = DeviceInfo.Current.DeviceType.ToString();
@@ -182,6 +185,7 @@ public static class MauiProgram
         services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
         services.AddSingleton<IAssessmentScoreRepository, AssessmentScoreRepository>();
         services.AddSingleton<IAssessmentCategoryRepository, AssessmentCategoryRepository>();
+        services.AddSingleton<IAssessmentCategoryResultRepository, AssessmentCategoryResultRepository>();
         services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
         services.AddSingleton<IAnswerItemResultRepository, AnswerItemResultRepository>();
         services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
@@ -224,6 +228,9 @@ public static class MauiProgram
 
         services.AddTransient<SkipQuestionDialog>();
         services.AddTransient<SkipQuestionDialogViewModel>();
+
+        services.AddTransient<ConfirmDataUsageDialog>();
+        services.AddTransient<ConfirmDataUsageDialogViewModel>();
 
         services.AddTransient<MessageDialog>();
         services.AddTransient<MessageDialogViewModel>();
@@ -268,5 +275,15 @@ public static class MauiProgram
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
         Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
+    }
+
+    private static void SetupHandler()
+    {
+        Microsoft.Maui.Handlers.RadioButtonHandler.Mapper.AppendToMapping("TextColor", (handler, view) =>
+        {
+#if IOS
+
+#endif
+        });
     }
 }

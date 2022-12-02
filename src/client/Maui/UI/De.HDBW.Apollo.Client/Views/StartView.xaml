@@ -28,7 +28,7 @@
                 </Border.GestureRecognizers>
                 <Grid RowDefinitions="*,auto,auto, auto" Padding="0" ColumnDefinitions="*, 28">
                     <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" Grid.ColumnSpan="2" InputTransparent="True"/>
-                    <Border IsVisible="{Binding IsProcessed}" Grid.ColumnSpan="2" InputTransparent="True" Background="{StaticResource DisabledGradientBrush}" StrokeThickness="0">
+                    <Border Loaded="HandleStateChanged" Grid.ColumnSpan="2" InputTransparent="True" Background="{StaticResource DisabledGradientBrush}" StrokeThickness="0">
                         <Image Source="completed.png" WidthRequest="64" HeightRequest="64"/>
                     </Border>
                     <Border InputTransparent="True" IsVisible="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
@@ -67,11 +67,11 @@
                             <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}" Padding="5">
                                 <Button.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="Background" Value="{StaticResource Primary}" />
                                         <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
-                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Background}" />
+                                        <Setter TargetName="PART_Button" Property="Background" Value="{StaticResource Background}" />
                                         <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
                                         <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
                                     </DataTrigger>

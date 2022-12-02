@@ -41,6 +41,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             _canHandleToggleIsFavorite = canHandleToggleIsFavorite;
             Subline = subline;
             Info = info;
+            Status = Status.Processed;
             Status = status;
             EntityType = entityType;
             ImagePath = imagePath?.ToUniformedName();
