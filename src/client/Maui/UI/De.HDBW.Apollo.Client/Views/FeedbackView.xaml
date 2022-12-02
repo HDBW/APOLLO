@@ -267,7 +267,7 @@
         <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
             <VerticalStackLayout Spacing="8" Padding="24,0">
                 <Label Grid.Row="0" Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
-                <Label Grid.Row="1" Text="{Binding Instruction}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}" LineBreakMode="TailTruncation" IsVisible="{Binding HasInstruction}"/>
+                <Label Grid.Row="1" Text="{Binding Instruction}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}" MaxLines="3" LineBreakMode="WordWrap" IsVisible="{Binding HasInstruction}"/>
                 <StackLayout
                     Grid.Row="2" 
                     BindableLayout.ItemTemplateSelector="{StaticResource QuestionLayoutTemplateSelector}"
@@ -290,7 +290,7 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Label Text="{Binding Question}" Grid.Row="0" IsVisible="{Binding HasQuestion}"/>
-                <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}"/>
+                <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}" MaxLines="3" LineBreakMode="WordWrap" />
                 <Image x:Name="PART_Image" Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
                 <StackLayout Grid.Row="2" HeightRequest="200" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
                 </StackLayout>
