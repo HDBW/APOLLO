@@ -10,6 +10,12 @@
 
     <Grid RowDefinitions="auto, 60, *, auto, auto">
         <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" HeightRequest="200" Aspect="AspectFill" Grid.RowSpan="2"/>
+        <Border InputTransparent="True" Background="{StaticResource Tag1Brush}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,0,4" />
+            </Border.StrokeShape>
+            <Label Text="{Binding DecoratorText}" LineBreakMode="TailTruncation"/>
+        </Border>
         <Border BackgroundColor="{StaticResource Background}" StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="0" Margin="12,0"  Grid.RowSpan="2" Grid.Row="1" />
         <ScrollView Grid.Row="1" Padding="24,0,24,12" Margin="0,12,0,0" Grid.RowSpan="2" BackgroundColor="Transparent" >
             <VerticalStackLayout Spacing="16" >
@@ -22,7 +28,7 @@
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
-        <Button Grid.Row="3" Margin="24,0,24,8" Text="{Binding StartText}" Command="{Binding StartCommand}"/>
+        <Button Grid.Row="3" Margin="24,8,24,8" Text="{Binding StartText}" Command="{Binding StartCommand}"/>
         <Label  Grid.Row="4" Margin="24,0,24,8" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" Text="{x:Static strings:Resource.AssessmentDescriptionView_OnlyOnce}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}"/>
     </Grid>
 </ContentPage>
