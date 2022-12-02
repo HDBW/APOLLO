@@ -111,12 +111,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             DescriptionTitle = assessmentItem.Title;
             DescriptionText = assessmentItem.Description;
             DescriptionDetails = assessmentItem.Disclaimer;
-            if (TimeSpan.TryParse(assessmentItem.Duration, CultureInfo.InvariantCulture, out TimeSpan duration))
-            {
-                duration = TimeSpan.Zero;
-            }
-
-            Duration = string.Format(Resources.Strings.Resource.Global_DurationFormat, duration.TotalMinutes);
+            Duration = string.Format(Resources.Strings.Resource.Global_DurationFormat, !string.IsNullOrWhiteSpace(assessmentItem.Duration) ? assessmentItem.Duration : 0);
             switch (assessmentItem.AssessmentType)
             {
                 case AssessmentType.SoftSkillAssessment:
