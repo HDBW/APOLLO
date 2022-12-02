@@ -306,7 +306,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 CourseType = CourseType.InPerson,
                                 Occurrence = OccurrenceType.FullTime,
                                 //320 Unterrichtseinheiten je 45 min pro Modul + 120 Unterrichtseinheiten je 60 min im Unternehmen
-                                Duration = TimeSpan.FromMinutes(129600),//320 Unterrichtseinheiten je 45 min pro Modul + 120 Unterrichtseinheiten je 60 min im Unternehmen - 6 Module
+                                Duration = "11 Wochen",//320 Unterrichtseinheiten je 45 min pro Modul + 120 Unterrichtseinheiten je 60 min im Unternehmen - 6 Module
                                 CourseUrl = new Uri("https://www.biwe-bbq.de/weiterbildungen/anzeige/tq-lagerlogistik"),
                                 ExternalId = "https://www.biwe-bbq.de/weiterbildungen/anzeige/tq-lagerlogistik",
                                 Language = "DE-DE",
@@ -328,6 +328,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 Benefits = "Bei erfolgreicher Kompetenzfeststellung erhalten Sie nach jedem Modul ein Zertifikat inklusive Kompetenzfeststellungsergebnis, das bundesweit anerkannt ist.",
                                 LoanOptions = "Förderfähig durch einen Bildungsgutschein, die Deutsche Rentenversicherung Bund und Land sowie das Qualifizierungschancengesetz",
                                 Skills = "<Label TextType=\"Html\">\r\n    <![CDATA[\r\n       <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/ec66b111-d8d0-4516-88ba-ee0b6fe6f695\" target=\"_blank\">Kundenbestellungen bearbeiten</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/27536739-c38b-45d2-9e96-1573b1d32fdd\" target=\"_blank\">Verpackungszubehör nutzen</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/5d2e82cc-5943-4218-a459-a1956fad2b63\" target=\"_blank\">Lagerbestand verwalten</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/d5fa1ed6-6cd8-41b9-8e78-2ba168ff3457\" target=\"_blank\">Bestellungen aus dem Online-Geschäft bearbeiten</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/7838de1e-d65e-4a3f-b60b-e2213026116f\" target=\"_blank\">Geräte für den Materialtransport bedienen</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/ab2bb44a-3956-4028-8715-8b70b1960b99\" target=\"_blank\">schwere Gewichte heben</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/e0ae0101-ab8f-47a2-938b-ab0cc367b3b5\" target=\"_blank\">Lagerdatenbank pflegen</a>.\r\n   \t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/5b91b6d4-345e-4195-a078-218514871e7b\" target=\"_blank\">effiziente Nutzung von Lagerraum sicherstellen</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/28b7d7fb-0483-4877-9aaa-f990f10f16f5\" target=\"_blank\">Pick-by-Voice-Kommissionierungssysteme bedienen</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/b2b8ec41-d6d1-470d-9e78-4eee515aaa3d\" target=\"_blank\">Kettensäge bedienen</a>.\r\n\t   <a href=\"https://esco.ec.europa.eu/de/classification/skills?uri=http://data.europa.eu/esco/skill/23db1cab-e565-4a90-89f8-3a8685a20029\" target=\"_blank\">den physischen Zustand des Lagers pflegen und aufrechterhalten</a>.   \r\n    ]]>\r\n </Label>"
+                                
             } },
             //{ 1, new CourseItem() {
             //                    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -411,7 +412,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 CourseTagType = CourseTagType.PartialQualification,
                 CourseType = CourseType.Online,
                 Occurrence = OccurrenceType.FullTime,
-                Duration = TimeSpan.FromMinutes(129600),
+                Duration = "11 Wochen",
                 CourseUrl = new Uri("https://www.bfz.de/kurs/eca-90527/fachlageristin"),
                 ExternalId = "https://www.bfz.de/kurs/eca-90527/fachlageristin",
                 Language = "DE-DE",
@@ -481,7 +482,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 CourseTagType = CourseTagType.PartialQualification,
                 CourseType = CourseType.Online,
                 Occurrence = OccurrenceType.FullTime,
-                Duration = TimeSpan.FromMinutes(14400),
+                Duration = "11 Wochen",
                 CourseUrl = new Uri("https://www.bfz.de/kurs/eca-90531/fachlageristin-gueterbewegung-und-arbeitsschutz-modul-1"),
                 ExternalId = "https://www.bfz.de/kurs/eca-90531/fachlageristin-gueterbewegung-und-arbeitsschutz-modul-1",
                 Language = "DE-DE",
@@ -552,7 +553,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 CourseTagType = CourseTagType.PartialQualification,
                                 CourseType = CourseType.Online,
                                 Occurrence = OccurrenceType.FullTime,
-                                Duration = TimeSpan.FromMinutes(14400),
+                                Duration = "11 Wochen",
                                 CourseUrl = new Uri("https://www.bfz.de/kurs/eca-90580/fachlageristin-wareneingang-modul-2"),
                                 ExternalId = "https://www.bfz.de/kurs/eca-90580/fachlageristin-wareneingang-modul-2",
                                 Language = "DE-DE",
@@ -622,7 +623,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 CourseTagType = CourseTagType.PartialQualification,
                                 CourseType = CourseType.Online,
                                 Occurrence = OccurrenceType.FullTime,
-                                Duration = TimeSpan.FromMinutes(14400),
+                                Duration = "11 Wochen", 
                                 CourseUrl = new Uri("https://www.bfz.de/kurs/eca-90041/fachlageristin-lagerhaltung-und-warenpflege-modul-3"),
                                 ExternalId = "https://www.bfz.de/kurs/eca-90041/fachlageristin-lagerhaltung-und-warenpflege-modul-3",
                                 Language = "DE-DE",
@@ -692,7 +693,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     CourseTagType = CourseTagType.PartialQualification,
                     CourseType = CourseType.Online,
                     Occurrence = OccurrenceType.FullTime,
-                    Duration = TimeSpan.FromMinutes(14400),
+                    Duration = "11 Wochen",
                     CourseUrl = new Uri("https://www.bfz.de/kurs/eca-90041/fachlageristin-lagerhaltung-und-warenpflege-modul-3"),
                     ExternalId = "https://www.bfz.de/kurs/eca-90041/fachlageristin-lagerhaltung-und-warenpflege-modul-3",
                     Language = "DE-DE",
@@ -760,7 +761,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     CourseTagType = CourseTagType.PartialQualification,
                     CourseType = CourseType.Online,
                     Occurrence = OccurrenceType.FullTime,
-                    Duration = TimeSpan.FromMinutes(14400),
+                    Duration = "11 Wochen",
                     CourseUrl = new Uri("https://www.bfz.de/kurs/eca-90041/fachlageristin-lagerhaltung-und-warenpflege-modul-3"),
                     ExternalId = "https://www.bfz.de/kurs/eca-90041/fachlageristin-lagerhaltung-und-warenpflege-modul-3",
                     Language = "DE-DE",
