@@ -26,6 +26,17 @@ public partial class StartView
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
+#if IOS
+        var handler = Handler as Microsoft.Maui.Handlers.PageHandler;
+        var renderer = handler?.ViewController as UIKit.UIViewController;
+        var gesture = renderer?.NavigationController?.InteractivePopGestureRecognizer;
+        if (gesture == null)
+        {
+            return;
+        }
+
+        gesture.Enabled = true;
+#endif
         if (!IsLoaded)
         {
             return;

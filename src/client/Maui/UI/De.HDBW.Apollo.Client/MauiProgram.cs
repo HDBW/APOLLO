@@ -18,6 +18,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Identity.Client;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Serilog;
 using Serilog.Configuration;
@@ -278,12 +279,11 @@ public static class MauiProgram
 
     private static void SetupHandler()
     {
-        /*Microsoft.Maui.Handlers.ButtonHandler.TextButtonMapper.AppendToMapping("TextColor", (handler, view) =>
+        Microsoft.Maui.Handlers.RadioButtonHandler.Mapper.AppendToMapping("TextColor", (handler, view) =>
         {
 #if IOS
-            handler.PlatformView.SetTitleColor(UIKit.UIColor.Green, UIKit.UIControlState.Highlighted);
+
 #endif
         });
-        */
     }
 }
