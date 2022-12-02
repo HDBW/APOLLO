@@ -139,7 +139,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void LoadonUIThread(AssessmentScore score, IEnumerable<CourseItem> courseItems, IEnumerable<EduProviderItem> eduProviderItems)
         {
-            Score = (double)score.PercentageScore;
+            Score = (double)score.PercentageScore / 100d;
             var converter = new CourseTagTypeToStringConverter();
             var interactions = new List<InteractionEntry>();
             foreach (var course in courseItems)
