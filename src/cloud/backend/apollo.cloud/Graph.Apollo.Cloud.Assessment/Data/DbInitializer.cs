@@ -53,18 +53,22 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             string filepath = String.Empty;
 
+            //UMFRAGE SHEET 1
             filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\UseCaseCourseData.xlsx");
             System.Console.WriteLine(filepath);
             CreateAssessmentFromCsv(filepath, context);
+            //CreateAssessmentFromCsv(filepath, 2, context);
+            //CreateAssessmentFromCsv(filepath, 3, context);
 
 
             filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Booklet_FK_Lagerlogistik.xlsx");
             System.Console.WriteLine(filepath);
-            CreateAssessmentFromCsv(filepath, context);
+            CreateAssessmentFromCsv(filepath,context);
 
             filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Digitale_Kompetenzen.xlsx");
             System.Console.WriteLine(filepath);
-            CreateAssessmentFromCsv(filepath, context);
+            CreateAssessmentFromCsv(filepath,  context);
+
 
 
         }
@@ -75,7 +79,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             {
                 throw new FileNotFoundException("Expected File not found", filename);
             }
-
+            
             //Excel.Application xlApp = new Excel.Application();
             //Excel.Workbook xlWorkbook = null;
             List<BstAssessment> items = GetAssessmentsfromExcelWorkbook(filename);
@@ -99,8 +103,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             MetaData mdInstruction = null;
             foreach (BstAssessment bstAssessment in items)
             {
-                
 
+                if (assessment.UseCaseId != bstAssessment.UseCaseId)
+                    assessment = CreateAssessment(bstAssessment, context);
 
                 if (bstAssessment.GetQuestionType().Equals(QuestionType.Rating) ||
                     bstAssessment.GetQuestionType().Equals(QuestionType.Survey))
@@ -430,175 +435,178 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 for (int i = 2; i <= rowCount; i++)
                 {
                     BstAssessment item = new();
+                    item.UseCaseId = xlRange.Cells[i, ExcelColumnIndexBST.UseCaseId].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.UseCaseId].Value2.ToString())
+                        : default;
 
-                    item.ItemId = (xlRange.Cells[i, ExcelColumnIndex.ItemId].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.ItemId].Value2.ToString()
+                    item.ItemId = (xlRange.Cells[i, ExcelColumnIndexBST.ItemId].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.ItemId].Value2.ToString()
                         : string.Empty;
 
-                    item.ItemType = (xlRange.Cells[i, ExcelColumnIndex.ItemType].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.ItemType].Value2.ToString()
+                    item.ItemType = (xlRange.Cells[i, ExcelColumnIndexBST.ItemType].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.ItemType].Value2.ToString()
                         : string.Empty;
 
-                    item.ItemStem = (xlRange.Cells[i, ExcelColumnIndex.ItemStem].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.ItemStem].Value2.ToString()
+                    item.ItemStem = (xlRange.Cells[i, ExcelColumnIndexBST.ItemStem].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.ItemStem].Value2.ToString()
                         : string.Empty;
 
-                    item.ImageResourceName1 = (xlRange.Cells[i, ExcelColumnIndex.ImageResourceName1].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.ImageResourceName1].Value2.ToString()
+                    item.ImageResourceName1 = (xlRange.Cells[i, ExcelColumnIndexBST.ImageResourceName1].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.ImageResourceName1].Value2.ToString()
                         : string.Empty;
 
-                    item.Instruction = (xlRange.Cells[i, ExcelColumnIndex.Instruction].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.Instruction].Value2.ToString()
+                    item.Instruction = (xlRange.Cells[i, ExcelColumnIndexBST.Instruction].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.Instruction].Value2.ToString()
                         : string.Empty;
 
                     item.NumberOfPrimaryDisctrators =
-                        (xlRange.Cells[i, ExcelColumnIndex.NumberOfPrimaryDisctrators].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.NumberOfPrimaryDisctrators].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.NumberOfPrimaryDisctrators].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.NumberOfPrimaryDisctrators].Value2.ToString()
                             : string.Empty;
 
-                    item.NumberSelectable = xlRange.Cells[i, ExcelColumnIndex.NumberSelectable].Value2 != null
-                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndex.NumberSelectable].Value2.ToString())
+                    item.NumberSelectable = xlRange.Cells[i, ExcelColumnIndexBST.NumberSelectable].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.NumberSelectable].Value2.ToString())
                         : default;
 
                     item.HTMLDistractorPrimary_1 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_1].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_1].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_1].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_1].Value2.ToString()
                             : string.Empty;
 
                     item.HTMLDistractorPrimary_2 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_2].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_2].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_2].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_2].Value2.ToString()
                             : string.Empty;
 
                     item.HTMLDistractorPrimary_3 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_3].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_3].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_3].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_3].Value2.ToString()
                             : string.Empty;
 
                     item.HTMLDistractorPrimary_4 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_4].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorPrimary_4].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_4].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorPrimary_4].Value2.ToString()
                             : string.Empty;
 
 
-                    item.ScoringOption_1 = (xlRange.Cells[i, ExcelColumnIndex.ScoringOption_1].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.ScoringOption_1].Value2.ToString()
+                    item.ScoringOption_1 = (xlRange.Cells[i, ExcelColumnIndexBST.ScoringOption_1].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.ScoringOption_1].Value2.ToString()
                         : string.Empty;
 
                     item.HTMLDistractorSecondary_1 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_1].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_1].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_1].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_1].Value2.ToString()
                             : string.Empty;
                     item.HTMLDistractorSecondary_2 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_2].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_2].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_2].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_2].Value2.ToString()
                             : string.Empty;
                     item.HTMLDistractorSecondary_3 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_3].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_3].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_3].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_3].Value2.ToString()
                             : string.Empty;
 
                     item.HTMLDistractorSecondary_4 =
-                        (xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_4].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.HTMLDistractorSecondary_4].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_4].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.HTMLDistractorSecondary_4].Value2.ToString()
                             : string.Empty;
 
-                    item.Credit_ScoringOption_1 = xlRange.Cells[i, ExcelColumnIndex.Credit_ScoringOption_1].Value2 != null
-                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndex.Credit_ScoringOption_1].Value2.ToString())
+                    item.Credit_ScoringOption_1 = xlRange.Cells[i, ExcelColumnIndexBST.Credit_ScoringOption_1].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.Credit_ScoringOption_1].Value2.ToString())
                         : default;
 
                     item.DescriptionOfProfession =
-                        (xlRange.Cells[i, ExcelColumnIndex.DescriptionOfProfession].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.DescriptionOfProfession].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfProfession].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfProfession].Value2.ToString()
                             : string.Empty;
 
-                    item.Kldb = (xlRange.Cells[i, ExcelColumnIndex.Kldb].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.Kldb].Value2.ToString()
+                    item.Kldb = (xlRange.Cells[i, ExcelColumnIndexBST.Kldb].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.Kldb].Value2.ToString()
                         : string.Empty;
 
                     item.DescriptionOfPartialQualification =
-                        (xlRange.Cells[i, ExcelColumnIndex.DescriptionOfPartialQualification].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.DescriptionOfPartialQualification].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfPartialQualification].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfPartialQualification].Value2.ToString()
                             : string.Empty;
 
                     item.DescriptionOfWorkingProcess =
-                        (xlRange.Cells[i, ExcelColumnIndex.DescriptionOfWorkingProcess].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.DescriptionOfWorkingProcess].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfWorkingProcess].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfWorkingProcess].Value2.ToString()
                             : string.Empty;
 
                     item.Description =
-                        (xlRange.Cells[i, ExcelColumnIndex.Description].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.Description].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.Description].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.Description].Value2.ToString()
                             : string.Empty;
 
                     item.AssessmentType =
-                        (xlRange.Cells[i, ExcelColumnIndex.AssessmentType].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.AssessmentType].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.AssessmentType].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.AssessmentType].Value2.ToString()
                             : string.Empty;
 
                     item.Disclaimer =
-                        (xlRange.Cells[i, ExcelColumnIndex.Disclaimer].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.Disclaimer].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.Disclaimer].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.Disclaimer].Value2.ToString()
                             : string.Empty;
 
                     item.Duration =
-                        (xlRange.Cells[i, ExcelColumnIndex.Duration].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.Duration].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.Duration].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.Duration].Value2.ToString()
                             : string.Empty;
 
                     item.EscoOccupationId =
-                        (xlRange.Cells[i, ExcelColumnIndex.EscoOccupationId].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoOccupationId].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.EscoOccupationId].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.EscoOccupationId].Value2.ToString()
                             : string.Empty;
 
-                    item.SubjectArea = (xlRange.Cells[i, ExcelColumnIndex.SubjectArea].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.SubjectArea].Value2.ToString()
+                    item.SubjectArea = (xlRange.Cells[i, ExcelColumnIndexBST.SubjectArea].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.SubjectArea].Value2.ToString()
                         : string.Empty;
 
-                    item.DescriptionOfSkills = (xlRange.Cells[i, ExcelColumnIndex.DescriptionOfSkills].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.DescriptionOfSkills].Value2.ToString()
+                    item.DescriptionOfSkills = (xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfSkills].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.DescriptionOfSkills].Value2.ToString()
                         : string.Empty;
 
-                    item.EscoId = (xlRange.Cells[i, ExcelColumnIndex.EscoId].Value2 != null)
-                        ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoId].Value2.ToString()
+                    item.EscoId = (xlRange.Cells[i, ExcelColumnIndexBST.EscoId].Value2 != null)
+                        ? (string)xlRange.Cells[i, ExcelColumnIndexBST.EscoId].Value2.ToString()
                         : string.Empty;
 
                     item.EscoSkills =
-                        (xlRange.Cells[i, ExcelColumnIndex.EscoSkills].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.EscoSkills].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.EscoSkills].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.EscoSkills].Value2.ToString()
                             : string.Empty;
 
                     item.Publisher =
-                        (xlRange.Cells[i, ExcelColumnIndex.Publisher].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.Publisher].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.Publisher].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.Publisher].Value2.ToString()
                             : string.Empty;
 
                     item.Title =
-                        (xlRange.Cells[i, ExcelColumnIndex.Title].Value2 != null)
-                            ? (string)xlRange.Cells[i, ExcelColumnIndex.Title].Value2.ToString()
+                        (xlRange.Cells[i, ExcelColumnIndexBST.Title].Value2 != null)
+                            ? (string)xlRange.Cells[i, ExcelColumnIndexBST.Title].Value2.ToString()
                             : string.Empty;
 
-                    item.Limit = xlRange.Cells[i, ExcelColumnIndex.Limit].Value2 != null
-                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndex.Limit].Value2.ToString())
+                    item.Limit = xlRange.Cells[i, ExcelColumnIndexBST.Limit].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.Limit].Value2.ToString())
                         : default;
 
 
                     item.CourseId = Convert.ToInt64(
-                        (xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2 != null)
-                            ? xlRange.Cells[i, ExcelColumnIndex.CourseId].Value2
+                        (xlRange.Cells[i, ExcelColumnIndexBST.CourseId].Value2 != null)
+                            ? xlRange.Cells[i, ExcelColumnIndexBST.CourseId].Value2
                             : -1);
 
-                    item.QuestionHasPictures = xlRange.Cells[i, ExcelColumnIndex.QuestionHasPicture].Value2 != null
-                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndex.QuestionHasPicture].Value2.ToString())
+                    item.QuestionHasPictures = xlRange.Cells[i, ExcelColumnIndexBST.QuestionHasPicture].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.QuestionHasPicture].Value2.ToString())
                         : default;
 
 
-                    item.AnswerHasPicture = xlRange.Cells[i, ExcelColumnIndex.AnswerHasPicture].Value2 != null
-                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndex.AnswerHasPicture].Value2.ToString())
+                    item.AnswerHasPicture = xlRange.Cells[i, ExcelColumnIndexBST.AnswerHasPicture].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.AnswerHasPicture].Value2.ToString())
                         : default;
 
-                    item.AmountAnswers = xlRange.Cells[i, ExcelColumnIndex.AmountAnswers].Value2 != null
-                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndex.AmountAnswers].Value2.ToString())
+                    item.AmountAnswers = xlRange.Cells[i, ExcelColumnIndexBST.AmountAnswers].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.AmountAnswers].Value2.ToString())
                         : default;
 
                     items.Add(item);
@@ -783,8 +791,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         private static Models.Assessment CreateAssessment(BstAssessment bstAssessment, AssessmentContext context)
         {
 
+            var assessmentCheck = context.Assessments.Where(a => a.ExternalId.Equals(bstAssessment.ItemId)).FirstOrDefault();
+            if (assessmentCheck != null)
+            {
+                bstAssessment.ItemId = Guid.NewGuid().ToString();
+            }
+
             Models.Assessment assessment  = new Models.Assessment
             {
+                UseCaseId = bstAssessment.UseCaseId,
                 Kldb = bstAssessment.Kldb,
                 AssessmentType = bstAssessment.GetAssessmentType(),
                 Description = bstAssessment.Description,

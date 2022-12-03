@@ -4,6 +4,7 @@ using Invite.Apollo.App.Graph.Assessment.Repository;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services
@@ -20,9 +21,10 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         private readonly IQuestionHasMetaDataRepository _questionHasMetaDataRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMetaDataHasMetaDataRepository _metaDataHasMetaDataRepository;
-        
+        private readonly ICategoryRecomendationRepository _categoryRecomendationRepository;
 
-        public AssessmentDataService(ILogger<AssessmentDataService> logger, IAssessmentRepository assessmentRepository, IQuestionRepository questionRepository, IAnswerRepository answerRepository, IMetaDataRepository metaDataRepository, IAnswerHasMetaDataRepository answerHasMetaDataRepository, IQuestionHasMetaDataRepository questionHasMetaDataRepository, ICategoryRepository categoryRepository, IMetaDataHasMetaDataRepository metaDataHasMetaDataRepository)
+
+        public AssessmentDataService(ILogger<AssessmentDataService> logger, IAssessmentRepository assessmentRepository, IQuestionRepository questionRepository, IAnswerRepository answerRepository, IMetaDataRepository metaDataRepository, IAnswerHasMetaDataRepository answerHasMetaDataRepository, IQuestionHasMetaDataRepository questionHasMetaDataRepository, ICategoryRepository categoryRepository, IMetaDataHasMetaDataRepository metaDataHasMetaDataRepository, ICategoryRecomendationRepository categoryRecomendationRepository)
         {
             _logger = logger;
             _assessmentRepository = assessmentRepository;
@@ -33,6 +35,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             _questionHasMetaDataRepository = questionHasMetaDataRepository;
             _categoryRepository = categoryRepository;
             _metaDataHasMetaDataRepository = metaDataHasMetaDataRepository;
+            _categoryRecomendationRepository = categoryRecomendationRepository;
         }
 
         
@@ -535,5 +538,379 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public void DeleteAssessmentCategory(AssessmentCategory category) => throw new NotImplementedException();
 
         #endregion
+
+        #region Implementation of ICategoryRecomendation
+        public async Task<IEnumerable<CategoryRecomendation>> GetAllCategoryRecomendationsAsync()
+        {
+            return await _categoryRecomendationRepository.GetAllAsync();
+        }
+
+        public async Task<CategoryRecomendation> GetCategoryRecomendationByIdAsync(long categoryRecomendationId) =>
+            await _categoryRecomendationRepository.GetSingleAsync(categoryRecomendationId);
+
+        public async Task<CategoryRecomendation> GetCategoryRecomendationByCategoryIdAsync(long categoryId) =>
+            await _categoryRecomendationRepository.GetSingleAsync(categoryId);
+
+        public void CreateCategoryRecomendation(CategoryRecomendation categoryRecomendation) => throw new NotImplementedException();
+
+        public void EditCategoryRecomendation(CategoryRecomendation categoryRecomendation) => throw new NotImplementedException();
+
+        public void DeleteCategoryRecomendation(CategoryRecomendation categoryRecomendation) => throw new NotImplementedException();
+
+        public async Task<IEnumerable<CategoryRecomendationItem>> GetAllCategoryRecomendationItemAsync()
+        {
+            var list = await GetAllCategoryRecomendationsAsync();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.CategoryRecomendation, CategoryRecomendationItem>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<CategoryRecomendationItem> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<CategoryRecomendationItem>(item));
+            }
+            return result;
+        }
+
+        public async Task<CategoryRecomendationItem> GetCategoryRecomendationItemByIdAsync(long categoryRecomendationId)
+        {
+            var item = GetCategoryByIdAsync(categoryRecomendationId);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.CategoryRecomendation, CategoryRecomendationItem>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            return mapper.Map<CategoryRecomendationItem>(item);
+        }
+
+        public void CreateCategoryRecomendationItem(CategoryRecomendationItem categoryRecomendationItem) => throw new NotImplementedException();
+
+        public void EditCategoryRecomendationItem(CategoryRecomendationItem categoryRecomendationItem) => throw new NotImplementedException();
+
+        public void DeleteCategoryRecomendationItem(CategoryRecomendationItem categoryRecomendationItem) => throw new NotImplementedException();
+        #endregion
+
+
+        #region December UseCase
+
+
+        public IEnumerable<Models.Assessment> GetAssessmentsByUseCase(int useCase)
+        {
+            var list  = GetAllAssessmentsAsync().Result;
+            var result =  list.Where(u => u.UseCaseId.Equals(useCase));
+            return result;
+        }
+
+        public IEnumerable<Answer> GetAnswersByUseCase(int useCase)
+        {
+            //var result = GetAllAnswersAsync().Result.Where(a => a.Question.Assessment.UseCaseId.Equals(useCase));
+            var questions = GetQuestionsByUseCase(useCase);
+            List<Answer> result = new();
+            foreach (var question in questions)
+            {
+                foreach (Answer answer in question.Answers)
+                {
+                    result.Add(answer);
+                }
+            }
+
+            //var list = GetAllAnswersAsync().Result;
+            //var result = list.Where(a => a.Question.Assessment.UseCaseId.Equals(useCase));
+            return result;
+        }
+
+        public IEnumerable<Question> GetQuestionsByUseCase(int useCase)
+        {
+            var assessments = GetAssessmentsByUseCase(useCase);
+            List<Question> result = new();
+            foreach (var assessment in assessments)
+            {
+                foreach (Question assessmentQuestion in assessment.Questions)
+                {
+                    result.Add(assessmentQuestion);
+                }
+            }
+            //var result= GetAllQuestionsAsync().Result.Where(q => q.Assessment.UseCaseId.Equals(useCase));
+            return result;
+        }
+
+        public IEnumerable<Category> GetCategoryByUseCase(int useCase)
+        {
+            //var result = GetAllCategoriesAsync().Result.Where(q => q.Questions.First().Assessment.UseCaseId.Equals(useCase));
+            //return result;
+            var questions = GetQuestionsByUseCase(useCase);
+            List<Category> result = new();
+            foreach (var question in questions)
+            {
+                result.Add(question.Category);
+            }
+            //var result= GetAllQuestionsAsync().Result.Where(q => q.Assessment.UseCaseId.Equals(useCase));
+            return result;
+
+
+        }
+
+        public IEnumerable<CategoryRecomendation> GetCategoryRecomendationsByUseCase(int useCase)
+        {
+            var categories = GetCategoryByUseCase(useCase);
+            List<CategoryRecomendation> result = new();
+            foreach (var category in categories)
+            {
+                result.AddRange(_categoryRecomendationRepository.FindBy(a => a.CategoryId.Equals(category.Id)));
+                
+            }
+
+            //var result = GetAllCategoryRecomendationsAsync().Result.Where(q => q.Category.Questions.First().Assessment.UseCaseId.Equals(useCase));
+            return result;
+        }
+
+        public IEnumerable<MetaData> GetMetaDataByUseCase(int useCase)
+        {
+            List<MetaData> result = new();
+            var answers = GetAnswersByUseCase(useCase);
+            var questions = GetQuestionsByUseCase(useCase);
+
+            foreach (Answer answer in answers)
+            {
+                foreach (AnswerHasMetaData answerAnswerHasMetaData in answer.AnswerHasMetaDatas)
+                {
+                    result.Add(answerAnswerHasMetaData.MetaData);
+
+                }
+            }
+            foreach (Question question in questions)
+            {
+                foreach (QuestionHasMetaData questionHasMetaData in question.QuestionHasMetaDatas)
+                {
+                    result.Add(questionHasMetaData.MetaData);
+
+                }
+            }
+
+            return result;
+
+        }
+
+        public IEnumerable<MetaDataHasMetaData> GetMetaDataHasMetaDataByUseCase(int useCase)
+        {
+            if (_metaDataHasMetaDataRepository.GetAll().Count() == 0)
+                return new List<MetaDataHasMetaData>();
+
+
+            List<MetaDataHasMetaData> result = new();
+            var questionHasMetaData = GetQuestionHasMetaDataByUseCase(useCase);
+            var answerHasMetaData = GetAnswerHasMetaDataByUseCase(useCase);
+
+            foreach (QuestionHasMetaData qhmd in questionHasMetaData)
+            {
+                if (qhmd.MetaData.TargetMetaDataHasMetaDatas != null)
+                {
+                    foreach (var target in qhmd.MetaData.TargetMetaDataHasMetaDatas)
+                    {
+                        result.Add(target);
+                    }
+                }
+
+                if (qhmd.MetaData.SourceQuestionHasMetaDatas != null)
+                {
+                    foreach (var source in qhmd.MetaData.SourceQuestionHasMetaDatas)
+                    {
+                        result.Add(source);
+                    }
+                }
+
+            }
+
+            foreach (AnswerHasMetaData ahmd in answerHasMetaData)
+            {
+                foreach (var target in ahmd.MetaData.TargetMetaDataHasMetaDatas)
+                {
+                    result.Add(target);
+                }
+
+                foreach (var source in ahmd.MetaData.SourceQuestionHasMetaDatas)
+                {
+                    result.Add(source);
+                }
+            }
+
+            return result.Distinct();
+        }
+
+        public IEnumerable<QuestionHasMetaData> GetQuestionHasMetaDataByUseCase(int useCase)
+        {
+            //return GetAllQuestionHasMetaDataAsync().Result.Where(q => q.Question.Assessment.UseCaseId.Equals(useCase));
+
+            List<QuestionHasMetaData> result = new();
+            
+            var questions = GetQuestionsByUseCase(useCase);
+
+            
+
+            foreach (Question question in questions)
+            {
+                foreach (QuestionHasMetaData questionHasMetaData in question.QuestionHasMetaDatas)
+                {
+                    result.Add(questionHasMetaData);
+
+                }
+            }
+
+            //var list = GetAllMetaDataAsync().Result;
+            //foreach (MetaData metaData in list)
+            //{
+            //    if(metaData.QuestionHasMetaDatas.Count>0 && metaData.QuestionHasMetaDatas.First().Question.Assessment.UseCaseId.Equals(useCase) ||
+            //       metaData.AnswerHasMetaDatas.Count > 0 && metaData.AnswerHasMetaDatas.First().Answer.Question.Assessment.UseCaseId.Equals(useCase))
+            //        result.Add(metaData);
+            //}
+
+            return result;
+
+        }
+
+        public IEnumerable<AnswerHasMetaData> GetAnswerHasMetaDataByUseCase(int useCase)
+        {
+
+            List<AnswerHasMetaData> result = new();
+            var answers = GetAnswersByUseCase(useCase);
+            foreach (Answer answer in answers)
+            {
+                foreach (AnswerHasMetaData answerAnswerHasMetaData in answer.AnswerHasMetaDatas)
+                {
+                    result.Add(answerAnswerHasMetaData);
+
+                }
+            }
+
+            return result;
+            //return GetAllAnswerHasMetaDataAsync().Result.Where(q => q.Answer.Question.Assessment.UseCaseId.Equals(useCase));
+        }
+
+        public IEnumerable<AssessmentItem> GetAssessmentItemsByUseCase(int useCase)
+        {
+            var list = GetAssessmentsByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Assessment, AssessmentItem>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<AssessmentItem> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<AssessmentItem>(item));
+            }
+            return result;
+        }
+
+        public IEnumerable<AnswerItem> GetAnswersItemsByUseCase(int useCase)
+        {
+            var list = GetAnswersByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Answer, AnswerItem>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<AnswerItem> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<AnswerItem>(item));
+            }
+            return result;
+        }
+
+        public IEnumerable<QuestionItem> GetQuestionItemsByUseCase(int useCase)
+        {
+            var list = GetQuestionsByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Question, QuestionItem>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<QuestionItem> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<QuestionItem>(item));
+            }
+            return result; 
+        }
+
+        public IEnumerable<AssessmentCategory> GetAssessmentCategoriesByUseCase(int useCase)
+        {
+            var list = GetCategoryByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Category, AssessmentCategory>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<AssessmentCategory> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<AssessmentCategory>(item));
+            }
+            return result;
+        }
+
+        public IEnumerable<CategoryRecomendationItem> GetCategoryRecomendationItemsByUseCase(int useCase)
+        {
+            var list = GetCategoryRecomendationsByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.CategoryRecomendation, CategoryRecomendationItem>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<CategoryRecomendationItem> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<CategoryRecomendationItem>(item));
+            }
+            return result;
+        }
+
+        public IEnumerable<MetaDataItem> GetMetaDataItemsByUseCase(int useCase)
+        {
+            var list = GetMetaDataByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.MetaData, MetaDataItem>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<MetaDataItem> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<MetaDataItem>(item));
+            }
+            return result;
+        }
+
+        public IEnumerable<MetaDataMetaDataRelation> GetMetaDataMetaDataRelationsByUseCase(int useCase)
+        {
+            var list = GetMetaDataHasMetaDataByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.MetaDataHasMetaData, MetaDataMetaDataRelation>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<MetaDataMetaDataRelation> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<MetaDataMetaDataRelation>(item));
+            }
+            return result;
+        }
+
+        public IEnumerable<QuestionMetaDataRelation> GetQuestionMetaDataRelationByUseCase(int useCase)
+        {
+            var list = GetQuestionHasMetaDataByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.QuestionHasMetaData, QuestionMetaDataRelation>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<QuestionMetaDataRelation> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<QuestionMetaDataRelation>(item));
+            }
+            return result;
+        }
+
+        public IEnumerable<AnswerMetaDataRelation> GetAnswerMetaDataRelationByUseCase(int useCase)
+        {
+            var list = GetAnswerHasMetaDataByUseCase(useCase);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.AnswerHasMetaData, AnswerMetaDataRelation>());
+            //TODO: Overwrite shit
+            var mapper = new Mapper(config);
+            List<AnswerMetaDataRelation> result = new();
+            foreach (var item in list)
+            {
+                result.Add(mapper.Map<AnswerMetaDataRelation>(item));
+            }
+            return result;
+        }
+
+        #endregion
+
+
     }
 }
