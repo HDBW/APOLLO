@@ -88,6 +88,7 @@ public class Startup
         services.AddScoped<IMetaDataRepository, MetaDataRepository>();
         services.AddScoped<IQuestionHasMetaDataRepository, QuestionHasMetaDataRepository>();
         services.AddScoped<IMetaDataHasMetaDataRepository, MetaDataHasMetaDataRepository>();
+        services.AddScoped<ICategoryRecomendationRepository, CategoryRecomendationRepository>();
         
 
 

@@ -1,6 +1,6 @@
 ﻿namespace Invite.Apollo.App.Graph.Assessment.Data
 {
-    public enum ExcelColumnIndex
+    public enum ExcelColumnIndexBST
     {
         ItemId = 1,
         ItemType = 3,
@@ -38,6 +38,53 @@
         CourseId = 64,
         QuestionHasPicture = 65,
         AnswerHasPicture = 66,
-        AmountAnswers = 67
+        AmountAnswers = 67,
+        UseCaseId = 68,
+        CourseId2 = 69,
+        CourseId3 = 70,
+
     }
+
+    public enum ExcelCourseColumnIndex
+    {
+        UseCase = 1,
+        CourseId = 2,
+        UnPublishingDate = 3,
+        CourseProviderId = 4,
+        TrainingProviderId = 5,
+        InstructorId = 6,
+        CourseTagType = 7,
+        CourseType = 8,
+        Occurrence = 9,
+        Duration = 10,
+        CourseUrl = 11,
+        ExternalId = 12,
+        Language = 13,
+        Title = 14,
+        ShortDescription = 15,
+        Description = 16,
+        TargetGroup = 17,
+        PreRequisitesDescription = 18,
+        LearningOutcomes = 19,
+        Benefits = 20,
+        LoanOptions = 21,
+        Skills = 22,
+        KeyPhrases = 23,
+        Price = 24,
+        Note = 25,
+        LinkTermin = 26,
+        ContactId= 27,
+        ContactMail = 28,
+        ContactName = 29,
+        ContactPhone = 30,
+        TerminStart1= 31,
+        TerminEnde1=32,
+        TerminStart2 = 33,
+        TerminEnde2 = 34,
+        TerminStart3 = 35,
+        TerminEnde3 = 36,
+        ContactUrl  = 37
+    }
+
+
 }
