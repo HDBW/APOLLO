@@ -38,7 +38,11 @@
         CourseId = 64,
         QuestionHasPicture = 65,
         AnswerHasPicture = 66,
-        AmountAnswers = 67
+        AmountAnswers = 67,
+        UseCaseId = 68,
+        CourseId2 = 69,
+        CourseId3 = 70,
+
     }
 
     public enum ExcelCourseColumnIndex

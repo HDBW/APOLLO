@@ -53,18 +53,22 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             string filepath = String.Empty;
 
+            //UMFRAGE SHEET 1
             filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\UseCaseCourseData.xlsx");
             System.Console.WriteLine(filepath);
             CreateAssessmentFromCsv(filepath, context);
+            //CreateAssessmentFromCsv(filepath, 2, context);
+            //CreateAssessmentFromCsv(filepath, 3, context);
 
 
             filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Booklet_FK_Lagerlogistik.xlsx");
             System.Console.WriteLine(filepath);
-            CreateAssessmentFromCsv(filepath, context);
+            CreateAssessmentFromCsv(filepath,context);
 
             filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Digitale_Kompetenzen.xlsx");
             System.Console.WriteLine(filepath);
-            CreateAssessmentFromCsv(filepath, context);
+            CreateAssessmentFromCsv(filepath,  context);
+
 
 
         }
@@ -75,7 +79,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             {
                 throw new FileNotFoundException("Expected File not found", filename);
             }
-
+            
             //Excel.Application xlApp = new Excel.Application();
             //Excel.Workbook xlWorkbook = null;
             List<BstAssessment> items = GetAssessmentsfromExcelWorkbook(filename);
@@ -99,8 +103,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             MetaData mdInstruction = null;
             foreach (BstAssessment bstAssessment in items)
             {
-                
 
+                if (assessment.UseCaseId != bstAssessment.UseCaseId)
+                    assessment = CreateAssessment(bstAssessment, context);
 
                 if (bstAssessment.GetQuestionType().Equals(QuestionType.Rating) ||
                     bstAssessment.GetQuestionType().Equals(QuestionType.Survey))
@@ -430,6 +435,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 for (int i = 2; i <= rowCount; i++)
                 {
                     BstAssessment item = new();
+                    item.UseCaseId = xlRange.Cells[i, ExcelColumnIndexBST.UseCaseId].Value2 != null
+                        ? (int)Convert.ToInt32(xlRange.Cells[i, ExcelColumnIndexBST.UseCaseId].Value2.ToString())
+                        : default;
 
                     item.ItemId = (xlRange.Cells[i, ExcelColumnIndexBST.ItemId].Value2 != null)
                         ? (string)xlRange.Cells[i, ExcelColumnIndexBST.ItemId].Value2.ToString()
@@ -783,8 +791,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         private static Models.Assessment CreateAssessment(BstAssessment bstAssessment, AssessmentContext context)
         {
 
+            var assessmentCheck = context.Assessments.Where(a => a.ExternalId.Equals(bstAssessment.ItemId)).FirstOrDefault();
+            if (assessmentCheck != null)
+            {
+                bstAssessment.ItemId = Guid.NewGuid().ToString();
+            }
+
             Models.Assessment assessment  = new Models.Assessment
             {
+                UseCaseId = bstAssessment.UseCaseId,
                 Kldb = bstAssessment.Kldb,
                 AssessmentType = bstAssessment.GetAssessmentType(),
                 Description = bstAssessment.Description,

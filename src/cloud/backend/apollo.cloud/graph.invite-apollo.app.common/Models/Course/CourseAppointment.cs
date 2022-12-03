@@ -31,11 +31,11 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public DateTime? EndDate { get; set; }
 
         //FIXME: Timespan is not considering Recurrence rule, basically time spent. 
-        [IgnoreDataMember]
-        public TimeSpan? Duration
-        {
-            get { return StartDate != null && EndDate != null ? EndDate - StartDate : null; }
-        }
+        //[IgnoreDataMember]
+        public string? Duration { get; set; } = string.Empty;
+        //{
+        //    get { return StartDate != null && EndDate != null ? EndDate - StartDate : null; }
+        //}
 
         /// <summary>
         /// Recurrence Rule as in Google Calendar

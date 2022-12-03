@@ -62,6 +62,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
     [ProtoInclude(42, typeof(CourseAppointmentMetaData))]
     [ProtoInclude(43, typeof(CourseContactRelation))]
 
+    [ProtoInclude(44, typeof(CategoryRecomendationItem))]
 
 
 
