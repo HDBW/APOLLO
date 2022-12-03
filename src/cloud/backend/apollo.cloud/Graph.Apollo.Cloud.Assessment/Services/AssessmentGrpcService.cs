@@ -32,30 +32,47 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         ExcelUseCaseCourse useCaseCourseData = new(courseDataFile);
 
         //TODO: Assessments müssen noch pro UseCase ausgegeben werden!!!!!!!
+        
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 1; i < 4; i++)
         {
             _collections = new UseCaseCollections
             {
-                AssessmentCategories = new Collection<AssessmentCategory>(_assessmentDataService.GetAllAssessmentCategoriesAsync().Result.ToList()),
-                AssessmentItems = new Collection<AssessmentItem>(_assessmentDataService.GetAllAssessmentItemsAsync().Result.ToList()),
-                AnswerItems = new Collection<AnswerItem>(_assessmentDataService.GetAllAnswerItemsAsync().Result.ToList()),
-                AnswerMetaDataRelations = new Collection<AnswerMetaDataRelation>(_assessmentDataService.GetAllAnswerMetaDataRelationsAsync().Result.ToList()),
-                MetaDataItems = new Collection<MetaDataItem>(_assessmentDataService.GetAllMetaDataItemsAsync().Result.ToList()),
-                MetaDataMetaDataRelations = new Collection<MetaDataMetaDataRelation>(_assessmentDataService.GetAllMetaDataMetaDataRelationsAsync().Result.ToList()),
-                QuestionItems = new Collection<QuestionItem>(_assessmentDataService.GetAllQuestionItemsAsync().Result.ToList()),
-                QuestionMetaDataRelations = new Collection<QuestionMetaDataRelation>(_assessmentDataService.GetAllQuestionMetaDataRelationsAsync().Result.ToList()),
+                //AssessmentCategories = new Collection<AssessmentCategory>(_assessmentDataService.GetAllAssessmentCategoriesAsync().Result.ToList()),
+                //AssessmentItems = new Collection<AssessmentItem>(_assessmentDataService.GetAllAssessmentItemsAsync().Result.ToList()),
+                //AnswerItems = new Collection<AnswerItem>(_assessmentDataService.GetAllAnswerItemsAsync().Result.ToList()),
+                //AnswerMetaDataRelations = new Collection<AnswerMetaDataRelation>(_assessmentDataService.GetAllAnswerMetaDataRelationsAsync().Result.ToList()),
+                //MetaDataItems = new Collection<MetaDataItem>(_assessmentDataService.GetAllMetaDataItemsAsync().Result.ToList()),
+                //MetaDataMetaDataRelations = new Collection<MetaDataMetaDataRelation>(_assessmentDataService.GetAllMetaDataMetaDataRelationsAsync().Result.ToList()),
+                //QuestionItems = new Collection<QuestionItem>(_assessmentDataService.GetAllQuestionItemsAsync().Result.ToList()),
+                //QuestionMetaDataRelations = new Collection<QuestionMetaDataRelation>(_assessmentDataService.GetAllQuestionMetaDataRelationsAsync().Result.ToList()),
+                //CategoryRecomendations = new Collection<CategoryRecomendationItem>(GetAllCategoryRecomendationsByUseCaseId(i)),
+                ////Course
+                //CourseItems = new Collection<CourseItem>(GetAllCourseItems(i, useCaseCourseData)),
+                //CourseContacts = new Collection<CourseContact>(GetAllCourseContacts(i, useCaseCourseData)),
+                //EduProviderItems = new Collection<EduProviderItem>(GetAllEduProviderByUseCaseId(i, useCaseCourseData)),
+                //CourseAppointments = new Collection<CourseAppointment>(GetAllAppointments(i, useCaseCourseData)),
+                //CourseContactRelations = new Collection<CourseContactRelation>(GetAllCourseContactsRelations(i, useCaseCourseData))
+
+
+
+                AssessmentCategories = new Collection<AssessmentCategory>(_assessmentDataService.GetAssessmentCategoriesByUseCase(i).ToList()),
+                AssessmentItems = new Collection<AssessmentItem>(_assessmentDataService.GetAssessmentItemsByUseCase(i).ToList()),
+                AnswerItems = new Collection<AnswerItem>(_assessmentDataService.GetAnswersItemsByUseCase(i).ToList()),
+                AnswerMetaDataRelations = new Collection<AnswerMetaDataRelation>(_assessmentDataService.GetAnswerMetaDataRelationByUseCase(i).ToList()),
+                MetaDataItems = new Collection<MetaDataItem>(_assessmentDataService.GetMetaDataItemsByUseCase(i).ToList()),
+                MetaDataMetaDataRelations = new Collection<MetaDataMetaDataRelation>(_assessmentDataService.GetMetaDataMetaDataRelationsByUseCase(i).ToList()),
+                QuestionItems = new Collection<QuestionItem>(_assessmentDataService.GetQuestionItemsByUseCase(i).ToList()),
+                QuestionMetaDataRelations = new Collection<QuestionMetaDataRelation>(_assessmentDataService.GetQuestionMetaDataRelationByUseCase(i).ToList()),
+                CategoryRecomendations = new Collection<CategoryRecomendationItem>(_assessmentDataService.GetCategoryRecomendationItemsByUseCase(i).ToList()),
+                //Course
                 CourseItems = new Collection<CourseItem>(GetAllCourseItems(i, useCaseCourseData)),
-                //CourseContacts = new Collection<CourseContact>(useCaseCourseData.useCaseContacts[0]),
                 CourseContacts = new Collection<CourseContact>(GetAllCourseContacts(i, useCaseCourseData)),
                 EduProviderItems = new Collection<EduProviderItem>(GetAllEduProviderByUseCaseId(i, useCaseCourseData)),
                 CourseAppointments = new Collection<CourseAppointment>(GetAllAppointments(i, useCaseCourseData)),
                 CourseContactRelations = new Collection<CourseContactRelation>(GetAllCourseContactsRelations(i, useCaseCourseData))
-                //surveyCollection = new Collection<AssessmentItem>(_assessmentDataService.GetAssessmentItemsByType(AssessmentType.Survey).Result.ToList())
 
 
-                //Appointments = new Collection<CourseAppointment>(GetAllAppointments(useCaseCourseData))
-                //TODO: Courses
             };
 
             using (StreamWriter file = File.CreateText(@"devtest"+i+".json"))
@@ -81,10 +98,8 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         
     }
 
-    private List<AssessmentCategory> getAssessmentCategoriesByUseCaseId(int useCaseId)
-    {
-        return null;
-    }
+
+
 
 
     private List<EduProviderItem> GetAllEduProviderByUseCaseId(int i, ExcelUseCaseCourse useCaseCourseData)

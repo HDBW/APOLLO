@@ -15,7 +15,7 @@
         
         public string Description { get; set; } = string.Empty;
 
-        //TODO: Remove after December
+        //Moved to CategoryRecomendation
         public long CourseId { get; set; }
 
         public List<Question> Questions { get; set; }
@@ -25,5 +25,6 @@
         public string Minimum { get; set; } = string.Empty;
         public string Maximum { get; set; } = string.Empty;
         public string Subject { get; set; } = string.Empty;
+        public List<CategoryRecomendation> CategoryRecomendations { get; set; }
     }
 }

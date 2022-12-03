@@ -5,6 +5,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 {
     internal class BstAssessment
     {
+        public int UseCaseId { get; set; } = 1;
+
         public string HTMLDistractorPrimary_1;
         public string HTMLDistractorPrimary_2;
         public string HTMLDistractorPrimary_3;

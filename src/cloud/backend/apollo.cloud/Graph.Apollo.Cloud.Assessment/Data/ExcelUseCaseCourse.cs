@@ -128,7 +128,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
         public Dictionary<long, CourseItem> CourseById = new();
 
-        public Dictionary<long, CourseAppointment> AppointmentsByCourseId = new();
+        public Dictionary<long, List<CourseAppointment>> AppointmentsByCourseId = new();
 
         public Dictionary<int, List<CourseAppointment>> AppointmentsByUseCaseId = new();
 
@@ -462,16 +462,26 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         : default;
 
 
-                   
+
 
                     //Contact Stuff
                     var ContactId = xlRange.Cells[i, ExcelCourseColumnIndex.ContactId].Value2 != null
                         ? (long)Convert.ToInt64(xlRange.Cells[i, ExcelCourseColumnIndex.ContactId].Value2.ToString())
                         : -1;
 
-                    var ContactMail = xlRange.Cells[i, ExcelCourseColumnIndex.ContactMail].Value2.ToString();
-                    var ContactPhone = xlRange.Cells[i, ExcelCourseColumnIndex.ContactPhone].Value2.ToString();
-                    var contactName = xlRange.Cells[i, ExcelCourseColumnIndex.ContactName].Value2.ToString();
+                    string ContactMail = xlRange.Cells[i, ExcelCourseColumnIndex.ContactMail].Value2 != null
+                                ? xlRange.Cells[i, ExcelCourseColumnIndex.ContactMail].Value2.ToString()
+                                : string.Empty;
+
+                    //string ContactPhone = xlRange.Cells[i, ExcelCourseColumnIndex.ContactPhone].Value2.ToString();
+                    //string contactName = xlRange.Cells[i, ExcelCourseColumnIndex.ContactName].Value2.ToString();
+
+                    string ContactPhone = xlRange.Cells[i, ExcelCourseColumnIndex.ContactPhone].Value2 != null
+                        ? xlRange.Cells[i, ExcelCourseColumnIndex.ContactPhone].Value2.ToString()
+                        : string.Empty;
+                    string contactName = xlRange.Cells[i, ExcelCourseColumnIndex.ContactName].Value2 != null
+                        ? xlRange.Cells[i, ExcelCourseColumnIndex.ContactName].Value2.ToString()
+                        : string.Empty;
 
                     var ContactUrl = (xlRange.Cells[i, ExcelCourseColumnIndex.ContactUrl].Value2 != null)
                         ? (string)xlRange.Cells[i, ExcelCourseColumnIndex.ContactUrl].Value2.ToString()
@@ -506,12 +516,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                                 StartDate = (xlRange.Cells[i, j].Value2 != null)
                                     ? DateTime.Parse(xlRange.Cells[i, j].Value2.ToString()) : null,
                                 EndDate = (xlRange.Cells[i, j + 1].Value2 != null)
-                                    ? DateTime.Parse(xlRange.Cells[i, j + 1].Value2.ToString()) : null,
+                                    ? DateTime.Parse(xlRange.Cells[i, j + 1].Value2.ToString()) : null
+                                
                             };
                         if ((xlRange.Cells[i, j].Value2 != null))
                         {
                             //appointment
-                            AppointmentsByCourseId.Add(item.Id,appointment);
+                            if(AppointmentsByCourseId.ContainsKey(item.Id))
+                                AppointmentsByCourseId[item.Id].Add(appointment);
+                            else
+                            {
+                                AppointmentsByCourseId.Add(item.Id, new(){appointment});
+                            }
                             AppointmentsByUseCaseId[useCaseId].Add(appointment);
 
 
@@ -530,7 +546,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             }
             catch (Exception e)
             {
-                xlWorkbook.Close();
+                //xlWorkbook.Close();
                 //TODO: Check if Finalization queue is reached when exception occurs
                 throw new Exception("AHHHHHH Excel Workbook Stuff", e);
             }
