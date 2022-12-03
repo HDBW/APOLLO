@@ -16,7 +16,10 @@
         IMetaDataHasMetaDataDataService,
         IMetaDataHasMetaDataDtoDataService,
         ICategoryDataService,
-        ICategoryDtoDataService
+        ICategoryDtoDataService,
+        ICategoryRecomendationDataService,
+        ICategoryRecomendationDtoDataService,
+        IUseCase
     {
     }
 }
