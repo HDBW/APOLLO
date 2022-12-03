@@ -15,6 +15,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         public DbSet<Models.Category> AssessmentCategories { get; set; }
         public DbSet<Models.Question> Questions { get; set; }
         public DbSet<Models.EscoSkill> EscoSkills { get; set; }
+        public DbSet<Models.CategoryRecomendation> CategoryRecomendations{ get; set; }
         #endregion
 
         private readonly ILoggerFactory _loggerFactory;
@@ -71,6 +72,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 .HasKey(t => new { t.Id });
             builder.Entity<Models.Category>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
+
+
+            //CategoryRecomendation
+            builder.Entity<Models.CategoryRecomendation>()
+                .HasKey(t => new { t.Id });
+            builder.Entity<Models.CategoryRecomendation>()
+                .HasIndex(t => new { t.Schema }).IsUnique();
+
+            builder.Entity<Models.CategoryRecomendation>()
+                .HasOne(q => q.Category)
+                .WithMany(a => a.CategoryRecomendations) //used to be AssessmentQuestions
+                .HasForeignKey(q => q.CategoryId);
 
             //Asset
             builder.Entity<Models.Asset>()

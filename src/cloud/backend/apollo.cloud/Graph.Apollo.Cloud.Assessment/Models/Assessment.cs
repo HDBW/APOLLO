@@ -5,7 +5,14 @@ namespace Invite.Apollo.App.Graph.Assessment.Models
 {
     public class Assessment : BaseItem
     {
-        
+
+        /// <summary>
+        /// Temp Variable for December Prototyp
+        /// TODO: Remove this after public Alpha Test 
+        /// </summary>
+        [Required]
+        public int UseCaseId { get; set; } = 1;
+
         /// <summary>
         /// Import Id from External Dataprovider.
         /// Not mapped/ serialized for client

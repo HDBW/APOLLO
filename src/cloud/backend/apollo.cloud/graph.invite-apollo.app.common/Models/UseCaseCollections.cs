@@ -148,5 +148,8 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
         [DataMember(Order = 16, IsRequired = false)]
         public Collection<AnswerItemResult> AnswerItemResults { get; set; }
+
+        [DataMember(Order = 17, IsRequired = false)]
+        public Collection<CategoryRecomendationItem> CategoryRecomendations { get; set; }
     }
 }
