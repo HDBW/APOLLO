@@ -381,6 +381,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 if (!string.IsNullOrWhiteSpace(skills))
                 {
                     var xml = new XmlDocument();
+                    skills = System.Text.RegularExpressions.Regex.Unescape(skills);
                     xml.LoadXml(skills);
                     foreach (var node in xml.FirstChild?.ChildNodes.OfType<XmlNode>() ?? new List<XmlNode>())
                     {
