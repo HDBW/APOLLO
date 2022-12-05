@@ -21,7 +21,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Google.Protobuf" Version="3.21.9" />
-	  <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.14" />
+	  <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.16" />
 	  <PackageReference Include="protobuf-net.Core" Version="3.1.25" />
 	</ItemGroup>
 </Project>
