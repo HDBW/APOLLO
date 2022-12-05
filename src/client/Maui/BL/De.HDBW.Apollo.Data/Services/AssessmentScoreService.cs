@@ -94,7 +94,9 @@ namespace De.HDBW.Apollo.Data.Services
                 categoryResult.AssessmentScoreId = score.Id;
 
                 // NOTE: !!! Important set the CourseId of the category to the result !!!
-                categoryResult.CourseId = category.CourseId;
+                // NOTE we give the result only back if the user scores less than the result limit. 
+                //categoryResult.CourseId = category.CourseId;
+
                 var categoryQuestions = questions.Where(x => x.CategoryId.Equals(category.Id));
                 int scores = 0;
 
@@ -193,6 +195,17 @@ namespace De.HDBW.Apollo.Data.Services
 
                 Debug.WriteLine($"category.Result:{100 * scores} / {maxScoreDictionary[category.Id]}");
                 categoryResult.Result = (100 * scores) / maxScoreDictionary[category.Id];
+                //NOTE: Decide to set the Course or not
+                decimal mr = Math.Round(categoryQuestions.ToList().Count() / 100 * categoryResult.Result);
+                if (mr<Convert.ToDecimal(category.ResultLimit))
+                {
+                    categoryResult.CourseId = category.CourseId;
+                }
+                else
+                {
+                    categoryResult.CourseId = -1;
+                }
+
                 Debug.WriteLine($"category.Result:{categoryResult.Result}");
                 results.Add(categoryResult); // REVIEW: DO WE NEED IT?
                 await AssessmentCategoryResultsRepository.AddItemAsync(categoryResult, token);
