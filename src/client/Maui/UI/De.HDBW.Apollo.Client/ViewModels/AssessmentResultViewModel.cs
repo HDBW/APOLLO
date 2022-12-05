@@ -232,14 +232,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Task HandleToggleIsFavorite(StartViewInteractionEntry entry)
         {
+            entry.IsFavorite = !entry.IsFavorite;
             if (entry.IsFavorite)
-            {
-                SessionService.RemoveFavorite(entry.EntityId, entry.EntityType);
-            }
-            else
             {
                 SessionService.AddFavorite(entry.EntityId, entry.EntityType);
             }
+            else
+            {
+                SessionService.RemoveFavorite(entry.EntityId, entry.EntityType);
+            }
+
             return Task.CompletedTask;
         }
     }
