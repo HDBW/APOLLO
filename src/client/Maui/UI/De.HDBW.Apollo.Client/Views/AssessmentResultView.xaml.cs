@@ -27,4 +27,13 @@ public partial class AssessmentResultView : ContentPage
         var behaviour = Shell.GetBackButtonBehavior(this);
         behaviour?.ClearValue(BackButtonBehavior.CommandProperty);
     }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        // Remark: Work around for nullpointer during use of BackButtonBehaviour.
+        var behaviour = Shell.GetBackButtonBehavior(this);
+        var binding = new Binding();
+        binding.Path = "ConfirmCommand";
+        behaviour.SetBinding(BackButtonBehavior.CommandProperty, binding);
+    }
 }
