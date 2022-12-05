@@ -95,7 +95,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         categoryResults = await AssessmentCategoryResultRepository.GetItemsByForeignKeyAsync(score.Id, worker.Token).ConfigureAwait(false);
                     }
 
-                    var courseIds = categoryResults.Select(r => r.CategoryId).Distinct().ToList();
+                    var courseIds = categoryResults.Select(r => r.CourseId).Distinct().ToList();
                     IEnumerable<CourseItem> courseItems = new List<CourseItem>();
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     if (courseIds.Any())
