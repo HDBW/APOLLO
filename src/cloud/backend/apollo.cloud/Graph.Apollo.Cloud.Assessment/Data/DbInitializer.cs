@@ -410,6 +410,45 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 //Minimum = 
             };
             context.SaveChanges();
+
+            if (!bstAssessment.CourseId.Equals(-1))
+            {
+                context.CategoryRecomendations.Add(new CategoryRecomendation()
+                {
+                    CategoryId = category.Id,
+                    Category = category,
+                    CourseId = bstAssessment.CourseId,
+                    Schema = CreateApolloSchema(),
+                    Ticks = DateTime.Now.Ticks
+                });
+            }
+
+
+
+            if (!bstAssessment.CourseId2.Equals(-1))
+            {
+                context.CategoryRecomendations.Add(new CategoryRecomendation()
+                {
+                    CategoryId = category.Id,
+                    Category = category,
+                    CourseId = bstAssessment.CourseId2,
+                    Schema = CreateApolloSchema(),
+                    Ticks = DateTime.Now.Ticks
+                });
+            }
+
+            if (!bstAssessment.CourseId3.Equals(-1))
+            {
+                context.CategoryRecomendations.Add(new CategoryRecomendation()
+                {
+                    CategoryId = category.Id,
+                    Category = category,
+                    CourseId = bstAssessment.CourseId3,
+                    Schema = CreateApolloSchema(),
+                    Ticks = DateTime.Now.Ticks
+                });
+            }
+            context.SaveChanges();
             return category;
         }
 
@@ -594,6 +633,15 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     item.CourseId = Convert.ToInt64(
                         (xlRange.Cells[i, ExcelColumnIndexBST.CourseId].Value2 != null)
                             ? xlRange.Cells[i, ExcelColumnIndexBST.CourseId].Value2
+                            : -1);
+
+                    item.CourseId2 = Convert.ToInt64(
+                        (xlRange.Cells[i, ExcelColumnIndexBST.CourseId2].Value2 != null)
+                            ? xlRange.Cells[i, ExcelColumnIndexBST.CourseId2].Value2
+                            : -1);
+                    item.CourseId3 = Convert.ToInt64(
+                        (xlRange.Cells[i, ExcelColumnIndexBST.CourseId3].Value2 != null)
+                            ? xlRange.Cells[i, ExcelColumnIndexBST.CourseId3].Value2
                             : -1);
 
                     item.QuestionHasPictures = xlRange.Cells[i, ExcelColumnIndexBST.QuestionHasPicture].Value2 != null
