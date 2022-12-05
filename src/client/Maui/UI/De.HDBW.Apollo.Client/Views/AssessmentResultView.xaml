@@ -3,6 +3,7 @@
              x:Class="De.HDBW.Apollo.Client.Views.AssessmentResultView"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              x:DataType="viewModels:AssessmentResultViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resource.AssessmentResultView_Title}"
@@ -11,6 +12,11 @@
         <BackButtonBehavior Command="{Binding ConfirmCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.Resources>
+        <converter:EntityTypeToBrushConverter x:Key="EntityTypeToBrushConverter"
+                                              DefaultBrush="Transparent"
+                                              AssessmentItemBrush="{StaticResource Tag1Brush}"
+                                              CourseItemBrush="{StaticResource Tag2Brush}"/>
+        <converter:InteractionsToMaximumHeightConverter x:Key="InteractionsToMaximumHeightConverter" />
 
         <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:StartViewInteractionEntry">
             <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >
@@ -56,8 +62,11 @@
         <Label Grid.Row="4" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationHeadline}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
         <Label Margin="0,0,0,8" Grid.Row="5" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationDescription}" Style="{StaticResource NotoSerif16}" LineBreakMode="WordWrap"/>
         <CollectionView  Grid.Row="6"
-                         ItemsSource="{Binding Interactions}">
-            
+                         ItemsSource="{Binding Interactions}"
+                         ItemTemplate="{StaticResource DefaultInteractionEntry}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
+            </CollectionView.ItemsLayout>
         </CollectionView>
         <Button Grid.Row="7" Margin="0,8,0,16" Command="{Binding ConfirmCommand}" Text="{x:Static strings:Resource.AssessmentResultView_CloseAssessment}" />
     </Grid>

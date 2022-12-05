@@ -69,7 +69,8 @@ namespace De.HDBW.Apollo.Data.Services
             // TODO: Iterate over answerItems and create Category result
             var questions = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentId, token).ConfigureAwait(false);
             IEnumerable<QuestionItem> questionItems = questions.ToList();
-            Dictionary<long, int> maxScoreDictionary = new();
+            Dictionary<long, int> maxScoreDictionary = new ();
+
             // set the score data now that we have some information
             score.AssessmentId = assessmentId;
             score.UserId = userId;
@@ -176,7 +177,8 @@ namespace De.HDBW.Apollo.Data.Services
                                 var userAnswer = answerItemResults.Where(a => a.AnswerItemId.Equals(item.Id));
                                 if (userAnswer != null && item != null)
                                 {
-                                    Debug.WriteLine($"Score ADD Value:{Convert.ToInt32(userAnswer.First().Value)} * {Convert.ToInt32(item.Scalar)}" );
+                                    Debug.WriteLine($"Score ADD Value:{Convert.ToInt32(userAnswer.First().Value)} * {Convert.ToInt32(item.Scalar)}");
+
                                     // The value of the answeritem should be the index which should be the indication vector, these are a lot of should bes will see.
                                     scores += Convert.ToInt32(userAnswer.First().Value) * Convert.ToInt32(item.Scalar);
                                     Debug.WriteLine($"Score NEW Value:{scores}");
@@ -189,7 +191,7 @@ namespace De.HDBW.Apollo.Data.Services
                     }
                 }
 
-                Debug.WriteLine($"category.Result:{(100 * scores)} / {maxScoreDictionary[category.Id]}");
+                Debug.WriteLine($"category.Result:{100 * scores} / {maxScoreDictionary[category.Id]}");
                 categoryResult.Result = (100 * scores) / maxScoreDictionary[category.Id];
                 Debug.WriteLine($"category.Result:{categoryResult.Result}");
                 results.Add(categoryResult); // REVIEW: DO WE NEED IT?

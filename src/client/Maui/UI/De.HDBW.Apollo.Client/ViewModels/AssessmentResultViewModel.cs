@@ -209,7 +209,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanHandleInteract(InteractionEntry arg)
         {
-            return false;
+            return !IsBusy;
         }
 
         private async Task HandleInteract(InteractionEntry interaction)
