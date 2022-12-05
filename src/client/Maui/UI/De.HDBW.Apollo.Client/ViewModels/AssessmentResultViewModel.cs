@@ -34,6 +34,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IAssessmentScoreRepository assessmentScoreRepository,
             IAssessmentScoreService assessmentResultService,
             IAssessmentCategoryResultRepository assessmentCategoryResultRepository,
+            ICategoryRecomendationItemRepository categoryRecomendationItemRepository,
             ICourseItemRepository courseItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             IDispatcherService dispatcherService,
@@ -50,6 +51,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             AssessmentCategoryResultRepository = assessmentCategoryResultRepository;
             CourseItemRepository = courseItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
+            CategoryRecomendationItemRepository = categoryRecomendationItemRepository;
         }
 
         public bool HasInteractions
@@ -71,6 +73,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ICourseItemRepository CourseItemRepository { get; }
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
+
+        private ICategoryRecomendationItemRepository CategoryRecomendationItemRepository { get; }
 
         private ISessionService SessionService { get; }
 
@@ -95,7 +99,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         categoryResults = await AssessmentCategoryResultRepository.GetItemsByForeignKeyAsync(score.Id, worker.Token).ConfigureAwait(false);
                     }
 
-                    var courseIds = categoryResults.Select(r => r.CourseId).Distinct().ToList();
+                    var categoryIds = categoryResults.Select(c => c.CategoryId).Distinct().ToList();
+                    var recomondations = await CategoryRecomendationItemRepository.GetItemsByForeignKeysAsync(categoryIds, worker.Token).ConfigureAwait(false);
+
+                    var relatedCourseIds = recomondations.Select(r => r.CourseId);
+                    var courseIds = categoryResults.Where(r => r.CourseId > -1).Select(r => r.CourseId).ToList();
+                    await CourseItemRepository.ResetUnpublishedAsync(relatedCourseIds, worker.Token).ConfigureAwait(false);
+
                     IEnumerable<CourseItem> courseItems = new List<CourseItem>();
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     if (courseIds.Any())
