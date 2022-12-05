@@ -31,7 +31,8 @@ namespace De.HDBW.Apollo.Data.Helper
             ICourseAppointmentRepository courseAppointmentRepository,
             ICourseContactRelationRepository courseContactRelationRepository,
             IUserProfileItemRepository userProfileItemRepository,
-            IEduProviderItemRepository eduProviderItemRepository)
+            IEduProviderItemRepository eduProviderItemRepository,
+            ICategoryRecomendationItemRepository categoryRecomendationItemRepository)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
@@ -51,6 +52,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(courseContactRelationRepository);
             ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
+            ArgumentNullException.ThrowIfNull(categoryRecomendationItemRepository);
 
             Logger = logger;
             AssessmentItemRepository = assessmentItemRepository;
@@ -70,6 +72,7 @@ namespace De.HDBW.Apollo.Data.Helper
             CourseContactRelationRepository = courseContactRelationRepository;
             UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
+            CategoryRecomendationItemRepository = categoryRecomendationItemRepository;
         }
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
@@ -103,6 +106,8 @@ namespace De.HDBW.Apollo.Data.Helper
         private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
+
+        private ICategoryRecomendationItemRepository CategoryRecomendationItemRepository { get; }
 
         private ICourseContactRelationRepository CourseContactRelationRepository { get; }
 
@@ -180,6 +185,7 @@ namespace De.HDBW.Apollo.Data.Helper
             CourseContactRelationRepository.ResetItemsAsync(usecase?.CourseContactRelations, token).ConfigureAwait(false);
             AssessmentCategoryResultRepository.ResetItemsAsync(usecase?.AssessmentCategoryResults, token).ConfigureAwait(false);
             AnswerItemResultRepository.ResetItemsAsync(usecase?.AnswerItemResults, token).ConfigureAwait(false);
+            CategoryRecomendationItemRepository.ResetItemsAsync(usecase?.CategoryRecomendations, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
 
