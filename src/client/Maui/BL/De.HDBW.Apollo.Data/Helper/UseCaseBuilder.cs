@@ -140,7 +140,7 @@ namespace De.HDBW.Apollo.Data.Helper
                 switch (usecase)
                 {
                     case UseCase.A:
-                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Job finden" }, token).ConfigureAwait(false);
+                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = string.Empty, Image = "user1.png", Goal = "Job finden" }, token).ConfigureAwait(false);
                         break;
                     case UseCase.B:
                         await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Kerstin", LastName = string.Empty, Image = "user2.png", Goal = "Weiterbildung" }, token).ConfigureAwait(false);
