@@ -9,7 +9,7 @@
              Title="{x:Static strings:Resource.AssessmentResultView_Title}"
              Shell.FlyoutBehavior="Disabled">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding ConfirmCommand}" />
+        <BackButtonBehavior />
     </Shell.BackButtonBehavior>
     <ContentPage.Resources>
         <converter:EntityTypeToBrushConverter x:Key="EntityTypeToBrushConverter"
