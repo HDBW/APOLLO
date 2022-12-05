@@ -187,6 +187,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get
             {
                 var parts = new List<string>();
+                parts.Add("ab ");
                 parts.Add((Price ?? 0).ToString());
                 parts.Add(Currency ?? string.Empty);
                 return string.Join(string.Empty, parts.Where(s => !string.IsNullOrWhiteSpace(s)));
@@ -381,6 +382,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 if (!string.IsNullOrWhiteSpace(skills))
                 {
                     var xml = new XmlDocument();
+                    skills = System.Text.RegularExpressions.Regex.Unescape(skills);
                     xml.LoadXml(skills);
                     foreach (var node in xml.FirstChild?.ChildNodes.OfType<XmlNode>() ?? new List<XmlNode>())
                     {
