@@ -7,9 +7,11 @@ using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Assessment.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Newtonsoft.Json;
 using ProtoBuf;
 using ProtoBuf.Grpc;
+using System.Collections.Generic;
 
 namespace Invite.Apollo.App.Graph.Assessment.Services;
 
@@ -70,10 +72,15 @@ public class AssessmentGrpcService : IAssessmentGRPCService
                 CourseContacts = new Collection<CourseContact>(GetAllCourseContacts(i, useCaseCourseData)),
                 EduProviderItems = new Collection<EduProviderItem>(GetAllEduProviderByUseCaseId(i, useCaseCourseData)),
                 CourseAppointments = new Collection<CourseAppointment>(GetAllAppointments(i, useCaseCourseData)),
-                CourseContactRelations = new Collection<CourseContactRelation>(GetAllCourseContactsRelations(i, useCaseCourseData))
+                CourseContactRelations = new Collection<CourseContactRelation>(GetAllCourseContactsRelations(i, useCaseCourseData)),
+                //Results for FAKE Assessments
+                AssessmentCategoryResults = CreateFakeCategoryResults(i),
+                AnswerItemResults = CreateFakeAnwerResults(i)
 
 
-            };
+
+
+        };
 
             using (StreamWriter file = File.CreateText(@"devtest"+i+".json"))
             {
@@ -98,8 +105,56 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         
     }
 
+    private Collection<AnswerItemResult> CreateFakeAnwerResults(int useCase)
+    {
+        Collection <AnswerItemResult> answerItems = new();
+        switch (useCase)
+        {
+            case 1:
+                break;
+            case 2:
+                //SKILLASSESSMENT Kaufmann/Kauffrau im E-Commerce
+                //TODO: RESULT STUFF
+                //var skillAssessment = 
+                //_assessmentDataService.GetAllAssessmentsAsync().Result
+                //    .Where(a => a.Title.Equals("Test Kaufmann/Kauffrau im E-Commerce")).First();
+                //skillAssessment.
 
 
+                //EXPERIENCE Kaufmann/Kauffrau im E-Commerce
+                break;
+            case 3:
+                //Soziale & Kommunikative Kompetenzen
+
+                break;
+            default:
+                break;
+        }
+
+        return answerItems;
+    }
+
+    private Collection<AssessmentCategoryResult> CreateFakeCategoryResults(int useCase)
+    {
+        Collection<AssessmentCategoryResult> answerItems = new();
+        switch (useCase)
+        {
+            case 1:
+                break;
+            case 2:
+                //TODO: RESULT STUFF
+                //SKILLASSESSMENT Kaufmann/Kauffrau im E-Commerce
+                //EXPERIENCE Kaufmann/Kauffrau im E-Commerce
+                break;
+            case 3:
+                //Soziale & Kommunikative Kompetenzen
+                break;
+            default:
+                break;
+        }
+
+        return answerItems;
+    }
 
 
     private List<EduProviderItem> GetAllEduProviderByUseCaseId(int i, ExcelUseCaseCourse useCaseCourseData)
@@ -118,7 +173,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
     private List<CourseContact> GetAllCourseContacts(int useCase, ExcelUseCaseCourse useCaseCourseData)
     {
         //TODO: Implement a query for useCases
-        return useCaseCourseData.ContactsByUseCaseId[useCase];
+        return useCaseCourseData.ContactsByUseCaseId[useCase].Distinct().ToList();
     }
 
     private List<CourseAppointment> GetAllAppointments(int useCase, ExcelUseCaseCourse useCaseCourseData)
@@ -136,7 +191,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         //TODO: a query to determine the usecases would be awesome?
         //return useCaseCourseData.Appointments.Values.ToList();
         
-        return useCaseCourseData.AppointmentsByUseCaseId[useCase];
+        return useCaseCourseData.AppointmentsByUseCaseId[useCase].Distinct().ToList();
     }
 
     //private IList<CourseContact> GetAllCourseContacts(int useCase, UseCaseCourseData useCaseCourseData)
