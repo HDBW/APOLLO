@@ -69,7 +69,79 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             System.Console.WriteLine(filepath);
             CreateAssessmentFromCsv(filepath,  context);
 
+            //Create Ex-Assessment with FakeData
+            CreateFakeExAssessment(context,3, "Kaufmann/Kauffrau im E-Commerce");
+            
 
+
+        }
+
+        private static void CreateFakeExAssessment(AssessmentContext context, int useCase, string Titel)
+        {
+            Models.Assessment assessment = new Models.Assessment
+            {
+                UseCaseId = useCase,
+                Kldb = "0000",
+                AssessmentType = AssessmentType.ExperienceAssessment,
+                Description = "Test Description",
+                Disclaimer = "Test Disclaimer",
+                Duration = "20",
+                EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
+                EscoSkills = new List<EscoSkill>(),
+                ExternalId = "EX000",
+                Profession = "Kaufmann/Kauffrau im E-Commerce",
+                Publisher = "APOLLO APP",
+                Title = "Kaufmann/Kauffrau im E-Commerce",
+                Schema = CreateApolloSchema(),
+                Ticks = DateTime.Now.Ticks,
+            };
+
+            context.Assessments.Add(assessment);
+            context.SaveChanges();
+            Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Create New Assessment {assessment.Title}");
+
+            //TODO: Add Category and Question + Result
+            Category catExCategory = new Category()
+            {
+                CourseId = -1,
+                Ticks = DateTime.Now.Ticks,
+                Description = "Test",
+                EscoId = "http://data.europa.eu/esco/occupation/356227b9-2263-4dbd-81e9-7dfc6d3f3af7",
+                Maximum = "0",
+                Minimum = "0",
+                ResultLimit = 0,
+                Schema = CreateApolloSchema(),
+                Subject = "Test Subject",
+                Title = "Test Titel",
+                Value = "Test Value"
+            };
+
+            context.Categories.Add(catExCategory);
+            context.SaveChanges();
+            Models.Question question = new Question()
+            {
+                Category = catExCategory,
+                CategoryId = catExCategory.Id,
+                Schema = CreateApolloSchema(),
+                Assessment = assessment,
+                AssessmentId = assessment.Id,
+                ExternalId = "Ext Test Id",
+                QuestionType = QuestionType.Rating,
+                Scalar = 1,
+                Ticks = DateTime.Now.Ticks,
+                ScoringOption = "0-1-2-3-4-5"
+            };
+            context.Questions.Add(question);
+            Models.Answer answer = new Models.Answer()
+            {
+                Ticks = DateTime.Now.Ticks,
+                Schema = CreateApolloSchema(),
+                Scalar = 1,
+                AnswerType = AnswerType.TextBox,
+                QuestionId = question.Id,
+                Question = question
+            };
+            context.Add(answer);
 
         }
 
