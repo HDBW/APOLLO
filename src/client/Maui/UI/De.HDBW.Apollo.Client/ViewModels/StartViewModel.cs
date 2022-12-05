@@ -195,7 +195,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var durationString = string.Format(Resources.Strings.Resource.Global_DurationFormat, !string.IsNullOrWhiteSpace(assesment.Duration) ? assesment.Duration : 0);
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
-                var status = (assessmentResults?.Any(r => r.AnswerItemId == assesment.Id) ?? false) ? Status.Processed : Status.Unknown;
+                var status = (assessmentResults?.Any(r => r.AssessmentItemId == assesment.Id) ?? false) ? Status.Processed : Status.Unknown;
                 var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, assesment.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == assesment.Id && f.Type == typeof(AssessmentItem));
                 if (((StartViewInteractionEntry)interaction).IsFavorite)
