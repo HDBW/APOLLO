@@ -14,5 +14,12 @@ namespace De.HDBW.Apollo.Data.Repositories
             : base(logger)
         {
         }
+
+        public Task<bool> ResetUnpublishedAsync(IEnumerable<long> ids, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            Items.Where(i => ids.Contains(i.Id)).ToList().ForEach((i) => i.UnPublishingDate = null);
+            return Task.FromResult(true);
+        }
     }
 }

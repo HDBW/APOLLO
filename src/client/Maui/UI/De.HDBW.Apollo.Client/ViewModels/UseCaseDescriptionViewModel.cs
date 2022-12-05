@@ -164,6 +164,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    SessionService.ClearFavorites();
                     if (!await UseCaseBuilder.BuildAsync(UseCase, worker.Token).ConfigureAwait(false))
                     {
                         return;

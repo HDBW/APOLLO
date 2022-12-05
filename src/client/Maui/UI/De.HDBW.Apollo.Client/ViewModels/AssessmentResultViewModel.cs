@@ -34,20 +34,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IAssessmentScoreRepository assessmentScoreRepository,
             IAssessmentScoreService assessmentResultService,
             IAssessmentCategoryResultRepository assessmentCategoryResultRepository,
+            ICategoryRecomendationItemRepository categoryRecomendationItemRepository,
             ICourseItemRepository courseItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             IDispatcherService dispatcherService,
+            ISessionService sessionService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<AssessmentResultViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            SessionService = sessionService;
             AnswerItemResultRepository = answerItemResultRepository;
             AssessmentScoreRepository = assessmentScoreRepository;
             AssessmentResultService = assessmentResultService;
             AssessmentCategoryResultRepository = assessmentCategoryResultRepository;
             CourseItemRepository = courseItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
+            CategoryRecomendationItemRepository = categoryRecomendationItemRepository;
         }
 
         public bool HasInteractions
@@ -70,6 +74,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
 
+        private ICategoryRecomendationItemRepository CategoryRecomendationItemRepository { get; }
+
+        private ISessionService SessionService { get; }
+
         public override async Task OnNavigatedToAsync()
         {
             if (!_assessmentItemId.HasValue)
@@ -91,7 +99,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         categoryResults = await AssessmentCategoryResultRepository.GetItemsByForeignKeyAsync(score.Id, worker.Token).ConfigureAwait(false);
                     }
 
-                    var courseIds = categoryResults.Select(r => r.CategoryId).Distinct().ToList();
+                    var categoryIds = categoryResults.Select(c => c.CategoryId).Distinct().ToList();
+                    var recomondations = await CategoryRecomendationItemRepository.GetItemsByForeignKeysAsync(categoryIds, worker.Token).ConfigureAwait(false);
+
+                    var relatedCourseIds = recomondations.Select(r => r.CourseId).Distinct().ToList();
+                    var courseIds = categoryResults.Where(r => r.CourseId > -1).Select(r => r.CourseId).Distinct().ToList();
+                    await CourseItemRepository.ResetUnpublishedAsync(relatedCourseIds, worker.Token).ConfigureAwait(false);
+
                     IEnumerable<CourseItem> courseItems = new List<CourseItem>();
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     if (courseIds.Any())
@@ -144,6 +158,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var interactions = new List<InteractionEntry>();
             foreach (var course in courseItems)
             {
+                course.UnPublishingDate = null;
                 var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
 
                 var courseData = new NavigationParameters();
@@ -162,7 +177,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         break;
                 }
 
-                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, course.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 interactions.Add(interaction);
                 Interactions = new ObservableCollection<InteractionEntry>(interactions);
                 OnPropertyChanged(nameof(HasInteractions));
@@ -204,7 +219,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanHandleInteract(InteractionEntry arg)
         {
-            return false;
+            return !IsBusy;
         }
 
         private async Task HandleInteract(InteractionEntry interaction)
@@ -227,6 +242,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Task HandleToggleIsFavorite(StartViewInteractionEntry entry)
         {
+            entry.IsFavorite = !entry.IsFavorite;
+            if (entry.IsFavorite)
+            {
+                SessionService.AddFavorite(entry.EntityId, entry.EntityType);
+            }
+            else
+            {
+                SessionService.RemoveFavorite(entry.EntityId, entry.EntityType);
+            }
+
             return Task.CompletedTask;
         }
     }
