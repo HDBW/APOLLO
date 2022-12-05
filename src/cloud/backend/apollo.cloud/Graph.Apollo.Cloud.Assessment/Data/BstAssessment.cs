@@ -60,6 +60,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
         public string Publisher { get; set; }
         public string Title { get; set; }
         public long CourseId { get; set; }
+        public long CourseId2 { get; set; }
+        public long CourseId3 { get; set; }
         public int Limit { get; set; }
         public int QuestionHasPictures { get; set; }
         public int AnswerHasPicture { get; set; }

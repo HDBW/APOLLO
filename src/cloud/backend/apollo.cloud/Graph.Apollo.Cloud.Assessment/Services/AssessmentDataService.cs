@@ -600,7 +600,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
         public IEnumerable<Answer> GetAnswersByUseCase(int useCase)
         {
-            //var result = GetAllAnswersAsync().Result.Where(a => a.Question.Assessment.UseCaseId.Equals(useCase));
             var questions = GetQuestionsByUseCase(useCase);
             List<Answer> result = new();
             foreach (var question in questions)
@@ -611,8 +610,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
                 }
             }
 
-            //var list = GetAllAnswersAsync().Result;
-            //var result = list.Where(a => a.Question.Assessment.UseCaseId.Equals(useCase));
             return result;
         }
 
@@ -627,22 +624,18 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
                     result.Add(assessmentQuestion);
                 }
             }
-            //var result= GetAllQuestionsAsync().Result.Where(q => q.Assessment.UseCaseId.Equals(useCase));
             return result;
         }
 
         public IEnumerable<Category> GetCategoryByUseCase(int useCase)
         {
-            //var result = GetAllCategoriesAsync().Result.Where(q => q.Questions.First().Assessment.UseCaseId.Equals(useCase));
-            //return result;
             var questions = GetQuestionsByUseCase(useCase);
             List<Category> result = new();
             foreach (var question in questions)
             {
                 result.Add(question.Category);
             }
-            //var result= GetAllQuestionsAsync().Result.Where(q => q.Assessment.UseCaseId.Equals(useCase));
-            return result;
+            return result.Distinct();
 
 
         }
@@ -657,7 +650,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
                 
             }
 
-            //var result = GetAllCategoryRecomendationsAsync().Result.Where(q => q.Category.Questions.First().Assessment.UseCaseId.Equals(useCase));
             return result;
         }
 
@@ -736,8 +728,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
         public IEnumerable<QuestionHasMetaData> GetQuestionHasMetaDataByUseCase(int useCase)
         {
-            //return GetAllQuestionHasMetaDataAsync().Result.Where(q => q.Question.Assessment.UseCaseId.Equals(useCase));
-
             List<QuestionHasMetaData> result = new();
             
             var questions = GetQuestionsByUseCase(useCase);
@@ -752,14 +742,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
                 }
             }
-
-            //var list = GetAllMetaDataAsync().Result;
-            //foreach (MetaData metaData in list)
-            //{
-            //    if(metaData.QuestionHasMetaDatas.Count>0 && metaData.QuestionHasMetaDatas.First().Question.Assessment.UseCaseId.Equals(useCase) ||
-            //       metaData.AnswerHasMetaDatas.Count > 0 && metaData.AnswerHasMetaDatas.First().Answer.Question.Assessment.UseCaseId.Equals(useCase))
-            //        result.Add(metaData);
-            //}
 
             return result;
 
@@ -780,7 +762,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             }
 
             return result;
-            //return GetAllAnswerHasMetaDataAsync().Result.Where(q => q.Answer.Question.Assessment.UseCaseId.Equals(useCase));
         }
 
         public IEnumerable<AssessmentItem> GetAssessmentItemsByUseCase(int useCase)
@@ -800,7 +781,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public IEnumerable<AnswerItem> GetAnswersItemsByUseCase(int useCase)
         {
             var list = GetAnswersByUseCase(useCase);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Answer, AnswerItem>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Answer, AnswerItem>()
+                .ForMember(dest => dest.AnswerType, opt => opt.MapFrom<AnswerTypeResolver>()));
+
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AnswerItem> result = new();
@@ -814,7 +797,14 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         public IEnumerable<QuestionItem> GetQuestionItemsByUseCase(int useCase)
         {
             var list = GetQuestionsByUseCase(useCase);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Question, QuestionItem>());
+            //var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Question, QuestionItem>());
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<Models.Question, QuestionItem>()
+                    .ForMember(dest => dest.AnswerLayout, opt => opt.MapFrom<AnswerLayoutResolver>())
+                    .ForMember(dest => dest.QuestionLayout, opt => opt.MapFrom<QuestionLayoutResolver>())
+                    .ForMember(dest => dest.Interaction, opt => opt.MapFrom<InteractionTypeResolver>())
+            );
+
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<QuestionItem> result = new();
