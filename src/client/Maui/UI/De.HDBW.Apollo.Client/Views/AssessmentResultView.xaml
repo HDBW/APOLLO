@@ -59,11 +59,12 @@
         <Label Margin="0,0,0,8" Grid.Row="1" Text="{x:Static strings:Resource.AssessmentResultView_Headline}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
         <Label Margin="0,0,0,8" Grid.Row="2" Text="{x:Static strings:Resource.AssessmentResultView_Description}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
         <ProgressBar Margin="0,0,0,8" Grid.Row="3" Progress="{Binding Score}" />
-        <Label Grid.Row="4" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationHeadline}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
-        <Label Margin="0,0,0,8" Grid.Row="5" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationDescription}" Style="{StaticResource NotoSerif16}" LineBreakMode="WordWrap"/>
-        <CollectionView  Grid.Row="6"
-                         ItemsSource="{Binding Interactions}"
-                         ItemTemplate="{StaticResource DefaultInteractionEntry}">
+        <Label IsVisible="{Binding HasInteractions}" Grid.Row="4" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationHeadline}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
+        <Label IsVisible="{Binding HasInteractions}" Margin="0,0,0,8" Grid.Row="5" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationDescription}" Style="{StaticResource NotoSerif16}" LineBreakMode="WordWrap"/>
+        <CollectionView IsVisible="{Binding HasInteractions}"
+                        Grid.Row="6"
+                        ItemsSource="{Binding Interactions}"
+                        ItemTemplate="{StaticResource DefaultInteractionEntry}">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
             </CollectionView.ItemsLayout>
