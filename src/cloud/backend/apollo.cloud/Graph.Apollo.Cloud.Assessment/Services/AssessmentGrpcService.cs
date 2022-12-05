@@ -118,7 +118,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
     private List<CourseContact> GetAllCourseContacts(int useCase, ExcelUseCaseCourse useCaseCourseData)
     {
         //TODO: Implement a query for useCases
-        return useCaseCourseData.ContactsByUseCaseId[useCase];
+        return useCaseCourseData.ContactsByUseCaseId[useCase].Distinct().ToList();
     }
 
     private List<CourseAppointment> GetAllAppointments(int useCase, ExcelUseCaseCourse useCaseCourseData)
@@ -136,7 +136,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         //TODO: a query to determine the usecases would be awesome?
         //return useCaseCourseData.Appointments.Values.ToList();
         
-        return useCaseCourseData.AppointmentsByUseCaseId[useCase];
+        return useCaseCourseData.AppointmentsByUseCaseId[useCase].Distinct().ToList();
     }
 
     //private IList<CourseContact> GetAllCourseContacts(int useCase, UseCaseCourseData useCaseCourseData)
