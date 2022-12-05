@@ -9,5 +9,6 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         IRepository<CourseItem>,
         IDatabaseRepository<CourseItem>
     {
+        Task<bool> ResetUnpublishedAsync(IEnumerable<long> ids, CancellationToken token);
     }
 }

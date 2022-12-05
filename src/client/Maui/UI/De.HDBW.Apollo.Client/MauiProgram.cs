@@ -18,7 +18,6 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Identity.Client;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Serilog;
 using Serilog.Configuration;
@@ -198,6 +197,7 @@ public static class MauiProgram
         services.AddSingleton<ICourseAppointmentRepository, CourseAppointmentRepository>();
         services.AddSingleton<ICourseContactRelationRepository, CourseContactRelationRepository>();
         services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
+        services.AddSingleton<ICategoryRecomendationItemRepository, CategoryRecomendationItemRepository>();
     }
 
     private static void SetupViewsAndViewModels(IServiceCollection services)

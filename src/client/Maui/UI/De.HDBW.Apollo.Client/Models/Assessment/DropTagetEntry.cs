@@ -73,9 +73,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public AnswerType? AnswerType { get; }
 
-        private ILogger Logger { get; }
-
         public int SortIndex { get; }
+
+        private ILogger Logger { get; }
 
         public static DropTagetEntry<TU> Import(
             TU data,

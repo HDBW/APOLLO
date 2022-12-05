@@ -37,6 +37,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private int? _selectedDetailIndex;
 
         private QuestionEntry(
+            bool sort,
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
             Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> questionDetailMetaData,
@@ -85,7 +86,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 Details.Add(detail);
             }
 
-            Details = new ObservableCollection<IInteractiveEntry>(Details.OrderBy(d => d.SortIndex));
+            if (sort)
+            {
+                Details = new ObservableCollection<IInteractiveEntry>(Details.OrderBy(d => d.SortIndex));
+            }
+
             OnPropertyChanged(nameof(HasDetails));
 
             _selectedDetailIndex = Details.Any() ? 0 : null;
@@ -133,7 +138,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                     break;
             }
 
-            Answers = new ObservableCollection<IInteractiveEntry>(Answers.OrderBy(a => a.SortIndex));
+            if (sort)
+            {
+                Answers = new ObservableCollection<IInteractiveEntry>(Answers.OrderBy(a => a.SortIndex));
+            }
+
             RefreshCommands();
         }
 
@@ -256,6 +265,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         }
 
         public static QuestionEntry Import(
+            bool sort,
             QuestionItem questionItem,
             IEnumerable<MetaDataItem> questionMetaDataItems,
             Dictionary<MetaDataItem, IEnumerable<MetaDataItem>> questionDetailMetaData,
@@ -264,7 +274,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             Dictionary<AnswerItem, IEnumerable<MetaDataItem>> answerMetaDataItems,
             ILogger logger)
         {
-            return new QuestionEntry(questionItem, questionMetaDataItems, questionDetailMetaData, answerItems, answerResultItems, answerMetaDataItems, logger);
+            return new QuestionEntry(sort, questionItem, questionMetaDataItems, questionDetailMetaData, answerItems, answerResultItems, answerMetaDataItems, logger);
         }
 
         public IEnumerable<AnswerItemResult> ExportResultes()
