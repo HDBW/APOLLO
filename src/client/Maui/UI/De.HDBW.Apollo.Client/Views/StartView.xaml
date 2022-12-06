@@ -3,6 +3,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="De.HDBW.Apollo.Client.Views.StartView"
              Shell.NavBarIsVisible="True"
+             xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
              xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
@@ -80,7 +81,7 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </HorizontalStackLayout>
-                <CollectionView BindingContextChanged="HandleBindingContextChanged"
+                <!--<CollectionView BindingContextChanged="HandleBindingContextChanged"
                                             Grid.Row="3"
                                             HorizontalScrollBarVisibility="Never"
                                             VerticalScrollBarVisibility="Never"
@@ -88,7 +89,12 @@
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
                     </CollectionView.ItemsLayout>
-                </CollectionView>
+                </CollectionView>-->
+                 <layouts:UniformGrid
+                     Grid.Row="3"
+                     BindableLayout.ItemsSource="{Binding Interactions}"
+                                  BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                                  ColumnCount="2"/>
             </Grid>
         </DataTemplate>
         
@@ -115,7 +121,7 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </HorizontalStackLayout>
-                <CollectionView BindingContextChanged="HandleBindingContextChanged"
+                <!--<CollectionView BindingContextChanged="HandleBindingContextChanged"
                                             x:Name="PART_Items"
                                             MinimumHeightRequest="240"
                                             Grid.Row="3"
@@ -125,7 +131,12 @@
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
                     </CollectionView.ItemsLayout>
-                </CollectionView>
+                </CollectionView>-->
+                <layouts:UniformGrid
+                     Grid.Row="3"
+                    BindableLayout.ItemsSource="{Binding Interactions}"
+                                  BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                                  ColumnCount="2"/>
 
                 <Grid IsVisible="{Binding HasNoInteractions}" RowDefinitions="*,auto, auto" RowSpacing="8" HeightRequest="240" Grid.Row="3">
                     <Image Source="stardashed.png" />
