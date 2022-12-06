@@ -221,9 +221,10 @@
 
         <DataTemplate x:Key="UniformQuestionLayoutTemplate">
             <layouts:UniformGrid BindableLayout.ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=Details}"
-                                ColumnCount="2"
-                                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=HasDetails}"
-                                BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailLayoutTemplateSelector}"/>
+                                 ColumnCount="2"
+                                 ItemSpace="8" 
+                                 IsVisible="{Binding Source={RelativeSource AncestorType={x:Type assessmentModels:QuestionEntry}}, Path=HasDetails}"
+                                 BindableLayout.ItemTemplateSelector="{StaticResource QuestionDetailLayoutTemplateSelector}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="HorizontalQuestionLayoutTemplate">
