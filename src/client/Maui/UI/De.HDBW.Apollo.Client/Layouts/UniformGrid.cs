@@ -10,6 +10,9 @@ namespace De.HDBW.Apollo.Client.Layouts
         public static readonly BindableProperty ColumnCountProperty =
             BindableProperty.Create(nameof(ColumnCount), typeof(int), typeof(UniformGrid), 0);
 
+        public static readonly BindableProperty ItemSpaceProperty =
+            BindableProperty.Create(nameof(ItemSpace), typeof(double), typeof(UniformGrid), 0d);
+
         private double _childWidth;
         private double _childHeight;
 
@@ -19,11 +22,17 @@ namespace De.HDBW.Apollo.Client.Layouts
             set { SetValue(ColumnCountProperty, value); }
         }
 
+        public double ItemSpace
+        {
+            get { return (double)GetValue(ItemSpaceProperty); }
+            set { SetValue(ItemSpaceProperty, value); }
+        }
+
         protected override void LayoutChildren(double x, double y, double width, double height)
         {
             Measure(width, height, 0);
             int rows = GetRowsCount(Children.Count, ColumnCount);
-            double boundsWidth = width / ColumnCount;
+            double boundsWidth = (width - ((ColumnCount - 1) * ItemSpace)) / ColumnCount;
             double boundsHeight = _childHeight;
             Rect bounds = new Rect(0, 0, boundsWidth, boundsHeight);
             int count = 0;
@@ -33,8 +42,8 @@ namespace De.HDBW.Apollo.Client.Layouts
                 for (int j = 0; j < ColumnCount && count < Children.Count; j++)
                 {
                     View item = Children[count];
-                    bounds.X = j * boundsWidth;
-                    bounds.Y = i * boundsHeight;
+                    bounds.X = j * boundsWidth + (ItemSpace * j);
+                    bounds.Y = i * boundsHeight + (ItemSpace * i);
                     item.Layout(bounds);
                     count++;
                 }
@@ -60,7 +69,7 @@ namespace De.HDBW.Apollo.Client.Layouts
             }
 
             int rows = GetRowsCount(Children.Count, ColumnCount);
-            Size size = new Size(ColumnCount * _childWidth, rows * _childHeight);
+            Size size = new Size(ColumnCount * _childWidth, ((rows * _childHeight) + (ItemSpace * (rows - 1))));
             return new SizeRequest(size, size);
         }
 

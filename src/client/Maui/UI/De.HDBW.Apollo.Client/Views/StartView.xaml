@@ -90,14 +90,15 @@
                         <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
                     </CollectionView.ItemsLayout>
                 </CollectionView>-->
-                 <layouts:UniformGrid
-                     Grid.Row="3"
-                     BindableLayout.ItemsSource="{Binding Interactions}"
-                                  BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
-                                  ColumnCount="2"/>
+                <layouts:UniformGrid
+                    Grid.Row="3"
+                    ItemSpace="16"
+                    BindableLayout.ItemsSource="{Binding Interactions}"
+                    BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                    ColumnCount="2"/>
             </Grid>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="FavoriteInteractionCategoryEntryTemplate" x:DataType="models:InteractionCategoryEntry">
             <Grid RowDefinitions="auto,auto,auto,auto" Padding="24,0" >
                 <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
@@ -133,10 +134,11 @@
                     </CollectionView.ItemsLayout>
                 </CollectionView>-->
                 <layouts:UniformGrid
-                     Grid.Row="3"
+                    Grid.Row="3"
+                    ItemSpace="16"
                     BindableLayout.ItemsSource="{Binding Interactions}"
-                                  BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
-                                  ColumnCount="2"/>
+                    BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                    ColumnCount="2"/>
 
                 <Grid IsVisible="{Binding HasNoInteractions}" RowDefinitions="*,auto, auto" RowSpacing="8" HeightRequest="240" Grid.Row="3">
                     <Image Source="stardashed.png" />
