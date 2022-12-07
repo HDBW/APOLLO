@@ -19,6 +19,8 @@ namespace De.HDBW.Apollo.Data.Services
 
         public UseCase? UseCase { get; private set; }
 
+        public bool ChangedUseCase { get; private set; }
+
         public void AddFavorite(long id, Type type)
         {
             RemoveFavorite(id, type);
@@ -28,6 +30,11 @@ namespace De.HDBW.Apollo.Data.Services
         public void ClearFavorites()
         {
             _favorites.Clear();
+        }
+
+        public void ConfirmedUseCaseChanged()
+        {
+            ChangedUseCase = false;
         }
 
         public IEnumerable<(long Id, Type Type)> GetFavorites()
@@ -52,6 +59,7 @@ namespace De.HDBW.Apollo.Data.Services
         public void UpdateUseCase(UseCase? useCase)
         {
             UseCase = useCase;
+            ChangedUseCase = true;
         }
     }
 }
