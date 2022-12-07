@@ -187,6 +187,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get
             {
                 var parts = new List<string>();
+                parts.Add("ab ");
                 parts.Add((Price ?? 0).ToString());
                 parts.Add(Currency ?? string.Empty);
                 return string.Join(string.Empty, parts.Where(s => !string.IsNullOrWhiteSpace(s)));
@@ -197,7 +198,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return Price.HasValue;
+                return Price.HasValue && Price.Value > 0;
             }
         }
 
@@ -238,6 +239,46 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get
             {
                 return Contact != null;
+            }
+        }
+
+        public bool HasCourseAppointments
+        {
+            get
+            {
+                return CourseAppointments?.Any() ?? false;
+            }
+        }
+
+        public bool HasSkills
+        {
+            get
+            {
+                return Skills?.Any() ?? false;
+            }
+        }
+
+        public bool HasLearningOutcomes
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(LearningOutcomes);
+            }
+        }
+
+        public bool HasPreRequisitesDescription
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(PreRequisitesDescription);
+            }
+        }
+
+        public bool HasCourseType
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(DisplayCourseType);
             }
         }
 
@@ -321,14 +362,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ShortDescription = courseItem?.ShortDescription.Trim();
             TargetGroup = courseItem?.TargetGroup;
             CourseAppointments = new ObservableCollection<CourseAppointmentEntry>(courseAppointments?.Select(e => CourseAppointmentEntry.Import(e)) ?? new List<CourseAppointmentEntry>());
+            OnPropertyChanged(nameof(HasCourseAppointments));
 
             CourseType = courseItem?.CourseType;
             converter = new CourseTypeToStringConverter();
             DisplayCourseType = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
+            OnPropertyChanged(nameof(HasCourseType));
 
             Availability = courseItem?.Availability;
             LatestUpdateFromProvider = courseItem?.LatestUpdateFromProvider;
             PreRequisitesDescription = courseItem?.PreRequisitesDescription;
+            OnPropertyChanged(nameof(HasPreRequisitesDescription));
             KeyPhrases = courseItem?.KeyPhrases;
             Duration = courseItem?.Duration;
 
@@ -339,6 +383,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Language = courseItem?.Language;
 
             LearningOutcomes = courseItem?.LearningOutcomes;
+            OnPropertyChanged(nameof(HasLearningOutcomes));
             InstructorId = courseItem?.InstructorId;
             Instructor = contacts.FirstOrDefault(c => c.Id == InstructorId);
             OnPropertyChanged(nameof(HasInstructor));
@@ -371,6 +416,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             LoanOptions = courseItem?.LoanOptions;
             Skills = new ObservableCollection<InteractionEntry>(skills?.Select(s => InteractionEntry.Import(s.Text, s.Link, OpenSkill, CanOpenSkill)) ?? new List<InteractionEntry>());
+            OnPropertyChanged(nameof(HasSkills));
         }
 
         private IEnumerable<(string Link, string Text)> ParseSkills(string? skills)
@@ -381,6 +427,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 if (!string.IsNullOrWhiteSpace(skills))
                 {
                     var xml = new XmlDocument();
+                    skills = System.Text.RegularExpressions.Regex.Unescape(skills);
                     xml.LoadXml(skills);
                     foreach (var node in xml.FirstChild?.ChildNodes.OfType<XmlNode>() ?? new List<XmlNode>())
                     {

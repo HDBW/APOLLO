@@ -72,9 +72,6 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             //Create Ex-Assessment with FakeData
             //USECASE 2 - E-COMMERCE
             CreateFakeExAssessment(context,2, "Kaufmann/Kauffrau im E-Commerce");
-            
-
-
         }
 
         private static void CreateFakeExAssessment(AssessmentContext context, int useCase, string Titel)

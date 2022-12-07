@@ -11,6 +11,14 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         bool HasRegisteredUser { get; }
 
+        void AddFavorite(long id, Type type);
+
+        void RemoveFavorite(long id, Type type);
+
+        void ClearFavorites();
+
+        IEnumerable<(long Id, Type Type)> GetFavorites();
+
         void UpdateRegisteredUser(bool hasRegisteredUser);
 
         void UpdateUseCase(UseCase? useCase);

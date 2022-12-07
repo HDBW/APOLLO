@@ -27,6 +27,5 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         Task<bool> RemoveItemsByIdsAsync(IEnumerable<long> ids, CancellationToken token);
 
         Task<bool> ResetItemsAsync(IEnumerable<TU>? items, CancellationToken token);
-
     }
 }

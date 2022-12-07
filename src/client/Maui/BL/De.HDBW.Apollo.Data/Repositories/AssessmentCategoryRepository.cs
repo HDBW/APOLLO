@@ -21,6 +21,10 @@ namespace De.HDBW.Apollo.Data.Repositories
             return Task.FromResult(new List<AssessmentCategory>());
         }
 
-        // tell future patric to use question as input for question
+        public Task<IEnumerable<AssessmentCategory>> GetItemByForeignKeysAsync(List<long> courseIds, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            return Task.FromResult(Items.Where(i => courseIds.Contains(i.CourseId)));
+        }
     }
 }
