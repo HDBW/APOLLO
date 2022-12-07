@@ -14,6 +14,12 @@ public partial class StartView
     {
         InitializeComponent();
         BindingContext = model;
+        if (ViewModel == null)
+        {
+            return;
+        }
+
+        ViewModel.UseCaseChangedHandler = ResetScrollViewer;
     }
 
     public StartViewModel? ViewModel
@@ -45,44 +51,27 @@ public partial class StartView
         ViewModel?.LoadDataCommand?.Execute(null);
     }
 
-    private void HandleBindingContextChanged(object sender, System.EventArgs e)
-    {
-        var view = sender as CollectionView;
-        if (view == null)
-        {
-            return;
-        }
-
-        var model = view.BindingContext as InteractionCategoryEntry;
-        if (model == null)
-        {
-            return;
-        }
-
-        var converter = new InteractionsToMaximumHeightConverter();
-        var value = converter.Convert(model.Interactions, typeof(double), 240d, CultureInfo.CurrentUICulture);
-        var doubleValue = 0d;
-        if (value is double)
-        {
-            doubleValue = (double)value;
-            var rows = doubleValue / 240d;
-            doubleValue += (int)Math.Floor(rows) * 16;
-        }
-
-        view.MaximumHeightRequest = Math.Max(doubleValue, view.MinimumHeightRequest);
-        view.ItemsSource = model.Interactions;
-    }
-
     private void HandleStateChanged(object sender, EventArgs e)
     {
         var view = sender as VisualElement;
         view?.SetBinding(Border.IsVisibleProperty, new Binding("IsProcessed"));
     }
 
-    private void HandleSizeChanged(object sender, System.EventArgs e)
+    private async void ResetScrollViewer()
+    {
+        if (PART_ScrollHost == null)
+        {
+            return;
+        }
+
+        await PART_ScrollHost.ScrollToAsync(0, 0, false);
+        HandleSizeChanged(PART_ScrollHost, null);
+    }
+
+    private void HandleSizeChanged(object sender, EventArgs? e)
     {
 #if IOS
-        var layout = sender as Layout;
+        var layout = PART_ScrollHost?.Content;
         if (layout == null)
         {
             return;
@@ -90,12 +79,11 @@ public partial class StartView
 
         layout.MinimumHeightRequest = 0;
         var size = layout.Measure(double.PositiveInfinity, double.PositiveInfinity, MeasureFlags.None);
-        if (double.IsNaN(size.Request.Height) || double.IsInfinity(size.Request.Height))
-        {
-            return;
-        }
-
         layout.MinimumHeightRequest = Math.Max(size.Request.Height, size.Minimum.Height);
+
+        if (layout.MinimumHeightRequest != PART_ScrollHost?.ContentSize.Height)
+        {
+        }
 #endif
     }
 }

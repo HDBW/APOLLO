@@ -60,7 +60,7 @@ namespace De.HDBW.Apollo.Client.Layouts
                     continue;
                 }
 
-                SizeRequest sizeRequest = child.Measure(widthConstraint / ColumnCount, double.PositiveInfinity, 0);
+                SizeRequest sizeRequest = child.Measure(widthConstraint / ColumnCount, double.PositiveInfinity,0);
                 Size minimum = sizeRequest.Minimum;
                 Size request = sizeRequest.Request;
 
@@ -69,7 +69,7 @@ namespace De.HDBW.Apollo.Client.Layouts
             }
 
             int rows = GetRowsCount(Children.Count, ColumnCount);
-            Size size = new Size(ColumnCount * _childWidth, ((rows * _childHeight) + (ItemSpace * (rows - 1))));
+            Size size = new Size(ColumnCount * _childWidth, Math.Max(((rows * _childHeight) + (ItemSpace * (rows - 1))),0));
             return new SizeRequest(size, size);
         }
 
