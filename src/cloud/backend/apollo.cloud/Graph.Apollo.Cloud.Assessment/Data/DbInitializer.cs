@@ -70,6 +70,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             CreateAssessmentFromCsv(filepath,  context);
 
             //Create Ex-Assessment with FakeData
+            //TODO: Review for Fake Assessments
             CreateFakeExAssessment(context,3, "Kaufmann/Kauffrau im E-Commerce");
             
 
