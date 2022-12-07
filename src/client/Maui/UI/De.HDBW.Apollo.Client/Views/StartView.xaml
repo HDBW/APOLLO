@@ -45,7 +45,7 @@
                             </DataTrigger>
                         </ImageButton.Triggers>
                     </ImageButton>
-                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Text, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="2" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
                     <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
                     <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
                 </Grid>
@@ -81,15 +81,6 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </HorizontalStackLayout>
-                <!--<CollectionView BindingContextChanged="HandleBindingContextChanged"
-                                            Grid.Row="3"
-                                            HorizontalScrollBarVisibility="Never"
-                                            VerticalScrollBarVisibility="Never"
-                                            ItemTemplate="{StaticResource DefaultInteractionEntry}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
-                    </CollectionView.ItemsLayout>
-                </CollectionView>-->
                 <layouts:UniformGrid
                     Grid.Row="3"
                     ItemSpace="16"
@@ -122,17 +113,6 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </HorizontalStackLayout>
-                <!--<CollectionView BindingContextChanged="HandleBindingContextChanged"
-                                            x:Name="PART_Items"
-                                            MinimumHeightRequest="240"
-                                            Grid.Row="3"
-                                            HorizontalScrollBarVisibility="Never"
-                                            VerticalScrollBarVisibility="Never"
-                                            ItemTemplate="{StaticResource DefaultInteractionEntry}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
-                    </CollectionView.ItemsLayout>
-                </CollectionView>-->
                 <layouts:UniformGrid
                     Grid.Row="3"
                     ItemSpace="16"
@@ -176,9 +156,10 @@
             <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
             <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
         </Grid>
-        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16">
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16" x:Name="PART_ScrollHost">
             <VerticalStackLayout
                 SizeChanged="HandleSizeChanged"
+                ChildRemoved="HandleSizeChanged"
                 BindableLayout.ItemsSource="{Binding InteractionCategories}"
                 BindableLayout.ItemTemplateSelector="{StaticResource InteractionCategoryTemplateSelector}"
                 Spacing="40">
