@@ -31,7 +31,8 @@ namespace De.HDBW.Apollo.Data.Helper
             ICourseAppointmentRepository courseAppointmentRepository,
             ICourseContactRelationRepository courseContactRelationRepository,
             IUserProfileItemRepository userProfileItemRepository,
-            IEduProviderItemRepository eduProviderItemRepository)
+            IEduProviderItemRepository eduProviderItemRepository,
+            ICategoryRecomendationItemRepository categoryRecomendationItemRepository)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
@@ -51,6 +52,7 @@ namespace De.HDBW.Apollo.Data.Helper
             ArgumentNullException.ThrowIfNull(courseContactRelationRepository);
             ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
+            ArgumentNullException.ThrowIfNull(categoryRecomendationItemRepository);
 
             Logger = logger;
             AssessmentItemRepository = assessmentItemRepository;
@@ -70,6 +72,7 @@ namespace De.HDBW.Apollo.Data.Helper
             CourseContactRelationRepository = courseContactRelationRepository;
             UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
+            CategoryRecomendationItemRepository = categoryRecomendationItemRepository;
         }
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
@@ -104,6 +107,8 @@ namespace De.HDBW.Apollo.Data.Helper
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
 
+        private ICategoryRecomendationItemRepository CategoryRecomendationItemRepository { get; }
+
         private ICourseContactRelationRepository CourseContactRelationRepository { get; }
 
         private ILogger<UseCaseBuilder> Logger { get; }
@@ -135,7 +140,7 @@ namespace De.HDBW.Apollo.Data.Helper
                 switch (usecase)
                 {
                     case UseCase.A:
-                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = "Grafenberger", Image = "user1.png", Goal = "Job finden" }, token).ConfigureAwait(false);
+                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = string.Empty, Image = "user1.png", Goal = "Job finden" }, token).ConfigureAwait(false);
                         break;
                     case UseCase.B:
                         await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Kerstin", LastName = string.Empty, Image = "user2.png", Goal = "Weiterbildung" }, token).ConfigureAwait(false);
@@ -180,6 +185,7 @@ namespace De.HDBW.Apollo.Data.Helper
             CourseContactRelationRepository.ResetItemsAsync(usecase?.CourseContactRelations, token).ConfigureAwait(false);
             AssessmentCategoryResultRepository.ResetItemsAsync(usecase?.AssessmentCategoryResults, token).ConfigureAwait(false);
             AnswerItemResultRepository.ResetItemsAsync(usecase?.AnswerItemResults, token).ConfigureAwait(false);
+            CategoryRecomendationItemRepository.ResetItemsAsync(usecase?.CategoryRecomendations, token).ConfigureAwait(false);
             return Task.FromResult(true);
         }
 
