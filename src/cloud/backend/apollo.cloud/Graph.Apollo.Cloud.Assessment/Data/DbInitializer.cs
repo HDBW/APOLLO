@@ -90,7 +90,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 EscoSkills = new List<EscoSkill>(),
                 ExternalId = "EX000",
                 Profession = "Kaufmann/Kauffrau im E-Commerce",
-                Publisher = "APOLLO APP",
+                Publisher = "Apollo App",
                 Title = "Kaufmann/Kauffrau im E-Commerce",
                 Schema = CreateApolloSchema(),
                 Ticks = DateTime.Now.Ticks,
