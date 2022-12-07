@@ -50,9 +50,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public AnswerType? AnswerType { get; }
 
-        private Action<SelectableEntry<TU>>? SelectionChangedHandler { get; }
-
         public int SortIndex { get; }
+
+        private Action<SelectableEntry<TU>>? SelectionChangedHandler { get; }
 
         public static SelectableEntry<TU> Import(TU data, InteractionType interaction, AnswerType? answerType, Action<SelectableEntry<TU>>? selectionChangedHandler)
         {
