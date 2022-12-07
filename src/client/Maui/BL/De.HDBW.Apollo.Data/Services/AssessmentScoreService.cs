@@ -69,7 +69,8 @@ namespace De.HDBW.Apollo.Data.Services
             // TODO: Iterate over answerItems and create Category result
             var questions = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentId, token).ConfigureAwait(false);
             IEnumerable<QuestionItem> questionItems = questions.ToList();
-            Dictionary<long, int> maxScoreDictionary = new();
+            Dictionary<long, int> maxScoreDictionary = new ();
+
             // set the score data now that we have some information
             score.AssessmentId = assessmentId;
             score.UserId = userId;
@@ -93,7 +94,8 @@ namespace De.HDBW.Apollo.Data.Services
                 categoryResult.AssessmentScoreId = score.Id;
 
                 // NOTE: !!! Important set the CourseId of the category to the result !!!
-                categoryResult.CourseId = category.CourseId;
+                // NOTE we give the result only back if the user scores less than the result limit.
+                // categoryResult.CourseId = category.CourseId;
                 var categoryQuestions = questions.Where(x => x.CategoryId.Equals(category.Id));
                 int scores = 0;
 
@@ -176,7 +178,8 @@ namespace De.HDBW.Apollo.Data.Services
                                 var userAnswer = answerItemResults.Where(a => a.AnswerItemId.Equals(item.Id));
                                 if (userAnswer != null && item != null)
                                 {
-                                    Debug.WriteLine($"Score ADD Value:{Convert.ToInt32(userAnswer.First().Value)} * {Convert.ToInt32(item.Scalar)}" );
+                                    Debug.WriteLine($"Score ADD Value:{Convert.ToInt32(userAnswer.First().Value)} * {Convert.ToInt32(item.Scalar)}");
+
                                     // The value of the answeritem should be the index which should be the indication vector, these are a lot of should bes will see.
                                     scores += Convert.ToInt32(userAnswer.First().Value) * Convert.ToInt32(item.Scalar);
                                     Debug.WriteLine($"Score NEW Value:{scores}");
@@ -189,8 +192,20 @@ namespace De.HDBW.Apollo.Data.Services
                     }
                 }
 
-                Debug.WriteLine($"category.Result:{(100 * scores)} / {maxScoreDictionary[category.Id]}");
+                Debug.WriteLine($"category.Result:{100 * scores} / {maxScoreDictionary[category.Id]}");
                 categoryResult.Result = (100 * scores) / maxScoreDictionary[category.Id];
+
+                // NOTE: Decide to set the Course or not
+                decimal mr = Math.Round(categoryQuestions.ToList().Count() / 100 * categoryResult.Result);
+                if (mr < Convert.ToDecimal(category.ResultLimit))
+                {
+                    categoryResult.CourseId = category.CourseId;
+                }
+                else
+                {
+                    categoryResult.CourseId = -1;
+                }
+
                 Debug.WriteLine($"category.Result:{categoryResult.Result}");
                 results.Add(categoryResult); // REVIEW: DO WE NEED IT?
                 await AssessmentCategoryResultsRepository.AddItemAsync(categoryResult, token);
