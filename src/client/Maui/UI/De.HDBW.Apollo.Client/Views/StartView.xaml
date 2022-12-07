@@ -176,7 +176,7 @@
             <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
             <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
         </Grid>
-        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16">
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16" x:Name="PART_ScrollHost">
             <VerticalStackLayout
                 SizeChanged="HandleSizeChanged"
                 BindableLayout.ItemsSource="{Binding InteractionCategories}"

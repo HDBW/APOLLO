@@ -14,6 +14,7 @@ public partial class StartView
     {
         InitializeComponent();
         BindingContext = model;
+        ViewModel.UseCaseChangedHandler = ResetScrollViewer;
     }
 
     public StartViewModel? ViewModel
@@ -77,6 +78,16 @@ public partial class StartView
     {
         var view = sender as VisualElement;
         view?.SetBinding(Border.IsVisibleProperty, new Binding("IsProcessed"));
+    }
+
+    private async void ResetScrollViewer()
+    {
+        if (PART_ScrollHost == null)
+        {
+            return;
+        }
+
+        await PART_ScrollHost.ScrollToAsync(0, 0, false);
     }
 
     private void HandleSizeChanged(object sender, System.EventArgs e)
