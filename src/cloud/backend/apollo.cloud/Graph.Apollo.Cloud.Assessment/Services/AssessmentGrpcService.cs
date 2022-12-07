@@ -119,12 +119,43 @@ public class AssessmentGrpcService : IAssessmentGRPCService
                 //_assessmentDataService.GetAllAssessmentsAsync().Result
                 //    .Where(a => a.Title.Equals("Test Kaufmann/Kauffrau im E-Commerce")).First();
                 //skillAssessment.
+                var assessments = _assessmentDataService.GetAllAssessmentsAsync().Result.Where(a => a.UseCaseId.Equals(2));
 
+                foreach (Models.Assessment assessment in assessments)
+                {
+                    AnswerItemResult air = new AnswerItemResult();
+                    air.Id = answerItems.Count;
+                    air.AssessmentItemId = assessment.Id;
+                    air.QuestionItemId = assessment.Questions.FirstOrDefault()!.Id;
+                    air.AnswerItemId = assessment.Questions.FirstOrDefault()!.Answers.FirstOrDefault()!.Id;
+                    air.Schema = CreateApolloSchema();
+                    air.Ticks = DateTime.Now.Ticks;
+                    air.Value = false.ToString();
+                    air.UserProfileId = 1;
+
+                    answerItems.Add(air);
+                }
 
                 //EXPERIENCE Kaufmann/Kauffrau im E-Commerce
                 break;
             case 3:
                 //Soziale & Kommunikative Kompetenzen
+                var assessmentsCase3 = _assessmentDataService.GetAllAssessmentsAsync().Result.Where(a => a.UseCaseId.Equals(3));
+
+                foreach (Models.Assessment assessment in assessmentsCase3)
+                {
+                    AnswerItemResult air = new AnswerItemResult();
+                    air.Id = answerItems.Count;
+                    air.AssessmentItemId = assessment.Id;
+                    air.QuestionItemId = assessment.Questions.FirstOrDefault()!.Id;
+                    air.AnswerItemId = assessment.Questions.FirstOrDefault()!.Answers.FirstOrDefault()!.Id;
+                    air.Schema = CreateApolloSchema();
+                    air.Ticks = DateTime.Now.Ticks;
+                    air.Value = false.ToString();
+                    air.UserProfileId = 1;
+
+                    answerItems.Add(air);
+                }
 
                 break;
             default:
@@ -132,6 +163,11 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         }
 
         return answerItems;
+    }
+
+    private static Uri CreateApolloSchema()
+    {
+        return new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
     }
 
     private Collection<AssessmentCategoryResult> CreateFakeCategoryResults(int useCase)
