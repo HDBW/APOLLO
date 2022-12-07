@@ -70,7 +70,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             CreateAssessmentFromCsv(filepath,  context);
 
             //Create Ex-Assessment with FakeData
-            CreateFakeExAssessment(context,3, "Kaufmann/Kauffrau im E-Commerce");
+            //USECASE 2 - E-COMMERCE
+            CreateFakeExAssessment(context,2, "Kaufmann/Kauffrau im E-Commerce");
             
 
 
@@ -81,7 +82,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             Models.Assessment assessment = new Models.Assessment
             {
                 UseCaseId = useCase,
-                Kldb = "0000",
+                Kldb = "61282",
                 AssessmentType = AssessmentType.ExperienceAssessment,
                 Description = "Test Description",
                 Disclaimer = "Test Disclaimer",
@@ -91,7 +92,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 ExternalId = "EX000",
                 Profession = "Kaufmann/Kauffrau im E-Commerce",
                 Publisher = "Apollo App",
-                Title = "Kaufmann/Kauffrau im E-Commerce",
+                Title = "Erfahrungs Selbsttest - Kaufmann/Kauffrau im E-Commerce",
                 Schema = CreateApolloSchema(),
                 Ticks = DateTime.Now.Ticks,
             };
@@ -141,7 +142,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 QuestionId = question.Id,
                 Question = question
             };
-            context.Add(answer);
+            context.Answers.Add(answer);
+            context.SaveChanges();
+
 
         }
 
