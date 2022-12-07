@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Invite.Apollo.App.Graph.Assessment.Models;
 using Invite.Apollo.App.Graph.Assessment.Repository;
 using Invite.Apollo.App.Graph.Common.Models;
@@ -89,7 +90,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Assessment, AssessmentItem>());
             Mapper mapper = new(config);
             List<AssessmentItem> assessmentItems = new();
-            foreach (var assessment in assessments)
+            foreach (var assessment in assessments ?? Enumerable.Empty<Models.Assessment>())
             {
                 assessmentItems.Add(mapper.Map<AssessmentItem>(assessment));
             }
@@ -103,7 +104,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.Assessment, AssessmentItem>());
             Mapper mapper = new(config);
             List<AssessmentItem> assessmentItems = new();
-            foreach (var assessment in assessments)
+            foreach (var assessment in assessments ?? Enumerable.Empty<Models.Assessment>())
             {
                 assessmentItems.Add(mapper.Map<AssessmentItem>(assessment));
             }
@@ -137,7 +138,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             );
             var mapper = new Mapper(config);
             List<AssessmentItem> assessmentItems = new List<AssessmentItem>();
-            foreach (var assessment in assessments)
+            foreach (var assessment in assessments ?? Enumerable.Empty<Models.Assessment>())
             {
                 assessmentItems.Add(mapper.Map<AssessmentItem>(assessment));
             }
@@ -183,7 +184,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
             var mapper = new Mapper(config);
             List<QuestionItem> questionItems = new();
-            foreach (var item in questions)
+            foreach (var item in questions ?? Enumerable.Empty<Models.Question>())
             {
                 questionItems.Add(mapper.Map<QuestionItem>(item));
             }
@@ -244,7 +245,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
             var mapper = new Mapper(config);
             List<AnswerItem> answerItems = new();
-            foreach (Answer answer in answers)
+            foreach (Answer answer in answers ?? Enumerable.Empty<Models.Answer>())
             {
                 answerItems.Add(mapper.Map<AnswerItem>(answer));
             }
@@ -299,7 +300,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.MetaData, MetaDataItem>());
             var mapper = new Mapper(config);
             List<MetaDataItem> metaDataItems = new();
-            foreach (MetaData data in metaData)
+            foreach (MetaData data in metaData ?? Enumerable.Empty<Models.MetaData>())
             {
                 metaDataItems.Add(mapper.Map<MetaDataItem>(data));
             }
@@ -353,7 +354,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.AnswerHasMetaData, AnswerMetaDataRelation>());
             var mapper = new Mapper(config);
             List<AnswerMetaDataRelation> metaDataItems = new();
-            foreach (AnswerHasMetaData data in answerHasMetaData)
+            foreach (AnswerHasMetaData data in answerHasMetaData ?? Enumerable.Empty<Models.AnswerHasMetaData>())
             {
                 metaDataItems.Add(mapper.Map<AnswerMetaDataRelation>(data));
             }
@@ -366,7 +367,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.AnswerHasMetaData, AnswerMetaDataRelation>());
             var mapper = new Mapper(config);
             List<AnswerMetaDataRelation> metaDataItems = new();
-            foreach (AnswerHasMetaData data in answerHasMetaData)
+            foreach (AnswerHasMetaData data in answerHasMetaData ?? Enumerable.Empty<Models.AnswerHasMetaData>())
             {
                 metaDataItems.Add(mapper.Map<AnswerMetaDataRelation>(data));
             }
@@ -412,7 +413,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.QuestionHasMetaData, QuestionMetaDataRelation>());
             var mapper = new Mapper(config);
             List<QuestionMetaDataRelation> metaDataItems = new();
-            foreach (QuestionHasMetaData data in questionHasMetaData)
+            foreach (QuestionHasMetaData data in questionHasMetaData ?? Enumerable.Empty<Models.QuestionHasMetaData>())
             {
                 metaDataItems.Add(mapper.Map<QuestionMetaDataRelation>(data));
             }
@@ -425,7 +426,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.QuestionHasMetaData, QuestionMetaDataRelation>());
             var mapper = new Mapper(config);
             List<QuestionMetaDataRelation> metaDataItems = new();
-            foreach (QuestionHasMetaData data in questionHasMetaData)
+            foreach (QuestionHasMetaData data in questionHasMetaData ?? Enumerable.Empty<Models.QuestionHasMetaData>())
             {
                 metaDataItems.Add(mapper.Map<QuestionMetaDataRelation>(data));
             }
@@ -468,7 +469,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.MetaDataHasMetaData, MetaDataMetaDataRelation>());
             var mapper = new Mapper(config);
             List<MetaDataMetaDataRelation> metaDataItems = new();
-            foreach (Models.MetaDataHasMetaData data in metaDataHasMetaData)
+            foreach (Models.MetaDataHasMetaData data in metaDataHasMetaData ?? Enumerable.Empty<Models.MetaDataHasMetaData>())
             {
                 metaDataItems.Add(mapper.Map<MetaDataMetaDataRelation>(data));
             }
@@ -515,7 +516,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AssessmentCategory> assessmentCategories = new();
-            foreach (var categoryItem in categories)
+            foreach (var categoryItem in categories ?? Enumerable.Empty<Models.Category>())
             {
                 assessmentCategories.Add(mapper.Map<AssessmentCategory>(categoryItem));
             }
@@ -564,7 +565,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<CategoryRecomendationItem> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.CategoryRecomendation>())
             {
                 result.Add(mapper.Map<CategoryRecomendationItem>(item));
             }
@@ -602,7 +603,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var questions = GetQuestionsByUseCase(useCase);
             List<Answer> result = new();
-            foreach (var question in questions)
+            foreach (var question in questions ?? Enumerable.Empty<Models.Question>())
             {
                 foreach (Answer answer in question.Answers)
                 {
@@ -617,9 +618,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var assessments = GetAssessmentsByUseCase(useCase);
             List<Question> result = new();
-            foreach (var assessment in assessments)
+            foreach (var assessment in assessments ?? Enumerable.Empty<Models.Assessment>())
             {
-                foreach (Question assessmentQuestion in assessment.Questions)
+                foreach (Question assessmentQuestion in assessment.Questions ?? Enumerable.Empty<Models.Question>())
                 {
                     result.Add(assessmentQuestion);
                 }
@@ -631,7 +632,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var questions = GetQuestionsByUseCase(useCase);
             List<Category> result = new();
-            foreach (var question in questions)
+            foreach (var question in questions ?? Enumerable.Empty<Question>())
             {
                 result.Add(question.Category);
             }
@@ -644,7 +645,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
         {
             var categories = GetCategoryByUseCase(useCase);
             List<CategoryRecomendation> result = new();
-            foreach (var category in categories)
+            foreach (var category in categories ?? Enumerable.Empty<Category>())
             {
                 result.AddRange(_categoryRecomendationRepository.FindBy(a => a.CategoryId.Equals(category.Id)));
                 
@@ -659,17 +660,17 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var answers = GetAnswersByUseCase(useCase);
             var questions = GetQuestionsByUseCase(useCase);
 
-            foreach (Answer answer in answers)
+            foreach (Answer answer in answers ?? Enumerable.Empty<Models.Answer>())
             {
-                foreach (AnswerHasMetaData answerAnswerHasMetaData in answer.AnswerHasMetaDatas)
+                foreach (AnswerHasMetaData answerAnswerHasMetaData in answer.AnswerHasMetaDatas ?? Enumerable.Empty<AnswerHasMetaData>())
                 {
                     result.Add(answerAnswerHasMetaData.MetaData);
 
                 }
             }
-            foreach (Question question in questions)
+            foreach (Question question in questions ?? Enumerable.Empty<Models.Question>())
             {
-                foreach (QuestionHasMetaData questionHasMetaData in question.QuestionHasMetaDatas)
+                foreach (QuestionHasMetaData questionHasMetaData in question.QuestionHasMetaDatas ?? Enumerable.Empty<QuestionHasMetaData>())
                 {
                     result.Add(questionHasMetaData.MetaData);
 
@@ -690,7 +691,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             var questionHasMetaData = GetQuestionHasMetaDataByUseCase(useCase);
             var answerHasMetaData = GetAnswerHasMetaDataByUseCase(useCase);
 
-            foreach (QuestionHasMetaData qhmd in questionHasMetaData)
+            foreach (QuestionHasMetaData qhmd in questionHasMetaData ?? Enumerable.Empty<Models.QuestionHasMetaData>())
             {
                 if (qhmd.MetaData.TargetMetaDataHasMetaDatas != null)
                 {
@@ -710,14 +711,14 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
             }
 
-            foreach (AnswerHasMetaData ahmd in answerHasMetaData)
+            foreach (AnswerHasMetaData ahmd in answerHasMetaData ?? Enumerable.Empty<Models.AnswerHasMetaData>())
             {
-                foreach (var target in ahmd.MetaData.TargetMetaDataHasMetaDatas)
+                foreach (var target in ahmd.MetaData.TargetMetaDataHasMetaDatas ?? Enumerable.Empty<Models.MetaDataHasMetaData>())
                 {
                     result.Add(target);
                 }
 
-                foreach (var source in ahmd.MetaData.SourceQuestionHasMetaDatas)
+                foreach (var source in ahmd.MetaData.SourceQuestionHasMetaDatas ?? Enumerable.Empty<Models.MetaDataHasMetaData>())
                 {
                     result.Add(source);
                 }
@@ -734,9 +735,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
             
 
-            foreach (Question question in questions)
+            foreach (Question question in questions ?? Enumerable.Empty<Models.Question>())
             {
-                foreach (QuestionHasMetaData questionHasMetaData in question.QuestionHasMetaDatas)
+                foreach (QuestionHasMetaData questionHasMetaData in question.QuestionHasMetaDatas ?? Enumerable.Empty<Models.QuestionHasMetaData>())
                 {
                     result.Add(questionHasMetaData);
 
@@ -752,12 +753,11 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
 
             List<AnswerHasMetaData> result = new();
             var answers = GetAnswersByUseCase(useCase);
-            foreach (Answer answer in answers)
+            foreach (Answer answer in answers ?? Enumerable.Empty<Models.Answer>())
             {
-                foreach (AnswerHasMetaData answerAnswerHasMetaData in answer.AnswerHasMetaDatas)
+                foreach (var answerAnswerHasMetaData in answer.AnswerHasMetaDatas ?? Enumerable.Empty<AnswerHasMetaData>())
                 {
                     result.Add(answerAnswerHasMetaData);
-
                 }
             }
 
@@ -771,7 +771,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AssessmentItem> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.Assessment>())
             {
                 result.Add(mapper.Map<AssessmentItem>(item));
             }
@@ -787,7 +787,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AnswerItem> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.Answer>())
             {
                 result.Add(mapper.Map<AnswerItem>(item));
             }
@@ -808,7 +808,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<QuestionItem> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.Question>())
             {
                 result.Add(mapper.Map<QuestionItem>(item));
             }
@@ -822,7 +822,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AssessmentCategory> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.Category>())
             {
                 result.Add(mapper.Map<AssessmentCategory>(item));
             }
@@ -836,7 +836,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<CategoryRecomendationItem> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.CategoryRecomendation>())
             {
                 result.Add(mapper.Map<CategoryRecomendationItem>(item));
             }
@@ -850,7 +850,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<MetaDataItem> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.MetaData>())
             {
                 result.Add(mapper.Map<MetaDataItem>(item));
             }
@@ -864,7 +864,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<MetaDataMetaDataRelation> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.MetaDataHasMetaData>())
             {
                 result.Add(mapper.Map<MetaDataMetaDataRelation>(item));
             }
@@ -878,7 +878,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<QuestionMetaDataRelation> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.QuestionHasMetaData>())
             {
                 result.Add(mapper.Map<QuestionMetaDataRelation>(item));
             }
@@ -892,7 +892,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Services
             //TODO: Overwrite shit
             var mapper = new Mapper(config);
             List<AnswerMetaDataRelation> result = new();
-            foreach (var item in list)
+            foreach (var item in list ?? Enumerable.Empty<Models.AnswerHasMetaData>())
             {
                 result.Add(mapper.Map<AnswerMetaDataRelation>(item));
             }
