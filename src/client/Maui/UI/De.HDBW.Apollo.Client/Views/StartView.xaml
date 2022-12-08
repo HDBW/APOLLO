@@ -81,15 +81,6 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </HorizontalStackLayout>
-                <!--<CollectionView BindingContextChanged="HandleBindingContextChanged"
-                                            Grid.Row="3"
-                                            HorizontalScrollBarVisibility="Never"
-                                            VerticalScrollBarVisibility="Never"
-                                            ItemTemplate="{StaticResource DefaultInteractionEntry}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
-                    </CollectionView.ItemsLayout>
-                </CollectionView>-->
                 <layouts:UniformGrid
                     Grid.Row="3"
                     ItemSpace="16"
@@ -122,17 +113,6 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </HorizontalStackLayout>
-                <!--<CollectionView BindingContextChanged="HandleBindingContextChanged"
-                                            x:Name="PART_Items"
-                                            MinimumHeightRequest="240"
-                                            Grid.Row="3"
-                                            HorizontalScrollBarVisibility="Never"
-                                            VerticalScrollBarVisibility="Never"
-                                            ItemTemplate="{StaticResource DefaultInteractionEntry}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
-                    </CollectionView.ItemsLayout>
-                </CollectionView>-->
                 <layouts:UniformGrid
                     Grid.Row="3"
                     ItemSpace="16"
@@ -179,6 +159,7 @@
         <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16" x:Name="PART_ScrollHost">
             <VerticalStackLayout
                 SizeChanged="HandleSizeChanged"
+                ChildRemoved="HandleSizeChanged"
                 BindableLayout.ItemsSource="{Binding InteractionCategories}"
                 BindableLayout.ItemTemplateSelector="{StaticResource InteractionCategoryTemplateSelector}"
                 Spacing="40">
