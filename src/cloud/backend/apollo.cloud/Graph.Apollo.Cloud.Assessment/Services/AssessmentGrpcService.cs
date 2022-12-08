@@ -113,7 +113,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
             case 1:
                 break;
             case 2:
-                //SKILLASSESSMENT Kaufmann/Kauffrau im E-Commerce
+                
                 //TODO: RESULT STUFF
                 //var skillAssessment = 
                 //_assessmentDataService.GetAllAssessmentsAsync().Result
@@ -123,20 +123,25 @@ public class AssessmentGrpcService : IAssessmentGRPCService
 
                 foreach (Models.Assessment assessment in assessments)
                 {
-                    AnswerItemResult air = new AnswerItemResult();
-                    air.Id = answerItems.Count;
-                    air.AssessmentItemId = assessment.Id;
-                    air.QuestionItemId = assessment.Questions.FirstOrDefault()!.Id;
-                    air.AnswerItemId = assessment.Questions.FirstOrDefault()!.Answers.FirstOrDefault()!.Id;
-                    air.Schema = CreateApolloSchema();
-                    air.Ticks = DateTime.Now.Ticks;
-                    air.Value = false.ToString();
-                    air.UserProfileId = 1;
+                    if (!assessment.AssessmentType.Equals(AssessmentType.SoftSkillAssessment))
+                    {
+                        //EXPERIENCE Kaufmann/Kauffrau im E-Commerce
+                        //SKILLASSESSMENT Kaufmann/Kauffrau im E-Commerce
+                        AnswerItemResult air = new AnswerItemResult();
+                        air.Id = answerItems.Count;
+                        air.AssessmentItemId = assessment.Id;
+                        air.QuestionItemId = assessment.Questions.FirstOrDefault()!.Id;
+                        air.AnswerItemId = assessment.Questions.FirstOrDefault()!.Answers.FirstOrDefault()!.Id;
+                        air.Schema = CreateApolloSchema();
+                        air.Ticks = DateTime.Now.Ticks;
+                        air.Value = false.ToString();
+                        air.UserProfileId = 1;
 
-                    answerItems.Add(air);
+                        answerItems.Add(air);
+                    }
                 }
 
-                //EXPERIENCE Kaufmann/Kauffrau im E-Commerce
+                
                 break;
             case 3:
                 //Soziale & Kommunikative Kompetenzen
