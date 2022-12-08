@@ -11,6 +11,7 @@ using ProtoBuf;
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
+    [ProtoContract]
     public class CourseAppointment : BaseItem, IPublishingInfo
     {
 
