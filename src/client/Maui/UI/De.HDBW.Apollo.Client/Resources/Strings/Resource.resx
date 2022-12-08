@@ -238,7 +238,7 @@
     <value>Ohne Anmeldung fortfahren</value>
   </data>
   <data name="RegistrationView_Description" xml:space="preserve">
-    <value>Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu.</value>
+    <value>Während der Testung benötigst Du keine Registrierung/Anmeldung. Wenn Du Dich allerdings für zukünftige Testversionen registrieren möchtest, kannst Du das über "Jetzt anmelden" vornehmen. Solltest Du Deine Meinung ändern, kannst Du über Einstellungen → "Benutzer abmelden" die Registrierung/Anmeldung löschen.</value>
   </data>
   <data name="RegistrationView_RegisterNow" xml:space="preserve">
     <value>Jetzt Anmelden</value>
@@ -414,17 +414,17 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>https://www.invite-apollo.app/terms</value>
   </data>
   <data name="SettingsView_EmailBody" xml:space="preserve">
-    <value>Hallo Apollo.
+    <value>Hallo Apollo-Team.
 </value>
   </data>
   <data name="SettingsView_EmailSubject" xml:space="preserve">
-    <value>Anregungen oder Wunsch</value>
+    <value>Anregungen oder Wunsch zu Apollo</value>
   </data>
   <data name="SettingsView_QuestionDescription" xml:space="preserve">
     <value>Hilf uns die Zukunft der Bildung zu gestalten.</value>
   </data>
   <data name="SettingsView_QuestionEmail" xml:space="preserve">
-    <value>martin.mailman@lorem.de</value>
+    <value>15d1a7e3.student.hdbw-hochschule.de@emea.teams.ms</value>
   </data>
   <data name="SettingsView_Questions" xml:space="preserve">
     <value>Anregungen oder Wünsche?</value>
