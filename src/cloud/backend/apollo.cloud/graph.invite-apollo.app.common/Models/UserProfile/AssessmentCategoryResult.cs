@@ -5,33 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Course;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
     [DataContract]
-    public class AssessmentCategoryResult : IEntity, IBackendEntity
+    [ProtoContract]
+    public class AssessmentCategoryResult : BaseItem
     {
-        #region Implementation of IEntity
-
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [Key]
-        [DataMember(Order = 2)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-
-        [DataMember(Order = 3)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4)]
-        public Uri Schema { get; set; }
-
-        #endregion
 
         [ForeignKey(nameof(UserProfile))]
         [DataMember(Order = 5)]
@@ -39,10 +21,18 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         [DataMember(Order = 6)]
         [ForeignKey(nameof(AssessmentCategory))]
-        public long Category { get; set; }
+        public long CategoryId { get; set; }
 
         //The result a user scored in a Category
         [DataMember(Order = 7)]
-        public long Result { get; set; }
+        public decimal Result { get; set; }
+
+        [ForeignKey(nameof(CourseItem))]
+        [DataMember(Order = 8)]
+        public long CourseId { get; set; }
+
+        [ForeignKey(nameof(AssessmentScore))]
+        [DataMember(Order = 9)]
+        public long AssessmentScoreId { get; set; }
     }
 }
