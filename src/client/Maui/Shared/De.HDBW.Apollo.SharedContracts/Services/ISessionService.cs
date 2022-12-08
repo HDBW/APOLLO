@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         bool HasRegisteredUser { get; }
 
-        bool ChangedUseCase { get;}
+        bool ChangedUseCase { get; }
 
         void AddFavorite(long id, Type type);
 
