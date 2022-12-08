@@ -835,7 +835,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu..
+        ///   Looks up a localized string similar to Während der Testung benötigst Du keine Registrierung/Anmeldung. Wenn Du Dich allerdings für zukünftige Testversionen registrieren möchtest, kannst Du das über &quot;Jetzt anmelden&quot; vornehmen. Solltest Du Deine Meinung ändern, kannst Du über Einstellungen → &quot;Benutzer abmelden&quot; die Registrierung/Anmeldung löschen..
         /// </summary>
         public static string RegistrationView_Description {
             get {
@@ -871,7 +871,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo Apollo.
+        ///   Looks up a localized string similar to Hallo Apollo-Team.
         ///.
         /// </summary>
         public static string SettingsView_EmailBody {
@@ -881,7 +881,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anregungen oder Wunsch.
+        ///   Looks up a localized string similar to Anregungen oder Wunsch zu Apollo.
         /// </summary>
         public static string SettingsView_EmailSubject {
             get {
@@ -935,7 +935,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to martin.mailman@lorem.de.
+        ///   Looks up a localized string similar to apollodev@hdbw-hochschule.de.
         /// </summary>
         public static string SettingsView_QuestionEmail {
             get {
