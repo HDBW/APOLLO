@@ -344,6 +344,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             base.RefreshCommands();
             ShowLoanOptionsCommand?.NotifyCanExecuteChanged();
             OpenCourseCommand?.NotifyCanExecuteChanged();
+            OpenMailCommand?.NotifyCanExecuteChanged();
         }
 
         private void LoadonUIThread(
@@ -540,6 +541,52 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool CanShowLoanOptions()
         {
             return !IsBusy && !string.IsNullOrWhiteSpace(LoanOptions);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenMail))]
+        private async Task OpenMail(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (Email.Default.IsComposeSupported)
+                    {
+                        string[] recipients = new[] { Contact?.ContactMail };
+
+                        var message = new EmailMessage
+                        {
+                            Subject = string.Empty,
+                            Body = string.Empty,
+                            BodyFormat = EmailBodyFormat.PlainText,
+                            To = new List<string>(recipients),
+                        };
+
+                        await Email.Default.ComposeAsync(message);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenMail()
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(Contact?.ContactMail);
         }
     }
 }
