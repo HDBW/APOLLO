@@ -935,7 +935,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 15d1a7e3.student.hdbw-hochschule.de@emea.teams.ms.
+        ///   Looks up a localized string similar to apollodev@hdbw-hochschule.de.
         /// </summary>
         public static string SettingsView_QuestionEmail {
             get {
