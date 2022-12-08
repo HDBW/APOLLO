@@ -120,7 +120,9 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.LoanOption" BaseTypeListCollapsed="true">
+  <Class Name="Invite.Apollo.App.Graph.Common.Models.Course.
+         
+    Option" BaseTypeListCollapsed="true">
     <Position X="12.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEACAAAAAAAgAEAAABABAAAEAAAACAAAAAAAAIAAIAA=</HashCode>

@@ -1,49 +1,50 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using System.Collections.ObjectModel;
-using System;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {
     [DataContract]
-    public class QuestionItem : IEntity, IBackendEntity
+    [ProtoContract]
+    public class QuestionItem : BaseItem
     {
-        #region Implementation of IEntity
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
 
-        [DataMember(Order = 2, IsRequired = true)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-        [DataMember(Order = 3, IsRequired = true)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4, IsRequired = true)]
-        public Uri Schema { get; set; } = null!;
-
-        #endregion
 
         [DataMember(Order = 5, IsRequired = true)]
+        [ProtoMember(1)]
         [ForeignKey(nameof(AssessmentItem))]
         public long AssessmentId { get; set; }
 
         [DataMember(Order = 6)]
+        [ProtoMember(2)]
         public LayoutType QuestionLayout { get; set; }
 
         [DataMember(Order = 7)]
+        [ProtoMember(3)]
         public LayoutType AnswerLayout { get; set; }
 
         [DataMember(Order = 8)]
+        [ProtoMember(4)]
         public InteractionType Interaction { get; set; }
 
+        [DataMember(Order = 9)]
+        [ProtoMember(5)]
         [ForeignKey(nameof(AssessmentCategory))]
-        public long Category { get; set; }
+        public long CategoryId { get; set; }
+
+        [DataMember(Order = 10)]
+        [ProtoMember(6)]
+        public string ScoringOption { get; set; } = string.Empty;
+
+        [DataMember(Order = 11)]
+        [ProtoMember(7)]
+        public int Scalar { get; set; }
+
+        [DataMember(Order = 12, IsRequired = true)]
+        [ProtoMember(8)]
+        public QuestionType QuestionType { get; set; }
     }
 
     [DataContract]
