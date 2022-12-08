@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Invite.Apollo.App.Graph.Common.Models
+﻿namespace Invite.Apollo.App.Graph.Common.Models
 {
     public interface ICorrelationId
     {

@@ -12,6 +12,25 @@ namespace Invite.Apollo.App.Graph.Common.Test
     {
         private AssessmentDictonary _assessments = new AssessmentDictonary();
 
+
+
+        [Test]
+        public void DeserializeBinFiles()
+        {
+           
+            string filename =
+                "C:\\Users\\PatricBoscolo\\source\\gh\\APOLLO\\src\\cloud\\backend\\apollo.cloud\\Graph.Apollo.Cloud.Assessment\\usecase1.bin";
+
+            UseCaseCollections expected;
+
+            using (var file = File.OpenRead(filename))
+            {
+                expected = Serializer.Deserialize<UseCaseCollections>(file);
+                file.Close();
+            }
+        }
+
+
         [Test]
         public void ShouldGenerateAssessmentBinFiles()
         {
@@ -50,7 +69,9 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
             UseCaseCollections expected;
 
-            using (var file = File.OpenRead(filename))
+            string filename1 = "usecase1.bin";
+
+            using (var file = File.OpenRead(filename1))
             {
                 expected = Serializer.Deserialize<UseCaseCollections>(file);
                 file.Close();
@@ -281,9 +302,9 @@ namespace Invite.Apollo.App.Graph.Common.Test
             Debug.WriteLine(amdr3.Dump());
         }
 
-        private void CreateImageMapQuestion(AssessmentItem assessmentItem)
+        private void CreateImageMapQuestion(AssessmentItem assessment)
         {
-            QuestionItem questionItem = CreateQuestionItem(assessmentItem, LayoutType.Overlay, LayoutType.Default,
+            QuestionItem questionItem = CreateQuestionItem(assessment, LayoutType.Overlay, LayoutType.Default,
                 InteractionType.MultiSelect);
 
             questionItem = _assessments.AddQuestionItem(questionItem);
@@ -521,7 +542,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
             answerItem.QuestionId = question.Id;
             answerItem.AnswerType = answertype;
             answerItem.Value = value;
-            answerItem.BackendId = DateTime.Now.Ticks;
+            //answerItem.BackendId = DateTime.Now.Ticks;
             answerItem.Schema = CreateApolloSchema();
             answerItem.Ticks = DateTime.Now.Ticks;
             return answerItem;
@@ -529,8 +550,8 @@ namespace Invite.Apollo.App.Graph.Common.Test
 
         private MetaDataItem CreateMetaDataItem(MetaDataType type, string value)
         {
-            MetaDataItem md = new() { Type = type, Value = value, Ticks = DateTime.Now.Ticks, Schema = CreateApolloSchema(),
-                BackendId = DateTime.Now.Ticks
+            MetaDataItem md = new() { Type = type, Value = value, Ticks = DateTime.Now.Ticks, Schema = CreateApolloSchema()
+                //, BackendId = DateTime.Now.Ticks
             };
             return md;
         }
@@ -541,7 +562,7 @@ namespace Invite.Apollo.App.Graph.Common.Test
                 {
                     AssessmentId = assessment.Id, QuestionLayout = questionLayoutType, AnswerLayout = answerLayoutType,
                     Interaction = interactionType,
-                    BackendId = DateTime.Now.Ticks,
+                    //BackendId = DateTime.Now.Ticks,
                     Ticks = DateTime.Now.Ticks,
                     Schema = CreateApolloSchema()
                 };
@@ -553,10 +574,10 @@ namespace Invite.Apollo.App.Graph.Common.Test
             item = new()
                 {
                     Schema = CreateApolloSchema(),
-                    BackendId = DateTime.Now.Ticks,
+                    //BackendId = DateTime.Now.Ticks,
                     AssessmentType = AssessmentType.SkillAssessment,
                     Publisher = "HDBW DEV Team",
-                    Duration = TimeSpan.FromMinutes(0),
+                    Duration = TimeSpan.FromMinutes(0).ToString(),
                     EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
                     Kldb = "43412",
                     Profession = "Developer",
