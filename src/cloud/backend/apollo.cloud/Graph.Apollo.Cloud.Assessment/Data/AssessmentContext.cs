@@ -1,167 +1,181 @@
-﻿using System.Reflection.Emit;
-using System.Security.Cryptography.X509Certificates;
-using Invite.Apollo.App.Graph.Assessment.Models;
+﻿using Invite.Apollo.App.Graph.Assessment.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
     public class AssessmentContext : DbContext
     {
-        public AssessmentContext(DbContextOptions<AssessmentContext> options) : base(options)
+        #region DBSets
+        public DbSet<Models.Assessment> Assessments { get; set; }
+        public DbSet<Models.Answer> Answers { get; set; }
+        public DbSet<Models.Asset> Assets { get; set; }
+
+        public DbSet<Models.Category> Categories { get; set; }
+        public DbSet<Models.MetaData> MetaDatas { get; set; }
+        public DbSet<Models.Category> AssessmentCategories { get; set; }
+        public DbSet<Models.Question> Questions { get; set; }
+        public DbSet<Models.EscoSkill> EscoSkills { get; set; }
+        public DbSet<Models.CategoryRecomendation> CategoryRecomendations{ get; set; }
+        #endregion
+
+        private readonly ILoggerFactory _loggerFactory;
+
+        public AssessmentContext(DbContextOptions<AssessmentContext> options, ILoggerFactory loggerFactory) : base(options)
         {
-            
+            _loggerFactory = loggerFactory;
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(_loggerFactory);
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Assessment
             builder.Entity<Models.Assessment>()
-                .HasKey(t => new { t.BackendId });
+                .HasKey(t => new { t.Id });
             builder.Entity<Models.Assessment>()
                 .HasIndex(t => new { t.ExternalId}).IsUnique();
 
-            //AssesmentQuestion
-            builder.Entity<Models.AssessmentQuestion>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentQuestion>()
+            //Question
+            builder.Entity<Models.Question>()
+                .HasKey(t => new { t.Id });
+            builder.Entity<Models.Question>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
-            builder.Entity<Models.AssessmentQuestion>()
+            builder.Entity<Models.Question>()
                 .HasIndex(t => new { t.ExternalId }).IsUnique();
-
-            //AssessmentAnswer
-            builder.Entity<Models.AssessmentAnswer>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentAnswer>()
-                .HasIndex(t => new { t.Schema }).IsUnique();
-
-            builder.Entity<Models.AssessmentQuestion>()
+            builder.Entity<Models.Question>()
                 .HasOne(q => q.Assessment)
-                .WithMany(a => a.AssessmentQuestions)
+                .WithMany(a => a.Questions) //used to be AssessmentQuestions
                 .HasForeignKey(q => q.AssessmentId);
+            builder.Entity<Models.Question>()
+                .HasOne(q => q.Category)
+                .WithMany(a => a.Questions) //used to be AssessmentQuestions
+                .HasForeignKey(q => q.CategoryId);
 
-            builder.Entity<Models.AssessmentAnswer>()
-                .HasOne(a => a.AssessmentQuestion)
-                .WithMany(q => q.AssessmentAnswers)
-                .HasForeignKey(a => a.AssessmentQuestionId);
 
-            //AssesmentCategory
-            builder.Entity<Models.AssessmentCategory>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentCategory>()
+
+            //Answer
+            builder.Entity<Models.Answer>()
+                .HasKey(t => new { t.Id });
+            builder.Entity<Models.Answer>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
-
-            //AssesmentScores
-            builder.Entity<Models.AssessmentScores>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentScores>()
-                .HasIndex(t => new { t.Schema }).IsUnique();
-
-            //AssessmentAsset
-            builder.Entity<Models.AssessmentAsset>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentAsset>()
-                .HasIndex(t => new { t.Schema }).IsUnique();
-            builder.Entity<Models.AssessmentAsset>()
-                .HasIndex(t => new { t.ExternalId }).IsUnique();
             
-            //AssessmentCategory
-            builder.Entity<Models.AssessmentCategory>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentCategory>()
+            builder.Entity<Models.Answer>()
+                .HasOne(a => a.Question)
+                .WithMany(q => q.Answers)
+                .HasForeignKey(a => a.QuestionId);
+
+            //Category
+            builder.Entity<Models.Category>()
+                .HasKey(t => new { t.Id });
+            builder.Entity<Models.Category>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
 
-            //AssessmentMetaData
-            builder.Entity<Models.AssessmentMetaData>()
-                .HasKey(t => new { t.BackendId });
-            builder.Entity<Models.AssessmentMetaData>()
+            //CategoryRecomendation
+            builder.Entity<Models.CategoryRecomendation>()
+                .HasKey(t => new { t.Id });
+            builder.Entity<Models.CategoryRecomendation>()
                 .HasIndex(t => new { t.Schema }).IsUnique();
 
-            builder.Entity<Models.AssessmentMetaData>()
-                .HasOne(pt => pt.AssessmentAsset)
-                .WithMany(p => p.AssessmentMetaDatas)
-                .HasForeignKey(pt => pt.AssessmentAssetId);
+            builder.Entity<Models.CategoryRecomendation>()
+                .HasOne(q => q.Category)
+                .WithMany(a => a.CategoryRecomendations) //used to be AssessmentQuestions
+                .HasForeignKey(q => q.CategoryId);
+
+            //Asset
+            builder.Entity<Models.Asset>()
+                .HasKey(t => new { t.Id });
+            builder.Entity<Models.Asset>()
+                .HasIndex(t => new { t.Schema }).IsUnique();
+            builder.Entity<Models.Asset>()
+                .HasIndex(t => new { t.ExternalId }).IsUnique();
+
+            //MetaData
+            builder.Entity<Models.MetaData>()
+                .HasKey(t => new { t.Id });
+            builder.Entity<Models.MetaData>()
+                .HasIndex(t => new { t.Schema }).IsUnique();
+
+            builder.Entity<Models.MetaData>()
+                .HasOne(pt => pt.Asset)
+                .WithMany(p => p.MetaDatas)
+                .HasForeignKey(pt => pt.AssetId);
 
 
 
             //AnswerHasMetaData
-            builder.Entity<AssessmentAnswerHasMetaData>().HasKey(
-                t => new { t.AnswerId, t.AssessmentMetaDataId });
+            builder.Entity<AnswerHasMetaData>().HasKey(
+                t => new { t.Id });
 
-            builder.Entity<AssessmentAnswerHasMetaData>()
-                .HasOne(pt => pt.AssessmentAnswer)
-                .WithMany(p => p.AssessmentAnswerHasMetaDatas)
+            builder.Entity<AnswerHasMetaData>().HasIndex(
+                t => new { t.AnswerId, t.MetaDataId }).IsUnique();
+            //IsClustered() ?
+
+            builder.Entity<AnswerHasMetaData>()
+                .HasOne(pt => pt.Answer)
+                .WithMany(p => p.AnswerHasMetaDatas)
                 .HasForeignKey(pt => pt.AnswerId);
 
-            builder.Entity<AssessmentAnswerHasMetaData>()
-                .HasOne(pt => pt.AssessmentMetaData)
-                .WithMany(p => p.AssessmentAnswerHasMetaDatas)
-                .HasForeignKey(pt => pt.AssessmentMetaDataId);
+            builder.Entity<AnswerHasMetaData>()
+                .HasOne(pt => pt.MetaData)
+                .WithMany(p => p.AnswerHasMetaDatas)
+                .HasForeignKey(pt => pt.MetaDataId);
 
 
 
-            //builder.Entity<UserCompany>()
-            //    .HasOne(pt => pt.Company)
-            //    .WithMany(p => p.CompaniesUsers)
-            //    .HasForeignKey(pt => pt.CompanyId);
 
-            //builder.Entity<UserCompany>()
-            //    .HasOne(pt => pt.User)
-            //    .WithMany(p => p.CompaniesUsers)
-            //    .HasForeignKey(pt => pt.UserId);
+            //QuestionHasMetaData
+            builder.Entity<QuestionHasMetaData>().HasKey(
+                t => new { t.Id });
 
-            ////Hate this section management of Subscriptions
+            builder.Entity<QuestionHasMetaData>().HasIndex(
+                t => new { t.QuestionId, t.MetaDataId }).IsUnique();
+            //IsClustered() ?
 
-            //builder.Entity<UserSubs>().HasKey(
-            //    t => new { t.UserId, t.SubId });
+            builder.Entity<QuestionHasMetaData>()
+                .HasOne(pt => pt.Question)
+                .WithMany(p => p.QuestionHasMetaDatas)
+                .HasForeignKey(pt => pt.QuestionId);
 
-            //builder.Entity<UserSubs>().HasOne(
-            //    pt => pt.Subscription)
-            //    .WithMany(p => p.SubscriptionUsers)
-            //    .HasForeignKey(pt => pt.SubId);
+            builder.Entity<QuestionHasMetaData>()
+                .HasOne(pt => pt.MetaData)
+                .WithMany(p => p.QuestionHasMetaDatas)
+                .HasForeignKey(pt => pt.MetaDataId);
 
-            //builder.Entity<UserSubs>().HasOne(
-            //    pt => pt.User)
-            //    .WithMany(p => p.SubscriptionUsers)
-            //    .HasForeignKey(pt => pt.UserId);
+            //MetaDataHasMetaData
+            builder.Entity<MetaDataHasMetaData>().HasKey(
+                t => new { t.Id });
+            
+            builder.Entity<MetaDataHasMetaData>()
+                .HasOne(pt => pt.SourceMetaData)
+                .WithMany(p => p.SourceQuestionHasMetaDatas)
+                .HasForeignKey(pt => pt.SourceMetaDataId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            ////This creates the association of productgroup has extras
-            //builder.Entity<ProductGroupHasExtraGroup>().HasKey(
-            //    g => new { g.ExtraGroupId, g.ProductGroupId });
+            builder.Entity<MetaDataHasMetaData>()
+                .HasOne(pt => pt.TargetMetaData)
+                .WithMany(p => p.TargetMetaDataHasMetaDatas)
+                .HasForeignKey(pt => pt.TargetMetaDataId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.Entity<ProductGroupHasExtraGroup>().HasOne(
-            //    pg => pg.ProductGroup)
-            //    .WithMany(eg => eg.ProductGroupsHasExtraGroups)
-            //    .HasForeignKey(pg => pg.ProductGroupId);
+            builder.Entity<MetaDataHasMetaData>().HasIndex(
+                t => new { t.SourceMetaDataId, t.TargetMetaDataId }).IsUnique();
 
-            //builder.Entity<ProductGroupHasExtraGroup>().HasOne(
-            //    eg => eg.ExtraGroup)
-            //    .WithMany(pg => pg.ProductGroupsHasExtraGroups)
-            //    .HasForeignKey(eg => eg.ExtraGroupId);
+            //Esco
+            builder.Entity<EscoSkill>().HasKey(
+                t => new { t.Id });
+            builder.Entity<Models.EscoSkill>()
+                .HasIndex(t => new { t.EscoId }).IsUnique();
+            builder.Entity<Models.EscoSkill>()
+                .HasIndex(t => new { t.Schema }).IsUnique();
 
-            ////This creates the association of product has extras
-            //builder.Entity<ProductHasExtraGroup>().HasKey(
-            //    p => new { p.ProductId, p.ExtraGroupId });
-
-            //builder.Entity<ProductHasExtraGroup>().HasOne(
-            //    eg => eg.Product)
-            //    .WithMany(p => p.ProductHasExtraGroups)
-            //    .HasForeignKey(eg => eg.ProductId);
-
-            //builder.Entity<ProductHasExtraGroup>().HasOne(
-            //    p => p.ExtraGroup)
-            //    .WithMany(eg => eg.ProductHasExtraGroups)
-            //    .HasForeignKey(p => p.ExtraGroupId);
 
             base.OnModelCreating(builder);
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<Models.Assessment> Assessments { get; set; }
-        public DbSet<Models.AssessmentAnswer> Answers { get; set; }
-        public DbSet<Models.AssessmentAsset> Assets { get; set; }
-        public DbSet<Models.AssessmentMetaData> MetaDatas { get; set; }
-        public DbSet<Models.AssessmentCategory> AssessmentCategories { get; set; }
-        public DbSet<Models.AssessmentQuestion> Questions { get; set; }
-        public DbSet<Models.AssessmentScores> Scores { get; set; }
 
     }
 }
