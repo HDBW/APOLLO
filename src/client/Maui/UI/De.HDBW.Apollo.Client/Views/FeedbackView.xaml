@@ -94,11 +94,11 @@
                                            ImageTemplate ="{StaticResource ImageQuestionDetailTemplate}"/>
 
         <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
-            <Grid Background="Transparent" ColumnDefinitions="*, 40">
+            <Grid BackgroundColor="Transparent" ColumnDefinitions="*, 40">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                 </Grid.GestureRecognizers>
-                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" Background="{StaticResource White}" InputTransparent="True">
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" BackgroundColor="{StaticResource White}" InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8"/>
                     </Border.StrokeShape>
@@ -118,7 +118,7 @@
                 <Grid.GestureRecognizers>
                     <DragGestureRecognizer CanDrag="{Binding IsNotAssociated}" DragStartingCommand="{Binding DragStartingCommand}" DropCompletedCommand="{Binding DropCompletedCommand}"/>
                 </Grid.GestureRecognizers>
-                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Primary}" Background="{StaticResource White}" InputTransparent="True">
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Primary}" BackgroundColor="{StaticResource White}" InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8"/>
                     </Border.StrokeShape>
@@ -150,8 +150,8 @@
 
         <DataTemplate x:Key="StringInputTemplate" x:DataType="contracts:IInputInteractiveEntry">
             <VerticalStackLayout>
-                <VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />
-                <Entry Text="{Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" Placeholder="{Binding Hint}" MaxLength="1000" Keyboard="Text" ReturnType="Default"/>
+                <!--<VerticalStackLayout BindableLayout.ItemTemplateSelector="{StaticResource DefaultAnswerTypeTemplateSelector}" BindableLayout.ItemsSource="{Binding Data, Converter={StaticResource SingleItemListConverter}}" />-->
+                <!--<Entry Text="{Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" Placeholder="{Binding Hint}" MaxLength="1000" Keyboard="Text" ReturnType="Default"/>-->
             </VerticalStackLayout>
         </DataTemplate>
 
@@ -303,8 +303,8 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="auto, *, auto" ColumnDefinitions="*, auto">
-        <ProgressBar Margin="24,8,8,8" Progress="{Binding Progress}" VerticalOptions="Center"/>
-        <Label  Grid.Column="1" Margin="0,0,14,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" Background="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+       <!-- <ProgressBar Margin="24,8,8,8" Progress="{Binding Progress}" VerticalOptions="Center"/>
+        <Label  Grid.Column="1" Margin="0,0,14,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" BackgroundColor="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
         <ScrollView Grid.ColumnSpan="2" Grid.Row="1" VerticalScrollBarVisibility="Default">
             <VerticalStackLayout
                 ChildAdded="HandleChildAdded"
@@ -314,6 +314,6 @@
             </VerticalStackLayout>
         </ScrollView>
         <Button IsVisible="{Binding ShowNextButton}" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resource.Global_Next}" Command="{Binding NextQuestionCommand}" Margin="24,0,24,16"/>
-        <Button  IsVisible="{Binding ShowSubmitButton}" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resource.FeedbackView_Submit}" Command="{Binding SubmitCommand}" Margin="24,0,24,16"/>
+        <Button  IsVisible="{Binding ShowSubmitButton}" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resource.FeedbackView_Submit}" Command="{Binding SubmitCommand}" Margin="24,0,24,16"/>-->
     </Grid>
 </ContentPage>

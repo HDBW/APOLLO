@@ -151,8 +151,10 @@ namespace De.HDBW.Apollo.Client.Services
                     queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
                 }
 
+                page.NavigatedTo -= NavigatedToPage;
                 page.NavigatedTo += NavigatedToPage;
                 await navigationPage.PushAsync(page, false);
+                page.NavigatedFrom -= NavigatedFromPage;
                 page.NavigatedFrom += NavigatedFromPage;
                 return;
             }
@@ -189,6 +191,8 @@ namespace De.HDBW.Apollo.Client.Services
                 queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
             }
 
+            page.NavigatedTo -= NavigatedToPage;
+            page.NavigatedFrom -= NavigatedFromPage;
             page.NavigatedTo += NavigatedToPage;
             page.NavigatedFrom += NavigatedFromPage;
 
@@ -206,13 +210,16 @@ namespace De.HDBW.Apollo.Client.Services
 
                     existingPage.NavigatedTo -= NavigatedToPage;
                     existingPage.NavigatedFrom -= NavigatedFromPage;
+                    NavigatedFromPage(existingPage, null);
 
                     if (existingPage != navigationPage.CurrentPage)
                     {
                         navigationPage.Navigation.RemovePage(existingPage);
                     }
 
-                    NavigatedFromPage(existingPage, null);
+                    existingPage.BindingContext = null;
+                    existingPage.Parent = null;
+                    existingPage.Handler = null;
                 }
 
                 return;
@@ -238,22 +245,30 @@ namespace De.HDBW.Apollo.Client.Services
                 Application.Current.MainPage = page;
                 NavigatedToPage(page, null);
 
-                var existingPages = navigationPage?.Navigation?.NavigationStack?.ToList() ?? new List<Page>();
-                foreach (var existingPage in existingPages)
+                if (navigationPage != null)
                 {
-                    existingPage.NavigatedTo -= NavigatedToPage;
-                    existingPage.NavigatedFrom -= NavigatedFromPage;
-                    if (navigationPage?.CurrentPage != existingPage)
+                    var existingPages = navigationPage.Navigation?.NavigationStack?.ToList() ?? new List<Page>();
+                    await (navigationPage.PopToRootAsync(false) ?? Task.CompletedTask);
+                    foreach (var existingPage in existingPages)
                     {
-                        navigationPage?.Navigation?.RemovePage(existingPage);
+                        existingPage.NavigatedTo -= NavigatedToPage;
+                        existingPage.NavigatedFrom -= NavigatedFromPage;
+                        NavigatedFromPage(existingPage, null);
+                        existingPage.BindingContext = null;
+                        existingPage.Parent = null;
+                        existingPage.Handler = null;
                     }
 
-                    NavigatedFromPage(existingPage, null);
+                    navigationPage.BindingContext = null;
+                    navigationPage.Handler = null;
+                    navigationPage.Parent = null;
                 }
 
                 shell = Application.Current.MainPage as Shell;
                 if (shell != null)
                 {
+                    shell.Navigating -= NavigatedFromPageInShell;
+                    shell.Navigated -= NavigatedToPageInShell;
                     shell.Navigating += NavigatedFromPageInShell;
                     shell.Navigated += NavigatedToPageInShell;
                     NavigatedToPageInShell(shell, null);
@@ -263,6 +278,7 @@ namespace De.HDBW.Apollo.Client.Services
 
         private async Task PopShellAsync(Shell shell)
         {
+            var pages = new List<Page>();
             foreach (var page in shell.Navigation.NavigationStack)
             {
                 if (page == null)
@@ -273,9 +289,15 @@ namespace De.HDBW.Apollo.Client.Services
                 page.NavigatedTo -= NavigatedToPage;
                 page.NavigatedFrom -= NavigatedFromPage;
                 await (GetViewModel(page)?.OnNavigatingFromAsync(false) ?? Task.CompletedTask);
+                pages.Add(page);
             }
 
-            await Shell.Current.Navigation.PopToRootAsync(false);
+            await Shell.Current.Navigation.PopToRootAsync(true);
+            foreach (var page in pages)
+            {
+                page.BindingContext = null;
+                page.Handler = null;
+            }
         }
 
         private async Task PushToRootOnUIThreadAsnc(CancellationToken token)
