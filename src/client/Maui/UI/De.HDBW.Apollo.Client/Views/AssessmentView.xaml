@@ -77,7 +77,7 @@
                                            />
 
         <DataTemplate x:Key="ImageQuestionDetailTemplate" x:DataType="assessmentModels:QuestionDetailEntry">
-            <Grid MinimumHeightRequest="100" Background="{StaticResource Surface}">
+            <Grid MinimumHeightRequest="100" BackgroundColor="{StaticResource Surface}">
                 <!--<Grid.Clip>
                     <RoundRectangleGeometry CornerRadius="5"  />
                 </Grid.Clip>-->
@@ -86,7 +86,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="DefaultQuestionDetailTemplate" x:DataType="assessmentModels:QuestionDetailEntry">
-            <Grid MinimumHeightRequest="100" Background="{StaticResource Surface}">
+            <Grid MinimumHeightRequest="100" BackgroundColor="{StaticResource Surface}">
                 <!--<Grid.Clip>
                     <RoundRectangleGeometry CornerRadius="5"  />
                 </Grid.Clip>-->
@@ -99,11 +99,11 @@
                                            ImageTemplate ="{StaticResource ImageQuestionDetailTemplate}"/>
 
         <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
-            <Grid Background="Transparent" ColumnDefinitions="*, 40">
+            <Grid BackgroundColor="Transparent" ColumnDefinitions="*, 40">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                 </Grid.GestureRecognizers>
-                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" Background="{StaticResource White}" InputTransparent="True">
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" BackgroundColor="{StaticResource White}" InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8"/>
                     </Border.StrokeShape>
@@ -123,7 +123,7 @@
                 <Grid.GestureRecognizers>
                     <DragGestureRecognizer CanDrag="{Binding IsNotAssociated}" DragStartingCommand="{Binding DragStartingCommand}" DropCompletedCommand="{Binding DropCompletedCommand}"/>
                 </Grid.GestureRecognizers>
-                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Primary}" Background="{StaticResource White}" InputTransparent="True">
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Primary}" BackgroundColor="{StaticResource White}" InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8"/>
                     </Border.StrokeShape>
@@ -310,11 +310,11 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="auto, auto, auto, auto, *, auto" ColumnDefinitions="*, auto">
-        <Picker IsVisible="false" Grid.ColumnSpan="2"  Title="Interaction" TitleColor="White" TextColor="White" ItemsSource="{Binding Interactions}" SelectedItem="{Binding Interaction, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+        <!--<Picker IsVisible="false" Grid.ColumnSpan="2"  Title="Interaction" TitleColor="White" TextColor="White" ItemsSource="{Binding Interactions}" SelectedItem="{Binding Interaction, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
         <Picker IsVisible="false" Grid.ColumnSpan="2" Grid.Row="1" Title="QuestionLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding QuestionLayouts}" SelectedItem="{Binding QuestionLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
-        <Picker IsVisible="false" Grid.ColumnSpan="2" Grid.Row="2" Title="AnserwerLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />
+        <Picker IsVisible="false" Grid.ColumnSpan="2" Grid.Row="2" Title="AnserwerLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />-->
         <ProgressBar Grid.Row="3" Margin="24,8,8,8" Progress="{Binding Progress}" VerticalOptions="Center"/>
-        <Label Grid.Row="3" Grid.Column="1" Margin="0,0,24,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" Background="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+        <Label Grid.Row="3" Grid.Column="1" Margin="0,0,24,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" BackgroundColor="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
         <ScrollView Grid.ColumnSpan="2" Grid.Row="4" VerticalScrollBarVisibility="Default">
             <VerticalStackLayout
                 ChildAdded="HandleChildAdded"

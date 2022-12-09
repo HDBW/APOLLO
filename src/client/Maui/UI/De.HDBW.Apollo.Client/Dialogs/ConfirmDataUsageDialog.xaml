@@ -10,7 +10,7 @@
         <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}">
             <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.ConfirmDataUsageDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
             <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.ConfirmDataUsageDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
-            <Grid ColumnDefinitions="auto, *" Background="Transparent">
+            <Grid ColumnDefinitions="auto, *" BackgroundColor="Transparent">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleAgreeCommand}" />
                 </Grid.GestureRecognizers>

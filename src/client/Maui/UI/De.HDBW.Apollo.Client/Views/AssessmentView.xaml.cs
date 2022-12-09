@@ -1,6 +1,7 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Views;
@@ -9,8 +10,18 @@ public partial class AssessmentView
 {
     public AssessmentView(AssessmentViewModel model)
     {
+#if DEBUG
+        Debug.WriteLine($"Create {GetType()}");
+#endif
         InitializeComponent();
         BindingContext = model;
+    }
+
+    ~AssessmentView()
+    {
+#if DEBUG
+        Debug.WriteLine($"~{GetType()}");
+#endif
     }
 
     public AssessmentViewModel? ViewModel
@@ -38,9 +49,24 @@ public partial class AssessmentView
 
     protected override void OnNavigatingFrom(NavigatingFromEventArgs args)
     {
-        // Remark: Work around for nullpointer during use of BackButtonBehaviour.
-        var behaviour = Shell.GetBackButtonBehavior(this);
-        behaviour?.ClearValue(BackButtonBehavior.CommandProperty);
+        try
+        {
+            // Remark: Work around for nullpointer during use of BackButtonBehaviour.
+            var behaviour = Shell.GetBackButtonBehavior(this);
+            if (behaviour == null)
+            {
+                return;
+            }
+
+            behaviour.ClearValue(BackButtonBehavior.CommandProperty);
+            behaviour.BindingContext = null;
+            Shell.SetBackButtonBehavior(this, null);
+
+        }
+        finally
+        {
+            base.OnNavigatingFrom(args);
+        }
     }
 
     private void HandleChildAdded(object sender, ElementEventArgs e)
