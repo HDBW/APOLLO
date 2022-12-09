@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -14,80 +12,68 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
     //[ProtoReserved(18,19,"Price")] //FIXME: https://developers.google.com/protocol-buffers/docs/proto3#reserved
-    public class CourseItem : IEntity, IBackendEntity, IPublishingInfo
+    public class CourseItem : BaseItem, IPublishingInfo
     {
-        #region Implementation of IEntity
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
 
-        [DataMember(Order = 2, IsRequired = true)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-        [DataMember(Order = 3, IsRequired = true)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4, IsRequired = true)]
-        public Uri Schema { get; set; } = null!;
-
-        #endregion
+        /// <summary>
+        /// Import Id from External Dataprovider.
+        /// Not mapped/ serialized for client
+        /// </summary>
+        [Required]
+        [DataMember(Order = 5, IsRequired = true)]
+        public string ExternalId { get; set; } = string.Empty;
 
         /// <summary>
         /// The title of a course provided by the training provider
         /// </summary>
-        [DataMember(Order = 5,IsRequired = true)]
+        [DataMember(Order = 6,IsRequired = true)]
         public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// A short description of the course
         /// A AI based feature which generates the key Talking points of the course
         /// </summary>
-        [DataMember(Order = 6, IsRequired = false)]
+        [DataMember(Order = 7, IsRequired = false)]
         public string ShortDescription { get; set; } = string.Empty;
 
         /// <summary>
         /// Course Description as HTML
         /// A description of the course
         /// </summary>
-        [DataMember(Order = 7, IsRequired = true)]
+        [DataMember(Order = 8, IsRequired = true)]
         public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// A list of person types or occupations as well as text describing the target audience.
         /// TODO: Maybe a list of PersonTypes as identified by the backend?
         /// </summary>
-        [DataMember(Order = 8, IsRequired = false)]
+        [DataMember(Order = 9, IsRequired = false)]
         public string TargetGroup { get; set; } = string.Empty;
 
         /// <summary>
         /// Indicates the type of a course: `Unknown, Online, InPerson, OnAndOffline, InHouse, All`
         /// </summary>
-        [DataMember(Order = 9, IsRequired = true)]
-        public CourseType Type { get; set; }
+        [DataMember(Order = 10, IsRequired = true)]
+        public CourseType CourseType { get; set; }
 
         /// <summary>
         ///  Indicates if a course is available: Unknown, Available, Unavailable
         /// </summary>
         //TODO: Implement Calculation for availability
-        [DataMember(Order = 10, IsRequired = false)]
+        [DataMember(Order = 11, IsRequired = false)]
         public CourseAvailability Availability { get; set; }
 
         /// <summary>
         /// Indicates the latest update from the training provider.
         /// </summary>
-        [DataMember(Order = 11, IsRequired = false)]
+        [DataMember(Order = 12, IsRequired = false)]
         public DateTime LatestUpdateFromProvider { get; set; }
 
         /// <summary>
         /// The original text provided as prerequisites as the training provider publishes the course.
         /// </summary>
-        [DataMember(Order = 12, IsRequired = false)]
+        [DataMember(Order = 13, IsRequired = false)]
         public string PreRequisitesDescription { get; set; } = string.Empty;
-
-        //TODO: Define Scope of LearningOutcomes note backend only!
 
         //TODO: Define Scope of Skills and EscoSkills
 
@@ -99,16 +85,16 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// This is a draft for Key phrases
         /// Key phrases are BiTerm Analysis of the given text
         /// </summary>
-        [DataMember(Order = 13, IsRequired = false)]
+        [DataMember(Order = 14, IsRequired = false)]
         public string KeyPhrases { get; set; } = string.Empty;
 
         /// <summary>
-        /// Duration of the Course
+        /// Duration of the Course in hours
         /// </summary>
-        [DataMember(Order = 14, IsRequired = false)]
-        public TimeSpan Duration { get; set; }
-
         [DataMember(Order = 15, IsRequired = false)]
+        public string Duration { get; set; } = string.Empty;
+
+        [DataMember(Order = 16, IsRequired = false)]
         public Uri CourseUrl { get; set; } = null;
 
 
@@ -118,33 +104,22 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// Indicates the available Occurrences
         /// displays if appointments are available: part time, full time, both
         /// </summary>
-        [DataMember(Order = 15, IsRequired = false)]
+        [DataMember(Order = 17, IsRequired = false)]
         public OccurrenceType Occurrence { get; set; }
 
         /// <summary>
         /// Course Language the description of the course is in language
         /// </summary>
-        [DataMember(Order = 16, IsRequired = false)]
-        public CultureInfo Language { get; set; } = null!;
-
-        /// <summary>
-        /// Indicates the type of the course
-        /// Online, InPerson, ...
-        /// </summary>
-        [DataMember(Order = 17, IsRequired = false)]
-        public CourseType CourseType { get; set; }
+        /// TODO: CultureInfo
+        [DataMember(Order = 18, IsRequired = false)]
+        public string Language { get; set; } = null!;
 
         #endregion
 
+        //TODO: Define Scope of LearningOutcomes note backend only!
+        [DataMember(Order = 19, IsRequired = false)]
+        public string LearningOutcomes { get; set; }
         
-        // FIXME: Review Price
-        [Obsolete]
-        [DataMember(Order = 40, IsRequired = false)]
-        public decimal? Price { get; set; }
-        [Obsolete]
-        [DataMember(Order = 41, IsRequired = false)]
-        public string Currency { get; set; } = string.Empty;
-
 
         #region relations
 
@@ -155,37 +130,23 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [ForeignKey(nameof(CourseContact))]
         public long InstructorId { get; set; }
 
-        /// <summary>
-        /// Indicates the Instructor on the Client
-        /// </summary>
-        [DataMember(Order = 21, IsRequired = false)]
-        public long InstructorBackendId { get; set; }
 
         /// <summary>
         /// The information about the training provider offering the course.
         /// </summary>
-        [DataMember(Order = 22, IsRequired = false)]
+        [DataMember(Order = 21, IsRequired = false)]
         [ForeignKey(nameof(EduProviderItem))]
         public long TrainingProviderId { get; set; }
 
         /// <summary>
-        /// The information about the training provider offering the course.
-        /// </summary>
-        [DataMember(Order = 23, IsRequired = false)]
-        public long TrainingProviderBackendId { get; set; }
-
-        /// <summary>
         /// The course provider offering the course via the training provider
         /// </summary>
-        [DataMember(Order = 24, IsRequired = false)]
+        [DataMember(Order = 22, IsRequired = false)]
         [ForeignKey(nameof(EduProviderItem))]
         public long CourseProviderId { get; set; }
 
-        /// <summary>
-        /// The course provider offering the course via the training provider
-        /// </summary>
-        [DataMember(Order = 25, IsRequired = false)]
-        public long CourseProviderBackendId { get; set; }
+        [DataMember(Order = 23, IsRequired = false)]
+        public string Benefits { get; set; }
 
         //TODO: QualificationProvider
 
@@ -237,18 +198,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [DataMember(Order = 36, IsRequired = false)]
         public long? SuccessorId { get; set; }
 
-        [DataMember(Order = 37, IsRequired = false)]
-        public long? SuccessorBackendId { get; set; }
 
         /// <summary>
         /// The Course replaced by the current course.
         /// </summary>
         [ForeignKey(nameof(CourseItem))]
-        [DataMember(Order = 38, IsRequired = false)]
+        [DataMember(Order = 37, IsRequired = false)]
         public long? PredecessorId { get; set; }
-
-        [DataMember(Order = 39, IsRequired = false)]
-        public long? PredecessorBackendId { get; set; }
 
         #endregion
 
@@ -257,6 +213,21 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         /// </summary>
         [DataMember(Order = 40, IsRequired = false)]
         public CourseTagType CourseTagType { get; set; }
+
+
+        // FIXME: Review Price
+        [Obsolete]
+        [DataMember(Order = 41, IsRequired = false)]
+        public decimal? Price { get; set; }
+        [Obsolete]
+        [DataMember(Order = 42, IsRequired = false)]
+        public string Currency { get; set; } = "€";
+
+        [DataMember(Order = 43, IsRequired = false)]
+        public string LoanOptions { get; set; }
+
+        [DataMember(Order = 44, IsRequired = false)]
+        public string Skills { get; set; }
     }
 
     /// <summary>
