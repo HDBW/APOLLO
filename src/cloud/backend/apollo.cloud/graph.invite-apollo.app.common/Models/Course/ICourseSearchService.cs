@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ServiceModel;
-using System.Text;
-using System.Xml.Linq;
+﻿using System.ServiceModel;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
