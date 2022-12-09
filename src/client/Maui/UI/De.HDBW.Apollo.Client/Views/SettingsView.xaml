@@ -14,7 +14,7 @@
             <VerticalStackLayout Spacing="8">
                 <Label Text="{x:Static strings:Resource.SettingsView_Questions}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}"/>
                 <Label Text="{x:Static strings:Resource.SettingsView_QuestionDescription}" Style="{StaticResource NotoSerif16}" TextColor="{StaticResource TextColor}"/>
-                <HorizontalStackLayout Background="Transparent" Spacing="8">
+                <HorizontalStackLayout BackgroundColor="Transparent" Spacing="8">
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenMailCommand}" />
                     </HorizontalStackLayout.GestureRecognizers>

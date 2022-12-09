@@ -10,7 +10,7 @@
 
     <Grid RowDefinitions="auto, 60, *, auto, auto">
         <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" HeightRequest="200" Aspect="AspectFill" Grid.RowSpan="2"/>
-        <Border InputTransparent="True" Background="{StaticResource Tag1Brush}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+        <Border InputTransparent="True" BackgroundColor="{StaticResource Tag1}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,0,4" />
             </Border.StrokeShape>
