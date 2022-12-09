@@ -1,17 +1,17 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Globalization;
-using De.HDBW.Apollo.Client.Converter;
-using De.HDBW.Apollo.Client.Models.Interactions;
+using System.Diagnostics;
 using De.HDBW.Apollo.Client.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.Views;
 public partial class StartView
 {
     public StartView(StartViewModel model)
     {
+#if DEBUG
+        Debug.WriteLine($"Create {GetType()}");
+#endif
         InitializeComponent();
         BindingContext = model;
         if (ViewModel == null)
@@ -20,6 +20,13 @@ public partial class StartView
         }
 
         ViewModel.UseCaseChangedHandler = ResetScrollViewer;
+    }
+
+    ~StartView()
+    {
+#if DEBUG
+        Debug.WriteLine($"~{GetType()}");
+#endif
     }
 
     public StartViewModel? ViewModel
@@ -32,6 +39,10 @@ public partial class StartView
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
+#if DEBUG
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+#endif
 #if IOS
         var handler = Handler as Microsoft.Maui.Handlers.PageHandler;
         var renderer = handler?.ViewController as UIKit.UIViewController;
