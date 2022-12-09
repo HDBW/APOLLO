@@ -1,33 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class CourseAppointmentOffer : IEntity, IBackendEntity
+    public class CourseAppointmentOffer : BaseItem
     {
-        #region Implementation of IEntity
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [DataMember(Order = 2, IsRequired = true)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-        [DataMember(Order = 3, IsRequired = true)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4, IsRequired = true)]
-        public Uri Schema { get; set; } = null!;
-
-        #endregion
-
         #region References
 
         [DataMember(Order = 5, IsRequired = true)]

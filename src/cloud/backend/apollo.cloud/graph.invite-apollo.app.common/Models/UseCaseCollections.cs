@@ -1,8 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Security.Principal;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using ProtoBuf;
+
 
 namespace Invite.Apollo.App.Graph.Common.Models
 {
@@ -49,13 +52,15 @@ namespace Invite.Apollo.App.Graph.Common.Models
         /// <param name="courseContacts"></param>
         /// <param name="courseAppointments"></param>
         /// <param name="courseItems"></param>
+        /// <param name="assessmentCategories"></param>
         public UseCaseCollections(Collection<AssessmentItem> assessmentItems, Collection<QuestionItem> questionItems,
             Collection<AnswerItem> answerItems, Collection<MetaDataItem> metaDataItems,
             Collection<QuestionMetaDataRelation> questionMetaDataRelations,
             Collection<AnswerMetaDataRelation> answerMetaDataRelations,
             Collection<MetaDataMetaDataRelation> metaDataMetaDataRelations, UserProfileItem userProfile,
             Collection<EduProviderItem> eduProviderItems, Collection<CourseContact> courseContacts,
-            Collection<CourseAppointment> courseAppointments, Collection<CourseItem> courseItems)
+            Collection<CourseAppointment> courseAppointments, Collection<CourseItem> courseItems,
+            Collection<AssessmentCategory> assessmentCategories)
         {
             AssessmentItems = assessmentItems;
             QuestionItems = questionItems;
@@ -69,6 +74,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
             CourseContacts = courseContacts;
             CourseAppointments = courseAppointments;
             CourseItems = courseItems;
+            AssessmentCategories = assessmentCategories;
         }
 
         /// <summary>
@@ -88,6 +94,11 @@ namespace Invite.Apollo.App.Graph.Common.Models
             CourseContacts = new Collection<CourseContact>();
             CourseAppointments = new Collection<CourseAppointment>();
             CourseItems = new Collection<CourseItem>();
+            AssessmentCategories = new Collection<AssessmentCategory>();
+            AssessmentItems = new Collection<AssessmentItem>();
+            CourseContactRelations = new Collection<CourseContactRelation>();
+            AssessmentCategoryResults = new Collection<AssessmentCategoryResult>();
+            AnswerItemResults = new Collection<AnswerItemResult>();
         }
 
         [DataMember(Order = 1, IsRequired = false)]
@@ -125,5 +136,20 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
         [DataMember(Order = 12, IsRequired = false)]
         public UserProfileItem UserProfile { get; set; }
+
+        [DataMember(Order = 13,IsRequired = false)]
+        public Collection<AssessmentCategory> AssessmentCategories { get; set; }
+
+        [DataMember(Order = 14, IsRequired = false)]
+        public Collection<CourseContactRelation> CourseContactRelations { get; set; }
+
+        [DataMember(Order = 15, IsRequired = false)]
+        public Collection<AssessmentCategoryResult> AssessmentCategoryResults { get; set; }
+
+        [DataMember(Order = 16, IsRequired = false)]
+        public Collection<AnswerItemResult> AnswerItemResults { get; set; }
+
+        [DataMember(Order = 17, IsRequired = false)]
+        public Collection<CategoryRecomendationItem> CategoryRecomendations { get; set; }
     }
 }
