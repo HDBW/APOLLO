@@ -6,38 +6,18 @@ using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
+using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {
     [DataContract]
-    public class CourseAppointment : IEntity, IBackendEntity, IPublishingInfo
+    [ProtoContract]
+    public class CourseAppointment : BaseItem, IPublishingInfo
     {
-
-        #region Implementation of IEntity
-        [Key]
-        [DataMember(Order = 1)]
-        public long Id { get; set; }
-
-        [DataMember(Order = 2, IsRequired = true)]
-        public long Ticks { get; set; }
-
-        #endregion
-
-        #region Implementation of IBackendEntity
-        [DataMember(Order = 3, IsRequired = true)]
-        public long BackendId { get; set; }
-
-        [DataMember(Order = 4, IsRequired = true)]
-        public Uri Schema { get; set; } = null!;
-
-        #endregion
 
         [DataMember(Order = 5)]
         [ForeignKey(nameof(CourseItem))]
         public long CourseId { get; set; }
-
-        [DataMember(Order = 6)]
-        public string CourseBackendId { get; set; } = string.Empty;
 
         [DataMember(Order = 7)]
         public string BookingCode { get; set; } = string.Empty;
@@ -52,11 +32,11 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public DateTime? EndDate { get; set; }
 
         //FIXME: Timespan is not considering Recurrence rule, basically time spent. 
-        [IgnoreDataMember]
-        public TimeSpan? Duration
-        {
-            get { return StartDate != null && EndDate != null ? EndDate - StartDate : null; }
-        }
+        //[IgnoreDataMember]
+        public string? Duration { get; set; } = string.Empty;
+        //{
+        //    get { return StartDate != null && EndDate != null ? EndDate - StartDate : null; }
+        //}
 
         /// <summary>
         /// Recurrence Rule as in Google Calendar
@@ -88,13 +68,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         public long BookingContact { get; set; }
 
         [DataMember(Order = 19)]
-        public Uri BookingUrl { get; set; } = null!;
+        public Uri? BookingUrl { get; set; } = null!;
 
         [DataMember(Order = 20)]
-        public CultureInfo Language { get; set; } = null!;
+        public string Language { get; set; } = null!;
 
         [DataMember(Order = 21)]
-        public int AvailableSeats { get; set; }
+        public int? AvailableSeats { get; set; }
 
         #region Implementation of IPublishingInfo
         [DataMember(Order = 22,IsRequired = false)]
@@ -122,12 +102,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course
         [ForeignKey(nameof(CourseAppointment))]
         [DataMember(Order = 29, IsRequired = false)]
         public long? PredecessorId { get; set; }
-
-        [DataMember(Order = 30, IsRequired = false)] 
-        public long? SuccessorBackendId { get; set; }
-
-        [DataMember(Order = 31, IsRequired = false)]
-        public long? PredecessorBackendId { get; set; }
 
         #endregion
 

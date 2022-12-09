@@ -4,4 +4,81 @@
 
 <MudText Typo="Typo.h3" GutterBottom="true">Herzlich Willkommen!</MudText>
 <MudText Class="mb-8">Invite Projekt Apollo</MudText>
-<MudAlert Severity="Severity.Normal">Dies ist das Backend von Invite Projekt Apollo mehr Informationen zum Projekt erfahren Sie unter: <MudLink Href="https://project-apollo.de/" Typo="Typo.body2" Color="Color.Inherit"><b>https://www.project-apollo.de/</b></MudLink></MudAlert>
+<MudAlert Severity="Severity.Normal">Dies ist das Backend von Invite Projekt Apollo mehr Informationen zum Projekt erhalten Sie unter: <MudLink Href="https://project-apollo.de/" Typo="Typo.body2" Color="Color.Inherit"><b>https://www.project-apollo.de/</b></MudLink></MudAlert>
+<MudGrid Spacing="1" Justify="Justify.Center">
+    <MudItem>
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Image="images/appicon.png" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">Apollo Weiterbildungen</MudText>
+                    <MudText Typo="Typo.body2">Hochschule der Bayerischen Wirtschaft gGmbH</MudText>
+                </CardHeaderContent>
+                @*                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Default" />
+                </CardHeaderActions>*@
+            </MudCardHeader>
+            <MudCardMedia Image="images/appwelcome.svg" Height="400" />
+            <MudCardContent>
+                <MudText Typo="Typo.body1">Unsere App - Apollo Weiterbildungen - die Rahmen des Invite Projektes Apollo erstellt wurde ist jetzt via Testflight für Apple verfügbar.</MudText>
+                <MudAlert Icon="@Icons.Material.Filled.Info" Severity="Severity.Warning">Minimum iOS Target Framework 13.0</MudAlert>
+            </MudCardContent>
+            <MudCardActions>
+                <MudLink Href="https://testflight.apple.com/join/crO6xJ3t">
+                    <MudImage Width="160" Src="images/AppleStore.svg"></MudImage>
+                </MudLink>
+                @*                <MudIconButton Icon="@Icons.Custom.Brands.Apple" Color="Color.Default" Href="https://testflight.apple.com/join/crO6xJ3t" />
+*@            @*<MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />*@
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+    <MudItem>
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Image="images/appicon.png" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">Apollo Weiterbildungen</MudText>
+                    <MudText Typo="Typo.body2">Hochschule der Bayerischen Wirtschaft gGmbH</MudText>
+                </CardHeaderContent>
+                @*                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.PhoneAndroid" Color="Color.Default" />
+                </CardHeaderActions>*@
+            </MudCardHeader>
+            <MudCardMedia Image="images/appwelcome3.svg" Height="400" />
+            <MudCardContent>
+                <MudText Typo="Typo.body1">Unsere App - Apollo Weiterbildungen - die Rahmen des Invite Projektes Apollo erstellt wurde ist jetzt auf Google Play verfügbar.</MudText>
+                <MudAlert Icon="@Icons.Material.Filled.Info" Severity="Severity.Warning">Minimum Android 5.0 - Level 21 Lollipop</MudAlert>
+            </MudCardContent>
+            <MudCardActions>
+                <MudLink Href="https://play.google.com/store/apps/details?id=de.hdbw.apollo.client">
+                    <MudImage Src="images/googlestore.svg"></MudImage>
+                </MudLink>
+                @*                <MudIconButton Icon="@Icons.Custom.Brands.Google" Color="Color.Default" Href="https://play.google.com/store/apps/details?id=de.hdbw.apollo.client" />
+*@            @*<MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />*@
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+<br/>
+<MudText Typo="Typo.h3" GutterBottom="true">Changelog</MudText>
+<MudPaper>
+    <MudList>
+        <MudListItem Avatar="@Icons.Material.Filled.AssignmentTurnedIn">
+            Assessments
+        </MudListItem>
+        <MudListItem Avatar="@Icons.Material.Filled.EventNote">
+            Kurse
+        </MudListItem>
+        <MudListItem Avatar="@Icons.Material.Filled.Insights">
+            Vorschläge
+        </MudListItem>
+    </MudList>
+</MudPaper>
+<br/>
+<MudText Typo="Typo.caption">*Apple App Store® ist eine Eingetragene Marke der Apple Inc.</MudText>
+<br/>
+<MudText Typo="Typo.caption">*Google Play und Google Play Logo sind Eingetragene Marken der Google LLC.</MudText>
