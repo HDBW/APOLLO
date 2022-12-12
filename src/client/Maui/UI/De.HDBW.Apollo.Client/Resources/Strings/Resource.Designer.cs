@@ -187,7 +187,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bewertung.
+        ///   Looks up a localized string similar to Test.
         /// </summary>
         public static string AssessmentType_SkillAssessment {
             get {
@@ -196,7 +196,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SoftSkills.
+        ///   Looks up a localized string similar to Selbsttest.
         /// </summary>
         public static string AssessmentType_SoftSkillAssessment {
             get {
@@ -322,7 +322,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kurs.
+        ///   Looks up a localized string similar to Weiterbildung.
         /// </summary>
         public static string CourseTagType_Course {
             get {
