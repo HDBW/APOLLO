@@ -1161,7 +1161,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arbeitssuche.
+        ///   Looks up a localized string similar to Arbeitssuchend.
         /// </summary>
         public static string UseCase_A_Name {
             get {
@@ -1170,7 +1170,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du möchtest neue Fähigkeiten erwerben.
+        ///   Looks up a localized string similar to Ich möchte mich fit für einen neuen Job machen.
         /// </summary>
         public static string UseCase_B_Description {
             get {
