@@ -59,7 +59,7 @@
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
                                 </Border.GestureRecognizers>
-                                <Label Text="{Binding Text}" Style="{StaticResource Noto16}" TextDecorations="Underline" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap" />
+                                <Label Text="{Binding Text}" Style="{StaticResource Noto12}" TextDecorations="Underline" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap" />
                             </Border>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
