@@ -74,7 +74,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
                 CourseAppointments = new Collection<CourseAppointment>(GetAllAppointments(i, useCaseCourseData)),
                 CourseContactRelations = new Collection<CourseContactRelation>(GetAllCourseContactsRelations(i, useCaseCourseData)),
                 //Results for FAKE Assessments
-                AssessmentCategoryResults = CreateFakeCategoryResults(i),
+                //AssessmentCategoryResults = new Collection<AssessmentCategoryResult>();
                 AnswerItemResults = CreateFakeAnwerResults(i)
 
 
@@ -173,28 +173,6 @@ public class AssessmentGrpcService : IAssessmentGRPCService
     private static Uri CreateApolloSchema()
     {
         return new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
-    }
-
-    private Collection<AssessmentCategoryResult> CreateFakeCategoryResults(int useCase)
-    {
-        Collection<AssessmentCategoryResult> answerItems = new();
-        switch (useCase)
-        {
-            case 1:
-                break;
-            case 2:
-                //TODO: RESULT STUFF
-                //SKILLASSESSMENT Kaufmann/Kauffrau im E-Commerce
-                //EXPERIENCE Kaufmann/Kauffrau im E-Commerce
-                break;
-            case 3:
-                //Soziale & Kommunikative Kompetenzen
-                break;
-            default:
-                break;
-        }
-
-        return answerItems;
     }
 
 

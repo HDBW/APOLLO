@@ -13,6 +13,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Course.Enums
         Course = 4,
         InfoEvent = 5,
         PartialQualification = 6,
-        Qualification = 7
+        Qualification = 7,
+        PostQualified = 8
     }
 }
