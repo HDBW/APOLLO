@@ -351,10 +351,10 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Du möchtest einen sicheren Job finden</value>
   </data>
   <data name="UseCase_A_Name" xml:space="preserve">
-    <value>Arbeitssuche</value>
+    <value>Arbeitssuchend</value>
   </data>
   <data name="UseCase_B_Description" xml:space="preserve">
-    <value>Du möchtest neue Fähigkeiten erwerben</value>
+    <value>Ich möchte mich fit für einen neuen Job machen</value>
   </data>
   <data name="UseCase_B_Name" xml:space="preserve">
     <value>Weiterbildung</value>
