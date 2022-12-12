@@ -136,7 +136,7 @@
     <value>Zertifikat</value>
   </data>
   <data name="CourseTagType_Course" xml:space="preserve">
-    <value>Kurs</value>
+    <value>Weiterbildung</value>
   </data>
   <data name="CourseTagType_InfoEvent" xml:space="preserve">
     <value>Veranstaltung</value>
@@ -526,10 +526,10 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Erfahrungen</value>
   </data>
   <data name="AssessmentType_SkillAssessment" xml:space="preserve">
-    <value>Bewertung</value>
+    <value>Test</value>
   </data>
   <data name="AssessmentType_SoftSkillAssessment" xml:space="preserve">
-    <value>SoftSkills</value>
+    <value>Selbsttest</value>
   </data>
   <data name="AssessmentType_Survey" xml:space="preserve">
     <value>Umfrage</value>
