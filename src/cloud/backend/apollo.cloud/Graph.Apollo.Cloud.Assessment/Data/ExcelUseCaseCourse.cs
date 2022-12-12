@@ -509,7 +509,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                         CourseAppointment appointment =
                             new CourseAppointment()
                             {
-                                Id = 0,
+                                Id = AppointmentCounter++,
                                 CourseId = item.Id,
                                 Ticks = DateTime.Now.Ticks,
                                 Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
@@ -557,6 +557,8 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
             #endregion
         }
+
+        public int AppointmentCounter { get; set; }
 
         private long getEduProvider(string? courseProvider)
         {
