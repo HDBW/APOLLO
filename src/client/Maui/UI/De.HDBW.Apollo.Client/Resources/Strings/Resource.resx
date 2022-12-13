@@ -136,7 +136,7 @@
     <value>Zertifikat</value>
   </data>
   <data name="CourseTagType_Course" xml:space="preserve">
-    <value>Kurs</value>
+    <value>Weiterbildung</value>
   </data>
   <data name="CourseTagType_InfoEvent" xml:space="preserve">
     <value>Veranstaltung</value>
@@ -348,10 +348,10 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Die Inhalte der Beta passen sich an dein gewähltes Ziel an.</value>
   </data>
   <data name="UseCase_A_Description" xml:space="preserve">
-    <value>Du möchtest einen sicheren Job finden</value>
+    <value>Du möchtest dich auf einen sicheren Job vorbereiten</value>
   </data>
   <data name="UseCase_A_Name" xml:space="preserve">
-    <value>Arbeitssuche</value>
+    <value>Fit für den Job</value>
   </data>
   <data name="UseCase_B_Description" xml:space="preserve">
     <value>Du möchtest neue Fähigkeiten erwerben</value>
@@ -526,10 +526,10 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Erfahrungen</value>
   </data>
   <data name="AssessmentType_SkillAssessment" xml:space="preserve">
-    <value>Bewertung</value>
+    <value>Test</value>
   </data>
   <data name="AssessmentType_SoftSkillAssessment" xml:space="preserve">
-    <value>SoftSkills</value>
+    <value>Selbsttest</value>
   </data>
   <data name="AssessmentType_Survey" xml:space="preserve">
     <value>Umfrage</value>
@@ -578,5 +578,8 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="AssessmentResultView_RecommendationDescription" xml:space="preserve">
     <value>Empfohlene Inhalte</value>
+  </data>
+  <data name="OccurrenceType_FullTimeAndPartTime" xml:space="preserve">
+    <value>Voll- und Teilzeit</value>
   </data>
 </root>
