@@ -817,6 +817,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voll- und Teilzeit.
+        /// </summary>
+        public static string OccurrenceType_FullTimeAndPartTime {
+            get {
+                return ResourceManager.GetString("OccurrenceType_FullTimeAndPartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teilzeit.
         /// </summary>
         public static string OccurrenceType_PartTime {
@@ -1152,7 +1161,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du möchtest einen sicheren Job finden.
+        ///   Looks up a localized string similar to Du möchtest dich auf einen sicheren Job vorbereiten.
         /// </summary>
         public static string UseCase_A_Description {
             get {
@@ -1161,7 +1170,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arbeitssuchend.
+        ///   Looks up a localized string similar to Fit für den Job.
         /// </summary>
         public static string UseCase_A_Name {
             get {
@@ -1170,7 +1179,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ich möchte mich fit für einen neuen Job machen.
+        ///   Looks up a localized string similar to Du möchtest neue Fähigkeiten erwerben.
         /// </summary>
         public static string UseCase_B_Description {
             get {
