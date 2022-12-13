@@ -274,6 +274,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(
+                        (assessmentItem?.AssessmentType ?? AssessmentType.Unknown) != AssessmentType.SkillAssessment,
                         questionItems,
                         questionQuestionMetaDatasMapping,
                         questionQuestionMetaDataMetaDatasMapping,
@@ -313,6 +314,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private void LoadonUIThread(
+            bool sort,
             IEnumerable<QuestionItem> questionItems,
             Dictionary<QuestionItem, IEnumerable<MetaDataItem>> questionMetaDatasMapping,
             Dictionary<QuestionItem, Dictionary<MetaDataItem, IEnumerable<MetaDataItem>>> questionMetaDataMetaDatasMappings,
@@ -320,7 +322,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Dictionary<QuestionItem, IEnumerable<AnswerItemResult>> answerResultsMapping,
             Dictionary<QuestionItem, Dictionary<AnswerItem, IEnumerable<MetaDataItem>>> answerItemMetaDatasMapping)
         {
-            Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(true, q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], Logger)).OrderBy(q => q.SortIndex));
+            if (sort)
+            {
+                Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(true, q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], Logger)).OrderBy(q => q.SortIndex));
+            }
+            else
+            {
+                Questions = new ObservableCollection<QuestionEntry>(questionItems.Select(q => QuestionEntry.Import(false, q, questionMetaDatasMapping[q], questionMetaDataMetaDatasMappings[q], answerItemsMapping[q], answerResultsMapping[q], answerItemMetaDatasMapping[q], Logger)));
+            }
+
             CurrentQuestion = Questions?.FirstOrDefault();
             _questionLayout = CurrentQuestion?.QuestionLayout ?? LayoutType.Default;
             _answerLayout = CurrentQuestion?.AnswerLayout ?? LayoutType.Default;

@@ -187,7 +187,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bewertung.
+        ///   Looks up a localized string similar to Test.
         /// </summary>
         public static string AssessmentType_SkillAssessment {
             get {
@@ -196,7 +196,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SoftSkills.
+        ///   Looks up a localized string similar to Selbsttest.
         /// </summary>
         public static string AssessmentType_SoftSkillAssessment {
             get {
@@ -322,7 +322,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kurs.
+        ///   Looks up a localized string similar to Weiterbildung.
         /// </summary>
         public static string CourseTagType_Course {
             get {
@@ -817,6 +817,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voll- und Teilzeit.
+        /// </summary>
+        public static string OccurrenceType_FullTimeAndPartTime {
+            get {
+                return ResourceManager.GetString("OccurrenceType_FullTimeAndPartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teilzeit.
         /// </summary>
         public static string OccurrenceType_PartTime {
@@ -1152,7 +1161,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du möchtest einen sicheren Job finden.
+        ///   Looks up a localized string similar to Du möchtest dich auf einen sicheren Job vorbereiten.
         /// </summary>
         public static string UseCase_A_Description {
             get {
@@ -1161,7 +1170,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arbeitssuche.
+        ///   Looks up a localized string similar to Fit für den Job.
         /// </summary>
         public static string UseCase_A_Name {
             get {
