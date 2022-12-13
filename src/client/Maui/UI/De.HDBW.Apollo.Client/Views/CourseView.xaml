@@ -25,7 +25,7 @@
                 <Label Text="{x:Static strings:Resource.CourseView_TargetGroup}" Margin="12,0" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <Label Text="{Binding TargetGroup}" Margin="12,0" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
                 <Grid ColumnDefinitions="auto, *" Margin="12,0">
-                    <Image Source="provider.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Margin="0,0,8,0"/>
+                    <Image Source="provider.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Start" Margin="0,4,8,0"/>
                     <Label Text="{Binding DisplayTrainingProvider}" Style="{StaticResource Noto16}" MaxLines="2" Grid.Column="1"/>
                 </Grid>
                 <HorizontalStackLayout Spacing="8" Margin="12,0">
@@ -37,7 +37,7 @@
                     <Label Text="{Binding DisplayOccurrence}" Style="{StaticResource Noto16}"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Spacing="8" Margin="12,0" IsVisible="{Binding HasCourseAppointments}">
-                    <Image Source="calendar.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Start"/>
+                    <Image Source="calendar.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Start" Margin="0,4,0,0"/>
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding CourseAppointments}" ChildAdded="HandleChildAdded">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="courseModels:CourseAppointmentEntry">
