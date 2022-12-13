@@ -227,7 +227,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
                 var data = new NavigationData(Routes.CourseView, courseData);
 
-                var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.TrainingProviderId);
+                var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
 
                 var duration = course.Duration ?? string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resource.StartViewModel_UnknownProvider;

@@ -348,13 +348,13 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Die Inhalte der Beta passen sich an dein gewähltes Ziel an.</value>
   </data>
   <data name="UseCase_A_Description" xml:space="preserve">
-    <value>Du möchtest einen sicheren Job finden</value>
+    <value>Du möchtest dich auf einen sicheren Job vorbereiten</value>
   </data>
   <data name="UseCase_A_Name" xml:space="preserve">
-    <value>Arbeitssuchend</value>
+    <value>Fit für den Job</value>
   </data>
   <data name="UseCase_B_Description" xml:space="preserve">
-    <value>Ich möchte mich fit für einen neuen Job machen</value>
+    <value>Du möchtest neue Fähigkeiten erwerben</value>
   </data>
   <data name="UseCase_B_Name" xml:space="preserve">
     <value>Weiterbildung</value>
@@ -578,5 +578,8 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="AssessmentResultView_RecommendationDescription" xml:space="preserve">
     <value>Empfohlene Inhalte</value>
+  </data>
+  <data name="OccurrenceType_FullTimeAndPartTime" xml:space="preserve">
+    <value>Voll- und Teilzeit</value>
   </data>
 </root>
