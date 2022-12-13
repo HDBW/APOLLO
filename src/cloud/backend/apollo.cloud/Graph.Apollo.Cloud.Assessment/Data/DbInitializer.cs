@@ -6,6 +6,7 @@ using Invite.Apollo.App.Graph.Assessment.Models;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Excel = Microsoft.Office.Interop.Excel;
 using Serilog;
+using Invite.Apollo.App.Graph.Assessment.Services;
 
 namespace Invite.Apollo.App.Graph.Assessment.Data
 {
@@ -69,36 +70,38 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             System.Console.WriteLine(filepath);
             CreateAssessmentFromCsv(filepath,  context);
 
+            //Create Fake Assessment for Usecase 1
+            //Experience Assessment
+            CreateFakeExSkillAssessment(context, 1, "Erfahrungs Selbsttest - Fachkraft für Lagerlogistik");
+
             //Create Ex-Assessment with FakeData
             //USECASE 2 - E-COMMERCE
             CreateFakeExAssessment(context,2, "Kaufmann/Kauffrau im E-Commerce");
         }
 
-        private static void CreateFakeExAssessment(AssessmentContext context, int useCase, string Titel)
+        private static void CreateFakeExSkillAssessment(AssessmentContext context, int useCase, string title)
         {
             Models.Assessment assessment = new Models.Assessment
             {
                 UseCaseId = useCase,
-                Kldb = "61282",
+                Kldb = "51312",
                 AssessmentType = AssessmentType.ExperienceAssessment,
                 Description = "Test Description",
                 Disclaimer = "Test Disclaimer",
-                Duration = "20",
+                Duration = "10",
                 EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
                 EscoSkills = new List<EscoSkill>(),
-                ExternalId = "EX000",
-                Profession = "Kaufmann/Kauffrau im E-Commerce",
+                ExternalId = "EX001",
+                Profession = "Fachkraft für Lagerlogistik",
                 Publisher = "Apollo App",
-                Title = "Erfahrungs Selbsttest - Kaufmann/Kauffrau im E-Commerce",
+                Title = title,
                 Schema = CreateApolloSchema(),
                 Ticks = DateTime.Now.Ticks,
             };
-
             context.Assessments.Add(assessment);
             context.SaveChanges();
             Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Create New Assessment {assessment.Title}");
 
-            //TODO: Add Category and Question + Result
             Category catExCategory = new Category()
             {
                 CourseId = -1,
@@ -141,8 +144,78 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             };
             context.Answers.Add(answer);
             context.SaveChanges();
+        }
 
+        private static void CreateFakeExAssessment(AssessmentContext context, int useCase, string Titel)
+        {
+            Models.Assessment assessment = new Models.Assessment
+            {
+                UseCaseId = useCase,
+                Kldb = "61282",
+                AssessmentType = AssessmentType.ExperienceAssessment,
+                Description = "Test Description",
+                Disclaimer = "Test Disclaimer",
+                Duration = "20",
+                EscoOccupationId = new Uri("http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1").ToString(),
+                EscoSkills = new List<EscoSkill>(),
+                ExternalId = "EX000",
+                Profession = "Kaufmann/Kauffrau im E-Commerce",
+                Publisher = "Apollo App",
+                Title = "Erfahrungs Selbsttest - Kaufmann/Kauffrau im E-Commerce",
+                Schema = CreateApolloSchema(),
+                Ticks = DateTime.Now.Ticks,
+            };
 
+            context.Assessments.Add(assessment);
+            context.SaveChanges();
+            Log.Information($"{DateTime.Now} : {Assembly.GetEntryAssembly()?.GetName().Name} - Create New Assessment {assessment.Title}");
+
+            //TODO: Add Category and Question + Result
+            Category catExCategory = new Category()
+            {
+                CourseId = -1,
+                Ticks = DateTime.Now.Ticks,
+                Description = "Test 12",
+                EscoId = "http://data.europa.eu/esco/occupation/356227b9-2263-4dbd-81e9-7dfc6d3f3af7",
+                Maximum = "0",
+                Minimum = "0",
+                ResultLimit = 0,
+                Schema = CreateApolloSchema(),
+                Subject = "Test Subject 12",
+                Title = "Test Titel 12",
+                Value = "Test Value 12"
+            };
+
+            context.Categories.Add(catExCategory);
+            context.SaveChanges();
+
+            Models.Question question = new Question()
+            {
+                Category = catExCategory,
+                CategoryId = catExCategory.Id,
+                Schema = CreateApolloSchema(),
+                Assessment = assessment,
+                AssessmentId = assessment.Id,
+                ExternalId = "A External Id like 123", //TODO: Note causes exception if there is already a question with the external id
+                QuestionType = QuestionType.Rating,
+                Scalar = 1,
+                Ticks = DateTime.Now.Ticks,
+                ScoringOption = "0-1-2-3-4-5"
+            };
+            context.Questions.Add(question);
+            context.SaveChanges();
+
+            Models.Answer answer = new Models.Answer()
+            {
+                Ticks = DateTime.Now.Ticks,
+                Schema = CreateApolloSchema(),
+                Scalar = 1,
+                AnswerType = AnswerType.TextBox,
+                QuestionId = question.Id,
+                Question = question
+            };
+            context.Answers.Add(answer);
+            context.SaveChanges();
         }
 
         private static void CreateAssessmentFromCsv(string filename, AssessmentContext context)
