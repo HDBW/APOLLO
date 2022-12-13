@@ -355,7 +355,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IEnumerable<EduProviderItem> eduProviders,
             IEnumerable<(string Link, string Text)> skills)
         {
-            ImagePath = "placeholdercontinuingeducation.png";
+            switch (courseItem?.CourseTagType)
+            {
+                case Invite.Apollo.App.Graph.Common.Models.Course.Enums.CourseTagType.InfoEvent:
+                    ImagePath = "placeholderinfoevent.png";
+                    break;
+                default:
+                    ImagePath = "placeholdercontinuingeducation.png";
+                    break;
+            }
+
             IValueConverter converter = new CourseTagTypeToStringConverter();
             DecoratorText = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
             OnPropertyChanged(nameof(HasImage));

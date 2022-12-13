@@ -21,6 +21,9 @@ namespace De.HDBW.Apollo.Client.Converter
                 case OccurrenceType.PartTime:
                     result = Resources.Strings.Resource.OccurrenceType_PartTime;
                     break;
+                case OccurrenceType.FullTimeAndPartTime:
+                    result = Resources.Strings.Resource.OccurrenceType_FullTimeAndPartTime;
+                    break;
             }
 
             return result;
