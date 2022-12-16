@@ -36,7 +36,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                 Biwe = 0,
                 Bbw = 1,
                 Tuev = 2,
-                Bfz
+                Bfz =3
             }
 
         public static Dictionary<int, string> providerNames = new Dictionary<int, string>()
@@ -46,7 +46,7 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
         public static Dictionary<string, int> getProviderIdByName = new Dictionary<string, int>()
         {
-            {"Biwe", (int)EduProviderId.Biwe}, {"bbw", (int)EduProviderId.Bbw}, {"TüV Rheinland Akademie", (int)EduProviderId.Tuev },  {"bfz", (int)EduProviderId.Bfz }
+            {"Biwe", (int)EduProviderId.Biwe}, {"bbw", (int)EduProviderId.Bbw}, {"Tuev", (int)EduProviderId.Tuev },  {"bfz", (int)EduProviderId.Bfz }
         };
 
 
@@ -118,6 +118,80 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
                     Logo = new Uri("https://invite-apollo.app/TODO"),
                     Id = (int)EduProviderId.Bfz,
                     Website = new Uri("https://www.bfz.de/")
+                }
+            },
+            {
+                4,
+                new EduProviderItem()
+                {
+                    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                    Ticks = DateTime.Now.Ticks,
+                    Name = "BBQ Bildung und Berufliche Qualifizierung gGmbH",
+                    Description = "",
+                    Logo = new Uri("https://invite-apollo.app/TODO"),
+                    Id = 4,
+                    Website = new Uri("https://www.biwe-bbq.de/")
+                }
+            },
+            {
+                5,
+                new EduProviderItem()
+                {
+                    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                    Ticks = DateTime.Now.Ticks,
+                    Name = "Berufliche Fortbildungszentren der Bayerischen Wirtschaft (bfz) gGmbH",
+                    Description = "",
+                    Logo = new Uri("https://invite-apollo.app/TODO"),
+                    Id = 5,
+                    Website = new Uri("https://www.bfz.de/")
+                }
+            },
+            {
+                6, new EduProviderItem()
+                {
+                    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                    Ticks = DateTime.Now.Ticks,
+                    Name = "TÜV Rheinland Akademie GmbH",
+                    Description = "",
+                    Logo = new Uri("https://invite-apollo.app/TODO"),
+                    Id = 6,
+                    Website = new Uri("https://akademie.tuv.com/")
+                }
+            },
+            {
+                7, new EduProviderItem()
+                {
+                    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                    Ticks = DateTime.Now.Ticks,
+                    Name = "bbw it akademie bayern",
+                    Description = "",
+                    Logo = new Uri("https://invite-apollo.app/TODO"),
+                    Id = 7,
+                    Website = new Uri("https://www.bbw-seminare.de/it-akademie/")
+                }
+            },
+            {
+                8, new EduProviderItem()
+                {
+                    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                    Ticks = DateTime.Now.Ticks,
+                    Name = "Bildungswerk der Bayerischen Wirtschaft (bbw) gemeinnützige GmbH",
+                    Description = "",
+                    Logo = new Uri("https://invite-apollo.app/TODO"),
+                    Id = 8,
+                    Website = new Uri("https://www.bbw-seminare.de/")
+                }
+            },
+            {
+                9, new EduProviderItem()
+                {
+                    Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}"),
+                    Ticks = DateTime.Now.Ticks,
+                    Name = "Bildungswerk der Baden-Württembergischen Wirtschaft e.V.",
+                    Description = "",
+                    Logo = new Uri("https://invite-apollo.app/TODO"),
+                    Id = 9,
+                    Website = new Uri("https://www.biwe-akademie.de/")
                 }
             }
             
@@ -362,9 +436,9 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
 
                     //Assumtion Excel not null
                     string? CourseProvider = xlRange.Cells[i, ExcelCourseColumnIndex.CourseProviderId].Value2.ToString();
-                    item.CourseProviderId = getEduProvider(CourseProvider);
+                    item.CourseProviderId = GetEduProvider(CourseProvider);
                     string? TrainingProvider = xlRange.Cells[i, ExcelCourseColumnIndex.TrainingProviderId].Value2.ToString();
-                    item.TrainingProviderId = getEduProvider(TrainingProvider);
+                    item.TrainingProviderId = GetTrainingProvider(TrainingProvider);
                     //item.CourseProviderId = xlRange.Cells[i, ExcelCourseColumnIndex.CourseProviderId].Value2 != null
                     //    ? (long)Convert.ToInt64(xlRange.Cells[i, ExcelCourseColumnIndex.CourseProviderId].Value2.ToString())
                     //    : default;
@@ -558,9 +632,23 @@ namespace Invite.Apollo.App.Graph.Assessment.Data
             #endregion
         }
 
+        private long GetTrainingProvider(string trainingProvider)
+        {
+            var result = ProviderList.Where(x => x.Value.Name.Equals(trainingProvider)).ToList();
+            if (result.Count>0)
+            {
+                return result.FirstOrDefault().Value.Id;
+            }
+            else
+            {
+                return -1;
+            }
+
+        }
+
         public int AppointmentCounter { get; set; }
 
-        private long getEduProvider(string? courseProvider)
+        private long GetEduProvider(string? courseProvider)
         {
             
             int providerid = 0;
