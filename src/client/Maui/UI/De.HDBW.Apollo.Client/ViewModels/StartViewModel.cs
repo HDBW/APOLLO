@@ -69,6 +69,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public Action UseCaseChangedHandler { get; set; }
+
         private IPreferenceService PreferenceService { get; }
 
         private IAssessmentItemRepository AssessmentItemRepository { get; }
@@ -105,6 +107,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var assessments = await AssessmentItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     var assessmentIds = assessments.Select(a => a.Id).ToList();
                     var assessmentResults = await AnswerItemResultRepository.GetItemsByForeignKeysAsync(assessmentIds, worker.Token).ConfigureAwait(false);
+                    var notifyUseCaseChanged = SessionService.ChangedUseCase;
+                    SessionService.ConfirmedUseCaseChanged();
                     UseCase = useCase;
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     courses = courses.Where(c => !c.UnPublishingDate.HasValue).ToList();
@@ -117,7 +121,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                            assessmentResults,
                            courses,
                            userProfile,
-                           eduProviders), worker.Token);
+                           eduProviders,
+                           notifyUseCaseChanged), worker.Token);
 
                     var taskList = new List<Task>();
 
@@ -167,7 +172,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IEnumerable<AnswerItemResult> assessmentResults,
            IEnumerable<CourseItem> courseItems,
            UserProfileItem? userProfile,
-           IEnumerable<EduProviderItem> eduProviderItems)
+           IEnumerable<EduProviderItem> eduProviderItems,
+           bool notifyUseCaseChanged)
         {
             UserProfile = UserProfileEntry.Import(userProfile ?? new UserProfileItem());
             InteractionCategories.Clear();
@@ -221,7 +227,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
                 var data = new NavigationData(Routes.CourseView, courseData);
 
-                var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.TrainingProviderId);
+                var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
 
                 var duration = course.Duration ?? string.Empty;
                 var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resource.StartViewModel_UnknownProvider;
@@ -268,6 +274,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var favoriteInteractionCategoryEntry = FavoriteInteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_FavoritesHeadline, Resources.Strings.Resource.StartViewModel_FavoritesSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore);
             AddFavorites((FavoriteInteractionCategoryEntry)favoriteInteractionCategoryEntry, favorites);
             InteractionCategories.Add(favoriteInteractionCategoryEntry);
+            if (notifyUseCaseChanged)
+            {
+                UseCaseChangedHandler?.Invoke();
+            }
         }
 
         private bool CanHandleFilter(InteractionEntry interaction)

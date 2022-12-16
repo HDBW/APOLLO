@@ -7,13 +7,13 @@ using Invite.Apollo.App.Graph.Common.Models.Course;
 
 namespace De.HDBW.Apollo.Client.Converter
 {
-    public class EntityTypeToBrushConverter : IValueConverter
+    public class EntityTypeToColorConverter : IValueConverter
     {
-        public Brush? AssessmentItemBrush { get; set; }
+        public Color? AssessmentItemColor { get; set; }
 
-        public Brush? CourseItemBrush { get; set; }
+        public Color? CourseItemColor { get; set; }
 
-        public Brush? DefaultBrush { get; set; }
+        public Color? DefaultColor { get; set; }
 
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -26,11 +26,11 @@ namespace De.HDBW.Apollo.Client.Converter
             switch (type?.Name)
             {
                 case nameof(AssessmentItem):
-                    return AssessmentItemBrush;
+                    return AssessmentItemColor;
                 case nameof(CourseItem):
-                    return CourseItemBrush;
+                    return CourseItemColor;
                 default:
-                    return DefaultBrush;
+                    return DefaultColor;
             }
         }
 
