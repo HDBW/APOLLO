@@ -32,7 +32,7 @@
 
             <DataTemplate x:Key="TemplateWithSeperator" x:DataType="BaseShellItem">
                 <Grid ColumnDefinitions="auto,*" RowDefinitions="1,*" Padding="24,8">
-                    <Rectangle Grid.ColumnSpan="2" Background="{StaticResource Primary}" />
+                    <Rectangle Grid.ColumnSpan="2" BackgroundColor="{StaticResource Primary}" />
                     <Image Source="{Binding Icon}"
                            Grid.Row="1"
                            VerticalOptions="Center"
