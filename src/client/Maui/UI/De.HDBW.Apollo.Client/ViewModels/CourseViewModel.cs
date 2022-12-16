@@ -344,6 +344,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             base.RefreshCommands();
             ShowLoanOptionsCommand?.NotifyCanExecuteChanged();
             OpenCourseCommand?.NotifyCanExecuteChanged();
+            OpenMailCommand?.NotifyCanExecuteChanged();
+            OpenDailerCommand?.NotifyCanExecuteChanged();
         }
 
         private void LoadonUIThread(
@@ -353,7 +355,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IEnumerable<EduProviderItem> eduProviders,
             IEnumerable<(string Link, string Text)> skills)
         {
-            ImagePath = "placeholdercontinuingeducation.png";
+            switch (courseItem?.CourseTagType)
+            {
+                case Invite.Apollo.App.Graph.Common.Models.Course.Enums.CourseTagType.InfoEvent:
+                    ImagePath = "placeholderinfoevent.png";
+                    break;
+                default:
+                    ImagePath = "placeholdercontinuingeducation.png";
+                    break;
+            }
+
             IValueConverter converter = new CourseTagTypeToStringConverter();
             DecoratorText = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
             OnPropertyChanged(nameof(HasImage));
@@ -540,6 +551,81 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool CanShowLoanOptions()
         {
             return !IsBusy && !string.IsNullOrWhiteSpace(LoanOptions);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenMail))]
+        private async Task OpenMail(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (Email.Default.IsComposeSupported)
+                    {
+                        string[] recipients = new[] { Contact!.ContactMail };
+
+                        var message = new EmailMessage
+                        {
+                            Subject = string.Empty,
+                            Body = string.Empty,
+                            BodyFormat = EmailBodyFormat.PlainText,
+                            To = new List<string>(recipients),
+                        };
+
+                        await Email.Default.ComposeAsync(message);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenMail()
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(Contact?.ContactMail);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanOpenDailer))]
+        private void OpenDailer()
+        {
+            try
+            {
+                if (PhoneDialer.Default.IsSupported)
+                {
+                    PhoneDialer.Default.Open(Contact!.ContactPhone);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error in {nameof(OpenDailer)} in {GetType().Name}.");
+            }
+        }
+
+        private bool CanOpenDailer()
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(Contact?.ContactPhone);
         }
     }
 }

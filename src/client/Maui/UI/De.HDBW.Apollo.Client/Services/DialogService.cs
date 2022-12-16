@@ -56,6 +56,8 @@ namespace De.HDBW.Apollo.Client.Services
                     return rootPage.ShowPopupAsync(popup);
                 }, token);
 
+                UnregisterDialog(popup);
+                popup.Parent = null;
                 return result as TV;
             }
             catch (OperationCanceledException)
@@ -134,6 +136,8 @@ namespace De.HDBW.Apollo.Client.Services
                 }
 
                 popup.Close(result);
+                UnregisterDialog(popup);
+                popup.Parent = null;
                 return true;
             }
             catch (Exception ex)

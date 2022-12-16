@@ -187,7 +187,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bewertung.
+        ///   Looks up a localized string similar to Test.
         /// </summary>
         public static string AssessmentType_SkillAssessment {
             get {
@@ -196,7 +196,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SoftSkills.
+        ///   Looks up a localized string similar to Selbsttest.
         /// </summary>
         public static string AssessmentType_SoftSkillAssessment {
             get {
@@ -322,7 +322,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kurs.
+        ///   Looks up a localized string similar to Weiterbildung.
         /// </summary>
         public static string CourseTagType_Course {
             get {
@@ -817,6 +817,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voll- und Teilzeit.
+        /// </summary>
+        public static string OccurrenceType_FullTimeAndPartTime {
+            get {
+                return ResourceManager.GetString("OccurrenceType_FullTimeAndPartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teilzeit.
         /// </summary>
         public static string OccurrenceType_PartTime {
@@ -835,7 +844,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beschreibung Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius eu tristique tristique ut. Morbi viverra in tempor maecenas ullamcorper tellus risus eu..
+        ///   Looks up a localized string similar to Während der Testung benötigst Du keine Registrierung/Anmeldung. Wenn Du Dich allerdings für zukünftige Testversionen registrieren möchtest, kannst Du das über &quot;Jetzt anmelden&quot; vornehmen. Solltest Du Deine Meinung ändern, kannst Du über Einstellungen → &quot;Benutzer abmelden&quot; die Registrierung/Anmeldung löschen..
         /// </summary>
         public static string RegistrationView_Description {
             get {
@@ -871,7 +880,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo Apollo.
+        ///   Looks up a localized string similar to Hallo Apollo-Team.
         ///.
         /// </summary>
         public static string SettingsView_EmailBody {
@@ -881,7 +890,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anregungen oder Wunsch.
+        ///   Looks up a localized string similar to Anregungen oder Wunsch zu Apollo.
         /// </summary>
         public static string SettingsView_EmailSubject {
             get {
@@ -935,7 +944,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to martin.mailman@lorem.de.
+        ///   Looks up a localized string similar to apollodev@hdbw-hochschule.de.
         /// </summary>
         public static string SettingsView_QuestionEmail {
             get {
@@ -1152,7 +1161,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du möchtest einen sicheren Job finden.
+        ///   Looks up a localized string similar to Du möchtest dich auf einen sicheren Job vorbereiten.
         /// </summary>
         public static string UseCase_A_Description {
             get {
@@ -1161,7 +1170,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arbeitssuche.
+        ///   Looks up a localized string similar to Fit für den Job.
         /// </summary>
         public static string UseCase_A_Name {
             get {

@@ -94,11 +94,11 @@
                                            ImageTemplate ="{StaticResource ImageQuestionDetailTemplate}"/>
 
         <DataTemplate x:Key="SelectionInteractionTemplate" x:DataType="contracts:ISelectionInteractiveEntry">
-            <Grid Background="Transparent" ColumnDefinitions="*, 40">
+            <Grid BackgroundColor="Transparent" ColumnDefinitions="*, 40">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleSelectionCommand}" />
                 </Grid.GestureRecognizers>
-                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" Background="{StaticResource White}" InputTransparent="True">
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Gray100}" BackgroundColor="{StaticResource White}" InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8"/>
                     </Border.StrokeShape>
@@ -118,7 +118,7 @@
                 <Grid.GestureRecognizers>
                     <DragGestureRecognizer CanDrag="{Binding IsNotAssociated}" DragStartingCommand="{Binding DragStartingCommand}" DropCompletedCommand="{Binding DropCompletedCommand}"/>
                 </Grid.GestureRecognizers>
-                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Primary}" Background="{StaticResource White}" InputTransparent="True">
+                <Border x:Name="PART_Bd" Grid.ColumnSpan="2" StrokeThickness="1.5" Stroke="{StaticResource Primary}" BackgroundColor="{StaticResource White}" InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8"/>
                     </Border.StrokeShape>
@@ -267,7 +267,7 @@
         <DataTemplate x:Key="DefaultQuestionTemplate" x:DataType="assessmentModels:QuestionEntry">
             <VerticalStackLayout Spacing="8" Padding="24,0">
                 <Label Grid.Row="0" Text="{Binding Question}" IsVisible="{Binding HasQuestion}"/>
-                <Label Grid.Row="1" Text="{Binding Instruction}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}" MaxLines="3" LineBreakMode="WordWrap" IsVisible="{Binding HasInstruction}"/>
+                <Label Grid.Row="1" Text="{Binding Instruction}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}" MaxLines="4" LineBreakMode="WordWrap" IsVisible="{Binding HasInstruction}"/>
                 <StackLayout
                     Grid.Row="2" 
                     BindableLayout.ItemTemplateSelector="{StaticResource QuestionLayoutTemplateSelector}"
@@ -290,7 +290,7 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Label Text="{Binding Question}" Grid.Row="0" IsVisible="{Binding HasQuestion}"/>
-                <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}" MaxLines="3" LineBreakMode="WordWrap" />
+                <Label Text="{Binding Instruction}" HorizontalTextAlignment="End" Grid.Row="1" IsVisible="{Binding HasInstruction}" MaxLines="4" LineBreakMode="WordWrap" />
                 <Image x:Name="PART_Image" Source="{Binding ImagePath}" HeightRequest="200" Grid.Row="2" IsVisible="{Binding HasImage}"/>
                 <StackLayout Grid.Row="2" HeightRequest="200" BindableLayout.ItemTemplateSelector="{StaticResource AnswersLayoutTemplateSelector}" BindableLayout.ItemsSource="{Binding AnswerLayout, Converter={StaticResource SingleItemListConverter}}">
                 </StackLayout>
@@ -304,7 +304,7 @@
 
     <Grid RowDefinitions="auto, *, auto" ColumnDefinitions="*, auto">
         <ProgressBar Margin="24,8,8,8" Progress="{Binding Progress}" VerticalOptions="Center"/>
-        <Label  Grid.Column="1" Margin="0,0,14,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" Background="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+        <Label  Grid.Column="1" Margin="0,0,14,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" BackgroundColor="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
         <ScrollView Grid.ColumnSpan="2" Grid.Row="1" VerticalScrollBarVisibility="Default">
             <VerticalStackLayout
                 ChildAdded="HandleChildAdded"

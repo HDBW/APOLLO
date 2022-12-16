@@ -12,10 +12,10 @@
         <BackButtonBehavior />
     </Shell.BackButtonBehavior>
     <ContentPage.Resources>
-        <converter:EntityTypeToBrushConverter x:Key="EntityTypeToBrushConverter"
-                                              DefaultBrush="Transparent"
-                                              AssessmentItemBrush="{StaticResource Tag1Brush}"
-                                              CourseItemBrush="{StaticResource Tag2Brush}"/>
+        <converter:EntityTypeToColorConverter x:Key="EntityTypeToColorConverter"
+                                              DefaultColor="Transparent"
+                                              AssessmentItemColor="{StaticResource Tag1}"
+                                              CourseItemColor="{StaticResource Tag2}"/>
         <converter:InteractionsToMaximumHeightConverter x:Key="InteractionsToMaximumHeightConverter" />
 
         <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:StartViewInteractionEntry">
@@ -28,7 +28,7 @@
                 </Border.GestureRecognizers>
                 <Grid RowDefinitions="*,auto,auto, auto" Padding="0" ColumnDefinitions="*, 28">
                     <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" Grid.ColumnSpan="2" InputTransparent="True"/>
-                    <Border InputTransparent="True" IsVisible="{Binding HasDecorator, Mode=OneTime}" Background="{Binding EntityType, Converter={StaticResource EntityTypeToBrushConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+                    <Border InputTransparent="True" IsVisible="{Binding HasDecorator, Mode=OneTime}" BackgroundColor="{Binding EntityType, Converter={StaticResource EntityTypeToColorConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="0,0,0,4" />
                         </Border.StrokeShape>
@@ -41,7 +41,7 @@
                             </DataTrigger>
                         </ImageButton.Triggers>
                     </ImageButton>
-                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Text, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="2" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
                     <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
                     <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
                 </Grid>
