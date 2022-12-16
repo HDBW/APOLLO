@@ -111,6 +111,29 @@ public class AssessmentGrpcService : IAssessmentGRPCService
         switch (useCase)
         {
             case 1:
+                //TODO: Experience Assessment ist erledigt
+                var assessmentsCase1 = _assessmentDataService.GetAllAssessmentsAsync().Result.Where(a => a.UseCaseId.Equals(useCase));
+
+                foreach (Models.Assessment assessment in assessmentsCase1)
+                {
+                    if (assessment.AssessmentType.Equals(AssessmentType.ExperienceAssessment))
+                    {
+                        //EXPERIENCE Fachkraft für Lagerlogistik
+                        AnswerItemResult air = new AnswerItemResult();
+                        air.Id = answerItems.Count;
+                        air.AssessmentItemId = assessment.Id;
+                        air.QuestionItemId = assessment.Questions.FirstOrDefault()!.Id;
+                        air.AnswerItemId = assessment.Questions.FirstOrDefault()!.Answers.FirstOrDefault()!.Id;
+                        air.Schema = CreateApolloSchema();
+                        air.Ticks = DateTime.Now.Ticks;
+                        air.Value = false.ToString();
+                        air.UserProfileId = 1;
+
+                        answerItems.Add(air);
+                    }
+                }
+
+
                 break;
             case 2:
                 
@@ -119,7 +142,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
                 //_assessmentDataService.GetAllAssessmentsAsync().Result
                 //    .Where(a => a.Title.Equals("Test Kaufmann/Kauffrau im E-Commerce")).First();
                 //skillAssessment.
-                var assessments = _assessmentDataService.GetAllAssessmentsAsync().Result.Where(a => a.UseCaseId.Equals(2));
+                var assessments = _assessmentDataService.GetAllAssessmentsAsync().Result.Where(a => a.UseCaseId.Equals(useCase));
 
                 foreach (Models.Assessment assessment in assessments)
                 {
@@ -145,7 +168,7 @@ public class AssessmentGrpcService : IAssessmentGRPCService
                 break;
             case 3:
                 //Soziale & Kommunikative Kompetenzen
-                var assessmentsCase3 = _assessmentDataService.GetAllAssessmentsAsync().Result.Where(a => a.UseCaseId.Equals(3));
+                var assessmentsCase3 = _assessmentDataService.GetAllAssessmentsAsync().Result.Where(a => a.UseCaseId.Equals(useCase));
 
                 foreach (Models.Assessment assessment in assessmentsCase3)
                 {
