@@ -34,5 +34,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         [ForeignKey(nameof(AssessmentScore))]
         [DataMember(Order = 9)]
         public long AssessmentScoreId { get; set; }
+
+        [DataMember(Order= 10)]
+        public bool NeedsRecommendation { get; set; }
     }
 }
