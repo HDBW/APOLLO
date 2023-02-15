@@ -21,6 +21,11 @@ on:
       - '**/*.yml'
       - 'src/cloud/**'
   workflow_dispatch:
+    inputs:
+        dotnetMajorVersion:
+          description: "The major sdk version"
+          default: "7"
+          type: "string"
 permissions:
   contents: read
   
@@ -38,10 +43,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET 6
+    - name: Setup .NET ${{ inputs.dotnetMajorVersion }}
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: ${{ inputs.dotnetMajorVersion }}.0.x
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
     - name: Setup nuget
@@ -67,12 +72,12 @@ jobs:
     - name: Build MAUI Android
       run: |
         $KEYSTORE_PATH = Join-Path -Path $env:RUNNER_TEMP -ChildPath "Apollo.keystore";
-        dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net6.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore=$KEYSTORE_PATH /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
+        dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net${{ inputs.dotnetMajorVersion }}.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore=$KEYSTORE_PATH /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
     - name: Upload Android Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
         name: apollo-android-app
-        path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net6.0-android/*Signed.a*
+        path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net${{ inputs.dotnetMajorVersion }}.0-android/*Signed.a*
     - name: Cleanup
       if: always()
       run: dotnet nuget remove source github
