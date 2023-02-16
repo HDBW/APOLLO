@@ -13,7 +13,7 @@
              x:DataType="viewModels:UseCaseDescriptionViewModel" Padding="0">
     <Grid RowDefinitions="*, auto">
         <ScrollView Padding="24,0" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
-            <VerticalStackLayout SizeChanged="HandleSizeChanged">
+            <VerticalStackLayout>
                 <Grid RowDefinitions="64, auto, *, auto, auto, 10, 38" ColumnDefinitions="*, auto" IsVisible="{Binding HasUserProfile}">
                     <Image Source="{Binding UserProfile.ImagePath}" HeightRequest="64" WidthRequest="64" HorizontalOptions="Start">
                         <Image.Clip>
