@@ -19,7 +19,7 @@
         </Border>
         <Border BackgroundColor="{StaticResource Background}" StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="0" Margin="12,0"  Grid.RowSpan="2" Grid.Row="1" />
         <ScrollView Grid.Row="1" Padding="12,0,12,12" Grid.RowSpan="2" BackgroundColor="Transparent" Margin="0,12,0,0">
-            <VerticalStackLayout Spacing="8" SizeChanged="HandleSizeChanged">
+            <VerticalStackLayout Spacing="8" >
                 <Label Margin="12,0" Text="{Binding Title}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
                 <Label Text="{Binding ShortDescription}" Margin="12,0" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
                 <Label Text="{x:Static strings:Resource.CourseView_TargetGroup}" Margin="12,0" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
@@ -38,7 +38,7 @@
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Spacing="8" Margin="12,0" IsVisible="{Binding HasCourseAppointments}">
                     <Image Source="calendar.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Start" Margin="0,4,0,0"/>
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding CourseAppointments}" ChildAdded="HandleChildAdded">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding CourseAppointments}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="courseModels:CourseAppointmentEntry">
                                 <Label Text="{Binding DisplayAppointment}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap" />
@@ -52,7 +52,7 @@
                 <Label IsVisible="{Binding HasLearningOutcomes}" Margin="12,0" Text="{x:Static strings:Resource.CourseView_LearningOutcomes}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <Label IsVisible="{Binding HasLearningOutcomes}" Margin="12,0" Text="{Binding LearningOutcomes}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
                 <Label IsVisible="{Binding HasSkills}" Margin="12,0" Text="{x:Static strings:Resource.CourseView_Skills}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
-                <VerticalStackLayout IsVisible="{Binding HasSkills}" Margin="12,0" BindableLayout.ItemsSource="{Binding Skills}" ChildAdded="HandleChildAdded" Spacing="8">
+                <VerticalStackLayout IsVisible="{Binding HasSkills}" Margin="12,0" BindableLayout.ItemsSource="{Binding Skills}" Spacing="8">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:InteractionEntry">
                             <Border StrokeThickness="0" BackgroundColor="Transparent">
