@@ -30,24 +30,4 @@ public partial class UseCaseDescriptionView
             return BindingContext as UseCaseDescriptionViewModel;
         }
     }
-
-    private void HandleSizeChanged(object sender, System.EventArgs e)
-    {
-#if IOS
-        var layout = sender as Layout;
-        if (layout == null)
-        {
-            return;
-        }
-
-        layout.MinimumHeightRequest = 0;
-        var size = layout.Measure(double.PositiveInfinity, double.PositiveInfinity, MeasureFlags.None);
-        if (double.IsNaN(size.Request.Height) || double.IsInfinity(size.Request.Height))
-        {
-            return;
-        }
-
-        layout.MinimumHeightRequest = Math.Max(size.Request.Height, size.Minimum.Height);
-#endif
-    }
 }
