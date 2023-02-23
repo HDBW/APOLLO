@@ -7,8 +7,8 @@
     <IOSManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\iOS\Info.plist</IOSManifestFile>
     <IOSManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/iOS/Info.plist</IOSManifestFile>
 
-    <JsonPeekAssembly Condition=" '$(OS)' == 'Windows_NT' ">$(NugetPackageRoot)\jsonpeek\1.1.9\build\JsonPeek.dll</JsonPeekAssembly>
-    <JsonPeekAssembly Condition=" '$(OS)' == 'Unix' ">$(NugetPackageRoot)/jsonpeek/1.1.9/build/JsonPeek.dll</JsonPeekAssembly>
+    <JsonPeekAssembly Condition=" '$(OS)' == 'Windows_NT' ">$(NugetPackageRoot)\jsonpeek\1.2.0\build\JsonPeek.dll</JsonPeekAssembly>
+    <JsonPeekAssembly Condition=" '$(OS)' == 'Unix' ">$(NugetPackageRoot)/jsonpeek/1.2.0/build/JsonPeek.dll</JsonPeekAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0-ios' And '$(UserSecretsId)' != '' ">
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsonPeek" Version="1.1.9" />
+    <PackageReference Include="JsonPeek" Version="1.2.0" />
   </ItemGroup>
 
   <UsingTask AssemblyFile="$(JsonPeekAssembly)" TaskName="JsonPeek" />

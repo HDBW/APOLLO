@@ -158,8 +158,6 @@
         </Grid>
         <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16" x:Name="PART_ScrollHost">
             <VerticalStackLayout
-                SizeChanged="HandleSizeChanged"
-                ChildRemoved="HandleSizeChanged"
                 BindableLayout.ItemsSource="{Binding InteractionCategories}"
                 BindableLayout.ItemTemplateSelector="{StaticResource InteractionCategoryTemplateSelector}"
                 Spacing="40">
