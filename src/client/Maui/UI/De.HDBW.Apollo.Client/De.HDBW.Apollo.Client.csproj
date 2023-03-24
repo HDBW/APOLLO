@@ -111,7 +111,6 @@
     <None Remove="Resources\Images\user2.svg" />
     <None Remove="Resources\Images\user3.svg" />
     <None Remove="Resources\Images\watch.svg" />
-    <None Remove="JsonPeek" />
   </ItemGroup>
 
   <ItemGroup>
@@ -129,7 +128,6 @@
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.26.1" />
-    <PackageReference Include="JsonPeek" Version="1.2.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.4" />
   </ItemGroup>
 
