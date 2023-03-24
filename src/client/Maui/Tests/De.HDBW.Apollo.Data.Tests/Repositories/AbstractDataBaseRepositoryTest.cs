@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
 using Xunit;
@@ -13,37 +14,43 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
         [Fact]
         public async Task TestDatabaseRepositoryWithCanceledAndDisposedTokenAsync()
         {
-            var repository = GetDataBaseRepository();
-            using (var cts = new CancellationTokenSource())
+            using (var context = new DatabaseTestContext(Path.GetTempFileName()))
             {
-                cts.Cancel();
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
-                cts.Dispose();
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
+                var repository = GetDataBaseRepository(context);
+                using (var cts = new CancellationTokenSource())
+                {
+                    cts.Cancel();
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
+                    cts.Dispose();
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
+                }
             }
         }
 
         [Fact]
         public async Task TestDatabaseRepositoryAsync()
         {
-            var repository = GetDataBaseRepository();
+            using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+            {
+                var repository = GetDataBaseRepository(context);
 
-            // TODO: Add tests for
-            // AddOrUpdateItemsAsync(IEnumerable<TU> items, CancellationToken token);
-            // AddOrUpdateItemAsync(TU item, CancellationToken token);
-            // UpdateItemAsync(TU item, CancellationToken token);
-            // UpdateItemsAsync(IEnumerable<TU> items, CancellationToken token);
+                // TODO: Add tests for
+                // AddOrUpdateItemsAsync(IEnumerable<TU> items, CancellationToken token);
+                // AddOrUpdateItemAsync(TU item, CancellationToken token);
+                // UpdateItemAsync(TU item, CancellationToken token);
+                // UpdateItemsAsync(IEnumerable<TU> items, CancellationToken token);
+            }
         }
 
-        private IDatabaseRepository<TU> GetDataBaseRepository()
+        private IDatabaseRepository<TU> GetDataBaseRepository(DatabaseTestContext context)
         {
-            return GetRepository() as IDatabaseRepository<TU>;
+            return GetRepository(context) as IDatabaseRepository<TU>;
         }
     }
 }

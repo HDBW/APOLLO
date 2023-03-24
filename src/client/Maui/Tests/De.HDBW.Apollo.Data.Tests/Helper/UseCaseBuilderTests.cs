@@ -4,6 +4,7 @@
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Tests.Extensions;
+using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -30,11 +31,14 @@ public class UseCaseBuilderTests : IDisposable
     private readonly ICourseContactRelationRepository _courseContactRelationRepository;
     private readonly IEduProviderItemRepository _eduProviderItemRepository;
     private readonly CategoryRecomendationItemRepository _categoryRecomendationItemRepository;
+    private DatabaseTestContext _context;
 
     public UseCaseBuilderTests()
     {
         _logger = this.SetupLogger<UseCaseBuilder>();
-        var connectionProvider = this.SetupDataBaseConnectionProvider();
+        _context = new DatabaseTestContext(Path.GetTempFileName());
+
+        var connectionProvider = this.SetupDataBaseConnectionProvider(_context);
         _assessmentItemRepository = new AssessmentItemRepository(connectionProvider, this.SetupLogger<AssessmentItemRepository>());
         _assessmentCategoryRepository = new AssessmentCategoryRepository(connectionProvider, this.SetupLogger<AssessmentCategoryRepository>());
         _assessmentCategoryResultRepository = new AssessmentCategoryResultRepository(connectionProvider, this.SetupLogger<AssessmentCategoryResultRepository>());
@@ -57,6 +61,8 @@ public class UseCaseBuilderTests : IDisposable
 
     public void Dispose()
     {
+        _context.Dispose();
+        _context = null;
     }
 
     [Fact]

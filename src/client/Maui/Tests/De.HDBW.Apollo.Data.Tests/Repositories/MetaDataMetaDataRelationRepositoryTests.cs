@@ -3,6 +3,7 @@
 
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Tests.Extensions;
+using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
@@ -10,9 +11,9 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
 {
     public class MetaDataMetaDataRelationRepositoryTests : AbstractDataBaseRepositoryTest<MetaDataMetaDataRelation>
     {
-        protected override IRepository<MetaDataMetaDataRelation> GetRepository()
+        protected override IRepository<MetaDataMetaDataRelation> GetRepository(DatabaseTestContext context)
         {
-            return new MetaDataMetaDataRelationRepository(this.SetupDataBaseConnectionProvider(), this.SetupLogger<MetaDataMetaDataRelationRepository>());
+            return new MetaDataMetaDataRelationRepository(this.SetupDataBaseConnectionProvider(context), this.SetupLogger<MetaDataMetaDataRelationRepository>());
         }
     }
 }

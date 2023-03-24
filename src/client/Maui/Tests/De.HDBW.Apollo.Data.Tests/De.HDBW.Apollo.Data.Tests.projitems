@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TestExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UseCaseBuilderTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseTestContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AbstractDataBaseRepositoryTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AbstractRepositoryTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AnswerMetaDataRelationRepositoryTests.cs" />

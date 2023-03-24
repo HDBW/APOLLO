@@ -56,8 +56,25 @@ namespace De.HDBW.Apollo.Data.Repositories
         public async Task<TU?> GetItemByIdAsync(long id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
-            return await asyncConnection.GetAsync<TU>(id).ConfigureAwait(false);
+            try
+            {
+                var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+                return await asyncConnection.GetAsync<TU>(id).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (ObjectDisposedException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(GetItemByIdAsync)}<{typeof(TU).Name}, {typeof(TU?).Name}> in {GetType().Name}.");
+            }
+
+            return default(TU);
         }
 
         public async Task<IEnumerable<TU>> GetItemsAsync(CancellationToken token)
@@ -70,8 +87,25 @@ namespace De.HDBW.Apollo.Data.Repositories
         public async Task<IEnumerable<TU>> GetItemsByIdsAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
-            return await asyncConnection.Table<TU>().Where(p => ids.Contains(p.Id)).ToListAsync().ConfigureAwait(false);
+            try
+            {
+                var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+                return await asyncConnection.Table<TU>().Where(p => ids.Contains(p.Id)).ToListAsync().ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (ObjectDisposedException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(GetItemByIdAsync)}<{typeof(TU).Name}, {typeof(TU?).Name}> in {GetType().Name}.");
+            }
+
+            return Enumerable.Empty<TU>();
         }
 
         public Task<bool> RemoveItemAsync(TU item, CancellationToken token)
