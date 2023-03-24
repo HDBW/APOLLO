@@ -13,7 +13,7 @@ public static class IocServiceHelper
 #elif IOS
             return MauiUIApplicationDelegate.Current.Services;
 #elif WINDOWS
-            return MauiWinUIApplicationDelegate.Current.Services;
+            return MauiWinUIApplication.Current.Services;
 #endif
         }
     }
