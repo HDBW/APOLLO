@@ -2,27 +2,29 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
     public class AssessmentCategoryResultRepository :
-        AbstractInMemoryRepository<AssessmentCategoryResult>,
+        AbstractDataBaseRepository<AssessmentCategoryResult>,
         IAssessmentCategoryResultRepository
     {
-        public AssessmentCategoryResultRepository(ILogger<AssessmentCategoryResultRepository> logger)
-            : base(logger)
+        public AssessmentCategoryResultRepository(IDataBaseConnectionProvider dataBaseConnectionProvider, ILogger<AssessmentCategoryResultRepository> logger)
+            : base(dataBaseConnectionProvider, logger)
         {
         }
 
-        public Task<IEnumerable<AssessmentCategoryResult>> GetItemsByForeignKeyAsync(long id, CancellationToken token)
+        public async Task<IEnumerable<AssessmentCategoryResult>> GetItemsByForeignKeyAsync(long id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            return Task.FromResult(new ReadOnlyCollection<AssessmentCategoryResult>(Items?.Where(i => i.AssessmentScoreId == id).ToList() ?? new List<AssessmentCategoryResult>()) as IEnumerable<AssessmentCategoryResult>);
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<AssessmentCategoryResult>().Where(i => i.AssessmentScoreId == id).ToListAsync().ConfigureAwait(false);
         }
-
-        public int Count() => Items.Count;
     }
 }

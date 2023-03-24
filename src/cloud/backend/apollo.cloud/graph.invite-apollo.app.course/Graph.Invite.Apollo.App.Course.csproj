@@ -9,6 +9,7 @@
     <ApplicationInsightsResourceId>/subscriptions/f83b64c1-d950-44e7-9004-80d6c393dafa/resourceGroups/rg-apollo-cloud/providers/microsoft.insights/components/appi-apollo-cloud</ApplicationInsightsResourceId>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'graph.invite-apollo.app.course' " />
   <ItemGroup>
     <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>

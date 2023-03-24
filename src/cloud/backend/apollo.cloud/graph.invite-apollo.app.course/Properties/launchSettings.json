@@ -2,15 +2,16 @@
   "profiles": {
     "graph.invite-apollo.app.course": {
       "commandName": "Project",
+      "applicationUrl": "http://localhost:5068;https://localhost:7068",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5068;https://localhost:7068"
+      "dotnetRunMessages": true
     },
     "Docker": {
       "commandName": "Docker",
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {},
       "publishAllPorts": true,
       "useSSL": true
     }

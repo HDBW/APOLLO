@@ -8,6 +8,7 @@
 		<ApplicationInsightsResourceId>/subscriptions/f83b64c1-d950-44e7-9004-80d6c393dafa/resourceGroups/rg-apollo-cloud/providers/microsoft.insights/components/appi-apollo-cloud</ApplicationInsightsResourceId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Mudblazor.Template' " />
 	<ItemGroup>
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />

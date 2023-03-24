@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
     {
         protected override IRepository<AnswerMetaDataRelation> GetRepository()
         {
-            return new AnswerMetaDataRelationRepository(this.SetupLogger<AnswerMetaDataRelationRepository>());
+            return new AnswerMetaDataRelationRepository(this.SetupDataBaseConnectionProvider(), this.SetupLogger<AnswerMetaDataRelationRepository>());
         }
     }
 }

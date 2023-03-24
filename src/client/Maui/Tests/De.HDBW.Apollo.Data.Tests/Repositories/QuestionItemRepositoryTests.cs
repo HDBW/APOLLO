@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
     {
         protected override IRepository<QuestionItem> GetRepository()
         {
-            return new QuestionItemRepository(this.SetupLogger<QuestionItemRepository>());
+            return new QuestionItemRepository(this.SetupDataBaseConnectionProvider(), this.SetupLogger<QuestionItemRepository>());
         }
     }
 }

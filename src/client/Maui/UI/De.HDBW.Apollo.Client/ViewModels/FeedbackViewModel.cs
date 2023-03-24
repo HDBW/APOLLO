@@ -43,8 +43,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private LayoutType? _questionLayout;
         private InteractionType? _interaction;
 
-        private long _maxResultId;
-
         public FeedbackViewModel(
             IAssessmentItemRepository assessmentItemRepository,
             IQuestionItemRepository questionItemRepository,
@@ -203,7 +201,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var answerIds = answerItems.Select(q => q.Id);
 
                     var answerItemResults = await AnswerItemResultRepository.GetItemsByForeignKeyAsync(assessmentItem.Id, worker.Token).ConfigureAwait(false);
-                    _maxResultId = await AnswerItemResultRepository.GetNextIdAsync(worker.Token).ConfigureAwait(false);
                     var questionMetaDataRelations = await QuestionMetaDataRelationRepository.GetItemsByForeignKeysAsync(questionIds, worker.Token).ConfigureAwait(false);
                     questionMetaDataRelations = questionMetaDataRelations ?? new List<QuestionMetaDataRelation>();
                     questionMetaDataIds.AddRange(questionMetaDataRelations.Select(r => r.MetaDataId).Distinct());
@@ -382,12 +379,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             foreach (var question in Questions)
             {
                 itemsToUpdate.AddRange(question.ExportResultes());
-            }
-
-            foreach (var item in itemsToUpdate.Where(i => i.Id < 0))
-            {
-                item.Id = _maxResultId;
-                _maxResultId = _maxResultId + 1;
             }
 
             return AnswerItemResultRepository.AddOrUpdateItemsAsync(itemsToUpdate, token);

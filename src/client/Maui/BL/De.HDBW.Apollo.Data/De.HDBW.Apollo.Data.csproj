@@ -18,7 +18,9 @@
 	  <EmbeddedResource Include="SampleData\Usecase3.bin" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
+		<ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj">
+		  <ReferenceSourceTarget>ProjectReference</ReferenceSourceTarget>
+		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Google.Protobuf" Version="3.21.12" />
