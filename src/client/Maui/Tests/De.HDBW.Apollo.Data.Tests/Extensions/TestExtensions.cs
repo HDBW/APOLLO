@@ -12,7 +12,6 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
 {
     internal static class TestExtensions
     {
-
         internal static IDataBaseConnectionProvider SetupDataBaseConnectionProvider(this object test)
         {
             var mock = new Mock<IDataBaseConnectionProvider>();
