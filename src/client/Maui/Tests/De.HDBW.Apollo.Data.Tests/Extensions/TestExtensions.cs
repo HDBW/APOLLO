@@ -15,7 +15,7 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
         internal static IDataBaseConnectionProvider SetupDataBaseConnectionProvider(this object test)
         {
             var mock = new Mock<IDataBaseConnectionProvider>();
-            var connection = new SQLiteAsyncConnection("Data Source=:memory:");
+            var connection = new SQLiteAsyncConnection(":memory:");
             var entityType = typeof(IEntity);
             var entities = Assembly.GetAssembly(typeof(BaseItem))?.GetTypes().Where(t => t.IsPublic && t.IsClass && t != typeof(BaseItem) && entityType.IsAssignableFrom(t)).ToList() ?? new List<Type>();
             entities.Select(entity => (entity, connection.GetConnection().CreateTable(entity, CreateFlags.AutoIncPK | CreateFlags.ImplicitPK | CreateFlags.ImplicitIndex))).ToList();
