@@ -29,7 +29,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         [ForeignKey(nameof(CourseItem))]
         [DataMember(Order = 8)]
-        public long CourseId { get; set; }
+        public long? CourseId { get; set; }
 
         [ForeignKey(nameof(AssessmentScore))]
         [DataMember(Order = 9)]

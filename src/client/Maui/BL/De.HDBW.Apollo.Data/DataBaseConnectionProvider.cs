@@ -38,7 +38,7 @@ namespace De.HDBW.Apollo.Data
                 var types = new List<Type>();
                 await Connection.RunInTransactionAsync((SQLiteConnection connection) =>
                 {
-                    var result = Entities.Select(entity => (entity, connection.CreateTable(entity, CreateFlags.AutoIncPK | CreateFlags.ImplicitPK | CreateFlags.ImplicitIndex))).ToList();
+                    var result = Entities.Select(entity => (entity, connection.CreateTable(entity, CreateFlags.ImplicitPK | CreateFlags.ImplicitIndex))).ToList();
                 }).ConfigureAwait(false);
 
                 return true;

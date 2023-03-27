@@ -74,7 +74,6 @@ namespace De.HDBW.Apollo.Data.Services
             // set the score data now that we have some information
             score.AssessmentId = assessmentId;
             score.UserId = userId;
-            score.Id = -1;
             score.Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
             score.Ticks = DateTime.Now.Ticks;
 
@@ -85,7 +84,6 @@ namespace De.HDBW.Apollo.Data.Services
             foreach (var category in categories)
             {
                 var categoryResult = new AssessmentCategoryResult();
-                categoryResult.Id = -1;
                 categoryResult.CategoryId = category.Id;
                 categoryResult.Ticks = DateTime.Now.Ticks;
                 categoryResult.Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
@@ -203,7 +201,7 @@ namespace De.HDBW.Apollo.Data.Services
                 }
                 else
                 {
-                    categoryResult.CourseId = -1;
+                    categoryResult.CourseId = null;
                 }
 
                 Debug.WriteLine($"category.Result:{categoryResult.Result}");

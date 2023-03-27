@@ -1,13 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 using SQLite;
 
 namespace De.HDBW.Apollo.Data.Repositories
@@ -29,12 +26,35 @@ namespace De.HDBW.Apollo.Data.Repositories
 
         public Task<bool> AddItemAsync(TU item, CancellationToken token)
         {
-            return AddOrUpdateItemAsync(item, token);
+            return AddItemsAsync(item != null ? new List<TU>() { item } : new List<TU>(), token);
         }
 
-        public Task<bool> AddItemsAsync(IEnumerable<TU> items, CancellationToken token)
+        public async Task<bool> AddItemsAsync(IEnumerable<TU> items, CancellationToken token)
         {
-            return AddOrUpdateItemsAsync(items, token);
+            token.ThrowIfCancellationRequested();
+            var result = false;
+            if (!(items?.Any() ?? false))
+            {
+                return result;
+            }
+
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            await asyncConnection.RunInTransactionAsync((connection)
+               =>
+            {
+                var mapping = connection.GetMapping<TU>();
+                var minId = connection.ExecuteScalar<long>($"Select Min(Id) FROM [{mapping.TableName}]");
+                var lowestId = Math.Min(minId, -1);
+                foreach (var item in items)
+                {
+                    item.Id = lowestId;
+                    lowestId--;
+                }
+
+                var affectedRows = connection.InsertAll(items);
+                result = affectedRows == items.Count();
+            }).ConfigureAwait(false);
+            return result;
         }
 
         public Task<bool> AddOrUpdateItemAsync(TU item, CancellationToken token)
@@ -45,7 +65,7 @@ namespace De.HDBW.Apollo.Data.Repositories
         public Task<bool> AddOrUpdateItemsAsync(IEnumerable<TU> items, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            if (items == null)
+            if (!(items?.Any() ?? false))
             {
                 return Task.FromResult(false);
             }
@@ -126,19 +146,27 @@ namespace De.HDBW.Apollo.Data.Repositories
         public async Task<bool> RemoveItemsByIdsAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
+            var result = false;
+            if (!(ids?.Any() ?? false))
+            {
+                return result;
+            }
+
             var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
             await asyncConnection.RunInTransactionAsync((connection)
                =>
             {
-                connection.Table<TU>().Delete(c => ids.Contains(c.Id));
+                var affectedRows = connection.Table<TU>().Delete(c => ids.Contains(c.Id));
+                result = affectedRows == ids.Count();
             }).ConfigureAwait(false);
 
-            return true;
+            return result;
         }
 
         public async Task<bool> ResetItemsAsync(IEnumerable<TU>? items, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
+            var result = false;
             var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
             await asyncConnection.RunInTransactionAsync((connection)
                =>
@@ -151,18 +179,33 @@ namespace De.HDBW.Apollo.Data.Repositories
                 }
 
                 connection.Execute(@"PRAGMA defer_foreign_Keys=Off;");
+                result = true;
             }).ConfigureAwait(false);
-            return true;
+            return result;
         }
 
         public Task<bool> UpdateItemAsync(TU item, CancellationToken token)
         {
-            return AddOrUpdateItemAsync(item, token);
+            return UpdateItemsAsync(item != null ? new List<TU>() { item } : new List<TU>(), token);
         }
 
-        public Task<bool> UpdateItemsAsync(IEnumerable<TU> items, CancellationToken token)
+        public async Task<bool> UpdateItemsAsync(IEnumerable<TU> items, CancellationToken token)
         {
-            return AddOrUpdateItemsAsync(items, token);
+            token.ThrowIfCancellationRequested();
+            var result = false;
+            if (!(items?.Any() ?? false))
+            {
+                return result;
+            }
+
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            await asyncConnection.RunInTransactionAsync((connection)
+               =>
+            {
+                var affectedRows = connection.UpdateAll(items);
+                result = affectedRows == items.Count();
+            }).ConfigureAwait(false);
+            return result;
         }
 
         private async Task<bool> ResetAsync(IEnumerable<TU> items, CancellationToken token)

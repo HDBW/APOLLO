@@ -60,7 +60,7 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
                 Assert.Single(result, (i) => i.Id == item.Id);
                 var itemResult = await repository.GetItemByIdAsync(0, CancellationToken.None).ConfigureAwait(false);
                 Assert.Null(itemResult);
-                itemResult = await repository.GetItemByIdAsync(1, CancellationToken.None).ConfigureAwait(false);
+                itemResult = await repository.GetItemByIdAsync(item.Id, CancellationToken.None).ConfigureAwait(false);
                 Assert.NotNull(itemResult);
                 Assert.Equal(item?.Id, itemResult?.Id);
                 var itemResults = await repository.GetItemsByIdsAsync(null, CancellationToken.None).ConfigureAwait(false);
@@ -69,10 +69,11 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
                 itemResults = await repository.GetItemsByIdsAsync(new List<long>() { 10, 11 }, CancellationToken.None).ConfigureAwait(false);
                 Assert.NotNull(itemResults);
                 Assert.Empty(itemResults);
-                itemResults = await repository.GetItemsByIdsAsync(new List<long>() { 1, 10, 11 }, CancellationToken.None).ConfigureAwait(false);
+                itemResults = await repository.GetItemsByIdsAsync(new List<long>() { item.Id, 10, 11 }, CancellationToken.None).ConfigureAwait(false);
                 Assert.NotNull(itemResults);
                 Assert.Single(itemResults);
                 Assert.Equal(item?.Id, itemResults.First().Id);
+                Assert.True(await repository.ResetItemsAsync(new List<TU>(), CancellationToken.None).ConfigureAwait(false));
 
                 var item1 = Activator.CreateInstance<TU>();
                 item1.Id = 1;
@@ -113,10 +114,10 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
                 Assert.True(boolResult);
 
                 result = await repository.GetItemsAsync(CancellationToken.None).ConfigureAwait(false);
-                Assert.Single(result);
+                Assert.Equal(2, result.Count());
 
                 boolResult = await repository.RemoveItemsAsync(null, CancellationToken.None).ConfigureAwait(false);
-                Assert.True(boolResult);
+                Assert.False(boolResult);
             }
         }
 
