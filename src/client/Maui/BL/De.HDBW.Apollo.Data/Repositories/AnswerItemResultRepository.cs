@@ -2,18 +2,21 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using SQLite;
 
 namespace De.HDBW.Apollo.Data.Repositories
 {
     public class AnswerItemResultRepository :
-        AbstractInMemoryRepository<AnswerItemResult>,
+        AbstractDataBaseRepository<AnswerItemResult>,
         IAnswerItemResultRepository
     {
-        public AnswerItemResultRepository(ILogger<AnswerItemResultRepository> logger)
-            : base(logger)
+        public AnswerItemResultRepository(IDataBaseConnectionProvider dataBaseConnectionProvider, ILogger<AnswerItemResultRepository> logger)
+            : base(dataBaseConnectionProvider, logger)
         {
         }
 
@@ -22,16 +25,11 @@ namespace De.HDBW.Apollo.Data.Repositories
             return GetItemsByForeignKeysAsync(new List<long>() { id }, token);
         }
 
-        public Task<IEnumerable<AnswerItemResult>> GetItemsByForeignKeysAsync(IEnumerable<long> ids, CancellationToken token)
+        public async Task<IEnumerable<AnswerItemResult>> GetItemsByForeignKeysAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            return Task.FromResult(new ReadOnlyCollection<AnswerItemResult>(Items?.Where(i => ids.Contains(i.AssessmentItemId)).ToList() ?? new List<AnswerItemResult>()) as IEnumerable<AnswerItemResult>);
-        }
-
-        public Task<long> GetNextIdAsync(CancellationToken token)
-        {
-            token.ThrowIfCancellationRequested();
-            return Task.FromResult(Items.Any() ? Items.Max(m => m.Id) + 1 : 0);
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<AnswerItemResult>().Where(i => ids.Contains(i.AssessmentItemId)).ToListAsync().ConfigureAwait(false);
         }
     }
 }

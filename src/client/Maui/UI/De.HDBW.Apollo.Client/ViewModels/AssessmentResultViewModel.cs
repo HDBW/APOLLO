@@ -103,7 +103,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var recomondations = await CategoryRecomendationItemRepository.GetItemsByForeignKeysAsync(categoryIds, worker.Token).ConfigureAwait(false);
 
                     var relatedCourseIds = recomondations.Select(r => r.CourseId).Distinct().ToList();
-                    var courseIds = categoryResults.Where(r => r.CourseId > -1).Select(r => r.CourseId).Distinct().ToList();
+                    var courseIds = categoryResults.Where(r => r.CourseId.HasValue).Select(r => r.CourseId!.Value).Distinct().ToList();
                     await CourseItemRepository.ResetUnpublishedAsync(relatedCourseIds, worker.Token).ConfigureAwait(false);
 
                     IEnumerable<CourseItem> courseItems = new List<CourseItem>();
