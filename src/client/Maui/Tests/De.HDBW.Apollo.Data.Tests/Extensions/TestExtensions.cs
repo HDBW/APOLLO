@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Data.Tests.Model;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -8,6 +10,18 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
 {
     internal static class TestExtensions
     {
+        internal static IDataBaseConnectionProvider SetupDataBaseConnectionProvider(this object test, DatabaseTestContext context)
+        {
+            var mock = new Mock<IDataBaseConnectionProvider>();
+            mock.Setup(m => m.GetConnectionAsync(It.IsAny<CancellationToken>()))
+                .Returns((CancellationToken token) =>
+                {
+                    token.ThrowIfCancellationRequested();
+                    return Task.FromResult(context.Connection);
+                });
+            return mock.Object;
+        }
+
         internal static ILogger<TU> SetupLogger<TU>(this object test)
         {
             var mock = new Mock<ILogger<TU>>();

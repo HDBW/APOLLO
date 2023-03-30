@@ -15,6 +15,9 @@ namespace De.HDBW.Apollo.Client.Services
 
         public DialogService(IDispatcherService dispatcherService, ILogger<DialogService> logger, IServiceProvider serviceProvider)
         {
+            ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+            ArgumentNullException.ThrowIfNull(dispatcherService);
             Logger = logger;
             ServiceProvider = serviceProvider;
             DispatcherService = dispatcherService;

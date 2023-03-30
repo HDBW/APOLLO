@@ -3,6 +3,7 @@
 
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Tests.Extensions;
+using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 
@@ -10,9 +11,9 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
 {
     public class QuestionItemRepositoryTests : AbstractDataBaseRepositoryTest<QuestionItem>
     {
-        protected override IRepository<QuestionItem> GetRepository()
+        protected override IRepository<QuestionItem> GetRepository(DatabaseTestContext context)
         {
-            return new QuestionItemRepository(this.SetupLogger<QuestionItemRepository>());
+            return new QuestionItemRepository(this.SetupDataBaseConnectionProvider(context), this.SetupLogger<QuestionItemRepository>());
         }
     }
 }
