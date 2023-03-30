@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
@@ -9,19 +10,19 @@ using Microsoft.Extensions.Logging;
 namespace De.HDBW.Apollo.Data.Repositories
 {
     public class CourseContactRelationRepository :
-        AbstractInMemoryRepository<CourseContactRelation>,
+        AbstractDataBaseRepository<CourseContactRelation>,
         ICourseContactRelationRepository
     {
-        public CourseContactRelationRepository(ILogger<CourseContactRelationRepository> logger)
-           : base(logger)
+        public CourseContactRelationRepository(IDataBaseConnectionProvider dataBaseConnectionProvider, ILogger<CourseContactRelationRepository> logger)
+           : base(dataBaseConnectionProvider, logger)
         {
         }
 
-        public Task<IEnumerable<CourseContactRelation>> GetItemsByForeignKeyAsync(long id, CancellationToken token)
+        public async Task<IEnumerable<CourseContactRelation>> GetItemsByForeignKeyAsync(long id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var result = new ReadOnlyCollection<CourseContactRelation>(Items.Where(i => i.CourseId == id).ToList());
-            return Task.FromResult(result as IEnumerable<CourseContactRelation>);
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<CourseContactRelation>().Where(i => i.CourseId == id).ToListAsync().ConfigureAwait(false);
         }
     }
 }

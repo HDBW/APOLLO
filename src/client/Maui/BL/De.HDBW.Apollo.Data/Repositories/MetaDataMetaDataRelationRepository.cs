@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Microsoft.Extensions.Logging;
@@ -9,24 +10,19 @@ using Microsoft.Extensions.Logging;
 namespace De.HDBW.Apollo.Data.Repositories
 {
     public class MetaDataMetaDataRelationRepository :
-        AbstractInMemoryRepository<MetaDataMetaDataRelation>,
+        AbstractDataBaseRepository<MetaDataMetaDataRelation>,
         IMetaDataMetaDataRelationRepository
     {
-        public MetaDataMetaDataRelationRepository(ILogger<MetaDataMetaDataRelationRepository> logger)
-            : base(logger)
+        public MetaDataMetaDataRelationRepository(IDataBaseConnectionProvider dataBaseConnectionProvider, ILogger<MetaDataMetaDataRelationRepository> logger)
+            : base(dataBaseConnectionProvider, logger)
         {
         }
 
-        public Task<IEnumerable<MetaDataMetaDataRelation>> GetItemsBySourceIdsAsync(IEnumerable<long> ids, CancellationToken token)
+        public async Task<IEnumerable<MetaDataMetaDataRelation>> GetItemsBySourceIdsAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var result = new ReadOnlyCollection<MetaDataMetaDataRelation>(new List<MetaDataMetaDataRelation>());
-            if (ids != null)
-            {
-                result = new ReadOnlyCollection<MetaDataMetaDataRelation>(Items.Where(i => ids.Contains(i.SourceId)).ToList());
-            }
-
-            return Task.FromResult(result as IEnumerable<MetaDataMetaDataRelation>);
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<MetaDataMetaDataRelation>().Where(i => ids.Contains(i.SourceId)).ToListAsync().ConfigureAwait(false);
         }
     }
 }

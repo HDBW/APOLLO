@@ -4,10 +4,12 @@
 using CommunityToolkit.Maui;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.Views;
+using De.HDBW.Apollo.Data;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Services;
@@ -17,6 +19,7 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Serilog;
@@ -50,6 +53,7 @@ public static class MauiProgram
         SetupHandler();
         var result = SetupB2CLogin(builder.Services);
         SetupServices(builder.Services, result);
+        SetupDataBaseTableProvider(builder);
         SetupRepositories(builder.Services);
         SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
@@ -114,6 +118,13 @@ public static class MauiProgram
         }
 
         return hasRegisteredUser;
+    }
+
+    private static void SetupDataBaseTableProvider(MauiAppBuilder builder)
+    {
+        var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db.sqlite");
+        var flags = SQLite.SQLiteOpenFlags.ReadWrite | SQLite.SQLiteOpenFlags.Create | SQLite.SQLiteOpenFlags.SharedCache;
+        builder.Services.AddSingleton<IDataBaseConnectionProvider>(new DataBaseConnectionProvider(dbFilePath, flags, IocServiceHelper.ServiceProvider?.GetService<ILogger<DataBaseConnectionProvider>>()));
     }
 
     private static void SetupLogging()

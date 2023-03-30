@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.Client.Services
 {
     public abstract class BaseAuthService : IAuthService
     {
-        private readonly IPublicClientApplication _authenticationClient;
+        private readonly IPublicClientApplication? _authenticationClient;
 
         protected BaseAuthService(IPublicClientApplication authenticationClient)
         {
@@ -18,26 +18,26 @@ namespace De.HDBW.Apollo.Client.Services
 
         public Task<AuthenticationResult?> SignInInteractively(CancellationToken cancellationToken)
         {
-            return _authenticationClient
+            return _authenticationClient?
                     .AcquireTokenInteractive(B2CConstants.Scopes)
 #if WINDOWS
                     .WithUseEmbeddedWebView(false)
 #endif
-                    .ExecuteAsync(cancellationToken);
+                    .ExecuteAsync(cancellationToken) ?? Task.FromResult<AuthenticationResult?>(null);
         }
 
         public async Task<AuthenticationResult?> AcquireTokenSilent(CancellationToken cancellationToken)
         {
             try
             {
-                var accounts = await _authenticationClient.GetAccountsAsync(B2CConstants.SignInPolicy);
+                var accounts = _authenticationClient != null ? await _authenticationClient.GetAccountsAsync(B2CConstants.SignInPolicy) : new List<IAccount>();
                 var firstAccount = accounts.FirstOrDefault();
                 if (firstAccount is null)
                 {
                     return null;
                 }
 
-                return await _authenticationClient.AcquireTokenSilent(B2CConstants.Scopes, firstAccount).ExecuteAsync(cancellationToken);
+                return _authenticationClient != null ? await _authenticationClient.AcquireTokenSilent(B2CConstants.Scopes, firstAccount).ExecuteAsync(cancellationToken) : null;
             }
             catch (MsalUiRequiredException)
             {
@@ -47,6 +47,11 @@ namespace De.HDBW.Apollo.Client.Services
 
         public async Task LogoutAsync(CancellationToken cancellationToken)
         {
+            if (_authenticationClient == null)
+            {
+                return;
+            }
+
             var accounts = await _authenticationClient.GetAccountsAsync();
             foreach (var account in accounts)
             {
