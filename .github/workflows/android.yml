@@ -20,9 +20,17 @@ on:
       - '**/*.gitattributes'
       - '**/*.yml'
       - 'src/cloud/**'
+  workflow_call:
+    inputs:
+        dotnetMajorVersion:
+          required: true
+          description: "The major sdk version"
+          default: "7"
+          type: "string"
   workflow_dispatch:
     inputs:
         dotnetMajorVersion:
+          required: true
           description: "The major sdk version"
           default: "7"
           type: "string"
