@@ -140,13 +140,13 @@ namespace De.HDBW.Apollo.Data.Helper
                 switch (usecase)
                 {
                     case UseCase.A:
-                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = string.Empty, Image = "user1.png", Goal = "Job finden" }, token).ConfigureAwait(false);
+                        await UserProfileItemRepository.AddOrUpdateItemAsync(new UserProfileItem() { Id = 1, FirstName = "Adrian", LastName = string.Empty, Image = "user1.png", Goal = "Job finden" }, token).ConfigureAwait(false);
                         break;
                     case UseCase.B:
-                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Kerstin", LastName = string.Empty, Image = "user2.png", Goal = "Weiterbildung" }, token).ConfigureAwait(false);
+                        await UserProfileItemRepository.AddOrUpdateItemAsync(new UserProfileItem() { Id = 1, FirstName = "Kerstin", LastName = string.Empty, Image = "user2.png", Goal = "Weiterbildung" }, token).ConfigureAwait(false);
                         break;
                     case UseCase.C:
-                        await UserProfileItemRepository.AddItemAsync(new UserProfileItem() { Id = 1, FirstName = "Arwa", LastName = string.Empty, Image = "user3.png", Goal = "Karriereaufstieg" }, token).ConfigureAwait(false);
+                        await UserProfileItemRepository.AddOrUpdateItemAsync(new UserProfileItem() { Id = 1, FirstName = "Arwa", LastName = string.Empty, Image = "user3.png", Goal = "Karriereaufstieg" }, token).ConfigureAwait(false);
                         break;
                     default:
                         throw new NotSupportedException($"Usecase {usecase} is not supported by builder.");
