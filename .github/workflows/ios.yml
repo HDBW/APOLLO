@@ -20,12 +20,6 @@ on:
       - '**/*.gitattributes'
       - '**/*.yml'
       - 'src/cloud/**'
-  workflow_dispatch:
-    inputs:
-        dotnetMajorVersion:
-          description: "The major sdk version"
-          default: "7"
-          type: "string"
 permissions:
   contents: read
 
@@ -36,10 +30,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET ${{ inputs.dotnetMajorVersion }}
+    - name: Setup .NET 7
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: ${{ inputs.dotnetMajorVersion }}.0.x
+        dotnet-version: 7.0.x
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
     - name: Init User-Secrets
@@ -83,14 +77,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI iOS
-      run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -f:net${{ inputs.dotnetMajorVersion }}.0-ios -c:Release /p:ArchiveOnBuild=true /p:RuntimeIdentifier=ios-arm64 /p:CodesignKey="${{secrets.CODESIGNINGKEY}}" /p:CodesignProvision=StoreProfile /p:CodesignEntitlements=${{github.workspace}}/src/client/Maui/UI/De.HDBW.Apollo.Client/Platforms/iOS/Entitlements.plist -v diag
+      run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -f:net7.0-ios -c:Release /p:ArchiveOnBuild=true /p:RuntimeIdentifier=ios-arm64 /p:CodesignKey="${{secrets.CODESIGNINGKEY}}" /p:CodesignProvision=StoreProfile /p:CodesignEntitlements=${{github.workspace}}/src/client/Maui/UI/De.HDBW.Apollo.Client/Platforms/iOS/Entitlements.plist -v diag
     - name: Upload iOS Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
         name: apollo-ios-app
         path: |
-          src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net${{ inputs.dotnetMajorVersion }}.0-ios/ios-arm64/publish/*.ipa
-          src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net${{ inputs.dotnetMajorVersion }}.0-ios/ios-arm64/**/*.dSYM
+          src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net7.0-ios/ios-arm64/publish/*.ipa
+          src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net7.0-ios/ios-arm64/**/*.dSYM
     - name: Cleanup
       if: always()
       run: dotnet nuget remove source github
