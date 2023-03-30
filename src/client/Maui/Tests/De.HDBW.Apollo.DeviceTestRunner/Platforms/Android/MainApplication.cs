@@ -1,8 +1,11 @@
-﻿namespace De.HDBW.Apollo.DeviceTestRunner
-{
-    using Android.App;
-    using Android.Runtime;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
+using Android.App;
+using Android.Runtime;
+
+namespace De.HDBW.Apollo.DeviceTestRunner
+{
     [Application]
     public class MainApplication : MauiApplication
     {

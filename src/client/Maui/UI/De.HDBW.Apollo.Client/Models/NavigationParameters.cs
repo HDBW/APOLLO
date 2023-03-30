@@ -1,8 +1,8 @@
-﻿namespace De.HDBW.Apollo.Client.Models
-{
-    using System.Collections.Generic;
-    using System.Linq;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
+namespace De.HDBW.Apollo.Client.Models
+{
     public class NavigationParameters : Dictionary<NavigationParameter, object>
     {
         public static NavigationParameters FromQueryDictionary(IDictionary<string, object> query)
@@ -10,7 +10,7 @@
             var result = new NavigationParameters();
             foreach (var kv in query)
             {
-                if (Enum.TryParse<NavigationParameter>(kv.Key, true, out NavigationParameter key))
+                if (Enum.TryParse(kv.Key, true, out NavigationParameter key))
                 {
                     result.Add(key, kv.Value);
                 }
@@ -26,13 +26,18 @@
 
         public void AddValue<TU>(NavigationParameter key, TU value)
         {
-            this.Remove(key);
-            this.Add(key, value);
+            Remove(key);
+            if (value == null)
+            {
+                return;
+            }
+
+            Add(key, value);
         }
 
-        public TU GetValue<TU>(NavigationParameter key)
+        public TU? GetValue<TU>(NavigationParameter key)
         {
-            if (!this.ContainsKey(key))
+            if (!ContainsKey(key))
             {
                 return default(TU);
             }

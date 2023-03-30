@@ -1,22 +1,25 @@
-﻿namespace De.HDBW.Apollo.Client.Selector
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+namespace De.HDBW.Apollo.Client.Selector
 {
     public class MenuItemTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate DefaultTemplate { get; set; }
+        public DataTemplate? DefaultTemplate { get; set; }
 
-        public DataTemplate TemplateWithSeperator { get; set; }
+        public DataTemplate? TemplateWithSeperator { get; set; }
 
-        protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
+        protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             var entry = item as BaseShellItem;
             if (entry?.Title == Resources.Strings.Resource.MainNavigation_FieldsOfInterest ||
                 entry?.Title == Resources.Strings.Resource.MainNavigation_LearningPath ||
                 entry?.Title == Resources.Strings.Resource.MainNavigation_CVGenerator)
             {
-                return this.TemplateWithSeperator;
+                return TemplateWithSeperator;
             }
 
-            return this.DefaultTemplate;
+            return DefaultTemplate;
         }
     }
 }

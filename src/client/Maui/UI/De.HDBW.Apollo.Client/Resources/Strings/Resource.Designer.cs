@@ -61,6 +61,510 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to *Kann nur einmalig ausgeführt werden.
+        /// </summary>
+        public static string AssessmentDescriptionView_OnlyOnce {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionView_OnlyOnce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string AssessmentDescriptionView_Title {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test starten*.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Skill_Start {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Skill_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test starten*.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_SoftSkill_Start {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_SoftSkill_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Umfrage starten*.
+        /// </summary>
+        public static string AssessmentDescriptionViewModel_Survey_Start {
+            get {
+                return ResourceManager.GetString("AssessmentDescriptionViewModel_Survey_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string AssessmentItem_DecoratorText {
+            get {
+                return ResourceManager.GetString("AssessmentItem_DecoratorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beenden.
+        /// </summary>
+        public static string AssessmentResultView_CloseAssessment {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_CloseAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Im Rahmen der Testversion zeigen wir dir hier dein vorläufiges Ergebnis. Wie du im Vergleich zu anderen abschneidest, erfährst du in der finalen Version der App!.
+        /// </summary>
+        public static string AssessmentResultView_Description {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deine Analyse.
+        /// </summary>
+        public static string AssessmentResultView_Headline {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Inhalte.
+        /// </summary>
+        public static string AssessmentResultView_RecommendationDescription {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_RecommendationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lerne neue Fähigkeiten.
+        /// </summary>
+        public static string AssessmentResultView_RecommendationHeadline {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_RecommendationHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auswertung.
+        /// </summary>
+        public static string AssessmentResultView_Title {
+            get {
+                return ResourceManager.GetString("AssessmentResultView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lückentext.
+        /// </summary>
+        public static string AssessmentType_Cloze {
+            get {
+                return ResourceManager.GetString("AssessmentType_Cloze", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erfahrungen.
+        /// </summary>
+        public static string AssessmentType_ExperienceAssessment {
+            get {
+                return ResourceManager.GetString("AssessmentType_ExperienceAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string AssessmentType_SkillAssessment {
+            get {
+                return ResourceManager.GetString("AssessmentType_SkillAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selbsttest.
+        /// </summary>
+        public static string AssessmentType_SoftSkillAssessment {
+            get {
+                return ResourceManager.GetString("AssessmentType_SoftSkillAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Umfrage.
+        /// </summary>
+        public static string AssessmentType_Survey {
+            get {
+                return ResourceManager.GetString("AssessmentType_Survey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fortfahren.
+        /// </summary>
+        public static string CancelAssessmentDialog_Cancel {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test beenden.
+        /// </summary>
+        public static string CancelAssessmentDialog_Continue {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tests sind nur einmalig durchführbar und können nicht wiederholt werden..
+        /// </summary>
+        public static string CancelAssessmentDialog_Message {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bist du dir sicher, dass du den Test beenden möchtest?.
+        /// </summary>
+        public static string CancelAssessmentDialog_Title {
+            get {
+                return ResourceManager.GetString("CancelAssessmentDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ich stimme zu..
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Agree {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Agree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abbrechen.
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Cancel {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiter.
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Continue {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mit Ihrer Anmeldung stimmen Sie einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Beta zu. Die Anmeldung kann in den Einstellungen der App jeder Zeit wiederrufen werden..
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Message {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wir benötigen Ihre Zustimmung.
+        /// </summary>
+        public static string ConfirmDataUsageDialog_Title {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zulassung.
+        /// </summary>
+        public static string CourseTagType_Admission {
+            get {
+                return ResourceManager.GetString("CourseTagType_Admission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilnahmebescheinigung.
+        /// </summary>
+        public static string CourseTagType_AttendeeCertificate {
+            get {
+                return ResourceManager.GetString("CourseTagType_AttendeeCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zertifikat.
+        /// </summary>
+        public static string CourseTagType_Certificate {
+            get {
+                return ResourceManager.GetString("CourseTagType_Certificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiterbildung.
+        /// </summary>
+        public static string CourseTagType_Course {
+            get {
+                return ResourceManager.GetString("CourseTagType_Course", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veranstaltung.
+        /// </summary>
+        public static string CourseTagType_InfoEvent {
+            get {
+                return ResourceManager.GetString("CourseTagType_InfoEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilqualifikation.
+        /// </summary>
+        public static string CourseTagType_PartialQualification {
+            get {
+                return ResourceManager.GetString("CourseTagType_PartialQualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qualifikation.
+        /// </summary>
+        public static string CourseTagType_Qualification {
+            get {
+                return ResourceManager.GetString("CourseTagType_Qualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alle.
+        /// </summary>
+        public static string CourseType_All {
+            get {
+                return ResourceManager.GetString("CourseType_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vorort.
+        /// </summary>
+        public static string CourseType_InHouse {
+            get {
+                return ResourceManager.GetString("CourseType_InHouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persönlich.
+        /// </summary>
+        public static string CourseType_InPerson {
+            get {
+                return ResourceManager.GetString("CourseType_InPerson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online und Vorort.
+        /// </summary>
+        public static string CourseType_OnAndOffline {
+            get {
+                return ResourceManager.GetString("CourseType_OnAndOffline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        public static string CourseType_Online {
+            get {
+                return ResourceManager.GetString("CourseType_Online", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vorteile.
+        /// </summary>
+        public static string CourseView_Benefits {
+            get {
+                return ResourceManager.GetString("CourseView_Benefits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ansprechpartner.
+        /// </summary>
+        public static string CourseView_Contact {
+            get {
+                return ResourceManager.GetString("CourseView_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ergebnis.
+        /// </summary>
+        public static string CourseView_LearningOutcomes {
+            get {
+                return ResourceManager.GetString("CourseView_LearningOutcomes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finanzierungsoptionen anzeigen.
+        /// </summary>
+        public static string CourseView_LoanOptions {
+            get {
+                return ResourceManager.GetString("CourseView_LoanOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vorraussetzungen.
+        /// </summary>
+        public static string CourseView_PreRequisites {
+            get {
+                return ResourceManager.GetString("CourseView_PreRequisites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ESCO-Skills.
+        /// </summary>
+        public static string CourseView_Skills {
+            get {
+                return ResourceManager.GetString("CourseView_Skills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zielgruppe.
+        /// </summary>
+        public static string CourseView_TargetGroup {
+            get {
+                return ResourceManager.GetString("CourseView_TargetGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kursinformationen.
+        /// </summary>
+        public static string CourseView_Title {
+            get {
+                return ResourceManager.GetString("CourseView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zum Anbieter.
+        /// </summary>
+        public static string CourseView_VisitVendor {
+            get {
+                return ResourceManager.GetString("CourseView_VisitVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction1 {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entdecke passende Weiterbildungen.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction1Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction1Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erkenne Trends in deinem Berufsfeld und sei immer auf dem neuesten Stand.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction2 {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Halte dein Wissen aktuell.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction2Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction2Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teste dein Wissen und analysiere deine Fähigkeiten.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction3 {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entfalte dein Potential.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Instruction3Detail {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Willkommen zur Beta von Apollo.
+        /// </summary>
+        public static string ExtendedSplashScreenView_Welcome {
+            get {
+                return ResourceManager.GetString("ExtendedSplashScreenView_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senden.
+        /// </summary>
+        public static string FeedbackView_Submit {
+            get {
+                return ResourceManager.GetString("FeedbackView_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feedback.
+        /// </summary>
+        public static string FeedbackView_Title {
+            get {
+                return ResourceManager.GetString("FeedbackView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to direkt loslegen.
         /// </summary>
         public static string FirstTimeDialog_Continue {
@@ -97,11 +601,119 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zurück.
+        /// </summary>
+        public static string Global_Back {
+            get {
+                return ResourceManager.GetString("Global_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schließen.
+        /// </summary>
+        public static string Global_Close {
+            get {
+                return ResourceManager.GetString("Global_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Minuten.
+        /// </summary>
+        public static string Global_DurationFormat {
+            get {
+                return ResourceManager.GetString("Global_DurationFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Stunden.
+        /// </summary>
+        public static string Global_DurationFormatHours {
+            get {
+                return ResourceManager.GetString("Global_DurationFormatHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiter.
+        /// </summary>
+        public static string Global_Next {
+            get {
+                return ResourceManager.GetString("Global_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Überspringen.
+        /// </summary>
+        public static string Global_Skip {
+            get {
+                return ResourceManager.GetString("Global_Skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt starten.
+        /// </summary>
+        public static string Global_StartNow {
+            get {
+                return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trifft garnicht zu.
+        /// </summary>
+        public static string IntegerInput_Negative {
+            get {
+                return ResourceManager.GetString("IntegerInput_Negative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trifft voll zu.
+        /// </summary>
+        public static string IntegerInput_Positive {
+            get {
+                return ResourceManager.GetString("IntegerInput_Positive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zukünftig werden dir hier weitere Funktionen zur Verfügung stehen.
+        /// </summary>
+        public static string MainNavigation_BetaDescription {
+            get {
+                return ResourceManager.GetString("MainNavigation_BetaDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beta Version.
+        /// </summary>
+        public static string MainNavigation_BetaTitle {
+            get {
+                return ResourceManager.GetString("MainNavigation_BetaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zeugnisse und Abschlüsse.
         /// </summary>
         public static string MainNavigation_CertificatesAndDegrees {
             get {
                 return ResourceManager.GetString("MainNavigation_CertificatesAndDegrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szenario wechseln.
+        /// </summary>
+        public static string MainNavigation_ChangeUseCase {
+            get {
+                return ResourceManager.GetString("MainNavigation_ChangeUseCase", resourceCulture);
             }
         }
         
@@ -133,6 +745,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feedback senden.
+        /// </summary>
+        public static string MainNavigation_Feedback {
+            get {
+                return ResourceManager.GetString("MainNavigation_Feedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interessenfelder.
         /// </summary>
         public static string MainNavigation_FieldsOfInterest {
@@ -147,6 +768,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MainNavigation_LearningPath {
             get {
                 return ResourceManager.GetString("MainNavigation_LearningPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einstellungen.
+        /// </summary>
+        public static string MainNavigation_Settings {
+            get {
+                return ResourceManager.GetString("MainNavigation_Settings", resourceCulture);
             }
         }
         
@@ -174,6 +804,636 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MainNavigation_ViewTutorial {
             get {
                 return ResourceManager.GetString("MainNavigation_ViewTutorial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vollzeit.
+        /// </summary>
+        public static string OccurrenceType_FullTime {
+            get {
+                return ResourceManager.GetString("OccurrenceType_FullTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voll- und Teilzeit.
+        /// </summary>
+        public static string OccurrenceType_FullTimeAndPartTime {
+            get {
+                return ResourceManager.GetString("OccurrenceType_FullTimeAndPartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilzeit.
+        /// </summary>
+        public static string OccurrenceType_PartTime {
+            get {
+                return ResourceManager.GetString("OccurrenceType_PartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ohne Anmeldung fortfahren.
+        /// </summary>
+        public static string RegistrationView_Continue {
+            get {
+                return ResourceManager.GetString("RegistrationView_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Während der Testung benötigst Du keine Registrierung/Anmeldung. Wenn Du Dich allerdings für zukünftige Testversionen registrieren möchtest, kannst Du das über &quot;Jetzt anmelden&quot; vornehmen. Solltest Du Deine Meinung ändern, kannst Du über Einstellungen → &quot;Benutzer abmelden&quot; die Registrierung/Anmeldung löschen..
+        /// </summary>
+        public static string RegistrationView_Description {
+            get {
+                return ResourceManager.GetString("RegistrationView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt Anmelden.
+        /// </summary>
+        public static string RegistrationView_RegisterNow {
+            get {
+                return ResourceManager.GetString("RegistrationView_RegisterNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt anmelden.
+        /// </summary>
+        public static string RegistrationView_RegisterUser {
+            get {
+                return ResourceManager.GetString("RegistrationView_RegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abmelden.
+        /// </summary>
+        public static string RegistrationView_UnRegisterUser {
+            get {
+                return ResourceManager.GetString("RegistrationView_UnRegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hallo Apollo-Team.
+        ///.
+        /// </summary>
+        public static string SettingsView_EmailBody {
+            get {
+                return ResourceManager.GetString("SettingsView_EmailBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anregungen oder Wunsch zu Apollo.
+        /// </summary>
+        public static string SettingsView_EmailSubject {
+            get {
+                return ResourceManager.GetString("SettingsView_EmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Impressum.
+        /// </summary>
+        public static string SettingsView_Imprint {
+            get {
+                return ResourceManager.GetString("SettingsView_Imprint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.invite-apollo.app/Imprint.
+        /// </summary>
+        public static string SettingsView_ImprintUri {
+            get {
+                return ResourceManager.GetString("SettingsView_ImprintUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datenschutz.
+        /// </summary>
+        public static string SettingsView_Privacy {
+            get {
+                return ResourceManager.GetString("SettingsView_Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.invite-apollo.app/privacy.
+        /// </summary>
+        public static string SettingsView_PrivacyUri {
+            get {
+                return ResourceManager.GetString("SettingsView_PrivacyUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hilf uns die Zukunft der Bildung zu gestalten..
+        /// </summary>
+        public static string SettingsView_QuestionDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_QuestionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to apollodev@hdbw-hochschule.de.
+        /// </summary>
+        public static string SettingsView_QuestionEmail {
+            get {
+                return ResourceManager.GetString("SettingsView_QuestionEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anregungen oder Wünsche?.
+        /// </summary>
+        public static string SettingsView_Questions {
+            get {
+                return ResourceManager.GetString("SettingsView_Questions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nutzungsbedingungen.
+        /// </summary>
+        public static string SettingsView_Terms {
+            get {
+                return ResourceManager.GetString("SettingsView_Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.invite-apollo.app/terms.
+        /// </summary>
+        public static string SettingsView_TermsUri {
+            get {
+                return ResourceManager.GetString("SettingsView_TermsUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einstellungen.
+        /// </summary>
+        public static string SettingsView_Title {
+            get {
+                return ResourceManager.GetString("SettingsView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Antwort wählen.
+        /// </summary>
+        public static string SkipQuestionDialog_Cancel {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Überspringen.
+        /// </summary>
+        public static string SkipQuestionDialog_Continue {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jede Frage ist nur einmalig durchführbar und Antworten können nicht korrigiert werden.
+        /// </summary>
+        public static string SkipQuestionDialog_Message {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bist du dir sicher, dass du diese Frage überspringen möchtest?.
+        /// </summary>
+        public static string SkipQuestionDialog_Title {
+            get {
+                return ResourceManager.GetString("SkipQuestionDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usecase ändern.
+        /// </summary>
+        public static string StartView_ChangeUseCase {
+            get {
+                return ResourceManager.GetString("StartView_ChangeUseCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mein Ziel.
+        /// </summary>
+        public static string StartView_Goal {
+            get {
+                return ResourceManager.GetString("StartView_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sobald du Inhalte favorisierst werden sie hier erscheinen..
+        /// </summary>
+        public static string StartView_NoFavoritesDescription {
+            get {
+                return ResourceManager.GetString("StartView_NoFavoritesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch keine Favoriten gesetzt.
+        /// </summary>
+        public static string StartView_NoFavoritesTitle {
+            get {
+                return ResourceManager.GetString("StartView_NoFavoritesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erreiche deine Ziele.
+        /// </summary>
+        public static string StartViewModel_FavoritesHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_FavoritesHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deine Favoriten.
+        /// </summary>
+        public static string StartViewModel_FavoritesSubline {
+            get {
+                return ResourceManager.GetString("StartViewModel_FavoritesSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entdecke dein Karrierepotential
+        ///(Ist-Stand bekannt – Inspiration).
+        /// </summary>
+        public static string StartViewModel_InteractionCareer {
+            get {
+                return ResourceManager.GetString("StartViewModel_InteractionCareer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sobald du Inhalte favorisierst werden sie hier erscheinen..
+        /// </summary>
+        public static string StartViewModel_NoFavoritesText {
+            get {
+                return ResourceManager.GetString("StartViewModel_NoFavoritesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch keine Favoriten gesetzt.
+        /// </summary>
+        public static string StartViewModel_NoFavoritesTitle {
+            get {
+                return ResourceManager.GetString("StartViewModel_NoFavoritesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empfohlene Inhalte.
+        /// </summary>
+        public static string StartViewModel_RecomondationsSubline {
+            get {
+                return ResourceManager.GetString("StartViewModel_RecomondationsSubline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unbekannter Anbieter.
+        /// </summary>
+        public static string StartViewModel_UnknownProvider {
+            get {
+                return ResourceManager.GetString("StartViewModel_UnknownProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erhöhe deine Jobchancen.
+        /// </summary>
+        public static string StartViewModel_UseCaseA_RecomondationsHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_UseCaseA_RecomondationsHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lerne neue Fähigkeiten.
+        /// </summary>
+        public static string StartViewModel_UseCaseB_RecomondationsHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_UseCaseB_RecomondationsHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beschleunige deinen Aufstieg.
+        /// </summary>
+        public static string StartViewModel_UseCaseC_RecomondationsHeadline {
+            get {
+                return ResourceManager.GetString("StartViewModel_UseCaseC_RecomondationsHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dein Szenario.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du möchtest dich auf einen sicheren Job vorbereiten.
+        /// </summary>
+        public static string UseCase_A_Description {
+            get {
+                return ResourceManager.GetString("UseCase_A_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fit für den Job.
+        /// </summary>
+        public static string UseCase_A_Name {
+            get {
+                return ResourceManager.GetString("UseCase_A_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du möchtest neue Fähigkeiten erwerben.
+        /// </summary>
+        public static string UseCase_B_Description {
+            get {
+                return ResourceManager.GetString("UseCase_B_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiterbildung.
+        /// </summary>
+        public static string UseCase_B_Name {
+            get {
+                return ResourceManager.GetString("UseCase_B_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du möchtest in deinem Job Karriere machen.
+        /// </summary>
+        public static string UseCase_C_Description {
+            get {
+                return ResourceManager.GetString("UseCase_C_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Karriereaufstieg.
+        /// </summary>
+        public static string UseCase_C_Name {
+            get {
+                return ResourceManager.GetString("UseCase_C_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alter: {0}.
+        /// </summary>
+        public static string UseCaseDescriptionView_AgeFormat {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_AgeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erfahrung.
+        /// </summary>
+        public static string UseCaseDescriptionView_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ziel.
+        /// </summary>
+        public static string UseCaseDescriptionView_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ort: {0}.
+        /// </summary>
+        public static string UseCaseDescriptionView_LocationFormat {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_LocationFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szenario starten.
+        /// </summary>
+        public static string UseCaseDescriptionView_Start {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Story.
+        /// </summary>
+        public static string UseCaseDescriptionView_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dein Szenario.
+        /// </summary>
+        public static string UseCaseDescriptionView_Title {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 31.
+        /// </summary>
+        public static string UseCaseDetail_A_Age {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 Jahre Lager und Kommissionierung
+        ///1 Jahr Einzelhandel im Lebensmittelbereich.
+        /// </summary>
+        public static string UseCaseDetail_A_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job im Bereich Lager
+        ///Langfristig stabilere Arbeitsbedingungen.
+        /// </summary>
+        public static string UseCaseDetail_A_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ludwigsburg.
+        /// </summary>
+        public static string UseCaseDetail_A_Location {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast in den letzten vier Jahren in einem großen Versandlager gearbeitet. Deine Aufgabe war es, Waren aus dem Lager für Lieferaufträge zusammenzustellen. Vorher hast du eine Ausbildung im Einzelhandel angefangen, jedoch abgebrochen. Dein Unternehmen hat beschlossen, den Standort zu schließen. Du bist auf der Suche nach einem neuen Job im Bereich Lager..
+        /// </summary>
+        public static string UseCaseDetail_A_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_A_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 42.
+        /// </summary>
+        public static string UseCaseDetail_B_Age {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 Jahre Ausbildung Kauffrau im Einzelhandel
+        ///19 Jahre Erfahrung im Einzelhandel.
+        /// </summary>
+        public static string UseCaseDetail_B_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiterbildung im Bereich E-Commerce
+        ///Anschlussfähig bleiben und neue Bereiche entdecken.
+        /// </summary>
+        public static string UseCaseDetail_B_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to München.
+        /// </summary>
+        public static string UseCaseDetail_B_Location {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du arbeitest seit 22 Jahren im Einzelhandel. Dein Betrieb hat in den letzten Jahren neben dem Geschäft vor Ort auch den Online-Handel weiter ausgebaut. Um anschlussfähig zu bleiben, möchtest du dich im Bereich E-Commerce weiterbilden..
+        /// </summary>
+        public static string UseCaseDetail_B_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_B_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 36.
+        /// </summary>
+        public static string UseCaseDetail_C_Age {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 Jahre Ausbildung Fachinformatikerin
+        ///1 Jahr Weiterbildung IHK Techniker IT
+        ///10 Jahre Erfahrung Systemintegration.
+        /// </summary>
+        public static string UseCaseDetail_C_Experience {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufliche Weiterentwicklung
+        ///Weiterbildung zur IT Projektleiterin.
+        /// </summary>
+        public static string UseCaseDetail_C_Goal {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Augsburg.
+        /// </summary>
+        public static string UseCaseDetail_C_Location {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast zehn Jahre Erfahrung als Fachinformatikerin. Neben deiner Arbeit hast du verschiedene Möglichkeiten wahrgenommen, um dich weiterzubilden und auf dem Laufenden zu bleiben. Nun willst du den nächsten Schritt in deiner Karriere gehen. Du bist auf der Suche nach einer Qualifizierung, um eine Führungsposition zu übernehmen..
+        /// </summary>
+        public static string UseCaseDetail_C_Story {
+            get {
+                return ResourceManager.GetString("UseCaseDetail_C_Story", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wähle dein Szenario.
+        /// </summary>
+        public static string UseCaseSelectionView_Choose {
+            get {
+                return ResourceManager.GetString("UseCaseSelectionView_Choose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die Inhalte der Beta passen sich an dein gewähltes Ziel an..
+        /// </summary>
+        public static string UseCaseSelectionView_ChooseDescription {
+            get {
+                return ResourceManager.GetString("UseCaseSelectionView_ChooseDescription", resourceCulture);
             }
         }
     }

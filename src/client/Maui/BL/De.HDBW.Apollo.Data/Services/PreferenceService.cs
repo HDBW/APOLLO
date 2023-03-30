@@ -1,32 +1,35 @@
-﻿namespace De.HDBW.Apollo.Data.Services
-{
-    using De.HDBW.Apollo.SharedContracts.Enums;
-    using De.HDBW.Apollo.SharedContracts.Services;
-    using Microsoft.Extensions.Logging;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Extensions.Logging;
+
+namespace De.HDBW.Apollo.Data.Services
+{
     public class PreferenceService : IPreferenceService
     {
-        public PreferenceService(ILogger<PreferenceService> logger, IPreferences preferences)
+        public PreferenceService(ILogger<PreferenceService>? logger, IPreferences? preferences)
         {
-            this.Logger = logger;
-            this.Preferences = preferences;
+            Logger = logger;
+            Preferences = preferences;
         }
 
-        private ILogger Logger { get; }
+        private ILogger? Logger { get; }
 
-        private IPreferences Preferences { get;  }
+        private IPreferences? Preferences { get; }
 
         public bool SetValue<TU>(Preference key, TU value)
         {
             try
             {
-                this.Preferences.Remove(key.ToString());
-                this.Preferences.Set<TU>(key.ToString(), value);
+                Preferences?.Remove(key.ToString());
+                Preferences?.Set<TU>(key.ToString(), value);
                 return true;
             }
             catch (Exception ex)
             {
-                this.Logger.LogError(ex, $"Unknown error while SetValue<TU> in {this.GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while SetValue<TU> in {GetType().Name}.");
             }
 
             return false;
@@ -38,11 +41,14 @@
 
             try
             {
-                result = this.Preferences.Get<TU>(key.ToString(), defaultValue);
+                if (Preferences != null)
+                {
+                    result = Preferences.Get<TU>(key.ToString(), defaultValue);
+                }
             }
             catch (Exception ex)
             {
-                this.Logger.LogError(ex, $"Unknown error while GetValue<TU> in {this.GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while GetValue<TU> in {GetType().Name}.");
             }
 
             return result is TU ? (TU)result : defaultValue;

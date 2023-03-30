@@ -1,0 +1,32 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.SettingsView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             Shell.FlyoutBehavior="Disabled"
+             x:DataType="viewModels:SettingsViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resource.SettingsView_Title}"
+             IsBusy="{Binding IsBusy}"
+             Padding="0">
+    <Grid RowDefinitions="*, auto, auto" ColumnDefinitions="*, *" Padding="0,0,0,16">
+        <ScrollView Padding="24,0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="{x:Static strings:Resource.SettingsView_Questions}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}"/>
+                <Label Text="{x:Static strings:Resource.SettingsView_QuestionDescription}" Style="{StaticResource NotoSerif16}" TextColor="{StaticResource TextColor}"/>
+                <HorizontalStackLayout BackgroundColor="Transparent" Spacing="8">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenMailCommand}" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <Image WidthRequest="24" HeightRequest="24" Source="mail.png" />
+                    <Label Text="{x:Static strings:Resource.SettingsView_QuestionEmail}" LineBreakMode="WordWrap" MaxLines="2" Style="{StaticResource NotoSerif16}"/>
+                </HorizontalStackLayout>
+                <Button Text="{x:Static strings:Resource.RegistrationView_UnRegisterUser}" Command="{Binding UnRegisterCommand}" Margin="0,24,0,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Column="0" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resource.SettingsView_Terms}" Command="{Binding OpenTermsCommand}"/>
+        <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resource.SettingsView_Privacy}" Command="{Binding OpenPrivacyCommand}"/>
+        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resource.SettingsView_Imprint}" Command="{Binding OpenImprintCommand}"/>
+    </Grid>
+   
+</ContentPage>

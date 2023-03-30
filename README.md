@@ -10,11 +10,10 @@
 
 INVITE Project APOLLO - **A**I-based cross-**P**lattform C**O**mpanion-app for **L**ive Long **L**earning **O**ptimization
 
-| Branch | Android | iOS | Windows | Mac | NuGet | Docker | Cloud Status | Deployment iOS / Android |
-| -------------- | --------------- | ----------- | --------------- | --------------- | --------------- | --------------- | --------------- | --------------- |
-| Main | [![Android Build](https://github.com/HDBW/APOLLO/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/HDBW/APOLLO/actions/workflows/android.yml) | [![iOS Build](https://github.com/HDBW/APOLLO/actions/workflows/ios.yml/badge.svg?branch=main)](https://github.com/HDBW/APOLLO/actions/workflows/ios.yml) |  |  | [![NuGet Invite.Apollo.App.Graph.Common](https://github.com/HDBW/APOLLO/actions/workflows/dotnetnuget.yml/badge.svg)](https://github.com/HDBW/APOLLO/actions/workflows/dotnetnuget.yml) | - | DEV/TEST |  |
-| Development |  |  |  |  |  |  |  | [![Deployments](https://github.com/HDBW/APOLLO/actions/workflows/deployment.yml/badge.svg?branch=development)](https://github.com/HDBW/APOLLO/actions/workflows/deployment.yml) |
-
+| Branch | Android | iOS | NuGet | Deploy iOS / Deploy Android |
+| -------------- | --------------- | --------------- | --------------- | --------------- |
+| Main | [![Android Build](https://github.com/HDBW/APOLLO/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/HDBW/APOLLO/actions/workflows/android.yml) | [![iOS Build](https://github.com/HDBW/APOLLO/actions/workflows/ios.yml/badge.svg?branch=main)](https://github.com/HDBW/APOLLO/actions/workflows/ios.yml) | [![NuGet Invite.Apollo.App.Graph.Common](https://github.com/HDBW/APOLLO/actions/workflows/dotnetnuget.yml/badge.svg)](https://github.com/HDBW/APOLLO/actions/workflows/dotnetnuget.yml) |  |
+| Development | [![Android Build](https://github.com/HDBW/APOLLO/actions/workflows/android.yml/badge.svg?branch=development)](https://github.com/HDBW/APOLLO/actions/workflows/android.yml) | [![iOS Build](https://github.com/HDBW/APOLLO/actions/workflows/ios.yml/badge.svg?branch=development)](https://github.com/HDBW/APOLLO/actions/workflows/ios.yml) | [![NuGet Invite.Apollo.App.Graph.Common](https://github.com/HDBW/APOLLO/actions/workflows/dotnetnuget.yml/badge.svg?branch=development)](https://github.com/HDBW/APOLLO/actions/workflows/dotnetnuget.yml) |  [![Deployments](https://github.com/HDBW/APOLLO/actions/workflows/deployment.yml/badge.svg)](https://github.com/HDBW/APOLLO/actions/workflows/deployment.yml) | 
 
 ## Summary
 

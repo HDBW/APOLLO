@@ -1,0 +1,26 @@
+﻿<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="De.HDBW.Apollo.Client.Dialogs.ConfirmDataUsageDialog"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             Color="{StaticResource Background}"
+             x:DataType="viewModels:ConfirmDataUsageDialogViewModel">
+    <Grid RowDefinitions="*, auto, 20" Padding="0" x:Name="Part_Root">
+        <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}">
+            <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.ConfirmDataUsageDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
+            <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.ConfirmDataUsageDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
+            <Grid ColumnDefinitions="auto, *" BackgroundColor="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleAgreeCommand}" />
+                </Grid.GestureRecognizers>
+                <CheckBox InputTransparent="True" IsChecked="{Binding Agree, Mode=TwoWay}" VerticalOptions="Center"/>
+                <Label Grid.Column="1" Text="{x:Static strings:Resource.ConfirmDataUsageDialog_Agree}" Margin="8,0,0,0" VerticalOptions="Center"/>
+            </Grid>
+        </VerticalStackLayout>
+        <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
+            <Button Text="{x:Static strings:Resource.ConfirmDataUsageDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{Binding CancelCommand}" />
+            <Button Text="{x:Static strings:Resource.ConfirmDataUsageDialog_Continue}" Command="{Binding ContinueCommand}" Grid.Column="2"/>
+        </Grid>
+    </Grid>
+</toolkit:Popup>

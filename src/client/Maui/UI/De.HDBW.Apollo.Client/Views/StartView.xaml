@@ -1,32 +1,167 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.StartView"
-             NavigationPage.HasBackButton="False"
-             NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False"
-             Title="Main"
-             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="De.HDBW.Apollo.Client.Views.StartView"
+             Shell.NavBarIsVisible="True"
+             xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:StartViewModel"
-             IsBusy="{Binding IsBusy}">
+             IsBusy="{Binding IsBusy}"
+             Padding="0">
+    <ContentPage.Resources>
+        <converter:EntityTypeToColorConverter x:Key="EntityTypeToColorConverter"
+                                              DefaultColor="Transparent"
+                                              AssessmentItemColor="{StaticResource Tag1}"
+                                              CourseItemColor="{StaticResource Tag2}"/>
+        <converter:InteractionsToMaximumHeightConverter x:Key="InteractionsToMaximumHeightConverter" />
+
+        <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:StartViewInteractionEntry">
+            <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="3" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
+                </Border.GestureRecognizers>
+                <Grid RowDefinitions="*,auto,auto, auto" Padding="0" ColumnDefinitions="*, 28">
+                    <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" Grid.ColumnSpan="2" InputTransparent="True"/>
+                    <Border Loaded="HandleStateChanged" Grid.ColumnSpan="2" InputTransparent="True" Background="{StaticResource DisabledGradientBrush}" StrokeThickness="0">
+                        <Image Source="completed.png" WidthRequest="64" HeightRequest="64"/>
+                    </Border>
+                    <Border InputTransparent="True" IsVisible="{Binding HasDecorator, Mode=OneTime}" BackgroundColor="{Binding EntityType, Converter={StaticResource EntityTypeToColorConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0,0,0,4" />
+                        </Border.StrokeShape>
+                        <Label Text="{Binding DecoratorText}" LineBreakMode="TailTruncation"/>
+                    </Border>
+                    <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="2" Command="{Binding ToggleIsFavoriteCommand}" Source="staroutline.png" VerticalOptions="Start">
+                        <ImageButton.Triggers>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsFavorite}" Value="True">
+                                <Setter Property="Source"  Value="star.png" />
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
+                    <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
+                </Grid>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding IsFiltered}" Value="True">
+                        <Setter Property="Opacity"  Value="0.3" />
+                        <!-- Multiple Setter elements are allowed -->
+                    </DataTrigger>
+                </Border.Triggers>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DefaultInteractionCategoryEntryTemplate" x:DataType="models:InteractionCategoryEntry">
+            <Grid RowDefinitions="auto,auto,auto,auto" Padding="24,0" >
+                <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+                <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" Margin="0,0,0,8"/>
+                <HorizontalStackLayout IsVisible="{Binding HasFilters}" Grid.Row="2" BindableLayout.ItemsSource="{Binding Filters}" Margin="0,0,0,8" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:FilterInteractionEntry">
+                            <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}" Padding="5">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter TargetName="PART_Button" Property="Background" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
+                                        <Setter TargetName="PART_Button" Property="Background" Value="{StaticResource Background}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <layouts:UniformGrid
+                    Grid.Row="3"
+                    ItemSpace="16"
+                    BindableLayout.ItemsSource="{Binding Interactions}"
+                    BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                    ColumnCount="2"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="FavoriteInteractionCategoryEntryTemplate" x:DataType="models:InteractionCategoryEntry">
+            <Grid RowDefinitions="auto,auto,auto,auto" Padding="24,0" >
+                <Label Text="{Binding HeadLine, Mode=OneTime}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
+                <Label Text="{Binding SublineLine, Mode=OneTime}" Grid.Row="1" Style="{StaticResource NotoSerif16}" VerticalOptions="Center" Margin="0,0,0,8"/>
+                <HorizontalStackLayout IsVisible="{Binding HasFilters}" Grid.Row="2" BindableLayout.ItemsSource="{Binding Filters}" Margin="0,0,0,8" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:FilterInteractionEntry">
+                            <Button x:Name="PART_Button" Text="{Binding Text}" Command="{Binding NavigateCommand}" Padding="5">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource White}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
+                                        <Setter TargetName="PART_Button" Property="BackgroundColor" Value="{StaticResource Background}" />
+                                        <Setter TargetName="PART_Button" Property="TextColor" Value="{StaticResource Primary}" />
+                                        <Setter TargetName="PART_Button" Property="FontAttributes" Value="None" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <layouts:UniformGrid
+                    Grid.Row="3"
+                    ItemSpace="16"
+                    BindableLayout.ItemsSource="{Binding Interactions}"
+                    BindableLayout.ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                    ColumnCount="2"/>
+
+                <Grid IsVisible="{Binding HasNoInteractions}" RowDefinitions="*,auto, auto" RowSpacing="8" HeightRequest="240" Grid.Row="3">
+                    <Image Source="stardashed.png" />
+                    <Label Text="{x:Static strings:Resource.StartView_NoFavoritesTitle}" Style="{StaticResource Noto12}" LineBreakMode="WordWrap" VerticalOptions="Center" FontAttributes="Bold" Grid.Row="1"/>
+                    <Label Text="{x:Static strings:Resource.StartView_NoFavoritesDescription}" VerticalOptions="Center" Grid.Row="2" LineBreakMode="WordWrap"/>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+        <selector:InteractionCategoryTemplateSelector x:Key="InteractionCategoryTemplateSelector"
+                                                      DefaultTemplate="{StaticResource DefaultInteractionCategoryEntryTemplate}"
+                                                      FavoriteTemplate="{StaticResource FavoriteInteractionCategoryEntryTemplate}" />
+    </ContentPage.Resources>
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding LoadDataCommand}" />
     </ContentPage.Behaviors>
-    <Grid Padding="10">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Image Grid.Column="0" Grid.Row="0" Source="untitled.png">
+        <Frame Grid.ColumnSpan="2" CornerRadius="8" BackgroundColor="{StaticResource Surface}" BorderColor="Transparent" Margin="12,0"/>
+        <Image HeightRequest="64" WidthRequest="64" Grid.Column="0" Margin="24,8,0,8" Grid.Row="0" Source="{Binding UserProfile.ImagePath}" Aspect="AspectFill">
             <Image.Clip>
-                <EllipseGeometry RadiusX="25" RadiusY="25" Center="25,25"/>
+                <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32" />
             </Image.Clip>
         </Image>
-        <ImageButton Grid.Column="2" Grid.Row="0" Source="untitled.png" VerticalOptions="Center" WidthRequest="40" HeightRequest="40" Command="{Binding OpenSettingsCommand}"/>
+        <Grid Grid.Column="1" ColumnDefinitions="auto,*" RowDefinitions="auto, auto" Margin="8,8,24,8" VerticalOptions="Center">
+            <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold"  Grid.ColumnSpan="2"/>
+            <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
+            <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
+        </Grid>
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16" x:Name="PART_ScrollHost">
+            <VerticalStackLayout
+                BindableLayout.ItemsSource="{Binding InteractionCategories}"
+                BindableLayout.ItemTemplateSelector="{StaticResource InteractionCategoryTemplateSelector}"
+                Spacing="40">
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

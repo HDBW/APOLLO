@@ -1,20 +1,26 @@
-﻿namespace De.HDBW.Apollo.Client.Services
-{
-    using CommunityToolkit.Maui.Views;
-    using De.HDBW.Apollo.Client.Contracts;
-    using De.HDBW.Apollo.Client.Models;
-    using De.HDBW.Apollo.Client.ViewModels;
-    using Microsoft.Extensions.Logging;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
+using CommunityToolkit.Maui.Views;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.ViewModels;
+using Microsoft.Extensions.Logging;
+
+namespace De.HDBW.Apollo.Client.Services
+{
     public class DialogService : IDialogService
     {
-        private readonly Dictionary<WeakReference<Popup>, BaseViewModel> dialogLookup = new Dictionary<WeakReference<Popup>, BaseViewModel>();
+        private readonly Dictionary<WeakReference<Popup>, BaseViewModel> _dialogLookup = new Dictionary<WeakReference<Popup>, BaseViewModel>();
 
         public DialogService(IDispatcherService dispatcherService, ILogger<DialogService> logger, IServiceProvider serviceProvider)
         {
-            this.Logger = logger;
-            this.ServiceProvider = serviceProvider;
-            this.DispatcherService = dispatcherService;
+            ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+            ArgumentNullException.ThrowIfNull(dispatcherService);
+            Logger = logger;
+            ServiceProvider = serviceProvider;
+            DispatcherService = dispatcherService;
         }
 
         private ILogger Logger { get; }
@@ -23,39 +29,70 @@
 
         private IDispatcherService DispatcherService { get; }
 
-        public async Task<TV> ShowPopupAsync<TU, TV>(CancellationToken token)
+        public async Task<TV?> ShowPopupAsync<TU, TV, TW>(CancellationToken token, TW parameters)
             where TU : Popup
             where TV : NavigationParameters
+            where TW : NavigationParameters?
         {
             token.ThrowIfCancellationRequested();
-            Popup popup = null;
+            Popup? popup = null;
             try
             {
-                popup = this.ServiceProvider.GetService<TU>();
-                this.RegisterDialog(popup);
-                var result = await this.DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current?.CurrentPage?.ShowPopupAsync(popup), token);
+                popup = ServiceProvider.GetService<TU>();
+
+                var rootPage = Shell.Current?.CurrentPage ?? Application.Current?.MainPage;
+                if (popup == null || rootPage == null)
+                {
+                    throw new NotSupportedException();
+                }
+
+                RegisterDialog(popup);
+                var result = await DispatcherService.ExecuteOnMainThreadAsync(
+                    () =>
+                {
+                    var queryAble = popup as IQueryAttributable ?? popup.BindingContext as IQueryAttributable;
+                    if (queryAble != null && parameters != null)
+                    {
+                        queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
+                    }
+
+                    return rootPage.ShowPopupAsync(popup);
+                }, token);
+
+                UnregisterDialog(popup);
+                popup.Parent = null;
                 return result as TV;
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled ShowPopupAsync in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}, {typeof(TV).Name}> in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled ShowPopupAsync in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}, {typeof(TV).Name}> in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error while ShowPopupAsync in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ShowPopupAsync)}<{typeof(TU).Name}, {typeof(TV).Name}> in {GetType().Name}.");
             }
             finally
             {
-                this.UnregisterDialog(popup);
+                if (popup != null)
+                {
+                    UnregisterDialog(popup);
+                }
             }
 
             return null;
+        }
+
+        public Task<TV?> ShowPopupAsync<TU, TV>(CancellationToken token)
+            where TU : Popup
+            where TV : NavigationParameters
+        {
+            return ShowPopupAsync<TU, TV, NavigationParameters?>(token, null);
         }
 
         public Task ShowPopupAsync<TU>(CancellationToken token)
@@ -64,24 +101,30 @@
             token.ThrowIfCancellationRequested();
             try
             {
-                return this.DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current?.CurrentPage?.ShowPopupAsync(this.ServiceProvider.GetService<TU>()), token);
+                var popup = ServiceProvider.GetService<TU>();
+                if (Shell.Current?.CurrentPage == null || popup == null)
+                {
+                    throw new NotSupportedException();
+                }
+
+                return DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current.CurrentPage.ShowPopupAsync(popup), token);
             }
             catch (OperationCanceledException)
             {
-                this.Logger?.LogDebug($"Canceled ShowPopupAsync in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                this.Logger?.LogDebug($"Canceled ShowPopupAsync in {this.GetType()}.");
+                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error while ShowPopupAsync in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType().Name}.");
             }
 
-            return null;
+            return Task.CompletedTask;
         }
 
         public bool ClosePopup<TV>(BaseViewModel viewModel, TV result)
@@ -89,18 +132,20 @@
         {
             try
             {
-                var itemToClose = this.dialogLookup.FirstOrDefault(k => k.Value == viewModel);
-                if (!itemToClose.Key.TryGetTarget(out Popup popup))
+                var itemToClose = _dialogLookup.FirstOrDefault(k => k.Value == viewModel);
+                if (!itemToClose.Key.TryGetTarget(out Popup? popup))
                 {
                     return false;
                 }
 
                 popup.Close(result);
+                UnregisterDialog(popup);
+                popup.Parent = null;
                 return true;
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error while ClosePopup in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ClosePopup)}<{typeof(TV).Name}> in {GetType().Name}.");
             }
 
             return false;
@@ -110,8 +155,8 @@
         {
             try
             {
-                var itemToClose = this.dialogLookup.FirstOrDefault(k => k.Value == viewModel);
-                if (!itemToClose.Key.TryGetTarget(out Popup popup))
+                var itemToClose = _dialogLookup.FirstOrDefault(k => k.Value == viewModel);
+                if (!itemToClose.Key.TryGetTarget(out Popup? popup))
                 {
                     return false;
                 }
@@ -121,7 +166,7 @@
             }
             catch (Exception ex)
             {
-                this.Logger?.LogError(ex, $"Unknown Error while ClosePopup in {this.GetType()}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(ClosePopup)} in {GetType().Name}.");
             }
 
             return false;
@@ -134,23 +179,23 @@
                 return false;
             }
 
-            this.CleanupLookups();
-            var exitingItem = this.dialogLookup.FirstOrDefault(k => k.Key.TryGetTarget(out Popup p) && p == popup);
+            CleanupLookups();
+            var exitingItem = _dialogLookup.FirstOrDefault(k => k.Key.TryGetTarget(out Popup? p) && p == popup);
             if (exitingItem.Key == null)
             {
                 return false;
             }
 
-            this.dialogLookup.Remove(exitingItem.Key);
+            _dialogLookup.Remove(exitingItem.Key);
             return true;
         }
 
         private void CleanupLookups()
         {
-            var disposedItems = this.dialogLookup.Where(k => !k.Key.TryGetTarget(out _)).ToList();
+            var disposedItems = _dialogLookup.Where(k => !k.Key.TryGetTarget(out _)).ToList();
             foreach (var disposedItem in disposedItems)
             {
-                this.dialogLookup.Remove(disposedItem.Key);
+                _dialogLookup.Remove(disposedItem.Key);
             }
         }
 
@@ -161,15 +206,15 @@
                 return false;
             }
 
-            this.CleanupLookups();
+            CleanupLookups();
             var dialog = popup;
-            var viewModel = dialog?.BindingContext as BaseViewModel;
+            var viewModel = dialog.BindingContext as BaseViewModel;
             if (viewModel == null)
             {
                 return false;
             }
 
-            this.dialogLookup.Add(new WeakReference<Popup>(dialog), viewModel);
+            _dialogLookup.Add(new WeakReference<Popup>(dialog), viewModel);
             return true;
         }
     }

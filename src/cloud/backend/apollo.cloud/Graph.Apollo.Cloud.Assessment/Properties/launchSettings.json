@@ -1,0 +1,27 @@
+{
+  "profiles": {
+    "Graph.Apollo.Cloud.Assessment": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5260;https://localhost:7084"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true,
+      "useSSL": true
+    },
+    "WSL": {
+        "commandName": "WSL2",
+        "launchUrl": "https://localhost:7084",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "ASPNETCORE_URLS": "http://localhost:5260;https://localhost:7084"
+        },
+        "distributionName": "Ubuntu-22.04"
+    }
+  }
+}

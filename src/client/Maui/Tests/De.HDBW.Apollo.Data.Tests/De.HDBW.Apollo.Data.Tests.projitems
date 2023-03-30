@@ -10,6 +10,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TestExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\UseCaseBuilderTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseTestContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\AbstractDataBaseRepositoryTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\AbstractRepositoryTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\AnswerMetaDataRelationRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\MetaDataMetaDataRelationRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\MetaDataRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\QuestionMetaDataRelationRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\QuestionItemRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\AssessmentItemRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\AnswerItemRepositoryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\PreferenceServiceTests.cs" />
   </ItemGroup>
 </Project>
