@@ -10,6 +10,7 @@ namespace De.HDBW.Apollo.Client.Services
     {
         public DispatcherService(ILogger<DispatcherService> logger)
         {
+            ArgumentNullException.ThrowIfNull(logger);
             Logger = logger;
         }
 

@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Microsoft.Extensions.Logging;
@@ -9,18 +10,19 @@ using Microsoft.Extensions.Logging;
 namespace De.HDBW.Apollo.Data.Repositories
 {
     public class AnswerItemRepository :
-        AbstractInMemoryRepository<AnswerItem>,
+        AbstractDataBaseRepository<AnswerItem>,
         IAnswerItemRepository
     {
-        public AnswerItemRepository(ILogger<AnswerItemRepository> logger)
-            : base(logger)
+        public AnswerItemRepository(IDataBaseConnectionProvider dataBaseConnectionProvider, ILogger<AnswerItemRepository> logger)
+            : base(dataBaseConnectionProvider, logger)
         {
         }
 
-        public Task<IEnumerable<AnswerItem>> GetItemsByForeignKeysAsync(IEnumerable<long> ids, CancellationToken token)
+        public async Task<IEnumerable<AnswerItem>> GetItemsByForeignKeysAsync(IEnumerable<long> ids, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            return Task.FromResult(new ReadOnlyCollection<AnswerItem>(Items?.Where(i => ids.Contains(i.QuestionId)).ToList() ?? new List<AnswerItem>()) as IEnumerable<AnswerItem>);
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<AnswerItem>().Where(i => ids.Contains(i.QuestionId)).ToListAsync().ConfigureAwait(false);
         }
     }
 }

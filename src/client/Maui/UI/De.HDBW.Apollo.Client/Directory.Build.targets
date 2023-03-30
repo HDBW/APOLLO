@@ -11,7 +11,7 @@
     <JsonPeekAssembly Condition=" '$(OS)' == 'Unix' ">$(NugetPackageRoot)/jsonpeek/1.2.0/build/JsonPeek.dll</JsonPeekAssembly>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0-ios' And '$(UserSecretsId)' != '' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net7.0-ios' And '$(UserSecretsId)' != '' ">
     <CollectBundleResourcesDependsOn>
       $(CollectBundleResourcesDependsOn);
       TransformManifest-iOS;
@@ -74,7 +74,7 @@
 
   <Target Name="TransformManifest-Android"
          BeforeTargets="PrepareForBuild"
-         Condition=" '$(TargetFramework)' == 'net6.0-android' And '$(UserSecretsId)' != '' ">
+         Condition=" '$(TargetFramework)' == 'net7.0-android' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
 
     <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
@@ -90,7 +90,7 @@
 
   <Target Name="TransformManifest-iOS"
          BeforeTargets="PrepareForBuild"
-         Condition=" '$(TargetFramework)' == 'net6.0-ios' And '$(UserSecretsId)' != '' ">
+         Condition=" '$(TargetFramework)' == 'net7.0-ios' And '$(UserSecretsId)' != '' ">
     <Message Text="TransformManifest $(TargetFramework)" />
 
     <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.ClientId">
