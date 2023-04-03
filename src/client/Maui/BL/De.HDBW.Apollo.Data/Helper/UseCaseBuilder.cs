@@ -137,6 +137,7 @@ namespace De.HDBW.Apollo.Data.Helper
                 }
 
                 result = await DeserializeSampleDataAndInitalizeRepositoriesAsync(fileName, token).ConfigureAwait(false);
+
                 switch (usecase)
                 {
                     case UseCase.A:
@@ -161,7 +162,7 @@ namespace De.HDBW.Apollo.Data.Helper
             return result;
         }
 
-        private Task<bool> DeserializeSampleDataAndInitalizeRepositoriesAsync(string fileName, CancellationToken token)
+        private async Task<bool> DeserializeSampleDataAndInitalizeRepositoriesAsync(string fileName, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             UseCaseCollections usecase;
@@ -170,23 +171,23 @@ namespace De.HDBW.Apollo.Data.Helper
                 usecase = Serializer.Deserialize<UseCaseCollections>(stream);
             }
 
-            AnswerItemRepository.ResetItemsAsync(usecase?.AnswerItems, token).ConfigureAwait(false);
-            QuestionItemRepository.ResetItemsAsync(usecase?.QuestionItems, token).ConfigureAwait(false);
-            AssessmentItemRepository.ResetItemsAsync(usecase?.AssessmentItems, token).ConfigureAwait(false);
-            MetadataRepository.ResetItemsAsync(usecase?.MetaDataItems, token).ConfigureAwait(false);
-            AnswerMetaDataRelationRepository.ResetItemsAsync(usecase?.AnswerMetaDataRelations, token).ConfigureAwait(false);
-            QuestionMetaDataRelationRepository.ResetItemsAsync(usecase?.QuestionMetaDataRelations, token).ConfigureAwait(false);
-            MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase?.MetaDataMetaDataRelations, token).ConfigureAwait(false);
-            EduProviderItemRepository.ResetItemsAsync(usecase?.EduProviderItems, token).ConfigureAwait(false);
-            CourseItemRepository.ResetItemsAsync(usecase?.CourseItems, token).ConfigureAwait(false);
-            CourseContactRepository.ResetItemsAsync(usecase?.CourseContacts, token).ConfigureAwait(false);
-            CourseAppointmentRepository.ResetItemsAsync(usecase?.CourseAppointments, token).ConfigureAwait(false);
-            AssessmentCategoriesRepository.ResetItemsAsync(usecase?.AssessmentCategories, token).ConfigureAwait(false);
-            CourseContactRelationRepository.ResetItemsAsync(usecase?.CourseContactRelations, token).ConfigureAwait(false);
-            AssessmentCategoryResultRepository.ResetItemsAsync(usecase?.AssessmentCategoryResults, token).ConfigureAwait(false);
-            AnswerItemResultRepository.ResetItemsAsync(usecase?.AnswerItemResults, token).ConfigureAwait(false);
-            CategoryRecomendationItemRepository.ResetItemsAsync(usecase?.CategoryRecomendations, token).ConfigureAwait(false);
-            return Task.FromResult(true);
+            await AnswerItemRepository.ResetItemsAsync(usecase?.AnswerItems, token).ConfigureAwait(false);
+            await QuestionItemRepository.ResetItemsAsync(usecase?.QuestionItems, token).ConfigureAwait(false);
+            await AssessmentItemRepository.ResetItemsAsync(usecase?.AssessmentItems, token).ConfigureAwait(false);
+            await MetadataRepository.ResetItemsAsync(usecase?.MetaDataItems, token).ConfigureAwait(false);
+            await AnswerMetaDataRelationRepository.ResetItemsAsync(usecase?.AnswerMetaDataRelations, token).ConfigureAwait(false);
+            await QuestionMetaDataRelationRepository.ResetItemsAsync(usecase?.QuestionMetaDataRelations, token).ConfigureAwait(false);
+            await MetaDataMetaDataRelationRepository.ResetItemsAsync(usecase?.MetaDataMetaDataRelations, token).ConfigureAwait(false);
+            await EduProviderItemRepository.ResetItemsAsync(usecase?.EduProviderItems, token).ConfigureAwait(false);
+            await CourseItemRepository.ResetItemsAsync(usecase?.CourseItems, token).ConfigureAwait(false);
+            await CourseContactRepository.ResetItemsAsync(usecase?.CourseContacts, token).ConfigureAwait(false);
+            await CourseAppointmentRepository.ResetItemsAsync(usecase?.CourseAppointments, token).ConfigureAwait(false);
+            await AssessmentCategoriesRepository.ResetItemsAsync(usecase?.AssessmentCategories, token).ConfigureAwait(false);
+            await CourseContactRelationRepository.ResetItemsAsync(usecase?.CourseContactRelations, token).ConfigureAwait(false);
+            await AssessmentCategoryResultRepository.ResetItemsAsync(usecase?.AssessmentCategoryResults, token).ConfigureAwait(false);
+            await AnswerItemResultRepository.ResetItemsAsync(usecase?.AnswerItemResults, token).ConfigureAwait(false);
+            await CategoryRecomendationItemRepository.ResetItemsAsync(usecase?.CategoryRecomendations, token).ConfigureAwait(false);
+            return true;
         }
 
         private async Task ClearAllRepositoriesAsync(CancellationToken token)
