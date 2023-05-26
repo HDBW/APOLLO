@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33711.374
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{206D4F82-3440-4CAF-A098-8AD16771386D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3BE4DC65-3ABE-4BC3-BB3F-784F536F8D49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trainings API", "Trainings API", "{2C70AABD-8F73-451C-88EF-DC55AC9FE307}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "training.api.invite-apollo.app", "training.api.invite-apollo.app\training.api.invite-apollo.app.csproj", "{F1E835A1-B4CD-4375-9642-4EB2B067BB10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1E835A1-B4CD-4375-9642-4EB2B067BB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E835A1-B4CD-4375-9642-4EB2B067BB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E835A1-B4CD-4375-9642-4EB2B067BB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E835A1-B4CD-4375-9642-4EB2B067BB10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2C70AABD-8F73-451C-88EF-DC55AC9FE307} = {206D4F82-3440-4CAF-A098-8AD16771386D}
+		{F1E835A1-B4CD-4375-9642-4EB2B067BB10} = {2C70AABD-8F73-451C-88EF-DC55AC9FE307}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {46B9B09A-48DD-48AA-8BDA-87B5DB2C7893}
+	EndGlobalSection
+EndGlobal
