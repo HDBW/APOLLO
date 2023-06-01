@@ -3,6 +3,7 @@
 
 using System.Text.Json.Serialization;
 using Serilog;
+using Serilog.Events;
 using training.api.invite_apollo.app;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -14,9 +15,13 @@ builder.Logging.ClearProviders();
 var logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
-
 // Register Serilog
 builder.Logging.AddSerilog(logger);
+
+logger.Write(LogEventLevel.Information,"Local Database");
+
+builder.Services.Configure<BookStoreDatabaseSettings>(builder.Configuration.GetSection("BookStoreDatabase"));
+builder.Services.AddSingleton<BooksService>();
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -36,8 +41,6 @@ todosApi.MapGet("/{id}", (int id) =>
         ? Results.Ok(todo)
         : Results.NotFound());
 
-
-
 app.Logger.LogInformation("The application started!");
 
 app.Run();
@@ -46,4 +49,14 @@ app.Run();
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
     
+}
+
+
+public class BookStoreDatabaseSettings
+{
+    public string ConnectionString { get; set; } = null!;
+
+    public string DatabaseName { get; set; } = null!;
+
+    public string BooksCollectionName { get; set; } = null!;
 }
