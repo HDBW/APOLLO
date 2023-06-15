@@ -1,8 +1,12 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading.RateLimiting;
+using System.Transactions;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -55,7 +59,9 @@ catch (Exception e)
     Log.Logger.Fatal(e, "API Configuration failed for Swagger and Swagger UI");
 }
 
+
 var app = builder.Build();
+app.UseStatusCodePages();
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 try
@@ -79,18 +85,40 @@ app.MapGet("/", async (HttpContext context) =>
 //TODO: Add Authorization for Endpoints
 //TODO: Add Flags (Obsolete, Deprecated, etc.) to Endpoints https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/openapi?view=aspnetcore-7.0
 
+
 app.MapGet("/api/v1/training", async (HttpContext context, TrainingsService trainingsService) =>
-{
-    Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings");
-    return Results.Ok(trainingsService.Get());
-})
-    .WithName("Training")
+    {
+        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings");
+        return Results.Ok(trainingsService.Get());
+    })
+    .WithName("GetTrainings")
     .WithOpenApi();
 
+app.MapGet("/api/v1/training/{id}", async (string id, HttpContext context, TrainingsService trainingsService) =>
+    {
+        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings/{id}");
+        return Results.Ok(trainingsService.Get(id));
+    })
+    .WithName("GetTraining")
+    .WithOpenApi();
+
+//TODO: you can actually define endpoints somewhere else? https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-7.0
+
+app.MapPost("/api/v1/training", async (Training training, HttpContext context, TrainingsService trainingsService) =>
+    {
+        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested POST/trainings/");
+        //TODO: Object Id should be null
+        //TODO: Validate Object https://blog.safia.rocks/endpoint-filters-exploration.html
+        // Making sure we don't have an ID in the request, however there has to be a better way to do this, but it is late and I am tired
+        training = training with { Id = null };
+        return TypedResults.Ok(trainingsService.Create(training));
+    })
+    .WithName("PostTraining")
+    .WithOpenApi();
 
 app.Run();
 
-public class Training
+public record Training
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
