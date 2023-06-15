@@ -12,10 +12,15 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Serilog;
+using Serilog.Events;
+using ZstdSharp;
 
 var builder = WebApplication.CreateBuilder(args);
 // TODO: Implement Azure Workload Identity and get this from KeyVault
-Log.Information("Starting API Configuration");
+if (Log.IsEnabled(LogEventLevel.Information))
+{
+    Log.Information("Starting API Configuration");
+}
 
 // we want to be sure we are able to Log Anything
 builder.Logging.ClearProviders();
@@ -28,12 +33,20 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 //TODO: Add Azure Application Insights to Serilog Sinks and Configuration
 builder.Logging.AddSerilog(logger);
-Log.Logger.Information("Logging successfully Initialized");
+
+if (Log.IsEnabled(LogEventLevel.Information))
+{
+    Log.Information("Logging successfully Initialized");
+}
 
 //Gonna add a nice Database here - MongoDB
 try
 {
-    Log.Logger.Information("API Configuration Initialize MongoDB");
+    if (Log.IsEnabled(LogEventLevel.Information))
+    {
+        Log.Logger.Information("API Configuration Initialize MongoDB");
+    }
+    
     builder.Services.Configure<TrainingsDatabaseSettings>(
         builder.Configuration.GetSection("TrainingsStoreDatabase"));
     builder.Services.AddSingleton<TrainingsService>();
@@ -56,7 +69,7 @@ try
 }
 catch (Exception e)
 {
-    Log.Logger.Fatal(e, "API Configuration failed for Swagger and Swagger UI");
+    Log.Fatal(e, "API Configuration failed for Swagger and Swagger UI");
 }
 
 
@@ -66,9 +79,18 @@ app.UseStatusCodePages();
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 try
 {
-    Log.Logger.Information("API Configuration Initialize Swagger");
+    if (Log.IsEnabled(LogEventLevel.Information))
+    {
+        Log.Information("API Configuration Initialize Swagger");
+    }
+
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{builder.Environment.ApplicationName} v1"));
+
+    if (Log.IsEnabled(LogEventLevel.Information))
+    {
+        Log.Information("API Configuration Swagger initialized");
+    }
 }
 catch (Exception e)
 {
@@ -77,7 +99,10 @@ catch (Exception e)
 
 app.MapGet("/", async (HttpContext context) =>
 {
-    Log.Logger.Information($"Hello World! send to {context.Connection.RemoteIpAddress} at UTC: {DateTime.UtcNow}");
+    if (Log.IsEnabled(LogEventLevel.Information))
+    {
+        Log.Information($"Hello World! send to {context.Connection.RemoteIpAddress} at UTC: {DateTime.UtcNow}");
+    }
     await context.Response.WriteAsync($"{DateTime.UtcNow} ><> Hello World!");
 });
 
@@ -88,7 +113,10 @@ app.MapGet("/", async (HttpContext context) =>
 
 app.MapGet("/api/v1/training", async (HttpContext context, TrainingsService trainingsService) =>
     {
-        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings");
+        if (Log.IsEnabled(LogEventLevel.Information))
+        {
+            Log.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings");
+        }
         return Results.Ok(trainingsService.Get());
     })
     .WithName("GetTrainings")
@@ -96,7 +124,10 @@ app.MapGet("/api/v1/training", async (HttpContext context, TrainingsService trai
 
 app.MapGet("/api/v1/training/{id}", async (string id, HttpContext context, TrainingsService trainingsService) =>
     {
-        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings/{id}");
+        if (Log.IsEnabled(LogEventLevel.Information))
+        {
+            Log.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings/{id}");
+        }
         return Results.Ok(trainingsService.Get(id));
     })
     .WithName("GetTraining")
@@ -106,7 +137,10 @@ app.MapGet("/api/v1/training/{id}", async (string id, HttpContext context, Train
 
 app.MapPost("/api/v1/training", async (Training training, HttpContext context, TrainingsService trainingsService) =>
     {
-        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested POST/trainings/");
+        if (Log.IsEnabled(LogEventLevel.Information))
+        {
+            Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested POST/trainings/");
+        }
         //TODO: Object Id should be null
         //TODO: Validate Object https://blog.safia.rocks/endpoint-filters-exploration.html
         // Making sure we don't have an ID in the request, however there has to be a better way to do this, but it is late and I am tired
@@ -114,6 +148,59 @@ app.MapPost("/api/v1/training", async (Training training, HttpContext context, T
         return TypedResults.Ok(trainingsService.Create(training));
     })
     .WithName("PostTraining")
+    .WithOpenApi();
+
+app.MapPut("/api/v1/training", async (string id, Training training, HttpContext context, TrainingsService trainingsService) =>
+    {
+        if (Log.IsEnabled(LogEventLevel.Information))
+        {
+            Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested PUT/{id}");
+        }
+        //TODO: Object Id should be null
+        //TODO: Validate Object https://blog.safia.rocks/endpoint-filters-exploration.html
+        // Making sure we don't have an ID in the request, however there has to be a better way to do this, but it is late and I am tired
+        try
+        {
+            trainingsService.Update(id, training);
+            return Results.Ok();
+        }
+        catch (Exception e)
+        {
+            if (Log.IsEnabled(LogEventLevel.Information))
+            {
+                Guid correlationId = Guid.NewGuid();
+                Log.Logger.Error($"{DateTime.UtcNow} Error: {correlationId} | Client {context.Connection.RemoteIpAddress} requested PUT/{id} - TrainingsService throw a exception: {e.Message}");
+            }
+            return Results.BadRequest("Something went wrong! Contact Support: correlationId");
+        }
+        
+    })
+    .WithName("UpdateTraining")
+    .WithOpenApi();
+
+app.MapDelete("/api/v1/training/{id}", async (string id, HttpContext context, TrainingsService trainingsService) =>
+{
+    if (Log.IsEnabled(LogEventLevel.Information))
+    {
+        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested DELETE/{id}");
+    }
+
+    try
+    {
+        trainingsService.Remove(id);
+        return Results.Ok();
+    }
+    catch (Exception e)
+    {
+        Guid correlationId = Guid.NewGuid();
+        if (Log.IsEnabled(LogEventLevel.Information)) ;
+        {
+            Log.Error($"{DateTime.UtcNow} Error: {correlationId} | Client {context.Connection.RemoteIpAddress} requested DELETE/{id} - TrainingsService throw a exception: {e.Message}");
+        }
+        return Results.BadRequest($"Something went wrong! Contact Support: {correlationId}");
+    }
+})
+    .WithName("DeleteTraining")
     .WithOpenApi();
 
 app.Run();
