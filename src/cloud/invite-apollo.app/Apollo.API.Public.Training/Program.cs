@@ -123,10 +123,7 @@ app.MapGet("/api/v1/training", async (HttpContext context, TrainingsService trai
 
 app.MapGet("/api/v1/training/{id}", async (string id, HttpContext context, TrainingsService trainingsService) =>
     {
-        if (Log.IsEnabled(LogEventLevel.Information))
-        {
-            Log.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings/{id}");
-        }
+        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings/{id}");
         return Results.Ok(trainingsService.Get(id));
     })
     .WithName("GetTraining")
@@ -147,59 +144,6 @@ app.MapPost("/api/v1/training", async (Training training, HttpContext context, T
         return TypedResults.Ok(trainingsService.Create(training));
     })
     .WithName("PostTraining")
-    .WithOpenApi();
-
-app.MapPut("/api/v1/training", async (string id, Training training, HttpContext context, TrainingsService trainingsService) =>
-    {
-        if (Log.IsEnabled(LogEventLevel.Information))
-        {
-            Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested PUT/{id}");
-        }
-        //TODO: Object Id should be null
-        //TODO: Validate Object https://blog.safia.rocks/endpoint-filters-exploration.html
-        // Making sure we don't have an ID in the request, however there has to be a better way to do this, but it is late and I am tired
-        try
-        {
-            trainingsService.Update(id, training);
-            return Results.Ok();
-        }
-        catch (Exception e)
-        {
-            if (Log.IsEnabled(LogEventLevel.Information))
-            {
-                Guid correlationId = Guid.NewGuid();
-                Log.Logger.Error($"{DateTime.UtcNow} Error: {correlationId} | Client {context.Connection.RemoteIpAddress} requested PUT/{id} - TrainingsService throw a exception: {e.Message}");
-            }
-            return Results.BadRequest("Something went wrong! Contact Support: correlationId");
-        }
-        
-    })
-    .WithName("UpdateTraining")
-    .WithOpenApi();
-
-app.MapDelete("/api/v1/training/{id}", async (string id, HttpContext context, TrainingsService trainingsService) =>
-{
-    if (Log.IsEnabled(LogEventLevel.Information))
-    {
-        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested DELETE/{id}");
-    }
-
-    try
-    {
-        trainingsService.Remove(id);
-        return Results.Ok();
-    }
-    catch (Exception e)
-    {
-        Guid correlationId = Guid.NewGuid();
-        if (Log.IsEnabled(LogEventLevel.Information)) ;
-        {
-            Log.Error($"{DateTime.UtcNow} Error: {correlationId} | Client {context.Connection.RemoteIpAddress} requested DELETE/{id} - TrainingsService throw a exception: {e.Message}");
-        }
-        return Results.BadRequest($"Something went wrong! Contact Support: {correlationId}");
-    }
-})
-    .WithName("DeleteTraining")
     .WithOpenApi();
 
 app.Run();
