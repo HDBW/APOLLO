@@ -3,3 +3,7 @@
 GET {{Apollo.API.Public.Training_HostAddress}}/
 
 ###
+
+GET {{Apollo.API.Public.Training_HostAddress}}/api/v1/training
+
+###

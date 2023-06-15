@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33711.374
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{206D4F82-3440-4CAF-A098-8AD16771386D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3BE4DC65-3ABE-4BC3-BB3F-784F536F8D49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Public Training API", "Public Training API", "{2C70AABD-8F73-451C-88EF-DC55AC9FE307}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.API.Public.Training", "Apollo.API.Public.Training\Apollo.API.Public.Training.csproj", "{25E8A6E9-377E-4C51-853B-584F247E3745}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Private Training API", "Private Training API", "{6F273905-FCDD-4843-9F8F-CD169EA7823F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Components", "Shared Components", "{8F626F27-2C55-4673-BE39-F81F2128173C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.API.Training", "Apollo.API.Training\Apollo.API.Training.csproj", "{09A5BEA6-FB4E-45CB-8835-872CB262AE21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{CE92082D-CA9E-4CAC-BC67-97770C09AA49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E3DE8EAA-FA9A-4758-94E8-C63B18200A7B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.Portal", "Apollo.Portal\Apollo.Portal.csproj", "{31440636-9B88-4EB9-829A-F4D4A8739DC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25E8A6E9-377E-4C51-853B-584F247E3745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25E8A6E9-377E-4C51-853B-584F247E3745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25E8A6E9-377E-4C51-853B-584F247E3745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25E8A6E9-377E-4C51-853B-584F247E3745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A5BEA6-FB4E-45CB-8835-872CB262AE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A5BEA6-FB4E-45CB-8835-872CB262AE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A5BEA6-FB4E-45CB-8835-872CB262AE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A5BEA6-FB4E-45CB-8835-872CB262AE21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31440636-9B88-4EB9-829A-F4D4A8739DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31440636-9B88-4EB9-829A-F4D4A8739DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31440636-9B88-4EB9-829A-F4D4A8739DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31440636-9B88-4EB9-829A-F4D4A8739DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2C70AABD-8F73-451C-88EF-DC55AC9FE307} = {206D4F82-3440-4CAF-A098-8AD16771386D}
+		{25E8A6E9-377E-4C51-853B-584F247E3745} = {2C70AABD-8F73-451C-88EF-DC55AC9FE307}
+		{6F273905-FCDD-4843-9F8F-CD169EA7823F} = {206D4F82-3440-4CAF-A098-8AD16771386D}
+		{09A5BEA6-FB4E-45CB-8835-872CB262AE21} = {6F273905-FCDD-4843-9F8F-CD169EA7823F}
+		{31440636-9B88-4EB9-829A-F4D4A8739DC1} = {CE92082D-CA9E-4CAC-BC67-97770C09AA49}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {46B9B09A-48DD-48AA-8BDA-87B5DB2C7893}
+	EndGlobalSection
+EndGlobal
