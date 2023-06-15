@@ -1,12 +1,6 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Threading.RateLimiting;
-using System.Transactions;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -43,7 +37,7 @@ try
 {
     if (Log.IsEnabled(LogEventLevel.Information))
     {
-        Log.Logger.Information("API Configuration Initialize MongoDB");
+        Log.Information("API Configuration Initialize MongoDB");
     }
     
     builder.Services.Configure<TrainingsDatabaseSettings>(
@@ -93,7 +87,7 @@ try
 }
 catch (Exception e)
 {
-    Log.Logger.Fatal(e, "API Configuration failed Initialize Swagger");
+    Log.Fatal(e, "API Configuration failed Initialize Swagger");
 }
 
 app.MapGet("/", async (HttpContext context) =>
@@ -123,7 +117,7 @@ app.MapGet("/api/v1/training", async (HttpContext context, TrainingsService trai
 
 app.MapGet("/api/v1/training/{id}", async (string id, HttpContext context, TrainingsService trainingsService) =>
     {
-        Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings/{id}");
+        Log.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested GET/trainings/{id}");
         return Results.Ok(trainingsService.Get(id));
     })
     .WithName("GetTraining")
@@ -131,11 +125,12 @@ app.MapGet("/api/v1/training/{id}", async (string id, HttpContext context, Train
 
 //TODO: you can actually define endpoints somewhere else? https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-7.0
 //TODO: Enable Bulk Operations
+//TODO: Implement Validation / Error Handling and CorrelationId
 app.MapPost("/api/v1/training", async (Training training, HttpContext context, TrainingsService trainingsService) =>
     {
         if (Log.IsEnabled(LogEventLevel.Information))
         {
-            Log.Logger.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested POST/trainings/");
+            Log.Information($"{DateTime.UtcNow} ><> {context.Connection.RemoteIpAddress} requested POST/trainings/");
         }
         //TODO: Object Id should be null
         //TODO: Validate Object https://blog.safia.rocks/endpoint-filters-exploration.html
