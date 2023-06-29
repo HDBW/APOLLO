@@ -40,12 +40,23 @@ public partial class ExtendedSplashScreenView
         var grid = view as Grid;
         if (grid == null)
         {
-            grid = view?.Parent as Grid ?? null;
+            return;
         }
 
-        var height = grid?.Height ?? 0d;
+        var height = grid.Height;
+        var width = grid.Width;
+        if (double.IsNaN(height) || double.IsInfinity(height))
+        {
+            height = Window.Height;
+        }
+
+        if (double.IsNaN(width) || double.IsInfinity(width))
+        {
+            height = Window.Width;
+        }
+
         var heightSum = 0d;
-        foreach (var child in grid.Children)
+        foreach (var child in grid.Children ?? Array.Empty<IView>())
         {
             switch (child)
             {
@@ -61,7 +72,7 @@ public partial class ExtendedSplashScreenView
         }
 
         var diff = height - heightSum;
-        PART_Animation.MaximumHeightRequest = diff;
+        PART_Animation.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
 #endif
     }
 }
