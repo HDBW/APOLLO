@@ -50,4 +50,47 @@ public partial class UseCaseSelectionView
         gesture.Enabled = false;
 #endif
     }
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+
+#if IOS
+        var grid = Content as Grid;
+        if (grid == null)
+        {
+            return;
+        }
+
+        grid.Measure(width, height);
+
+        if (double.IsNaN(height) || double.IsInfinity(height))
+        {
+            height = Window.Height;
+        }
+
+        if (double.IsNaN(width) || double.IsInfinity(width))
+        {
+            height = Window.Width;
+        }
+
+        var heightSum = 0d;
+        foreach (var child in grid.Children ?? Array.Empty<IView>())
+        {
+            switch (child)
+            {
+                case CollectionView _:
+                    break;
+
+                default:
+                    var size = child.Measure(grid.Width, grid.Height);
+                    heightSum += size.Height;
+                    break;
+            }
+        }
+
+        var diff = height - grid.Padding.Top - grid.Padding.Bottom - heightSum;
+        PART_UseCases.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
+#endif
+    }
 }
