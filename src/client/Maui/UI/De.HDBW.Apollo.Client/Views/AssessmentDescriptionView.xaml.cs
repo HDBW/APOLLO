@@ -36,7 +36,7 @@ public partial class AssessmentDescriptionView
     {
         base.OnSizeAllocated(width, height);
 
-#if IOS
+
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -60,7 +60,7 @@ public partial class AssessmentDescriptionView
         {
             switch (child)
             {
-                case CarouselView _:
+                case ScrollView _:
                     break;
 
                 default:
@@ -72,6 +72,6 @@ public partial class AssessmentDescriptionView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 }

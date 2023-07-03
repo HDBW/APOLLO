@@ -37,7 +37,6 @@ public partial class ExtendedSplashScreenView
     {
         base.OnSizeAllocated(width, height);
 
-#if IOS
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -73,6 +72,6 @@ public partial class ExtendedSplashScreenView
 
         var diff = height - heightSum;
         PART_Animation.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 }

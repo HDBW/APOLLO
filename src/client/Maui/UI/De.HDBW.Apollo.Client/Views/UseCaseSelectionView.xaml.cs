@@ -55,7 +55,6 @@ public partial class UseCaseSelectionView
     {
         base.OnSizeAllocated(width, height);
 
-#if IOS
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -91,6 +90,6 @@ public partial class UseCaseSelectionView
 
         var diff = height - grid.Padding.Top - grid.Padding.Bottom - heightSum;
         PART_UseCases.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 }

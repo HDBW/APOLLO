@@ -3,7 +3,6 @@
 
 using System.Diagnostics;
 using De.HDBW.Apollo.Client.ViewModels;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace De.HDBW.Apollo.Client.Views;
@@ -68,7 +67,7 @@ public partial class StartView
     {
         base.OnSizeAllocated(width, height);
 
-#if IOS
+
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -92,7 +91,7 @@ public partial class StartView
         {
             switch (child)
             {
-                case CarouselView _:
+                case Microsoft.Maui.Controls.ScrollView _:
                     break;
 
                 default:
@@ -104,7 +103,7 @@ public partial class StartView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 
     private void HandleStateChanged(object sender, EventArgs e)

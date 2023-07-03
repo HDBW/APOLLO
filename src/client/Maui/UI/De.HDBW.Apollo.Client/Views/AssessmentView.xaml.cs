@@ -73,7 +73,7 @@ public partial class AssessmentView
     {
         base.OnSizeAllocated(width, height);
 
-#if IOS
+
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -97,9 +97,8 @@ public partial class AssessmentView
         {
             switch (child)
             {
-                case CarouselView _:
+                case ScrollView _:
                     break;
-
                 default:
                     var size = child.Measure(grid.Width, grid.Height);
                     heightSum += size.Height;
@@ -109,6 +108,6 @@ public partial class AssessmentView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 }

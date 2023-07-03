@@ -52,7 +52,6 @@ public partial class AssessmentResultView : ContentPage
     {
         base.OnSizeAllocated(width, height);
 
-#if IOS
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -76,7 +75,7 @@ public partial class AssessmentResultView : ContentPage
         {
             switch (child)
             {
-                case CarouselView _:
+                case ScrollView _:
                     break;
 
                 default:
@@ -88,6 +87,6 @@ public partial class AssessmentResultView : ContentPage
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 }

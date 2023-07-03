@@ -33,7 +33,7 @@ public partial class CourseView
     {
         base.OnSizeAllocated(width, height);
 
-#if IOS
+
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -57,9 +57,15 @@ public partial class CourseView
         {
             switch (child)
             {
-                case CarouselView _:
+                case ScrollView _:
                     break;
                 default:
+                    if (child is Image)
+                    {
+                        heightSum += 200;
+                        continue;
+                    }
+
                     if (child == PART_Deko)
                     {
                         continue;
@@ -67,7 +73,7 @@ public partial class CourseView
 
                     if (child == PART_Background)
                     {
-                        heightSum += 60;
+                        heightSum += 12;
                         continue;
                     }
 
@@ -79,6 +85,6 @@ public partial class CourseView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 }

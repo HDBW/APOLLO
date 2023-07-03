@@ -34,17 +34,4 @@ public partial class SettingsView
         }
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        var thickness = default(Thickness);
-#if IOS
-        var safeInsets = On<iOS>().SafeAreaInsets();
-        safeInsets.Left = 0;
-        safeInsets.Right = 0;
-        thickness = safeInsets;
-#endif
-
-        Padding = thickness;
-    }
 }
