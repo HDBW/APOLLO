@@ -228,6 +228,7 @@ app.MapDelete("/api/v1/training/{id}", async (string id, HttpContext context, Tr
 
 app.Run();
 
+
 public record Training
 {
     [BsonId]
@@ -243,7 +244,8 @@ public record Training
     [BsonElement("Description")]
     public string Description { get; set; }
 
-
+    [BsonElement("ShortDescription")]
+    public string ShortDescription { get; set; }
 }
 
 public class TrainingsDatabaseSettings
