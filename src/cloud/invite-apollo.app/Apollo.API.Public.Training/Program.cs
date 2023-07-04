@@ -31,6 +31,23 @@ if (Log.IsEnabled(LogEventLevel.Information))
     Log.Information("Logging successfully Initialized");
 }
 
+try
+{
+    builder.Services.AddAuthentication("Bearer").AddJwtBearer();
+    builder.Services.AddAuthorization();
+
+    builder.Services.AddAuthorizationBuilder().AddPolicy("admin_greetings",policy =>
+        policy
+            .RequireRole("admin")
+            .RequireClaim("scope", "greetings_api"));
+}
+catch (Exception e)
+{
+    Log.Fatal(e, "API Configuration failed for Authentication");
+    Log.Fatal(e.Message);
+    throw;
+}
+
 //Gonna add a nice Database here - MongoDB
 try
 {
@@ -68,6 +85,19 @@ catch (Exception e)
 var app = builder.Build();
 app.UseStatusCodePages();
 
+//Enable Middleware to Authenticate and Authorize Requests
+try
+{
+    //app.UseCors();
+    app.UseAuthentication();
+    app.UseAuthorization();
+}
+catch (Exception e)
+{
+    Log.Fatal(e, "API Configuration failed for Authentication and Authorization");
+    Log.Fatal(e.Message);
+}
+
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 try
 {
@@ -89,13 +119,16 @@ catch (Exception e)
     Log.Fatal(e, "API Configuration failed Initialize Swagger");
 }
 
+app.MapGet("/hello", () => "Joshua:> Hello Prof. Falken!")
+    .RequireAuthorization("admin_greetings");
+
 app.MapGet("/", async (HttpContext context) =>
 {
     if (Log.IsEnabled(LogEventLevel.Information))
     {
         Log.Information($"Hello World! send to {context.Connection.RemoteIpAddress} at UTC: {DateTime.UtcNow}");
     }
-    await context.Response.WriteAsync($"{DateTime.UtcNow} ><> Hello World!");
+    await context.Response.WriteAsync($"{DateTime.UtcNow} ><> Hello World!\n                                                                                                                                                                                                         \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                                                                                                                                                                                        \r\n                                          .,**//*,.       ......                                                                                                                                        \r\n                                     .%&@@@@@@@@@@@@@@&(  .,,,,.                                                                                                                                        \r\n                                  .%@@@@@@#/,.  .,/%@@@@@@#,,,,.                                                                                                                                        \r\n                                .@@@@@%               .&@@%,,,,.                                                                             #@*    *@(                                                 \r\n                               *@@@@#                   .&%,,,,.                                ,**.   ,,.  ,,.   .,.                        #@*    *@(           .,.                                   \r\n                              ,@@@@*                      (,,,,.                            /@&%(**(&@@&@*  &@%@&#/*/#&@#     .%@&#//(%&@*   #@*    *@(      .%@&(**/%@&/                               \r\n                              #@@@@         .,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.             &@*        /@@*  &@&         &@,  /@%        .&&. #@*    *@(     #@(        .@&.                             \r\n                              #@@@&         ..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.            /@#          %@*  &@,         .@@ .@&          /@( #@*    *@(     &&          /@/                             \r\n                              /@@@@.                      ,,,,,.                           &&.        ,@@*  &@#         %@*  #@/         &@, .&&.    &@.    %@/        .@@,                             \r\n                               (@@@@,                    (%,,,,.                            /@&#,  ,%@@&@*  &@&@&/. ./&@&.    *@@#,  ./&@%.   .%@&/   #@&/   ,&&%*  .(&@%                               \r\n                                /@@@@%.                *&@%,,,,.                                ,**,   /(,  &@,  ,/(/,           ./(((,           *//    ,/(     ,//*.                                  \r\n                                  %@@@@@&/         .(@@@@@%.,,,.                                                                                                                                        \r\n                                    ,%@@@@@@@@@@@@@@@@@@(.......                                                                                                                                        \r\n                                         *%&&@@@&&%#,     ......                                                                                                                                        ");
 });
 
 //TODO: Add Authentication and Authorization
@@ -209,6 +242,8 @@ public record Training
 
     [BsonElement("Description")]
     public string Description { get; set; }
+
+
 }
 
 public class TrainingsDatabaseSettings

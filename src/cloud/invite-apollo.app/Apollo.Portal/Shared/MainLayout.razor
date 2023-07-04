@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -13,7 +13,8 @@
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
         <MudDrawerHeader>
-            <MudText Typo="Typo.h6">Apollo.Portal</MudText>
+            <MudImage Src="Images/logow.svg" Width="200" Height="47" Alt="Apollo Logo">portal.invite-apollo.app</MudImage>
+            @* <MudText Typo="Typo.h6">Apollo.Portal</MudText> *@
         </MudDrawerHeader>
         <NavMenu />
     </MudDrawer>
@@ -30,5 +31,24 @@
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+    }
+
+    private bool _isDarkMode;
+    private MudThemeProvider _mudThemeProvider;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isDarkMode = await _mudThemeProvider.GetSystemPreference();
+            await _mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnSystemPreferenceChanged(bool newValue)
+    {
+        _isDarkMode = newValue;
+        StateHasChanged();
     }
 }
