@@ -53,7 +53,7 @@ namespace De.HDBW.Apollo.Data.Services
         {
             Logger?.Log(LogLevel.Information, new EventId(101, "GetAssessmentScore Called"), "{answerItems.Dump()}", answerItemResults);
 
-            AssessmentScore score = new ();
+            AssessmentScore score = await AssessmentScoresRepository.CreateItemAsync(token).ConfigureAwait(false);
 
             // TODO: Initialize score object we need id for category result
             List<AssessmentCategoryResult> results = new List<AssessmentCategoryResult>();
@@ -77,7 +77,7 @@ namespace De.HDBW.Apollo.Data.Services
             score.Schema = new Uri($"https://invite-apollo.app/{Guid.NewGuid()}");
             score.Ticks = DateTime.Now.Ticks;
 
-            await AssessmentScoresRepository.AddItemAsync(score, token);
+            await AssessmentScoresRepository.UpdateItemAsync(score, token).ConfigureAwait(false);
 
             var categories = await AssessmentCategoriesRepository.GetItemsByIdsAsync(questionItems.Select(x => x.CategoryId).Distinct(), token);
 

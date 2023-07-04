@@ -33,18 +33,18 @@ public partial class ExtendedSplashScreenView
         }
     }
 
-    private void HandleSizeChanged(Object sender, System.EventArgs e)
+    protected override void OnSizeAllocated(double width, double height)
     {
-#if IOS
-        var view = sender as IView;
-        var grid = view as Grid;
+        base.OnSizeAllocated(width, height);
+
+        var grid = Content as Grid;
         if (grid == null)
         {
             return;
         }
 
-        var height = grid.Height;
-        var width = grid.Width;
+        grid.Measure(width, height);
+
         if (double.IsNaN(height) || double.IsInfinity(height))
         {
             height = Window.Height;
@@ -64,15 +64,14 @@ public partial class ExtendedSplashScreenView
                     break;
 
                 default:
-                    var handler = child.Handler;
-                    var size = handler?.GetDesiredSize(grid.Width, grid.Height) ?? Size.Zero;
-                    heightSum += size.Height + child.Margin.Top + child.Margin.Bottom;
+                    var size = child.Measure(grid.Width, grid.Height);
+                    heightSum += size.Height;
                     break;
             }
         }
 
         var diff = height - heightSum;
         PART_Animation.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-#endif
+
     }
 }

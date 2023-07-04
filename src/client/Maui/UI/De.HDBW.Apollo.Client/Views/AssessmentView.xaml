@@ -315,9 +315,9 @@
         <Picker IsVisible="false" Grid.ColumnSpan="2" Grid.Row="2" Title="AnserwerLayout" TitleColor="White" TextColor="White" ItemsSource="{Binding AnswerLayouts}" SelectedItem="{Binding AnswerLayout, Mode=TwoWay}" BackgroundColor="{StaticResource Primary}" />-->
         <ProgressBar Grid.Row="3" Margin="24,8,8,8" Progress="{Binding Progress}" VerticalOptions="Center"/>
         <Label Grid.Row="3" Grid.Column="1" Margin="0,0,24,0" Text="{Binding DisplayProgress}" TextColor="{StaticResource Primary}" BackgroundColor="{StaticResource Background}" Style="{StaticResource Noto12}" VerticalOptions="Center"/>
-        <ScrollView Grid.ColumnSpan="2" Grid.Row="4" VerticalScrollBarVisibility="Default">
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="4" VerticalScrollBarVisibility="Default" x:Name="PART_ScrollHost">
             <VerticalStackLayout
-                x:Name="PART_ScrollHost"
+                x:Name="PART_ScrollContent"
                 BindableLayout.ItemTemplateSelector="{StaticResource QuestionTemplateSelector}"
                 BindableLayout.ItemsSource="{Binding CurrentQuestion, Converter={StaticResource SingleItemListConverter}}" >
             </VerticalStackLayout>

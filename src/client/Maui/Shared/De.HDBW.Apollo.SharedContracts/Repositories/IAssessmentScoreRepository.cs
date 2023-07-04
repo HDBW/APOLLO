@@ -10,5 +10,7 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         IDatabaseRepository<AssessmentScore>
     {
         Task<AssessmentScore?> GetItemByForeignKeyAsync(long id, CancellationToken token);
+
+        Task<AssessmentScore> CreateItemAsync(CancellationToken token);
     }
 }
