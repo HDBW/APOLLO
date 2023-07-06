@@ -11,9 +11,9 @@
     <Grid RowDefinitions="auto, *, auto, auto">
         <Label Margin="24,16,24,8" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.ExtendedSplashScreenView_Welcome}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
         <CarouselView Grid.Row="1" ItemsSource="{Binding Instructions}"
-                  IndicatorView="indicatorView"
-                  VerticalOptions="Fill"
-                  x:Name="PART_Animation">
+                IndicatorView="indicatorView"
+                VerticalOptions="Fill"
+                x:Name="PART_Animation">
             <CarouselView.ItemTemplate>
                 <DataTemplate x:DataType="models:InstructionEntry">
                     <Grid RowDefinitions="auto, *, auto" >

@@ -19,6 +19,15 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
         }
 
+        public async Task<AssessmentScore> CreateItemAsync(CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            var score = new AssessmentScore();
+            await AddItemAsync(score, token).ConfigureAwait(false);
+            return score;
+        }
+
         public async Task<AssessmentScore?> GetItemByForeignKeyAsync(long id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();

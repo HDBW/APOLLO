@@ -64,7 +64,7 @@
         <CollectionView IsVisible="{Binding HasInteractions}"
                         Grid.Row="6"
                         ItemsSource="{Binding Interactions}"
-                        ItemTemplate="{StaticResource DefaultInteractionEntry}">
+                        ItemTemplate="{StaticResource DefaultInteractionEntry}" x:Name="PART_ScrollHost">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
             </CollectionView.ItemsLayout>

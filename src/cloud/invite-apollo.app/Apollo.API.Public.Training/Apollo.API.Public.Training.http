@@ -1,0 +1,15 @@
+﻿@Apollo.API.Public.Training_HostAddress = http://localhost:5162
+
+GET {{Apollo.API.Public.Training_HostAddress}}/
+
+###
+
+GET {{Apollo.API.Public.Training_HostAddress}}/api/v1/training
+
+###
+
+PUT {{Apollo.API.Public.Training_HostAddress}}/api/v1/training
+
+###
+
+
