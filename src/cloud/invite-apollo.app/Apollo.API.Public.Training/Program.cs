@@ -243,7 +243,7 @@ public record Training
     [BsonElement("Description")]
     public string Description { get; set; }
 
-
+    //TODO: Create schema for Trainings aligned with TACOS
 }
 
 public class TrainingsDatabaseSettings
