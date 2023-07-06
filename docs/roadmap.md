@@ -23,9 +23,11 @@ For released versions of the product:
 | Workshops Persona | 1st of July 2022 |
 | Workshops UI/UX | 3rd of August 2022 |
 | UX/UI Mockup | October 2022 |
-| Backend Courses | October 2022 |
-| ML Pipeline Courses | November 2022 |
 | Prototype 1 | December 2022 |
+| Workshop App Scope Cologne | Mai 2023 |
+| Trainings API | August 2023 |
+| POC Semantic Trainings | August 2023 |
+| Beta | March 2024 |
 ...
 
 Milestone information will be updated, you can check out the Issue milestones to find more details.
