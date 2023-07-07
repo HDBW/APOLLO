@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E3DE8EAA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.Portal", "Apollo.Portal\Apollo.Portal.csproj", "{31440636-9B88-4EB9-829A-F4D4A8739DC1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Healthz", "Healthz", "{B03CC095-69BE-4946-9380-AA775ADC61E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "healthz.invite-apollo.app", "healthz.invite-apollo.app\healthz.invite-apollo.app.csproj", "{B7E27AAA-46EF-453F-B0D2-C49E7559CA74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{31440636-9B88-4EB9-829A-F4D4A8739DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31440636-9B88-4EB9-829A-F4D4A8739DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31440636-9B88-4EB9-829A-F4D4A8739DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7E27AAA-46EF-453F-B0D2-C49E7559CA74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7E27AAA-46EF-453F-B0D2-C49E7559CA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7E27AAA-46EF-453F-B0D2-C49E7559CA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7E27AAA-46EF-453F-B0D2-C49E7559CA74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +59,8 @@ Global
 		{6F273905-FCDD-4843-9F8F-CD169EA7823F} = {206D4F82-3440-4CAF-A098-8AD16771386D}
 		{09A5BEA6-FB4E-45CB-8835-872CB262AE21} = {6F273905-FCDD-4843-9F8F-CD169EA7823F}
 		{31440636-9B88-4EB9-829A-F4D4A8739DC1} = {CE92082D-CA9E-4CAC-BC67-97770C09AA49}
+		{B03CC095-69BE-4946-9380-AA775ADC61E6} = {E3DE8EAA-FA9A-4758-94E8-C63B18200A7B}
+		{B7E27AAA-46EF-453F-B0D2-C49E7559CA74} = {B03CC095-69BE-4946-9380-AA775ADC61E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46B9B09A-48DD-48AA-8BDA-87B5DB2C7893}
