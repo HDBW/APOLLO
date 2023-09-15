@@ -69,7 +69,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public Action UseCaseChangedHandler { get; set; }
+        public Action? UseCaseChangedHandler { get; set; }
 
         private IPreferenceService PreferenceService { get; }
 

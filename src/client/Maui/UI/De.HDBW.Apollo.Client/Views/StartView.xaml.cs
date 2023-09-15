@@ -67,7 +67,6 @@ public partial class StartView
     {
         base.OnSizeAllocated(width, height);
 
-
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -103,7 +102,6 @@ public partial class StartView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-
     }
 
     private void HandleStateChanged(object sender, EventArgs e)

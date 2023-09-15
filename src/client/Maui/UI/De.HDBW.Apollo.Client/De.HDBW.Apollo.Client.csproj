@@ -155,9 +155,6 @@
     <MauiXaml Update="Views\ExtendedSplashScreenView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\FeedbackView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Views\RegistrationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

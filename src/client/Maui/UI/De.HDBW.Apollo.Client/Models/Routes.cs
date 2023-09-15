@@ -5,32 +5,32 @@ namespace De.HDBW.Apollo.Client.Models
 {
     public static class Routes
     {
-        public static readonly string EmptyView = "/EmptyView";
+        public const string EmptyView = "/EmptyView";
 
-        public static readonly string Shell = "AppShell";
+        public const string Shell = "AppShell";
 
-        public static readonly string ExtendedSplashScreenView = "/ExtendedSplashScreenView";
+        public const string ExtendedSplashScreenView = "/ExtendedSplashScreenView";
 
-        public static readonly string StartView = "/StartView";
+        public const string StartView = "/StartView";
 
-        public static readonly string TutorialView = "/EmptyView";
+        public const string TutorialView = "/EmptyView";
 
-        public static readonly string RegistrationView = "/RegistrationView";
+        public const string RegistrationView = "/RegistrationView";
 
-        public static readonly string UseCaseDescriptionView = "/UseCaseDescriptionView";
+        public const string UseCaseDescriptionView = "/UseCaseDescriptionView";
 
-        public static readonly string UseCaseSelectionView = "/UseCaseSelectionView";
+        public const string UseCaseSelectionView = "/UseCaseSelectionView";
 
-        public static readonly string AssessmentView = "/AssessmentView";
+        public const string AssessmentView = "/AssessmentView";
 
-        public static readonly string AssessmentResultView = "/AssessmentResultView";
+        public const string AssessmentResultView = "/AssessmentResultView";
 
-        public static readonly string AssessmentDescriptionView = "/AssessmentDescriptionView";
+        public const string AssessmentDescriptionView = "/AssessmentDescriptionView";
 
-        public static readonly string CourseView = "/CourseView";
+        public const string CourseView = "/CourseView";
 
-        public static readonly string SettingsView = "/SettingsView";
+        public const string SettingsView = "/SettingsView";
 
-        public static readonly string FeedbackView = "/FeedbackView";
+        public const string FeedbackView = "/FeedbackView";
     }
 }
