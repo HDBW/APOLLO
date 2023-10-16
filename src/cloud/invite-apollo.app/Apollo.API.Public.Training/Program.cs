@@ -1,8 +1,8 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
+
+using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Serilog;
 using Serilog.Events;
@@ -229,23 +229,16 @@ app.MapDelete("/api/v1/training/{id}", async (string id, HttpContext context, Tr
 app.Run();
 
 
-public record Training
+public enum LessonType
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
+}
 
-    [BsonElement("Title")]
-    public string TrainingName { get; set; }
-
-    [BsonElement("Identifier")]
-    public string Identifier { get; set; }
-
-    [BsonElement("Description")]
-    public string Description { get; set; }
-
-    [BsonElement("ShortDescription")]
-    public string ShortDescription { get; set; }
+public enum TrainingType
+{
+    Online,
+    Offline,
+    Hybrid,
+    OnDemand
 }
 
 public class TrainingsDatabaseSettings
