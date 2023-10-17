@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+using System.Runtime.Serialization;
 
 namespace Apollo.Service.Entities
 {
