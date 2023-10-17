@@ -13,3 +13,7 @@ PUT {{Apollo.API.Public.Training_HostAddress}}/api/v1/training
 ###
 
 
+
+GET {{Apollo.API.Public.Training_HostAddress}}/api/v1/training
+
+###

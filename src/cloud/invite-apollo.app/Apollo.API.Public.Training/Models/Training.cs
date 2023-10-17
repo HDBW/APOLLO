@@ -1,10 +1,11 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-public record Training
+public record Training : IContent
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -15,12 +16,14 @@ public record Training
     //[BsonElement("MobileId")]
     //public long? MobileId { get; set; }
 
+    [Required]
     [BsonElement("Title")]
     public string TrainingName { get; set; }
 
     /// <summary>
     /// External Identifier for the Training Providers
     /// </summary>
+    [Required]
     [BsonElement("Identifier")]
     public string Identifier { get; set; }
 
@@ -102,5 +105,29 @@ public record Training
     [BsonElement("PriceDescription")]
     public string PriceDescription { get; set; }
 
-    
+    [BsonElement("Accessibility")]
+    public bool AccessibilityAvailable { get; set; }
+
+    #region Metadata
+
+    [BsonElement("SeoTags")]
+    public List<string> Tags { get; set; }
+
+    [BsonElement("Categories")]
+    public List<string> Categories { get; set; }
+
+    #endregion
+
+    #region IContentPublising
+
+    [BsonElement("PublishingDate")]
+    public DateTime PublishingDate { get; set; }
+    [BsonElement("UnpublishingDate")]
+    public DateTime UnpublishingDate { get; set; }
+    [BsonElement("Successor")]
+    public string? Successor { get; set; }
+    [BsonElement("Predecessor")]
+    public string? Predecessor { get; set; }
+
+    #endregion
 }

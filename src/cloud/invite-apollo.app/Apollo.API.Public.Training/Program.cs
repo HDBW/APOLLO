@@ -229,18 +229,6 @@ app.MapDelete("/api/v1/training/{id}", async (string id, HttpContext context, Tr
 app.Run();
 
 
-public enum LessonType
-{
-}
-
-public enum TrainingType
-{
-    Online,
-    Offline,
-    Hybrid,
-    OnDemand
-}
-
 public class TrainingsDatabaseSettings
 {
     public string ConnectionString { get; set; } = null!;
