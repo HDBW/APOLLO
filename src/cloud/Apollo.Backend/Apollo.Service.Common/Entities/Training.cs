@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 //using MongoDB.Bson;
 //using MongoDB.Bson.Serialization.Attributes;
 
-namespace Apollo.Service.Entities
+namespace Apollo.Service.Common.Entities
 {
     public record Training
     {

@@ -2,13 +2,11 @@
 // The HDBW licenses this file to you under the MIT license.
 using System.Runtime.Serialization;
 
-namespace Apollo.Service.Entities
+namespace Apollo.Service.Common.Entities
 {
     [DataContract]
     public class UserProfileItem //: BaseItem
     {
-
-
         [DataMember(Order = 5, IsRequired = true)]
         public string? Goal { get; set; } = string.Empty;
 

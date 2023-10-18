@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Apollo.GrpcService";
+
+package training;
+
+// The greeting service definition.
+service Training {
+  // Sends a greeting
+  rpc SayHello (GetTrainingRequest) returns (GetTrainingResponse);
+}
+
+// The request message containing the user's name.
+message GetTrainingRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message GetTrainingResponse {
+  string message = 1;
+}
