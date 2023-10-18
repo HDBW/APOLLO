@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.Service", "Apollo.Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.GrpcService", "Apollo.GrpcService\Apollo.GrpcService.csproj", "{B9B3F6C2-AEFB-4EF2-9655-8AA1F37642CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.GrpcService.UnitTests", "Apollo.GrpcService.UnitTests\Apollo.GrpcService.UnitTests.csproj", "{4DDE8D2F-457B-41A2-9847-D9117BB496C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B9B3F6C2-AEFB-4EF2-9655-8AA1F37642CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9B3F6C2-AEFB-4EF2-9655-8AA1F37642CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9B3F6C2-AEFB-4EF2-9655-8AA1F37642CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DDE8D2F-457B-41A2-9847-D9117BB496C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DDE8D2F-457B-41A2-9847-D9117BB496C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DDE8D2F-457B-41A2-9847-D9117BB496C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DDE8D2F-457B-41A2-9847-D9117BB496C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
