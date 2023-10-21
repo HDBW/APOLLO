@@ -1,21 +1,139 @@
 syntax = "proto3";
 
-option csharp_namespace = "Apollo.GrpcService";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+//import "Protos/user.proto";
+
+option csharp_namespace = "Apollo.Services.Grpc";
 
 package training;
 
 // The greeting service definition.
-service Training {
+service TrainingService {
   // Sends a greeting
-  rpc SayHello (GetTrainingRequest) returns (GetTrainingResponse);
+  rpc GetTraining (GetTrainingsRequest) returns (GetTrainingResponse);
+  rpc QueryTrainings (QueryTrainingsRequest) returns (QueryTrainingsResponse);
 }
 
-// The request message containing the user's name.
-message GetTrainingRequest {
-  string name = 1;
+message GetTrainingsRequest {
+  string Id = 1;
 }
 
 // The response message containing the greetings.
 message GetTrainingResponse {
-  string message = 1;
+  Training Training = 1;
 }
+
+// The request for QueryTrainings.
+message QueryTrainingsRequest {
+  string Contains = 1;
+  google.protobuf.Timestamp From = 2;
+  google.protobuf.Timestamp To = 3;
+}
+
+// The response message containing trainings.
+message QueryTrainingsResponse {
+  repeated Training Trainings = 1;
+}
+
+message Training {
+  string id = 1;
+  /*
+  string TrainingName = 2;
+  string Description = 3;
+  string ShortDescription = 4;
+  repeated string Content = 5;
+  repeated string BenefitList = 6;
+  repeated string Certificate = 7;
+  repeated string Prerequisites = 8;
+  repeated Loans Loans = 9;
+  EduProvider TrainingProvider = 10;
+  EduProvider CourseProvider = 11;
+  repeated Appointment Appointments = 12;
+  string ProductUrl = 13;
+  map<string, Contact> Contacts = 14;
+  TrainingType TrainingType = 15;
+  string IndividualStartDate = 16;
+  double Price = 18;
+  string PriceDescription = 19;
+  bool AccessibilityAvailable = 20;
+  repeated string SeoTags = 21;
+  repeated string Categories = 22;
+  google.protobuf.Timestamp PublishingDate = 23;
+  google.protobuf.Timestamp UnpublishingDate = 24;
+  string Successor = 25;
+  string Predecessor = 26;
+    google.protobuf.Timestamp CreatedAt = 27;
+    string CreatedBy = 28;
+    google.protobuf.Timestamp ChangedAt = 29;
+    string ChangedBy = 30;
+    */
+}
+
+/*
+message Loans {
+  string Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string Url = 4;
+  Contact LoanContact = 5;
+}
+
+
+message EduProvider {
+  string Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string Url = 4;
+  Contact Contact = 5;
+  string Image = 6;
+}
+
+
+message Appointment {
+  string Id = 1;
+  string Appointment = 2;
+  string Appointment_type = 3;
+  string Appointment_description = 4;
+  Contact Appointment_location = 5;
+  google.protobuf.Timestamp StartDate = 6;
+  google.protobuf.Timestamp EndDate = 7;
+  string DurationDescription = 8;
+  google.protobuf.Duration Duration = 9;
+  repeated Occurence Occurences = 10;
+  bool IsGuaranteed = 11;
+  // Enum type needs to be defined separately
+  TrainingType TrainingType = 12;
+  google.protobuf.Duration TimeInvestAttendee = 13;
+  string TimeModel = 14;
+}
+
+message Occurence {
+  string Id = 1;
+  string CorrelationId = 2;
+  google.protobuf.Timestamp StartDate = 3;
+  google.protobuf.Timestamp EndDate = 4;
+  google.protobuf.Duration Duration = 5;
+  string Description = 6;
+  Contact Location = 7;
+}
+
+message Contact {
+  string Id = 1;
+  string Surname = 2;
+  string Mail = 3;
+  string Phone = 4;
+  string Organization = 5;
+  string Address = 6;
+  string City = 7;
+  string ZipCode = 8;
+  string EAppointmentUrl = 9;
+}
+
+enum TrainingType {
+  Online = 0;
+  Offline = 1;
+  Hybrid = 2;
+  OnDemand = 3;
+}
+*/

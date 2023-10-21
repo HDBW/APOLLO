@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Apollo.Service.Common.Entities
 {
     [DataContract]
-    public class UserProfileItem //: BaseItem
+    public class User //: BaseItem
     {
         [DataMember(Order = 5, IsRequired = true)]
         public string? Goal { get; set; } = string.Empty;

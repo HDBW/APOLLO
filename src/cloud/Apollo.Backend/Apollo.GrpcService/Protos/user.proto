@@ -1,21 +1,53 @@
 syntax = "proto3";
+import "google/protobuf/timestamp.proto";
 
-option csharp_namespace = "Apollo.GrpcService";
+option csharp_namespace = "Apollo.Services.Grpc";
 
 package user;
 
-// The greeting service definition.
-service User {
-  // Sends a greeting
-  rpc SayHello (GetUserRequest) returns (GetUserResponse);
+// Defines the User object
+service UserService {
+  // Gets the instance of the specific user.
+  rpc GetUser (GetUserRequest) returns (GetUserResponse);
+
+  // QueryUsers
+  rpc QueryUsers (QueryUsersRequest) returns (QueryUsersResponse);
 }
 
 // The request message containing the user's name.
 message GetUserRequest {
-  string id = 1;
+  // User identifier
+  string Id = 1;
 }
 
 // The response message containing the greetings.
 message GetUserResponse {
-  string message = 1;
+  // The user instance
+  User user = 1;
 }
+
+
+// The request for QueryUsers.
+message QueryUsersRequest {
+    // Contained in FirstName or LastName 
+  string Contains = 1;
+  google.protobuf.Timestamp From = 2;
+  google.protobuf.Timestamp To = 3;
+}
+// The response message containing the greetings.
+message QueryUsersResponse {
+  // The user instance
+  repeated User users = 1;
+}
+
+ message User {
+    string Id =1;
+    string Goal = 2;  
+    string FirstName = 3;  
+    string LastName = 4;  
+    string Image = 5;
+    google.protobuf.Timestamp CreatedAt = 6;
+    string CreatedBy = 7;
+    google.protobuf.Timestamp ChangedAt = 8;
+    string ChangedBy = 9;
+}  

@@ -2,11 +2,13 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Apollo.GrpcService;
+using Apollo.Services.Grpc;
 using Grpc.Core;
+using static Apollo.Services.Grpc.Greeter;
 
 namespace Apollo.GrpcService.Services
 {
-    public class GreeterService : Greeter.GreeterBase
+    public class GreeterService : GreeterBase
     {
         private readonly ILogger<GreeterService> _logger;
         public GreeterService(ILogger<GreeterService> logger)

@@ -6,7 +6,7 @@
 
 namespace Apollo.Service.Common.Entities
 {
-    public record Contact
+    public class Contact
     {
         //[BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]

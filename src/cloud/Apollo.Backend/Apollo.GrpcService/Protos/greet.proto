@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Apollo.GrpcService";
+option csharp_namespace = "Apollo.Services.Grpc";
 
 package greet;
 

@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\user.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\training.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\user.proto" GrpcServices="Server" ProtoCompile="True" />
+    <Protobuf Include="Protos\training.proto" GrpcServices="Server" ProtoCompile="True" />
     <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>
 

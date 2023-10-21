@@ -27,7 +27,7 @@ namespace Apollo.Service.Common.Entities
         /// </summary>
         //[Required]
         //[BsonElement("Identifier")]
-        public string Identifier { get; set; }
+        //public string Identifier { get; set; }
 
 
         //[BsonElement("Description")]
