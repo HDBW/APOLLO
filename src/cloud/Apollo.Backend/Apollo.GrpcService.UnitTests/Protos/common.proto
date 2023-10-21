@@ -1,0 +1,74 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+option csharp_namespace = "Apollo.Services.Grpc";
+
+package apollo;
+
+
+message Loans {
+  string Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string Url = 4;
+  Contact LoanContact = 5;
+}
+
+
+message EduProvider {
+  string Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string Url = 4;
+  Contact Contact = 5;
+  string Image = 6;
+}
+
+
+message Appointment {
+  string Id = 1;
+  string Appointment = 2;
+  string Appointment_type = 3;
+  string Appointment_description = 4;
+  Contact Appointment_location = 5;
+  google.protobuf.Timestamp StartDate = 6;
+  google.protobuf.Timestamp EndDate = 7;
+  string DurationDescription = 8;
+  google.protobuf.Duration Duration = 9;
+  repeated Occurence Occurences = 10;
+  bool IsGuaranteed = 11;
+  // Enum type needs to be defined separately
+  TrainingType TrainingType = 12;
+  google.protobuf.Duration TimeInvestAttendee = 13;
+  string TimeModel = 14;
+}
+
+message Occurence {
+  string Id = 1;
+  string CorrelationId = 2;
+  google.protobuf.Timestamp StartDate = 3;
+  google.protobuf.Timestamp EndDate = 4;
+  google.protobuf.Duration Duration = 5;
+  string Description = 6;
+  Contact Location = 7;
+}
+
+message Contact {
+  string Id = 1;
+  string Surname = 2;
+  string Mail = 3;
+  string Phone = 4;
+  string Organization = 5;
+  string Address = 6;
+  string City = 7;
+  string ZipCode = 8;
+  string EAppointmentUrl = 9;
+}
+
+enum TrainingType {
+  Online = 0;
+  Offline = 1;
+  Hybrid = 2;
+  OnDemand = 3;
+}

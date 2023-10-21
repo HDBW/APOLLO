@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "Protos/common.proto";
+
+
+option csharp_namespace = "Apollo.Services.Grpc";
+
+package apollo;
+
+// The greeting service definition.
+service TrainingService {
+  // Sends a greeting
+  rpc GetTraining (GetTrainingsRequest) returns (GetTrainingResponse);
+  rpc QueryTrainings (QueryTrainingsRequest) returns (QueryTrainingsResponse);
+}
+
+message GetTrainingsRequest {
+  string Id = 1;
+}
+
+// The response message containing the greetings.
+message GetTrainingResponse {
+  Training Training = 1;
+}
+
+// The request for QueryTrainings.
+message QueryTrainingsRequest {
+  string Contains = 1;
+  google.protobuf.Timestamp From = 2;
+  google.protobuf.Timestamp To = 3;
+}
+
+// The response message containing trainings.
+message QueryTrainingsResponse {
+  repeated Training Trainings = 1;
+}
+
+message Training {
+  string id = 1;
+  
+  string TrainingName = 2;
+  string Description = 3;
+  string ShortDescription = 4;
+  repeated string Content = 5;
+  repeated string BenefitList = 6;
+  repeated string Certificate = 7;
+  repeated string Prerequisites = 8;
+  repeated Loans Loans = 9;
+  EduProvider TrainingProvider = 10;
+  EduProvider CourseProvider = 11;
+  repeated Appointment Appointments = 12;
+  string ProductUrl = 13;
+  map<string, Contact> Contacts = 14;
+  TrainingType TrainingType = 15;
+  string IndividualStartDate = 16;
+  double Price = 18;
+  string PriceDescription = 19;
+  bool AccessibilityAvailable = 20;
+  repeated string SeoTags = 21;
+  repeated string Categories = 22;
+  google.protobuf.Timestamp PublishingDate = 23;
+  google.protobuf.Timestamp UnpublishingDate = 24;
+  string Successor = 25;
+  string Predecessor = 26;
+    google.protobuf.Timestamp CreatedAt = 27;
+    string CreatedBy = 28;
+    google.protobuf.Timestamp ChangedAt = 29;
+    string ChangedBy = 30;
+    
+}
+
+

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-option csharp_namespace = "Apollo.GrpcService.UnitTests";
+option csharp_namespace = "Apollo.Services.Grpc";
 
-package greet;
+package apollo;
 
 // The greeting service definition.
 service Greeter {
