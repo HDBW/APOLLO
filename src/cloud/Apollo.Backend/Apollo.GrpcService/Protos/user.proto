@@ -3,7 +3,7 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Apollo.Services.Grpc";
 
-package user;
+package apollo;
 
 // Defines the User object
 service UserService {
