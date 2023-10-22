@@ -14,8 +14,13 @@ service TrainingService {
   // Sends a greeting
   rpc GetTraining (GetTrainingsRequest) returns (GetTrainingResponse);
   rpc QueryTrainings (QueryTrainingsRequest) returns (QueryTrainingsResponse);
+  rpc CreateOrUpdateTraining (CreateOrUpdateRequest) returns (CreateOrUpdateResponse);
+  rpc DeleteTrainings (DeleteTrainingsRequest) returns (DeleteTrainingsResponse);
 }
 
+//
+// GetTraining Messages
+//
 message GetTrainingsRequest {
   string Id = 1;
 }
@@ -25,6 +30,10 @@ message GetTrainingResponse {
   Training Training = 1;
 }
 
+
+//
+// QueryTraining Messages
+//
 // The request for QueryTrainings.
 message QueryTrainingsRequest {
   string Contains = 1;
@@ -37,7 +46,40 @@ message QueryTrainingsResponse {
   repeated Training Trainings = 1;
 }
 
+
+
+//
+// CreateOrUpdateTraining Messages
+//
+// The request for QueryTrainings.
+message CreateOrUpdateRequest {
+  Training training = 1;
+}
+
+// The response message containing trainings.
+message  CreateOrUpdateResponse {
+  string Id = 1;
+}
+
+
+//
+// CreateOrUpdateTraining Messages
+//
+// The request for QueryTrainings.
+message DeleteTrainingsRequest {
+  repeated string Ids = 1;
+}
+
+// The response message containing trainings.
+message  DeleteTrainingsResponse {
+ 
+}
+
+
+
+
 message Training {
+
   string id = 1;
   
   string TrainingName = 2;

@@ -8,14 +8,16 @@ using Grpc.Net.Client;
 namespace Apollo.GrpcService.UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class TestServiceIntegrationTest
     {
         [TestMethod]
         public async Task GreateTest()
         {
-            using var channel = GrpcChannel.ForAddress("https://localhost:7064");
+            using var channel = Helpers.GetChannel();
             var client = new Greeter.GreeterClient(channel);
-            var reply = await client.SayHelloAsync(new HelloRequest { Name = "GreeterClient" });
+            var reply = await client.SayHelloAsync(new HelloRequest { Name = "me" });
+
+            Assert.IsTrue(reply.Message.Contains(" me"));
         }
 
      

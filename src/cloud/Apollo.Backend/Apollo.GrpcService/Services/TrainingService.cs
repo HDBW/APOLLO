@@ -25,5 +25,17 @@ namespace Apollo.GrpcService.Services
         {
             return Task.FromResult<QueryTrainingsResponse>(new QueryTrainingsResponse());
         }
+
+        public override Task<CreateOrUpdateTrainingResponse> CreateOrUpdateTraining(CreateOrUpdateTrainingRequest request, ServerCallContext context)
+        {
+            return Task.FromResult<CreateOrUpdateTrainingResponse>(new CreateOrUpdateTrainingResponse { Id = "1"  });
+        }
+
+        public override Task<DeleteTrainingsResponse> DeleteTrainings(DeleteTrainingsRequest request, ServerCallContext context)
+        {
+            return Task.FromResult<DeleteTrainingsResponse>(new DeleteTrainingsResponse {  });
+
+        }
+
     }
 }

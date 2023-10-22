@@ -1,5 +1,7 @@
 syntax = "proto3";
+
 import "google/protobuf/timestamp.proto";
+import "Protos/common.proto";
 
 option csharp_namespace = "Apollo.Services.Grpc";
 
@@ -12,6 +14,10 @@ service UserService {
 
   // QueryUsers
   rpc QueryUsers (QueryUsersRequest) returns (QueryUsersResponse);
+
+  rpc CreateOrUpdateUser (CreateOrUpdateUserRequest) returns (CreateOrUpdateUserResponse);
+
+  rpc DeleteUsers (DeleteUsersRequest) returns (DeleteUsersResponse);
 }
 
 // The request message containing the user's name.
@@ -39,6 +45,37 @@ message QueryUsersResponse {
   // The user instance
   repeated User users = 1;
 }
+
+
+
+
+//
+// CreateOrUpdateTraining Messages
+//
+// The request for QueryTrainings.
+message CreateOrUpdateUserRequest {
+  User user = 1;
+}
+
+// The response message containing trainings.
+message  CreateOrUpdateUserResponse {
+  string Id = 1;
+}
+
+
+//
+// CreateOrUpdateTraining Messages
+//
+// The request for QueryTrainings.
+message DeleteUsersRequest {
+  repeated string Ids = 1;
+}
+
+// The response message containing trainings.
+message  DeleteUsersResponse {
+ 
+}
+
 
  message User {
     string Id =1;
