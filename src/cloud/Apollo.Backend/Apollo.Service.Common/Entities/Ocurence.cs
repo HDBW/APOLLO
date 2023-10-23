@@ -4,7 +4,7 @@
 //using MongoDB.Bson;
 //using MongoDB.Bson.Serialization.Attributes;
 
-namespace Apollo.Service.Common.Entities
+namespace Apollo.Common.Entities
 {
     public record Occurence
     {

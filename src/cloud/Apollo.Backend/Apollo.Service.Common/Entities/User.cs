@@ -2,7 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 using System.Runtime.Serialization;
 
-namespace Apollo.Service.Common.Entities
+namespace Apollo.Common.Entities
 {
     [DataContract]
     public class User //: BaseItem

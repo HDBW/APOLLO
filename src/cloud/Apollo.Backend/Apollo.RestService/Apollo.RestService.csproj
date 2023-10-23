@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Apollo.Service.Common\Apollo.Service.Common.csproj" />
+    <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
   </ItemGroup>
 
 </Project>
