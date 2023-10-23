@@ -12,12 +12,12 @@
 
   <ItemGroup>
 
-    <Content Include="XApi.cs" />
+    <Content Include="ApolloApi.cs" />
     <Content Include="ApolloApi_Training.cs">
-      <DependentUpon>XApi.cs</DependentUpon>
+      <DependentUpon>ApolloApi.cs</DependentUpon>
     </Content>
     <Content Include="ApolloApi_User.cs">
-      <DependentUpon>XApi.cs</DependentUpon>
+      <DependentUpon>ApolloApi.cs</DependentUpon>
     </Content>
   </ItemGroup>
 
@@ -30,6 +30,10 @@
     <Content Include="MyApiPart2.cs">
       <DependentUpon>MyApi.cs</DependentUpon>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
   </ItemGroup>
   
 </Project>
