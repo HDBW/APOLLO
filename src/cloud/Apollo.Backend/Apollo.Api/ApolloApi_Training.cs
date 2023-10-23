@@ -8,6 +8,6 @@ namespace Apollo.Api
     /// </summary>
     public partial class ApolloApi
     {
-
+       
     }
 }

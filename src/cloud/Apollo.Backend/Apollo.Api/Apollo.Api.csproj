@@ -6,4 +6,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <Content Include="ApolloApi.cs"/>
+    <Content Include="ApolloApi_Training.cs">
+      <DependentUpon>ApolloApi.cs</DependentUpon>
+    </Content>
+    <Content Include="ApolloApi_User.cs">
+      <DependentUpon>ApolloApi.cs</DependentUpon>
+    </Content>
+  </ItemGroup>
+  
 </Project>
