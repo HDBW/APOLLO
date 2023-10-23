@@ -3,4 +3,10 @@
 
 public enum LessonType
 {
+    UNDEFINED,
+    FULL_TIME,
+    PART_TIME,
+    WEEKEND,
+    PART_TIME_WHILE_WORKING,
+    BLOCK_SCHEDULE
 }

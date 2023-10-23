@@ -3,8 +3,9 @@
 
 public enum TrainingType
 {
-    Online,
-    Offline,
-    Hybrid,
-    OnDemand
+    UNDEFINED,
+    ONLINE,
+    OFFLINE,
+    HYBRID,
+    ONDEMAND
 }
