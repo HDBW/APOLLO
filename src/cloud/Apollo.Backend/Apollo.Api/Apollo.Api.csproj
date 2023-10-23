@@ -12,12 +12,23 @@
 
   <ItemGroup>
 
-    <Content Include="ApolloApi.cs"/>
+    <Content Include="XApi.cs" />
     <Content Include="ApolloApi_Training.cs">
-      <DependentUpon>ApolloApi.cs</DependentUpon>
+      <DependentUpon>XApi.cs</DependentUpon>
     </Content>
     <Content Include="ApolloApi_User.cs">
-      <DependentUpon>ApolloApi.cs</DependentUpon>
+      <DependentUpon>XApi.cs</DependentUpon>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <Content Include="MyApi.cs" />
+    <Content Include="MyApiPart1.cs">
+      <DependentUpon>MyApi.cs</DependentUpon>
+    </Content>
+    <Content Include="MyApiPart2.cs">
+      <DependentUpon>MyApi.cs</DependentUpon>
     </Content>
   </ItemGroup>
   

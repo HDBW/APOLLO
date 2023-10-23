@@ -6,7 +6,7 @@ namespace Apollo.Api
     /// <summary>
     /// Implements all Apollo Business functionalities.
     /// </summary>
-    public partial class ApolloApi
+    public partial class XApi
     {
 
     }
