@@ -15,38 +15,33 @@ namespace Apollo.GrpcService.UnitTests
         private const string testId1 = "testuser-01";
 
     
-        private static UserServiceClient GetClient()
-        {
-            var channel = Helpers.GetChannel();
-            return new UserServiceClient(channel);
-        }
 
         [TestMethod]
-        public async Task GetTrainingTest()
+        public async Task GetUserTest()
         {
-            var client = GetClient();
+            var client = Helpers.GetClient();
             var reply = await client.GetUserAsync(new GetUserRequest { Id = testId1 });
         }
 
         [TestMethod]
-        public async Task QueryTrainingTest()
+        public async Task QueryUserTest()
         {
-            var client = GetClient();
+            var client = Helpers.GetClient();
             var reply = await client.QueryUsersAsync(new QueryUsersRequest { Contains = "testtraining"});
         }
 
         [TestMethod]
-        public async Task AddTrainingTest()
+        public async Task AddOrUpdateUserTest()
         {
-            var client = GetClient();
+            var client = Helpers.GetClient();
             var reply = await client.CreateOrUpdateUserAsync(new CreateOrUpdateUserRequest  { });
 
         }
 
         [TestMethod]
-        public async Task DeleteTrainingTest()
+        public async Task DeleteUsersTest()
         {
-            var client = GetClient();
+            var client = Helpers.GetClient();
             var reply = await client.DeleteUsersAsync(new DeleteUsersRequest  { });
         }
     }

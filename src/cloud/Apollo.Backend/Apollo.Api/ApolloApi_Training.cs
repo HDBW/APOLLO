@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Apollo.Common.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Apollo.Api
 {
@@ -18,7 +19,21 @@ namespace Apollo.Api
         /// <returns></returns>
         public Task<Training> GetTraining(string trainingId)
         {
-            return Task.FromResult<Training>(new Training());
+            try
+            {
+                _logger.LogTrace($"{this.User} entered {nameof(GetTraining)}");
+
+                var res = Task.FromResult<Training>(new Training());
+
+                _logger.LogTrace($"{this.User} completed {nameof(GetTraining)}");
+
+                return res;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{this.User} failed execution of {nameof(GetTraining)}");
+                throw;
+            }
         }
 
 

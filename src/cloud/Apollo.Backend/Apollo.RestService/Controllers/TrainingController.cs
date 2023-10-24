@@ -1,44 +1,70 @@
-﻿using Apollo.Common.Entities;
+﻿using Apollo.Api;
+using Apollo.Common.Entities;
+using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Apollo.Service.Controllers
 {
+    /// <summary>
+    /// Implements all operations required to deal with trainings.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TrainingController : ControllerBase
     {
-        // GET: api/<TrainingController>
-        [HttpGet]
-        public IEnumerable<Training> Get()
+        private readonly ApolloApi _api;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="api"></param>
+        public TrainingController(ApolloApi api)
         {
-            return new Training[0];
+            _api = api;
         }
 
-        // GET api/<TrainingController>/5
+        /// <summary>
+        /// Gets the training for the given taining identifier.
+        /// </summary>
+        /// <param name="id">The id of the training to be returned.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public Training Get(int id)
+        public async Task<GetTrainingResponse> GetTraining(string id)
         {
-            return new Training();
+            var res = await _api.GetTraining(id);
+
+            return new GetTrainingResponse { Training = res };
         }
+
+        /// <summary>
+        /// Looks up the training that mathc the given criteria.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost()]
+        public Task<IList<QueryTrainingsResponse>> QueryTrainings([FromBody] QueryTrainingsRequest req)
+        {
+            // todo. invoke api..
+            return Task.FromResult<IList<QueryTrainingsResponse>>(new List<QueryTrainingsResponse> { new QueryTrainingsResponse() { Trainings = new List<Training>() } });
+        }
+
 
         // POST api/<TrainingController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPut]
+        public Task<CreateOrUpdateTrainingResponse> CreateOrUpdateTraining([FromBody] CreateOrUpdateTrainingRequest req)
         {
+            // todo. invoke api..
+            return Task.FromResult(new CreateOrUpdateTrainingResponse());
         }
 
-        // PUT api/<TrainingController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
         // DELETE api/<TrainingController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Task Delete(List<int> iDs)
         {
+            // todo. invoke api..
+            return Task.CompletedTask;
         }
     }
 }
