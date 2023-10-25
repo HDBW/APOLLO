@@ -45,6 +45,7 @@ namespace Apollo.Service.Controllers
         [HttpPost()]
         public Task<IList<QueryTrainingsResponse>> QueryTrainings([FromBody] QueryTrainingsRequest req)
         {
+            //_api.QueryTrainings
             // todo. invoke api..
             return Task.FromResult<IList<QueryTrainingsResponse>>(new List<QueryTrainingsResponse> { new QueryTrainingsResponse() { Trainings = new List<Training>() } });
         }

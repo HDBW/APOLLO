@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Apollo.MongoDal\Apollo.MongoDal.csproj" />
     <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
   </ItemGroup>
 

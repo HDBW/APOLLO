@@ -2,7 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Security.Claims;
+using Apollo.MongoDal;
 using Microsoft.Extensions.Logging;
+
 
 namespace Apollo.Api
 {
@@ -28,7 +30,7 @@ namespace Apollo.Api
             }
         }
 
-        public ApolloApi(ILogger<ApolloApi> logger)
+        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger)
         {
             _logger = logger;
         }
