@@ -15,6 +15,8 @@ namespace Apollo.Api
     {
         private readonly ILogger<ApolloApi> _logger;
 
+        private readonly MongoDataAccessLayer _dal;
+
         public ClaimsPrincipal Principal { get; set; }
 
         /// <summary>
@@ -33,6 +35,7 @@ namespace Apollo.Api
         public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger)
         {
             _logger = logger;
+            _dal = dal;
         }
     }
 }

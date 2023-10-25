@@ -16,13 +16,16 @@ namespace Apollo.Service.Controllers
     {
         private readonly ApolloApi _api;
 
+        private readonly ILogger<TrainingController> _logger;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="api"></param>
-        public TrainingController(ApolloApi api)
+        public TrainingController(ApolloApi api, ILogger<TrainingController> logger)
         {
             _api = api;
+            _logger = logger;
         }
 
         /// <summary>
@@ -33,6 +36,8 @@ namespace Apollo.Service.Controllers
         [HttpGet("{id}")]
         public async Task<GetTrainingResponse> GetTraining(string id)
         {
+            _logger.LogTrace($"{nameof(GetTraining)} entered.");
+
             var res = await _api.GetTraining(id);
 
             return new GetTrainingResponse { Training = res };
