@@ -9,5 +9,9 @@ namespace Apollo.RestService.Messages
     public class QueryTrainingsRequest
     {
         public string Id { get; set; }
+
+        public DateTime? From { get; set; }
+
+        public DateTime? To { get; set; }
     }
 }
