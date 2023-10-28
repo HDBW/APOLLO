@@ -14,8 +14,11 @@ namespace Apollo.Common.Entities
     /// </summary>
     public class QueryTrainings
     {
+        
+
         public string? Contains { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
+       
     }
 }
