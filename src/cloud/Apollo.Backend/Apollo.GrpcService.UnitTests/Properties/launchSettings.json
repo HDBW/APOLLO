@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Apollo.GrpcService.UnitTests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:59971;http://localhost:59972"
+    }
+  }
+}
