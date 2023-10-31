@@ -17,7 +17,10 @@ namespace Apollo.Api
 
         private readonly MongoDataAccessLayer _dal;
 
-        public ClaimsPrincipal Principal { get; set; }
+        /// <summary>
+        /// Set by <see cref="ApiPrincipalFilter"/>.
+        /// </summary>
+        internal ClaimsPrincipal? Principal { get; set; }
 
         /// <summary>
         /// The name of the user.
@@ -26,8 +29,7 @@ namespace Apollo.Api
         {
             get
             {
-                // TODO GDPR??
-                string usr = Principal?.Identity?.Name;
+                string? usr = Principal?.Identity?.Name;
                 return String.IsNullOrEmpty(usr)  ? "anonymous" : usr;
             }
         }
@@ -37,9 +39,5 @@ namespace Apollo.Api
             _logger = logger;
             _dal = dal;
         }
-
-
-
-
     }
 }

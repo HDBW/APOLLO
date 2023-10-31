@@ -1,5 +1,6 @@
 
 using Apollo.Api;
+using Apollo.Service.Middleware;
 using Daenet.MongoDal;
 using Daenet.MongoDal.Entitties;
 
@@ -18,6 +19,12 @@ namespace Apollo.Service
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // Registers the action filter
+            builder.Services.AddControllers().AddMvcOptions(options =>
+            {
+                options.Filters.Add(new ApiPrincipalFilter());
+            });
+          
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
