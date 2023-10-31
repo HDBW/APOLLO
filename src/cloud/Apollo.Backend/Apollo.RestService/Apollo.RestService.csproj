@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Apollo.Api\Apollo.Api.csproj" />
     <ProjectReference Include="..\Apollo.GrpcService.UnitTests\Apollo.GrpcService.UnitTests.csproj" />
     <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
+    <ProjectReference Include="..\Daenet.MongoDal\Daenet.MongoDal.csproj" />
   </ItemGroup>
 
   <ItemGroup>

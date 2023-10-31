@@ -1,4 +1,8 @@
 
+using Apollo.Api;
+using Daenet.MongoDal;
+using Daenet.MongoDal.Entitties;
+
 namespace Apollo.Service
 {
     public class Program
@@ -31,6 +35,31 @@ namespace Apollo.Service
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void RegisterApi(WebApplicationBuilder builder)
+        {
+
+        }
+
+        /// <summary>
+        /// Registers the Daenet Mongo Dal.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <exception cref="Exception"></exception>
+        private static void RegisterDaenetMongoDal(WebApplicationBuilder builder)
+        {
+            var cfg = builder.Configuration.GetSection("MongoDalConfig").Get<MongoDalConfig>();
+
+            if (cfg == null)
+            {
+                throw new Exception("MongoDalConfig section is missing in the configuration file.");
+            }
+            
+            builder.Services.AddSingleton(cfg);
+            builder.Services.AddSingleton<MongoDataAccessLayer>();
+
+            builder.Services.AddScoped<MongoDataAccessLayer>();
         }
     }
 }

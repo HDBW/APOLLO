@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rest", "Rest", "{6A511DB5-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.Api", "Apollo.Api\Apollo.Api.csproj", "{C0DF9524-72C9-4A49-8F2A-E6A1113217B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.MongoDal", "Apollo.MongoDal\Apollo.MongoDal.csproj", "{442380F1-2B90-41C6-8CC2-356C634025CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daenet.MongoDal", "Daenet.MongoDal\Daenet.MongoDal.csproj", "{C140EFF2-257E-4816-B8D0-58829A87C2E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.MongoDal.UnitTests", "Apollo.MongoDal.UnitTests\Apollo.MongoDal.UnitTests.csproj", "{4A682DE3-8FAA-4F7E-A909-55B8275CADA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daenet.MongoDal.UnitTests", "Daenet.MongoDal.UnitTests\Daenet.MongoDal.UnitTests.csproj", "{4390739B-9906-4770-A86A-8BB3DF64C72D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,14 +47,14 @@ Global
 		{C0DF9524-72C9-4A49-8F2A-E6A1113217B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0DF9524-72C9-4A49-8F2A-E6A1113217B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0DF9524-72C9-4A49-8F2A-E6A1113217B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{442380F1-2B90-41C6-8CC2-356C634025CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{442380F1-2B90-41C6-8CC2-356C634025CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{442380F1-2B90-41C6-8CC2-356C634025CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{442380F1-2B90-41C6-8CC2-356C634025CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A682DE3-8FAA-4F7E-A909-55B8275CADA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A682DE3-8FAA-4F7E-A909-55B8275CADA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A682DE3-8FAA-4F7E-A909-55B8275CADA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A682DE3-8FAA-4F7E-A909-55B8275CADA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C140EFF2-257E-4816-B8D0-58829A87C2E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C140EFF2-257E-4816-B8D0-58829A87C2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C140EFF2-257E-4816-B8D0-58829A87C2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C140EFF2-257E-4816-B8D0-58829A87C2E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4390739B-9906-4770-A86A-8BB3DF64C72D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4390739B-9906-4770-A86A-8BB3DF64C72D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4390739B-9906-4770-A86A-8BB3DF64C72D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4390739B-9906-4770-A86A-8BB3DF64C72D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
