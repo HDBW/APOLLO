@@ -8,6 +8,7 @@ using static Apollo.Services.Grpc.TrainingService;
 
 namespace Apollo.GrpcService.UnitTests
 {
+    [TestCategory("Grpc")]
     [TestClass]
     public class TrainingServiceIntegrationTests
     {

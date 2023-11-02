@@ -13,6 +13,6 @@ namespace Apollo.RestService.Messages
         /// <summary>
         /// The Id of the created training instance.
         /// </summary>
-        public T Training{ get; set; }
+        public Training Training{ get; set; }
     }
 }

@@ -9,6 +9,7 @@ using static Apollo.Services.Grpc.UserService;
 
 namespace Apollo.GrpcService.UnitTests
 {
+    [TestCategory("Grpc")]
     [TestClass]
     public class UserServiceIntegrationTests
     {

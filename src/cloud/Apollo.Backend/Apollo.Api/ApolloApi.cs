@@ -44,7 +44,7 @@ namespace Apollo.Api
             _dal = dal;
         }
 
-        public async Task InsertTrainings(ICollection<T> trainings)
+        public async Task InsertTrainings(ICollection<Training> trainings)
         {
             ICollection<ExpandoObject> list = null;
 
