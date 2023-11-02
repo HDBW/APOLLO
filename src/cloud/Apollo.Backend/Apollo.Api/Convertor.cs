@@ -7,7 +7,7 @@ namespace Apollo.Api
     /// <summary>
     /// Provides methods to convert objects to expando objects.
     /// </summary>
-    internal static class Convertor
+    public static class Convertor
     {
         /// <summary>
         ///  Converts the items to expando objects.

@@ -61,17 +61,35 @@ namespace Apollo.Api
             }
         }
 
-     
-
 
         /// <summary>
         /// Gets the name of the collection for the specified item.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        private string GetCollectionName(object item)
+        public static string GetCollectionName(object item)
         {
-            return $"{item.GetType().Name}s";
+            return GetCollectionName(item.GetType().Name);
+        }
+
+        /// <summary>
+        /// Gets the name of the collection from type. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static string GetCollectionName<T>()
+        {
+            return GetCollectionName(typeof(Type).Name);
+        }
+
+        /// <summary>
+        /// Creates the name of the collection from the given type name.
+        /// </summary>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        private static string GetCollectionName(string typeName)
+        {
+            return $"{typeName.ToLower()}s";
         }
 
     }

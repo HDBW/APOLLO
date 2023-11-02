@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Apollo.Api\Apollo.Api.csproj" />
     <ProjectReference Include="..\Daenet.MongoDal\Daenet.MongoDal.csproj" />
   </ItemGroup>
 

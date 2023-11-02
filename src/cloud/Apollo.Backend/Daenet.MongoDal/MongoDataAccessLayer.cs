@@ -33,6 +33,13 @@ namespace Daenet.MongoDal
             this._db = this._client.GetDatabase(_cfg.MongoDatabase);
         }
 
+
+        /// <summary>
+        ///  Inserts the set of documents into the collection.
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="documents"></param>
+        /// <returns></returns>
         public async Task InsertManyAsync(string collectionName, IEnumerable<ExpandoObject> documents)
         {
             InsertManyOptions options = new InsertManyOptions
@@ -53,10 +60,24 @@ namespace Daenet.MongoDal
             await coll.InsertManyAsync(bsons, options);
         }
 
+
         /// <summary>
-        ///  
+        ///  Inserts a document into the collection.
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public async Task InsertAsync(string collectionName, ExpandoObject document)
+        {
+            var coll = GetCollection(collectionName);
+            await coll.InsertOneAsync(new BsonDocument(document));
+        }
+
+
+        /// <summary>
+        /// Looks up the set of documents.  
         /// </summary>        
-        public async Task<IList<ExpandoObject>> ExecuteQuery(string collectionName, ICollection<string> fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        public async Task<IList<ExpandoObject>> ExecuteQuery(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
         {
             if (skip < 0)
                 skip = 0;

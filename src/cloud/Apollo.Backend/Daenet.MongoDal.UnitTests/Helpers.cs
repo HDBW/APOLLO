@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Apollo.Api;
 
 namespace Daenet.MongoDal.UnitTests
 {
@@ -20,6 +21,11 @@ namespace Daenet.MongoDal.UnitTests
             });
 
             return dal;
+        }
+
+        internal static string GetCollectionName<T>()
+        {
+            return ApolloApi.GetCollectionName<T>();
         }
     }
 }
