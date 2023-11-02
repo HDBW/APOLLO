@@ -3,8 +3,10 @@
 
 namespace Apollo.RestService.Messages
 {
+    // Define a response message for creating or updating a user.
     public class CreateOrUpdateUserResponse
     {
+        // Property to store the result of the create/update operation.
         public object Result { get; internal set; }
     }
 }

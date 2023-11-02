@@ -8,6 +8,8 @@ namespace Apollo.RestService.Messages
     /// </summary>
     public class QueryTrainingsRequest
     {
+        public string Contains { get; set; }
+
         public string Id { get; set; }
 
         public DateTime? From { get; set; }
