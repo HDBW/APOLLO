@@ -17,12 +17,14 @@ namespace Apollo.Api
     {
         private readonly ILogger<ApolloApi> _logger;
 
+
         private readonly MongoDataAccessLayer _dal;
 
         /// <summary>
         /// Set by <see cref="ApiPrincipalFilter"/>.
         /// </summary>
-        internal ClaimsPrincipal? Principal { get; set; }
+        /// note it was changed from internal to public because it was causing issues in the ApiPrincipalFilter class
+        public ClaimsPrincipal? Principal { get; set; }
 
         /// <summary>
         /// The name of the user.

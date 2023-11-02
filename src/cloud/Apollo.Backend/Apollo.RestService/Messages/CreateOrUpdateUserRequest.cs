@@ -6,8 +6,10 @@ using Apollo.Common.Entities;
 
 namespace Apollo.RestService.Apollo.Common.Messages
 {
+    // Define a request message for creating or updating a user.
     public class CreateOrUpdateUserRequest
     {
+        // Property to hold the user to be created or updated
         public User User { get; internal set; }
     }
 }

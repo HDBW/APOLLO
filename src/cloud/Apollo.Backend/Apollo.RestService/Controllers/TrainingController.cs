@@ -3,8 +3,6 @@ using Apollo.Common.Entities;
 using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Apollo.Service.Controllers
 {
     /// <summary>
@@ -15,13 +13,8 @@ namespace Apollo.Service.Controllers
     public class TrainingController : ControllerBase
     {
         private readonly ApolloApi _api;
-
         private readonly ILogger<TrainingController> _logger;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="api"></param>
         public TrainingController(ApolloApi api, ILogger<TrainingController> logger)
         {
             _api = api;
@@ -29,48 +22,110 @@ namespace Apollo.Service.Controllers
         }
 
         /// <summary>
-        /// Gets the training for the given taining identifier.
+        /// Gets the training for the given training identifier.
         /// </summary>
         /// <param name="id">The id of the training to be returned.</param>
-        /// <returns></returns>
+        /// <returns>A response containing the requested training.</returns>
         [HttpGet("{id}")]
         public async Task<GetTrainingResponse> GetTraining(string id)
         {
-            _logger.LogTrace($"{nameof(GetTraining)} entered.");
+            try
+            {
+                _logger.LogTrace($"{nameof(GetTraining)} entered.");
 
-            var res = await _api.GetTraining(id);
+                // Call the Apollo API to retrieve the training with the specified ID.
+                var res = await _api.GetTraining(id);
 
-            return new GetTrainingResponse { Training = res };
+                _logger.LogTrace($"{nameof(GetTraining)} completed.");
+
+                // Return the training as a response.
+                return new GetTrainingResponse { Training = res };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger.LogError($"{nameof(GetTraining)} failed: {ex.Message}");
+                throw;
+            }
         }
 
         /// <summary>
         /// Looks up the training that mathc the given criteria.
         /// </summary>
         /// <returns></returns>
-        [HttpPost()]
-        public Task<IList<QueryTrainingsResponse>> QueryTrainings([FromBody] QueryTrainingsRequest req)
+        [HttpPost]
+        public async Task<IList<QueryTrainingsResponse>> QueryTrainings([FromBody] QueryTrainingsRequest req)
         {
-            //_api.QueryTrainings
-            // todo. invoke api..
-            return Task.FromResult<IList<QueryTrainingsResponse>>(new List<QueryTrainingsResponse> { new QueryTrainingsResponse() { Trainings = new List<T>() } });
+            try
+            {
+                _logger.LogTrace($"{nameof(QueryTrainings)} entered.");
+
+                // Create a new QueryTrainings object based on the QueryTrainingsRequest object.
+                var queryTrainings = new QueryTrainings
+                {
+                    Contains = req.Contains,
+                    From = req.From,
+                    To = req.To
+                    // Add more properties as needed for the query.
+                };
+
+                // Call the Apollo API to query trainings based on the request.
+                var trainings = await _api.QueryTrainings(queryTrainings);
+
+                _logger.LogTrace($"{nameof(QueryTrainings)} completed.");
+
+                // Return the queried trainings as a response.
+                return new List<QueryTrainingsResponse> { new QueryTrainingsResponse { Trainings = (List<Training>)trainings } };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger.LogError($"{nameof(QueryTrainings)} failed: {ex.Message}");
+                throw;
+            }
         }
 
-
-        // POST api/<TrainingController>
         [HttpPut]
-        public Task<CreateOrUpdateTrainingResponse> CreateOrUpdateTraining([FromBody] CreateOrUpdateTrainingRequest req)
+        public async Task<CreateOrUpdateTrainingResponse> CreateOrUpdateTraining([FromBody] CreateOrUpdateTrainingRequest req)
         {
-            // todo. invoke api..
-            return Task.FromResult(new CreateOrUpdateTrainingResponse());
+            try
+            {
+                _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} entered.");
+
+                // Assuming req contains the Training object to create or update.
+                var result = await _api.CreateOrUpdateTraining(req.Training);
+
+                _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} completed.");
+
+                // Return the result of the create/update operation as a response.
+                return new CreateOrUpdateTrainingResponse { Training = req.Training };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger.LogError($"{nameof(CreateOrUpdateTraining)} failed: {ex.Message}");
+                throw;
+            }
         }
 
-
-        // DELETE api/<TrainingController>/5
         [HttpDelete("{id}")]
-        public Task Delete(List<int> iDs)
+        public async Task Delete(string id)
         {
-            // todo. invoke api..
-            return Task.CompletedTask;
+            try
+            {
+                _logger.LogTrace($"{nameof(Delete)} entered.");
+
+                // Assuming you need to pass the ID of the training to delete.
+                await _api.DeleteTrainings(new int[] { int.Parse(id) });
+
+                _logger.LogTrace($"{nameof(Delete)} completed.");
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger.LogError($"{nameof(Delete)} failed: {ex.Message}");
+                throw;
+            }
         }
     }
 }
