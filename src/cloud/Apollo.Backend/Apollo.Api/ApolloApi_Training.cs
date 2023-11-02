@@ -17,13 +17,13 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="trainingId"></param>
         /// <returns></returns>
-        public Task<Training> GetTraining(string trainingId)
+        public Task<T> GetTraining(string trainingId)
         {
             try
             {
                 _logger.LogTrace($"{this.User} entered {nameof(GetTraining)}");
 
-                var res = Task.FromResult<Training>(new Training());
+                var res = Task.FromResult<T>(new T());
 
                 _logger.LogTrace($"{this.User} completed {nameof(GetTraining)}");
 
@@ -42,9 +42,9 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="filter">The filter that specifies trainings to be retrieved.</param>
         /// <returns>List of trainings.</returns>
-        public Task<IList<Training>> QueryTrainings(QueryTrainings filter)
+        public Task<IList<T>> QueryTrainings(QueryTrainings filter)
         {
-            return Task.FromResult<IList<Training>>(new List<Training>());
+            return Task.FromResult<IList<T>>(new List<T>());
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="training"></param>
         /// <returns></returns>
-        public Task<string> CreateOrUpdateTraining(Training training)
+        public Task<string> CreateOrUpdateTraining(T training)
         {
             return Task.FromResult<string>(Guid.NewGuid().ToString());
         }

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Apollo.Common.Entities
 {
-    public class Training
+    public class T
     {
         //[BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]

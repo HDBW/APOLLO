@@ -1,10 +1,12 @@
-﻿using System.Dynamic;
+﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Daenet.MongoDal.Entitties;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Misc;
 
 namespace Daenet.MongoDal
 {
@@ -31,6 +33,26 @@ namespace Daenet.MongoDal
             this._db = this._client.GetDatabase(_cfg.MongoDatabase);
         }
 
+        public async Task InsertManyAsync(string collectionName, IEnumerable<ExpandoObject> documents)
+        {
+            InsertManyOptions options = new InsertManyOptions
+            {
+                IsOrdered = false,
+                BypassDocumentValidation = true
+            };
+
+            var coll = GetCollection(collectionName);
+
+            ICollection<BsonDocument> bsons = new List<BsonDocument>();
+
+            foreach (var document in documents)
+            {
+                bsons.Add(new BsonDocument(document));
+            }
+
+            await coll.InsertManyAsync(bsons, options);
+        }
+
         /// <summary>
         ///  
         /// </summary>        
@@ -40,7 +62,7 @@ namespace Daenet.MongoDal
                 skip = 0;
             var results = new List<ExpandoObject>();
 
-            var coll = GetCollection<BsonDocument>(collectionName);
+            var coll = GetCollection(collectionName);
 
             FilterDefinition<BsonDocument> filter;
 
@@ -51,7 +73,7 @@ namespace Daenet.MongoDal
             else
                 filter = Builders<BsonDocument>.Filter.Eq("_id", "should not match anything");
 
-           // filter = Builders<BsonDocument>.Filter.Eq(EntitySet.PartitionKey, partitionKey);
+            // filter = Builders<BsonDocument>.Filter.Eq(EntitySet.PartitionKey, partitionKey);
 
             if (query != null)
             {
@@ -172,12 +194,12 @@ namespace Daenet.MongoDal
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <param name="collectionName">The name of collection.</param>
         /// <returns></returns>
-        private IMongoCollection<T> GetCollection<T>(string collectionName)
+        private IMongoCollection<BsonDocument> GetCollection(string collectionName)
         {
             if (string.IsNullOrEmpty(collectionName))
                 throw new ArgumentException($"Parameter '{nameof(collectionName)}' is empty!");
 
-            var todoTaskCollection = this._db.GetCollection<T>(collectionName);
+            var todoTaskCollection = this._db.GetCollection<BsonDocument>(collectionName);
 
             return todoTaskCollection;
         }
@@ -475,5 +497,7 @@ namespace Daenet.MongoDal
             var pattern = Regex.Replace(inputPattern, "(?=[\\.\\^\\$\\*\\+\\-\\?\\(\\)\\[\\]\\{\\}\\\\\\|\\—\\/])", "\\");
             return pattern;
         }
+
+
     }
 }

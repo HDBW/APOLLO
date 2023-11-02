@@ -10,6 +10,6 @@ namespace Apollo.RestService.Messages
     /// </summary>
     public class QueryTrainingsResponse
     {
-        public List<Training> Trainings { get; set; }
+        public List<T> Trainings { get; set; }
     }
 }

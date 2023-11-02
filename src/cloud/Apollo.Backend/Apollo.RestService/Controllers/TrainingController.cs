@@ -52,7 +52,7 @@ namespace Apollo.Service.Controllers
         {
             //_api.QueryTrainings
             // todo. invoke api..
-            return Task.FromResult<IList<QueryTrainingsResponse>>(new List<QueryTrainingsResponse> { new QueryTrainingsResponse() { Trainings = new List<Training>() } });
+            return Task.FromResult<IList<QueryTrainingsResponse>>(new List<QueryTrainingsResponse> { new QueryTrainingsResponse() { Trainings = new List<T>() } });
         }
 
 

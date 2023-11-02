@@ -1,7 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Dynamic;
 using System.Security.Claims;
+using Apollo.Common.Entities;
 using Daenet.MongoDal;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +32,7 @@ namespace Apollo.Api
             get
             {
                 string? usr = Principal?.Identity?.Name;
-                return String.IsNullOrEmpty(usr)  ? "anonymous" : usr;
+                return String.IsNullOrEmpty(usr) ? "anonymous" : usr;
             }
         }
 
@@ -39,5 +41,36 @@ namespace Apollo.Api
             _logger = logger;
             _dal = dal;
         }
+
+        public async Task InsertTrainings(ICollection<T> trainings)
+        {
+            ICollection<ExpandoObject> list = null;
+
+            try
+            {
+                List<ExpandoObject> expoTrainings = Convertor.Convert(trainings);
+
+                await _dal.InsertManyAsync(GetCollectionName("training"), expoTrainings);
+            }
+            catch (Exception ex)
+            {
+                //todo logger.
+                throw;
+            }
+        }
+
+     
+
+
+        /// <summary>
+        /// Gets the name of the collection for the specified item.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private string GetCollectionName(object item)
+        {
+            return $"{item.GetType().Name}s";
+        }
+
     }
 }

@@ -7,6 +7,6 @@ namespace Apollo.RestService.Messages
 {
     public class GetTrainingResponse
     {
-        public Training Training { get; set; }
+        public T Training { get; set; }
     }
 }
