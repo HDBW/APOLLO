@@ -75,12 +75,12 @@ namespace Daenet.MongoDal
 
 
         /// <summary>
-        ///  Inserts a document into the collection.
+        /// Deletes document.
         /// </summary>
         /// <param name="collectionName"></param>
-        /// <param name="document"></param>
-        /// <returns></returns>
-        public async Task DeleteAsync(string collectionName, string id)
+        /// <param name="id"></param>
+        /// <param name="throwIfNotDeleted">Set on false if exception should be thrown if the document is not deleted. Default value is true.</param>
+        public async Task DeleteAsync(string collectionName, string id, bool throwIfNotDeleted = true)
         {
             var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
 
@@ -88,8 +88,31 @@ namespace Daenet.MongoDal
 
             var result = await coll.DeleteOneAsync(filter);
 
-            if (result.DeletedCount != 1)
+            if (throwIfNotDeleted && result.DeletedCount != 1)
                 throw new ApplicationException("Document cannot be deleted!") ;
+
+        }
+
+
+        /// <summary>
+        /// Deletes many documents.
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="ids"></param>
+        /// <param name="throwIfNotDeleted">Set on false if exception should be thrown if the document is not deleted. Default value is true.</param>
+        /// <returns>Number of deleted records.</returns>
+        public async Task<long> DeleteManyAsync(string collectionName, string[] ids, bool throwIfNotDeleted = true)
+        {
+            var filter = Builders<BsonDocument>.Filter.In("_id", ids.Select(i => i));
+
+            var coll = GetCollection(collectionName);
+
+            var result = await coll.DeleteManyAsync(filter);
+
+            if (throwIfNotDeleted && result.DeletedCount != ids.Length)
+                throw new ApplicationException("Documents cannot be deleted!");
+
+            return result.DeletedCount;
         }
 
 

@@ -116,7 +116,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace($"{nameof(Delete)} entered.");
 
                 // Assuming you need to pass the ID of the training to delete.
-                await _api.DeleteTrainings(new int[] { int.Parse(id) });
+                await _api.DeleteTrainings(new string[] { id });
 
                 _logger.LogTrace($"{nameof(Delete)} completed.");
             }

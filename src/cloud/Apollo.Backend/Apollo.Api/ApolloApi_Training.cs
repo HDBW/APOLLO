@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Apollo.Common.Entities;
+using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Logging;
 
 namespace Apollo.Api
@@ -44,6 +45,8 @@ namespace Apollo.Api
         /// <returns>List of trainings.</returns>
         public Task<IList<Training>> QueryTrainings(QueryTrainings filter)
         {
+          
+
             return Task.FromResult<IList<Training>>(new List<Training>());
         }
 
@@ -63,9 +66,10 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="deletingIds">The list of training identifiers.</param>
         /// <returns>The numbe rof deleted trainings.</returns>
-        public Task<int> DeleteTrainings(int[] deletingIds)
+        public async Task<long> DeleteTrainings(string[] deletingIds)
         {
-            return Task.FromResult<int>(42);
+            var res = await _dal.DeleteManyAsync(GetCollectionName<Training>(), deletingIds);
+            return res;
 
         }
 
