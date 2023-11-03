@@ -13,8 +13,8 @@ namespace Daenet.MongoDal.UnitTests
     {
         Training[] _testTrainings = new Training[]
         {
-            new Training(){  Id = "T01", ProviderId = "unittest" },
-            new Training(){  Id = "T02", ProviderId = "unittest" },
+            new Training(){  Id = "T01", ProviderId = "unittest", TrainingName = "Open AI" },
+            new Training(){  Id = "T02", ProviderId = "unittest", TrainingName = "Azure AI" },
             new Training(){  Id = "T03" , ProviderId = "unittest" },
         };
 
@@ -77,7 +77,7 @@ namespace Daenet.MongoDal.UnitTests
         /// <param name="idx"></param>
         /// <returns></returns>
         [TestMethod]
-        [TestCategory("Prod")]
+        //[TestCategory("Prod")]
         [DataRow(0)]
         [DataRow(1)]
         [DataRow(2)]
@@ -93,7 +93,7 @@ namespace Daenet.MongoDal.UnitTests
 
 
         [TestMethod]
-        public async Task QueryTrainingnTest()
+        public async Task QueryNonExsistingTrainingTest()
         {
             var dal = Helpers.GetDal();
 
@@ -110,6 +110,56 @@ namespace Daenet.MongoDal.UnitTests
                  }
 
             }, 100, 0);
+
+            Assert.IsTrue(res?.Count == 0);
+        }
+
+        [TestMethod]
+        public async Task QueryTrainingsTest()
+        {
+            var dal = Helpers.GetDal();
+
+            await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
+            {
+                Fields = new List<FieldExpression>()
+                 {
+                     new FieldExpression()
+                     {
+                         FieldName = "Name",
+                         Operator = QueryOperator.NotEquals,
+                         Argument = new List<object>(){"anything"},
+                      }
+                 }
+
+            }, 100, 0);
+
+            Assert.IsTrue(res?.Count == 3);
+        }
+
+        [TestMethod]
+        public async Task QueryTrainingsByNameTest()
+        {
+            var dal = Helpers.GetDal();
+
+            await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
+            {
+                Fields = new List<FieldExpression>()
+                 {
+                     new FieldExpression()
+                     {
+                         FieldName = "TrainingName",
+                         Operator = QueryOperator.Contains,
+                         Argument = new List<object>(){"AI"},
+                      }
+                 }
+
+            }, 100, 0);
+
+            Assert.IsTrue(res?.Count == 2);
         }
 
     }
