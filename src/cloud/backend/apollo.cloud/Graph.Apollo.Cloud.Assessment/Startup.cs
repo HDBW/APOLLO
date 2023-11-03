@@ -36,7 +36,21 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        //services.AddGrpc();
+        services.AddGrpc(o =>
+        {
+            o.EnableDetailedErrors = true;
+            o.Interceptors.Add<RequestLogger>();
+        });
+        // Register configuration settings, e.g., MongoDalConfig.
+        services.Configure<MongoDalConfig>(Configuration.GetSection("MongoDalConfig"));
+
+        // Register DaenetMongoDal and configure options from app settings.
+        services.AddScoped<DaenetMongoDal>();
+
+        services.AddScoped<ApolloApi>();
+        services.AddScoped<MongoDataAccessLayer>();
+        services.AddSingleton<IGreeter, Graph.Invite.Apollo.App.Course.Services.Greeter>();
+        services.AddApplicationInsightsTelemetry(Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
         services.AddLogging();
         //services.AddSingleton<IDataService,AssessmentDataService>();
         

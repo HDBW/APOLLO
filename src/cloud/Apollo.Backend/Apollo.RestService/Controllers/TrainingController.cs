@@ -108,6 +108,37 @@ namespace Apollo.Service.Controllers
             }
         }
 
+        [HttpPost("insert")]
+        public async Task<IActionResult> InsertTrainings([FromBody] ICollection<Training> trainings)
+        {
+            try
+            {
+                _logger.LogTrace($"{nameof(InsertTrainings)} entered.");
+
+                if (trainings == null || trainings.Count == 0)
+                {
+                    // Return a 400 Bad Request with an error message.
+                    return BadRequest(new { error = "No valid trainings provided" });
+                }
+
+                // Call the Apollo API to insert the provided trainings.
+                await _api.InsertTrainings(trainings);
+
+                _logger.LogTrace($"{nameof(InsertTrainings)} completed.");
+
+                // Return a success response.
+                return Ok(new { message = "Trainings inserted successfully" });
+            }
+            catch (Exception ex)
+            {
+                // Log and return an error response with a 500 Internal Server Error.
+                _logger.LogError($"{nameof(InsertTrainings)} failed: {ex.Message}");
+                return StatusCode(500, new { error = "Failed to insert trainings" });
+            }
+        }
+
+
+
         [HttpDelete("{id}")]
         public async Task Delete(string id)
         {
