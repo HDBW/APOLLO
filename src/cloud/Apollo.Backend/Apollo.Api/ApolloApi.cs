@@ -46,17 +46,26 @@ namespace Apollo.Api
 
         public async Task InsertTrainings(ICollection<Training> trainings)
         {
-            ICollection<ExpandoObject> list = null;
-
             try
             {
+                _logger.LogTrace("InsertTrainings method entered.");
+
                 List<ExpandoObject> expoTrainings = Convertor.Convert(trainings);
 
+                // Log information before inserting data.
+                _logger.LogInformation($"Inserting {expoTrainings.Count} trainings into the database.");
+
                 await _dal.InsertManyAsync(GetCollectionName("training"), expoTrainings);
+
+                // Log information after a successful insertion.
+                _logger.LogInformation($"Inserted {expoTrainings.Count} trainings into the database.");
             }
             catch (Exception ex)
             {
-                //todo logger.
+                // Log an error in case of an exception.
+                _logger.LogError($"Error in InsertTrainings method: {ex.Message}");
+
+                // Re-throw the exception
                 throw;
             }
         }
