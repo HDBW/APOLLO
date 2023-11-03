@@ -1,6 +1,7 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Linq;
 using Apollo.Api;
 using Apollo.Common.Entities;
 using Daenet.MongoDal.Entitties;
@@ -18,6 +19,12 @@ namespace Daenet.MongoDal.UnitTests
             new Training(){  Id = "T03" , ProviderId = "unittest" },
         };
 
+        private async Task CleanTestDocuments()
+        {
+            var dal = Helpers.GetDal();
+
+            await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => t.Id).ToArray(), false);
+        }
 
         /// <summary>
         /// Cleansup all test data.
@@ -26,10 +33,20 @@ namespace Daenet.MongoDal.UnitTests
         [TestCleanup]
         public async Task CleanupTest()
         {
-            var dal = Helpers.GetDal();
-
-            await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => t.Id).ToArray(), false);
+            await CleanTestDocuments();
         }
+
+
+        /// <summary>
+        /// Cleansup all test data.
+        /// </summary>
+        /// <returns></returns>
+        [TestInitialize]
+        public async Task InitTest()
+        {
+            await CleanTestDocuments();
+        }
+
 
         [TestMethod]
         [ExpectedException(typeof(ApplicationException))]
@@ -162,5 +179,35 @@ namespace Daenet.MongoDal.UnitTests
             Assert.IsTrue(res?.Count == 2);
         }
 
+        [TestMethod]
+        public async Task UpsertTest()
+        {
+            var dal = Helpers.GetDal();
+
+            await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            _testTrainings.ToList().ForEach(t =>
+            {
+                t.Description = nameof(UpsertTest);
+            });
+
+            await dal.UpsertAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
+            {
+                Fields = new List<FieldExpression>()
+                 {
+                     new FieldExpression()
+                     {
+                         FieldName = "Description",
+                         Operator = QueryOperator.Equals,
+                         Argument = new List<object>(){nameof(UpsertTest)},
+                      }
+                 }
+
+            }, 100, 0);
+
+            Assert.IsTrue(res?.Count == 3);
+        }
     }
 }

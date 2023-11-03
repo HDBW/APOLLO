@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Amazon.Runtime.Internal.Util;
 using Daenet.MongoDal.Entitties;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -14,19 +17,37 @@ namespace Daenet.MongoDal
     /// Implements the Data Access Layer for communication with the Mongo Database.
     /// </summary>
     public class MongoDataAccessLayer
-    {
+    {        
         private readonly IMongoDatabase _db;
 
         private readonly MongoDalConfig _cfg;
+
+        private readonly ILogger<MongoDataAccessLayer>? _logger;
+
 
         /// <summary>
         /// Client instance.
         /// </summary>
         private readonly MongoClient _client;
 
-        public MongoDataAccessLayer(MongoDalConfig cfg)
+        /// <summary>
+        /// The key used for partitioning.  
+        /// </summary>
+        public string? ShredKey { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cfg"></param>
+        /// <param name="logger"></param>
+        /// <param name="shredKey">Used as a partitioning key.</param>
+        public MongoDataAccessLayer(MongoDalConfig cfg, ILogger<MongoDataAccessLayer>? logger = null, string? shredKey = null)
         {
             _cfg = cfg;
+
+            _logger = logger;
+
+            ShredKey = shredKey;
 
             this._client = new MongoClient(GetSettings(_cfg.MongoConnStr));
 
@@ -75,6 +96,106 @@ namespace Daenet.MongoDal
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="documents"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<UpsertResult> UpsertAsync(string collectionName, ICollection<ExpandoObject> documents)
+        {
+            if (documents == null)
+                throw new ArgumentNullException($"Argument {nameof(documents)} cannot be nulL!");
+
+            var coll = GetCollection(collectionName);
+
+            try
+            {
+                int inserted = 0;
+                int updated = 0;
+
+                foreach (IDictionary<string, object> item in documents)
+                {
+                    if (item == null)
+                        throw new ArgumentNullException(nameof(item));
+
+                    FilterDefinition<BsonDocument> filter = ShredKey == null ?
+                        Builders<BsonDocument>.Filter.Eq("_id", item["_id"]) :
+                        Builders<BsonDocument>.Filter.Eq("_id", item["_id"]) &
+                        Builders<BsonDocument>.Filter.Eq("ShredKey", item[ShredKey]);
+
+                        BsonDocument? doc =
+                        await coll.FindOneAndUpdateAsync<BsonDocument>(filter, BuildUpdate(item as ExpandoObject),
+                        new FindOneAndUpdateOptions<BsonDocument>
+                        {
+                            IsUpsert = true,
+                            ReturnDocument = ReturnDocument.Before
+                        });
+
+                    if (doc == null)
+                    {
+                        // inserted
+                        inserted++;
+                    }
+                    else
+                    {
+                        // updated
+                        updated++;
+                    }
+                }
+
+                return new UpsertResult
+                {
+                    Inserted = inserted,
+                    Updated = updated
+                };
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex.Message, $"{nameof(UpsertAsync)} has failed");
+                throw;
+
+            }
+        }
+
+        /// <summary>
+        /// Builds an update definition for the given document.
+        /// </summary>
+        /// <param name="doc">The document to build the update definition for.</param>
+        /// <returns>The update definition for the given document.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when the given document is null.</exception>
+        private UpdateDefinition<BsonDocument> BuildUpdate(ExpandoObject doc)
+        {
+            if (doc == null)
+                throw new ArgumentNullException("The argument doc cannot be null.");
+
+            var builder = Builders<BsonDocument>.Update;
+            var updates = new List<UpdateDefinition<BsonDocument>>();
+
+            foreach (var prop in (IDictionary<string, object>)doc!)
+            {
+                if (prop.Key == "_id")
+                    continue; // Mongo doesn't allow changing Mongo IDs
+                else if (prop.Value == null)// TODO we cannot update existing value to NULL!
+                    continue;
+                else
+                {
+                    if (prop.Key == "CreatedAt" || prop.Key == "CreatedBy")
+                    {
+                        updates.Add(builder.SetOnInsert(prop.Key, prop.Value));
+                    }
+                    else
+                    {
+                        updates.Add(builder.Set(prop.Key, prop.Value));
+                    }
+                }
+            }
+
+            return builder.Combine(updates);
+        }
+
+
+        /// <summary>
         /// Deletes document.
         /// </summary>
         /// <param name="collectionName"></param>
@@ -89,7 +210,7 @@ namespace Daenet.MongoDal
             var result = await coll.DeleteOneAsync(filter);
 
             if (throwIfNotDeleted && result.DeletedCount != 1)
-                throw new ApplicationException("Document cannot be deleted!") ;
+                throw new ApplicationException("Document cannot be deleted!");
 
         }
 

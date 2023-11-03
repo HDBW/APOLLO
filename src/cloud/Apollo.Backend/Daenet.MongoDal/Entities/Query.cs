@@ -28,7 +28,7 @@ namespace Daenet.MongoDal.Entitties
         {
             StringBuilder sb = new StringBuilder();
 
-            if (Fields != null || Fields.Count == 0)
+            if (Fields != null || Fields?.Count == 0)
             {
                 foreach (var item in this.Fields)
                 {

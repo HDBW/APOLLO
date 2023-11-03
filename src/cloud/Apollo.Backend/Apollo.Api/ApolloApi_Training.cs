@@ -44,11 +44,21 @@ namespace Apollo.Api
         /// <param name="filter">The filter that specifies trainings to be retrieved.</param>
         /// <returns>List of trainings.</returns>
         public Task<IList<Training>> QueryTrainings(QueryTrainings filter)
-        {
-          
+        {          
 
             return Task.FromResult<IList<Training>>(new List<Training>());
         }
+
+        /// <summary>
+        /// Creates the new Trainng instance 
+        /// </summary>
+        /// <param name="training"></param>
+        /// <returns></returns>
+        public Task<string> InsertTraining(Training training)
+        {
+            return Task.FromResult<string>(Guid.NewGuid().ToString());
+        }
+
 
         /// <summary>
         /// Creates the new Trainng instance 
@@ -70,7 +80,6 @@ namespace Apollo.Api
         {
             var res = await _dal.DeleteManyAsync(GetCollectionName<Training>(), deletingIds);
             return res;
-
         }
 
     }
