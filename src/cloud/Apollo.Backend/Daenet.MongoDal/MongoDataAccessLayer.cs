@@ -33,7 +33,7 @@ namespace Daenet.MongoDal
         /// <summary>
         /// The key used for partitioning.  
         /// </summary>
-        public string? ShredKey { get; set; }
+       // public string? ShredKey { get; set; }
 
         /// <summary>
         /// 
@@ -41,13 +41,13 @@ namespace Daenet.MongoDal
         /// <param name="cfg"></param>
         /// <param name="logger"></param>
         /// <param name="shredKey">Used as a partitioning key.</param>
-        public MongoDataAccessLayer(MongoDalConfig cfg, ILogger<MongoDataAccessLayer>? logger = null, string? shredKey = null)
+        public MongoDataAccessLayer(MongoDalConfig cfg, ILogger<MongoDataAccessLayer>? logger = null/*, string? shredKey = null*/)
         {
             _cfg = cfg;
 
             _logger = logger;
 
-            ShredKey = shredKey;
+            //ShredKey = shredKey;
 
             this._client = new MongoClient(GetSettings(_cfg.MongoConnStr));
 
@@ -119,12 +119,15 @@ namespace Daenet.MongoDal
                     if (item == null)
                         throw new ArgumentNullException(nameof(item));
 
-                    FilterDefinition<BsonDocument> filter = ShredKey == null ?
-                        Builders<BsonDocument>.Filter.Eq("_id", item["_id"]) :
-                        Builders<BsonDocument>.Filter.Eq("_id", item["_id"]) &
-                        Builders<BsonDocument>.Filter.Eq("ShredKey", item[ShredKey]);
+                    FilterDefinition<BsonDocument> filter =
+                    Builders<BsonDocument>.Filter.Eq("_id", item["_id"]);                   
 
-                        BsonDocument? doc =
+                    //FilterDefinition<BsonDocument> filter = ShredKey == null ?
+                    //    Builders<BsonDocument>.Filter.Eq("_id", item["_id"]) :
+                    //    Builders<BsonDocument>.Filter.Eq("_id", item["_id"]) &
+                    //    Builders<BsonDocument>.Filter.Eq("ShredKey", item[ShredKey]);
+
+                    BsonDocument? doc =
                         await coll.FindOneAndUpdateAsync<BsonDocument>(filter, BuildUpdate(item as ExpandoObject),
                         new FindOneAndUpdateOptions<BsonDocument>
                         {
