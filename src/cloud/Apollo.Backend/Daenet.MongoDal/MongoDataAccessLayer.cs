@@ -75,6 +75,26 @@ namespace Daenet.MongoDal
 
 
         /// <summary>
+        ///  Inserts a document into the collection.
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(string collectionName, string id)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+
+            var coll = GetCollection(collectionName);
+
+            var result = await coll.DeleteOneAsync(filter);
+
+            if (result.DeletedCount != 1)
+                throw new ApplicationException("Document cannot be deleted!") ;
+        }
+
+
+
+        /// <summary>
         /// Looks up the set of documents.  
         /// </summary>        
         public async Task<IList<ExpandoObject>> ExecuteQuery(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)

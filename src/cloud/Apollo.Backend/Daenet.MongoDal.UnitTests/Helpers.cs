@@ -16,8 +16,8 @@ namespace Daenet.MongoDal.UnitTests
         {
             MongoDataAccessLayer dal = new MongoDataAccessLayer(new Entitties.MongoDalConfig()
             {
-                MongoConnStr = "mongodb://apollobackend-cosmos-dev:ixHaRynO7TgcqeES2Ho6eq3PYXWYTwRHgnai316AvC69TJkecHbKwPr7CW47ReSdGgLIk3f0FD8FACDbgUNQxQ==@apollobackend-cosmos-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@apollobackend-cosmos-dev@",
-                MongoDatabase = "apollobackend-cosmos-dev"
+                MongoConnStr = "mongodb://apollodb-cosmos-dev:TV9uJP68Tr07LalP2dVazch7AVBXfsVqB4HIzkGMNbBQtKWe7aTT42iKdZt8IuCuH0UHLjbgmwwRACDbIv9d2A==@apollodb-cosmos-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@apollodb-cosmos-dev@",
+                MongoDatabase = "apollodb"
             });
 
             return dal;

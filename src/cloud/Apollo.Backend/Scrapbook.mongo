@@ -1,0 +1,2013 @@
+
+db.genericarticles.find({"UsePurposes":{$size:1}})
+db.genericarticles.find({"GenArtNo":"00412"})
+
+db.manufacturers.find()
+db.manufacturers.find({"BrandNo": "0055"})
+
+db.assets.find({"ObjectId": "0000-00010-001"})
+db.keyvalues.find({"Key": "002"})
+
+db.assets.find({"DocNo": "005510112"})
+db.assets.find({"BrandNo": "0000"})
+
+// Articles
+db.articles.count()
+
+db.articles.find({"ObjectId": "0000-0004"})
+
+db.articles.find({"BrandNo":"5376", "AssetRefs": {$ne: []}})
+
+db.articles.find({"BrandNo":"0000", "ObjectId":"0000-0000"})
+
+db.articles.find({"AssetRefs": {$size: 13}})
+
+db.articles.find({"AssetRefs": {$ne: []}})
+
+db.articles.find({"BrandNo" : "0055"}).count()
+db.articles.find({"ObjectId" : "5376-AU422202"})
+
+// Huge one
+db.articles.find()
+db.articles.find({"ArtNo" : "R5376000"})
+db.articles.find({"ArtNo" : "AU260800"})
+db.articles.find({"ArtNo" : "R4913055+"})
+db.articles.find({"ArtNo" : "51277296"})
+
+db.articles.find({"GroupId" : "1070671"})
+
+db.articles.find({"BrandNo" : "0000"})
+
+db.articles.find({"PriceCalculation.Rows.IsPriceModel" : {$exists: true}})
+
+db.articles.find({"ArtNo" : "19010007"})
+
+db.articles.find({"GraphDocs": {$ne: []}})
+db.articles.find({"GenericArticleRefs.GenArtNo" : "60262"})
+
+db.articles.find({"GenericArticleRefs": {$size: 0}})
+db.articles.find({"GenericArticleRefs.2": {$exists: true}})
+db.articles.find({"ArticleInfo": {$size: 2}})
+db.articles.find({"Assets.DocNo" : "005517828"})
+
+db.articles.find({"ArticleInfo": {$size: 2}})
+
+db.articles.find({"TradeNos": {"$ne": []}, "TradeNos.Exclude": false}).count()
+
+// db.articles.find(
+//    {
+//       "ArtNo": { $nin: db.manufacturerarticlereferences.distinct("ArtNo") }
+//    }
+// )
+
+db.manufacturerarticlereferences.distinct("ArtNo")
+
+db.articles.deleteOne({"ArtNo" : "19050081", "_id": null})
+db.articles.deleteOne({"ArtNo" : "19010001", "_id": "0001-19010001"})
+
+db.articles.find({"AccessoryList" : {$ne: []}}).limit(10).pretty()
+db.articles.find({"AccessoryList" : {$ne: []}, "ArticleInfo" : {$ne: []}, "ArticleParts" : {$ne: []}, "SupersedingArticles" : {$ne: []}, "CountryRestrictions" : {$ne: []}, "PartsCriteria" : {$ne: []}, "GTIN" : {$ne: []}, "CriteriaRefs" : {$ne: []}, "TradeNos" : {$ne: []}, "GenericArticleRefs" : {$ne: []}, "CounSpecArtData" : {$ne: []}, "PartsListCountryResrticts" : {$ne: []}, "PartsListCoordGraphs" : {$ne: []}, "Assets" : {$ne: []}})
+
+db.articles.find({"ArticleInfo" : {$ne: []}}).pretty()
+db.articles.find({"PriceCalculation": {$ne: null}, "PriceCalculation.Rows" : {$ne: []}})
+db.articles.find({"TradeNos" : {$ne: []}}).pretty()
+
+db.articles.find({"Prices.GrossPrice": {$lt: 100}})
+
+db.articles.find({"ArticlePart" : {$ne: []}}).limit(10).pretty()
+
+db.articles.find({"ArticleRefs" : {$ne: []}}).limit(3).pretty()
+
+db.articles.find({"ArticleParts" : {$ne: null}}).count().pretty()
+
+db.articles.find({"GraphDocs" : {$ne: null}}).pretty()
+
+db.articles.find({"TradeNos.TradeNo": "Car-Light 12V 8W"})
+
+
+
+db.articles.find({"GenericArticleRefs" : {$ne: []}}).limit(1).pretty()
+
+db.articles.find({"SupersedingArticles" : {$ne: []}}).limit(1)
+
+db.articles.find({"Vehicles" : {$eq: []}}).limit(3)
+
+db.articles.find({"ArtNo" : { $regex : /^19010075^/ }})
+
+db.articles.find({"BrandNo": "0000"})
+
+db.articles.aggregate(
+  [
+    {
+      $match: {
+        "ArtNo": {
+          $eq: "J1061210"
+        }
+      }
+    },
+    {
+      "$project": {
+          NumberOfPrices : {$size: "$Prices"}
+      }
+    }
+  ]
+)
+
+db.articles.aggregate([
+  {
+    $match: {
+      "ArticleRefs.RefPrice": {$ne: []}
+      }
+    }
+]).pretty()
+
+// Gets articles that have some ArticleParts
+db.articles.find({"ArticleParts":  { "$not": { "$size": 0 } } })
+
+// Fets articles that have one or more SupersedingArticles
+db.articles.find({"SupersedingArticles":  { "$not": { "$size": 0 } } })
+
+db.articles.find({"ArtNo" : "95923003001"})
+
+db.articles.find({"GenericArticleRefs.GenArtNo": "60262"})
+
+db.articles.aggregate([{$match : { "BrandNo" : { $eq: "0072"}}}, {$count: "ElParts"}])
+
+db.articles.find({"_id" : "0072-19010022"})
+db.articles.find({"ArtNo": "95923003001"})
+
+db.articles.find({"BrandNo": "0000"})
+
+//201 prices for specified ArtNo
+db.articles.aggregate([{$match : { "ArtNo" : { $eq: "19050095"}}}, 
+    {
+        $group: {"_id": "$ArtNo"}
+    }
+]).pretty()
+
+//203 reference number for specified ArtNo
+db.articles.aggregate([{$match : { "ArtNo" : { $eq: "19050095"}}}, 
+    {
+        $group: {"_id": "$ArticleRefs"}
+    }
+])
+
+//204 superseding articles specified ArtNo
+db.articles.aggregate([{$match : { "ArtNo" : { $eq: "19020059"}}}, 
+    {
+        $group: {"_id": "$SupersedingArticles"}
+    }
+])
+
+//205 parts lists specified ArtNo
+db.articles.aggregate([{$match : { "ArtNo" : { $eq: "50266070"}}}, 
+    {
+        $group: {"_id": "$ArticleParts"}
+    }
+])
+
+//Find Generic articles for specified ArtNo
+db.articles.aggregate([{$match : { "ArtNo" : { $eq: "19010001"}}}, 
+    {
+        $group: {"_id": "$GenericArticleRefs"}
+    }
+])
+
+
+db.engines.find({'ObjectId' : { '$regex' : '/^04/' }})
+
+db.articles.aggregate(
+[
+    {$match : { "ArtNo" : { $eq: "50266070"}}}, 
+    {
+        $group: {"_id": "$ArticleParts"}
+    }
+])
+
+db.articles.distinct("ArtDescriptionTerms.001.Original", {"ArtDescriptionTerms.001.Capital" : {$in: [/STOPPER/, /LUFT/]}})
+// vehicles
+// 400 articlevehicleslinkages
+db.articlevehicleslinkages.count()
+db.articlevehicleslinkages.find()
+
+db.articlevehicleslinkages.find()
+
+db.articlevehicleslinkages.find({},{ "CreatedAt": 1,  }).limit(10000).sort({'CreatedAt':1}); 
+db.articlevehicleslinkages.find({BrandNo: "0000"})
+db.articlevehicleslinkages.find({"KTypNo": "000018692"})
+
+db.articlevehicleslinkages.find({"BrandNo":"0072" ,"ArtNo" : "70660052","KTypNo" : "000017810"})
+db.articlevehicleslinkages.find({"BrandNo":"9999" ,"ArtNo" : "95923000"})
+
+db.articlevehicleslinkages.find({"BrandNo":"9999" ,"_id" : "95923000"})
+
+db.articlevehicleslinkages.find({"BrandNo":"9999" ,"ArtNo" : "19010001"}).count()
+db.articlevehicleslinkages.find({"BrandNo":"0072" ,"ArtNo" : "19010001", "KW": null})
+
+db.articlevehicleslinkages.deleteMany({"DocumentType": "JournalDoc"})
+db.articlevehicleslinkages.find({"BrandNo":"0072" ,"ArtNo" : "19020007", "KTypNo": "000017268"})
+
+db.articlevehicleslinkages.find({"ObjectId" : { $regex : /^9999-19010001^/ }})
+
+db.articlevehicleslinkages.find({"_id" : { $regex : /^19010001^/ }})
+
+db.articlevehicleslinkages.find({ArtNo : { $regex : /^1001/ }})
+
+db.articlevehicleslinkages.find({"ArtNo": "19010001"}).count()
+
+db.articlevehicleslinkages.find({"ArtNo": "J1103008"}).count()
+
+db.articlevehicleslinkages.find({"ArtNo" : {$in: 
+[
+"95945422",
+"95921001",
+"95945370"
+	]} 
+  })
+
+db.articlevehicleslinkages.find({"KTypNo": "000033521"})
+
+db.articlevehicleslinkages.find({"ObjectId": "0055-95923003001-06291-002-000000001-1"})
+
+db.vehicles.find({"IsTopBestVIO" : {$ne: null}})
+
+// 120 Vehicle Types
+// 532 CV Types 
+
+db.vehicles.count()
+
+db.vehicles.find()
+
+db.vehicles.find().skip(100000).limit(2000)
+
+db.vehicles.find({"Delete": true}).count()
+db.vehicles.find({"BrandNo": "0000"})
+db.vehicles.find({"KTyp": "016"})
+
+db.vehicles.find({"VehicleTypeInfo" : {$ne: null}})
+
+
+db.vehicles.find({"KTyp": "016"})
+db.vehicles.find({"KModNo": "00028"})
+
+db.vehicles.find({"EngineNoAllocRefs.ModYFrom": {$ne: ""}})
+
+db.vehicles.find({"EngineNoAllocRefs.EngCode": "BLX"})
+
+db.vehicles.find({"FuelMixForm": {"$ne": null}})
+//Count of vehicles with typ "002"
+db.vehicles.aggregate([{$match : { "KTyp" : { $eq: "002"}}}, {$count: "PC"}])
+
+//Count of vehicles with typ "016"
+db.vehicles.aggregate([{$match : { "KTyp" : { $eq: "016"}}}, {$count: "CV"}])
+
+db.vehicles.find({},{"EngineNoAllocRefs": 1}).sort({"EngineNoAllocRefs.0": 1}).pretty()
+
+//1-50
+db.vehicles.find({"KTypNo" : {$in: 
+    [
+      "000038711",
+      "000038617",
+      "000038605",
+      "000038593",
+      "000036605",
+      "000036549",
+      "000036086",
+      "000036052",
+      "000035792",
+      "000035632",
+      "000035623",
+      "000035396",
+      "000035342",
+      "000035339",
+      "000035172",
+      "000033633",
+      "000033571"
+    ]} 
+  })
+
+db.vehicles.find({"FirstKbaNo" : {$ne: null}})
+
+db.vehicles.find({"KTypNo": "000033520"})
+
+db.vehicles.find({"KbaTypRefs.KBANo"  : "0035AFR"})
+
+db.vehicles.find({"ManufacturerTerms.001.Default.Capital": "BMW"},{"ManufacturerTerms.001.Default.Capital": "1"})
+
+db.vehicles.distinct("ManufacturerTerms.001.Default.Capital")
+
+db.vehicles.find({}, {"LCV": 1}).sort({"LCV": -1})
+db.vehicles.find({}, {"Terms.255.Default.Capital": 1}).sort({"Terms.255.Default.Capital": 1})
+
+// 110 Vehicle Model Series
+db.vehiclemodels.find({CTermNo: '110037112'})
+db.vehiclemodels.find({}, {'ObjectId': 1, 'Terms.255.Default.Original': 1, _id:0}).sort({'Terms.255.Default.Capital': 1}).pretty()
+
+db.vehiclemodels.find({'Terms.001.B.Capital': {$ne: null}})
+db.vehiclemodels.find({"KModNo" : "00001"})
+
+db.vehicles.find({"EngineNoAllocRefs" : {$size: 2}})
+db.vehicles.find({"EngineNoAllocRefs.EngCode" : "F4R 874"},{"EngineNoAllocRefs": 1})
+db.vehicles.aggregate([{$match : { $text: { "$search": "F4R 874" } }}])
+db.vehicles.find({"EngineNoAllocRefs.$**.EngCode" : "F4R 874"}, {"EngineNoAllocRefs": 1})
+db.vehiclemodels.find({"ManNo" : "M00002"})
+
+db.vehiclemodels.find({KModNo: "00164"})
+db.vehiclemodels.find({"ModelTypes": {$size: 3}})
+db.vehiclemodels.find({_id : {$ne:null}},{"ObjectId" : 1, "KTyp" : 1, "KModNo" : 1})
+db.vehiclemodels.find({"KModNo" : {$in: 
+    [
+      "41551",
+      "41416",
+      "41363",
+      "40800",
+      "40785",
+      "40489",
+      "40277",
+      "39914",
+      "39896",
+      "39833",
+      "39360",
+      "39049"
+    ]} 
+  })
+
+db.vehiclemodels.find({"KModNo" : {$in: 
+    [
+      "12485",
+      "12297",
+      "11636",
+      "11525",
+      "11436",
+      "11191",
+      "11178",
+      "10909",
+      "10759",
+      "10526"
+    ]} 
+  }) 
+
+db.vehiclemodels.aggregate([
+  {
+    "$lookup": {
+      "from": "manufacturers",
+      "let": {
+        manNumber: "$ManNo"
+      },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $eq: ["$ManNo", "$$manNumber"]
+            }
+          }
+        }
+      ],
+      
+      "as": "manufacturer"
+    }
+  },
+  {
+    $limit: 10
+  }
+])
+
+// Configuration
+db.configuration.find()
+
+//001 Header
+db.headers.count()
+db.headers.find()
+
+//010 Countries
+db.countries.count()
+db.countries.find()
+db.countries.find({"BrandNo": "Postman"})
+db.countries.find({"BrandNo": "0000"})
+db.countries.find({"_id": ",>?\"-*<=+"})
+db.countries.find({"CurNo": "656"})
+//find 10
+db.countries.find({"TermNo" : "000009972"})
+db.countries.find({"TermNo": {$in: 
+        [
+          "000009972",
+          "000009951",
+          "000010121",
+          "000009930",
+          "000010063",
+          "000010062",
+          "000009895",
+          "000009881",
+          "000010029",
+          "000009861" 
+        ]
+      }
+    }    
+  )
+
+
+//020 Language
+db.languages.count()
+db.assets.find()
+db.assets.count()
+
+db.assets.find({"_id": "0055-005500012-255"})
+
+db.assets.find({"LangNo": {$ne: "255"}})
+
+db.assets.find({"TermNo": {$ne: ""}}).count()
+
+db.assets.find({"ImageType": "001"})
+
+db.assets.deleteOne({"BrandNo": "0000","Status": "OK"})
+db.assets.find({"_id": "0000-!)(%23-%3A%3F%7D"})
+db.assets.find({"_id": "0000-!)(#-:?}"})
+db.assets.find({"BrandNo": "0000"})
+db.assets.find({"_id": "0000-%21%40%40%23%25%26%5E%5E%29%28%2A%29%28__-%7B%3A%7C%3E%3E%3C%3E%3C%3F%3E%3C%7D%7D%7D%7B%3C"})
+db.assets.find({"BrandNo": "0000", "_id": "0000-!)(%23-%3A%3F%7D", "Width": "596"})
+
+db.assets.replaceOne({"_id": "0000-!)(#-:?}", "BrandNo": "0000"}, {"DocType": "", "BrandNo": "0000"})
+
+db.assets.find({"DocNo": "007200211"})
+
+db.languages.find()
+db.languages.find({"LangNo": "023"})
+
+// 035 Text Modules
+db.textmodules.count()
+db.textmodules.find({"BrandNo": "0000"})
+
+db.textmodules.find({"Text": ""})
+db.textmodules.find({"Text":{$eq:[null,""]}})
+db.textmodules.find({"TxtModNo": "123"})
+
+db.textmodules.find({"LangNo": "016"})
+
+
+// 035 Text Modules 0072
+db.textmodules.aggregate([{$match : { "BrandNo" : { $eq: "0072"}}}, {$count: "Elpart"}])
+
+db.textmodules.aggregate([{$match : { "BrandNo" : { $eq: "0055"}}}, {$count: "Jakoparts"}])
+
+db.textmodules.find({"LangNo": "001", "Text": null})
+
+//040 Suppliers
+db.suppliers.count()
+db.suppliers.find()
+db.suppliers.find({"BrandNo" : "0072"})
+db.suppliers.find({"BrandNo" : "0055"})
+
+//050 Criterias
+db.criteria.count()
+db.criteria.find({"TermNo": "000000008"})
+
+db.criteria.find({"NameTerms.004.Original": {$ne: null}},{"ObjectId": 1, "NameTerms.004.Original":1}).collation({'locale': 'en'}).sort({"NameTerms.004.Capital": -1}).pretty()
+
+db.criteria.find({"NameTerms.001.original": {$ne: null}},{"ObjectId": 1, "NameTerms.001.original":1}).sort({"NameTerms.001.capital": -1}).explain()
+
+db.criteria.createIndex( { NameTerms: 1 }, { collation: { locale: "en", numericOrdering: true } } )
+
+db.criteria.explain().aggregate([
+  {
+    "$addFields": {
+      "name": {$toLower: "$NameTerms.004"} 
+    }
+  },
+  {
+    $sort: {
+      name: 1
+    }
+  }
+])
+
+db.criteria.aggregate([
+  {
+    '$addFields': {
+      'AbbrTerms1': 
+      {
+        $filter: 
+        {
+          input: '$AbbrTerms',
+          as: 'term',
+          cond: {$eq: ['$$term.LangNo', '004']}
+        }
+      }
+    }
+  },
+  {
+    '$addFields': {
+      'text':{'$toLower': {'$arrayElemAt': ['$AbbrTerms1.Text', 0]}} 
+    }
+  },
+  {
+    $sort: {
+      'text': -1
+    }
+  },
+  {
+    "$project": {
+      text: 1
+    }
+  }
+])
+
+db.criteria.aggregate([
+  {
+    $match: {
+      "CriteriaNo": /^00/,
+      "BrandNo": "9999"
+    }
+  },
+  {
+    "$group": {
+      "_id": "$CriteriaNo"
+    }
+  },
+  {
+    "$limit": 5
+  }
+])
+
+db.criteria.find({"BrandNo": "0000"})
+db.criteria.find({"Type": "K"})
+
+db.criteria.find({"CriteriaNo" : "1372"})
+db.criteria.find({"CriteriaNo" : "N0166"})
+db.criteria.find({"TermNo" : "000101880"})
+db.criteria.find({"TermNoAbbr" :null})
+
+db.criteria.find({"BrandNo": {$not: {$in: ["9999", "0055", "0072", "9811", "9812"]}}})
+
+// find 35 criteria
+db.criteria.find({"TermNo": {$in: 
+        [
+          "000101880",
+          "000101725",
+          "000101540",
+          "000099938"
+        ]
+      }
+    }    
+  )
+
+//100 Manufacturers
+db.manufacturers.count()
+db.manufacturers.find()
+db.manufacturers.find({"CTermNo": {$in: ["100005603","100002084","100004484","100004736","100003630","100005239","100002523","100005576","100004506","100003667"]}})
+
+db.manufacturers.find({},{"ObjectId": 1, "CTermNo": 1, "Terms.001.Original":1}).sort({"Terms.001.Capital": 1}).pretty()
+db.manufacturers.find({"ManNo" : "006255"})
+
+db.manufacturers.find({"ManNo" : {$in: 
+    [
+      "006085",
+      "005963",
+      "005898"
+    ]} 
+  })
+
+db.manufacturers.find({"KbaManCodes": {$ne: []}})
+
+db.manufacturers.find({"IsPC": true, "ManNo": "004754"})
+
+db.manufacturers.aggregate([
+  {
+    $addFields: {
+      "BrandNo-CTermNo": {
+        $concat: [ "$BrandNo", '-', "$CTermNo" ]
+      }
+    }
+  },
+  {
+    $match: {
+      "BrandNo-CTermNo": {
+        $in: ["9901-MV0010340","9901-MV0010346","9901-MV0010356","9999-100000255","9901-M00000025","9999-100000035","9999-100003761","9999-100003131","9999-100000254","9999-100001024","9999-100002381","9999-100000947","9999-100000948","9999-100003988"]
+      }
+    }
+  },
+  {$addFields: {"__order": {$indexOfArray: [["9901-MV0010340","9901-MV0010346","9901-MV0010356","9999-100000255","9901-M00000025","9999-100000035","9999-100003761","9999-100003131","9999-100000254","9999-100001024","9999-100002381","9999-100000947","9999-100000948","9999-100003988"], "$BrandNo-CTermNo" ]}}},
+  {
+    $project: {
+      BrandNo: 1,
+      ManNo: 1,
+      __order: 1
+    }
+  },
+  {
+    $sort: {
+      "__order": 1
+    }
+  }
+])
+
+db.vehiclemodels.aggregate([
+{
+    $addFields: {
+      "BrandNo-ManNo": {
+        $concat: [ "$BrandNo", '-', "$ManNo" ]
+      }
+    }
+  },
+  {
+    $match: {
+      "BrandNo-ManNo": {
+        $in: ["9999-000035","9999-000254","9999-000255","9999-000947","9999-000948","9999-001024","9999-002381","9999-003131","9999-003761","9999-003988","9901-M00025"]
+      }
+    }
+  },
+  {
+    $project: {
+      BrandNo: 1,
+      KModNo: 1
+    }
+  },
+  {
+    $skip: 250
+  },
+  {
+    $limit: 50
+  }
+]) // 257 Models
+
+db.vehicles.aggregate([
+{
+    $addFields: {
+      "BrandNo-KModNo": {
+        $concat: [ "$BrandNo", '-', "$KModNo" ]
+      }
+    }
+  },
+  {
+    $match: {
+      "BrandNo-KModNo": {
+        $in: ["9999-00015","9999-00034","9999-00038","9999-00061","9999-00071","9999-00081","9999-00086","9999-00112","9999-00123","9999-00128","9999-00133","9999-00139","9999-00149","9999-00154","9999-00226","9999-00288","9999-00348","9999-00364","9999-00369","9999-00399","9999-00404","9999-00414","9999-00418","9999-00422","9999-00437","9999-00458","9999-00462","9999-00476","9999-00480","9999-00790","9999-00803","9999-01145","9999-01322","9999-01458","9999-01459","9999-01543","9999-01570","9999-01571","9999-01594","9999-01836","9999-01837","9999-01838","9999-01839","9999-01840","9999-01841","9999-01845","9999-01858","9999-01859","9999-01860","9999-01861","9999-01862","9999-01863","9999-01864","9999-01865","9999-01866","9999-01867","9999-01888","9999-01889","9999-01890","9999-01910","9999-02046","9999-02047","9999-03391","9999-03399","9999-03407","9999-03408","9999-03464","9999-03506","9999-03938","9999-03940","9999-03998","9999-04016","9999-04056","9999-04199","9999-04278","9999-04531","9999-04533","9999-04534","9999-04562","9999-04574","9999-04575","9999-04579","9999-04580","9999-04584","9999-04586","9999-04588","9999-04589","9999-04596","9999-04728","9999-04743","9999-04770","9999-04773","9999-04774","9999-04778","9999-04787","9999-04893","9999-04894","9999-04905","9999-04906","9999-04936","9999-04951","9999-05055","9999-05097","9999-05449","9999-05450","9999-05560","9999-05630","9999-05631","9999-05632","9999-05647","9999-05648","9999-05649","9999-06242","9999-06396","9999-06409","9999-06565","9999-06566","9999-06567","9999-06568","9999-06810","9999-07383","9999-07563","9999-07602","9999-07603","9999-07805","9999-07868","9999-07953","9999-07954","9999-08358","9999-08500","9999-08617","9999-08618","9999-09054","9999-09056","9999-09058","9999-09059","9999-09063","9999-09064","9999-09065","9999-09085","9999-09086","9999-09087","9999-09088","9999-09089","9999-09090","9999-09093","9999-09097","9999-09098","9999-09119","9999-09120","9999-09153","9999-09205","9999-09564","9999-09565","9999-09657","9999-09777","9999-09778","9999-09779","9999-09780","9999-09781","9999-09782","9999-09783","9999-09919","9999-10004","9999-10047","9999-10048","9999-10049","9999-10050","9999-10051","9999-10052","9999-10053","9999-10054","9999-10055","9999-10056","9999-10057","9999-10199","9999-10204","9999-10246","9999-10254","9999-10255","9999-10256","9999-10258","9999-10259","9999-10260","9999-10451","9999-10453","9999-10853","9999-10878","9999-10905","9999-11255","9999-11320","9999-11524","9999-13243","9999-13905","9999-14295","9999-14321","9999-14607","9999-14608","9999-14609","9999-14610","9999-14915","9999-31376","9999-31395","9999-31396","9999-31397","9999-31398","9999-36213","9999-36262","9999-36352","9999-36387","9999-36400","9999-36526","9999-36527","9999-36685","9999-36750","9999-36751","9999-36752","9999-36753","9999-36810","9999-36943","9999-36944","9999-38106","9999-38275","9999-38299","9999-38501","9999-38595","9999-39018","9999-39026","9999-39029","9999-39031","9999-39570","9999-40011","9999-40641","9999-41280","9999-41502","9999-41503","9999-41651","9999-41652","9999-41653","9999-41654","9999-41683","9999-41793","9901-00003","9901-00004","9901-00005","9901-00006","9901-00007","9901-00008","9901-00009","9901-00010","9901-00011","9901-00012","9901-00013","9901-00014","9901-00015","9901-00016","9901-00017"]
+      }
+    }
+  },
+  {
+    $project: {
+      BrandNo: 1,
+      KTypNo: 1
+    }
+  },
+  {
+    $skip: 2000
+  },
+  {
+    $limit: 5
+  }
+],
+  {
+    explain: true
+  })
+
+// 155 Engines
+db.engines.count()
+db.engines.find({"EngNo" : "33737"})
+
+//Find 
+db.engines.find({"EngNo" : {$in: 
+    [
+      "41992",
+      "41903",
+      "35031",
+      "34227",
+      "34199",
+      "34120",
+      "34109",
+      "34083",
+      "34057",
+      "34033"
+    ]} 
+  })
+
+db.engines.find({"EngCode": "N63 M30 A"})
+db.engines.find({"EngNo": "24254"})
+
+db.engines.find({ModYFrom: {$ne: null}})
+
+
+// 160 Axles
+db.axles.count()
+
+db.axles.find({"BrandNo": "0000"})
+db.axles.find({"ATypNo" : "00001"})
+
+db.axles.find({"ATypNo" : {$in: 
+    [
+      "07665",
+      "07656",
+      "07613",
+      "07579",
+      "07520",
+      "07483"
+    ]} 
+  })
+
+db.axles.find({"TrWidth": {$ne: ""}})
+db.axles.find({"HubWidth": {$ne: ""}})
+db.axles.find({"DrivHeightTo": {$ne: ""}})
+
+// 320 Generic Articles 
+db.genericarticles.count()
+
+db.genericarticles.find({"GenArtNo" : "03947"}, { "_id" : 0, "Name" : 1, "GenArtNo" : 1, "Assemblies" : 1, "UsePurposes" : 1, "NormName" : 1, "GenArticleTermNo" : 1, "Terms.004" : 1, "Terms.255" : 1, "NormTerms.004" : 1, "NormTerms.255" : 1 })
+db.genericarticles.find({"_id" : "9812-N0116"})
+db.genericarticles.find({"_id" : "9999-00001"})
+db.genericarticles.find({"GenArtNo" : "02471"})
+db.genericarticles.find({"Assemblies" : {$ne: []}, "BrandNo": {$ne: "9999"}})
+db.genericarticles.find({"BrandNo" : "9999"})
+
+db.genericarticles.find({"OK_Ind": null})
+
+db.genericarticles.find({"MandatoryCriteriasRef": {$ne:[]}, "ProposedCriteriasRef": {$ne:[]}})
+// 035 Text Modules
+db.textmodules.count()
+db.textmodules.find({"TxtModNo": "000001"})
+
+// 035 Text Modules 0072
+db.textmodules.aggregate([{$match : { "BrandNo" : { $eq: "0072"}}}, {$count: "Elpart"}])
+
+db.textmodules.aggregate([{$match : { "BrandNo" : { $eq: "0055"}}}, {$count: "Jakoparts"}])
+
+
+
+////////////////////////////////
+// Article List Search commands
+///////////////////////////////
+
+
+// lookup by article number
+
+db.articles.aggregate(
+  [
+    {
+      $match: {
+        "ArtNo":  { $regex : /.*26.*/ }     
+        
+      },
+    },
+     {
+        $group: {"_id": "$articles"}    
+    }
+    
+  ]
+)
+
+db.articles.aggregate(
+  [
+    {
+      $match: {
+        "ArtNo":  { $regex : /.*26.*/ }     
+        
+      },
+    },
+     {
+        $group: {"_id": "$ArticleParts"}    
+    }
+    
+  ]
+)
+
+db.articles.aggregate(
+[
+    {
+      $match: {
+        "ArtNo":  { $eq : "19010022" }    
+        
+      },
+    },
+    {
+      "$project": {
+          ArtNo : 1
+      }
+    }
+]
+)
+
+db.articles.explain().aggregate([
+  {
+    $match: {
+      "BrandNo": {$in: ["9812","9811","5376","0072", "0055"]},
+      "ArtNo": /^J/
+    }
+  },
+  {
+    "$group": {
+      "_id": "null",
+      "count": {
+        "$sum": { "$size": "$CriteriaRefs" }
+      }
+    }
+  }
+])
+
+db.articles.explain().aggregate([
+  {
+    $match: {
+      "BrandNo": {$in: ["9812","9811","5376","0072", "0055"]},
+    }
+  },
+  {
+    $unwind: "$CriteriaRefs"
+  },
+  {
+    $sort:{
+      "CriteriaRefs.CritValue": 1
+    }
+  },
+  {
+    $limit: 10
+  }
+])
+
+db.articles.aggregate([
+  {
+    "$match": {
+      "CriteriaRefs.CriteriaNo": "0491",
+      "CriteriaRefs.CritValue": "22"  
+    }
+  },
+  {
+    "$unwind": "$CriteriaRefs"
+  },
+  {
+    "$match": {
+      "CriteriaRefs.CriteriaNo": "0491",
+      "CriteriaRefs.CritValue": "22"  
+    }
+  },
+  {
+    "$count": "total"
+  }
+])
+
+db.articles.aggregate([
+  {
+    "$match": {
+      "BrandNo": "0072"  
+    }
+  },
+  {
+    $count: "total"
+  }
+])
+
+db.articles.aggregate([
+  {
+    $match: {
+      "ArtNo": /^J36/
+    }
+  },
+  {
+    "$group": {
+      "_id": "$ArtNo"
+    }
+  },
+  {
+    "$limit": 5
+  }
+])
+
+db.articles.aggregate([
+  {
+    $match: {
+      "CriteriaRefs.CritValue": {
+        $in: ["22", "1/2", "80"]
+      },
+      "CriteriaRefs.SortNo": {$gt: 2}
+    }
+  },
+  {
+    "$unwind": "$CriteriaRefs"
+  },
+  {
+    $match: {
+      "CriteriaRefs.CritValue": {
+        $in: ["22", "1/2", "80"]
+      },
+      "CriteriaRefs.SortNo": {$gt: 2}
+    }
+  },
+  {
+    "$group": {
+      "_id": "$CriteriaRefs.SortNo"
+    }
+  },
+  {
+    "$limit": 200
+  },
+  {
+    "$sort" : {
+      "_id" : 1
+    }
+  }
+])
+
+db.articles.aggregate([
+  {
+    $match: {
+      "ArtDescriptionTerms.001.Capital": {
+        $in: ["FILTER, INNENRAUMLUFT", "BREMSSCHEIBE"]
+      }
+    }
+  },
+  {
+    "$group": {
+      "_id": "$ArtDescriptionTerms.001.Original"
+    }
+  },
+  {
+    "$limit": 10
+  },
+  {
+    "$sort" : {
+      "_id" : 1
+    }
+  }
+])
+db.configuration.find()
+// manufacturer article reference
+db.manufacturerarticlereferences.find({"BrandNo":"0055", "ArtNo":"J1100901",  "ShortRefNo": "1987946479", "ManNo":"000530"})
+db.manufacturerarticlereferences.find({"BrandNo":"0072", "ArtNo":"19010007", "RefNo": "60755012", "ManNo":"000064"})
+db.manufacturerarticlereferences.find({"BrandNo":"0055", "ArtNo":"95923003"})
+db.manufacturerarticlereferences.find({"ManNo":"N00002"})
+
+db.manufacturerarticlereferences.find({"IsNew": true})
+db.manufacturerarticlereferences.find({"ArtNo" : "19050213", "ManNo" : "001444"})
+db.manufacturerarticlereferences.find({"ArtNo":"70671000"})
+
+db.manufacturerarticlereferences.find({"BrandNo":"0055", "ArtNo":"J1312010",  "RefNo": "1616399880", "ManNo":"000021"})
+
+db.manufacturerarticlereferences.find({"RefStatus": ""})
+db.manufacturerarticlereferences.find({"PricingRelevant": "true"})
+
+db.manufacturerarticlereferences.find({"GenesisNo": true})
+db.manufacturerarticlereferences.find({"BrandNo": "0000"})
+db.manufacturerarticlereferences.find({"BrandNo": "TestCSV"})
+db.manufacturerarticlereferences.find({ArtNo: "82700325", ManNo: "000536", RefNo: "1855906", ShortRefNo: "1855906"})
+
+db.manufacturerarticlereferences.find({"BrandNo": "0055"}).count()
+
+db.manufacturerarticlereferences.deleteOne({"_id": "0072-NOTAVAILABLE-61318363710-000016-"})
+
+db.manufacturerarticlereferences.find({"IsMainCompetitorExport": true})
+db.manufacturerarticlereferences.count()
+db.manufacturerarticlereferences.find({"ManNo": "0H0352"})
+
+db.manufacturerarticlereferences.find({$and: [{"ManNo": {$in: ["002513"]}}, {"ArtNo":{$in: ["70671905"]} } ]})
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    $group: {"_id":"$BrandNo"}
+  }
+])
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    $match: {
+      "ReferencePrices": {"$elemMatch": {"Name": "E1/N1", "GrossPrice": {$ne: ""}}}
+    }
+  }
+]).pretty()
+db.manufacturerarticlereferences.aggregate([
+  {
+    $match: {
+      //"ReferencePrices": {$ne: []},
+      // "ReferencePrices.Name": "E1/N1",
+      "ReferencePrices.GrossPrice":{$ne: {$in:[null]}}
+    }
+  }
+]).pretty()
+
+db.manufacturerarticlereferences.aggregate(
+[
+    {
+      $match: {
+        "ArtNo":  { $eq : "J1312010" }    
+        
+      },
+    },
+    {
+      "$project": {
+          DescriptionPartsPool : 1,
+          GenesisNo: 1
+      }
+    }
+]
+).pretty()
+
+db.runCommand({
+  aggregate: "manufacturerarticlereferences",
+  pipeline: [
+    {$group: {"_id":"$RefNo"}}
+  ],
+  allowDiskUse: true
+})
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    "$unwind": "$ReferencePrices"
+  },
+  {
+    "$match": {
+      "ReferencePrices.Name": "E1/N1",
+      $or: [
+        {"ReferencePrices.GrossPrice": {$ne: ""}},
+        {"ReferencePrices.ValidFrom": {$ne: ""}}
+      ]
+
+      
+    }
+  }
+]).pretty()
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    "$unwind": "$ReferencePrices"
+  },
+   {
+    "$addFields": {
+      grossPrice: {$multiply: [{$toInt: "$ReferencePrices.GrossPrice"}, 0.01]}
+    }
+  },
+  {
+    "$match": {
+      "ReferencePrices.Name": "E1/N1",
+      "ReferencePrices.GrossPrice": {$ne: ""},
+      // "grossPrice": {$gt: 10}
+    }
+  } 
+]).pretty()
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    "$unwind": "$ReferencePrices"
+  },
+  {
+    "$match": {
+      "ReferencePrices.Name": "E1/N1"
+    }
+  }
+]).pretty()
+
+db.manufacturerarticlereferences.explain().aggregate([
+  {
+    "$match": {
+      "ManNo": {$in: ["003663", "000020"]}
+    }
+  },
+  {
+    "$addFields": {
+      "f": {$indexOfArray: [["003663", "000020"], "$ManNo" ]}
+    }
+  },
+
+  {
+    "$skip": 0
+  },
+  {
+    "$limit": 10000
+  }
+])
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    "$match": {
+      "ManufacturerTerms.001.Default.Capital": "BOSCH"
+    }
+  },
+  {
+    "$sort": { "ManufacturerTerms.001.Default.Capital": 1}
+  },
+
+  {
+    "$skip": 0
+  },
+  {
+    "$limit": 100000
+  },
+  {
+    "$group": {
+      "_id": "$ManufacturerTerms.001.Default.Original"
+    }
+  }
+], {explain: true})
+
+db.manufacturerarticlereferences.distinct("ManufacturerTerms.001.Default.Capital", {"ManufacturerTerms.001.Default.Capital": /NIS/})
+db.manufacturerarticlereferences.find().count()
+db.manufacturerarticlereferences.find({"ReferencePrices" : {$ne: null}})
+
+db.manufacturerarticlereferences.find({"ReferencePrices.GrossPrice": {$ne: null}, "ReferencePrices": {$ne: []}})
+
+db.manufacturerarticlereferences.find({"ObjectId": "0072-19010007-582E11-000603-1"})
+db.manufacturerarticlereferences.find({"ReferencePrices.Name": "Brutto_01"})
+
+db.articles.find({"HasReferences": false})
+db.articles.find({"AccessoryLists": {
+      "List1": [
+        {
+          "LnkType": null,
+          "LnkVal": null,
+          "SeqNo": 1,
+          "SortNo": 1,
+          "AccArtNo": "J9103000",
+          "Quantity": 1,
+          "AccGenArtNo": "04061",
+          "Status": null
+        }
+      ]
+    }})
+
+db.articles.find({"Prices.D.GrossPrice": {$gt: "asf"}})
+
+db.articles.find({"ArticleParts": {$ne: []}, "BrandNo": "0072"})
+db.articles.find({"ArticleParts": {$in: [null]}})
+
+db.articles.find({"IsTop80": true})
+
+db.journals.find({"ArtNo": "95923003001"})
+
+db.keytables.find({Display: true})
+
+db.keytables.find({"EntryTerms":null})
+
+db.keytables.find()
+
+db.keytables.distinct("EntryTerms.004.Capital",{"EntryTerms.004.Capital": {$in: [ /^9V/, /SINGLE/]}}).take(10)
+
+db.categories.find().limit(1).sort({"GenArts": -1}).pretty()
+
+db.articlevehicleslinkages.count()
+
+
+// 
+db.articles.explain().aggregate([
+  {
+    $match: {
+      "GroupId": "20J131"
+    },
+  },
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "ArtNo",
+      foreignField: "ArtNo",
+      as: "articlevehiclelinkages"
+    }
+  },
+  {
+    $unwind: "$articlevehiclelinkages"
+  },
+  {
+    "$addFields": {
+      "VehNo": {
+        $concat: [ "9999","-", "$articlevehiclelinkages.KTypNo","-", "$articlevehiclelinkages.KTyp" ]
+      }
+    }
+  },
+  {
+    $lookup: {
+      from: "vehicles",
+      localField: "VehNo",
+      foreignField: "_id",
+      as: "vehicles"
+    }
+  },
+  {
+    $unwind: "$vehicles"
+  },
+  {
+    $group: {
+      "_id": "$vehicles._id"
+    }
+  },
+  {
+    $count: "_id"
+  }
+])
+
+
+
+// Get vehicles over linkages and articles
+db.vehicles.aggregate([
+   
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTypNo",
+      foreignField: "KTypNo",
+      as: "articlevehicleslinkages"
+    }
+  },
+  {
+    $unwind: "$articlevehicleslinkages"
+  },
+  {
+    $match: {
+      "articlevehicleslinkages.ArtNo":  /^1901000/,
+    }
+  }
+]).pretty()
+
+
+// TIMEOUT on $COUNT !!
+// Get count of vehicles over linkages and articles
+db.vehicles.explain("executionStats").aggregate([
+   
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTypNo",
+      foreignField: "KTypNo",
+      as: "articlevehicleslinkages"
+    }
+  },
+  {
+    $unwind: "$articlevehicleslinkages"
+  },
+  {
+    $match: {
+      "articlevehicleslinkages.ArtNo":  /^1901000/,
+    }
+  },
+  {
+    $skip: 0 
+  },
+  {
+    $limit: 1000
+  },
+  {
+    $count: "totalDocuments" // Count the total number of documents in the pipeline
+  }
+])
+
+
+// TIMEOUT on $COUNT !!
+// Get count of vehicles over linkages and articles
+db.vehicles.aggregate([
+
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTypNo",
+      foreignField: "KTypNo",
+      as: "articlevehicleslinkages"
+    }
+  },
+  {
+    $unwind: "$articlevehicleslinkages"
+  },
+  {
+    $match: {
+      "articlevehicleslinkages.KTypNo":  "000000054",
+    }
+  },
+  {
+    $skip: 0 
+  },
+  {
+    $limit: 50 
+  }
+]).pretty()
+
+
+// TIMEOUT on $COUNT !!
+// Get count of vehicles over linkages and articles
+db.vehicles.aggregate([
+   
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTypNo",
+      foreignField: "KTypNo",
+      as: "articlevehicleslinkages"
+    }
+  },
+  {
+    $match: {
+      "articlevehicleslinkages":  {$nin: [null, []]},
+    }
+  },
+  {
+    $skip: 0 
+  },
+  {
+    $limit: 1000 
+  }  
+]).pretty()
+
+db.searchfilters.find()
+
+// Aggregate example over vehicles
+db.vehicles.aggregate([
+  {
+    $match: {
+      "KTyp": { $eq: "002" },
+      "KTypNo": "000013916",
+    }
+  },
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTyp",
+      foreignField: "KTyp",
+      as: "articlevehicleslinkages"
+    }
+  },
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTypNo",
+      foreignField: "KTypNo",
+      as: "articlevehicleslinkages"
+    }
+  },
+  {
+    $unwind: "$articlevehicleslinkages"
+  },
+  {
+    $skip: 10 // Skip the first 10 documents
+  },
+  {
+    $limit: 20 // Return a maximum of 20 documents
+  }
+])
+
+// TIMEOUT on $COUNT !!
+// Get count of vehicles over linkages and articles
+db.vehicles.aggregate([
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTypNo",
+      foreignField: "KTypNo",
+      as: "articlevehicleslinkages"
+    }
+  },{
+    $addFields: {
+      "articlevehicleslinkages": {
+        $filter: {
+          input: "$articlevehicleslinkages",
+          cond: {
+            $and: [
+              { $eq: [ "$$this.KTypNo", "$KTypNo" ] },
+              { $eq: [ "$$this.KTyp", "$KTyp" ] }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    $unwind: "$articlevehicleslinkages"
+  },
+  {
+    "$match": {
+      "articlevehicleslinkages.ArtNo":  /^1901000/,
+    }
+  },
+  {
+    $limit: 50
+  }
+],{"explain": true})
+
+db.articlevehicleslinkages.find({"KTypNo": "000006859"}).count()
+db.vehicles.find({"KTypNo": "000006859"})
+
+db.articles.explain("executionStats").aggregate([
+  {
+    $match: {
+      "ArtNo": /^J13/
+    }
+  },
+  {
+    $lookup: {
+      from: "manufacturerarticlereferences",
+    localField: "ArtNo",
+    foreignField: "ArtNo",
+    as: "ref"
+    }
+  },
+  {
+    "$unwind": "$ref"
+  },
+  {
+    "$count": "Total"
+  }
+])
+
+db.articles.aggregate([
+  
+  {
+    "$lookup": {
+      from: "criteria",
+      localField: "CriteriaRefs.CriteriaNo",
+      foreignField: "CriteriaNo",
+      as: "Criteria"
+    }
+  },
+  {
+    $project: {
+      "CriteriaRefs": 0
+    }
+  },
+  {
+    $limit: 50
+  }
+]).batchSize(10)
+
+db.articles.count()
+
+
+
+/////////////////////
+/// Search Job Queries
+////////////////////
+
+
+// Example: 
+// Vehicle, ArticleVehicleLinkages, Article
+
+db.vehicles.find({"KTypNo": "000011863"})
+
+db.articlevehicleslinkages.find({"KTypNo": "%", "KTyp": "%"} )
+
+db.articles.find({} )
+
+db.criteria.find({"TermNo": "000000008"})
+
+db.articlevehicleslinkages.find({"KTypNo": "000014653", "ArtNo": "G1321001"} )
+db.articlevehicleslinkages.find({"LinkageCriterias.CritValue": "L", "LinkageCriterias.SortNo": 22} )
+db.articlevehicleslinkages.find({"LinkageCriterias":{ "$elemMatch": { "CritValue": "L", "SortNo": 22}}} )
+db.articles.find({"ArtNo": "95923000"})
+db.searchfilters.find({"JobStatus.Name": "Running"}, {"CreatedAt": 1, "CreatedBy": 1}).sort({"CreatedAt": -1}).pretty()
+db.searchfilters.find({}, {"CreatedAt": 1,"ChangedAt": 1, "CreatedBy": 1, "JobStatus.Name": 1, "Context": 1, "JobId": 1}).sort({"ChangedAt": -1}).pretty()
+
+db.searchfilters.find({"JobStatus.Name": "Running"})
+
+db.vehicles.find({"ManufacturerTerms.001.Default.Capital": "BMW"}).count()
+
+db.manufacturerarticlereferences.find({"BrandNo": "5376", "ArtNo": "AU150008", "ShortRefNo": "CSC050008"})
+
+db.articles.aggregate([
+  {
+    "$match": {
+      "ArtNo": "J5604000",
+      
+    }
+  }
+])
+
+db.users.find({ "UserId": "e2f9e42b-2cab-464f-b1d9-4da452a77813"})
+
+db.vehicles.find({"KTyp": "016"})
+
+db.articlevehicleslinkages.find({"ArtNo": "N00086-VA"}).count()
+
+db.configuration.find({"_id": "sysconfig"})
+
+db.textmodules.find({"BrandNo": "5376"}).count()
+
+db.manufacturerarticlereferences.find({"ArtNo": "J3603069", "ManNo": "001200", "ShortRefNo": "6E5Z2001C"})
+db.manufacturerarticlereferences.find({"ArtNo": "J3608025", "ManNo": "003666"})
+db.manufacturerarticlereferences.find({"ArtNo": "AU150008"})
+
+db.keytables.find({"KeyTabType": "N"})
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    $match: {
+      "BrandNo": "0072"
+    }
+  },
+  {
+    "$addFields": {
+      "ArtRef": {
+        $concat: ["$ArtNo", "-", "$ShortRefNo", "-"]
+      }
+    }
+  },
+    {"$group" : {_id:"$ArtRef", count:{$sum:1}}},
+    {
+      "$match": {
+        "count": {
+          $gt: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        "count": -1
+      }
+    }
+])
+
+db.manufacturerarticlereferences.find({"ArtNo": "AU180000", "ShortRefNo": "IA800"})
+
+db.manufacturerarticlereferences.find({"RefNo": "FDB1596"})
+
+db.manufacturerarticlereferences.find({"ArtNo": "AU160113"}, {"ReferencePrices.D2": 1})
+
+db.articles.find({"ArtNo": "J4712026"})
+
+db.articles.find().sort({"ChangedAt" : -1}).pretty()
+
+db.articles.ensureIndex({"ChangedAt" : -1, "ArtNo": 1})
+
+db.manufacturerarticlereferences.find({"ArtNo": "J3603069"}, {"ManufacturerTerms.001.Default.Capital": 1, "SortNo": 1, "ChangedAt": 1}).sort({"ManufacturerTerms.001.Default.Capital": 1, "SortNo": 1})
+
+db.articles.find({"ArtNo": /^KOF/, "CriteriaRefs.CriteriaNo": "1073"}, {"CriteriaRefs": 1})
+
+db.articles.find({"AccessoryList": {$nin: [[], null]}}).count()
+
+db.manufacturerarticlereferences.find({"ManufacturerTerms.001.Default.Capital": "RAM"})
+db.manufacturerarticlereferences.find({"ArtNo": "S70670072", "RefNo": "46342571"})
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    $match:{
+      "PriceValidFrom": {$ne: null} 
+    }
+  }
+])
+
+db.searchfilters.find({"BrandNo": "9999", "JobId": "a16c2623c1844591af67ef9aaf0f369d", "DocumentType": "SearchJobDoc"})
+
+db.articles.find({"GroupId": null})
+
+db.articles.aggregate([
+  { 
+    "$match" : { "$or" : [{ "GroupId" : "" }, { "GroupId" : null }, { "GroupId" : [] }] } 
+  },
+  {
+    $count: "Total"
+  }
+])
+
+db.articles.aggregate([
+  { 
+    "$match" : 
+    {
+      "$or" : [{ "_id" : "should not match" }, { "TradeNos" : { "$nin" : [[], null] } }] 
+    } 
+  },
+  {
+    "$unwind": "$TradeNos"
+  },
+  {
+    $count: "Total"
+  }
+])
+
+db.articles.find({"HasReferences": false, "BrandNo": "0055"})
+
+db.articlevehicleslinkages.aggregate([
+  {
+    "$group": { _id:"$ArtNo", count:{$sum:1}}
+  },
+  {
+      $sort: {
+        "count": -1
+      }
+    },
+    {
+      "$limit": 5
+    }
+])
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    $match: {
+      "ArtNo": /J/
+    }
+  },
+  {
+    "$sort" : {
+      "ArtNo" : 1
+    }
+  },
+  {
+    "$group": {
+      "_id": "$ArtNo"
+    }
+  },
+  {
+    "$limit": 10
+  }
+])
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    $match: {
+      "ImportSource": /04.03.20/i
+    }
+  },
+  // Group by the desired field (e.g., category)
+  {
+    $group: {
+      _id: "$ImportSource",
+      count: { $sum: 1 }
+    }
+  },
+
+  // Sort by _id or any other criteria
+  {
+    $sort: { _id: 1 }
+  },
+
+  // Limit to the first 10 groups
+  {
+    $limit: 10
+  }
+])
+
+db.manufacturerarticlereferences.distinct("ArtNo", {"BrandNo": "0055"}).slice(0, 10)
+
+db.articles.find({"TradeNos": {$ne: []}}).count()
+
+db.articles.aggregate([
+  {
+    "$match": {
+    }
+  },
+  {
+    "$unwind": "$TradeNos"
+  },
+  {
+    "$count": "Sum"
+  }
+]).pretty()
+
+db.articles.find({"TradeNos": {$size: 2}})
+
+db.articles.find({"TradeNos": {$ne: []}}).count()
+
+db.manufacturerarticlereferences.explain().find({"ImportSource": /eucon/i}).count()
+
+db.manufacturerarticlereferences.aggregate([
+  {
+    $match: {
+      "ImportSource":  { $text: { $search: /Eucon/ } } ,
+    }
+  }
+])
+
+db.manufacturerarticlereferences.createIndex({"ImportSource": "text"})
+
+db.articles.find({"ArtNo": "J1319018"})
+
+db.manufacturerarticlereferences.find({"ShortRefNo": "EC4112", "ManNo": "002856"})
+
+db.searchfilters.find({"Owner": "Grebner Patrick"}).sort({CreatedAt: -1}).pretty()
+
+db.searchfilters.find({}).sort({CreatedAt: -1}).pretty()
+
+
+db.articlevehicleslinkages.find({"KTyp": "002", "KTypNo": "000000001"}).count()
+
+db.keytables.find({"EntryTerms.004.Original": "Rear Axle Left"})
+
+db.keytables.find({"KeyNo": "HR", "KeyTabNo": "090"}, {"EntryTerms.004.Original": 1})
+
+db.keytables.find({"KeyTabNo": {$in: ["181","021","131","129","062","090","085"]}, "KeyNo": {$in: ["121","679","13","","52","51","2","ZX","HL","17","F17","19MA9234","19MA9235","A4999999","201301","17476"]}},{"EntryTerms.004.Original": 1})
+
+db.articlevehicleslinkages.find({"KTypNo": "000000001", "KTyp": "002", "LinkageCriterias.CriteriaNo": "0100"},{"LinkageCriterias": 1})
+
+db.manufacturerarticlereferences.find({"Status": {$nin: [null, ""]}})
+
+db.manufacturerarticlereferences.explain({"executionStatistics": true}).count({"ImportSource": /eucon/i})
+
+db.manufacturerarticlereferences.explain().find({"ImportSource": /Eucon/i}).count()
+
+db.manufacturerarticlereferences.estimatedDocumentCount()
+db.manufacturerarticlereferences.count()
+db.manufacturerarticlereferences.count({"BrandNo": "5376"})
+
+db.manufacturerarticlereferences.explain({"executionStatistics": true}).aggregate([
+  {
+    $match: {
+      "ImportSource": /eucon/i
+    }
+  },
+  {
+    $project: {
+      _id: 1
+    }
+  },
+  {
+    $count: "Total"
+  }
+])
+
+db.manufacturerarticlereferences.explain({"executionStatistics": true}).aggregate([
+  {
+    $match: {
+      "BrandNo": "0055"
+    }
+  },
+  {
+    $project: {
+      _id: 1
+    }
+  },
+  {
+    $count: "Total"
+  }
+])
+
+db.manufacturerarticlereferences.find()
+
+db.articles.explain({"executionStatistics": true}).aggregate([
+  {
+    $match: {
+      "ArtNo": /^j13/i
+    }
+  }
+])
+
+db.articles.aggregate([
+  {
+    "$match": {
+      "CriteriaRefs.Status": "NKAT"
+    }
+  },
+  {
+    "$unwind": "$CriteriaRefs"
+  },
+  {
+    "$match": {
+      "CriteriaRefs.Status": "NKAT"
+    }
+  },
+  {
+    $addFields: {
+      "CriteriaRefs": {
+        $map: {
+          "input": ["A"],
+          "as": "el",
+          "in": "$CriteriaRefs"
+        }
+      }
+    }
+  },
+  {
+    $project: {
+      "CriteriaRefs": 1
+    }
+  }
+]).pretty()
+
+db.articles.aggregate([
+  {
+    $match: {
+      "ArtNo": /1901/
+    }
+  },
+  {
+    $unwind: {
+      "path": "$CriteriaRefs",
+      "preserveNullAndEmptyArrays": true
+    }
+  },
+  {
+    "$group": {
+      "_id": "$_id",
+      "CriteriaRefs": {$push: "$CriteriaRefs"}
+    }
+  }
+]).pretty()
+
+db.articles.aggregate([
+  {
+    $match: {
+      "ArtNo": /1901/
+    }
+  },
+  {
+    "$addFields": {
+      "data": {$eq: ["$ArticleParts", []]}
+    }
+  },
+  {
+    $unwind: {
+      "path": "$ArticleParts",
+      "preserveNullAndEmptyArrays": true
+    }
+  },
+  {
+    $addFields: {
+      "ArticleParts": {
+        $cond: {
+          if: "$data",
+          then: [],
+          else: {$map: {
+          "input": ["A"],
+          "as": "el",
+          "in": "$ArticleParts"
+        }}
+      }
+      }
+    }
+  },
+  {
+    "$project": {
+      "ArticleParts": 1
+    }
+  }
+]).pretty()
+
+db.articles.aggregate([
+  {
+    $match: {
+      "ArtNo": /1901/
+    }
+  },
+  {
+    $unwind: {
+      "path": "$ArticleParts",
+    }
+  }
+]).pretty()
+db.articlevehicleslinkages.explain().aggregate([
+  {
+    $match: {
+      "LinkageCriterias.CriteriaNo": "0020",
+    }
+  },
+  {
+    "$sort": {
+      "LinkageCriterias.CritValue": 1
+    }
+  },
+  {
+    "$addFields": {
+      "data": {$eq: ["$LinkageCriterias", []]}
+    }
+  },
+  {
+    $unwind: {
+      "path": "$LinkageCriterias",
+      "preserveNullAndEmptyArrays": true
+    }
+  },
+  {
+    $match: {
+      "LinkageCriterias.CriteriaNo": "0020",
+    }
+  },
+  {
+    "$sort": {
+      "LinkageCriterias.CritValue": 1
+    }
+  },
+  {
+    $addFields: {
+      "LinkageCriterias": {
+        $cond: {
+          if: "$data",
+          then: [],
+          else: {$map: {
+          "input": ["A"],
+          "as": "el",
+          "in": "$LinkageCriterias"
+        }}
+      }
+      }
+    }
+  },
+  {
+    "$project": {
+      _id: 0,
+      "ArtNo": 1,
+      "KTyp": 1,
+      "KTypNo": 1,
+      "LinkageCriterias": 1
+    }
+  },
+  {
+    $limit: 50
+  }
+])
+
+db.articlevehicleslinkages.aggregate([{ "$match" : { "$or" : [{ "_id" : "should not match" }, { "LinkageCriterias.CriteriaNo" : { "$in" : ["0020"] } }] } }, { "$sort" : { "LinkageCriterias.CritValue" : 1 } }, { "$unwind" : "$LinkageCriterias" }, { "$match" : { "$or" : [{ "_id" : "should not match" }, { "LinkageCriterias.CriteriaNo" : { "$in" : ["0020"] } }] } }, { "$addFields" : { "LinkageCriterias" : { "$cond" : { "if" : "$LinkageCriteriasEmpty", "then" : [], "else" : { "$map" : { "input" : ["A"], "as" : "el", "in" : "$LinkageCriterias" } } } } } }, { "$project" : { "_id" : 0, "ArtNo" : 1, "KTyp" : 1, "KTypNo" : 1, "LinkageCriterias" : 1 } }, { "$limit" : 50 }]).pretty()
+
+db.articlevehicleslinkages.aggregate([
+  {
+    $project: {
+      "LinkageCriterias": {
+        $filter: {
+          input: "$LinkageCriterias",
+          as: "item",
+          cond: { $eq: ["$$item.CriteriaNo", "0020" ]}
+        }
+      }
+    }
+  },
+  {
+    $match: {
+      "LinkageCriterias.CriteriaNo": "0020",
+    }
+  },
+  {
+    "$sort": {
+      "LinkageCriterias.CritValue": 1
+    }
+  }
+])
+
+db.articles.find({"AssetRefs": []})
+
+db.vehicles.aggregate([
+  {
+    $lookup: {
+      from: "articlevehicleslinkages",
+      localField: "KTypNo",
+      foreignField: "KTypNo",
+      as: "articlevehicleslinkages"
+    }
+  },
+  {
+    "$unwind": {
+      "path": "$articlevehicleslinkages"
+    }
+  },
+  {
+    "$lookup": {
+      from: "articles",
+      localField: "articlevehicleslinkages.ArtNo",
+      foreignField: "ArtNo",
+      as: "articles"
+    }
+  },
+  {
+    "$unwind": {
+      "path": "$articles"
+    }
+  },
+  {
+    "$match": {
+      "articles.ArtNo": /J13/,
+      "articles.Status": {$in: [null, ""]}
+    }
+  },
+  {
+    "$project": {
+      "KTypNo": 1,
+      "articles.ArtNo": 1,
+      "articlevehicleslinkages.GenArtNo": 1
+    }
+  }
+]).pretty()
+
+db.criteria.find({"IsMultiple": true, "CriteriaNo": "0596"})
+
+db.vehicles.aggregate([
+  { 
+    "$lookup" : 
+    { 
+      "from" : "articlevehicleslinkages", 
+      "localField" : "KTypNo", 
+      "foreignField" : "KTypNo", 
+      "as" : "articlevehicleslinkages" 
+      } 
+  }, 
+  { 
+    "$unwind" : "$articlevehicleslinkages" 
+  }, 
+  { 
+    "$lookup" : 
+    { 
+      "from" : "articles", 
+      "localField" : "articlevehicleslinkages.ArtNo", 
+      "foreignField" : "ArtNo", 
+      "as" : "articlevehicleslinkages.articles" 
+    } 
+  }, 
+  { 
+    "$unwind" : "$articles" 
+  }, 
+  { 
+    "$project" : 
+    { 
+      "_id" : 0 
+    } 
+  },
+  {
+    $limit: 10
+  }
+])
+
+db.vehicles.aggregate([{ "$lookup" : { "from" : "articlevehicleslinkages", "localField" : "KTypNo", "foreignField" : "KTypNo", "as" : "articlevehicleslinkages" } }, { "$unwind" : "$articlevehicleslinkages" }, { "$lookup" : { "from" : "articles", "localField" : "articlevehicleslinkages.ArtNo", "foreignField" : "ArtNo", "as" : "articles" } }, { "$unwind" : "$articles" }, { "$match" : { "$or" : [{ "_id" : "should not match" }, { "articles.ArtNo" : { "$in" : [/J13/i] } }] } }, { "$match" : { "$or" : [{ "_id" : "should not match" }, { "articles.ArtNo" : { "$in" : [/J13/i] } }] } }, { "$project" : { "_id" : 0 } },
+  {
+    $limit: 10
+  }])
+
+db.vehicles.aggregate([{ "$lookup" : { "from" : "articlevehicleslinkages", "localField" : "KTypNo", "foreignField" : "KTypNo", "as" : "articlevehicleslinkages" } }, { "$unwind" : "$articlevehicleslinkages" }, { "$lookup" : { "from" : "articles", "localField" : "articlevehicleslinkages.ArtNo", "foreignField" : "ArtNo", "as" : "articles" } }, { "$unwind" : "$articles" }, { "$unwind" : "$articlevehicleslinkages.LinkageCriterias" }, { "$lookup" : { "from" : "criteria", "localField" : "articlevehicleslinkages.LinkageCriterias.CriteriaNo", "foreignField" : "CriteriaNo", "as" : "articlevehicleslinkages.criteria" } }, { "$unwind" : "$articlevehicleslinkages.criteria" }, { "$match" : { "$or" : [{ "_id" : "should not match" }, { "articles.ArtNo" : { "$in" : [/J13/i] } }] } }, { "$match" : { "$or" : [{ "_id" : "should not match" }, { "articles.ArtNo" : { "$in" : [/J13/i] } }] } }, 
+  {
+    $limit: 10
+  }]).pretty()
+
+  db.vehicles.aggregate([{ "$lookup" : { "from" : "articlevehicleslinkages", "localField" : "KTypNo", "foreignField" : "KTypNo", "as" : "articlevehicleslinkages" } }, { "$unwind" : "$articlevehicleslinkages" }, { "$lookup" : { "from" : "articles", "localField" : "articlevehicleslinkages.ArtNo", "foreignField" : "ArtNo", "as" : "articles" } }, { "$unwind" : "$articles" }, { "$unwind" : "$articlevehicleslinkages.LinkageCriterias" }, { "$lookup" : { "from" : "criteria", "localField" : "articlevehicleslinkages.LinkageCriterias.CriteriaNo", "foreignField" : "CriteriaNo", "as" : "articlevehicleslinkages.criteria" } }, { "$unwind" : "$articlevehicleslinkages.criteria" }, { "$match" : { "$or" : [{ "_id" : "should not match" }, { "articles.ArtNo" : { "$in" : [/J13/i] } }] } }, { "$unwind" : { "path" : "$KbaTypRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$CountryRestrictRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$CountrySpecificatRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$EngineNoAllocRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$ModelTypeRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$SecondaryTypeRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$ManIdAllocationRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$DriverCabAllocationRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$WheelBaseRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$SuspensionRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$TypeVoltageRefs", "preserveNullAndEmptyArrays" : true } }, { "$unwind" : { "path" : "$DriveTypeSynonyms", "preserveNullAndEmptyArrays" : true } }, { "$match" : { "$or" : [{ "_id" : "should not match" }, { "articles.ArtNo" : { "$in" : [/J13/i] } }] } }, { "$project" : { "_id" : 0 } }, { "$limit" : 10 }])
+
+  db.vehicles.aggregate([{ "$lookup" : { "from" : "articlevehicleslinkages", "localField" : "KTypNo", "foreignField" : "KTypNo", "as" : "articlevehicleslinkages" } }, { "$unwind" : "$articlevehicleslinkages" }, { "$lookup" : { "from" : "articles", "localField" : "articlevehicleslinkages.ArtNo", "foreignField" : "ArtNo", "as" : "articlevehicleslinkages.articles" } }, { "$unwind" : "$articlevehicleslinkages.articles" }, { "$unwind" : "$articlevehicleslinkages.LinkageCriterias" }, { "$lookup" : { "from" : "criteria", "localField" : "articlevehicleslinkages.LinkageCriterias.CriteriaNo", "foreignField" : "CriteriaNo", "as" : "articlevehicleslinkages.criteria" } }, { "$unwind" : "$articlevehicleslinkages.criteria" }, { "$unwind" : "$articlevehicleslinkages.LinkageCriterias" }, { "$lookup" : { "from" : "keytables", "localField" : "articlevehicleslinkages.LinkageCriterias.CritValue", "foreignField" : "KeyNo", "as" : "articlevehicleslinkages.keytables" } }, { "$unwind" : "$articlevehicleslinkages.keytables" }, { "$match" : { "$and" : [{ "$or" : [{ "_id" : "should not match" }, { "articlevehicleslinkages.articles.ArtNo" : { "$in" : [/J13/i] } }] }, { "$or" : [{ "_id" : "should not match" }, { "articlevehicleslinkages.keytables" : { "$nin" : ["", null, { }, []] } }] }] } }, { "$match" : { "$and" : [{ "$or" : [{ "_id" : "should not match" }, { "articlevehicleslinkages.articles.ArtNo" : { "$in" : [/J13/i] } }] }, { "$or" : [{ "_id" : "should not match" }, { "articlevehicleslinkages.keytables" : { "$nin" : ["", null, { }, []] } }] }] } }, { "$limit" : 10 }]).pretty()

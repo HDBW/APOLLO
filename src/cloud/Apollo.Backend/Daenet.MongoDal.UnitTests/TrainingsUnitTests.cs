@@ -13,18 +13,31 @@ namespace Daenet.MongoDal.UnitTests
     {
         Training[] _testTrainings = new Training[]
         {
-            new Training(){  Id = "T01" },
-            new Training(){  Id = "T02" },
-            new Training(){  Id = "T03" },
+            new Training(){  Id = "T01", ProviderId = "unittest" },
+            new Training(){  Id = "T02", ProviderId = "unittest" },
+            new Training(){  Id = "T03" , ProviderId = "unittest" },
         };
 
+
+        /// <summary>
+        /// Insert and delete training instances.
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
         [TestMethod]
-        public async Task InsertTrainingTest()
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(2)]
+        public async Task InsertDeleteTrainingTest(int idx)
         {
             var dal = Helpers.GetDal();
 
-            await dal.InsertAsync(Helpers.GetCollectionName<Training>(), Convertor.Convert(_testTrainings[0]));
+            await dal.InsertAsync(Helpers.GetCollectionName<Training>(), Convertor.Convert(_testTrainings[idx]));
+
+            await dal.DeleteAsync(Helpers.GetCollectionName<Training>(), _testTrainings[idx].Id);
         }
+
+
 
         [TestMethod]
         public async Task QueryTrainingnTest()

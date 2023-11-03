@@ -44,7 +44,10 @@ namespace Apollo.Api
 
             foreach (var prop in item.GetType().GetProperties())
             {
-                expoDict.Add(prop.Name, prop.GetValue(item)!);
+                if (prop.Name == "Id")
+                    expoDict.Add("_id", prop.GetValue(item)!);
+                else
+                    expoDict.Add(prop.Name, prop.GetValue(item)!);
             }
 
             return expo;

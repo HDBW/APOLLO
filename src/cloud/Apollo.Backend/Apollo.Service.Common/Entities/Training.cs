@@ -11,7 +11,9 @@ namespace Apollo.Common.Entities
     {
         //[BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string Id { get; set; }
+
+        public string ProviderId { get; set; }
 
         //Note we need a longid for mobile clients should we convert to longid in mongo?
         // I guess there is a converation from objectid to type long?

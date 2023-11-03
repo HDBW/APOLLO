@@ -79,7 +79,7 @@ namespace Apollo.Api
         /// <returns></returns>
         public static string GetCollectionName<T>()
         {
-            return GetCollectionName(typeof(Type).Name);
+            return GetCollectionName(typeof(T).Name);
         }
 
         /// <summary>
