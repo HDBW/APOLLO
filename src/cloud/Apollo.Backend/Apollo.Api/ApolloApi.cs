@@ -70,6 +70,33 @@ namespace Apollo.Api
             }
         }
 
+        public async Task InsertUsers(ICollection<User> users)
+        {
+            try
+            {
+                _logger.LogTrace("InsertUsers method entered.");
+
+                List<ExpandoObject> expoUsers = Convertor.Convert(users);
+
+                // Log information before inserting data.
+                _logger.LogInformation($"Inserting {expoUsers.Count} users into the database.");
+
+                await _dal.InsertManyAsync(GetCollectionName("user"), expoUsers);
+
+                // Log information after a successful insertion.
+                _logger.LogInformation($"Inserted {expoUsers.Count} users into the database.");
+            }
+            catch (Exception ex)
+            {
+                // Log an error in case of an exception.
+                _logger.LogError($"Error in InsertUsers method: {ex.Message}");
+
+                // Re-throw the exception
+                throw;
+            }
+        }
+
+
 
         /// <summary>
         /// Gets the name of the collection for the specified item.

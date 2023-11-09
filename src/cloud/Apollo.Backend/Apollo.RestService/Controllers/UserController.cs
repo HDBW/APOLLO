@@ -92,6 +92,36 @@ namespace Apollo.Service.Controllers
             }
         }
 
+        [HttpPost("insert")]
+        // Handles HTTP POST requests to insert multiple users.
+        public async Task<IActionResult> InsertUsers([FromBody] IList<User> users)
+        {
+            try
+            {
+                _logger.LogTrace("Enter {method}", nameof(InsertUsers));
+
+                if (users == null || users.Count == 0)
+                {
+                    // Return a 400 Bad Request with an error message.
+                    return BadRequest(new { error = "No valid users provided" });
+                }
+
+                // Call the Apollo API to insert the provided users.
+                await _api.InsertUsers(users);
+
+                _logger.LogTrace("Leave {method}", nameof(InsertUsers));
+
+                // Return a success response.
+                return Ok(new { message = "Users inserted successfully" });
+            }
+            catch (Exception ex)
+            {
+                // Log and return an error response with a 500 Internal Server Error.
+                _logger.LogError($"{nameof(InsertUsers)} failed: {ex.Message}");
+                return StatusCode(500, new { error = "Failed to insert users" });
+            }
+        }
+
         [HttpDelete("{id}")]
         // Handles HTTP DELETE requests to delete a user by ID.
         public async Task DeleteUser(int[] id)
