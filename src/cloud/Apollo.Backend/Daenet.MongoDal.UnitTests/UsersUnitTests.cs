@@ -141,9 +141,9 @@ namespace Daenet.MongoDal.UnitTests
 
             var user = new User
             {
-                Id = UserId, // Verwenden Konstante anstelle des harten Codes "U01".
+                Id = UserId, 
                 UserName = "testuser1",
-                // Andere Eigenschaften
+               
             };
             await dal.InsertAsync(Helpers.GetCollectionName<User>(), Convertor.Convert(user));
         }
