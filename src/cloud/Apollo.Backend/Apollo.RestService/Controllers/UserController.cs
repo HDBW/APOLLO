@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Apollo.Service.Controllers
 {
+    /// <summary>
+    /// Controller handling user-related operations within the Apollo service.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -13,15 +16,23 @@ namespace Apollo.Service.Controllers
         private readonly ApolloApi _api;
         private readonly ILogger<UserController> _logger;
 
-        // Constructor that initializes the UserController with required dependencies.
+        /// <summary>
+        /// Constructor that initializes the UserController with required dependencies.
+        /// </summary>
+        /// <param name="api">ApolloApi instance for user operations.</param>
+        /// <param name="logger">Logger for logging user controller actions.</param>
         public UserController(ApolloApi api, ILogger<UserController> logger)
         {
             _api = api;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Handles HTTP GET requests to retrieve a user by ID.
+        /// </summary>
+        /// <param name="id">ID of the user to retrieve.</param>
+        /// <returns>Response containing the retrieved user.</returns>
         [HttpGet("{id}")]
-        // Handles HTTP GET requests to retrieve a user by ID.
         public async Task<GetUserResponse> GetUser(string id)
         {
             try
@@ -44,8 +55,12 @@ namespace Apollo.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Handles HTTP POST requests to query users based on a request object.
+        /// </summary>
+        /// <param name="req">Query request object specifying user search criteria.</param>
+        /// <returns>Response containing the queried users.</returns>
         [HttpPost()]
-        // Handles HTTP POST requests to query users based on a request object.
         public async Task<QueryUsersResponse> QueryUsers([FromBody] QueryTrainings req)
         {
             try
@@ -68,8 +83,12 @@ namespace Apollo.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Handles HTTP PUT requests to create or update a user based on a request object.
+        /// </summary>
+        /// <param name="req">Request object containing user information for create or update.</param>
+        /// <returns>Response containing the result of the create/update operation.</returns>
         [HttpPut]
-        // Handles HTTP PUT requests to create or update a user based on a request object.
         public async Task<CreateOrUpdateUserResponse> CreateOrUpdateUser([FromBody] CreateOrUpdateUserRequest req)
         {
             try
@@ -92,8 +111,12 @@ namespace Apollo.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Handles HTTP POST requests to insert multiple users.
+        /// </summary>
+        /// <param name="users">List of users to be inserted.</param>
+        /// <returns>ActionResult indicating the success or failure of the operation.</returns>
         [HttpPost("insert")]
-        // Handles HTTP POST requests to insert multiple users.
         public async Task<IActionResult> InsertUsers([FromBody] IList<User> users)
         {
             try
@@ -122,8 +145,11 @@ namespace Apollo.Service.Controllers
             }
         }
 
+        /// <summary>
+        /// Handles HTTP DELETE requests to delete a user by ID.
+        /// </summary>
+        /// <param name="id">ID of the user to delete.</param>
         [HttpDelete("{id}")]
-        // Handles HTTP DELETE requests to delete a user by ID.
         public async Task DeleteUser(int[] id)
         {
             try
