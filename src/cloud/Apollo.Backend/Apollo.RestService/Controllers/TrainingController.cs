@@ -1,6 +1,7 @@
 ﻿using Apollo.Api;
 using Apollo.Common.Entities;
 using Apollo.RestService.Messages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Apollo.Service.Controllers
@@ -9,6 +10,7 @@ namespace Apollo.Service.Controllers
     /// Implements all operations required to deal with trainings.
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "ApiKey")]
     [ApiController]
     public class TrainingController : ControllerBase
     {

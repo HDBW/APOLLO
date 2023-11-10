@@ -1,8 +1,11 @@
 
 using Apollo.Api;
 using Apollo.Service.Middleware;
+using Daenet.ApiKeyAuthenticator;
 using Daenet.MongoDal;
 using Daenet.MongoDal.Entitties;
+using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
 
 namespace Apollo.Service
 {
@@ -17,7 +20,17 @@ namespace Apollo.Service
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen((c) => {
+
+                c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+                {
+                    Description = @"Please provide the key in the value field bellow.",
+                    Name = "ApiKey",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "ApiKey"
+                });
+            });
 
             // Registers the action filter
             builder.Services.AddControllers().AddMvcOptions(options =>
@@ -25,9 +38,20 @@ namespace Apollo.Service
                 options.Filters.Add(new ApiPrincipalFilter());
             });
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "ApiKey";
+                //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddScheme<ValidateApiKeyOptions, ApiKeyAuthenticationHandler>
+                  ("ApiKey", op =>
+                  {
+                  });
+
             RegisterDaenetMongoDal(builder);
             RegisterApi(builder);
-           
+            RegisterApiKey(builder);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -61,6 +85,15 @@ namespace Apollo.Service
         private static void RegisterApi(WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<ApolloApi>();
+        }
+
+        private static void RegisterApiKey(WebApplicationBuilder builder)
+        {
+            ApiKeyConfig apiKeyCfg = new ApiKeyConfig();
+
+            builder.Configuration.GetSection("ApiKeyConfig").Bind(apiKeyCfg);
+
+            builder.Services.AddSingleton(apiKeyCfg);
         }
 
         /// <summary>
