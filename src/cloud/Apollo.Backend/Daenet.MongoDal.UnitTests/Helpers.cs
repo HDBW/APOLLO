@@ -10,7 +10,7 @@ using Apollo.Api;
 
 namespace Daenet.MongoDal.UnitTests
 {
-    internal class Helpers
+    public class Helpers
     {
         internal static MongoDataAccessLayer GetDal()
         {
