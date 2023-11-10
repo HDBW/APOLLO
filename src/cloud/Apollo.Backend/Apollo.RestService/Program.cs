@@ -24,7 +24,10 @@ namespace Apollo.Service
             {
                 options.Filters.Add(new ApiPrincipalFilter());
             });
-          
+
+            RegisterDaenetMongoDal(builder);
+            RegisterApi(builder);
+           
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -44,9 +47,20 @@ namespace Apollo.Service
             app.Run();
         }
 
+
+
+        private static void RegisterDal(WebApplicationBuilder builder)
+        {
+            MongoDalConfig cfg = new MongoDalConfig();
+            var sec = builder.Configuration.GetSection("MongoDalConfig");
+            sec.Bind(cfg);
+            builder.Services.AddSingleton< MongoDataAccessLayer>();
+            builder.Services.AddScoped<MongoDataAccessLayer>();
+        }
+
         private static void RegisterApi(WebApplicationBuilder builder)
         {
-
+            builder.Services.AddScoped<ApolloApi>();
         }
 
         /// <summary>
@@ -62,7 +76,7 @@ namespace Apollo.Service
             {
                 throw new Exception("MongoDalConfig section is missing in the configuration file.");
             }
-            
+
             builder.Services.AddSingleton(cfg);
             builder.Services.AddSingleton<MongoDataAccessLayer>();
 
