@@ -2,6 +2,7 @@
 using Apollo.Common.Entities;
 using Apollo.RestService.Apollo.Common.Messages;
 using Apollo.RestService.Messages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Apollo.Service.Controllers
@@ -10,6 +11,7 @@ namespace Apollo.Service.Controllers
     /// Controller handling user-related operations within the Apollo service.
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "ApiKey")]
     [ApiController]
     public class UserController : ControllerBase
     {
