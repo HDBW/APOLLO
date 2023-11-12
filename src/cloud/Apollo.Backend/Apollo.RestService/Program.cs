@@ -22,6 +22,15 @@ namespace Apollo.Service
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen((c) => {
 
+                //c.UseInlineDefinitionsForEnums();
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "APOLLO REST Service",
+                    Description = "REST API for APOLLO Backend. Copyright HDBW",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                });
+
                 c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
                 {
                     Description = @"Please provide the key in the value field bellow.",
@@ -29,6 +38,24 @@ namespace Apollo.Service
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "ApiKey"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "ApiKey"
+                            },
+                            Scheme = "ApiKey",
+                            Name = "ApiKey",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                    }
                 });
             });
 
