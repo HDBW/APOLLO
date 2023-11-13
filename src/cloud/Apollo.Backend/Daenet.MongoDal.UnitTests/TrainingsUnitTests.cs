@@ -116,12 +116,12 @@ namespace Daenet.MongoDal.UnitTests
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
-                Fields = new List<FieldExpression>()
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
                  {
-                     new FieldExpression()
+                     new Daenet.MongoDal.Entitties.FieldExpression()
                      {
                          FieldName = "Name",
-                         Operator = QueryOperator.Contains,
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.Contains,
                          Argument = new List<object>(){"test"},
                       }
                  }
@@ -140,12 +140,12 @@ namespace Daenet.MongoDal.UnitTests
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
-                Fields = new List<FieldExpression>()
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
                  {
-                     new FieldExpression()
+                     new Daenet.MongoDal.Entitties.FieldExpression()
                      {
                          FieldName = "Name",
-                         Operator = QueryOperator.NotEquals,
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.NotEquals,
                          Argument = new List<object>(){"anything"},
                       }
                  }
@@ -164,12 +164,12 @@ namespace Daenet.MongoDal.UnitTests
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
-                Fields = new List<FieldExpression>()
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
                  {
-                     new FieldExpression()
+                     new Daenet.MongoDal.Entitties.FieldExpression()
                      {
                          FieldName = "TrainingName",
-                         Operator = QueryOperator.Contains,
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.Contains,
                          Argument = new List<object>(){"AI"},
                       }
                  }
@@ -195,12 +195,12 @@ namespace Daenet.MongoDal.UnitTests
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
-                Fields = new List<FieldExpression>()
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
                  {
-                     new FieldExpression()
+                     new Daenet.MongoDal.Entitties.FieldExpression()
                      {
                          FieldName = "Description",
-                         Operator = QueryOperator.Equals,
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.Equals,
                          Argument = new List<object>(){nameof(UpsertTest)},
                       }
                  }

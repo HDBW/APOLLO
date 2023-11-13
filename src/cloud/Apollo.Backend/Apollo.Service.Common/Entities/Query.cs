@@ -1,19 +1,21 @@
-﻿using System;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Daenet.MongoDal.Entitties
+namespace Apollo.Common.Entities
 {
-    /// <summary>
-    /// Used in the query methods to specifiy the operator.
-    /// </summary>
     public class Query
     {
+
         /// <summary>
         /// Specifies if FilterExpressions will be OR-ed or AND-ed.
         /// </summary>
-        public bool IsOrOperator { get; set; } 
+        public bool IsOrOperator { get; set; }
 
         /// <summary>
         /// List of fields joined in the query operation. Currentlly the AND operation across all fields is supported only.
@@ -96,10 +98,5 @@ namespace Daenet.MongoDal.Entitties
 
             return this;
         }
-    }
-
-    public class QueryExpression
-    {
-
     }
 }

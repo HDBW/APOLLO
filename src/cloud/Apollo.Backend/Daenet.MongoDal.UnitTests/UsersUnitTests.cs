@@ -160,14 +160,14 @@ namespace Daenet.MongoDal.UnitTests
             var usersToInsert = _testUsers.ToList();
             await dal.InsertManyAsync(Helpers.GetCollectionName<User>(), usersToInsert.Select(u => Convertor.Convert(u)).ToArray());
 
-            var query = new Query
+            var query = new Daenet.MongoDal.Entitties.Query
             {
-                Fields = new List<FieldExpression>
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>
                 {
-                    new FieldExpression
+                    new Daenet.MongoDal.Entitties.FieldExpression
                     {
                         FieldName = "UserName",
-                        Operator = QueryOperator.Equals,
+                        Operator = Daenet.MongoDal.Entitties.QueryOperator.Equals,
                         Argument = new List<object> { "testuser2" },
                     }
                 }

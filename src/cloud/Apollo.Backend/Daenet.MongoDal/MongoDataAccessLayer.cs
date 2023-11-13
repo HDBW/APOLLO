@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Amazon.Runtime.Internal.Util;
-using Apollo.Common.Entities;
 using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
@@ -57,21 +56,21 @@ namespace Daenet.MongoDal
 
 
 
-        public async Task UpdateTraining(string trainingId, Training updatedTraining)
-        {
-            var filter = Builders<Training>.Filter.Eq(t => t.Id, trainingId);
-            var update = Builders<Training>.Update
-                .Set(t => t.ProviderId, updatedTraining.ProviderId)
-                .Set(t => t.TrainingName, updatedTraining.TrainingName)
-                .Set(t => t.Description, updatedTraining.Description)
+        //public async Task UpdateTraining(string trainingId, Training updatedTraining)
+        //{
+        //    var filter = Builders<Training>.Filter.Eq(t => t.Id, trainingId);
+        //    var update = Builders<Training>.Update
+        //        .Set(t => t.ProviderId, updatedTraining.ProviderId)
+        //        .Set(t => t.TrainingName, updatedTraining.TrainingName)
+        //        .Set(t => t.Description, updatedTraining.Description)
                 
-                .Set(t => t.ShortDescription, updatedTraining.ShortDescription)
-                .Set(t => t.Content, updatedTraining.Content)
-                .Set(t => t.BenefitList, updatedTraining.BenefitList);
+        //        .Set(t => t.ShortDescription, updatedTraining.ShortDescription)
+        //        .Set(t => t.Content, updatedTraining.Content)
+        //        .Set(t => t.BenefitList, updatedTraining.BenefitList);
 
            
                
-        }
+        //}
 
         /// <summary>
         ///  Inserts the set of documents into the collection.

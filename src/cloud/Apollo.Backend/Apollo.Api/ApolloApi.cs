@@ -99,8 +99,10 @@ namespace Apollo.Api
         {
             foreach (var updatedTraining in updatedTrainings)
             {
-                // Assuming you have a method like UpdateTraining in your DAL.
-                await _dal.UpdateTraining(updatedTraining.Id, updatedTraining);
+                throw new NotImplementedException();
+                //TODO
+                //await _dal.UpsertAsync()
+                //UpdateTraining(updatedTraining.Id, updatedTraining);
             }
         }
 
