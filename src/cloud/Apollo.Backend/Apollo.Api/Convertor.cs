@@ -52,5 +52,30 @@ namespace Apollo.Api
 
             return expo;
         }
+
+        public static Daenet.MongoDal.Entitties.Query ToDaenetQuery(Apollo.Common.Entities.Query apiQuery)
+        {
+            Daenet.MongoDal.Entitties.Query daenetQuery = new();
+            daenetQuery.IsOrOperator = apiQuery.IsOrOperator;
+            daenetQuery.Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>();
+            foreach (var item in apiQuery.Fields)
+            {
+                daenetQuery.Fields.Add(new Daenet.MongoDal.Entitties.FieldExpression
+                {
+                    FieldName = item.FieldName,
+                    Operator = ToOperator(item.Operator),
+                    Argument = item.Argument,
+                    Distinct = item.Distinct
+                });
+            }
+            return daenetQuery;
+        }
+
+        public static Daenet.MongoDal.Entitties.QueryOperator ToOperator(Apollo.Common.Entities.QueryOperator apiOperator)
+        {
+            string? stringOperator = Enum.GetName(typeof(Apollo.Common.Entities.QueryOperator), apiOperator);
+            var res = Enum.Parse<Daenet.MongoDal.Entitties.QueryOperator>(stringOperator!);
+            return res;
+        }
     }
 }

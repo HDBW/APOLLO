@@ -98,5 +98,7 @@ namespace Apollo.Common.Entities
 
             return this;
         }
+
+      
     }
 }
