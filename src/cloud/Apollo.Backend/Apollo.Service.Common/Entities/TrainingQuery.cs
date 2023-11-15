@@ -16,9 +16,6 @@ namespace Apollo.Common.Entities
     {
 
         public  Query Query { get; set; }
-        public string? Contains { get; set; }
-        public DateTime? From { get; set; }
-        public DateTime? To { get; set; }
        
     }
 }
