@@ -50,7 +50,6 @@
                 //foreach (var training in testTrainings)
                 //{
                 //    var insertedTraining = await _api.GetTrainingById(training.Id);
-                //    Assert.IsNotNull(insertedTraining);
                 //    Assert.AreEqual(training.TrainingName, insertedTraining.TrainingName);
                 //    Assert.AreEqual(training.ProviderId, insertedTraining.ProviderId);
                 //    Assert.AreEqual(training.Description, insertedTraining.Description);

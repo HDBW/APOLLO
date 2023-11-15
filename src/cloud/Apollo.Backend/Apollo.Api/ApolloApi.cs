@@ -21,10 +21,10 @@ namespace Apollo.Api
 
         private readonly MongoDataAccessLayer _dal;
 
+
         /// <summary>
         /// Set by <see cref="ApiPrincipalFilter"/>.
         /// </summary>
-        /// note it was changed from internal to public because it was causing issues in the ApiPrincipalFilter class
         public ClaimsPrincipal? Principal { get; set; }
 
         /// <summary>
@@ -38,73 +38,68 @@ namespace Apollo.Api
                 return String.IsNullOrEmpty(usr) ? "anonymous" : usr;
             }
         }
-
         public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger)
         {
-            _logger = logger;
-            _dal = dal;
+            _dal = dal ?? throw new ArgumentNullException(nameof(dal));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task InsertTrainings(ICollection<Training> trainings)
+        /// <summary>
+        /// Inserts a list of trainings.
+        /// </summary>
+        /// <param name="trainings">The list of trainings to insert.</param>
+        /// <returns>Task representing the asynchronous operation.</returns>
+        public async Task InsertTrainings(List<Training> trainings)
         {
             try
             {
-                _logger.LogTrace("InsertTrainings method entered.");
+                _logger.LogTrace($"{this.User} entered {nameof(InsertTrainings)}");
 
-                List<ExpandoObject> expoTrainings = Convertor.Convert(trainings);
+                // Convert API trainings to DAL trainings
+                var dalTrainings = Convertor.Convert(trainings);
 
-                // Log information before inserting data.
-                _logger.LogInformation($"Inserting {expoTrainings.Count} trainings into the database.");
+                // Insert DAL trainings
+                foreach (var dalTraining in dalTrainings)
+                {
+                    await _dal.InsertAsync(GetCollectionName<Training>(), dalTraining);
+                }
 
-                await _dal.InsertManyAsync(GetCollectionName("training"), expoTrainings);
-
-                // Log information after a successful insertion.
-                _logger.LogInformation($"Inserted {expoTrainings.Count} trainings into the database.");
+                _logger.LogTrace($"{this.User} completed {nameof(InsertTrainings)}");
             }
             catch (Exception ex)
             {
-                // Log an error in case of an exception.
-                _logger.LogError($"Error in InsertTrainings method: {ex.Message}");
-
-                // Re-throw the exception
+                _logger.LogError($"{this.User} failed execution of {nameof(InsertTrainings)}");
                 throw;
             }
         }
 
-        public async Task<Training> GetTrainingById(string trainingId)
-        {
-            try
-            {
-                _logger.LogTrace($"GetTrainingById method entered for trainingId: {trainingId}");
+        /// <summary>
+        /// Updates an existing training.
+        /// </summary>
+        /// <param name="training">The updated training data.</param>
+        /// <returns>Task representing the asynchronous operation.</returns>
+        //public async Task UpdateTraining(Training training)
+        //{
+        //    try
+        //    {
+        //        _logger.LogTrace($"{this.User} entered {nameof(UpdateTraining)}");
 
-                var filter = Builders<BsonDocument>.Filter.Eq("_id", trainingId);
-                var training = await _dal.GetByIdAsync<Training>(Helpers.GetCollectionName<Training>(), trainingId);
+        //        // Convert API training to DAL training
+        //        var dalTraining = Convertor.Convert(training);
 
-                // Log information after successful retrieval.
-                _logger.LogInformation($"Retrieved training with ID: {trainingId}");
+        //        // Update DAL training
+        //        await _dal.UpdateAsync(GetCollectionName<Training>(), dalTraining);
 
-                return training;
-            }
-            catch (Exception ex)
-            {
-                // Log an error in case of an exception.
-                _logger.LogError($"Error in GetTrainingById method: {ex.Message}");
+        //        _logger.LogTrace($"{this.User} completed {nameof(UpdateTraining)}");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"{this.User} failed execution of {nameof(UpdateTraining)}");
+        //        throw;
+        //    }
+        //}
 
-                // Re-throw the exception
-                throw;
-            }
-        }
 
-        public async Task UpdateTrainings(List<Training> updatedTrainings)
-        {
-            foreach (var updatedTraining in updatedTrainings)
-            {
-                throw new NotImplementedException();
-                //TODO
-                //await _dal.UpsertAsync()
-                //UpdateTraining(updatedTraining.Id, updatedTraining);
-            }
-        }
 
         public async Task DeleteTrainings(List<string> trainingIds)
         {
