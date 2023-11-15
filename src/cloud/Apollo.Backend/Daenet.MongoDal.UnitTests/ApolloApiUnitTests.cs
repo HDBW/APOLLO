@@ -49,7 +49,7 @@ namespace Daenet.MongoDal.UnitTests
             // Add assertions to check if the data is inserted correctly.
             foreach (var training in testTrainings)
             {
-                var insertedTraining = await _api.GetTrainingById(training.Id);
+                var insertedTraining = await _api.GetTraining(training.Id);
                 Assert.IsNotNull(insertedTraining);
                 Assert.AreEqual(training.TrainingName, insertedTraining.TrainingName);
                 Assert.AreEqual(training.ProviderId, insertedTraining.ProviderId);
@@ -85,12 +85,12 @@ namespace Daenet.MongoDal.UnitTests
                 }
 
                 // Call the UpdateTrainings method in ApolloApi.
-                await _api.UpdateTrainings(testTrainings);
+                await _api.CreateOrUpdateTraining(testTrainings.First());
 
                 // Add assertions to check if the data is updated correctly.
                 foreach (var updatedTraining in testTrainings)
                 {
-                    var retrievedTraining = await _api.GetTrainingById(updatedTraining.Id);
+                    var retrievedTraining = await _api.GetTraining(updatedTraining.Id);
                     Assert.IsNotNull(retrievedTraining);
                     Assert.AreEqual(updatedTraining.Description, retrievedTraining.Description);
                     Assert.AreEqual(updatedTraining.ShortDescription, retrievedTraining.ShortDescription);
@@ -121,7 +121,7 @@ namespace Daenet.MongoDal.UnitTests
                 // Add assertions to check if the data is deleted correctly.
                 foreach (var trainingId in trainingIds)
                 {
-                    var deletedTraining = await _api.GetTrainingById(trainingId);
+                    var deletedTraining = await _api.GetTraining(trainingId);
                     Assert.IsNull(deletedTraining);
                 }
             }

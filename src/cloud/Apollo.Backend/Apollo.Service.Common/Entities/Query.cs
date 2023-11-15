@@ -11,94 +11,35 @@ namespace Apollo.Common.Entities
 {
     public class Query
     {
+        /// <summary>
+        /// Specify which properties of the Entity should be returned in the response message, if Fields is empty, all fields in the database are returned
+        /// </summary>
+        public List<string> Fields { get; set; }
+
+        public Filter Filter { get; set; }
 
         /// <summary>
-        /// Specifies if FilterExpressions will be OR-ed or AND-ed.
+        /// If set on true, then the response will contain the number of pages and records (items).
+        /// If set on false, the number of pages is set on -1. We use this argument, to avoid a double query inside of backend when number of pages is required.
+        /// To calculate the number of pages, the backend first executes the query and then execute the request to get the number of available items for the given query,
+        /// which is finally recalculated in the number of pages.
+        /// In a case of FALSE (default), the second query is not executed.
         /// </summary>
-        public bool IsOrOperator { get; set; }
+        public bool RequestCount { get; set; }
 
         /// <summary>
-        /// List of fields joined in the query operation. Currentlly the AND operation across all fields is supported only.
+        /// Number of items return e.g., pageSize
         /// </summary>
-        public List<FieldExpression> Fields { get; set; } = new List<FieldExpression>();
+        public int Top { get; set; } = 200;
 
         /// <summary>
-        /// 
+        /// Use for paging indicated by (page - 1) * pageSize
         /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            if (Fields != null || Fields?.Count == 0)
-            {
-                foreach (var item in this.Fields)
-                {
-                    if (item.Argument == null)
-                        continue;
-
-                    sb.Append($"[{item.FieldName} {item.Operator} {string.Join(',', item.Argument)}]");
-                    if (item != this.Fields.Last())
-                    {
-                        if (IsOrOperator)
-                        {
-                            sb.Append(" OR ");
-                        }
-                        else
-                        {
-                            sb.Append(" AND ");
-                        }
-                    }
-                }
-            }
-            else
-                return "All items";
-
-            return sb.ToString();
-        }
+        public int Skip { get; set; } = 0;
 
         /// <summary>
-        /// Create a query with single fieldName
+        /// Specify the order of the return items by the specified field.
         /// </summary>
-        /// <param name="fieldName"></param>
-        /// <param name="fieldValues"></param>
-        /// <param name="op"></param>
-        /// <returns></returns>
-        public static Query CreateQuery(string fieldName, IList<object> fieldValues, QueryOperator op = QueryOperator.Equals, bool distinct = false)
-        {
-            return new Query
-            {
-                Fields = new List<FieldExpression>
-                {
-                    new FieldExpression
-                    {
-                        FieldName = fieldName, Operator = op, Argument = fieldValues, Distinct = distinct
-                    }
-                }
-            };
-        }
-
-
-        /// <summary>
-        /// Add new AND-conditional field expression across all other fields and OR-conditional field expression within a fieldName to the query
-        /// </summary>
-        /// <param name="fieldName"></param>
-        /// <param name="fieldValues">list of all values with or condition</param>
-        /// <param name="op"></param>
-        /// <returns>The query to support concatnation.</returns>
-        public Query AddExpression(string fieldName, ICollection<object> fieldValues, QueryOperator op = QueryOperator.Equals, bool distinct = false)
-        {
-            this.Fields.Add(new FieldExpression
-            {
-                FieldName = fieldName,
-                Operator = op,
-                Argument = fieldValues,
-                Distinct = distinct
-            });
-
-            return this;
-        }
-
-      
+        public SortExpression SortExpression { get; set; }
     }
 }

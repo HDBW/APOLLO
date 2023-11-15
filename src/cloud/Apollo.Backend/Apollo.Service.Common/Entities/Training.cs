@@ -71,7 +71,7 @@ namespace Apollo.Common.Entities
         /// Financial Aid provided for a Training
         /// </summary>
         //[BsonElement("Loans")]
-        public List<Loans> Loans { get; set; }
+        public List<Loans>? Loans { get; set; }
 
         //[BsonElement("TrainingsProvider")]
         public EduProvider TrainingProvider { get; set; }

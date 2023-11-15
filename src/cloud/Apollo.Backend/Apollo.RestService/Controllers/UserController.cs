@@ -63,7 +63,7 @@ namespace Apollo.Service.Controllers
         /// <param name="req">Query request object specifying user search criteria.</param>
         /// <returns>Response containing the queried users.</returns>
         [HttpPost()]
-        public async Task<QueryUsersResponse> QueryUsers([FromBody] QueryTrainings req)
+        public async Task<QueryUsersResponse> QueryUsers([FromBody] QueryUsersRequest req)
         {
             try
             {

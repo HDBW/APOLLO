@@ -27,7 +27,7 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="filter">The filter that specifies trainings to be retrieved.</param>
         /// <returns>List of trainings.</returns>
-        public Task<IList<User>> QueryUser(QueryTrainings filter)
+        public Task<IList<User>> QueryUser(Query query)
         {
             return Task.FromResult<IList<User>>(new List<User>());
         }

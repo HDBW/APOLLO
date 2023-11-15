@@ -1,24 +1,20 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using Daenet.MongoDal.Entitties;
+
+
+
+using Apollo.Common.Entities;
 
 namespace Apollo.RestService.Messages
 {
     /// <summary>
     /// Defines the requeste message of the GetTrainings operation.
     /// </summary>
-    public class QueryTrainingsRequest
+    public class QueryTrainingsRequest : Query
     {
-        QueryOperator Query { get; set; }
+       // Apollo.Common.Entities.Query Query { get; set; }
 
-        [Obsolete]
-        public string Contains { get; set; }
-
-        [Obsolete]
-        public DateTime? From { get; set; }
-
-        [Obsolete]
-        public DateTime? To { get; set; }
+       
     }
 }

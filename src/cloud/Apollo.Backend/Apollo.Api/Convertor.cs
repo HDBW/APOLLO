@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using Apollo.Common.Entities;
+using MongoDB.Driver.Core.Events.Diagnostics;
 
 namespace Apollo.Api
 {
@@ -53,7 +55,66 @@ namespace Apollo.Api
             return expo;
         }
 
-        public static Daenet.MongoDal.Entitties.Query ToDaenetQuery(Apollo.Common.Entities.Query apiQuery)
+        public static Training ToTraining(ExpandoObject expando)
+        {
+            IDictionary<string,object> dict = expando as IDictionary<string, object>;
+         
+            Training tr = new Training();
+
+            tr.TrainingProvider = ToTrainingProvider(dict["TrainingProvider"] as ExpandoObject);
+         //   tr.Tags
+            tr.PublishingDate = (DateTime)dict["PublishingDate"];
+           // tr.Prerequisites
+            tr.ProductUrl = new Uri(dict["ProductUrl"] as string);
+            tr.Price = (decimal)dict["Price"];
+            //tr. = (string)dict["PictureUrl"];
+
+            tr.Loans = dict.ContainsKey("Loans") ? ToEntityList<Loans>(dict["Loans"] as List<ExpandoObject>, ToLoans) : null;
+
+            return tr;
+        }
+
+        public static Loans ToLoans(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            Loans loans = new Loans();
+            //..
+            return loans;
+        }
+
+        public static List<T> ToEntityList<T>(IList<ExpandoObject>? expandos, Func<ExpandoObject,T> toEntity)
+        {
+            if (expandos == null)
+                throw new ArgumentNullException("Argument 'expandos' cannot be null!");
+
+            List<T> list = new List<T>();
+
+            foreach (ExpandoObject item in expandos)
+            {
+                list.Add(toEntity(item));
+            }
+
+            return list;
+        }
+
+        public static EduProvider ToTrainingProvider(ExpandoObject? expando)
+        {
+            EduProvider provider = new EduProvider();
+
+            IDictionary<string, object>? dict = expando as IDictionary<string, object>;
+
+            if (dict != null)
+            {
+                provider.Name = dict.ContainsKey("Name") ? (string)dict["Name"] : null;
+                provider.Url = new Uri((string)dict["Url"]);
+                //TODO...
+            }
+
+            return provider;
+        }
+
+        public static Daenet.MongoDal.Entitties.Query ToDaenetQuery(Apollo.Common.Entities.Filter apiQuery)
         {
             Daenet.MongoDal.Entitties.Query daenetQuery = new();
             daenetQuery.IsOrOperator = apiQuery.IsOrOperator;
@@ -76,6 +137,15 @@ namespace Apollo.Api
             string? stringOperator = Enum.GetName(typeof(Apollo.Common.Entities.QueryOperator), apiOperator);
             var res = Enum.Parse<Daenet.MongoDal.Entitties.QueryOperator>(stringOperator!);
             return res;
+        }
+
+        public static Daenet.MongoDal.Entitties.SortExpression ToDaenetSortExpression(Common.Entities.SortExpression sortExpression)
+        {
+            return  new Daenet.MongoDal.Entitties.SortExpression
+            {
+                FieldName = sortExpression.FieldName,
+                Order = Enum.Parse<Daenet.MongoDal.Entitties.SortOrder>(Enum.GetName(typeof(Common.Entities.SortOrder), sortExpression.Order)!)                       
+            };
         }
     }
 }

@@ -43,10 +43,13 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="filter">The filter that specifies trainings to be retrieved.</param>
         /// <returns>List of trainings.</returns>
-        public Task<IList<Training>> QueryTrainings(QueryTrainings filter)
-        {          
+        public async Task<IList<Training>> QueryTrainings(Apollo.Common.Entities.Query query)
+        {
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-            return Task.FromResult<IList<Training>>(new List<Training>());
+            var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+
+            return trainings;
         }
 
         /// <summary>

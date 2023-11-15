@@ -62,17 +62,8 @@ namespace Apollo.Service.Controllers
             {
                 _logger.LogTrace($"{nameof(QueryTrainings)} entered.");
 
-                // Create a new QueryTrainings object based on the QueryTrainingsRequest object.
-                var queryTrainings = new QueryTrainings
-                {
-                    Contains = req.Contains,
-                    From = req.From,
-                    To = req.To
-                    // Add more properties as needed for the query.
-                };
-
                 // Call the Apollo API to query trainings based on the request.
-                var trainings = await _api.QueryTrainings(queryTrainings);
+                var trainings = await _api.QueryTrainings(req);
 
                 _logger.LogTrace($"{nameof(QueryTrainings)} completed.");
 
@@ -124,7 +115,7 @@ namespace Apollo.Service.Controllers
                 }
 
                 // Call the Apollo API to insert the provided trainings.
-                await _api.InsertTrainings(trainings);
+                await _api.CreateOrUpdateTraining(trainings.First());
 
                 _logger.LogTrace($"{nameof(InsertTrainings)} completed.");
 

@@ -12,7 +12,7 @@ public class QueryUsersResponse
             
     }
 
-    public Query Query { get; set; }
+    public Filter Query { get; set; }
 
     public List<Apollo.Common.Entities.User> Users { get; set; }
     // ... other properties or methods
