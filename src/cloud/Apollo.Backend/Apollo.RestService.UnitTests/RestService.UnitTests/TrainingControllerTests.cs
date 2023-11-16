@@ -8,6 +8,7 @@ using Apollo.Service.Controllers;
 using Daenet.MongoDal.Entitties;
 using Daenet.MongoDal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Extensions.Logging;
 
 namespace Apollo.RestService.RestService.UnitTests
 {

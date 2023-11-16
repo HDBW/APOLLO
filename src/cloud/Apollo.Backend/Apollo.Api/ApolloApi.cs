@@ -44,60 +44,6 @@ namespace Apollo.Api
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        /// <summary>
-        /// Inserts a list of trainings.
-        /// </summary>
-        /// <param name="trainings">The list of trainings to insert.</param>
-        /// <returns>Task representing the asynchronous operation.</returns>
-        public async Task InsertTrainings(List<Training> trainings)
-        {
-            try
-            {
-                _logger.LogTrace($"{this.User} entered {nameof(InsertTrainings)}");
-
-                // Convert API trainings to DAL trainings
-                var dalTrainings = Convertor.Convert(trainings);
-
-                // Insert DAL trainings
-                foreach (var dalTraining in dalTrainings)
-                {
-                    await _dal.InsertAsync(GetCollectionName<Training>(), dalTraining);
-                }
-
-                _logger.LogTrace($"{this.User} completed {nameof(InsertTrainings)}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{this.User} failed execution of {nameof(InsertTrainings)}");
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing training.
-        /// </summary>
-        /// <param name="training">The updated training data.</param>
-        /// <returns>Task representing the asynchronous operation.</returns>
-        //public async Task UpdateTraining(Training training)
-        //{
-        //    try
-        //    {
-        //        _logger.LogTrace($"{this.User} entered {nameof(UpdateTraining)}");
-
-        //        // Convert API training to DAL training
-        //        var dalTraining = Convertor.Convert(training);
-
-        //        // Update DAL training
-        //        await _dal.UpdateAsync(GetCollectionName<Training>(), dalTraining);
-
-        //        _logger.LogTrace($"{this.User} completed {nameof(UpdateTraining)}");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"{this.User} failed execution of {nameof(UpdateTraining)}");
-        //        throw;
-        //    }
-        //}
 
 
 
