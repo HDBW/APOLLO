@@ -19,6 +19,7 @@ namespace Apollo.Service.Controllers
 
         public TrainingController(ApolloApi api, ILogger<TrainingController> logger)
         {
+
             _api = api;
             _logger = logger;
         }

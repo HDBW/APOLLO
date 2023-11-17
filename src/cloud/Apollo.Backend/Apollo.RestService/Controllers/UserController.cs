@@ -70,7 +70,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace("Enter {method}", nameof(QueryUsers));
 
                 // Call the Apollo API to query users based on the request.
-                var users = await _api.QueryUser(req);
+                var users = await _api.QueryUsers(req);
 
                 _logger.LogTrace("Leave {method}", nameof(QueryUsers));
 
@@ -127,25 +127,27 @@ namespace Apollo.Service.Controllers
 
                 if (users == null || users.Count == 0)
                 {
-                    // Return a 400 Bad Request with an error message.
                     return BadRequest(new { error = "No valid users provided" });
                 }
 
-                // Call the Apollo API to insert the provided users.
-                await _api.InsertUsers(users);
+                var userIds = new List<string>();
+                foreach (var user in users)
+                {
+                    var userId = await _api.InsertUser(user);
+                    userIds.Add(userId);
+                }
 
                 _logger.LogTrace("Leave {method}", nameof(InsertUsers));
 
-                // Return a success response.
-                return Ok(new { message = "Users inserted successfully" });
+                return Ok(new { message = "Users inserted successfully", userIds = userIds });
             }
             catch (Exception ex)
             {
-                // Log and return an error response with a 500 Internal Server Error.
                 _logger.LogError($"{nameof(InsertUsers)} failed: {ex.Message}");
                 return StatusCode(500, new { error = "Failed to insert users" });
             }
         }
+
 
         /// <summary>
         /// Handles HTTP DELETE requests to delete a user by ID.

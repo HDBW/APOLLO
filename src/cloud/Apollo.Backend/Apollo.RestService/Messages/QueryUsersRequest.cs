@@ -12,6 +12,6 @@ namespace Apollo.RestService.Messages
     /// </summary>
     public class QueryUsersRequest : Query
     {
-    
+        Query _query {  get; set; }
     }
 }

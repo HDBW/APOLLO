@@ -28,25 +28,33 @@ namespace Apollo.RestService.RestService.UnitTests
         [TestInitialize]
         public void Setup()
         {
-            // Create instances of required dependencies, including configuring the MongoDataAccessLayer.
+            // Assuming you have a class ApolloApiConfig
+            // Initialize your ApolloApiConfig here
+            var apiConfig = new ApolloApiConfig
+            {
+                // Set the necessary configuration properties
+            };
+
+            // Initialize the MongoDataAccessLayer
             var dal = new MongoDataAccessLayer(new MongoDalConfig
             {
-                // Configure the connection string and database name for the MongoDB.
                 MongoConnStr = "your_connection_string",
                 MongoDatabase = "your_database"
             });
 
-            // Create an ILogger<ApolloApi> instance for the ApolloApi class.
+            // Initialize the ILogger for ApolloApi
             var apiLogger = new LoggerFactory().CreateLogger<ApolloApi>();
 
+            // Initialize the ILogger for UserController
             _logger = new LoggerFactory().CreateLogger<UserController>();
 
-            // Pass the dependencies to the ApolloApi constructor.
-            _api = new ApolloApi(dal, apiLogger);
+            // Create an instance of ApolloApi with the necessary dependencies
+            _api = new ApolloApi(dal, apiLogger, apiConfig);
 
-            // Initialize the UserController with the ApolloApi and logger.
+            // Create an instance of UserController
             _controller = new UserController(_api, _logger);
         }
+
 
         /// <summary>
         /// Test method to verify the GetUser action of UserController with a valid user ID.

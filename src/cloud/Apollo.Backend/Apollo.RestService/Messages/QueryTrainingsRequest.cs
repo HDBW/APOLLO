@@ -13,7 +13,7 @@ namespace Apollo.RestService.Messages
     /// </summary>
     public class QueryTrainingsRequest : Query
     {
-       // Apollo.Common.Entities.Query Query { get; set; }
+        Query Query { get; set; }
 
        
     }

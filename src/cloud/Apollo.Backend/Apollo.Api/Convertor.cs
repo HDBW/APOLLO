@@ -114,6 +114,24 @@ namespace Apollo.Api
             return provider;
         }
 
+        public static User ToUser(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            User user = new User
+            {
+                Goal = dict.ContainsKey("Goal") ? (string)dict["Goal"] : null,
+                FirstName = dict.ContainsKey("FirstName") ? (string)dict["FirstName"] : null,
+                LastName = dict.ContainsKey("LastName") ? (string)dict["LastName"] : null,
+                Image = dict.ContainsKey("Image") ? (string)dict["Image"] : null,
+                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : null,
+                UserName = dict.ContainsKey("UserName") ? (string)dict["UserName"] : null
+            };
+
+            return user;
+        }
+
+
         public static Daenet.MongoDal.Entitties.Query ToDaenetQuery(Apollo.Common.Entities.Filter apiQuery)
         {
             Daenet.MongoDal.Entitties.Query daenetQuery = new();

@@ -34,8 +34,18 @@ namespace Daenet.MongoDal.UnitTests
         /// </summary>
         public UsersUnitTests()
         {
-            _api = new ApolloApi(new MongoDataAccessLayer(new MongoDalConfig()), new LoggerFactory().CreateLogger<ApolloApi>());
-            _logger = new LoggerFactory().CreateLogger<UsersUnitTests>();
+            var mongoDalConfig = new MongoDalConfig
+            {
+                // Set MongoDalConfig properties if needed
+            };
+            var loggerFactory = new LoggerFactory();
+            var apolloApiConfig = new ApolloApiConfig
+            {
+                // Set ApolloApiConfig properties here
+            };
+            _api = new ApolloApi(new MongoDataAccessLayer(mongoDalConfig), loggerFactory.CreateLogger<ApolloApi>(), apolloApiConfig);
+            _logger = loggerFactory.CreateLogger<UsersUnitTests>();
+
         }
 
         /// <summary>

@@ -29,19 +29,26 @@ namespace Apollo.RestService.RestService.UnitTests
         public void Setup()
         {
             // Create instances of required dependencies
-            var dal = new MongoDataAccessLayer(new MongoDalConfig { /* configure  */ });
+            var dal = new MongoDataAccessLayer(new MongoDalConfig { /* configure */ });
 
             // Create an ILogger<ApolloApi> instance for the ApolloApi class
             var apiLogger = new LoggerFactory().CreateLogger<ApolloApi>();
 
+            // Define and initialize the ApolloApiConfig
+            var config = new ApolloApiConfig
+            {
+                // Set the necessary configuration properties here
+            };
+
             _logger = new LoggerFactory().CreateLogger<TrainingController>();
 
             // Pass the dependencies to the ApolloApi constructor
-            _api = new ApolloApi(dal, apiLogger);
+            _api = new ApolloApi(dal, apiLogger, config);
 
             // Initialize the TrainingController with the ApolloApi and logger
             _controller = new TrainingController(_api, _logger);
         }
+
 
         /// <summary>
         /// Test method to verify the GetTraining action of TrainingController with a valid training ID.

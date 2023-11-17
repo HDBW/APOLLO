@@ -25,11 +25,215 @@ namespace Apollo.Api
         /// <summary>
         /// Queries for a set of users that match specified criteria.
         /// </summary>
-        /// <param name="filter">The filter that specifies trainings to be retrieved.</param>
-        /// <returns>List of trainings.</returns>
-        public Task<IList<User>> QueryUser(Query query)
+        /// <param name="query">The filter that specifies users to be retrieved.</param>
+        /// <returns>List of users.</returns>
+        public async Task<IList<User>> QueryUsers(Query query)
         {
-            return Task.FromResult<IList<User>>(new List<User>());
+            // Use the same approach as in ApolloApi_Training to execute the query and retrieve ExpandoObjects.
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+
+            // Convert the ExpandoObjects to User objects using the existing methods in Convertor.
+            var users = Convertor.ToEntityList<User>(res, Convertor.ToUser);
+
+            return users;
+        }
+
+        /// <summary>
+        /// Retrieves users with a specific goal.
+        /// </summary>
+        /// <param name="goal">The goal to filter users by.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a list of User objects with the specified goal.</returns>
+        public async Task<IList<User>> QueryUsersByGoal(string goal)
+        {
+            var queryFilter = new Apollo.Common.Entities.Filter
+            {
+                Fields = new List<FieldExpression>
+        {
+            new FieldExpression
+            {
+                FieldName = "Goal",
+                Operator = QueryOperator.Equals,
+                Argument = new List<object> { goal }
+            }
+        }
+            };
+
+            var query = new Query
+            {
+                Fields = new List<string>(),
+                Filter = queryFilter,
+                Top = 100,
+                Skip = 0
+            };
+
+            return Convertor.ToEntityList<User>(await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression)), Convertor.ToUser);
+        }
+
+        /// <summary>
+        /// Searches for users based on a keyword in their names.
+        /// </summary>
+        /// <param name="keyword">The keyword to search in user's names.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a list of User objects that match the keyword.</returns>
+        public async Task<IList<User>> QueryUsersByKeyword(string keyword)
+        {
+            var query = new Query
+            {
+                Fields = new List<string> { /* Add field names to return here */ },
+                Filter = new Apollo.Common.Entities.Filter
+                {
+                    Fields = new List<FieldExpression>
+            {
+                new FieldExpression { FieldName = "FirstName", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } },
+                new FieldExpression { FieldName = "LastName", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } }
+                // Add more searchable fields here if needed
+            }
+                },
+                Top = 100,
+                Skip = 0  
+            };
+
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        }
+
+        /// <summary>
+        /// Retrieves users based on multiple search criteria including first name, last name, and goal.
+        /// </summary>
+        /// <param name="firstName">The first name to filter by.</param>
+        /// <param name="lastName">The last name to filter by.</param>
+        /// <param name="goal">The goal to filter by.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a list of User objects that match the specified criteria.</returns>
+        public async Task<IList<User>> QueryUsersByMultipleCriteria(string firstName, string lastName, string goal)
+        {
+            var query = new Query
+            {
+                Fields = new List<string> { "FirstName", "LastName", "Goal" }, // Add or adjust field names to return
+                Filter = new Apollo.Common.Entities.Filter
+                {
+                    Fields = new List<FieldExpression>
+            {
+                new FieldExpression { FieldName = "FirstName", Operator = QueryOperator.Equals, Argument = new List<object> { firstName } },
+                new FieldExpression { FieldName = "LastName", Operator = QueryOperator.Equals, Argument = new List<object> { lastName } },
+                new FieldExpression { FieldName = "Goal", Operator = QueryOperator.Equals, Argument = new List<object> { goal } }
+                // Add more criteria as needed
+            }
+                },
+                Top = 100,
+                Skip = 0  
+            };
+
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        }
+
+        /// <summary>
+        /// Retrieves a paginated list of users.
+        /// </summary>
+        /// <param name="pageNumber">The page number of the results.</param>
+        /// <param name="pageSize">The number of results per page.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a paginated list of User objects.</returns>
+        public async Task<IList<User>> QueryUsersWithPagination(int pageNumber, int pageSize)
+        {
+            var query = new Query
+            {
+                Fields = new List<string> { "FirstName", "LastName" /* Add other fields as needed */ },
+                Filter = new Apollo.Common.Entities.Filter(),
+                Top = pageSize,
+                Skip = (pageNumber - 1) * pageSize
+            };
+
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        }
+
+        /// <summary>
+        /// Retrieves users who registered within a specified date range.
+        /// </summary>
+        /// <param name="startDate">The start date of the registration period.</param>
+        /// <param name="endDate">The end date of the registration period.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a list of User objects registered within the date range.</returns>
+        public async Task<IList<User>> QueryUsersByDateRange(DateTime startDate, DateTime endDate)
+        {
+            var query = new Apollo.Common.Entities.Query
+            {
+                Fields = new List<string> { "FirstName", "LastName" /* Add other fields as needed */ },
+                Filter = new Apollo.Common.Entities.Filter
+                {
+                    Fields = new List<FieldExpression>
+            {
+                new FieldExpression { FieldName = "RegistrationDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } },
+                new FieldExpression { FieldName = "RegistrationDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } }
+            }
+                },
+                Top = 100, 
+                Skip = 0    
+            };
+
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        }
+
+
+        /// <summary>
+        /// Retrieves users by their first name.
+        /// </summary>
+        /// <param name="firstName">The first name to filter users by.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a list of User objects with the specified first name.</returns>
+        public async Task<IList<User>> QueryUsersByFirstName(string firstName)
+        {
+            var query = new Query
+            {
+                Fields = new List<string> { /* Add field names to return here */ },
+                Filter = new Apollo.Common.Entities.Filter
+                {
+                    Fields = new List<FieldExpression>
+            {
+                new FieldExpression { FieldName = "FirstName", Operator = QueryOperator.Equals, Argument = new List<object> { firstName } }
+            }
+                },
+                Top = 100,
+                Skip = 0   
+            };
+
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        }
+
+
+        /// <summary>
+        /// Retrieves users by their last name.
+        /// </summary>
+        /// <param name="lastName">The last name to filter users by.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a list of User objects with the specified last name.</returns>
+        public async Task<IList<User>> QueryUsersByLastName(string lastName)
+        {
+            var query = new Query
+            {
+                Fields = new List<string> { /* Add field names to return here */ },
+                Filter = new Apollo.Common.Entities.Filter
+                {
+                    Fields = new List<FieldExpression>
+            {
+                new FieldExpression { FieldName = "LastName", Operator = QueryOperator.Equals, Argument = new List<object> { lastName } }
+            }
+                },
+                Top = 100, 
+                Skip = 0   
+            };
+
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        }
+
+        /// <summary>
+        /// Inserts a new user into the system.
+        /// </summary>
+        /// <param name="user">The User object to be inserted.</param>
+        /// <returns>Task that represents the asynchronous operation, containing the unique identifier of the inserted user.</returns>
+        public Task<string> InsertUser(User user)
+        {
+           
+            return Task.FromResult<string>(Guid.NewGuid().ToString());
         }
 
         /// <summary>

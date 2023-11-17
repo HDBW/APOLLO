@@ -21,6 +21,8 @@ namespace Apollo.Api
 
         private readonly MongoDataAccessLayer _dal;
 
+        private readonly ApolloApiConfig _config;
+
 
         /// <summary>
         /// Set by <see cref="ApiPrincipalFilter"/>.
@@ -38,104 +40,43 @@ namespace Apollo.Api
                 return String.IsNullOrEmpty(usr) ? "anonymous" : usr;
             }
         }
-        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger)
-        {
-            _dal = dal ?? throw new ArgumentNullException(nameof(dal));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-
-
-
-
-        public async Task DeleteTrainings(List<string> trainingIds)
-        {
-            // Perform validation and exception handling if needed.
-
-            foreach (var trainingId in trainingIds)
-            {
-                // Delete the training with the specified ID.
-                await DeleteTrainingById(trainingId);
-            }
-        }
-
-        private async Task DeleteTrainingById(string trainingId)
-        {
-         
-            string collectionName = "Trainings"; 
-
-            try
-            {
-                // Use your DAL (Data Access Layer) methods to perform the deletion.
-                await _dal.DeleteAsync(collectionName, trainingId);
-            }
-            catch (Exception ex)
-            {
-                
-                Console.WriteLine($"Error deleting training with ID {trainingId}: {ex.Message}");
-                throw; // Propagate the exception to the calling code.
-            }
-        }
-
-        public async Task InsertUsers(ICollection<User> users)
+        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
         {
             try
             {
-                _logger.LogTrace("InsertUsers method entered.");
+                _dal = dal ?? throw new ArgumentNullException(nameof(dal));
+                _logger = logger;
+                _config = config ?? throw new ArgumentNullException(nameof(config));
+                _config.Validate(); 
 
-                List<ExpandoObject> expoUsers = Convertor.Convert(users);
-
-                // Log information before inserting data.
-                _logger.LogInformation($"Inserting {expoUsers.Count} users into the database.");
-
-                await _dal.InsertManyAsync(GetCollectionName("user"), expoUsers);
-
-                // Log information after a successful insertion.
-                _logger.LogInformation($"Inserted {expoUsers.Count} users into the database.");
+                // Additional initialization or method calls can be added here.
             }
             catch (Exception ex)
             {
-                // Log an error in case of an exception.
-                _logger.LogError($"Error in InsertUsers method: {ex.Message}");
-
-                // Re-throw the exception
-                throw;
+                _logger.LogError($"An error occurred in ApolloApi constructor: {ex.Message}", ex);
+                throw; // Re-throwing the exception to maintain the flow, can be handled differently based on requirements.
             }
         }
-
-        public async Task<User> GetUserById(string userId)
-        {
-            try
-            {
-                _logger.LogTrace($"GetUserById method entered for UserId: {userId}");
-
-                // Invoke the corresponding DAL method to get the user by Id.
-                var user = await _dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), userId);
-
-                // Log information after a successful retrieval.
-                _logger.LogInformation($"Retrieved user by UserId: {userId}");
-
-                return user;
-            }
-            catch (Exception ex)
-            {
-                // Log an error in case of an exception.
-                _logger.LogError($"Error in GetUserById method for UserId: {userId}, Error: {ex.Message}");
-
-                // Re-throw the exception.
-                throw;
-            }
-        }
-
-
-
         /// <summary>
         /// Gets the name of the collection for the specified item.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static string GetCollectionName(object item)
+        public string GetCollectionName(object item)
         {
-            return GetCollectionName(item.GetType().Name);
+            try
+            {
+                if (item == null)
+                    throw new ArgumentNullException(nameof(item));
+
+                // Assuming there's another instance or static method to get the name
+                return GetCollectionName(item.GetType().Name);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error in GetCollectionName: {ex.Message}", ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -158,36 +99,5 @@ namespace Apollo.Api
             return $"{typeName.ToLower()}s";
         }
 
-
-        // Added helpers class here to remove error
-        // TODO: Add reference to original Helpers class 
-        private class Helpers
-        {
-            internal static string GetCollectionName<T>()
-            {
-                return ApolloApi.GetCollectionName<T>();
-            }
-
-            internal static void LogError(ILogger logger, string message)
-            {
-                logger.LogError(message);
-            }
-
-            internal static void LogInformation(ILogger logger, string message)
-            {
-                logger.LogInformation(message);
-            }
-
-            internal static void LogTrace(ILogger logger, string message)
-            {
-                logger.LogTrace(message);
-            }
-
-            internal static void LogExceptionAndThrow(ILogger logger, string errorMessage, Exception exception)
-            {
-                logger.LogError($"{errorMessage}: {exception.Message}");
-                throw exception;
-            }
-        }
     }
 }
