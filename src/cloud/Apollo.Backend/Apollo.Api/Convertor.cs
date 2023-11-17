@@ -55,34 +55,144 @@ namespace Apollo.Api
             return expo;
         }
 
+        /// <summary>
+        /// Converts an expando object to a Training object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A Training object converted from the expando object.</returns>
         public static Training ToTraining(ExpandoObject expando)
         {
             IDictionary<string,object> dict = expando as IDictionary<string, object>;
          
             Training tr = new Training();
 
-            tr.TrainingProvider = ToTrainingProvider(dict["TrainingProvider"] as ExpandoObject);
-         //   tr.Tags
-            tr.PublishingDate = (DateTime)dict["PublishingDate"];
-           // tr.Prerequisites
-            tr.ProductUrl = new Uri(dict["ProductUrl"] as string);
+            tr.ProviderId = (string)dict["ProviderId"];
+            tr.TrainingName = (string)dict["TrainingName"];
+            tr.Description = (string)dict["Description"];
+            tr.ShortDescription = (string)dict["ShortDescription"];
+            tr.Content = (List<string>)dict["Content"];
+            tr.BenefitList = (List<string>)dict["BenefitList"];
+            tr.Certificate = (List<string>)dict["Certificate"];
+            tr.Prerequisites = (List<string>)dict["Prerequisites"];
+            tr.ProductUrl = new Uri((string)dict["ProductUrl"]);
             tr.Price = (decimal)dict["Price"];
-            //tr. = (string)dict["PictureUrl"];
-
             tr.Loans = dict.ContainsKey("Loans") ? ToEntityList<Loans>(dict["Loans"] as List<ExpandoObject>, ToLoans) : null;
+            tr.TrainingProvider = ToTrainingProvider(dict["TrainingProvider"] as ExpandoObject);
+            //  map other properties here
+            // tr.Tags = (List<string>)dict["Tags"];
+            // tr.PublishingDate = (DateTime)dict["PublishingDate"];
 
             return tr;
+
         }
 
+
+        /// <summary>
+        /// Converts an expando object to a Loans object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A Loans object converted from the expando object.</returns>
         public static Loans ToLoans(ExpandoObject expando)
         {
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
             Loans loans = new Loans();
-            //..
+
+            loans.Id = (string)dict["Id"];
+            loans.Name = (string)dict["Name"];
+            loans.Description = (string)dict["Description"];
+            loans.Url = new Uri((string)dict["Url"]);
+            loans.LoanContact = ToContact(dict["LoanContact"] as ExpandoObject);
+
             return loans;
         }
 
+        /// <summary>
+        /// Converts an expando object to an Appointments object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>An Appointments object converted from the expando object.</returns>
+        public static Appointments ToAppointments(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            Appointments appointments = new Appointments();
+
+            appointments.Id = (string)dict["Id"];
+            appointments.Appointment = new Uri((string)dict["Appointment"]);
+            appointments.AppointmentType = (string)dict["AppointmentType"];
+            appointments.AppointmentDescription = (string)dict["AppointmentDescription"];
+            appointments.AppointmentLocation = ToContact(dict["AppointmentLocation"] as ExpandoObject);
+            appointments.StartDate = (DateTime)dict["StartDate"];
+            appointments.EndDate = (DateTime)dict["EndDate"];
+            appointments.DurationDescription = (string)dict["DurationDescription"];
+            appointments.Duration = (TimeSpan)dict["Duration"];
+            appointments.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
+            appointments.IsGuaranteed = (bool)dict["IsGuaranteed"];
+            appointments.TrainingType = (Enum)dict["TrainingType"];
+            appointments.TimeInvestAttendee = (TimeSpan)dict["TimeInvestAttendee"];
+            appointments.TimeModel = (string)dict["TimeModel"];
+            // Add other property mappings as needed
+
+            return appointments;
+        }
+
+
+        /// <summary>
+        /// Converts an expando object to an Occurence object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>An Occurence object converted from the expando object.</returns>
+        public static Occurence ToOccurence(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            Occurence occurence = new Occurence();
+
+            occurence.Id = (string)dict["Id"];
+            occurence.StartDate = (DateTime)dict["StartDate"];
+            occurence.EndDate = (DateTime)dict["EndDate"];
+            occurence.Description = (string)dict["Description"];
+            occurence.Location = ToContact(dict["Location"] as ExpandoObject);
+            occurence.CorrelationId = (string)dict["CorrelationId"];
+
+            // Calculate Duration based on StartDate and EndDate
+            return occurence;
+        }
+
+
+        /// <summary>
+        /// Converts an expando object to a Contact object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A Contact object converted from the expando object.</returns>
+        public static Contact ToContact(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            Contact contact = new Contact
+            {
+                Surname = dict.TryGetValue("Surname", out var surname) ? (string)surname! : null!,
+                Mail = dict.TryGetValue("Mail", out var mail) ? (string)mail! : null!,
+                Phone = dict.TryGetValue("Phone", out var phone) ? (string)phone! : null!,
+                Organization = dict.TryGetValue("Organization", out var organization) ? (string)organization! : null!,
+                Address = dict.TryGetValue("Address", out var address) ? (string)address! : null!,
+                City = dict.TryGetValue("City", out var city) ? (string)city! : null!,
+                ZipCode = dict.TryGetValue("ZipCode", out var zipCode) ? (string)zipCode! : null!,
+                EAppointmentUrl = dict.TryGetValue("EAppointmentUrl", out var eAppointmentUrl) && eAppointmentUrl != null ?
+                    new Uri((string)eAppointmentUrl)! : null
+            };
+
+            return contact;
+        }
+
+        /// <summary>
+        /// Converts a list of expando objects to a list of a specific entity type.
+        /// </summary>
+        /// <typeparam name="T">The type of entity to be converted to.</typeparam>
+        /// <param name="expandos">The list of expando objects to be converted.</param>
+        /// <param name="toEntity">The function to convert each expando object to the specified entity type.</param>
+        /// <returns>A list of entities of type T converted from the list of expando objects.</returns>
         public static List<T> ToEntityList<T>(IList<ExpandoObject>? expandos, Func<ExpandoObject,T> toEntity)
         {
             if (expandos == null)
@@ -98,6 +208,11 @@ namespace Apollo.Api
             return list;
         }
 
+        /// <summary>
+        /// Converts an expando object to an EduProvider object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>An EduProvider object converted from the expando object.</returns>
         public static EduProvider ToTrainingProvider(ExpandoObject? expando)
         {
             EduProvider provider = new EduProvider();
@@ -114,6 +229,12 @@ namespace Apollo.Api
             return provider;
         }
 
+
+        /// <summary>
+        /// Converts an expando object to a User object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A User object converted from the expando object.</returns>
         public static User ToUser(ExpandoObject expando)
         {
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
@@ -131,7 +252,11 @@ namespace Apollo.Api
             return user;
         }
 
-
+        /// <summary>
+        /// Converts an Apollo API query filter to a Daenet query.
+        /// </summary>
+        /// <param name="apiQuery">The Apollo API query filter to be converted.</param>
+        /// <returns>A Daenet query object converted from the Apollo API query filter.</returns>
         public static Daenet.MongoDal.Entitties.Query ToDaenetQuery(Apollo.Common.Entities.Filter apiQuery)
         {
             Daenet.MongoDal.Entitties.Query daenetQuery = new();
@@ -150,6 +275,11 @@ namespace Apollo.Api
             return daenetQuery;
         }
 
+        /// <summary>
+        /// Converts an Apollo Common Entities QueryOperator to a Daenet QueryOperator.
+        /// </summary>
+        /// <param name="apiOperator">The Apollo Common Entities QueryOperator to be converted.</param>
+        /// <returns>A Daenet QueryOperator converted from the Apollo Common Entities QueryOperator.</returns>
         public static Daenet.MongoDal.Entitties.QueryOperator ToOperator(Apollo.Common.Entities.QueryOperator apiOperator)
         {
             string? stringOperator = Enum.GetName(typeof(Apollo.Common.Entities.QueryOperator), apiOperator);
