@@ -1,5 +1,6 @@
 
 using Apollo.Api;
+using Apollo.RestService.Midleware;
 using Apollo.Service.Middleware;
 using Daenet.ApiKeyAuthenticator;
 using Daenet.MongoDal;
@@ -75,6 +76,11 @@ namespace Apollo.Service
                   {
                   });
 
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new ApolloExceptionFilter());
+            });
+
             RegisterDaenetMongoDal(builder);
             RegisterApi(builder);
             RegisterApiKey(builder);
@@ -111,13 +117,16 @@ namespace Apollo.Service
 
         private static void RegisterApi(WebApplicationBuilder builder)
         {
+            ApolloApiConfig apiCfg = new ApolloApiConfig();
+            builder.Configuration.GetSection("ApolloApiConfig").Bind(apiCfg);
+            builder.Services.AddSingleton(apiCfg);
+
             builder.Services.AddScoped<ApolloApi>();
         }
 
         private static void RegisterApiKey(WebApplicationBuilder builder)
         {
             ApiKeyConfig apiKeyCfg = new ApiKeyConfig();
-
             builder.Configuration.GetSection("ApiKeyConfig").Bind(apiKeyCfg);
 
             builder.Services.AddSingleton(apiKeyCfg);
