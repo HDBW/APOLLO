@@ -3,6 +3,7 @@
 
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace Apollo.Api
 {
@@ -11,6 +12,12 @@ namespace Apollo.Api
     /// </summary>
     public partial class ApolloApi
     {
+        private readonly IMongoCollection<Training> _trainingCollection;
+
+        public ApolloApi()
+        {
+        }
+
 
         /// <summary>
         /// Gets the specific instance of the training.
@@ -155,6 +162,28 @@ namespace Apollo.Api
 
             var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
             return Convertor.ToEntityList<Training>(res, training => Convertor.ToTraining(training));
+        }
+
+
+        public async Task<long> GetTotalTrainingCountAsync()
+        {
+            try
+            {
+                _logger.LogTrace($"{this.User} entered {nameof(GetTotalTrainingCountAsync)}");
+
+                // Assuming you have a collection or data source of training entities, e.g., _trainingCollection
+                var filter = Builders<Training>.Filter.Empty;
+                var count = await _trainingCollection.CountDocumentsAsync(filter);
+
+                _logger.LogTrace($"{this.User} completed {nameof(GetTotalTrainingCountAsync)}");
+
+                return count;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{this.User} failed execution of {nameof(GetTotalTrainingCountAsync)}: {ex.Message}");
+                throw;
+            }
         }
 
 

@@ -92,7 +92,7 @@ namespace Apollo.Common.Entities
         /// Defined as City + Contact
         /// </summary>
         // [BsonElement("Contacts")]
-        Dictionary<string, Contact> Contacts { get; set; }
+        public Dictionary<string, Contact> Contacts { get; set; }
 
         /// <summary>
         /// The type of the training.

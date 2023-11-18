@@ -239,7 +239,6 @@ namespace Daenet.MongoDal
         }
 
 
-
         /// <summary>
         /// Looks up the set of documents.  
         /// </summary>        
@@ -702,6 +701,16 @@ namespace Daenet.MongoDal
             // Deserialize the BsonDocument to the desired type T.
             return BsonSerializer.Deserialize<T>(document);
         }
+
+        public async Task<long> CountDocumentsAsync(string collectionName, FilterDefinition<BsonDocument> filter)
+        {
+            var coll = GetCollection(collectionName);
+
+            long count = await coll.CountDocumentsAsync(filter);
+
+            return count;
+        }
+
 
         /// <summary>
         /// Updates documents in the collection that match the filter with the provided update definition.
