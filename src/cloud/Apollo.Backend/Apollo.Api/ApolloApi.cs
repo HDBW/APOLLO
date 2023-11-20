@@ -6,7 +6,8 @@ using System.Security.Claims;
 using Apollo.Common.Entities;
 using Daenet.MongoDal;
 using Microsoft.Extensions.Logging;
-
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Apollo.Api
 {
@@ -20,10 +21,12 @@ namespace Apollo.Api
 
         private readonly MongoDataAccessLayer _dal;
 
+        private readonly ApolloApiConfig _config;
+
+
         /// <summary>
         /// Set by <see cref="ApiPrincipalFilter"/>.
         /// </summary>
-        /// note it was changed from internal to public because it was causing issues in the ApiPrincipalFilter class
         public ClaimsPrincipal? Principal { get; set; }
 
         /// <summary>
@@ -37,48 +40,43 @@ namespace Apollo.Api
                 return String.IsNullOrEmpty(usr) ? "anonymous" : usr;
             }
         }
-
-        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger)
-        {
-            _logger = logger;
-            _dal = dal;
-        }
-
-        public async Task InsertTrainings(ICollection<Training> trainings)
+        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
         {
             try
             {
-                _logger.LogTrace("InsertTrainings method entered.");
+                _dal = dal ?? throw new ArgumentNullException(nameof(dal));
+                _logger = logger;
+                _config = config ?? throw new ArgumentNullException(nameof(config));
+                _config.Validate(); 
 
-                List<ExpandoObject> expoTrainings = Convertor.Convert(trainings);
-
-                // Log information before inserting data.
-                _logger.LogInformation($"Inserting {expoTrainings.Count} trainings into the database.");
-
-                await _dal.InsertManyAsync(GetCollectionName("training"), expoTrainings);
-
-                // Log information after a successful insertion.
-                _logger.LogInformation($"Inserted {expoTrainings.Count} trainings into the database.");
+                // Additional initialization or method calls can be added here.
             }
             catch (Exception ex)
             {
-                // Log an error in case of an exception.
-                _logger.LogError($"Error in InsertTrainings method: {ex.Message}");
-
-                // Re-throw the exception
-                throw;
+                _logger.LogError($"An error occurred in ApolloApi constructor: {ex.Message}", ex);
+                throw; // Re-throwing the exception to maintain the flow, can be handled differently based on requirements.
             }
         }
-
-
         /// <summary>
         /// Gets the name of the collection for the specified item.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static string GetCollectionName(object item)
+        public string GetCollectionName(object item)
         {
-            return GetCollectionName(item.GetType().Name);
+            try
+            {
+                if (item == null)
+                    throw new ArgumentNullException(nameof(item));
+
+                // Assuming there's another instance or static method to get the name
+                return GetCollectionName(item.GetType().Name);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error in GetCollectionName: {ex.Message}", ex);
+                throw;
+            }
         }
 
         /// <summary>

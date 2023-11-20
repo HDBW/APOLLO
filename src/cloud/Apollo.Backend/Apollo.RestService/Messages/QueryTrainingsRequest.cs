@@ -1,19 +1,20 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+
+
+
+using Apollo.Common.Entities;
+
 namespace Apollo.RestService.Messages
 {
     /// <summary>
     /// Defines the requeste message of the GetTrainings operation.
     /// </summary>
-    public class QueryTrainingsRequest
+    public class QueryTrainingsRequest : Query
     {
-        public string Contains { get; set; }
+        Query Query { get; set; }
 
-        public string Id { get; set; }
-
-        public DateTime? From { get; set; }
-
-        public DateTime? To { get; set; }
+       
     }
 }

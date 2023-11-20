@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    
+
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Apollo.Api\Apollo.Api.csproj" />
-    <ProjectReference Include="..\Daenet.MongoDal\Daenet.MongoDal.csproj" />
+    <ProjectReference Include="..\Apollo.RestService\Apollo.RestService.csproj" />
   </ItemGroup>
 
 </Project>

@@ -54,7 +54,6 @@ namespace Daenet.MongoDal
             this._db = this._client.GetDatabase(_cfg.MongoDatabase);
         }
 
-
         /// <summary>
         ///  Inserts the set of documents into the collection.
         /// </summary>
@@ -238,7 +237,6 @@ namespace Daenet.MongoDal
 
             return result.DeletedCount;
         }
-
 
 
         /// <summary>
@@ -684,6 +682,50 @@ namespace Daenet.MongoDal
             //return Regex.Replace(inputPattern, "(?=[^a-zA-Z0-9üöä ])", "\\\\");
             var pattern = Regex.Replace(inputPattern, "(?=[\\.\\^\\$\\*\\+\\-\\?\\(\\)\\[\\]\\{\\}\\\\\\|\\—\\/])", "\\");
             return pattern;
+        }
+
+        public async Task<T> GetByIdAsync<T>(string collectionName, string id)
+        {
+            var coll = GetCollection(collectionName);
+
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+
+            var document = await coll.Find(filter).FirstOrDefaultAsync();
+
+            if (document == null)
+            {
+                // Document not found, return null or throw an exception as needed.
+                return default(T);
+            }
+
+            // Deserialize the BsonDocument to the desired type T.
+            return BsonSerializer.Deserialize<T>(document);
+        }
+
+        public async Task<long> CountDocumentsAsync(string collectionName, FilterDefinition<BsonDocument> filter)
+        {
+            var coll = GetCollection(collectionName);
+
+            long count = await coll.CountDocumentsAsync(filter);
+
+            return count;
+        }
+
+
+        /// <summary>
+        /// Updates documents in the collection that match the filter with the provided update definition.
+        /// </summary>
+        /// <param name="collectionName">The name of the collection to update documents in.</param>
+        /// <param name="filter">The filter to match documents for the update.</param>
+        /// <param name="updateDefinition">The update definition to apply to matching documents.</param>
+        /// <returns>A task representing the asynchronous update operation.</returns>
+        public async Task<UpdateResult> UpdateAsync(string collectionName, FilterDefinition<BsonDocument> filter, UpdateDefinition<BsonDocument> updateDefinition)
+        {
+            var coll = GetCollection(collectionName);
+
+            UpdateResult result = await coll.UpdateManyAsync(filter, updateDefinition);
+
+            return result;
         }
 
 

@@ -24,6 +24,7 @@ namespace Apollo.Common.Entities
         /// </summary>
         [DataMember(Order = 8, IsRequired = false)]
         public string? Image { get; set; } = string.Empty;
-      
+        public string? Id { get; set; }
+        public string? UserName { get; set; }
     }
 }
