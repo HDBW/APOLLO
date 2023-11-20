@@ -5,6 +5,7 @@ namespace Apollo.Common.Entities
 {
     public enum TrainingType
     {
+        //TODO: Returen String for Enum ... 
         Online,
         Offline,
         Hybrid,

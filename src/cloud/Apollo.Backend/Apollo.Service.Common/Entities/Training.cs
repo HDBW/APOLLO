@@ -13,6 +13,9 @@ namespace Apollo.Common.Entities
         //[BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        /// <summary>
+        /// External Identifier from the Training Providers.
+        /// </summary>
         public string ProviderId { get; set; }
 
         //Note we need a longid for mobile clients should we convert to longid in mongo?
@@ -25,11 +28,11 @@ namespace Apollo.Common.Entities
         public string TrainingName { get; set; }
 
         /// <summary>
-        /// External Identifier for the Training Providers.
+        /// The image of a training.
         /// </summary>
-        //[Required]
-        //[BsonElement("Identifier")]
-        //public string Identifier { get; set; }
+        public Uri? Image { get; set; }
+
+
 
 
         //[BsonElement("Description")]
@@ -128,7 +131,7 @@ namespace Apollo.Common.Entities
 
         #endregion
 
-#warning candidate for interface!!
+        #warning candidate for interface!!
         #region IContentPublising // todo.
 
         //[BsonElement("PublishingDate")]
