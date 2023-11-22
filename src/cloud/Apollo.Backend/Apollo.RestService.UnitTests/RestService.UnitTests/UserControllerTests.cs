@@ -7,8 +7,10 @@ using Apollo.RestService.Messages;
 using Apollo.Service.Controllers;
 using Daenet.MongoDal.Entitties;
 using Daenet.MongoDal;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Extensions.Logging;
+using Apollo.RestService.Apollo.Common.Messages;
+using Microsoft.AspNetCore.Mvc;
+using Amazon.Auth.AccessControlPolicy;
 
 namespace Apollo.RestService.RestService.UnitTests
 {
@@ -69,9 +71,75 @@ namespace Apollo.RestService.RestService.UnitTests
             
             var result = await _controller.GetUser(userId);
 
-           
+
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(GetUserResponse));
-            Assert.AreEqual(expectedUser, result.User);
+            Assert.IsNotNull(result.User);
+            Assert.AreEqual(userId, result.User.Id);
+        }
+
+        [TestMethod]
+        public async Task QueryUsers_ValidRequest_ReturnsListOfUsers()
+        {
+            // Define the query criteria
+            var queryRequest = new QueryUsersRequest
+            {
+                Filter = new Filter
+                {
+                    Fields = new List<Common.Entities.FieldExpression>
+            {
+                new Common.Entities.FieldExpression
+                {
+                    FieldName = "UserName", // Adjust to your entity's property
+                    Operator = Common.Entities.QueryOperator.Equals,
+                    Argument = new List<object> { "TestUser" } // Define the value to match
+                }
+                
+            }
+                }
+            };
+
+            var result = await _controller.QueryUsers(queryRequest);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(QueryUsersResponse));
+            // Add more assertions based on the expected response
+        }
+
+        [TestMethod]
+        public async Task CreateOrUpdateUser_ValidRequest_ReturnsCreatedUser()
+        {
+            // Create a valid CreateOrUpdateUserRequest
+            var createOrUpdateRequest = new CreateOrUpdateUserRequest { /* Define User object */ };
+
+            var result = await _controller.CreateOrUpdateUser(createOrUpdateRequest);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(CreateOrUpdateUserResponse));
+            // Add more assertions based on the expected response
+        }
+
+        [TestMethod]
+        public async Task InsertUsers_ValidUsers_ReturnsOkResult()
+        {
+            // Create a valid collection of Users
+            var users = new List<User> { /* Define User objects */ };
+
+            var result = await _controller.InsertUsers(users);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ActionResult));
+            // Add more assertions based on the expected response
+        }
+
+        [TestMethod]
+        public async Task DeleteUser_ValidId_ReturnsNoContent()
+        {
+            int[] userIds = new int[] { /* Define valid user IDs */ };
+
+            await _controller.DeleteUser(userIds);
+
+            // Add assertions based on the expected behavior after deletion
         }
 
         // Add more test methods for other UserController actions

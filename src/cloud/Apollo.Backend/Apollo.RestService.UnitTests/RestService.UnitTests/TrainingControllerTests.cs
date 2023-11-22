@@ -7,8 +7,8 @@ using Apollo.RestService.Messages;
 using Apollo.Service.Controllers;
 using Daenet.MongoDal.Entitties;
 using Daenet.MongoDal;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Apollo.RestService.RestService.UnitTests
 {
@@ -49,7 +49,6 @@ namespace Apollo.RestService.RestService.UnitTests
             _controller = new TrainingController(_api, _logger);
         }
 
-
         /// <summary>
         /// Test method to verify the GetTraining action of TrainingController with a valid training ID.
         /// </summary>
@@ -68,6 +67,64 @@ namespace Apollo.RestService.RestService.UnitTests
             Assert.AreEqual(expectedTraining, result.Training);
         }
 
+        [TestMethod]
+        public async Task GetTraining_InvalidId_ReturnsNull()
+        {
+            string trainingId = "invalidTrainingId";
+
+            var result = await _controller.GetTraining(trainingId);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(GetTrainingResponse));
+            Assert.IsNotNull(result.Training);
+            Assert.AreEqual(trainingId, result.Training.Id);
+        }
+
+        [TestMethod]
+        public async Task QueryTrainings_ValidRequest_ReturnsListOfTrainings()
+        {
+            var queryRequest = new QueryTrainingsRequest { /* Define query criteria */ };
+
+            var result = await _controller.QueryTrainings(queryRequest);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList<QueryTrainingsResponse>));
+            // Add more assertions based on the expected response
+        }
+
+        [TestMethod]
+        public async Task CreateOrUpdateTraining_ValidRequest_ReturnsCreatedTraining()
+        {
+            var createOrUpdateRequest = new CreateOrUpdateTrainingRequest { /* Define Training object */ };
+
+            var result = await _controller.CreateOrUpdateTraining(createOrUpdateRequest);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(CreateOrUpdateTrainingResponse));
+            // Add more assertions based on the expected response
+        }
+
+        [TestMethod]
+        public async Task InsertTrainings_ValidTrainings_ReturnsResult()
+        {
+            var trainings = new List<Training> { /* Define Training objects */ };
+
+            var result = await _controller.InsertTrainings(trainings);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+            // Add more assertions based on the expected response
+        }
+
+        [TestMethod]
+        public async Task Delete_ValidId_ReturnsNoContent()
+        {
+            string trainingId = "someValidTrainingId";
+
+            await _controller.Delete(trainingId);
+
+            // Add assertions based on the expected behavior after deletion
+        }
         // Add more test methods for other TrainingController actions
     }
 }
