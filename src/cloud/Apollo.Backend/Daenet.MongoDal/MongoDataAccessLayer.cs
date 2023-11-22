@@ -160,6 +160,7 @@ namespace Daenet.MongoDal
             }
         }
 
+
         /// <summary>
         /// Builds an update definition for the given document.
         /// </summary>

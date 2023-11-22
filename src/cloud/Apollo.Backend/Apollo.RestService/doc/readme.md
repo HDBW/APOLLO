@@ -10,7 +10,10 @@ https://{serviceurl}/{EntityName}/{entityId}
 ~~~
 
 For example, the URL of a GET request for Asset would be:
-~~~https://serviceurl/Training/0000~~~
+
+~~~
+https://serviceurl/Training/0000
+~~~
 
 The response projects all entity’s properties by default. 
 
@@ -24,7 +27,8 @@ The URL of a POST request for entities looks like this:
 {baseUrl}/{EntityName}/query
 
 For example, the URL of the POST request for Product (Article) is:
-https://serviceurl/training/query
+https://serviceurl/training/query
+
 
 The request requires a request body to store the query request’s criteria. The criteria used in a query are listed below:
 •	*Top* (integer): Number of items return e.g., pageSize. If this parameter is not set, then the number of all documents is counted. This might be a very slow operation that can take time. To prevent a full scan, the caller can specify any number here that will limit the execution time of the scan operation. For example, if there are 30000 matches and Top is set to 200, this method will quickly return 20000 (200*100) as the number of records and will be shown in the response if RequestCount is set to true. If the number of all matches is required, set Top to < 0 (-1 for example) and RequestCount to true. The response will not show any result but will show the number of all matches.
