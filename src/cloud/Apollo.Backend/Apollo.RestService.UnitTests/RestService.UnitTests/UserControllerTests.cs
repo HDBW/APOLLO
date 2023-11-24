@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using Apollo.RestService.Apollo.Common.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Amazon.Auth.AccessControlPolicy;
+using Moq;
+using System.Reflection;
 
 namespace Apollo.RestService.RestService.UnitTests
 {
@@ -20,128 +22,119 @@ namespace Apollo.RestService.RestService.UnitTests
     [TestClass]
     public class UserControllerTests
     {
+
         private UserController _controller;
-        private ILogger<UserController> _logger;
-        private ApolloApi _api;
+        private Mock<ApolloApi> _mockApi;
+        private Mock<ILogger<UserController>> _mockLogger;
 
-        /// <summary>
-        /// Set up the test environment by creating instances of required dependencies and initializing the controller.
-        /// </summary>
         [TestInitialize]
-        public void Setup()
+        public void Init()
         {
-            // Assuming you have a class ApolloApiConfig
-            // Initialize your ApolloApiConfig here
-            var apiConfig = new ApolloApiConfig
+            _mockApi = new Mock<ApolloApi>();
+            _mockLogger = new Mock<ILogger<UserController>>();
+            _controller = new UserController(_mockApi.Object, _mockLogger.Object);
+        }
+
+        [TestMethod]
+        public async Task GetUser_ReturnsUser()
+        {
+            // Arrange
+            var userId = "someId";
+            var expectedUser = new User { Id = userId, FirstName = "John", LastName = "Doe" };
+            _mockApi.Setup(api => api.GetUser(userId)).ReturnsAsync(expectedUser);
+
+            // Act
+            var result = await _controller.GetUser(userId) as GetUserResponse;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expectedUser.FirstName, result.User.FirstName);
+        }
+
+        [TestMethod]
+        public async Task QueryUsers_ReturnsListOfUsers()
+        {
+            // Arrange
+            var request = new QueryUsersRequest();
+            var expectedUsers = new List<User>
             {
-                // Set the necessary configuration properties
+                new User { FirstName = "Alice" },
+                new User { FirstName = "Bob" }
             };
+            _mockApi.Setup(api => api.QueryUsers(It.IsAny<QueryUsersRequest>())).ReturnsAsync(expectedUsers);
 
-            // Initialize the MongoDataAccessLayer
-            var dal = new MongoDataAccessLayer(new MongoDalConfig
-            {
-                MongoConnStr = "your_connection_string",
-                MongoDatabase = "your_database"
-            });
+            // Act
+            var actionResult = await _controller.QueryUsers(request);
 
-            // Initialize the ILogger for ApolloApi
-            var apiLogger = new LoggerFactory().CreateLogger<ApolloApi>();
-
-            // Initialize the ILogger for UserController
-            _logger = new LoggerFactory().CreateLogger<UserController>();
-
-            // Create an instance of ApolloApi with the necessary dependencies
-            _api = new ApolloApi(dal, apiLogger, apiConfig);
-
-            // Create an instance of UserController
-            _controller = new UserController(_api, _logger);
+            // Assert
+            Assert.IsNotNull(actionResult, "The action result should not be null.");
+            var result = actionResult as QueryUsersResponse;
+            Assert.IsNotNull(result, "The result should be of type QueryUsersResponse.");
+            Assert.IsNotNull(result.Users, "The Users property should not be null.");
+            Assert.AreEqual(2, result.Users.Count, "The Users count should be 2.");
         }
 
-
-        /// <summary>
-        /// Test method to verify the GetUser action of UserController with a valid user ID.
-        /// </summary>
         [TestMethod]
-        public async Task GetUser_ValidId_ReturnsUser()
+        public async Task CreateOrUpdateUser_CreatesUserSuccessfully()
         {
-           
-            string userId = "someId";
-            var expectedUser = new User { Id = userId, UserName = "TestUser" };
+            // Arrange
+            var newUser = new User { FirstName = "Charlie" };
+            var request = new CreateOrUpdateUserRequest();
 
-            
-            var result = await _controller.GetUser(userId);
+            // Using reflection to set the internal property
+            var userProperty = request.GetType().GetProperty("User", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            userProperty.SetValue(request, newUser);
 
+            _mockApi.Setup(api => api.CreateOrUpdateUser(newUser)).ReturnsAsync("newId");
 
+            // Act
+            var result = await _controller.CreateOrUpdateUser(request) as CreateOrUpdateUserResponse;
+
+            // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(GetUserResponse));
-            Assert.IsNotNull(result.User);
-            Assert.AreEqual(userId, result.User.Id);
+            Assert.AreEqual("newId", result.Result);
         }
 
         [TestMethod]
-        public async Task QueryUsers_ValidRequest_ReturnsListOfUsers()
+        public async Task InsertUsers_InsertsUsersSuccessfully()
         {
-            // Define the query criteria
-            var queryRequest = new QueryUsersRequest
-            {
-                Filter = new Filter
-                {
-                    Fields = new List<Common.Entities.FieldExpression>
-            {
-                new Common.Entities.FieldExpression
-                {
-                    FieldName = "UserName", // Adjust to your entity's property
-                    Operator = Common.Entities.QueryOperator.Equals,
-                    Argument = new List<object> { "TestUser" } // Define the value to match
-                }
-                
-            }
-                }
-            };
+            // Arrange
+            var usersToInsert = new List<User> { new User { FirstName = "Dave" } };
+            _mockApi.Setup(api => api.InsertUser(It.IsAny<User>())).ReturnsAsync("userId");
 
-            var result = await _controller.QueryUsers(queryRequest);
+            // Act
+            var actionResult = await _controller.InsertUsers(usersToInsert);
+            var result = actionResult as OkObjectResult;
 
+            // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(QueryUsersResponse));
-            // Add more assertions based on the expected response
+            Assert.AreEqual(200, result.StatusCode);
         }
 
         [TestMethod]
-        public async Task CreateOrUpdateUser_ValidRequest_ReturnsCreatedUser()
+        public async Task DeleteUser_RemovesUserSuccessfully()
         {
-            // Create a valid CreateOrUpdateUserRequest
-            var createOrUpdateRequest = new CreateOrUpdateUserRequest { /* Define User object */ };
+            // Arrange
+            var userIds = new int[] { 1 };
 
-            var result = await _controller.CreateOrUpdateUser(createOrUpdateRequest);
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(CreateOrUpdateUserResponse));
-            // Add more assertions based on the expected response
-        }
-
-        [TestMethod]
-        public async Task InsertUsers_ValidUsers_ReturnsOkResult()
-        {
-            // Create a valid collection of Users
-            var users = new List<User> { /* Define User objects */ };
-
-            var result = await _controller.InsertUsers(users);
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
-            // Add more assertions based on the expected response
-        }
-
-        [TestMethod]
-        public async Task DeleteUser_ValidId_ReturnsNoContent()
-        {
-            int[] userIds = new int[] { /* Define valid user IDs */ };
-
+            // Act
             await _controller.DeleteUser(userIds);
 
-            // Add assertions based on the expected behavior after deletion
+            // Assert
+            _mockApi.Verify(api => api.DeleteUser(userIds), Times.Once());
         }
 
-        // Add more test methods for other UserController actions
+        [TestCleanup]
+        public void Cleanup()
+        {
+            // Perform any necessary cleanup after the tests have run
+
+            // Clearing mocks
+            _mockApi.Reset();
+            _mockLogger.Reset();
+
+         
+        }
+
     }
 }

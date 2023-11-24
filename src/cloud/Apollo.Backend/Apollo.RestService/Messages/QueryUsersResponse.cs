@@ -7,11 +7,11 @@ public class QueryUsersResponse
 {
     public QueryUsersResponse(object users)
     {
-            
+        Users = users as List<Apollo.Common.Entities.User> ?? new List<Apollo.Common.Entities.User>();
     }
 
     public Filter Query { get; set; }
-
     public List<Apollo.Common.Entities.User> Users { get; set; }
     // ... other properties or methods
 }
+
