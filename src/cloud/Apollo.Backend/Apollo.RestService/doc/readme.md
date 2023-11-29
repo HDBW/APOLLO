@@ -1,17 +1,19 @@
-﻿## Table of Contents
-- [Searching (Querying) Entities](#searching-querying-entities)
-  - [Request URL and Body](#request-url-and-body)
-  - [Query Criteria](#query-criteria)
-  - [Example Request and Response](#example-request-and-response)
-- [Querying Entities – Users](#querying-entities-users)
-  - [User Query Structure](#user-query-structure)
-  - [Example User Query](#example-user-query)
-- [Querying Trainings](#querying-trainings)
-  - [Training Query Overview](#training-query-overview)
-  - [Request and Response Structure](#request-and-response-structure)
-
-
+﻿
 # Apollo REST Service operations
+
+## Table of Contents
+
+1. [Apollo REST Service operations](#apollo-rest-service-operations)
+2. [Returning a specific entity](#returning-a-specific-entity)
+3. [Searching (Querying) entities](#searching-querying-entities)
+   - [Request URL and Body](#request-url-and-body)
+   - [Query Criteria](#query-criteria)
+   - [Example Request and Response](#example-request-and-response)
+4. [Querying Entities – Users](#querying-entities--users)
+   - [User Query criteria](#user-query-criteria)
+   - [Example Request and Response Body for Users](#example-request-and-responce-body-for-users)
+5. [Querying Trainings](#querying-trainings)
+   - [Examples for Request and Response](#examples-for-request-and-response)
 
 
 ## Returning a specific entity 
@@ -65,26 +67,26 @@ The response will not show any result but will show the number of all matches.
 The number of records equals Top*100 and the number of records equals the number of records/Top.If set to false, the number of pages is set to -1. 
 This argument is used to avoid a double query inside of the backend when several pages are required. To calculate the number of pages, the backend first executes the query and then executes the request to get the number of available items for the given query, which is finally recalculated in the number of pages. In the case of FALSE (default), the second query is not executed.
 
--	*Filter*: A complex query that defines the criteria of a query. Each criterion is defined in a field. Queried entities must fulfill all the defined fields to be reflected. In other words, between each field is an AND operation. Each field in the filter should contain:
-o	**FieldName (string)**: Name of a property in an entity.
-o	**Operator (integer)**: Defined the operator. Possible values are 0 for Equals, 1 for Contains (for strings only), 2 for StartsWith (for strings only), 3 for GreaterThan, and 4 for LessThan.
-o	**Argument (string)**: The argument of the operation. There can be one or several arguments. If at least one argument is fulfilled, there is a match. In other words, between each argument is an OR operation.
-o	**Distinct (boolean)**: If is set to true, the result is returned as distinct.
+**Filter**: A complex query that defines the criteria of a query. Each criterion is defined in a field. Queried entities must fulfill all the defined fields to be reflected. In other words, between each field is an AND operation. Each field in the filter should contain:
+-	**FieldName (string)**: Name of a property in an entity.
+- **Operator (integer)**: Defined the operator. Possible values are 0 for Equals, 1 for Contains (for strings only), 2 for StartsWith (for strings only), 3 for GreaterThan, and 4 for LessThan.
+- **Argument (string)**: The argument of the operation. There can be one or several arguments. If at least one argument is fulfilled, there is a match. In other words, between each argument is an OR operation.
+- **Distinct (boolean)**: If is set to true, the result is returned as distinct.
 
 ## Example Request and Response
 
 >  `*Example*`
 
 Considering a request body to query Product entities that satisfy these criteria:
-•	The fields should be set so that only 2 properties that are DocNo and Width are reflected in the query response.
-•	The NumberOfPages and NumberOfRecords (RequestCount) should be reflected.
-•	**Maximum** 10 entities per page (top).
-•	Skip the first matched entity, only showing the 2nd matched entity and so on.
-•	German language.
-•	Only reflected entities that were created after 14/12/2017.
-•	The filter should have:
-o	DocNo equals (operator 0) to either "005528540" **OR** "005528541" **OR** "001234679". The result should not be distinct.
-o	AND DocType contains the string “0”. The result should be distinct.
+- 	The fields should be set so that only 2 properties that are DocNo and Width are reflected in the query response.
+-	The NumberOfPages and NumberOfRecords (RequestCount) should be reflected.
+-	**Maximum** 10 entities per page (top).
+-	Skip the first matched entity, only showing the 2nd matched entity and so on.
+-	German language.
+-	Only reflected entities that were created after 14/12/2017.
+-	The filter should have:
+-	DocNo equals (operator 0) to either "005528540" **OR** "005528541" **OR** "001234679". The result should not be distinct.
+-	AND DocType contains the string “0”. The result should be distinct.
 
 Then the following request body of the Training entity should be of the following:
 ```sh
@@ -134,10 +136,10 @@ Below is the following response to the such request:
 ```
 
 
-•	NumberOfPages: There are fewer than 10 matches, so it took only 1 page.
-•	NumberOfRecords: There are 2 matches in total which are Products with DocNo of "005528540", and "005528541 (there is no match for "001234679"). 
+-	NumberOfPages: There are fewer than 10 matches, so it took only 1 page.
+-	NumberOfRecords: There are 2 matches in total which are Products with DocNo of "005528540", and "005528541 (there is no match for "001234679"). 
 However, because of Skip, the 1st match is not shown in the result.
-•	Result: As defined in Fields, only the matched DocNo and Width (with DocumentType as an exception) are shown.
+-	Result: As defined in Fields, only the matched DocNo and Width (with DocumentType as an exception) are shown.
 Detail description of the request URL, the schema of the request, the and response for each entity can be found on **Swagger**.
 
 ## Querying Entities – Users
@@ -158,17 +160,17 @@ https://serviceurl/user/query
 ## User Query criteria
 
 The request body for querying User entities includes the following criteria:
-•	Top (integer): Number of items to return.
-•	Fields (string[] array): Properties to be reflected in the result.
-•	Skip (integer): For paging purposes.
-•	RequestCount (boolean): To include the count of pages and records in the response.
-•	Filter: Criteria defining the query for user entities.
+-	Top (integer): Number of items to return.
+-	Fields (string[] array): Properties to be reflected in the result.
+-	Skip (integer): For paging purposes.
+-	RequestCount (boolean): To include the count of pages and records in the response.
+-	Filter: Criteria defining the query for user entities.
 
 The filter criteria in the request body includes:
-•	FieldName (string): Property name in the User entity.
-•	Operator (integer): Operator code (0 for Equals, 1 for Contains - strings only, 2 for StartsWith - strings only, 3 for GreaterThan, and 4 for LessThan).
-•	Argument (string[]): Argument(s) for the operation. The OR operation is applied between each argument.
-•	Distinct (boolean): To return distinct results.
+-	FieldName (string): Property name in the User entity.
+-	Operator (integer): Operator code (0 for Equals, 1 for Contains - strings only, 2 for StartsWith - strings only, 3 for GreaterThan, and 4 for LessThan).
+-	Argument (string[]): Argument(s) for the operation. The OR operation is applied between each argument.
+-	Distinct (boolean): To return distinct results.
 
 ## Example Request and Responce Body for Users
 
@@ -217,9 +219,9 @@ The response to the above query request includes the following structure:
     "NumberOfRecords": 2
 }
 ```
-•	Result: Contains matched UserName and Email properties.
-•	NumberOfPages: Indicates the total number of pages in the response.
-•	NumberOfRecords: Shows the total number of records that match the query criteria.
+-	Result: Contains matched UserName and Email properties.
+-	NumberOfPages: Indicates the total number of pages in the response.
+-	NumberOfRecords: Shows the total number of records that match the query criteria.
 
 
 The Query structure allows specifying query criteria:
@@ -235,25 +237,24 @@ public class Query
 }
 ```
 This structure allows specifying:
-•	Fields to return.
-•	Filter criteria using the Filter object.
-•	Pagination settings (Top, Skip).
-•	Sorting based on a specified field.
-The internal API method (_api.QueryTrainings) uses this information to construct and execute a query against the training data.
+-	Fields to return.
+-	Filter criteria using the Filter object.
+-	Pagination settings (Top, Skip).
+-	Sorting based on a specified field.The internal API method **(_api.QueryTrainings)** uses this information to construct and execute a query against the training data.
 The **Filter** class enables setting complex query criteria.
 
 ## Querying Trainings
 
 The QueryTrainings method is an API endpoint responsible for querying trainings based on the request. Here's a high-level explanation:
 1.	**Request and Handling**:
-•	The method QueryTrainings accepts a QueryTrainingsRequest from the API.
-•	Inside, it logs the entry and attempts to query the trainings based on the provided request.
+-	The method QueryTrainings accepts a QueryTrainingsRequest from the API.
+-	Inside, it logs the entry and attempts to query the trainings based on the provided request.
 2.	**Execution**:
-•	It calls an internal API method _api.QueryTrainings(req), passing the request.
-•	This internal method likely processes the request parameters (defined in QueryTrainingsRequest), creates a query based on the provided criteria (fields, filters, pagination, sorting), and retrieves the desired trainings.
+-	It calls an internal API method _api.QueryTrainings(req), passing the request.
+-	This internal method likely processes the request parameters (defined in QueryTrainingsRequest), creates a query based on the provided criteria (fields, filters, pagination, sorting), and retrieves the desired trainings.
 3.	**Response**:
-•	After obtaining the queried trainings, it logs completion and returns a response.
-•	The response is a list of QueryTrainingsResponse, typically containing the queried training data.
+-	After obtaining the queried trainings, it logs completion and returns a response.
+-	The response is a list of QueryTrainingsResponse, typically containing the queried training data.
 
 Example of Request Object
 ```sh
@@ -299,20 +300,21 @@ public class QueryTrainingsRequest : Query
 }
 ```
 This structure specifies that the query should:
-•	Return TrainingName and Description.
-•	Apply specific filters.
-•	Include information for pagination and sorting based on the StartDate field in ascending order.
+-	Return TrainingName and Description.
+-	Apply specific filters.
+-	Include information for pagination and sorting based on the StartDate field in ascending order.
 
 The **_api.QueryTrainings(req)** method processes this request, performs the query, and returns the corresponding training data based on the defined criteria.
 QueryTrainingsRequest
-•	Fields: Specifies which fields of the training entities should be returned in the response. It's a list of field names. For instance, **["TrainingName", "Description"]** indicates you want only these two fields to be included in the response.
-•	Filter: Defines the criteria to filter the training entities. In this template, it's set up to filter based on two fields **(FilterField1 and FilterField2)**. 
+
+-	Fields: Specifies which fields of the training entities should be returned in the response. It's a list of field names. For instance, **["TrainingName", "Description"]** indicates you want only these two fields to be included in the response.
+-	Filter: Defines the criteria to filter the training entities. In this template, it's set up to filter based on two fields **(FilterField1 and FilterField2)**. 
 You can define the field names, operators, and values for filtering. For instance, FilterField1 might be **"TrainingType"** with an operator **Equals** and **FilterValue1** might be "Online".
-•	RequestCount: A boolean value indicating whether the response should contain the count of pages and records based on the query. 
+-	RequestCount: A boolean value indicating whether the response should contain the count of pages and records based on the query. 
 If true, it includes this information; otherwise, it's set to -1.
-•	Top: Specifies the number of items (trainings) to be returned in the response.
-•	Skip: Indicates the number of items to skip before beginning to return items. It's used for pagination.
-•	SortExpression: Specifies the field name for sorting and the order (ascending or descending).
+-	Top: Specifies the number of items (trainings) to be returned in the response.
+-	Skip: Indicates the number of items to skip before beginning to return items. It's used for pagination.
+-	SortExpression: Specifies the field name for sorting and the order (ascending or descending).
 
 **Example**
 ```sh
@@ -345,11 +347,10 @@ If true, it includes this information; otherwise, it's set to -1.
 **QueryTrainingsResponse**
 
 The QueryTrainingsResponse shows a hypothetical response based on the request:
-•	Result: Contains an array of training objects that match the specified criteria in the request's Filter and are filtered based on Fields. 
+-	Result: Contains an array of training objects that match the specified criteria in the request's Filter and are filtered based on Fields. 
 Each object represents a training entity and includes the requested fields such as **"TrainingName"**, **"Description"**, **"StartDate"**, **"EndDate"**, etc.
-•	NumberOfPages: Indicates the total number of pages available based on the applied query criteria.
-•	NumberOfRecords: Represents the total count of records (trainings) that satisfy the applied query conditions.
-This structured response provides filtered training entities based on the criteria provided in the QueryTrainingsRequest, along with metadata regarding the number of pages and total records meeting the criteria.
+-	NumberOfPages: Indicates the total number of pages available based on the applied query criteria.
+-	NumberOfRecords: Represents the total count of records (trainings) that satisfy the applied query conditions.This structured response provides filtered training entities based on the criteria provided in the QueryTrainingsRequest, along with metadata regarding the number of pages and total records meeting the criteria.
 
 **Example**
 ```sh
