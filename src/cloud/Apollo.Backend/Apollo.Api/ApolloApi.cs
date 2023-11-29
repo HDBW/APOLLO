@@ -47,7 +47,7 @@ namespace Apollo.Api
                 _dal = dal ?? throw new ArgumentNullException(nameof(dal));
                 _logger = logger;
                 _config = config ?? throw new ArgumentNullException(nameof(config));
-                _config.Validate(); 
+                ValidateConfig(_config);
 
                 // Additional initialization or method calls can be added here.
             }
@@ -99,5 +99,21 @@ namespace Apollo.Api
             return $"{typeName.ToLower()}s";
         }
 
+        // Add the ValidateConfig method to validate the configuration properties
+        private void ValidateConfig(ApolloApiConfig config)
+        {
+            // Validation logic to ensure configuration properties are set correctly
+            if (string.IsNullOrWhiteSpace(config.ApiKey))
+            {
+                throw new InvalidOperationException("API key is not configured.");
+            }
+
+            if (string.IsNullOrWhiteSpace(config.ServiceUrl))
+            {
+                throw new InvalidOperationException("Base URL is not configured.");
+            }
+
+            // Add further validation as required for other properties
+        }
     }
 }
