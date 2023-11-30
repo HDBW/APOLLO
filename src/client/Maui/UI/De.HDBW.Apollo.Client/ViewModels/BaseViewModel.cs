@@ -129,6 +129,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     switch (route)
                     {
                         case Routes.FeedbackView:
+                            Logger?.LogDebug($"Navigate to {route} with parameters: null.");
                             await Browser.Default.OpenAsync(Resources.Strings.Resource.FeedbackUrl, BrowserLaunchMode.SystemPreferred);
                             break;
                         default:
