@@ -164,8 +164,9 @@ namespace De.HDBW.Apollo.Data.Services
 
                             Dictionary<long, int> tmpDictionary = answerItems
                                                                         .GroupBy(c => c.QuestionId)
-                                                                        .ToDictionary(ca => category.Id,
-                                                                                      ca => ca.Where(s => s.Scalar > 0)
+                                                                        .ToDictionary(
+                                                                            ca => category.Id,
+                                                                            ca => ca.Where(s => s.Scalar > 0)
                                                                                                                     .Sum(s => s.Scalar * 5).GetValueOrDefault(0));
 
                             maxScoreDictionary = maxScoreDictionary.Union(tmpDictionary).ToDictionary(k => k.Key, v => v.Value);

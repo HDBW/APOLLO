@@ -36,7 +36,6 @@ public partial class AssessmentDescriptionView
     {
         base.OnSizeAllocated(width, height);
 
-
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -72,6 +71,5 @@ public partial class AssessmentDescriptionView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-
     }
 }

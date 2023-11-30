@@ -168,8 +168,8 @@
   <data name="ExtendedSplashScreenView_Welcome" xml:space="preserve">
     <value>Willkommen zur Beta von Apollo</value>
   </data>
-  <data name="FeedbackView_Title" xml:space="preserve">
-    <value>Feedback</value>
+  <data name="FeedbackUrl" xml:space="preserve">
+    <value>https://forms.office.com/e/cmES4qec8q</value>
   </data>
   <data name="FirstTimeDialog_Continue" xml:space="preserve">
     <value>direkt loslegen</value>
@@ -539,9 +539,6 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="CourseView_Title" xml:space="preserve">
     <value>Kursinformationen</value>
-  </data>
-  <data name="FeedbackView_Submit" xml:space="preserve">
-    <value>Senden</value>
   </data>
   <data name="Global_Next" xml:space="preserve">
     <value>Weiter</value>

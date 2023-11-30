@@ -33,7 +33,6 @@ public partial class CourseView
     {
         base.OnSizeAllocated(width, height);
 
-
         var grid = Content as Grid;
         if (grid == null)
         {
@@ -85,6 +84,5 @@ public partial class CourseView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-
     }
 }
