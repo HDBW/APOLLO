@@ -100,16 +100,19 @@ namespace Apollo.RestService.RestService.UnitTests
         {
             // Arrange
             var usersToInsert = new List<User> { new User { FirstName = "Dave" } };
-            _mockApi.Setup(api => api.InsertUser(It.IsAny<User>())).ReturnsAsync("userId");
+            _mockApi.Setup(api => api.InsertUser(It.IsAny<User>()))
+                    .ReturnsAsync(() => Guid.NewGuid().ToString());
 
             // Act
-            var actionResult = await _controller.InsertUsers(usersToInsert);
-            var result = actionResult as OkObjectResult;
+            var userIds = await _controller.InsertUsers(usersToInsert);
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.IsNotNull(userIds);
+            Assert.AreEqual(1, userIds.Count); // Expecting 1 user ID in the list
+            Assert.IsFalse(string.IsNullOrEmpty(userIds.First())); // Check if the ID is not null or empty
+            Assert.IsTrue(Guid.TryParse(userIds.First(), out _)); // Check if the ID is in a valid GUID format
         }
+
 
         [TestMethod]
         public async Task DeleteUser_RemovesUserSuccessfully()

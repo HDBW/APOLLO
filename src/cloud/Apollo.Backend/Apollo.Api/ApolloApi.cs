@@ -57,7 +57,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error occurred in ApolloApi constructor: {ex.Message}", ex);
+                _logger?.LogError($"An error occurred in ApolloApi constructor: {ex.Message}", ex);
                 throw; // Re-throwing the exception to maintain the flow, can be handled differently based on requirements.
             }
         }
@@ -105,7 +105,10 @@ namespace Apollo.Api
             return $"{typeName.ToLower()}s";
         }
 
-        // Add the ValidateConfig method to validate the configuration properties
+
+        /// <summary>
+        /// Validates the configuration properties.
+        /// </summary>
         private void ValidateConfig(ApolloApiConfig config)
         {
             // Validation logic to ensure configuration properties are set correctly

@@ -67,12 +67,12 @@ namespace Apollo.Service.Controllers
         {
             try
             {
-                _logger.LogTrace("Enter {method}", nameof(QueryUsers));
+                _logger?.LogTrace("Enter {method}", nameof(QueryUsers));
 
                 // Call the Apollo API to query users based on the request.
                 var users = await _api.QueryUsers(req);
 
-                _logger.LogTrace("Leave {method}", nameof(QueryUsers));
+                _logger?.LogTrace("Leave {method}", nameof(QueryUsers));
 
                 // Return the queried users as a response.
                 return new QueryUsersResponse(users);
@@ -119,7 +119,7 @@ namespace Apollo.Service.Controllers
         /// <param name="users">List of users to be inserted.</param>
         /// <returns>ActionResult indicating the success or failure of the operation.</returns>
         [HttpPost("insert")]
-        public async Task<IActionResult> InsertUsers([FromBody] IList<User> users)
+        public async Task<IList<string>> InsertUsers([FromBody] IList<User> users)
         {
             try
             {
@@ -127,27 +127,33 @@ namespace Apollo.Service.Controllers
 
                 if (users == null || users.Count == 0)
                 {
-                    return BadRequest(new { error = "No valid users provided" });
+                    throw new ArgumentException("No valid users provided");
                 }
 
                 var userIds = new List<string>();
                 foreach (var user in users)
                 {
-                    var userId = await _api.InsertUser(user);
-                    userIds.Add(userId);
+                    // Generate new ID if not provided
+                    if (string.IsNullOrEmpty(user.Id))
+                    {
+                        user.Id = Guid.NewGuid().ToString();
+                    }
+
+                    await _api.InsertUser(user);
+                    userIds.Add(user.Id);
                 }
 
                 _logger.LogTrace("Leave {method}", nameof(InsertUsers));
 
-                return Ok(new { message = "Users inserted successfully", userIds = userIds });
+                // Return the list of user IDs
+                return userIds;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{nameof(InsertUsers)} failed: {ex.Message}");
-                return StatusCode(500, new { error = "Failed to insert users" });
+                throw; // Rethrow the exception for the middleware to handle
             }
         }
-
 
         /// <summary>
         /// Handles HTTP DELETE requests to delete a user by ID.
