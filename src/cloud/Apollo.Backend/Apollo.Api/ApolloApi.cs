@@ -16,8 +16,10 @@ namespace Apollo.Api
     /// </summary>
     public partial class ApolloApi
     {
-        private readonly ILogger<ApolloApi> _logger;
+        #region Fields and Properties
 
+        
+        private readonly ILogger<ApolloApi> _logger;
 
         private readonly MongoDataAccessLayer _dal;
 
@@ -40,6 +42,8 @@ namespace Apollo.Api
                 return String.IsNullOrEmpty(usr) ? "anonymous" : usr;
             }
         }
+        #endregion
+
         public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
         {
             try
@@ -57,6 +61,8 @@ namespace Apollo.Api
                 throw; // Re-throwing the exception to maintain the flow, can be handled differently based on requirements.
             }
         }
+
+
         /// <summary>
         /// Gets the name of the collection for the specified item.
         /// </summary>
@@ -74,7 +80,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error in GetCollectionName: {ex.Message}", ex);
+                _logger?.LogError($"Error in GetCollectionName: {ex.Message}", ex);
                 throw;
             }
         }

@@ -15,6 +15,22 @@
 5. [Querying Trainings](#querying-trainings)
    - [Examples for Request and Response](#examples-for-request-and-response)
 
+So sollte es sein...
+Query User, QueryTraining usw. sind unter Query Entities und nicht eigenständige Topics auf dem gleichen Level
+wie Query. 
+   
+1. [Apollo REST Service operations](#apollo-rest-service-operations)
+2. [Returning a specific entity](#returning-a-specific-entity)
+3. [Searching (Querying) entities](#searching-querying-entities)
+   - [Request URL and Body](#request-url-and-body)
+   - [Query Criteria](#query-criteria)
+   - [Example Request and Response](#example-request-and-response)
+  [Querying Users](#querying-entities--users)
+   - [User Query criteria](#user-query-criteria)
+   - [User Query Examples](#example-request-and-responce-body-for-users)
+  [Querying Trainings](#querying-trainings)
+   - [Training Query criteria](#training-query-criteria)
+   - [Trianing Query Examples](#examples-for-request-and-response)
 
 ## Returning a specific entity 
 Every time some specific entity needs to be returned from the service, the CPDM offers specific GET operations for every entity, which is implemented as an HTTP-GET-Method.
@@ -73,9 +89,7 @@ This argument is used to avoid a double query inside of the backend when several
 - **Argument (string)**: The argument of the operation. There can be one or several arguments. If at least one argument is fulfilled, there is a match. In other words, between each argument is an OR operation.
 - **Distinct (boolean)**: If is set to true, the result is returned as distinct.
 
-## Example Request and Response
-
->  `*Example*`
+### Example
 
 Considering a request body to query Product entities that satisfy these criteria:
 - 	The fields should be set so that only 2 properties that are DocNo and Width are reflected in the query response.
@@ -172,7 +186,7 @@ The filter criteria in the request body includes:
 -	Argument (string[]): Argument(s) for the operation. The OR operation is applied between each argument.
 -	Distinct (boolean): To return distinct results.
 
-## Example Request and Responce Body for Users
+### Example
 
 Here's an example request body for querying User entities:
 ```sh

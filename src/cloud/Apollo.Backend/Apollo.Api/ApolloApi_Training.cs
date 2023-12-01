@@ -14,7 +14,7 @@ namespace Apollo.Api
     {
         private readonly IMongoCollection<Training> _trainingCollection;
 
-        public ApolloApi()
+        public ApolloApi()//todo remove constructor.
         {
         }
 
@@ -57,8 +57,10 @@ namespace Apollo.Api
             {
                 _logger.LogTrace($"{this.User} entered {nameof(QueryTrainings)}");
 
-                // Execute the query and convert the results to a list of Training objects
+                // Execute the query 
                 var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+
+                //  convert  results to a list of typed Training objects
                 var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
 
                 _logger.LogTrace($"{this.User} completed {nameof(QueryTrainings)}");
