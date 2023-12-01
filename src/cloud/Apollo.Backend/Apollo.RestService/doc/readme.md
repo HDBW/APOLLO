@@ -2,9 +2,9 @@
 
 ## Table of Contents
 
-1. - [Apollo REST Service operations](#apollo-rest-service-operations)
-2. - [Returning a specific entity](#returning-a-specific-entity)
-3. - [Searching (Querying) entities](#searching-querying-entities)
+- [Apollo REST Service operations](#apollo-rest-service-operations)
+- [Returning a specific entity](#returning-a-specific-entity)
+- [Searching (Querying) entities](#searching-querying-entities)
   - [Request URL](#request-url)
   - [Query Criteria](#query-criteria)
   - [Example](#example)
@@ -16,8 +16,6 @@
   - [Training Query Criteria](#training-query-criteria)
   - [Structure of Training Query](#structure-of-training-query)
   - [Example for Trainings](#example-2)
-
-
 
 ## Returning a specific entity 
 Every time some specific entity needs to be returned from the service, the CPDM offers specific GET operations for every entity, which is implemented as an HTTP-GET-Method.
