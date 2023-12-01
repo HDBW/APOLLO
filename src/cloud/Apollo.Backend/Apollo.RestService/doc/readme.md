@@ -1,20 +1,21 @@
-﻿
-# Apollo REST Service operations
+﻿# Apollo REST Service operations
 
 ## Table of Contents
 
 1. [Apollo REST Service operations](#apollo-rest-service-operations)
 2. [Returning a specific entity](#returning-a-specific-entity)
 3. [Searching (Querying) entities](#searching-querying-entities)
-   - [Request URL and Body](#request-url-and-body)
+   - [Request URL](#request-url)
    - [Query Criteria](#query-criteria)
    - [Example Request and Response](#example-request-and-response)
-4. [Querying Entities – Users](#querying-entities--users)
-   - [User Query criteria](#user-query-criteria)
-   - [Example Request and Response Body for Users](#example-request-and-responce-body-for-users)
+4. [Querying Users](#querying-users)
+   - [User Query Criteria](#user-query-criteria)
+   - [User Query Examples](#user-query-examples)
+   - [Query Structure](#query-structure)
 5. [Querying Trainings](#querying-trainings)
-   - [Examples for Request and Response](#examples-for-request-and-response)
-
+   - [Training Query Criteria](#training-query-criteria)
+   - [Structure of training query](#structure-of-training-query)
+   - [Training Query Examples](#training-query-examples)
 
 ## Returning a specific entity 
 Every time some specific entity needs to be returned from the service, the CPDM offers specific GET operations for every entity, which is implemented as an HTTP-GET-Method.
@@ -32,25 +33,24 @@ https://serviceurl/Training/0000
 
 The response projects all entity’s properties by default. 
 
-
 The detailed description of the request URL and the schema of response for each entity can be seen at Swagger.
 
 ## Searching (Querying) entities
 Every time some specific entities need to be returned from the service if they match certain searching criteria, the CPDM offers POST-operations for every entity, which is implemented as an HTTP-POST-Method.
 
-## Request URL and Body
+### Request URL
 
 The URL of a POST request for entities looks like this:
 ```sh
 {baseUrl}/{EntityName}/query
 ```
 
-For example, the URL of the POST request for Product (Article) is:
+For example, the URL of the POST request training is:
 ~~~
 https://serviceurl/training/query
 ~~~
 
-## Query Criteria
+### Query Criteria
 The request requires a request body to store the query request’s criteria. The criteria used in a query are listed below:
 
 -	*Top* (integer): Number of items return e.g., pageSize. If this parameter is not set, then the number of all documents is counted. 
@@ -73,7 +73,7 @@ This argument is used to avoid a double query inside of the backend when several
 - **Argument (string)**: The argument of the operation. There can be one or several arguments. If at least one argument is fulfilled, there is a match. In other words, between each argument is an OR operation.
 - **Distinct (boolean)**: If is set to true, the result is returned as distinct.
 
-## Example Request and Response
+### Example Request and Response
 
 >  `*Example*`
 
@@ -142,22 +142,11 @@ However, because of Skip, the 1st match is not shown in the result.
 -	Result: As defined in Fields, only the matched DocNo and Width (with DocumentType as an exception) are shown.
 Detail description of the request URL, the schema of the request, the and response for each entity can be found on **Swagger**.
 
-## Querying Entities – Users
+## Querying Users
 
 Similar to other entities, querying User entities follows the same approach using the POST method.
 
-**Request URL and Body**
-
-The URL structure for querying User entities is:
-~~~
-{baseUrl}/user/query 
-~~~
-For example, the URL for querying users would be:
-~~~
-https://serviceurl/user/query 
-~~~
-
-## User Query criteria
+### User Query criteria
 
 The request body for querying User entities includes the following criteria:
 -	Top (integer): Number of items to return.
@@ -172,7 +161,7 @@ The filter criteria in the request body includes:
 -	Argument (string[]): Argument(s) for the operation. The OR operation is applied between each argument.
 -	Distinct (boolean): To return distinct results.
 
-## Example Request and Responce Body for Users
+### User Query Examples
 
 Here's an example request body for querying User entities:
 ```sh
@@ -223,7 +212,7 @@ The response to the above query request includes the following structure:
 -	NumberOfPages: Indicates the total number of pages in the response.
 -	NumberOfRecords: Shows the total number of records that match the query criteria.
 
-
+### Query Structure
 The Query structure allows specifying query criteria:
 ```sh
 public class Query
@@ -256,53 +245,16 @@ The QueryTrainings method is an API endpoint responsible for querying trainings 
 -	After obtaining the queried trainings, it logs completion and returns a response.
 -	The response is a list of QueryTrainingsResponse, typically containing the queried training data.
 
-Example of Request Object
+### Structure of training query
+
 ```sh
 public class QueryTrainingsRequest : Query
 {
     public Query Query { get; set; }
 }
 ```
-## Examples for Request and Response
 
-**Sample Request Object:**
-```sh
-{
-  "Fields": ["TrainingName", "Description"],
-  "Filter": {
-    // Define filter criteria here...
-  },
-  "RequestCount": true,
-  "Top": 10,
-  "Skip": 0,
-  "SortExpression": {
-    "FieldName": "StartDate",
-    "Order": 1
-  }
-}
-```
-
-**Sample Response:**
-```sh
-{
-  "Result": [
-    {
-      "TrainingName": "Training ABC",
-      "Description": "Description of Training ABC"
-    },
-    {
-      "TrainingName": "Training XYZ",
-      "Description": "Description of Training XYZ"
-    }
-  ],
-  "NumberOfPages": 4,
-  "NumberOfRecords": 38
-}
-```
-This structure specifies that the query should:
--	Return TrainingName and Description.
--	Apply specific filters.
--	Include information for pagination and sorting based on the StartDate field in ascending order.
+### Training Query Criteria
 
 The **_api.QueryTrainings(req)** method processes this request, performs the query, and returns the corresponding training data based on the defined criteria.
 QueryTrainingsRequest
@@ -316,43 +268,45 @@ If true, it includes this information; otherwise, it's set to -1.
 -	Skip: Indicates the number of items to skip before beginning to return items. It's used for pagination.
 -	SortExpression: Specifies the field name for sorting and the order (ascending or descending).
 
-**Example**
+### Training Query Examples
+
+**Request Example**
+
 ```sh
 {
-  "Fields": ["{{Fields}}"],
+  "Fields": [
+    "TrainingName", "Description", "StartDate", "EndDate", 
+    "DurationDescription", "Duration", "IsGuaranteed", 
+    "TrainingType", "TimeInvestAttendee", "TimeModel"
+  ],
+  "RequestCount": true,
+  "Top": 10,
+  "Skip": 0,
   "Filter": {
     "Fields": [
       {
-        "FieldName": "{{FilterField1}}",
-        "Operator": {{FilterOperator1}},
-        "Argument": ["{{FilterValue1}}"]
+        "FieldName": "StartDate",
+        "Operator": 3, // GreaterThan
+        "Argument": ["2023-11-20T00:00:00Z"],
+        "Distinct": false
       },
       {
-        "FieldName": "{{FilterField2}}",
-        "Operator": {{FilterOperator2}},
-        "Argument": ["{{FilterValue2}}"]
+        "FieldName": "TrainingType",
+        "Operator": 0, // Equals
+        "Argument": ["Online", "Offline"],
+        "Distinct": false
       }
     ]
   },
-  "RequestCount": {{RequestCount}},
-  "Top": {{Top}},
-  "Skip": {{Skip}},
   "SortExpression": {
-    "FieldName": "{{SortField}}",
-    "Order": {{SortOrder}}
+    "FieldName": "StartDate",
+    "Order": 1 
   }
 }
 ```
 
-**QueryTrainingsResponse**
+**Response Example**
 
-The QueryTrainingsResponse shows a hypothetical response based on the request:
--	Result: Contains an array of training objects that match the specified criteria in the request's Filter and are filtered based on Fields. 
-Each object represents a training entity and includes the requested fields such as **"TrainingName"**, **"Description"**, **"StartDate"**, **"EndDate"**, etc.
--	NumberOfPages: Indicates the total number of pages available based on the applied query criteria.
--	NumberOfRecords: Represents the total count of records (trainings) that satisfy the applied query conditions.This structured response provides filtered training entities based on the criteria provided in the QueryTrainingsRequest, along with metadata regarding the number of pages and total records meeting the criteria.
-
-**Example**
 ```sh
 {
   "Result": [
@@ -385,3 +339,9 @@ Each object represents a training entity and includes the requested fields such 
   "NumberOfRecords": 15
 }
 ```
+
+The QueryTrainingsResponse shows a hypothetical response based on the request:
+-	Result: Contains an array of training objects that match the specified criteria in the request's Filter and are filtered based on Fields. 
+Each object represents a training entity and includes the requested fields such as **"TrainingName"**, **"Description"**, **"StartDate"**, **"EndDate"**, etc.
+-	NumberOfPages: Indicates the total number of pages available based on the applied query criteria.
+-	NumberOfRecords: Represents the total count of records (trainings) that satisfy the applied query conditions.This structured response provides filtered training entities based on the criteria provided in the QueryTrainingsRequest, along with metadata regarding the number of pages and total records meeting the criteria.
