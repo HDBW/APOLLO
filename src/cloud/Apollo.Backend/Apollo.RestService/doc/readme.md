@@ -2,20 +2,21 @@
 
 ## Table of Contents
 
-1. [Apollo REST Service operations](#apollo-rest-service-operations)
-2. [Returning a specific entity](#returning-a-specific-entity)
-3. [Searching (Querying) entities](#searching-querying-entities)
-   - [Request URL](#request-url)
-   - [Query Criteria](#query-criteria)
-   - [Example](#example)
- [Querying Users](#querying-users)
-   - [User Query Criteria](#user-query-criteria)
-   - [Query Structure](#query-structure)
-   - [Example for Users](#example-1)
- [Querying Trainings](#querying-trainings)
-   - [Training Query Criteria](#training-query-criteria)
-   - [Structure of Training Query](#structure-of-training-query)
-   - [Example for Trainings](#example-2)
+1. - [Apollo REST Service operations](#apollo-rest-service-operations)
+2. - [Returning a specific entity](#returning-a-specific-entity)
+3. - [Searching (Querying) entities](#searching-querying-entities)
+  - [Request URL](#request-url)
+  - [Query Criteria](#query-criteria)
+  - [Example](#example)
+- [Querying Users](#querying-users)
+  - [User Query Criteria](#user-query-criteria)
+  - [Query Structure](#query-structure)
+  - [Example for Users](#example-1)
+- [Querying Trainings](#querying-trainings)
+  - [Training Query Criteria](#training-query-criteria)
+  - [Structure of Training Query](#structure-of-training-query)
+  - [Example for Trainings](#example-2)
+
 
 
 ## Returning a specific entity 
