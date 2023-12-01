@@ -24,27 +24,26 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="trainingId"></param>
         /// <returns></returns>
-        public virtual Task<Training> GetTraining(string trainingId)
+        public virtual async Task<Training> GetTraining(string trainingId)
         {
             try
             {
-                _logger.LogTrace($"{this.User} entered {nameof(GetTraining)}");
+                _logger.LogTrace($"Entered {nameof(GetTraining)}");
 
-                var res = Task.FromResult<Training>(new Training());
+                var training = await _dal.GetByIdAsync<Training>(ApolloApi.GetCollectionName<Training>(), trainingId);
 
-                _logger.LogTrace($"{this.User} completed {nameof(GetTraining)}");
+                _logger.LogTrace($"Completed {nameof(GetTraining)}");
 
-                return res;
+                return training;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{this.User} failed execution of {nameof(GetTraining)}");
+                _logger.LogError(ex, $"Failed execution of {nameof(GetTraining)}: {ex.Message}");
                 throw;
-
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Error while getting training", ex);
             }
-        
         }
+
 
         /// <summary>
         /// Retrieves a list of trainings based on a specified query filter.

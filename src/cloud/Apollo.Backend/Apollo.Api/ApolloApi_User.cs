@@ -23,11 +23,12 @@ namespace Apollo.Api
             {
                 _logger.LogTrace($"Entered {nameof(GetUser)}");
 
-                var user = await Task.FromResult(new User()); // Placeholder logic
+                var user = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), userId);
 
                 _logger.LogTrace($"Completed {nameof(GetUser)}");
 
-                return user;
+                // If user is not found, return null (as per your requirement)
+                return user ?? null;
             }
             catch (Exception ex)
             {
