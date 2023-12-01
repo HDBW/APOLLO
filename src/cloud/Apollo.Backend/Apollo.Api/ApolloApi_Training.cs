@@ -83,29 +83,29 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="keyword">The keyword to search within the training names.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of Trainings matching the keyword.</returns>
-        public async Task<IList<Training>> SearchTrainingsByKeyword(string keyword)
-        {
-            try
-            {
-                var query = new Apollo.Common.Entities.Query
-                {
-                    Fields = new List<string> { /* Fields to return */ },
-                    Filter = new Apollo.Common.Entities.Filter
-                    {
-                        Fields = new List<FieldExpression> { new FieldExpression { FieldName = "TrainingName", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } } }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //public async Task<IList<Training>> SearchTrainingsByKeyword(string keyword)
+        //{
+        //    try
+        //    {
+        //        var query = new Apollo.Common.Entities.Query
+        //        {
+        //            Fields = new List<string> { /* Fields to return */ },
+        //            Filter = new Apollo.Common.Entities.Filter
+        //            {
+        //                Fields = new List<FieldExpression> { new FieldExpression { FieldName = "TrainingName", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } } }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-                return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
-            }
-            catch (Exception ex)
-            {
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.SearchTrainingsByKeywordErr, "Error while searching trainings by keyword", ex);
-            }
-        }
+        //        var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.SearchTrainingsByKeywordErr, "Error while searching trainings by keyword", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -114,33 +114,33 @@ namespace Apollo.Api
         /// <param name="startDate">Start date of the range.</param>
         /// <param name="endDate">End date of the range.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of Trainings within the date range.</returns>
-        public async Task<IList<Training>> QueryTrainingsByDateRange(DateTime startDate, DateTime endDate)
-        {
-            try
-            {
-                var query = new Apollo.Common.Entities.Query
-                {
-                    Fields = new List<string> { /* Fields to return */ },
-                    Filter = new Apollo.Common.Entities.Filter
-                    {
-                        Fields = new List<FieldExpression>
-                {
-                    new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } },
-                    new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } }
-                }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //public async Task<IList<Training>> QueryTrainingsByDateRange(DateTime startDate, DateTime endDate)
+        //{
+        //    try
+        //    {
+        //        var query = new Apollo.Common.Entities.Query
+        //        {
+        //            Fields = new List<string> { /* Fields to return */ },
+        //            Filter = new Apollo.Common.Entities.Filter
+        //            {
+        //                Fields = new List<FieldExpression>
+        //        {
+        //            new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } },
+        //            new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } }
+        //        }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-                return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
-            }
-            catch (Exception ex)
-            {
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsByDateRangeErr, "Error while querying trainings by date range", ex);
-            }
-        }
+        //        var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsByDateRangeErr, "Error while querying trainings by date range", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -148,28 +148,28 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="providerId">The identifier of the training provider.</param>
         /// <returns>Task that represents the asynchronous operation, containing the count of trainings.</returns>
-        public async Task<int> CountTrainingsByProvider(string providerId)
-        {
-            try
-            {
-                var query = new Query
-                {
-                    Filter = new Filter
-                    {
-                        Fields = new List<FieldExpression> { new FieldExpression { FieldName = "ProviderId", Operator = QueryOperator.Equals, Argument = new List<object> { providerId } } },
-                    },
-                    Top = int.MaxValue, // may need to be adjusted to actual data size
-                    Skip = 0
-                };
+        //public async Task<int> CountTrainingsByProvider(string providerId)
+        //{
+        //    try
+        //    {
+        //        var query = new Query
+        //        {
+        //            Filter = new Filter
+        //            {
+        //                Fields = new List<FieldExpression> { new FieldExpression { FieldName = "ProviderId", Operator = QueryOperator.Equals, Argument = new List<object> { providerId } } },
+        //            },
+        //            Top = int.MaxValue, // may need to be adjusted to actual data size
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-                return res.Count;
-            }
-            catch (Exception ex)
-            {
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.CountTrainingsByProviderErr, "Error while counting trainings by provider", ex);
-            }
-        }
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        return res.Count;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.CountTrainingsByProviderErr, "Error while counting trainings by provider", ex);
+        //    }
+        //}
 
 
         /// <summary>
