@@ -17,9 +17,13 @@ namespace Apollo.Service.Controllers
         private readonly ApolloApi _api;
         private readonly ILogger<TrainingController> _logger;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="api">Authenticated instance of the API.</param>
+        /// <param name="logger"></param>
         public TrainingController(ApolloApi api, ILogger<TrainingController> logger)
         {
-
             _api = api;
             _logger = logger;
         }
@@ -53,7 +57,7 @@ namespace Apollo.Service.Controllers
         }
 
         /// <summary>
-        /// Looks up the training that mathc the given criteria.
+        /// Looks up the training that match the given criteria.
         /// </summary>
         /// <returns></returns>
         [HttpPost]
