@@ -11,11 +11,12 @@
  [Querying Users](#querying-users)
    - [User Query Criteria](#user-query-criteria)
    - [Query Structure](#query-structure)
-   - [Example](#example)
+   - [Example for Users](#example-1)
  [Querying Trainings](#querying-trainings)
    - [Training Query Criteria](#training-query-criteria)
-   - [Structure of training query](#structure-of-training-query)
-   - [Example](example)
+   - [Structure of Training Query](#structure-of-training-query)
+   - [Example for Trainings](#example-2)
+
 
 ## Returning a specific entity 
 Every time some specific entity needs to be returned from the service, the CPDM offers specific GET operations for every entity, which is implemented as an HTTP-GET-Method.
