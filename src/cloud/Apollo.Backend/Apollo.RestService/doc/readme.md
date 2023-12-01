@@ -7,32 +7,15 @@
 3. [Searching (Querying) entities](#searching-querying-entities)
    - [Request URL](#request-url)
    - [Query Criteria](#query-criteria)
-   - [Example Request and Response](#example-request-and-response)
-4. [Querying Users](#querying-users)
+   - [Example](#example)
+ [Querying Users](#querying-users)
    - [User Query Criteria](#user-query-criteria)
-   - [User Query Examples](#user-query-examples)
    - [Query Structure](#query-structure)
-5. [Querying Trainings](#querying-trainings)
+   - [Example](#example)
+ [Querying Trainings](#querying-trainings)
    - [Training Query Criteria](#training-query-criteria)
    - [Structure of training query](#structure-of-training-query)
-   - [Training Query Examples](#training-query-examples)
-
-So sollte es sein...
-Query User, QueryTraining usw. sind unter Query Entities und nicht eigenständige Topics auf dem gleichen Level
-wie Query. 
-   
-1. [Apollo REST Service operations](#apollo-rest-service-operations)
-2. [Returning a specific entity](#returning-a-specific-entity)
-3. [Searching (Querying) entities](#searching-querying-entities)
-   - [Request URL and Body](#request-url-and-body)
-   - [Query Criteria](#query-criteria)
-   - [Example Request and Response](#example-request-and-response)
-  [Querying Users](#querying-entities--users)
-   - [User Query criteria](#user-query-criteria)
-   - [User Query Examples](#example-request-and-responce-body-for-users)
-  [Querying Trainings](#querying-trainings)
-   - [Training Query criteria](#training-query-criteria)
-   - [Trianing Query Examples](#examples-for-request-and-response)
+   - [Example](example)
 
 ## Returning a specific entity 
 Every time some specific entity needs to be returned from the service, the CPDM offers specific GET operations for every entity, which is implemented as an HTTP-GET-Method.
@@ -176,6 +159,29 @@ The filter criteria in the request body includes:
 -	Argument (string[]): Argument(s) for the operation. The OR operation is applied between each argument.
 -	Distinct (boolean): To return distinct results.
 
+
+### Query Structure
+The Query structure allows specifying query criteria:
+```sh
+public class Query
+{
+    public List<string> Fields { get; set; }
+    public Filter Filter { get; set; }
+    public bool RequestCount { get; set; }
+    public int Top { get; set; } = 200;
+    public int Skip { get; set; } = 0;
+    public SortExpression SortExpression { get; set; }
+}
+```
+
+This structure allows specifying:
+-	Fields to return.
+-	Filter criteria using the Filter object.
+-	Pagination settings (Top, Skip).
+-	Sorting based on a specified field.The internal API method **(_api.QueryTrainings)** uses this information to construct and execute a query against the training data.
+The **Filter** class enables setting complex query criteria.
+
+
 ### Example
 
 Here's an example request body for querying User entities:
@@ -227,25 +233,6 @@ The response to the above query request includes the following structure:
 -	NumberOfPages: Indicates the total number of pages in the response.
 -	NumberOfRecords: Shows the total number of records that match the query criteria.
 
-### Query Structure
-The Query structure allows specifying query criteria:
-```sh
-public class Query
-{
-    public List<string> Fields { get; set; }
-    public Filter Filter { get; set; }
-    public bool RequestCount { get; set; }
-    public int Top { get; set; } = 200;
-    public int Skip { get; set; } = 0;
-    public SortExpression SortExpression { get; set; }
-}
-```
-This structure allows specifying:
--	Fields to return.
--	Filter criteria using the Filter object.
--	Pagination settings (Top, Skip).
--	Sorting based on a specified field.The internal API method **(_api.QueryTrainings)** uses this information to construct and execute a query against the training data.
-The **Filter** class enables setting complex query criteria.
 
 ## Querying Trainings
 
@@ -283,7 +270,7 @@ If true, it includes this information; otherwise, it's set to -1.
 -	Skip: Indicates the number of items to skip before beginning to return items. It's used for pagination.
 -	SortExpression: Specifies the field name for sorting and the order (ascending or descending).
 
-### Training Query Examples
+### Example
 
 **Request Example**
 
