@@ -74,7 +74,9 @@ jobs:
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
     - name: Setup nuget
-      run: dotnet nuget add source -u patbosc -p ${{ secrets.GITNUGET }} --store-password-in-clear-text -n github "https://nuget.pkg.github.com/HDBW/index.json"
+      run: |
+        dotnet nuget remove source github
+        dotnet nuget add source -u patbosc -p ${{ secrets.GITNUGET }} --store-password-in-clear-text -n github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Restore dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI iOS
