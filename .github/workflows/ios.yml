@@ -78,6 +78,7 @@ jobs:
         dotnet nuget remove source github
         dotnet nuget add source -u patbosc -p ${{ secrets.GITNUGET }} --store-password-in-clear-text -n github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Restore dependencies
+      if: always()
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI iOS
       run: dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -f:net7.0-ios -c:Release /p:ArchiveOnBuild=true /p:RuntimeIdentifier=ios-arm64 /p:CodesignKey="${{secrets.CODESIGNINGKEY}}" /p:CodesignProvision=StoreProfile /p:CodesignEntitlements=${{github.workspace}}/src/client/Maui/UI/De.HDBW.Apollo.Client/Platforms/iOS/Entitlements.plist -v diag
