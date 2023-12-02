@@ -32,10 +32,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET 7
+      if: ${{ false }}
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
     - name: Install MAUI Workload
+      if: ${{ false }}
       run: dotnet workload install maui --ignore-failed-sources
     - name: Init User-Secrets
       run: |
@@ -74,7 +76,8 @@ jobs:
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
     - name: Setup nuget
-      run: dotnet nuget add source --username patbosc --password ${{ secrets.GITNUGET }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/HDBW/index.json"
+      if: ${{ false }}
+      run: dotnet nuget add source -u patbosc -p ${{ secrets.GITNUGET }} --store-password-in-clear-text -n github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Restore dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
     - name: Build MAUI iOS
@@ -87,5 +90,5 @@ jobs:
           src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net7.0-ios/ios-arm64/publish/*.ipa
           src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net7.0-ios/ios-arm64/**/*.dSYM
     - name: Cleanup
-      if: always()
+      if: ${{ false }}
       run: dotnet nuget remove source github
