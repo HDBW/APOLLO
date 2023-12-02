@@ -74,6 +74,7 @@ jobs:
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
     - name: Setup nuget
+      if: ${{ false }}
       run: dotnet nuget add source -u patbosc -p ${{ secrets.GITNUGET }} --store-password-in-clear-text -n github "https://nuget.pkg.github.com/HDBW/index.json"
     - name: Restore dependencies
       run: dotnet restore src/client/Maui/Apollo.sln
@@ -87,4 +88,5 @@ jobs:
           src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net7.0-ios/ios-arm64/publish/*.ipa
           src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net7.0-ios/ios-arm64/**/*.dSYM
     - name: Cleanup
+      if: ${{ false }}
       run: dotnet nuget remove source github
