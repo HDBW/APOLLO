@@ -3,6 +3,7 @@ using Apollo.Common.Entities;
 using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Apollo.Service.Controllers
 {
@@ -33,7 +34,10 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <param name="id">The id of the training to be returned.</param>
         /// <returns>A response containing the requested training.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when the id is null or empty.</exception>"
         [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 101. Error while querying trainings")]
         public async Task<GetTrainingResponse> GetTraining(string id)
         {
             try
@@ -136,8 +140,14 @@ namespace Apollo.Service.Controllers
         }
 
 
-
+        /// <summary>
+        /// Deletes the training with the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier of the training which will be deleted.</param>
         [HttpDelete("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
+
         public async Task Delete(string id)
         {
             try

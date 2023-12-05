@@ -277,8 +277,9 @@ namespace Apollo.Api
         /// <summary>
         /// Creates the new Trainng instance 
         /// </summary>
-        /// <param name="training"></param>
-        /// <returns></returns>
+        /// <param name="training">The training identifier must be specified if the update operation is performed.
+        /// If the identifier not specified </param>
+        /// <returns>Returns the </returns>
         public virtual Task<string> CreateOrUpdateTraining(Training training)
         {
             try
@@ -326,6 +327,5 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
             }
         }
-
     }
 }

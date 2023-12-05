@@ -111,16 +111,16 @@ namespace Apollo.Api
         /// </summary>
         private void ValidateConfig(ApolloApiConfig config)
         {
-            // Validation logic to ensure configuration properties are set correctly
-            if (string.IsNullOrWhiteSpace(config.ApiKey))
-            {
-                throw new InvalidOperationException("API key is not configured.");
-            }
+            //// Validation logic to ensure configuration properties are set correctly
+            //if (string.IsNullOrWhiteSpace(config.ApiKey))
+            //{
+            //    throw new InvalidOperationException("API key is not configured.");
+            //}
 
-            if (string.IsNullOrWhiteSpace(config.ServiceUrl))
-            {
-                throw new InvalidOperationException("Base URL is not configured.");
-            }
+            //if (string.IsNullOrWhiteSpace(config.ServiceUrl))
+            //{
+            //    throw new InvalidOperationException("Base URL is not configured.");
+            //}
 
             // Add further validation as required for other properties
         }

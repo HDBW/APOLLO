@@ -3,47 +3,47 @@
 
 namespace Apollo.Api
 {
-    internal static class ErrorCodes
+    public static class ErrorCodes
     {
-        internal static class TrainingErrors
+        public static class TrainingErrors
         {
-            internal const int TrainingCodeBase = 100;
-            internal const int GetTrainingError = TrainingCodeBase + 1;
-            internal const int QueryTrainingsError = TrainingCodeBase + 10;
-            internal const int InsertTrainingErr = TrainingCodeBase + 30;
-            internal const int DeleteTrainingErr = TrainingCodeBase + 40; 
-            internal const int CreateOrUpdateTrainingErr = TrainingCodeBase + 50;
-            internal const int GetTotalTrainingCountErr = TrainingCodeBase + 60;
-            internal const int QueryTrainingsWithCustomFieldsErr = TrainingCodeBase + 70;
-            internal const int QueryTrainingsPaginatedErr = TrainingCodeBase + 80;
-            internal const int CountTrainingsByProviderErr = TrainingCodeBase + 90;
-            internal const int QueryTrainingsByDateRangeErr = TrainingCodeBase + 100;
-            internal const int SearchTrainingsByKeywordErr = TrainingCodeBase + 110;
+            public const int TrainingCodeBase = 100;
+            public const int GetTrainingError = TrainingCodeBase + 1;
+            public const int QueryTrainingsError = TrainingCodeBase + 10;
+            public const int InsertTrainingErr = TrainingCodeBase + 30;
+            public const int DeleteTrainingErr = TrainingCodeBase + 40; 
+            public const int CreateOrUpdateTrainingErr = TrainingCodeBase + 50;
+            public const int GetTotalTrainingCountErr = TrainingCodeBase + 60;
+            public const int QueryTrainingsWithCustomFieldsErr = TrainingCodeBase + 70;
+            public const int QueryTrainingsPaginatedErr = TrainingCodeBase + 80;
+            public const int CountTrainingsByProviderErr = TrainingCodeBase + 90;
+            public const int QueryTrainingsByDateRangeErr = TrainingCodeBase + 100;
+            public const int SearchTrainingsByKeywordErr = TrainingCodeBase + 110;
 
-            internal static void HandleException(Exception ex)
+            public static void HandleException(Exception ex)
             {
                 throw new ApolloApiException(TrainingCodeBase, "Training Error occurred", ex);
             }
         }
 
 
-        internal static class UserErrors
+        public static class UserErrors
         {
-            internal const int TrainingCodeBase = 200;
-            internal const int GetUserError = TrainingCodeBase + 1;
-            internal const int QueryUsersError = TrainingCodeBase + 10;
-            internal const int QueryUsersByGoalError = TrainingCodeBase + 30;
-            internal const int QueryUsersByKeywordError = TrainingCodeBase + 40;
-            internal const int QueryUsersByMultipleCriteriaError = TrainingCodeBase + 50;
-            internal const int QueryUsersWithPaginationError = TrainingCodeBase + 60;
-            internal const int QueryUsersByDateRangeError = TrainingCodeBase + 70;
-            internal const int QueryUsersByFirstNameError = TrainingCodeBase + 80;
-            internal const int QueryUsersByLastNameError = TrainingCodeBase + 90;
-            internal const int InsertUserError = TrainingCodeBase + 100;
-            internal const int CreateOrUpdateUserError = TrainingCodeBase + 110;
-            internal const int DeleteUserError = TrainingCodeBase + 120;
+            public const int TrainingCodeBase = 200;
+            public const int GetUserError = TrainingCodeBase + 1;
+            public const int QueryUsersError = TrainingCodeBase + 10;
+            public const int QueryUsersByGoalError = TrainingCodeBase + 30;
+            public const int QueryUsersByKeywordError = TrainingCodeBase + 40;
+            public const int QueryUsersByMultipleCriteriaError = TrainingCodeBase + 50;
+            public const int QueryUsersWithPaginationError = TrainingCodeBase + 60;
+            public const int QueryUsersByDateRangeError = TrainingCodeBase + 70;
+            public const int QueryUsersByFirstNameError = TrainingCodeBase + 80;
+            public const int QueryUsersByLastNameError = TrainingCodeBase + 90;
+            public const int InsertUserError = TrainingCodeBase + 100;
+            public const int CreateOrUpdateUserError = TrainingCodeBase + 110;
+            public const int DeleteUserError = TrainingCodeBase + 120;
 
-            internal static void HandleException(Exception ex)
+            public static void HandleException(Exception ex)
             {
                 throw new ApolloApiException(TrainingCodeBase, "User Error occurred", ex);
             }
