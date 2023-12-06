@@ -54,10 +54,10 @@ namespace Apollo.Service.Tests
             // Arrange
             var request = new Apollo.RestService.Messages.QueryTrainingsRequest();
             var expectedTrainings = new List<Training>
-    {
-        new Training { TrainingName = "Training 1" },
-        new Training { TrainingName = "Training 2" }
-    };
+            {
+                new Training { TrainingName = "Training 1" },
+                new Training { TrainingName = "Training 2" }
+            };
 
            
             _mockApi.Setup(api => api.QueryTrainings(It.IsAny<Apollo.Common.Entities.Query>()))

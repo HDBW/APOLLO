@@ -356,7 +356,6 @@ namespace Apollo.Api
         }
 
 
-
         /// <summary>
         /// Delete Users with specified Ids.
         /// </summary>

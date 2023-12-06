@@ -222,6 +222,11 @@ namespace Apollo.Api
         }
 
 
+        /// <summary>
+        /// Asynchronously gets the total count of Training documents in the database.
+        /// </summary>
+        /// <returns>The total count of Training documents as a long.</returns>
+        /// <exception cref="ApolloApiException">Thrown when there is an error during the operation.</exception>
         public async Task<long> GetTotalTrainingCountAsync()
         {
             try
@@ -362,6 +367,40 @@ namespace Apollo.Api
                 _logger?.LogTrace($"{this.User} completed {nameof(DeleteTrainings)}");
 
                 return res;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteTrainings)}: {ex.Message}");
+
+                throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Deletes multiple Training instances by their IDs.
+        /// </summary>
+        /// <param name="deletingIds">The array of training IDs to delete.</param>
+        /// <returns>A list of deleted record counts for each ID.</returns>
+        public virtual async Task<IList<long>> DeleteTraining(string[] deletingIds)
+        {
+            try
+            {
+                _logger?.LogTrace($"{this.User} entered {nameof(DeleteTrainings)}");
+
+                var deletedCounts = new List<long>();
+
+                foreach (var id in deletingIds)
+                {
+                    await _dal.DeleteAsync(GetCollectionName<Training>(), id);
+
+                    
+                    deletedCounts.Add(1);
+                }
+
+                _logger?.LogTrace($"{this.User} completed {nameof(DeleteTrainings)}");
+
+                return deletedCounts;
             }
             catch (Exception ex)
             {
