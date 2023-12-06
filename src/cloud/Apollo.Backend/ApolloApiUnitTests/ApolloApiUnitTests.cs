@@ -5,6 +5,7 @@
 using System.Collections;
 using Apollo.Api;
 using Apollo.Common.Entities;
+using ApolloApiUnitTests;
 using Daenet.MongoDal;
 using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Logging;
@@ -20,6 +21,20 @@ namespace apolloapiunittests
     [TestClass]
     public class ApolloApiTests
     {
+        [TestMethod]
+        public async Task InsertTraining()
+        {
+            var api = Helpers.GetApolloApi();
 
+            var training = new Training
+            {
+                Id = "T01",
+                TrainingName = "Test Training"
+            };
+
+            await api.InsertTraining(training);
+
+            await api.DeleteTrainings(new string[] { training.Id });
+        }
     }
 }

@@ -22,14 +22,7 @@ namespace Apollo.Api.UnitTests
         [TestInitialize]
         public void Initialize()
         {
-            // Initialize configuration
-            _config = new ApolloApiConfig
-            {
-                ApiKey = "your_api_key_here",
-                ServiceUrl = "https://your.service.url/"
-                
-            };
-
+           
             // Setup mock for MongoDataAccessLayer
             var mockDalConfig = new Mock<MongoDalConfig>();
             var mockLoggerDal = new Mock<ILogger<MongoDataAccessLayer>>();

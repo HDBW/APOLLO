@@ -11,8 +11,8 @@ namespace Apollo.Api
 {
     public class ApolloApiConfig
     {
-        public string ?ApiKey{ get; set; }
-        public string ?ServiceUrl { get; set; }
+       // public string ?ApiKey{ get; set; }
+       // public string ?ServiceUrl { get; set; }
         // Add other configuration properties as needed
     }
 }

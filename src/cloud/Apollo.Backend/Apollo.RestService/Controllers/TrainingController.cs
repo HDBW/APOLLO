@@ -111,6 +111,9 @@ namespace Apollo.Service.Controllers
         }
 
         [HttpPost("insert")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: ??1. Error while inserting the trainings.<br/>ErrorCode: ??2. Error while inserting the trainings")]
+    
         public async Task<IActionResult> InsertTrainings([FromBody] ICollection<Training> trainings)
         {
             try

@@ -124,5 +124,34 @@ namespace Apollo.Api
 
             // Add further validation as required for other properties
         }
+
+        /// <summary>
+        /// Creates the unique identifier for the new training instance.
+        /// </summary>
+        /// <returns></returns>
+        private string CreateTrainingId()
+        {
+            return CreateId(nameof(Training));
+        }
+
+
+        /// <summary>
+        /// Creates the unique identifier for the new user instance.
+        /// </summary>
+        /// <returns></returns>
+        private string CreateUserId()
+        {
+            return CreateId(nameof(User));
+        }
+
+        /// <summary>
+        /// Creates the unique identifier for the new instance of the specified entity.
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <returns></returns>
+        private string CreateId(string entityName)
+        {
+            return $"{entityName}-{Guid.NewGuid().ToString()}";
+        }
     }
 }
