@@ -16,25 +16,25 @@ namespace De.HDBW.Apollo.Client.Converter
             switch (course?.CourseTagType)
             {
                 case CourseTagType.AttendeeCertificate:
-                    result = Resources.Strings.Resource.CourseTagType_AttendeeCertificate;
+                    result = Resources.Strings.Resources.CourseTagType_AttendeeCertificate;
                     break;
                 case CourseTagType.Admission:
-                    result = Resources.Strings.Resource.CourseTagType_Admission;
+                    result = Resources.Strings.Resources.CourseTagType_Admission;
                     break;
                 case CourseTagType.Certificate:
-                    result = Resources.Strings.Resource.CourseTagType_Certificate;
+                    result = Resources.Strings.Resources.CourseTagType_Certificate;
                     break;
                 case CourseTagType.Course:
-                    result = Resources.Strings.Resource.CourseTagType_Course;
+                    result = Resources.Strings.Resources.CourseTagType_Course;
                     break;
                 case CourseTagType.InfoEvent:
-                    result = Resources.Strings.Resource.CourseTagType_InfoEvent;
+                    result = Resources.Strings.Resources.CourseTagType_InfoEvent;
                     break;
                 case CourseTagType.PartialQualification:
-                    result = Resources.Strings.Resource.CourseTagType_PartialQualification;
+                    result = Resources.Strings.Resources.CourseTagType_PartialQualification;
                     break;
                 case CourseTagType.Qualification:
-                    result = Resources.Strings.Resource.CourseTagType_Qualification;
+                    result = Resources.Strings.Resources.CourseTagType_Qualification;
                     break;
             }
 

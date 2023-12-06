@@ -11,7 +11,6 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
     public abstract class AbstractRepositoryTest<TU>
         where TU : IEntity, new()
     {
-
         [Fact]
         public async Task TestRepositoryWithCanceledAndDisposedTokenAsync()
         {

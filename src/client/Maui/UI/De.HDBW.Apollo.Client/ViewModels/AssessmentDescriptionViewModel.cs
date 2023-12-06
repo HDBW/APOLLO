@@ -106,22 +106,22 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(AssessmentItem assessmentItem)
         {
             ImagePath = "placeholdertest.png";
-            DecoratorText = Resources.Strings.Resource.AssessmentItem_DecoratorText;
+            DecoratorText = Resources.Strings.Resources.AssessmentItem_DecoratorText;
             OnPropertyChanged(nameof(HasImage));
             DescriptionTitle = assessmentItem.Title;
             DescriptionText = assessmentItem.Description;
             DescriptionDetails = assessmentItem.Disclaimer;
-            Duration = string.Format(Resources.Strings.Resource.Global_DurationFormat, !string.IsNullOrWhiteSpace(assessmentItem.Duration) ? assessmentItem.Duration : 0);
+            Duration = string.Format(Resources.Strings.Resources.Global_DurationFormat, !string.IsNullOrWhiteSpace(assessmentItem.Duration) ? assessmentItem.Duration : 0);
             switch (assessmentItem.AssessmentType)
             {
                 case AssessmentType.SoftSkillAssessment:
-                    StartText = Resources.Strings.Resource.AssessmentDescriptionViewModel_SoftSkill_Start;
+                    StartText = Resources.Strings.Resources.AssessmentDescriptionViewModel_SoftSkill_Start;
                     break;
                 case AssessmentType.SkillAssessment:
-                    StartText = Resources.Strings.Resource.AssessmentDescriptionViewModel_Skill_Start;
+                    StartText = Resources.Strings.Resources.AssessmentDescriptionViewModel_Skill_Start;
                     break;
                 case AssessmentType.Survey:
-                    StartText = Resources.Strings.Resource.AssessmentDescriptionViewModel_Survey_Start;
+                    StartText = Resources.Strings.Resources.AssessmentDescriptionViewModel_Survey_Start;
                     break;
             }
         }

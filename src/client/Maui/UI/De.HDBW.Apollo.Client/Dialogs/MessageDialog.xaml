@@ -13,7 +13,7 @@
             </VerticalStackLayout>
         </Border>
         <Grid ColumnDefinitions="*,auto,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resource.Global_Close}" Command="{Binding CancelCommand}" Grid.Column="1"/>
+            <Button Text="{x:Static strings:Resources.Global_Close}" Command="{Binding CancelCommand}" Grid.Column="1"/>
         </Grid>
     </Grid>
 </toolkit:Popup>
