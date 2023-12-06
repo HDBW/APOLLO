@@ -13,6 +13,7 @@ namespace Apollo.Api
     {
 
         /// <summary>
+        /// <summary>
         /// Gets the specific instance of the user.
         /// </summary>
         /// <param name="trainingId"></param>
@@ -21,11 +22,11 @@ namespace Apollo.Api
         {
             try
             {
-                _logger.LogTrace($"Entered {nameof(GetUser)}");
+                _logger?.LogTrace($"Entered {nameof(GetUser)}");
 
                 var user = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), userId);
 
-                _logger.LogTrace($"Completed {nameof(GetUser)}");
+                _logger?.LogTrace($"Completed {nameof(GetUser)}");
 
                 // If user is not found, return null (as per your requirement)
                 return user ?? null;
@@ -47,18 +48,18 @@ namespace Apollo.Api
         {
             try
             {
-                _logger.LogTrace($"Entered {nameof(QueryUsers)}");
+                _logger?.LogTrace($"Entered {nameof(QueryUsers)}");
 
                 var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
                 var users = Convertor.ToEntityList<User>(res, Convertor.ToUser);
 
-                _logger.LogTrace($"Completed {nameof(QueryUsers)}");
+                _logger?.LogTrace($"Completed {nameof(QueryUsers)}");
 
                 return users;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed execution of {nameof(QueryUsers)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(QueryUsers)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersError, "Error while querying users", ex);
             }
         }
@@ -73,7 +74,7 @@ namespace Apollo.Api
         {
             try
             {
-                _logger.LogTrace($"Entered {nameof(QueryUsersByGoal)}");
+                _logger?.LogTrace($"Entered {nameof(QueryUsersByGoal)}");
 
                 var queryFilter = new Filter
                 {
@@ -91,7 +92,7 @@ namespace Apollo.Api
                 var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
                 var users = Convertor.ToEntityList<User>(res, Convertor.ToUser);
 
-                _logger.LogTrace($"Completed {nameof(QueryUsersByGoal)}");
+                _logger?.LogTrace($"Completed {nameof(QueryUsersByGoal)}");
 
                 return users;
             }
@@ -276,7 +277,7 @@ namespace Apollo.Api
         {
             try
             {
-                _logger.LogTrace($"Entered {nameof(QueryUsersByLastName)}");
+                _logger?.LogTrace($"Entered {nameof(QueryUsersByLastName)}");
 
                 var query = new Query
                 {
@@ -297,7 +298,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed execution of {nameof(QueryUsersByLastName)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(QueryUsersByLastName)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByLastNameError, "Error while querying users by last name", ex);
             }
         }
@@ -312,18 +313,18 @@ namespace Apollo.Api
         {
             try
             {
-                _logger.LogTrace($"Entered {nameof(InsertUser)}");
+                _logger?.LogTrace($"Entered {nameof(InsertUser)}");
 
                 // Placeholder for actual user insertion logic
                 string userId = Guid.NewGuid().ToString();
 
-                _logger.LogTrace($"Completed {nameof(InsertUser)}");
+                _logger?.LogTrace($"Completed {nameof(InsertUser)}");
 
                 return Task.FromResult(userId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed execution of {nameof(InsertUser)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(InsertUser)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.InsertUserError, "Error while inserting user", ex);
             }
         }
@@ -338,18 +339,18 @@ namespace Apollo.Api
         {
             try
             {
-                _logger.LogTrace($"Entered {nameof(CreateOrUpdateUser)}");
+                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateUser)}");
 
                 // Placeholder for actual user creation or update logic
                 string result = Guid.NewGuid().ToString();
 
-                _logger.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
+                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
 
                 return Task.FromResult(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateUser)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateUser)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "Error while creating or updating user", ex);
             }
         }
@@ -365,18 +366,18 @@ namespace Apollo.Api
         {
             try
             {
-                _logger.LogTrace($"Entered {nameof(DeleteUser)}");
+                _logger?.LogTrace($"Entered {nameof(DeleteUser)}");
 
                 // Placeholder for actual user deletion logic
                 int deletedCount = 42; // Example value
 
-                _logger.LogTrace($"Completed {nameof(DeleteUser)}");
+                _logger?.LogTrace($"Completed {nameof(DeleteUser)}");
 
                 return Task.FromResult(deletedCount);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed execution of {nameof(DeleteUser)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteUser)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.DeleteUserError, "Error while deleting user", ex);
             }
         }

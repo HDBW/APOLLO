@@ -95,7 +95,8 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} entered.");
 
                 // Assuming req contains the Training object to create or update.
-                var result = await _api.CreateOrUpdateTraining(req.Training);
+                var result = await _api.CreateOrUpdateTraining(new List<Training> { req.Training });
+
 
                 _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} completed.");
 
@@ -127,7 +128,7 @@ namespace Apollo.Service.Controllers
                 }
 
                 // Call the Apollo API to insert the provided trainings.
-                await _api.CreateOrUpdateTraining(trainings.First());
+                await _api.CreateOrUpdateTraining(new List<Training>(trainings));
 
                 _logger.LogTrace($"{nameof(InsertTrainings)} completed.");
 
