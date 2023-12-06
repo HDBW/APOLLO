@@ -66,7 +66,7 @@ namespace Apollo.Api
          
             Training tr = new Training();
 
-            tr.ProviderId = (string)dict["ProviderId"];
+            tr.ExternalTrainingId = (string)dict["ExternalTrainingId"];
             tr.TrainingName = (string)dict["TrainingName"];
             tr.Description = (string)dict["Description"];
             tr.ShortDescription = (string)dict["ShortDescription"];
@@ -129,7 +129,8 @@ namespace Apollo.Api
             appointments.Duration = (TimeSpan)dict["Duration"];
             appointments.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
             appointments.IsGuaranteed = (bool)dict["IsGuaranteed"];
-            appointments.TrainingType = (Enum)dict["TrainingType"];
+            //appointments.TrainingType = ToEntityList<TrainingType>(dict["TrainingType"] as List<ExpandoObject>, ToTrainingType);
+            appointments.TrainingType = (TrainingType)dict["TrainingType"];
             appointments.TimeInvestAttendee = (TimeSpan)dict["TimeInvestAttendee"];
             appointments.TimeModel = (string)dict["TimeModel"];
             // Add other property mappings as needed
@@ -137,6 +138,25 @@ namespace Apollo.Api
             return appointments;
         }
 
+        //public static TrainingType ToTrainingType(ExpandoObject expandoObject)
+        //{
+        //    var trainingType = TrainingType.Unknown;
+
+        //    if (expandoObject != null)
+        //    {
+        //        var expandoDict = expandoObject as IDictionary<string, object>;
+
+        //        foreach (var keyValuePair in expandoDict)
+        //        {
+        //            if (Enum.TryParse<TrainingType>(keyValuePair.Key, out var value))
+        //            {
+        //                trainingType |= value;
+        //            }
+        //        }
+        //    }
+
+        //    return trainingType;
+        //}
 
         /// <summary>
         /// Converts an expando object to an Occurence object.

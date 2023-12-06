@@ -38,22 +38,43 @@ namespace Apollo.Common.Entities
         //[BsonElement("IsGuaranteedAppointment")]
         public bool IsGuaranteed { get; set; }
 
-        //TODO: Maybe this is flagged as well not sure?
         //[BsonElement("TrainingType")]
-        public Enum TrainingType { get; set; }
-
-        //[BsonElement("TimeInvestAttendee")]
-        public TimeSpan TimeInvestAttendee { get; set; }
+        public TrainingType TrainingType { get; set; }
 
         /// <summary>
         /// Explains the Time Model for the Training
         /// 1UE = 45 Minutes
         /// 1ZS = 60 Minutes
         /// </summary>
+        //[BsonElement("TimeInvestAttendee")]
+        public TimeSpan TimeInvestAttendee { get; set; }
+
+
         //[BsonElement("TimeModel")]
-        public string TimeModel { get; set; }
+        public TrainingTimeModel TimeModel { get; set; }
+
+        public string OccurenceNoteOnTime { get; set; }
+
+        /// <summary>
+        /// NOT UI RELEVANT
+        /// </summary>
+        public string ExecutionDuration { get; set; }
+
+        /// <summary>
+        /// Explains the Time Model for the Training
+        /// 1UE = 45 Minutes
+        /// 1ZS = 60 Minutes
+        /// Weeks is also Possible (1W)
+        /// NOT UI RELEvANT
+        /// </summary>
+        public string ExecutionDurationUnit { get; set; }
+
+        /// <summary>
+        /// NOT UI RELEVANT
+        /// </summary>
+        public string ExecutionDurationDescription { get; set;}
 
         //[BsonElement("LessonType")]
-        // public LessonType LessonType { get; set; }
+        public string LessonType { get; set; }
     }
 }

@@ -117,7 +117,7 @@ namespace Apollo.Api
             {
                 Filter = new Apollo.Common.Entities.Filter
                 {
-                    Fields = new List<FieldExpression> { new FieldExpression { FieldName = "ProviderId", Operator = QueryOperator.Equals, Argument = new List<object> { providerId } } },
+                    Fields = new List<FieldExpression> { new FieldExpression { FieldName = "ExternalTrainingId", Operator = QueryOperator.Equals, Argument = new List<object> { providerId } } },
                 },
                 Top = int.MaxValue, // may need to be ajusted to acual data size
                 Skip = 0

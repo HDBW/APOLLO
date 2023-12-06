@@ -14,9 +14,9 @@ namespace Daenet.MongoDal.UnitTests
     {
         Training[] _testTrainings = new Training[]
         {
-            new Training(){  Id = "T01", ProviderId = "unittest", TrainingName = "Open AI" },
-            new Training(){  Id = "T02", ProviderId = "unittest", TrainingName = "Azure AI" },
-            new Training(){  Id = "T03" , ProviderId = "unittest" },
+            new Training(){  Id = "T01", ExternalTrainingId = "unittest", TrainingName = "Open AI" },
+            new Training(){  Id = "T02", ExternalTrainingId = "unittest", TrainingName = "Azure AI" },
+            new Training(){  Id = "T03" , ExternalTrainingId = "unittest" },
         };
 
         private async Task CleanTestDocuments()

@@ -92,7 +92,7 @@ namespace apolloapiunittests
             {
                 () => result.Id,
                 () => result.TrainingName,
-                () => result.ProviderId,
+                () => result.ExternalTrainingId,
                 () => result.Description,
                 () => result.Content,
                 () => result.BenefitList,
