@@ -120,7 +120,7 @@ namespace Daenet.MongoDal.UnitTests
                  {
                      new Daenet.MongoDal.Entitties.FieldExpression()
                      {
-                         FieldName = "Name",
+                         FieldName = "TrainingName",
                          Operator = Daenet.MongoDal.Entitties.QueryOperator.Contains,
                          Argument = new List<object>(){"test"},
                       }
@@ -144,7 +144,7 @@ namespace Daenet.MongoDal.UnitTests
                  {
                      new Daenet.MongoDal.Entitties.FieldExpression()
                      {
-                         FieldName = "Name",
+                         FieldName = "TrainingName",
                          Operator = Daenet.MongoDal.Entitties.QueryOperator.NotEquals,
                          Argument = new List<object>(){"anything"},
                       }
