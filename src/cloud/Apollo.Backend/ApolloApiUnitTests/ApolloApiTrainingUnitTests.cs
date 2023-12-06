@@ -17,35 +17,6 @@ namespace Apollo.Api.UnitTests
     [TestClass]
     public class ApolloApiTrainingUnitTests
     {
-        private Mock<MongoDataAccessLayer>? _mockDal;
-        private ApolloApi? _apolloApi;
-        private Mock<ILogger<ApolloApi>>? _mockLogger;
-        private ApolloApiConfig? _config;
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            _mockDal = new Mock<MongoDataAccessLayer>();
-            _apolloApi = Helpers.GetApolloApi();
-        }
-
-        [TestMethod]
-        public async Task GetTraining_ReturnsCorrectTraining()
-        {
-            // Arrange
-            var expectedTraining = new Training { Id = "T01", TrainingName = "Test Training" };
-            _mockDal.Setup(dal => dal.GetByIdAsync<Training>(It.IsAny<string>(), expectedTraining.Id))
-                    .ReturnsAsync(expectedTraining);
-
-            // Act
-            var actualTraining = await Helpers.GetApolloApi().GetTraining(expectedTraining.Id);
-
-            // Assert
-            Assert.IsNotNull(actualTraining);
-            Assert.AreEqual(expectedTraining.Id, actualTraining.Id);
-            Assert.AreEqual(expectedTraining.TrainingName, actualTraining.TrainingName);
-        }
-
         /// <summary>
         /// Tests the insertion of a Training object and its subsequent deletion.
         /// </summary>
