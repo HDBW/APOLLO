@@ -18,7 +18,8 @@ namespace ApolloApiUnitTests
         {
             MongoDataAccessLayer dal = new MongoDataAccessLayer(new Daenet.MongoDal.Entitties.MongoDalConfig()
             {
-                MongoConnStr = "mongodb://apollodb-cosmos-dev:TV9uJP68Tr07LalP2dVazch7AVBXfsVqB4HIzkGMNbBQtKWe7aTT42iKdZt8IuCuH0UHLjbgmwwRACDbIv9d2A==@apollodb-cosmos-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@apollodb-cosmos-dev@",
+                MongoConnStr = "https://apollodb-cosmos-hdbw-tst.mongo.cosmos.azure.com:443/",
+                //MongoConnStr2 = "mongodb://apollodb-cosmos-dev:TV9uJP68Tr07LalP2dVazch7AVBXfsVqB4HIzkGMNbBQtKWe7aTT42iKdZt8IuCuH0UHLjbgmwwRACDbIv9d2A==@apollodb-cosmos-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@apollodb-cosmos-dev@",
                 MongoDatabase = "apollodb"
             });
 
