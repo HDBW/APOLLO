@@ -18,7 +18,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// External Identifier from the Training Providers.
         /// </summary>
-        public string ExternalTrainingId { get; set; }
+        public string ProviderId { get; set; }
 
         //[Required]
         //[BsonElement("Title")]

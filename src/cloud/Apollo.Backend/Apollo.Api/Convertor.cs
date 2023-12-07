@@ -66,7 +66,7 @@ namespace Apollo.Api
          
             Training tr = new Training();
 
-            tr.ExternalTrainingId = dict.ContainsKey("ExternalTrainingId") ? (string)dict["ProviderId"] : "null";
+            tr.ProviderId = dict.ContainsKey("ProviderId") ? (string)dict["ProviderId"] : "null";
             tr.TrainingName = (string)dict["TrainingName"];
             tr.Description = (string)dict["Description"];
             tr.ShortDescription = (string)dict["ShortDescription"];

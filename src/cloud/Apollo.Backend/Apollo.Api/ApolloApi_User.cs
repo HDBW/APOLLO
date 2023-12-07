@@ -372,7 +372,7 @@ namespace Apollo.Api
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(DeleteUser)}");
+                _logger?.LogTrace($"Entered {nameof(DeleteUsers)}");
                 //TODO: Delete User
                 // Placeholder for actual user deletion logic
                 int deletedCount = 42; // Example value
