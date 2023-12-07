@@ -24,16 +24,16 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The Operator on the field.
         /// </summary>
-        public QueryOperator Operator { get; set; }
+        public QueryOperator Operator { get; set; } = 0;
 
         /// <summary>
         /// The argument of the operation. Query executes the OR operator over all specified arguments in the collection.
         /// </summary>
-        public ICollection<object> Argument { get; set; }
+        public ICollection<object>? Argument { get; set; }
 
         /// <summary>
         /// If is set to true, the result is returned as distinct
         /// </summary>
-        public bool Distinct { get; set; }
+        public bool Distinct { get; set; } = false;
     }
 }

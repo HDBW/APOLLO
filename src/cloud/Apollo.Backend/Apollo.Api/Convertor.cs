@@ -66,7 +66,7 @@ namespace Apollo.Api
          
             Training tr = new Training();
 
-            tr.ExternalTrainingId = (string)dict["ExternalTrainingId"];
+            tr.ExternalTrainingId = dict.ContainsKey("ExternalTrainingId") ? (string)dict["ProviderId"] : "null";
             tr.TrainingName = (string)dict["TrainingName"];
             tr.Description = (string)dict["Description"];
             tr.ShortDescription = (string)dict["ShortDescription"];
@@ -309,6 +309,9 @@ namespace Apollo.Api
 
         public static Daenet.MongoDal.Entitties.SortExpression ToDaenetSortExpression(Common.Entities.SortExpression sortExpression)
         {
+            if (sortExpression == null)
+                return null;
+
             return  new Daenet.MongoDal.Entitties.SortExpression
             {
                 FieldName = sortExpression.FieldName,

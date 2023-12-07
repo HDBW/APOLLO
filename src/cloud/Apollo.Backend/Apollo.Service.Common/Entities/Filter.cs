@@ -15,7 +15,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specifies if FilterExpressions will be OR-ed or AND-ed.
         /// </summary>
-        public bool IsOrOperator { get; set; }
+        public bool IsOrOperator { get; set; } = false;
 
         /// <summary>
         /// List of fields joined in the query operation. Currentlly the AND operation across all fields is supported only.

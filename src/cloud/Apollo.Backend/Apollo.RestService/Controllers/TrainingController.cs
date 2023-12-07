@@ -29,6 +29,7 @@ namespace Apollo.Service.Controllers
             _logger = logger;
         }
 
+
         /// <summary>
         /// Gets the training for the given training identifier.
         /// </summary>
@@ -60,6 +61,7 @@ namespace Apollo.Service.Controllers
             }
         }
 
+
         /// <summary>
         /// Looks up the training that match the given criteria.
         /// </summary>
@@ -87,18 +89,18 @@ namespace Apollo.Service.Controllers
             }
         }
 
+
         [HttpPut]
         public async Task<CreateOrUpdateTrainingResponse> CreateOrUpdateTraining([FromBody] CreateOrUpdateTrainingRequest req)
         {
             try
             {
-                _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} entered.");
+                _logger?.LogTrace($"{nameof(CreateOrUpdateTraining)} entered.");
 
                 // Assuming req contains the Training object to create or update.
                 var result = await _api.CreateOrUpdateTraining(new List<Training> { req.Training });
 
-
-                _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} completed.");
+                _logger?.LogTrace($"{nameof(CreateOrUpdateTraining)} completed.");
 
                 // Return the result of the create/update operation as a response.
                 return new CreateOrUpdateTrainingResponse { Training = req.Training };
@@ -106,16 +108,16 @@ namespace Apollo.Service.Controllers
             catch (Exception ex)
             {
                 // Log and re-throw any exceptions encountered.
-                _logger.LogError($"{nameof(CreateOrUpdateTraining)} failed: {ex.Message}");
+                _logger?.LogError($"{nameof(CreateOrUpdateTraining)} failed: {ex.Message}");
                 throw;
             }
         }
 
         [HttpPost("insert")]
         [SwaggerResponse(StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: ??1. Error while inserting the trainings.<br/>ErrorCode: ??2. Error while inserting the trainings")]
-    
-        public async Task<IActionResult> InsertTrainings([FromBody] ICollection<Training> trainings)
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 400. Error while inserting the trainings.<br/>ErrorCode: 406. Error while inserting the trainings")]
+        public async Task<IList<Training>> InsertTrainings([FromBody] ICollection<Training> trainings)
         {
             try
             {
@@ -123,8 +125,8 @@ namespace Apollo.Service.Controllers
 
                 if (trainings == null || trainings.Count == 0)
                 {
-                    // Return a 400 Bad Request with an error message.
-                    return BadRequest(new { error = "No valid trainings provided" });
+                    // Return an empty list if no valid trainings provided.
+                    return new List<Training>();
                 }
 
                 // Call the Apollo API to insert the provided trainings.
@@ -132,14 +134,14 @@ namespace Apollo.Service.Controllers
 
                 _logger.LogTrace($"{nameof(InsertTrainings)} completed.");
 
-                // Return a success response.
-                return Ok(new { message = "Trainings inserted successfully" });
+                // Return the list of inserted trainings.
+                return trainings.ToList();
             }
             catch (Exception ex)
             {
-                // Log and return an error response with a 500 Internal Server Error.
+                // Log and return an empty list in case of an error.
                 _logger.LogError($"{nameof(InsertTrainings)} failed: {ex.Message}");
-                return StatusCode(500, new { error = "Failed to insert trainings" });
+                return new List<Training>();
             }
         }
 

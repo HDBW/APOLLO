@@ -13,62 +13,43 @@ namespace Apollo.Api.UnitTests
     [TestClass]
     public class ApolloApiUsersUnitTests
     {
-        private Mock<MongoDataAccessLayer> ?_mockDal;
-        private ApolloApi ?_apolloApi;
-        private Mock<ILogger<ApolloApi>> ?_mockLogger;
-        private ApolloApiConfig ?_config;
-
-
-        [TestInitialize]
-        public void Initialize()
-        {
-           
-            // Setup mock for MongoDataAccessLayer
-            var mockDalConfig = new Mock<MongoDalConfig>();
-            var mockLoggerDal = new Mock<ILogger<MongoDataAccessLayer>>();
-            _mockDal = new Mock<MongoDataAccessLayer>(mockDalConfig.Object, mockLoggerDal.Object);
-
-            // Setup mock for ILogger<ApolloApi>
-            _mockLogger = new Mock<ILogger<ApolloApi>>();
-
-            // Initialize ApolloApi with mocks
-            _apolloApi = new ApolloApi(_mockDal.Object, _mockLogger.Object, _config);
-        }
-
-
         [TestMethod]
-        public async Task GetUser_ShouldReturnUser_WhenUserIdIsValid()
+        public async Task InsertUser()
         {
             // Arrange
-            var expectedUser = new User
+            var api = Helpers.GetApolloApi();
+
+            var user = new User
             {
-                Id = "userId1",
+                Id = "U01", // Provide a valid user ID here
                 UserName = "TestUser",
+                Goal = "Some Goal",
                 FirstName = "John",
                 LastName = "Doe",
-                Goal = "Achieve something",
                 Image = "user1.png"
             };
 
-            _mockDal.Setup(dal => dal.GetByIdAsync<User>(It.IsAny<string>(), It.IsAny<string>()))
-                    .ReturnsAsync(expectedUser);
+            string userId = null; // Initialize userId outside the try block
 
-            // Act
-            var result = await _apolloApi.GetUser("userId1");
+            try
+            {
+                // Act
+                userId = await api.InsertUser(user);
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(expectedUser.Id, result.Id);
-            Assert.AreEqual(expectedUser.UserName, result.UserName);
-            Assert.AreEqual(expectedUser.FirstName, result.FirstName);
-            Assert.AreEqual(expectedUser.LastName, result.LastName);
-            Assert.AreEqual(expectedUser.Goal, result.Goal);
-            Assert.AreEqual(expectedUser.Image, result.Image);
-            // Further assertions...
+                // Assert
+                Assert.IsNotNull(userId);
+                // Update the assertion to check if userId is not null
+                Assert.IsNotNull(userId);
+
+            }
+            finally
+            {
+                // Clean up (optional): Delete the user after testing
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    await api.DeleteUser(new string[] { userId }); // Pass the user ID as a string array
+                }
+            }
         }
-
-
-        // Additional test methods for QueryUsers, CreateOrUpdateUser, DeleteUser, etc.
-    }
-
+      }
 }

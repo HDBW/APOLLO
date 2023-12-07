@@ -14,7 +14,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specify which properties of the Entity should be returned in the response message, if Fields is empty, all fields in the database are returned
         /// </summary>
-        public List<string> Fields { get; set; }
+        public List<string>? Fields { get; set; }
 
         public Filter Filter { get; set; }
 
@@ -25,12 +25,12 @@ namespace Apollo.Common.Entities
         /// which is finally recalculated in the number of pages.
         /// In a case of FALSE (default), the second query is not executed.
         /// </summary>
-        public bool RequestCount { get; set; }
+        public bool? RequestCount { get; set; }
 
         /// <summary>
         /// Number of items return e.g., pageSize
         /// </summary>
-        public int Top { get; set; } = 200;
+        public int Top { get; set; } = 100;
 
         /// <summary>
         /// Use for paging indicated by (page - 1) * pageSize
@@ -40,6 +40,6 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specify the order of the return items by the specified field.
         /// </summary>
-        public SortExpression SortExpression { get; set; }
+        public SortExpression? SortExpression { get; set; } 
     }
 }

@@ -309,25 +309,32 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="user">The User object to be inserted.</param>
         /// <returns>Task that represents the asynchronous operation, containing the unique identifier of the inserted user.</returns>
-        public virtual Task<string> InsertUser(User user)
+        public virtual async Task<string> InsertUser(User user)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(InsertUser)}");
+                _logger?.LogTrace($"{this.User} entered {nameof(InsertUser)}");
 
                 // Placeholder for actual user insertion logic
                 string userId = Guid.NewGuid().ToString();
 
-                _logger?.LogTrace($"Completed {nameof(InsertUser)}");
+                // Implement the actual user insertion logic here
+                // Example: await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
 
-                return Task.FromResult(userId);
+                _logger?.LogTrace($"{this.User} completed {nameof(InsertUser)}");
+
+                return userId;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(InsertUser)}: {ex.Message}");
+                // Log the error
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertUser)}: {ex.Message}");
+
+                // Throw an ApolloApiException with the specific error code
                 throw new ApolloApiException(ErrorCodes.UserErrors.InsertUserError, "Error while inserting user", ex);
             }
         }
+
 
 
         /// <summary>
@@ -356,13 +363,12 @@ namespace Apollo.Api
         }
 
 
-
         /// <summary>
         /// Delete Users with specified Ids.
         /// </summary>
         /// <param name="deletingIds">The list of user identifiers.</param>
         /// <returns>The number of deleted users.</returns>
-        public virtual Task<int> DeleteUser(int[] deletingIds)
+        public virtual Task<int> DeleteUser(string[] deletingIds)
         {
             try
             {
@@ -381,6 +387,7 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.UserErrors.DeleteUserError, "Error while deleting user", ex);
             }
         }
+
 
     }
 }
