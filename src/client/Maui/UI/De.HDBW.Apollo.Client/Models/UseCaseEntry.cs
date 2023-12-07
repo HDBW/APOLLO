@@ -34,15 +34,15 @@ namespace De.HDBW.Apollo.Client.Models
                 switch (UseCase)
                 {
                     case UseCase.A:
-                        return Resources.Strings.Resource.UseCase_A_Name;
+                        return Resources.Strings.Resources.UseCase_A_Name;
 
                     case UseCase.B:
-                        return Resources.Strings.Resource.UseCase_B_Name;
+                        return Resources.Strings.Resources.UseCase_B_Name;
 
                     case UseCase.C:
-                        return Resources.Strings.Resource.UseCase_C_Name;
+                        return Resources.Strings.Resources.UseCase_C_Name;
                     case UseCase.D:
-                        return Resources.Strings.Resource.UseCase_D_Name;
+                        return Resources.Strings.Resources.UseCase_D_Name;
                     default:
                         return string.Empty;
                 }
@@ -80,13 +80,13 @@ namespace De.HDBW.Apollo.Client.Models
                 switch (UseCase)
                 {
                     case UseCase.A:
-                        return Resources.Strings.Resource.UseCase_A_Description;
+                        return Resources.Strings.Resources.UseCase_A_Description;
 
                     case UseCase.B:
-                        return Resources.Strings.Resource.UseCase_B_Description;
+                        return Resources.Strings.Resources.UseCase_B_Description;
 
                     case UseCase.C:
-                        return Resources.Strings.Resource.UseCase_C_Description;
+                        return Resources.Strings.Resources.UseCase_C_Description;
 
                     case UseCase.D:
                         return Resources.Strings.Resource.UseCase_D_Description;

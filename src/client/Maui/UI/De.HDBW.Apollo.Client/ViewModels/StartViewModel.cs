@@ -199,10 +199,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 assemsmentData.AddValue<long?>(NavigationParameter.Id, assesment.Id);
                 var data = new NavigationData(Routes.AssessmentDescriptionView, assemsmentData);
 
-                var durationString = string.Format(Resources.Strings.Resource.Global_DurationFormat, !string.IsNullOrWhiteSpace(assesment.Duration) ? assesment.Duration : 0);
-                var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resource.StartViewModel_UnknownProvider;
+                var durationString = string.Format(Resources.Strings.Resources.Global_DurationFormat, !string.IsNullOrWhiteSpace(assesment.Duration) ? assesment.Duration : 0);
+                var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resources.StartViewModel_UnknownProvider;
                 var status = (assessmentResults?.Any(r => r.AssessmentItemId == assesment.Id) ?? false) ? Status.Processed : Status.Unknown;
-                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resource.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, assesment.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resources.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, assesment.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == assesment.Id && f.Type == typeof(AssessmentItem));
                 if (((StartViewInteractionEntry)interaction).IsFavorite)
                 {
@@ -230,7 +230,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
 
                 var duration = course.Duration ?? string.Empty;
-                var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resource.StartViewModel_UnknownProvider;
+                var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
                 var image = "placeholdercontinuingeducation.png";
                 switch (course.CourseTagType)
                 {
@@ -256,22 +256,22 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 switch (UseCase.Value)
                 {
                     case SharedContracts.Enums.UseCase.A:
-                        headline = Resources.Strings.Resource.StartViewModel_UseCaseA_RecomondationsHeadline;
+                        headline = Resources.Strings.Resources.StartViewModel_UseCaseA_RecomondationsHeadline;
                         break;
                     case SharedContracts.Enums.UseCase.B:
-                        headline = Resources.Strings.Resource.StartViewModel_UseCaseB_RecomondationsHeadline;
+                        headline = Resources.Strings.Resources.StartViewModel_UseCaseB_RecomondationsHeadline;
                         break;
                     case SharedContracts.Enums.UseCase.C:
-                        headline = Resources.Strings.Resource.StartViewModel_UseCaseC_RecomondationsHeadline;
+                        headline = Resources.Strings.Resources.StartViewModel_UseCaseC_RecomondationsHeadline;
                         break;
                 }
             }
 
-            InteractionCategories.Add(InteractionCategoryEntry.Import(headline, Resources.Strings.Resource.StartViewModel_RecomondationsSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
+            InteractionCategories.Add(InteractionCategoryEntry.Import(headline, Resources.Strings.Resources.StartViewModel_RecomondationsSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore));
 
             interactions = new List<InteractionEntry>();
             filters = new List<InteractionEntry>();
-            var favoriteInteractionCategoryEntry = FavoriteInteractionCategoryEntry.Import(Resources.Strings.Resource.StartViewModel_FavoritesHeadline, Resources.Strings.Resource.StartViewModel_FavoritesSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore);
+            var favoriteInteractionCategoryEntry = FavoriteInteractionCategoryEntry.Import(Resources.Strings.Resources.StartViewModel_FavoritesHeadline, Resources.Strings.Resources.StartViewModel_FavoritesSubline, interactions, filters, null, HandleShowMore, CanHandleShowMore);
             AddFavorites((FavoriteInteractionCategoryEntry)favoriteInteractionCategoryEntry, favorites);
             InteractionCategories.Add(favoriteInteractionCategoryEntry);
             if (notifyUseCaseChanged)
