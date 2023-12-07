@@ -89,7 +89,7 @@ namespace De.HDBW.Apollo.Client.Models
                         return Resources.Strings.Resources.UseCase_C_Description;
 
                     case UseCase.D:
-                        return Resources.Strings.Resource.UseCase_D_Description;
+                        return Resources.Strings.Resources.UseCase_D_Description;
                     default:
                         return string.Empty;
                 }
