@@ -35,9 +35,7 @@ namespace Apollo.Common.Entities
         //[BsonElement("ZipCode")]
         public string ZipCode { get; set; }
 
-        public GeoLocation Location { get; set; }
-
-        //[BsonElement("Appointment")]
+        //[BsonElement("AppointmentUrl")]
         public Uri EAppointmentUrl { get; set; }
     }
 }

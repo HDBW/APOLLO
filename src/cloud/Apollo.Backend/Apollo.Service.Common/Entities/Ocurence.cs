@@ -9,8 +9,8 @@ namespace Apollo.Common.Entities
     public record Occurence
     {
         /// <summary>
-        /// The CorrelationId is used to identify the occurence of the appointment that might be grouped with other appointments.
-        /// Used for recurring appointments.
+        /// The CorrelationId is used to identify the occurence of the appointment that might be grouped with other appointment.
+        /// Used for recurring appointment.
         /// </summary>
         public string CorrelationId { get; set; }
         // [BsonId]

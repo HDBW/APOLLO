@@ -58,7 +58,7 @@ namespace Apollo.Api
             // Validate the logger. 
             if (logger == null)
             {
-                //We can do this because Damir chose appservices and they have system diagnostics :P
+                //We can do this because Damir chose appservices and they have system diagnostics
                 System.Diagnostics.Debug.WriteLine("DI Logger exception incomming !!!");
                 //And then we make sure the constructor is not called with a null logger.
                 ArgumentNullException.ThrowIfNull(logger);

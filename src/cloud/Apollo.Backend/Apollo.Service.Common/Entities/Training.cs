@@ -47,7 +47,6 @@ namespace Apollo.Common.Entities
         //[BsonElement("Benefit")]
         public List<string> BenefitList { get; set; }
 
-
         /// <summary>
         /// Specifies the list of certificates that can be obtained after the training.
         /// </summary>
@@ -76,8 +75,8 @@ namespace Apollo.Common.Entities
         //[BsonElement("CourseProvider")]
         public EduProvider CourseProvider { get; set; }
 
-        //[BsonElement("Appointments")]
-        public Appointments Appointments { get; set; }
+        //[BsonElement("AppointmentUrl")]
+        public List<Appointment> Appointment { get; set; }
 
         public string TargetAudience { get; set; }
 

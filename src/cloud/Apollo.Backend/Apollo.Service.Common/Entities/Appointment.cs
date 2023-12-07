@@ -6,14 +6,14 @@
 
 namespace Apollo.Common.Entities
 {
-    public record Appointments
+    public record Appointment
     {
         //[BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
-        //[BsonElement("Appointment")]
-        public Uri Appointment { get; set; }
+        //[BsonElement("AppointmentUrl")]
+        public Uri AppointmentUrl { get; set; }
 
         //[BsonElement("AppointmentType")]
         public string AppointmentType { get; set; }
@@ -76,5 +76,9 @@ namespace Apollo.Common.Entities
 
         //[BsonElement("LessonType")]
         public string LessonType { get; set; }
+
+
+        //[BsonElement("BookingUrl")]
+        public Uri BookingUrl { get; set; }
     }
 }
