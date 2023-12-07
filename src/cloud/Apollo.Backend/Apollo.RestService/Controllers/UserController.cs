@@ -160,14 +160,14 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <param name="id">ID of the user to delete.</param>
         [HttpDelete("{id}")]
-        public async Task DeleteUser(string[] id)
+        public async Task DeleteUser(int[] id)
         {
             try
             {
                 _logger.LogTrace("Enter {method}", nameof(DeleteUser));
 
                 // Call the Apollo API to delete a user by ID.
-                await _api.DeleteUser(id); // This should pass an array of strings
+                await _api.DeleteUser(id);
 
                 _logger.LogTrace("Leave {method}", nameof(DeleteUser));
             }
@@ -178,6 +178,5 @@ namespace Apollo.Service.Controllers
                 throw;
             }
         }
-
     }
 }
