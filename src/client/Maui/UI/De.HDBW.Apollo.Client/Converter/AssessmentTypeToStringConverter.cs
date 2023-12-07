@@ -17,19 +17,19 @@ namespace De.HDBW.Apollo.Client.Converter
             switch (assessment?.AssessmentType)
             {
                 case AssessmentType.SkillAssessment:
-                    result = Resources.Strings.Resource.AssessmentType_SkillAssessment;
+                    result = Resources.Strings.Resources.AssessmentType_SkillAssessment;
                     break;
                 case AssessmentType.SoftSkillAssessment:
-                    result = Resources.Strings.Resource.AssessmentType_SoftSkillAssessment;
+                    result = Resources.Strings.Resources.AssessmentType_SoftSkillAssessment;
                     break;
                 case AssessmentType.Survey:
-                    result = Resources.Strings.Resource.AssessmentType_Survey;
+                    result = Resources.Strings.Resources.AssessmentType_Survey;
                     break;
                 case AssessmentType.ExperienceAssessment:
-                    result = Resources.Strings.Resource.AssessmentType_ExperienceAssessment;
+                    result = Resources.Strings.Resources.AssessmentType_ExperienceAssessment;
                     break;
                 case AssessmentType.Cloze:
-                    result = Resources.Strings.Resource.AssessmentType_Cloze;
+                    result = Resources.Strings.Resources.AssessmentType_Cloze;
                     break;
             }
 

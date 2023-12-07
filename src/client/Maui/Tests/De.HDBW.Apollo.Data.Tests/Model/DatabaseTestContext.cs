@@ -17,7 +17,6 @@ namespace De.HDBW.Apollo.Data.Tests.Model
             var entityType = typeof(IEntity);
             var entities = Assembly.GetAssembly(typeof(BaseItem))?.GetTypes().Where(t => t.IsPublic && t.IsClass && t != typeof(BaseItem) && entityType.IsAssignableFrom(t)).ToList() ?? new List<Type>();
             entities.Select(entity => (entity, Connection.GetConnection().CreateTable(entity, CreateFlags.ImplicitPK | CreateFlags.ImplicitIndex))).ToList();
-
         }
 
         public string Path { get; }

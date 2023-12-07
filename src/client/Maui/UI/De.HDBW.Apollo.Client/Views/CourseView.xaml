@@ -7,7 +7,7 @@
              xmlns:courseModels="clr-namespace:De.HDBW.Apollo.Client.Models.Course"
              x:DataType="viewModels:CourseViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resource.CourseView_Title}"
+             Title="{x:Static strings:Resources.CourseView_Title}"
              IsBusy="{Binding IsBusy}" Padding="0">
    <Grid RowDefinitions="auto, 60, *, auto, auto">
         <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" HeightRequest="200" Aspect="AspectFill" Grid.RowSpan="2" />
@@ -22,7 +22,7 @@
             <VerticalStackLayout Spacing="8" >
                 <Label Margin="12,0" Text="{Binding Title}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
                 <Label Text="{Binding ShortDescription}" Margin="12,0" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
-                <Label Text="{x:Static strings:Resource.CourseView_TargetGroup}" Margin="12,0" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Text="{x:Static strings:Resources.CourseView_TargetGroup}" Margin="12,0" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <Label Text="{Binding TargetGroup}" Margin="12,0" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
                 <Grid ColumnDefinitions="auto, *" Margin="12,0">
                     <Image Source="provider.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Start" Margin="0,4,8,0"/>
@@ -47,11 +47,11 @@
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
                 <Label IsVisible="{Binding HasCourseType}" Margin="12,0" Padding="5,2" Text="{Binding DisplayCourseType}" HorizontalOptions="Start" BackgroundColor="{StaticResource Surface}" LineBreakMode="WordWrap"/>
-                <Label IsVisible="{Binding HasPreRequisitesDescription}" Margin="12,0" Text="{x:Static strings:Resource.CourseView_PreRequisites}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label IsVisible="{Binding HasPreRequisitesDescription}" Margin="12,0" Text="{x:Static strings:Resources.CourseView_PreRequisites}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <Label IsVisible="{Binding HasPreRequisitesDescription}" Margin="12,0" Text="{Binding PreRequisitesDescription}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
-                <Label IsVisible="{Binding HasLearningOutcomes}" Margin="12,0" Text="{x:Static strings:Resource.CourseView_LearningOutcomes}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label IsVisible="{Binding HasLearningOutcomes}" Margin="12,0" Text="{x:Static strings:Resources.CourseView_LearningOutcomes}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <Label IsVisible="{Binding HasLearningOutcomes}" Margin="12,0" Text="{Binding LearningOutcomes}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
-                <Label IsVisible="{Binding HasSkills}" Margin="12,0" Text="{x:Static strings:Resource.CourseView_Skills}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label IsVisible="{Binding HasSkills}" Margin="12,0" Text="{x:Static strings:Resources.CourseView_Skills}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <VerticalStackLayout IsVisible="{Binding HasSkills}" Margin="12,0" BindableLayout.ItemsSource="{Binding Skills}" Spacing="8">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:InteractionEntry">
@@ -64,7 +64,7 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-                <Label Margin="12,0" Text="{x:Static strings:Resource.CourseView_Benefits}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label Margin="12,0" Text="{x:Static strings:Resources.CourseView_Benefits}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <Label Margin="12,0" Text="{Binding Benefits}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
                 <Grid RowDefinitions="auto,auto,auto">
                     <Border Grid.RowSpan="3" StrokeThickness="0" BackgroundColor="{StaticResource Surface}">
@@ -73,14 +73,14 @@
                         </Border.StrokeShape>
                     </Border>
                     <Label IsVisible="{Binding HasPrice}" Text="{Binding DisplayPrice}" Margin="12,8,12,8" Style="{StaticResource NotoSerif32}"/>
-                    <Label TextDecorations="Underline" Grid.Row="1" Text="{x:Static strings:Resource.CourseView_LoanOptions}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary }" Margin="12,8,12,0">
+                    <Label TextDecorations="Underline" Grid.Row="1" Text="{x:Static strings:Resources.CourseView_LoanOptions}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary }" Margin="12,8,12,0">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ShowLoanOptionsCommand}"  />
                         </Label.GestureRecognizers>
                     </Label>
-                    <Button Grid.Row="2" Command="{Binding OpenCourseCommand}" Text="{x:Static strings:Resource.CourseView_VisitVendor}" Margin="12,8"/>
+                    <Button Grid.Row="2" Command="{Binding OpenCourseCommand}" Text="{x:Static strings:Resources.CourseView_VisitVendor}" Margin="12,8"/>
                 </Grid>
-                <Label IsVisible="{Binding HasContact}" Margin="12,0" Text="{x:Static strings:Resource.CourseView_Contact}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
+                <Label IsVisible="{Binding HasContact}" Margin="12,0" Text="{x:Static strings:Resources.CourseView_Contact}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary900}" LineBreakMode="WordWrap"/>
                 <HorizontalStackLayout IsVisible="{Binding HasContact}" Spacing="8" Margin="12,0">
                     <Image Source="user.png" WidthRequest="24" HeightRequest="24" />
                     <Label Text="{Binding Contact.ContactName}" Style="{StaticResource Noto16}"/>

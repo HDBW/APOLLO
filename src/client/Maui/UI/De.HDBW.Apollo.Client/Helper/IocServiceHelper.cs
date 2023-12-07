@@ -4,17 +4,19 @@ namespace De.HDBW.Apollo.Client.Helper;
 
 public static class IocServiceHelper
 {
-    public static IServiceProvider ServiceProvider
+    public static IServiceProvider? ServiceProvider
     {
         get
         {
+            IPlatformApplication? app = null;
 #if ANDROID
-            return MauiApplication.Current.Services;
+            app = MauiApplication.Current;
 #elif IOS
-            return MauiUIApplicationDelegate.Current.Services;
+            app = MauiUIApplicationDelegate.Current;
 #elif WINDOWS
-            return MauiWinUIApplication.Current.Services;
+            app = MauiWinUIApplication.Current;
 #endif
+            return app?.Services;
         }
     }
 }

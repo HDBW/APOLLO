@@ -16,19 +16,19 @@ namespace De.HDBW.Apollo.Client.Converter
             switch (course?.CourseType)
             {
                 case CourseType.InPerson:
-                    result = Resources.Strings.Resource.CourseType_InPerson;
+                    result = Resources.Strings.Resources.CourseType_InPerson;
                     break;
                 case CourseType.Online:
-                    result = Resources.Strings.Resource.CourseType_Online;
+                    result = Resources.Strings.Resources.CourseType_Online;
                     break;
                 case CourseType.OnAndOffline:
-                    result = Resources.Strings.Resource.CourseType_OnAndOffline;
+                    result = Resources.Strings.Resources.CourseType_OnAndOffline;
                     break;
                 case CourseType.InHouse:
-                    result = Resources.Strings.Resource.CourseType_InHouse;
+                    result = Resources.Strings.Resources.CourseType_InHouse;
                     break;
                 case CourseType.All:
-                    result = Resources.Strings.Resource.CourseType_All;
+                    result = Resources.Strings.Resources.CourseType_All;
                     break;
             }
 

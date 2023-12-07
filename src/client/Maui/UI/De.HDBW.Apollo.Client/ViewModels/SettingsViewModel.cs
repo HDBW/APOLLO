@@ -2,10 +2,11 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Resources;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -81,7 +82,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenTerms))]
         private Task OpenTerms(CancellationToken token)
         {
-            return OpenUrlAsync(Resources.Strings.Resource.SettingsView_TermsUri, token);
+            return OpenUrlAsync(Resources.Strings.Resources.SettingsView_TermsUri, token);
         }
 
         private bool CanOpenTerms()
@@ -92,7 +93,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenPrivacy))]
         private Task OpenPrivacy(CancellationToken token)
         {
-            return OpenUrlAsync(Resources.Strings.Resource.SettingsView_PrivacyUri, token);
+            return OpenUrlAsync(Resources.Strings.Resources.SettingsView_PrivacyUri, token);
         }
 
         private bool CanOpenPrivacy()
@@ -103,7 +104,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenImprint))]
         private Task OpenImprint(CancellationToken token)
         {
-            return OpenUrlAsync(Resources.Strings.Resource.SettingsView_ImprintUri, token);
+            return OpenUrlAsync(Resources.Strings.Resources.SettingsView_ImprintUri, token);
         }
 
         private bool CanOpenImprint()
@@ -120,9 +121,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (Email.Default.IsComposeSupported)
                     {
-                        string subject = Resources.Strings.Resource.SettingsView_EmailSubject;
-                        string body = Resources.Strings.Resource.SettingsView_EmailBody;
-                        string[] recipients = new[] { Resources.Strings.Resource.SettingsView_QuestionEmail };
+                        string subject = Resources.Strings.Resources.SettingsView_EmailSubject;
+                        string body = Resources.Strings.Resources.SettingsView_EmailBody;
+                        string[] recipients = new[] { Resources.Strings.Resources.SettingsView_QuestionEmail };
 
                         var message = new EmailMessage
                         {
