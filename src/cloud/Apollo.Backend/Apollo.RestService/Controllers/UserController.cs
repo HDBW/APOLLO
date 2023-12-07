@@ -160,7 +160,7 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <param name="id">ID of the user to delete.</param>
         [HttpDelete("{id}")]
-        public async Task DeleteUser(int[] id)
+        public async Task DeleteUser(string[] id)
         {
             try
             {
