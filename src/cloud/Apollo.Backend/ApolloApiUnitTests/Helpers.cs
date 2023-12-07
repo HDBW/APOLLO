@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Apollo.Api;
 using Daenet.MongoDal;
+using Microsoft.Extensions.Logging;
 
 namespace ApolloApiUnitTests
 {
@@ -22,6 +23,22 @@ namespace ApolloApiUnitTests
             });
 
             return dal;
+        }
+
+        internal static ApolloApi GetApolloApi()
+        {
+            ApolloApi api = new ApolloApi(GetDal(), GetLogger(), GetAPIConfig());
+            return api;
+        }
+
+        internal static ApolloApiConfig  GetAPIConfig()
+        {
+            return new ApolloApiConfig();
+        }
+
+        internal static ILogger<ApolloApi> GetLogger()
+        {
+            return null;
         }
 
         internal static string GetCollectionName<T>()

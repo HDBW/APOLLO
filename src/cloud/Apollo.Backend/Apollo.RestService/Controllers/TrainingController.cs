@@ -3,6 +3,7 @@ using Apollo.Common.Entities;
 using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Apollo.Service.Controllers
 {
@@ -17,9 +18,13 @@ namespace Apollo.Service.Controllers
         private readonly ApolloApi _api;
         private readonly ILogger<TrainingController> _logger;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="api">Authenticated instance of the API.</param>
+        /// <param name="logger"></param>
         public TrainingController(ApolloApi api, ILogger<TrainingController> logger)
         {
-
             _api = api;
             _logger = logger;
         }
@@ -29,7 +34,10 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <param name="id">The id of the training to be returned.</param>
         /// <returns>A response containing the requested training.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when the id is null or empty.</exception>"
         [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 101. Error while querying trainings")]
         public async Task<GetTrainingResponse> GetTraining(string id)
         {
             try
@@ -53,7 +61,7 @@ namespace Apollo.Service.Controllers
         }
 
         /// <summary>
-        /// Looks up the training that mathc the given criteria.
+        /// Looks up the training that match the given criteria.
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -87,7 +95,8 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} entered.");
 
                 // Assuming req contains the Training object to create or update.
-                var result = await _api.CreateOrUpdateTraining(req.Training);
+                var result = await _api.CreateOrUpdateTraining(new List<Training> { req.Training });
+
 
                 _logger.LogTrace($"{nameof(CreateOrUpdateTraining)} completed.");
 
@@ -103,6 +112,9 @@ namespace Apollo.Service.Controllers
         }
 
         [HttpPost("insert")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: ??1. Error while inserting the trainings.<br/>ErrorCode: ??2. Error while inserting the trainings")]
+    
         public async Task<IActionResult> InsertTrainings([FromBody] ICollection<Training> trainings)
         {
             try
@@ -116,7 +128,7 @@ namespace Apollo.Service.Controllers
                 }
 
                 // Call the Apollo API to insert the provided trainings.
-                await _api.CreateOrUpdateTraining(trainings.First());
+                await _api.CreateOrUpdateTraining(new List<Training>(trainings));
 
                 _logger.LogTrace($"{nameof(InsertTrainings)} completed.");
 
@@ -132,8 +144,14 @@ namespace Apollo.Service.Controllers
         }
 
 
-
+        /// <summary>
+        /// Deletes the training with the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier of the training which will be deleted.</param>
         [HttpDelete("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
+
         public async Task Delete(string id)
         {
             try

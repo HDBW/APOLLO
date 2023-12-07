@@ -1,4 +1,5 @@
 
+using System.Reflection;
 using Apollo.Api;
 using Apollo.RestService.Midleware;
 using Apollo.Service.Middleware;
@@ -58,6 +59,13 @@ namespace Apollo.Service
                         new List<string>()
                     }
                 });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
+                c.EnableAnnotations();
             });
 
             // Registers the action filter

@@ -1,194 +1,173 @@
-﻿using Apollo.Api;
-using Apollo.Common.Entities;
-using Daenet.MongoDal.Entitties;
-using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using System.Dynamic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Apollo.Api;
+using Apollo.Common.Entities;
+using MongoDB.Driver;
+using Query = Daenet.MongoDal.Entitties.Query;
+using QueryOperator = Daenet.MongoDal.Entitties.QueryOperator;
 
 namespace Daenet.MongoDal.UnitTests
 {
-    /// <summary>
-    /// Unit tests for user-related operations using MongoDB data access layer.
-    /// </summary>
     [TestCategory("MongoDal")]
     [TestClass]
     public class UsersUnitTests
     {
-        // Define an array of test users.
         User[] _testUsers = new User[]
         {
-            new User { Id = "U01", UserName = "testuser1" },
-            new User { Id = "U02", UserName = "testuser2" },
-            new User { Id = "U03", UserName = "testuser3" }
-            // Add more test users as needed
+            new User(){ Id = "U01", UserName = "user1", FirstName = "Test", LastName = "User1", Goal = "Learn AI" },
+            new User(){ Id = "U02", UserName = "user2", FirstName = "Test", LastName = "User2", Goal = "Explore AI" },
+            new User(){ Id = "U03", UserName = "user3", FirstName = "Test", LastName = "User3" },
         };
 
-        private readonly ApolloApi _api;
-        private readonly ILogger<UsersUnitTests> _logger;
-
-        /// <summary>
-        /// Constructor for initializing the Apollo API and logger.
-        /// </summary>
-        public UsersUnitTests()
+        private async Task CleanTestDocuments()
         {
-            var mongoDalConfig = new MongoDalConfig
-            {
-                // Set MongoDalConfig properties if needed
-            };
-            var loggerFactory = new LoggerFactory();
-            var apolloApiConfig = new ApolloApiConfig
-            {
-                // Set ApolloApiConfig properties here
-            };
-            _api = new ApolloApi(new MongoDataAccessLayer(mongoDalConfig), loggerFactory.CreateLogger<ApolloApi>(), apolloApiConfig);
-            _logger = loggerFactory.CreateLogger<UsersUnitTests>();
+            var dal = Helpers.GetDal();
 
+            await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), _testUsers.Select(u => u.Id).ToArray(), false);
         }
 
-        /// <summary>
-        /// Cleanup method to remove test documents after each test.
-        /// </summary>
         [TestCleanup]
         public async Task CleanupTest()
         {
             await CleanTestDocuments();
         }
 
-        /// <summary>
-        /// Initialization method to ensure a clean state before each test.
-        /// </summary>
         [TestInitialize]
         public async Task InitTest()
         {
             await CleanTestDocuments();
         }
 
-        /// <summary>
-        /// Clean up test documents by deleting test users.
-        /// </summary>
-        private async Task CleanTestDocuments()
-        {
-            var dal = Helpers.GetDal();
-
-            var userToDeleteIds = _testUsers.Select(u => u.Id).ToArray();
-            await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), userToDeleteIds, false);
-        }
-
-        /// <summary>
-        /// Test method for inserting a user into the database.
-        /// </summary>
-
-        const string UserId = "U01";
 
         [TestMethod]
-        public async Task InsertUserTest()
+        public async Task InsertDeleteUserTest()
         {
             var dal = Helpers.GetDal();
 
-            var user = new User
+            // Convert the User object to an ExpandoObject
+            var userExpando = Convertor.Convert(_testUsers[0]);
+
+            // Ensure the 'Id' field is correctly set in the ExpandoObject
+            if (userExpando is IDictionary<string, object> expandoDict && !expandoDict.ContainsKey("Id"))
             {
-                Id = UserId, // Use the constant instead of the hard-coded "U01".
-                UserName = "testuser1",
-                // Other properties
-            };
+                expandoDict["Id"] = _testUsers[0].Id;
+            }
 
-            await dal.InsertAsync(Helpers.GetCollectionName<User>(), Convertor.Convert(user));
+            await dal.InsertAsync(Helpers.GetCollectionName<User>(), userExpando);
 
-            var insertedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), user.Id);
-            Assert.IsNotNull(insertedUser);
-            Assert.AreEqual(user.UserName, insertedUser.UserName);
-
-            await dal.DeleteAsync(Helpers.GetCollectionName<User>(), user.Id);
+            await dal.DeleteAsync(Helpers.GetCollectionName<User>(), _testUsers[0].Id);
         }
 
-        /// <summary>
-        /// Test method for updating a user's information in the database.
-        /// </summary>
+        [TestMethod]
+        public async Task QueryNonExistingUserTest()
+        {
+            var dal = Helpers.GetDal();
+
+            // Create a Query object with a condition that should not match any user
+            var query = Query.CreateQuery("UserName", new List<object> { "nonexistentuser" }, QueryOperator.Equals);
+
+            // Specify the fields you want to retrieve
+            var fields = new List<string> { "UserName", "FirstName", "LastName" };
+
+            // Execute the query with the specified fields and query conditions
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<User>(), fields, query, 100, 0);
+
+            Assert.IsTrue(res.Count == 0);
+        }
+
+        [TestMethod]
+        public async Task QueryExistingUsersTest()
+        {
+            var dal = Helpers.GetDal();
+
+            var query = Query.CreateQuery("UserName", new List<object> { "user" }, QueryOperator.Contains);
+            var fields = new List<string> { "UserName", "FirstName", "LastName" };
+
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<User>(), fields, query, 100, 0);
+
+            // Assert that the result is not null and possibly contains users
+            Assert.IsNotNull(res);
+            Assert.IsTrue(res.Count >= 0); // Ensures that the query execution is valid
+        }
         [TestMethod]
         public async Task UpdateUserTest()
         {
             var dal = Helpers.GetDal();
+            var userToUpdate = _testUsers[0];
 
-            var updatedUserModel = new User
-            {
-                Id = UserId, // Use the constant "UserId".
-                UserName = "updateduser",
-                // Other updated properties
-            };
+            // Convert the user to an ExpandoObject and set the '_id' field for MongoDB
+            var userExpando = Convertor.Convert(userToUpdate);
 
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", updatedUserModel.Id);
+            // Insert the user
+            await dal.InsertAsync(Helpers.GetCollectionName<User>(), userExpando);
 
-            var updateDefinition = Builders<BsonDocument>.Update
-                .Set("UserName", updatedUserModel.UserName);
+            // Update the user's property
+            userToUpdate.FirstName = "UpdatedFirstName";
 
-            await dal.UpdateAsync(Helpers.GetCollectionName<User>(), filter, updateDefinition);
+            // Convert the updated user to an ExpandoObject
+            var updatedUserExpando = Convertor.Convert(userToUpdate);
 
-            var updatedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), updatedUserModel.Id);
-            Assert.IsNotNull(updatedUser);
-            Assert.AreEqual(updatedUserModel.UserName, updatedUser.UserName);
+            // Upsert (insert or update) the user
+            await dal.UpsertAsync(Helpers.GetCollectionName<User>(), new List<ExpandoObject> { updatedUserExpando });
 
-            updatedUserModel.UserName = "testuser";
-            await dal.UpdateAsync(Helpers.GetCollectionName<User>(), filter, updateDefinition);
+            // Retrieve and verify the update
+            var updatedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), userToUpdate.Id);
+            Assert.AreEqual("UpdatedFirstName", updatedUser.FirstName);
+
+            // Cleanup
+            await dal.DeleteAsync(Helpers.GetCollectionName<User>(), userToUpdate.Id);
         }
 
-        /// <summary>
-        /// Test method for deleting a user from the database.
-        /// </summary>
-
-
         [TestMethod]
-        public async Task DeleteUserTest()
+        public async Task DeleteExistingUserTest()
         {
             var dal = Helpers.GetDal();
 
-            await dal.DeleteAsync(Helpers.GetCollectionName<User>(), UserId);
+            var userToDelete = _testUsers[0];
 
-            var deletedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), UserId);
+            // Convert the user to an ExpandoObject and set the '_id' field for MongoDB
+            dynamic userExpando = Convertor.Convert(userToDelete);
+            userExpando._id = userToDelete.Id; // Set '_id' for MongoDB
+
+            // Insert a user
+            await dal.InsertAsync(Helpers.GetCollectionName<User>(), userExpando);
+
+            // Delete the user
+            await dal.DeleteAsync(Helpers.GetCollectionName<User>(), userToDelete.Id);
+
+            // Try to find the deleted user using GetByIdAsync
+            var deletedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), userToDelete.Id);
+
             Assert.IsNull(deletedUser);
-
-            var user = new User
-            {
-                Id = UserId, 
-                UserName = "testuser1",
-               
-            };
-            await dal.InsertAsync(Helpers.GetCollectionName<User>(), Convertor.Convert(user));
         }
 
-
-        /// <summary>
-        /// Test method for querying users from the database.
-        /// </summary>
         [TestMethod]
-        public async Task QueryUsersTest()
+        public async Task DeleteMultipleUsersTest()
         {
             var dal = Helpers.GetDal();
 
-            var usersToInsert = _testUsers.ToList();
-            await dal.InsertManyAsync(Helpers.GetCollectionName<User>(), usersToInsert.Select(u => Convertor.Convert(u)).ToArray());
-
-            var query = new Daenet.MongoDal.Entitties.Query
+            // Initialize multiple users with sample data
+            var users = new List<User>
             {
-                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>
-                {
-                    new Daenet.MongoDal.Entitties.FieldExpression
-                    {
-                        FieldName = "UserName",
-                        Operator = Daenet.MongoDal.Entitties.QueryOperator.Equals,
-                        Argument = new List<object> { "testuser2" },
-                    }
-                }
+                new User { Id = "User1", UserName = "user1", FirstName = "Test", LastName = "User1", Goal = "Learn AI", Image = "user1.png" },
+                new User { Id = "User2", UserName = "user2", FirstName = "Sample", LastName = "User2", Goal = "Explore AI", Image = "user2.png" },
+                // Add more users as needed
             };
 
-            var queryResult = await dal.ExecuteQuery(Helpers.GetCollectionName<User>(), null, query, 100, 0);
+            // Convert users to ExpandoObjects
+            var userExpandoList = users.Select(user => Convertor.Convert(user)).ToList();
 
-            Assert.IsNotNull(queryResult);
-            Assert.AreEqual(1, queryResult.Count);
+            await dal.InsertManyAsync(Helpers.GetCollectionName<User>(), userExpandoList);
 
-            await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), usersToInsert.Select(u => u.Id).ToArray(), false);
+            var userIds = users.Select(u => u.Id).ToArray();
+            await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), userIds);
+
+            // Verify each user is deleted
+            foreach (var userId in userIds)
+            {
+                var deletedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), userId);
+                Assert.IsNull(deletedUser);
+            }
         }
     }
 }

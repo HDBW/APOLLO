@@ -17,8 +17,10 @@ namespace Apollo.Api
     /// </summary>
     public partial class ApolloApi
     {
-        private readonly ILogger<ApolloApi> _logger;
+        #region Fields and Properties
 
+        
+        private readonly ILogger<ApolloApi> _logger;
 
         private readonly MongoDataAccessLayer _dal;
 
@@ -41,6 +43,8 @@ namespace Apollo.Api
                 return string.IsNullOrEmpty(usr) ? "anonymous" : usr;
             }
         }
+        #endregion
+
 
         /// <summary>
         /// Docuement me please :P
@@ -68,7 +72,7 @@ namespace Apollo.Api
             {
                 _dal = dal ?? throw new ArgumentNullException(nameof(dal));
                 _config = config ?? throw new ArgumentNullException(nameof(config));
-                _config.Validate(); 
+                ValidateConfig(_config);
 
                 // Additional initialization or method calls can be added here.
             }
@@ -79,6 +83,8 @@ namespace Apollo.Api
                 throw; // Re-throwing the exception to maintain the flow, can be handled differently based on requirements.
             }
         }
+
+
         /// <summary>
         /// Gets the name of the collection for the specified item.
         /// </summary>
@@ -98,7 +104,6 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                //Sorry could be null when someone inherit from this class and does not initialize the logger or create a new constructor and doesn´t initialize the constructor.
                 _logger?.LogError($"Error in GetCollectionName: {ex.Message}", ex);
                 throw;
             }
@@ -125,5 +130,53 @@ namespace Apollo.Api
             return $"{typeName?.ToLower()}s";
         }
 
+
+        /// <summary>
+        /// Validates the configuration properties.
+        /// </summary>
+        private void ValidateConfig(ApolloApiConfig config)
+        {
+            //// Validation logic to ensure configuration properties are set correctly
+            //if (string.IsNullOrWhiteSpace(config.ApiKey))
+            //{
+            //    throw new InvalidOperationException("API key is not configured.");
+            //}
+
+            //if (string.IsNullOrWhiteSpace(config.ServiceUrl))
+            //{
+            //    throw new InvalidOperationException("Base URL is not configured.");
+            //}
+
+            // Add further validation as required for other properties
+        }
+
+        /// <summary>
+        /// Creates the unique identifier for the new training instance.
+        /// </summary>
+        /// <returns></returns>
+        private string CreateTrainingId()
+        {
+            return CreateId(nameof(Training));
+        }
+
+
+        /// <summary>
+        /// Creates the unique identifier for the new user instance.
+        /// </summary>
+        /// <returns></returns>
+        private string CreateUserId()
+        {
+            return CreateId(nameof(User));
+        }
+
+        /// <summary>
+        /// Creates the unique identifier for the new instance of the specified entity.
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <returns></returns>
+        private string CreateId(string entityName)
+        {
+            return $"{entityName}-{Guid.NewGuid().ToString()}";
+        }
     }
 }
