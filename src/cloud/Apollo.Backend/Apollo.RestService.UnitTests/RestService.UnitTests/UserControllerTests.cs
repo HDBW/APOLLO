@@ -118,13 +118,13 @@ namespace Apollo.RestService.RestService.UnitTests
         public async Task DeleteUser_RemovesUserSuccessfully()
         {
             // Arrange
-            var userIds = new int[] { 1 };
+            var userIds = new string[] { "1" };
 
             // Act
             await _controller.DeleteUser(userIds);
 
             // Assert
-            _mockApi.Verify(api => api.DeleteUser(userIds), Times.Once());
+            _mockApi.Verify(api => api.DeleteUsers(userIds), Times.Once());
         }
 
         [TestCleanup]

@@ -47,7 +47,7 @@ namespace Apollo.Api.UnitTests
                 // Clean up (optional): Delete the user after testing
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    await api.DeleteUser(new string[] { userId }); // Pass the user ID as a string array
+                    await api.DeleteUsers(new string[] { userId }); // Pass the user ID as a string array
                 }
             }
         }

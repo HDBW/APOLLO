@@ -368,22 +368,22 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="deletingIds">The list of user identifiers.</param>
         /// <returns>The number of deleted users.</returns>
-        public virtual Task<int> DeleteUser(string[] deletingIds)
+        public virtual Task<int> DeleteUsers(string[] deletingIds)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(DeleteUser)}");
+                _logger?.LogTrace($"Entered {nameof(DeleteUsers)}");
 
                 // Placeholder for actual user deletion logic
                 int deletedCount = 42; // Example value
 
-                _logger?.LogTrace($"Completed {nameof(DeleteUser)}");
+                _logger?.LogTrace($"Completed {nameof(DeleteUsers)}");
 
                 return Task.FromResult(deletedCount);
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteUser)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteUsers)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.DeleteUserError, "Error while deleting user", ex);
             }
         }
