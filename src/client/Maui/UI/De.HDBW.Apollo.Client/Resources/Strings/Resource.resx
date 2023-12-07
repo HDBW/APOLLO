@@ -579,4 +579,10 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="OccurrenceType_FullTimeAndPartTime" xml:space="preserve">
     <value>Voll- und Teilzeit</value>
   </data>
+  <data name="UseCase_D_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseCase_D_Name" xml:space="preserve">
+    <value>Entdecken</value>
+  </data>
 </root>

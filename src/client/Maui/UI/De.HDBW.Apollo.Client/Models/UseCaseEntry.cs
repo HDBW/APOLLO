@@ -41,7 +41,8 @@ namespace De.HDBW.Apollo.Client.Models
 
                     case UseCase.C:
                         return Resources.Strings.Resource.UseCase_C_Name;
-
+                    case UseCase.D:
+                        return Resources.Strings.Resource.UseCase_D_Name;
                     default:
                         return string.Empty;
                 }
@@ -62,6 +63,9 @@ namespace De.HDBW.Apollo.Client.Models
 
                     case UseCase.C:
                         return "usecase3deco.png";
+
+                    case UseCase.D:
+                        return "usecase4deco.png";
 
                     default:
                         return string.Empty;
@@ -84,6 +88,8 @@ namespace De.HDBW.Apollo.Client.Models
                     case UseCase.C:
                         return Resources.Strings.Resource.UseCase_C_Description;
 
+                    case UseCase.D:
+                        return Resources.Strings.Resource.UseCase_D_Description;
                     default:
                         return string.Empty;
                 }
