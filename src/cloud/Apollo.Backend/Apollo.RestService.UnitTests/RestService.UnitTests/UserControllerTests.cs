@@ -118,7 +118,7 @@ namespace Apollo.RestService.RestService.UnitTests
         public async Task DeleteUser_RemovesUserSuccessfully()
         {
             // Arrange
-            var userIds = new int[] { 1 };
+            var userIds = new string[] { "1" };
 
             // Act
             await _controller.DeleteUser(userIds);
