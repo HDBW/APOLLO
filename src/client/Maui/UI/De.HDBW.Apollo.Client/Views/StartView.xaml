@@ -122,8 +122,8 @@
 
                 <Grid IsVisible="{Binding HasNoInteractions}" RowDefinitions="*,auto, auto" RowSpacing="8" HeightRequest="240" Grid.Row="3">
                     <Image Source="stardashed.png" />
-                    <Label Text="{x:Static strings:Resource.StartView_NoFavoritesTitle}" Style="{StaticResource Noto12}" LineBreakMode="WordWrap" VerticalOptions="Center" FontAttributes="Bold" Grid.Row="1"/>
-                    <Label Text="{x:Static strings:Resource.StartView_NoFavoritesDescription}" VerticalOptions="Center" Grid.Row="2" LineBreakMode="WordWrap"/>
+                    <Label Text="{x:Static strings:Resources.StartView_NoFavoritesTitle}" Style="{StaticResource Noto12}" LineBreakMode="WordWrap" VerticalOptions="Center" FontAttributes="Bold" Grid.Row="1"/>
+                    <Label Text="{x:Static strings:Resources.StartView_NoFavoritesDescription}" VerticalOptions="Center" Grid.Row="2" LineBreakMode="WordWrap"/>
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -153,7 +153,7 @@
         </Image>
         <Grid Grid.Column="1" ColumnDefinitions="auto,*" RowDefinitions="auto, auto" Margin="8,8,24,8" VerticalOptions="Center">
             <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold"  Grid.ColumnSpan="2"/>
-            <Label Text="{x:Static strings:Resource.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
+            <Label Text="{x:Static strings:Resources.StartView_Goal}" Style="{StaticResource Noto12}" FontAttributes="Bold" Grid.Row="1"/>
             <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
         </Grid>
         <ScrollView Grid.ColumnSpan="2" Grid.Row="2" Padding="0,0,0,16" x:Name="PART_ScrollHost">
