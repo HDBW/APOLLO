@@ -175,6 +175,9 @@
     <MauiXaml Update="Dialogs\ConfirmDataUsageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\SearchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\Strings\Resources.Designer.cs">
