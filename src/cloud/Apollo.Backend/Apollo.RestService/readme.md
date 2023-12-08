@@ -31,3 +31,5 @@ https://portal.azure.com/#view/Microsoft_Azure_Storage/ContainerMenuBlade/~/over
 ## Trainings Examples
 
 https://portal.azure.com/#view/Microsoft_Azure_Storage/ContainerMenuBlade/~/overview/storageAccountId/%2Fsubscriptions%2Ff83b64c1-d950-44e7-9004-80d6c393dafa%2FresourceGroups%2Frg-apollo-dac%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fapollotxtanalytics/path/ingressbbw/etag/%220x8DAFEDC26850AF9%22/defaultEncryptionScope/%24account-encryption-key/denyEncryptionScopeOverride~/false/defaultId//publicAccessVal/None
+
+
