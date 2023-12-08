@@ -4,11 +4,17 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Services
 {
     public class TrainingServiceTests : AbstractServiceTestSetup<ITrainingService>
     {
+        public TrainingServiceTests(ITestOutputHelper outputHelper)
+            : base(outputHelper)
+        {
+        }
+
         [Fact]
         public async Task CancellationTokenTests()
         {

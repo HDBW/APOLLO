@@ -2,11 +2,13 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.Data.Tests.Extensions;
+using De.HDBW.Apollo.Data.Tests.Helper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Http.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Services
 {
@@ -15,18 +17,15 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         protected const string BaseUri = "https://apollo-api-hdbw-tst.azurewebsites.net/api";
         private bool _disposed;
 
-        protected AbstractServiceTestSetup()
+        protected AbstractServiceTestSetup(ITestOutputHelper outputHelper)
         {
             SetupSecrets();
             TokenSource = new CancellationTokenSource();
-            LogProvider = this.SetupLoggerProvider<TU>();
+            LogProvider = this.SetupLoggerProvider<TU>(outputHelper);
             ArgumentException.ThrowIfNullOrWhiteSpace(APIKey);
             ArgumentException.ThrowIfNullOrWhiteSpace(BaseUri);
-            var logger = this.SetupLogger<LoggingHttpMessageHandler>();
-            var handler = new LoggingHttpMessageHandler(logger)
-            {
-                InnerHandler = new HttpClientHandler(),
-            };
+            var logger = this.SetupLogger<LoggingHttpMessageHandler>(outputHelper);
+            var handler = new ContentLoggingHttpMessageHandler(logger);
             Service = SetupService(APIKey, BaseUri, LogProvider, handler);
             SetupAdditionalServices(APIKey, BaseUri, LogProvider, handler);
         }

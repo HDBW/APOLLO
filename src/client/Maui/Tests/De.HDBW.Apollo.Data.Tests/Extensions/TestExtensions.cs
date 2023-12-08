@@ -6,6 +6,7 @@ using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Extensions
 {
@@ -23,7 +24,7 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
             return mock.Object;
         }
 
-        internal static ILogger<TU> SetupLogger<TU>(this object test)
+        internal static ILogger<TU> SetupLogger<TU>(this object test, ITestOutputHelper? output = null)
         {
             var mock = new Mock<ILogger<TU>>();
             mock.Setup(m => m.Log<It.IsAnyType>(
@@ -39,16 +40,22 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
                      exception,
                      formatter) =>
                 {
-                    Console.WriteLine($"Level:{logLevel} EventId:{eventId} Message:{formatter.DynamicInvoke(state, exception)}");
+                    var message = $"Level:{logLevel}{Environment.NewLine}EventId:{eventId}{Environment.NewLine}Message:{formatter.DynamicInvoke(state, exception)}{Environment.NewLine}";
+                    output?.WriteLine(message);
+                    Console.WriteLine(message);
+                    if (Debugger.IsAttached)
+                    {
+                        Debug.WriteLine(message);
+                    }
                 });
             mock.Setup(m => m.IsEnabled(It.IsAny<LogLevel>())).Returns(true);
             return mock.Object;
         }
 
-        internal static ILoggerProvider SetupLoggerProvider<TU>(this object test)
+        internal static ILoggerProvider SetupLoggerProvider<TU>(this object test, ITestOutputHelper? output = null)
         {
             var mock = new Mock<ILoggerProvider>();
-            var mockLogger = test.SetupLogger<TU>();
+            var mockLogger = test.SetupLogger<TU>(output);
             mock.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(mockLogger);
             return mock.Object;
         }

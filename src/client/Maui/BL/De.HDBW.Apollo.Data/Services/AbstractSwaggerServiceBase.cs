@@ -49,7 +49,6 @@ namespace De.HDBW.Apollo.Data.Services
         {
             token.ThrowIfCancellationRequested();
             TU? result = default;
-            var requestId = Guid.NewGuid().ToString();
 
             var client = HttpClient;
             if (client == null)
@@ -57,14 +56,8 @@ namespace De.HDBW.Apollo.Data.Services
                 return result;
             }
 
-#if DEBUG
-            var start = DateTime.Now;
-            Logger?.LogDebug($"#HTTP# #{requestId}# {start}: Start {callerName} in {GetType().Name}.");
-#endif
-
             try
             {
-                Logger?.LogDebug($"#HTTP# #{requestId}# --------->        Start {nameof(DoPostAsync)} {callerName} in {GetType().Name}.");
                 using (var response = await client.GetAsync($"{BaseUri}/{id}", token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
@@ -86,39 +79,33 @@ namespace De.HDBW.Apollo.Data.Services
             }
             catch (WebException ex)
             {
-                Logger?.LogError(ex, $"#HTTP# #{requestId}# WebException in {callerName} from {GetType().Name}.");
+                Logger?.LogError(ex, $"WebException in {callerName} from {GetType().Name}.");
             }
             catch (HttpRequestException ex)
             {
-                Logger?.LogError(ex, $"#HTTP# #{requestId}# HttpRequestException in {callerName} from {GetType().Name}.");
+                Logger?.LogError(ex, $"HttpRequestException in {callerName} from {GetType().Name}.");
             }
             catch (AggregateException ex)
             {
-                Logger?.LogError(ex, $"#HTTP# #{requestId}# AggregateException in {callerName} from {GetType().Name}.");
+                Logger?.LogError(ex, $"AggregateException in {callerName} from {GetType().Name}.");
             }
             catch (OperationCanceledException ex)
             {
-                Logger?.LogInformation(ex, $"#HTTP# #{requestId}# Canceled {callerName} from {GetType().Name}.");
+                Logger?.LogInformation(ex, $"Canceled {callerName} from {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException ex)
             {
-                Logger?.LogInformation(ex, $"#HTTP# #{requestId}# Canceled {callerName} from {GetType().Name}.");
+                Logger?.LogInformation(ex, $"Canceled {callerName} from {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"#HTTP# #{requestId}# Unknown Error in {callerName} from {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown Error in {callerName} from {GetType().Name}.");
                 throw;
             }
             finally
             {
-#if DEBUG
-                var end = DateTime.Now;
-                Logger?.LogDebug($"#HTTP# #{requestId}# {end}: End {callerName} in {GetType().Name}.");
-                Logger?.LogDebug($"#HTTP# #{requestId}# Request took {end.Subtract(start).TotalMilliseconds} ms.");
-#endif
-                Logger?.LogDebug($"#HTTP# #{requestId}# <---------        End {nameof(DoPostAsync)} {callerName} in {GetType().Name}.");
             }
 
             return result;
