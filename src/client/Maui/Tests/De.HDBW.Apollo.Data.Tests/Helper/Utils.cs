@@ -48,6 +48,5 @@ namespace De.HDBW.Apollo.Data.Tests.Helper
                 }
             }
         }
-
     }
 }

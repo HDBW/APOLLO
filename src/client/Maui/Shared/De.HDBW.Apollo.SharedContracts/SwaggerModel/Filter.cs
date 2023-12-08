@@ -9,6 +9,6 @@ namespace Invite.Apollo.App.Graph.Common.Models
         public bool IsOrOperator { get; set; }
 
         [Newtonsoft.Json.JsonProperty("fields", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ICollection<FieldExpression>? Fields { get; set; }
+        public ICollection<FieldExpression> Fields { get; set; }
     }
 }

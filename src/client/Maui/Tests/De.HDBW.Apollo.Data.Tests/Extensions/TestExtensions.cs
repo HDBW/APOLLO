@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using Microsoft.Extensions.Logging;
@@ -40,6 +41,15 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
                 {
                     Console.WriteLine($"Level:{logLevel} EventId:{eventId} Message:{formatter.DynamicInvoke(state, exception)}");
                 });
+            mock.Setup(m => m.IsEnabled(It.IsAny<LogLevel>())).Returns(true);
+            return mock.Object;
+        }
+
+        internal static ILoggerProvider SetupLoggerProvider<TU>(this object test)
+        {
+            var mock = new Mock<ILoggerProvider>();
+            var mockLogger = test.SetupLogger<TU>();
+            mock.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(mockLogger);
             return mock.Object;
         }
     }

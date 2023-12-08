@@ -14,9 +14,12 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            TokenSource!.Cancel();
-            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, TokenSource.Token));
-            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync(1, TokenSource.Token));
+            using (var cts = CancellationTokenSource.CreateLinkedTokenSource(TokenSource.Token))
+            {
+                cts.Cancel();
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, cts.Token));
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync(1, cts.Token));
+            }
         }
 
         [Fact]

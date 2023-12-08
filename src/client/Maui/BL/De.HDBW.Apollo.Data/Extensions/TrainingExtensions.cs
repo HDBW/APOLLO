@@ -32,7 +32,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             result.TrainingProviderId = item.TrainingProvider?.Id?.TryToLong() ?? 0;
 
             // TODO: CourseItem Duration, right ??
-            result.Duration = item.Appointments?.Duration.ToFormattedString() ?? string.Empty;
+            result.Duration = TimeSpanExtensions.ToTotalHoursAndMinutes(item.Appointments?.Duration) ?? string.Empty;
 
             // TODO: CourseItem PredecessorId, right ??
             result.PredecessorId = item.Predecessor.TryToLong();

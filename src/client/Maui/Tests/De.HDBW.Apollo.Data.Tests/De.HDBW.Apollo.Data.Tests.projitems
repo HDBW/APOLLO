@@ -13,8 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UseCaseBuilderTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseTestContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Remote\FakeHttpContent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Remote\FakeResponseClientHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AbstractDataBaseRepositoryTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AbstractRepositoryTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AnswerMetaDataRelationRepositoryTests.cs" />
@@ -27,9 +25,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\AbstractServiceTestSetup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\PreferenceServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TrainingServiceTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Training" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Training-1" />
   </ItemGroup>
 </Project>

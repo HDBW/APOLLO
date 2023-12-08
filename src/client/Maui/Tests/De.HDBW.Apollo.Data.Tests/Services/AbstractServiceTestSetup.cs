@@ -1,10 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.Data.Tests.Extensions;
-using De.HDBW.Apollo.Data.Tests.Remote;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Http;
+using Microsoft.Extensions.Http.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -19,10 +19,14 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             SetupSecrets();
             TokenSource = new CancellationTokenSource();
-            LogProvider = GetLogProvider();
+            LogProvider = this.SetupLoggerProvider<TU>();
             ArgumentException.ThrowIfNullOrWhiteSpace(APIKey);
             ArgumentException.ThrowIfNullOrWhiteSpace(BaseUri);
-            var handler = new HttpClientHandler();
+            var logger = this.SetupLogger<LoggingHttpMessageHandler>();
+            var handler = new LoggingHttpMessageHandler(logger)
+            {
+                InnerHandler = new HttpClientHandler(),
+            };
             Service = SetupService(APIKey, BaseUri, LogProvider, handler);
             SetupAdditionalServices(APIKey, BaseUri, LogProvider, handler);
         }
@@ -84,12 +88,5 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected abstract TU SetupService(string apiKey, string baseUri, ILoggerProvider provider, HttpMessageHandler httpClientHandler);
 
-        private ILoggerProvider GetLogProvider()
-        {
-            var loggerMock = this.SetupLogger<TU>();
-            var mock = new Mock<ILoggerProvider>();
-            mock.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(loggerMock);
-            return mock.Object;
-        }
     }
 }

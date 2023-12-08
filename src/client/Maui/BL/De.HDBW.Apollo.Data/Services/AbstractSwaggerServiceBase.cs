@@ -2,8 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Net;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
-using De.HDBW.Apollo.Data.Exceptions;
+using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -71,13 +72,13 @@ namespace De.HDBW.Apollo.Data.Services
                     if (statusCode != HttpStatusCode.OK || response == null)
                     {
                         var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
-                        throw new ApiException("The Response was not expected: Code = (" + statusCode + ").", statusCode, responseData, responseHeaders, null);
+                        throw new ApiException("The Response was not expected: Code = (" + statusCode + ").", (int)statusCode, responseData, responseHeaders, null);
                     }
 
                     var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
                     if (objectResponse.Object == null)
                     {
-                        throw new ApiException("Response was null which was not expected.", statusCode, objectResponse.Text, responseHeaders, null);
+                        throw new ApiException("Response was null which was not expected.", (int)statusCode, objectResponse.Text, responseHeaders, null);
                     }
 
                     return objectResponse.Object;
@@ -123,7 +124,7 @@ namespace De.HDBW.Apollo.Data.Services
             return result;
         }
 
-        protected async Task<TU?> DoPostAsync<TU>(HttpContent? content, CancellationToken token, [CallerMemberName] string? callerName = null)
+        protected async Task<TU?> DoPostAsync<TU>(object content, CancellationToken token, [CallerMemberName] string? callerName = null)
         {
             token.ThrowIfCancellationRequested();
             TU? result = default;
@@ -142,20 +143,20 @@ namespace De.HDBW.Apollo.Data.Services
             try
             {
                 Logger?.LogDebug($"#HTTP# #{requestId}# --------->        Start {nameof(DoPostAsync)} {callerName} in {GetType().Name}.");
-                using (var response = await client.PostAsync(BaseUri, content, token).ConfigureAwait(false))
+                using (var response = await client.PostAsJsonAsync(BaseUri, content, token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
                     var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;
                     if (statusCode != HttpStatusCode.OK || response == null)
                     {
                         var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
-                        throw new ApiException("The Response was not expected: Code = (" + statusCode + ").", statusCode, responseData, responseHeaders, null);
+                        throw new ApiException("The Response was not expected: Code = (" + statusCode + ").", (int)statusCode, responseData, responseHeaders, null);
                     }
 
                     var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
                     if (objectResponse.Object == null)
                     {
-                        throw new ApiException("Response was null which was not expected.", statusCode, objectResponse.Text, responseHeaders, null);
+                        throw new ApiException("Response was null which was not expected.", (int)statusCode, objectResponse.Text, responseHeaders, null);
                     }
 
                     return objectResponse.Object;
@@ -196,7 +197,6 @@ namespace De.HDBW.Apollo.Data.Services
                 Logger?.LogDebug($"#HTTP# #{requestId}# Request took {end.Subtract(start).TotalMilliseconds} ms.");
 #endif
                 Logger?.LogDebug($"#HTTP# #{requestId}# <---------        End {nameof(DoPostAsync)} {callerName} in {GetType().Name}.");
-
             }
 
             return result;
@@ -211,6 +211,7 @@ namespace De.HDBW.Apollo.Data.Services
 
             try
             {
+                var content = await response.Content.ReadAsStringAsync();
                 using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 {
                     using (var streamReader = new StreamReader(responseStream))
@@ -228,22 +229,8 @@ namespace De.HDBW.Apollo.Data.Services
             catch (JsonException exception)
             {
                 var message = "Could not deserialize the response body stream as " + typeof(TU).FullName + ".";
-                throw new ApiException(message, response.StatusCode, string.Empty, headers, exception);
+                throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
             }
-
-        }
-
-        protected struct ObjectResponseResult<TU>
-        {
-            public ObjectResponseResult(TU? responseObject, string responseText)
-            {
-                Object = responseObject;
-                Text = responseText;
-            }
-
-            public TU? Object { get; }
-
-            public string Text { get; }
         }
 
         private void SetupHttpClient(string authKey)
@@ -264,6 +251,19 @@ namespace De.HDBW.Apollo.Data.Services
                 Logger.LogError(ex, $"Unknown Error while SetupHttpClient in {GetType().Name}.");
                 throw;
             }
+        }
+
+        protected struct ObjectResponseResult<TU>
+        {
+            public ObjectResponseResult(TU? responseObject, string responseText)
+            {
+                Object = responseObject;
+                Text = responseText;
+            }
+
+            public TU? Object { get; }
+
+            public string Text { get; }
         }
     }
 }
