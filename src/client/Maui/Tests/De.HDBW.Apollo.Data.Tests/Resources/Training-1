@@ -1,0 +1,221 @@
+{
+  "training": {
+    "id": "1",
+    "providerId": "string",
+    "trainingName": "string",
+    "description": "string",
+    "shortDescription": "string",
+    "content": [
+      "string"
+    ],
+    "benefitList": [
+      "string"
+    ],
+    "certificate": [
+      "string"
+    ],
+    "prerequisites": [
+      "string"
+    ],
+    "loans": [
+      {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "url": "string",
+        "loanContact": {
+          "id": "string",
+          "surname": "string",
+          "mail": "string",
+          "phone": "string",
+          "organization": "string",
+          "address": "string",
+          "city": "string",
+          "zipCode": "string",
+          "eAppointmentUrl": "string"
+        }
+      }
+    ],
+    "trainingProvider": {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "url": "string",
+      "contact": {
+        "id": "string",
+        "surname": "string",
+        "mail": "string",
+        "phone": "string",
+        "organization": "string",
+        "address": "string",
+        "city": "string",
+        "zipCode": "string",
+        "eAppointmentUrl": "string"
+      },
+      "image": "string"
+    },
+    "courseProvider": {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "url": "string",
+      "contact": {
+        "id": "string",
+        "surname": "string",
+        "mail": "string",
+        "phone": "string",
+        "organization": "string",
+        "address": "string",
+        "city": "string",
+        "zipCode": "string",
+        "eAppointmentUrl": "string"
+      },
+      "image": "string"
+    },
+    "appointments": {
+      "id": "string",
+      "appointment": "string",
+      "appointmentType": "string",
+      "appointmentDescription": "string",
+      "appointmentLocation": {
+        "id": "string",
+        "surname": "string",
+        "mail": "string",
+        "phone": "string",
+        "organization": "string",
+        "address": "string",
+        "city": "string",
+        "zipCode": "string",
+        "eAppointmentUrl": "string"
+      },
+      "startDate": "2023-12-07T13:08:40.357Z",
+      "endDate": "2023-12-07T13:08:40.357Z",
+      "durationDescription": "string",
+      "duration": {
+        "ticks": 0,
+        "days": 0,
+        "hours": 0,
+        "milliseconds": 0,
+        "microseconds": 0,
+        "nanoseconds": 0,
+        "minutes": 0,
+        "seconds": 0,
+        "totalDays": 0,
+        "totalHours": 0,
+        "totalMilliseconds": 0,
+        "totalMicroseconds": 0,
+        "totalNanoseconds": 0,
+        "totalMinutes": 0,
+        "totalSeconds": 0
+      },
+      "occurences": [
+        {
+          "correlationId": "string",
+          "id": "string",
+          "startDate": "2023-12-07T13:08:40.357Z",
+          "endDate": "2023-12-07T13:08:40.357Z",
+          "duration": {
+            "ticks": 0,
+            "days": 0,
+            "hours": 0,
+            "milliseconds": 0,
+            "microseconds": 0,
+            "nanoseconds": 0,
+            "minutes": 0,
+            "seconds": 0,
+            "totalDays": 0,
+            "totalHours": 0,
+            "totalMilliseconds": 0,
+            "totalMicroseconds": 0,
+            "totalNanoseconds": 0,
+            "totalMinutes": 0,
+            "totalSeconds": 0
+          },
+          "description": "string",
+          "location": {
+            "id": "string",
+            "surname": "string",
+            "mail": "string",
+            "phone": "string",
+            "organization": "string",
+            "address": "string",
+            "city": "string",
+            "zipCode": "string",
+            "eAppointmentUrl": "string"
+          }
+        }
+      ],
+      "isGuaranteed": true,
+      "trainingType": {},
+      "timeInvestAttendee": {
+        "ticks": 0,
+        "days": 0,
+        "hours": 0,
+        "milliseconds": 0,
+        "microseconds": 0,
+        "nanoseconds": 0,
+        "minutes": 0,
+        "seconds": 0,
+        "totalDays": 0,
+        "totalHours": 0,
+        "totalMilliseconds": 0,
+        "totalMicroseconds": 0,
+        "totalNanoseconds": 0,
+        "totalMinutes": 0,
+        "totalSeconds": 0
+      },
+      "timeModel": "string"
+    },
+    "productUrl": "string",
+    "contacts": {
+      "additionalProp1": {
+        "id": "string",
+        "surname": "string",
+        "mail": "string",
+        "phone": "string",
+        "organization": "string",
+        "address": "string",
+        "city": "string",
+        "zipCode": "string",
+        "eAppointmentUrl": "string"
+      },
+      "additionalProp2": {
+        "id": "string",
+        "surname": "string",
+        "mail": "string",
+        "phone": "string",
+        "organization": "string",
+        "address": "string",
+        "city": "string",
+        "zipCode": "string",
+        "eAppointmentUrl": "string"
+      },
+      "additionalProp3": {
+        "id": "string",
+        "surname": "string",
+        "mail": "string",
+        "phone": "string",
+        "organization": "string",
+        "address": "string",
+        "city": "string",
+        "zipCode": "string",
+        "eAppointmentUrl": "string"
+      }
+    },
+    "trainingType": 0,
+    "individualStartDate": "string",
+    "price": 0,
+    "priceDescription": "string",
+    "accessibilityAvailable": true,
+    "tags": [
+      "string"
+    ],
+    "categories": [
+      "string"
+    ],
+    "publishingDate": "2023-12-07T13:08:40.357Z",
+    "unpublishingDate": "2023-12-07T13:08:40.357Z",
+    "successor": "string",
+    "predecessor": "string"
+  }
+}
