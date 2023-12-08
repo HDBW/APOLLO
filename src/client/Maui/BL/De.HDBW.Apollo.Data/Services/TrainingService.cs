@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Services
 {
-    public abstract class TrainingService : AbstractSwaggerServiceBase, ITrainingService
+    public class TrainingService : AbstractSwaggerServiceBase, ITrainingService
     {
         public TrainingService(ILoggerProvider logProvider,  string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
                : base(logProvider.CreateLogger(nameof(TrainingService)), $"{baseUrl}/Training", authKey, httpClientHandler)

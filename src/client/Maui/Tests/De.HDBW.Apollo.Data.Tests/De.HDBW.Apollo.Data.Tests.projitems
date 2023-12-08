@@ -29,7 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\TrainingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Resources\Training" />
-    <None Include="$(MSBuildThisFileDirectory)Resources\Training-1" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Training" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Training-1" />
   </ItemGroup>
 </Project>

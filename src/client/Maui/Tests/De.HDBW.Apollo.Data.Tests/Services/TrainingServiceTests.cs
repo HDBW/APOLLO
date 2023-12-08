@@ -1,146 +1,136 @@
 ﻿using De.HDBW.Apollo.Data.Extensions;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace De.HDBW.Apollo.Data.Tests.Services
 {
-    //[TestClass]
-    //public class TrainingServiceTests : AbstractServiceTestSetup<ITrainingService>
-    //{
-    //    [TestInitialize]
-    //    public void Setup()
-    //    {
-    //        SetupDefaults();
-    //    }
+    public class TrainingServiceTests : AbstractServiceTestSetup<ITrainingService>
+    {
+        [Fact]
+        public async Task CancellationTokenTests()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+            TokenSource!.Cancel();
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, TokenSource.Token));
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync(1, TokenSource.Token));
+        }
 
-    //    [TestCleanup]
-    //    public void CleanUp()
-    //    {
-    //        Cleanup();
-    //    }
+        [Fact]
+        public async Task GetTrainingAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
 
-    //    protected override void CleanupAdditionalServices()
-    //    {
-    //    }
+            var training = await Service.GetTrainingAsync(1, TokenSource!.Token);
+            Assert.NotNull(training?.Id);
 
-    //    protected override void SetupAdditionalServices(ILoggerProvider provider, HttpMessageHandler httpClientHandler)
-    //    {
-    //    }
+            Assert.Equal(1, training!.Id);
 
-    //    [Fact]
-    //    public async Task CancellationTokenTests()
-    //    {
-    //        Assert.IsNotNull(TokenSource, "TokenSource is null.");
-    //        Assert.IsNotNull(Service, "Service is null.");
-    //        TokenSource.Cancel();
-    //        await Assert.ThrowsExceptionAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, TokenSource.Token), "Service did not cancel while searching.");
-    //        await Assert.ThrowsExceptionAsync<OperationCanceledException>(() => Service.GetTrainingAsync(1, TokenSource.Token), "Service did not cancel when getting training.");
-    //    }
+            // var courseItem = training.ToCourseItem();
+            // Assert.NotNull(courseItem);
 
-    //    [Fact]
-    //    public async Task GetTrainingAsyncTest()
-    //    {
-    //        Assert.IsNotNull(TokenSource, "TokenSource is null.");
-    //        Assert.IsNotNull(Service, "Service is null.");
+            // var courseAppointment = training.ToCourseAppointment();
+            // Assert.NotNull(courseAppointment);
 
-    //        var training = await Service.GetTrainingAsync(1, TokenSource.Token);
-    //        Assert.IsNotNull(training, "Service did not return any training.");
-    //        Assert.IsNotNull(training.Id, "Service did not return id for training.");
+            // var eduProviderItem = training.ToEduProviderItems();
+            // Assert.NotNull(eduProviderItem);
 
-    //        Assert.AreEqual(1, training.Id.TryToLong(), "Service did not return the right training.");
+            // var courseContactRelation = training.ToCourseContactRelation();
+            // Assert.NotNull(courseContactRelation);
+        }
 
-    //        var courseItem = training.ToCourseItem();
-    //        Assert.IsNotNull(courseItem, "CourseItem is null");
+        [Fact]
+        public async Task SearchTrainingsAsyncWithoutFilterTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
 
-    //        var courseAppointment = training.ToCourseAppointment();
-    //        Assert.IsNotNull(courseAppointment, "CourseAppointment is null");
+            var trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token);
+            Assert.NotNull(trainings);
+            Assert.Equal(2, trainings.Count());
 
-    //        var eduProviderItem = training.ToEduProviderItems();
-    //        Assert.IsNotNull(eduProviderItem, "EduProviderItem is null");
+            // var courseItems = trainings.Select(f => f.ToCourseItem());
+            // var courseAppointments = trainings.Select(f => f.ToCourseAppointment());
+            // var eduProviderItems = trainings.Select(f => f.ToEduProviderItems());
+            // var courseContactRelations = trainings.Select(f => f.ToCourseContactRelation());
+        }
 
-    //        var courseContactRelation = training.ToCourseContactRelation();
-    //        Assert.IsNotNull(courseContactRelation, "CourseContactRelation is null");
-    //    }
+        [Fact]
+        public async Task SearchTrainingsAsyncWithFilterTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
 
-    //    [Fact]
-    //    public async Task SearchTrainingsAsyncWithoutFilterTest()
-    //    {
-    //        Assert.IsNotNull(TokenSource, "TokenSource is null.");
-    //        Assert.IsNotNull(Service, "Service is null.");
+            var fields = new List<FieldExpression>()
+            {
+                    new FieldExpression()
+                    {
+                        FieldName = "trainingName",
+                        Argument = new List<string>()
+                        {
+                            "TestName",
+                            "TestName-2",
+                        }.ToList<object>(),
+                    },
+                    new FieldExpression()
+                    {
+                        FieldName = "id",
+                        Argument = new List<string>()
+                        {
+                            "5",
+                            "2",
+                        }.ToList<object>(),
+                    },
+            };
 
-    //        var trainings = await Service.SearchTrainingsAsync(null, TokenSource.Token);
-    //        Assert.IsNotNull(trainings, "Service did not return any training.");
-    //        Assert.AreEqual(2, trainings.Count(), "Service did not return one training.");
+            var filter = new Filter()
+            {
+                Fields = fields,
+            };
 
-    //        var courseItems = trainings.Select(f => f.ToCourseItem());
-    //        var courseAppointments = trainings.Select(f => f.ToCourseAppointment());
-    //        var eduProviderItems = trainings.Select(f => f.ToEduProviderItems());
-    //        var courseContactRelations = trainings.Select(f => f.ToCourseContactRelation());
-    //    }
+            var trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);
+            Assert.NotNull(trainings);
+            Assert.Equal(2, trainings.Count());
 
-    //    [Fact]
-    //    public async Task SearchTrainingsAsyncWithFilterTest()
-    //    {
-    //        Assert.IsNotNull(TokenSource, "TokenSource is null.");
-    //        Assert.IsNotNull(Service, "Service is null.");
+            foreach (var training in trainings)
+            {
+                var trainingDic = Helper.Utils.MapToDictionary(training);
 
-    //        var fields = new List<FieldExpression>() {
-    //                new FieldExpression() {
-    //                    FieldName = "trainingName",
-    //                    Argument = new List<string>()
-    //                    {
-    //                        "TestName",
-    //                        "TestName-2"
-    //                    }.ToList<object>(),
-    //                },
-    //                new FieldExpression() {
-    //                    FieldName = "id",
-    //                    Argument = new List<string>()
-    //                    {
-    //                        "5",
-    //                        "2"
-    //                    }.ToList<object>(),
-    //                }
-    //        };
+                bool found = false;
+                foreach (var item in fields)
+                {
+                    var dicKey = trainingDic.Keys.FirstOrDefault(x => x?.ToLower()?.Equals(item?.FieldName?.ToLower()) == true);
+                    if (string.IsNullOrWhiteSpace(dicKey))
+                    {
+                        continue;
+                    }
 
-    //        var filter = new Filter()
-    //        {
-    //            Fields = fields
-    //        };
+                    if (item?.Argument?.OfType<string>()?.Contains(trainingDic[dicKey] ?? string.Empty) == true)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
 
-    //        var trainings = await Service.SearchTrainingsAsync(filter, TokenSource.Token);
-    //        Assert.IsNotNull(trainings, "Service did not return any training.");
-    //        Assert.AreEqual(2, trainings.Count(), "Service did not return one training.");
+                Assert.True(found, "The service did not return the right training.");
+            }
+        }
 
-    //        foreach (var training in trainings)
-    //        {
-    //            var trainingDic = Utils.MapToDictionary(training);
+        protected override ITrainingService SetupService(string apiKey, string baseUri, ILoggerProvider provider, HttpMessageHandler httpClientHandler)
+        {
+            return new TrainingService(provider, baseUri, apiKey, httpClientHandler);
+        }
 
-    //            bool found = false;
-    //            foreach (var item in fields)
-    //            {
-    //                var dicKey = trainingDic.Keys.FirstOrDefault(x => x?.ToLower()?.Equals(item?.FieldName?.ToLower()) == true);
-    //                if (string.IsNullOrWhiteSpace(dicKey))
-    //                {
-    //                    continue;
-    //                }
+        protected override void CleanupAdditionalServices()
+        {
+        }
 
-    //                if(item?.Argument?.OfType<string>()?.Contains(trainingDic[dicKey] ?? string.Empty) == true)
-    //                {
-    //                    found = true;
-    //                    break;
-    //                }
-    //            }
-
-    //            Assert.IsTrue(found, "The service did not return the right training.");
-    //        }
-    //    }
-
-    //    protected override ITrainingService SetupService(ILoggerProvider provider, HttpMessageHandler httpClientHandler)
-    //    {
-    //        return new TrainingService(provider, BaseUri, string.Empty, httpClientHandler);
-    //    }
-    //}
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILoggerProvider provider, HttpMessageHandler httpClientHandler)
+        {
+        }
+    }
 }
