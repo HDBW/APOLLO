@@ -28,7 +28,7 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"Completed {nameof(GetUser)}");
 
-                // If user is not found, return null (as per your requirement)
+                // If user is not found, return null 
                 return user ?? null;
             }
             catch (Exception ex)
@@ -315,15 +315,17 @@ namespace Apollo.Api
             {
                 _logger?.LogTrace($"{this.User} entered {nameof(InsertUser)}");
 
-                // Placeholder for actual user insertion logic
-                string userId = Guid.NewGuid().ToString();
+                // Generate a unique user ID if it's not provided
+                if (String.IsNullOrEmpty(user.Id))
+                    user.Id = CreateUserId();
 
-                // Implement the actual user insertion logic here
-                // Example: await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
+                await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
 
                 _logger?.LogTrace($"{this.User} completed {nameof(InsertUser)}");
+                _logger?.LogTrace($"Inserting user with Id: {user.Id}");
 
-                return userId;
+
+                return user.Id;
             }
             catch (Exception ex)
             {
@@ -342,18 +344,26 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="user">If the Id is specified, the update will be performed.</param>
         /// <returns></returns>
-        public virtual Task<string> CreateOrUpdateUser(User user)
+        public virtual async Task<List<string>> CreateOrUpdateUser(ICollection<User> users)
         {
             try
             {
+                List<string> ids = new List<string>();
+
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateUser)}");
 
-                // Placeholder for actual user creation or update logic
-                string result = Guid.NewGuid().ToString();
+                foreach (var user in users)
+                {
+                    var userId = CreateUserId();
+                    ids.Add(userId);
+                    user.Id = userId;
+                }
+
+                await _dal.InsertManyAsync(ApolloApi.GetCollectionName<User>(), users.Select(u => Convertor.Convert(u)).ToArray());
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
 
-                return Task.FromResult(result);
+                return ids;
             }
             catch (Exception ex)
             {

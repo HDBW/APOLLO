@@ -6,50 +6,144 @@ using Apollo.Common.Entities;
 using Daenet.MongoDal;
 using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 using Moq;
 
 namespace Apollo.Api.UnitTests
 {
+
+    /// <summary>
+    /// Unit tests for the ApolloApi class.
+    /// </summary>
     [TestClass]
     public class ApolloApiUsersUnitTests
     {
+
+        /// <summary>
+        /// Tests the insertion of a User object and its retrieval from the database.
+        /// </summary>
         [TestMethod]
         public async Task InsertUser()
         {
-            // Arrange
             var api = Helpers.GetApolloApi();
 
             var user = new User
             {
-                Id = "U01", // Provide a valid user ID here
-                UserName = "TestUser",
-                Goal = "Some Goal",
+                Id = "U01",
                 FirstName = "John",
                 LastName = "Doe",
-                Image = "user1.png"
+                Goal = "Test Goal"
             };
 
-            string userId = null; // Initialize userId outside the try block
+            await api.InsertUser(user);
 
-            try
+            // Optionally, can add assertions to verify the insertion was successful
+            var retrievedUser = await api.GetUser(user.Id);
+            Assert.IsNotNull(retrievedUser);
+            Assert.AreEqual(user.Id, retrievedUser.Id);
+
+            await api.DeleteUsers(new string[] { user.Id });
+        }
+
+
+        /// <summary>
+        /// Tests creating or updating a User object and then cleaning up by deleting it.
+        /// </summary>
+        [TestMethod]
+        public async Task CreateOrUpdateUser()
+        {
+            var api = Helpers.GetApolloApi();
+
+            var user = new User
             {
-                // Act
-                userId = await api.InsertUser(user);
+                FirstName = "John",
+                LastName = "Doe"
+            };
 
-                // Assert
-                Assert.IsNotNull(userId);
-                // Update the assertion to check if userId is not null
-                Assert.IsNotNull(userId);
+            var userIds = await api.CreateOrUpdateUser(new List<User> { user });
 
-            }
-            finally
+            // Ensure that the user was created or updated and has a valid ID
+            Assert.IsNotNull(userIds);
+            Assert.IsTrue(userIds.Count > 0);
+
+            // Clean up: Delete the created or updated user
+            await api.DeleteUsers(userIds.ToArray());
+        }
+
+
+        /// <summary>
+        /// Tests retrieving a specific User object by its ID.
+        /// </summary>
+        [TestMethod]
+        public async Task GetUser()
+        {
+            // Arrange
+            var api = Helpers.GetApolloApi();
+
+            // Assuming there is a user with Id "U01" in the database
+            string userId = "U01";
+
+            // Act
+            var user = await api.GetUser(userId);
+
+            // Assert
+            Assert.IsNotNull(user);
+            // You can add custom assertions based on your requirements
+        }
+
+
+        /// <summary>
+        /// Tests querying User objects based on specific criteria such as FirstName and LastName.
+        /// </summary>
+        [TestMethod]
+        public async Task QueryUsers()
+        {
+            // Arrange
+            var api = Helpers.GetApolloApi();
+
+            var query = new Apollo.Common.Entities.Query
             {
-                // Clean up (optional): Delete the user after testing
-                if (!string.IsNullOrEmpty(userId))
+                Fields = new List<string> { "FirstName", "LastName", "UserName" },
+                Filter = new Apollo.Common.Entities.Filter
                 {
-                    await api.DeleteUsers(new string[] { userId }); // Pass the user ID as a string array
+                    Fields = new List<Apollo.Common.Entities.FieldExpression>
+            {
+                new Apollo.Common.Entities.FieldExpression
+                {
+                    FieldName = "FirstName",
+                    Operator = Apollo.Common.Entities.QueryOperator.Equals,
+                    Argument = new List<object> { "John" }
+                },
+                new Apollo.Common.Entities.FieldExpression
+                {
+                    FieldName = "LastName",
+                    Operator = Apollo.Common.Entities.QueryOperator.Equals,
+                    Argument = new List<object> { "Doe" }
                 }
             }
+                },
+                RequestCount = true,
+                Top = 200,
+                Skip = 0,
+                SortExpression = new Apollo.Common.Entities.SortExpression
+                {
+                    FieldName = "LastName",
+                    Order = Apollo.Common.Entities.SortOrder.Ascending
+                }
+            };
+
+            // Act
+            var users = await api.QueryUsers(query);
+
+            // Assert
+            Assert.IsNotNull(users);
+            Assert.IsTrue(users.Count >= 0);
+
+            // Cleanup
+            foreach (var user in users)
+            {
+                await api.DeleteUsers(new string[] { user.Id });
+            }
         }
-      }
+    }
 }

@@ -98,12 +98,13 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace("Enter {method}", nameof(CreateOrUpdateUser));
 
                 // Call the Apollo API to create or update a user based on the request.
-                var result = await _api.CreateOrUpdateUser(req.User);
+                var users = new List<User> { req.User };
+                var result = await _api.CreateOrUpdateUser(users);
 
                 _logger.LogTrace("Leave {method}", nameof(CreateOrUpdateUser));
 
                 // Return the result of the create/update operation as a response.
-                return new CreateOrUpdateUserResponse { Result = result };
+                return new CreateOrUpdateUserResponse { Result = result.FirstOrDefault() };
             }
             catch (Exception ex)
             {
@@ -112,6 +113,7 @@ namespace Apollo.Service.Controllers
                 throw;
             }
         }
+
 
         /// <summary>
         /// Handles HTTP POST requests to insert multiple users.
