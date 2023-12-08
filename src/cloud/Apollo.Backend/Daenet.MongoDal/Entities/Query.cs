@@ -28,6 +28,7 @@ namespace Daenet.MongoDal.Entitties
         {
             StringBuilder sb = new StringBuilder();
 
+            //TODO: Sure it is not Fields?.Count > 0 or != 0 ?
             if (Fields != null || Fields?.Count == 0)
             {
                 foreach (var item in this.Fields)

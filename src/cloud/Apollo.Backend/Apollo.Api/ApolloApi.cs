@@ -3,6 +3,7 @@
 
 using System.Dynamic;
 using System.Security.Claims;
+using Amazon.Runtime.Internal.Util;
 using Apollo.Common.Entities;
 using Daenet.MongoDal;
 using Microsoft.Extensions.Logging;
@@ -39,17 +40,37 @@ namespace Apollo.Api
             get
             {
                 string? usr = Principal?.Identity?.Name;
-                return String.IsNullOrEmpty(usr) ? "anonymous" : usr;
+                return string.IsNullOrEmpty(usr) ? "anonymous" : usr;
             }
         }
         #endregion
 
+
+        /// <summary>
+        /// Docuement me please :P
+        /// </summary>
+        /// <param name="dal"></param>
+        /// <param name="logger"></param>
+        /// <param name="config"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
         {
+            // Validate the logger. 
+            if (logger == null)
+            {
+                //We can do this because Damir chose appservices and they have system diagnostics
+                System.Diagnostics.Debug.WriteLine("DI Logger exception incomming !!!");
+                //And then we make sure the constructor is not called with a null logger.
+                ArgumentNullException.ThrowIfNull(logger);
+            }
+            else
+            {
+                _logger = logger;
+            }
+
             try
             {
                 _dal = dal ?? throw new ArgumentNullException(nameof(dal));
-                _logger = logger;
                 _config = config ?? throw new ArgumentNullException(nameof(config));
                 ValidateConfig(_config);
 
@@ -57,6 +78,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
+                //since we made sure the logger is not null we can then do the logging here.
                 _logger?.LogError($"An error occurred in ApolloApi constructor: {ex.Message}", ex);
                 throw; // Re-throwing the exception to maintain the flow, can be handled differently based on requirements.
             }
@@ -70,10 +92,12 @@ namespace Apollo.Api
         /// <returns></returns>
         public string GetCollectionName(object item)
         {
+            //TODO: Why object? 
             try
             {
-                if (item == null)
-                    throw new ArgumentNullException(nameof(item));
+                //if (item == null)
+                //    throw new ArgumentNullException(nameof(item));
+                ArgumentNullException.ThrowIfNull(item);
 
                 // Assuming there's another instance or static method to get the name
                 return GetCollectionName(item.GetType().Name);
@@ -100,9 +124,10 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="typeName"></param>
         /// <returns></returns>
-        private static string GetCollectionName(string typeName)
+        private static string? GetCollectionName(string typeName)
         {
-            return $"{typeName.ToLower()}s";
+            //TODO: The original code was not null safe. I changed to explicit is always better mode. Now that would return null but if you don't want that you can use the original code. And throw a null exception I guess? 
+            return $"{typeName?.ToLower()}s";
         }
 
 

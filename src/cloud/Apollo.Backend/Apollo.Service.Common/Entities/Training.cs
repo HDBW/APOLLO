@@ -2,6 +2,8 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
+
 //using MongoDB.Bson;
 //using MongoDB.Bson.Serialization.Attributes;
 
@@ -13,24 +15,19 @@ namespace Apollo.Common.Entities
         //[BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        /// <summary>
+        /// External Identifier from the Training Providers.
+        /// </summary>
         public string ProviderId { get; set; }
-
-        //Note we need a longid for mobile clients should we convert to longid in mongo?
-        // I guess there is a converation from objectid to type long?
-        //[BsonElement("MobileId")]
-        //public long? MobileId { get; set; }
 
         //[Required]
         //[BsonElement("Title")]
         public string TrainingName { get; set; }
 
         /// <summary>
-        /// External Identifier for the Training Providers.
+        /// The image of a training.
         /// </summary>
-        //[Required]
-        //[BsonElement("Identifier")]
-        //public string Identifier { get; set; }
-
+        public Uri? Image { get; set; }
 
         //[BsonElement("Description")]
         public string Description { get; set; }
@@ -49,7 +46,6 @@ namespace Apollo.Common.Entities
         /// </summary>
         //[BsonElement("Benefit")]
         public List<string> BenefitList { get; set; }
-
 
         /// <summary>
         /// Specifies the list of certificates that can be obtained after the training.
@@ -79,8 +75,10 @@ namespace Apollo.Common.Entities
         //[BsonElement("CourseProvider")]
         public EduProvider CourseProvider { get; set; }
 
-        //[BsonElement("Appointments")]
-        public Appointments Appointments { get; set; }
+        //[BsonElement("AppointmentUrl")]
+        public List<Appointment> Appointment { get; set; }
+
+        public string TargetAudience { get; set; }
 
         /// <summary>
         /// Training Provider Url or Target
@@ -102,7 +100,7 @@ namespace Apollo.Common.Entities
 
         // It should be bool but what do I know about education ofc it is not bool
         //[BsonElement("IndividualStartDate")]
-        public string IndividualStartDate { get; set; }
+        public string? IndividualStartDate { get; set; }
 
         //TODO: Review
         /// <summary>
@@ -110,7 +108,7 @@ namespace Apollo.Common.Entities
         /// Since comparison is done by more information such as where does it happens, what does it include ...
         /// </summary>
         //[BsonElement("Price")]
-        public decimal? Price { get; set; }
+        public decimal? Price { get; set; } 
 
         // [BsonElement("PriceDescription")]
         public string PriceDescription { get; set; }
@@ -126,9 +124,20 @@ namespace Apollo.Common.Entities
         //[BsonElement("Categories")]
         public List<string> Categories { get; set; }
 
+        //TODO: Review Not to be set by the API, API may Use Id room of Training Provider and ExternalTrainingId
+        /// <summary>
+        /// These are Apollo Ids not External Ids !!!
+        /// </summary>
+        public List<Training> SimilarTrainings { get; set; }
+
+        /// <summary>
+        /// Apollo Internal Id only to be set by the Backend!
+        /// </summary>
+        public List<Training> RecommendedTrainings { get; set; }
+
         #endregion
 
-#warning candidate for interface!!
+        #warning candidate for interface!!
         #region IContentPublising // todo.
 
         //[BsonElement("PublishingDate")]

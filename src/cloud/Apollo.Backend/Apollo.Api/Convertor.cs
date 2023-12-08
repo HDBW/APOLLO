@@ -108,35 +108,55 @@ namespace Apollo.Api
         }
 
         /// <summary>
-        /// Converts an expando object to an Appointments object.
+        /// Converts an expando object to an AppointmentUrl object.
         /// </summary>
         /// <param name="expando">The expando object to be converted.</param>
-        /// <returns>An Appointments object converted from the expando object.</returns>
-        public static Appointments ToAppointments(ExpandoObject expando)
+        /// <returns>An AppointmentUrl object converted from the expando object.</returns>
+        public static Appointment ToAppointments(ExpandoObject expando)
         {
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
-            Appointments appointments = new Appointments();
+            Appointment appointment = new Appointment();
 
-            appointments.Id = (string)dict["Id"];
-            appointments.Appointment = new Uri((string)dict["Appointment"]);
-            appointments.AppointmentType = (string)dict["AppointmentType"];
-            appointments.AppointmentDescription = (string)dict["AppointmentDescription"];
-            appointments.AppointmentLocation = ToContact(dict["AppointmentLocation"] as ExpandoObject);
-            appointments.StartDate = (DateTime)dict["StartDate"];
-            appointments.EndDate = (DateTime)dict["EndDate"];
-            appointments.DurationDescription = (string)dict["DurationDescription"];
-            appointments.Duration = (TimeSpan)dict["Duration"];
-            appointments.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
-            appointments.IsGuaranteed = (bool)dict["IsGuaranteed"];
-            appointments.TrainingType = (Enum)dict["TrainingType"];
-            appointments.TimeInvestAttendee = (TimeSpan)dict["TimeInvestAttendee"];
-            appointments.TimeModel = (string)dict["TimeModel"];
+            appointment.Id = (string)dict["Id"];
+            appointment.AppointmentUrl = new Uri((string)dict["AppointmentUrl"]);
+            appointment.AppointmentType = (string)dict["AppointmentType"];
+            appointment.AppointmentDescription = (string)dict["AppointmentDescription"];
+            appointment.AppointmentLocation = ToContact(dict["AppointmentLocation"] as ExpandoObject);
+            appointment.StartDate = (DateTime)dict["StartDate"];
+            appointment.EndDate = (DateTime)dict["EndDate"];
+            appointment.DurationDescription = (string)dict["DurationDescription"];
+            appointment.Duration = (TimeSpan)dict["Duration"];
+            appointment.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
+            appointment.IsGuaranteed = (bool)dict["IsGuaranteed"];
+            //appointment.TrainingType = ToEntityList<TrainingType>(dict["TrainingType"] as List<ExpandoObject>, ToTrainingType);
+            appointment.TrainingType = (TrainingType)dict["TrainingType"];
+            appointment.TimeInvestAttendee = (TimeSpan)dict["TimeInvestAttendee"];
+            appointment.TimeModel = (TrainingTimeModel)dict["TimeModel"];
             // Add other property mappings as needed
 
-            return appointments;
+            return appointment;
         }
 
+        //public static TrainingType ToTrainingType(ExpandoObject expandoObject)
+        //{
+        //    var trainingType = TrainingType.Unknown;
+
+        //    if (expandoObject != null)
+        //    {
+        //        var expandoDict = expandoObject as IDictionary<string, object>;
+
+        //        foreach (var keyValuePair in expandoDict)
+        //        {
+        //            if (Enum.TryParse<TrainingType>(keyValuePair.Key, out var value))
+        //            {
+        //                trainingType |= value;
+        //            }
+        //        }
+        //    }
+
+        //    return trainingType;
+        //}
 
         /// <summary>
         /// Converts an expando object to an Occurence object.
