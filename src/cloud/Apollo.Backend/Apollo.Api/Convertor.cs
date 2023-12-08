@@ -62,29 +62,29 @@ namespace Apollo.Api
         /// <returns>A Training object converted from the expando object.</returns>
         public static Training ToTraining(ExpandoObject expando)
         {
-            IDictionary<string,object> dict = expando as IDictionary<string, object>;
-         
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
             Training tr = new Training();
 
-            tr.ProviderId = dict.ContainsKey("ProviderId") ? (string)dict["ProviderId"] : "null";
-            tr.TrainingName = (string)dict["TrainingName"];
-            tr.Description = (string)dict["Description"];
-            tr.ShortDescription = (string)dict["ShortDescription"];
-            tr.Content = (List<string>)dict["Content"];
-            tr.BenefitList = (List<string>)dict["BenefitList"];
-            tr.Certificate = (List<string>)dict["Certificate"];
-            tr.Prerequisites = (List<string>)dict["Prerequisites"];
-            tr.ProductUrl = new Uri((string)dict["ProductUrl"]);
-            tr.Price = (decimal)dict["Price"];
-            tr.Loans = dict.ContainsKey("Loans") ? ToEntityList<Loans>(dict["Loans"] as List<ExpandoObject>, ToLoans) : null;
-            tr.TrainingProvider = ToTrainingProvider(dict["TrainingProvider"] as ExpandoObject);
-            //  map other properties here
-            // tr.Tags = (List<string>)dict["Tags"];
-            // tr.PublishingDate = (DateTime)dict["PublishingDate"];
+            tr.ProviderId = dict.ContainsKey("ProviderId") ? (string)dict["ProviderId"] : "";
+            tr.TrainingName = dict.ContainsKey("TrainingName") ? (string)dict["TrainingName"] : "";
+            tr.Description = dict.ContainsKey("Description") ? (string)dict["Description"] : "";
+            tr.ShortDescription = dict.ContainsKey("ShortDescription") ? (string)dict["ShortDescription"] : "";
+            tr.Content = dict.ContainsKey("Content") ? (List<string>)dict["Content"] : new List<string>();
+            tr.BenefitList = dict.ContainsKey("BenefitList") ? (List<string>)dict["BenefitList"] : new List<string>();
+            tr.Certificate = dict.ContainsKey("Certificate") ? (List<string>)dict["Certificate"] : new List<string>();
+            tr.Prerequisites = dict.ContainsKey("Prerequisites") ? (List<string>)dict["Prerequisites"] : new List<string>();
+            tr.ProductUrl = dict.ContainsKey("ProductUrl") ? new Uri((string)dict["ProductUrl"]) : new Uri("about:blank");
+            tr.Price = dict.ContainsKey("Price") ? (decimal)dict["Price"] : 0M;
+            tr.Loans = dict.ContainsKey("Loans") ? ToEntityList<Loans>(dict["Loans"] as List<ExpandoObject>, ToLoans) : new List<Loans>();
+            tr.TrainingProvider = dict.ContainsKey("TrainingProvider") ? ToTrainingProvider(dict["TrainingProvider"] as ExpandoObject) : null;
+            // map other properties here
+            // tr.Tags = dict.ContainsKey("Tags") ? (List<string>)dict["Tags"] : new List<string>();
+            // tr.PublishingDate = dict.ContainsKey("PublishingDate") ? (DateTime)dict["PublishingDate"] : DateTime.MinValue;
 
             return tr;
-
         }
+
 
 
         /// <summary>
@@ -261,16 +261,17 @@ namespace Apollo.Api
 
             User user = new User
             {
-                Goal = dict.ContainsKey("Goal") ? (string)dict["Goal"] : null,
-                FirstName = dict.ContainsKey("FirstName") ? (string)dict["FirstName"] : null,
-                LastName = dict.ContainsKey("LastName") ? (string)dict["LastName"] : null,
-                Image = dict.ContainsKey("Image") ? (string)dict["Image"] : null,
-                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : null,
-                UserName = dict.ContainsKey("UserName") ? (string)dict["UserName"] : null
+                Goal = dict.ContainsKey("Goal") ? (string)dict["Goal"] : "",
+                FirstName = dict.ContainsKey("FirstName") ? (string)dict["FirstName"] : "",
+                LastName = dict.ContainsKey("LastName") ? (string)dict["LastName"] : "",
+                Image = dict.ContainsKey("Image") ? (string)dict["Image"] : "",
+                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
+                UserName = dict.ContainsKey("UserName") ? (string)dict["UserName"] : ""
             };
 
             return user;
         }
+
 
         /// <summary>
         /// Converts an Apollo API query filter to a Daenet query.
