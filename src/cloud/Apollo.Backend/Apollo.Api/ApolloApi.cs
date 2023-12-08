@@ -55,18 +55,20 @@ namespace Apollo.Api
         /// <exception cref="ArgumentNullException"></exception>
         public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
         {
-            // Validate the logger. 
-            if (logger == null)
-            {
-                //We can do this because Damir chose appservices and they have system diagnostics
-                System.Diagnostics.Debug.WriteLine("DI Logger exception incomming !!!");
-                //And then we make sure the constructor is not called with a null logger.
-                ArgumentNullException.ThrowIfNull(logger);
-            }
-            else
-            {
-                _logger = logger;
-            }
+            //// Validate the logger. 
+            //if (logger == null)
+            //{
+            //    //We can do this because Damir chose appservices and they have system diagnostics
+            //    System.Diagnostics.Debug.WriteLine("DI Logger exception incomming !!!");
+            //    //And then we make sure the constructor is not called with a null logger.
+            //    ArgumentNullException.ThrowIfNull(logger);
+            //}
+            //else
+            //{
+            //    _logger = logger;
+            //}
+
+            _logger = logger;
 
             try
             {
