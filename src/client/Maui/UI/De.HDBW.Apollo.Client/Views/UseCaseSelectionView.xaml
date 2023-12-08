@@ -12,8 +12,8 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}">
     <Grid RowDefinitions="Auto, Auto, *" Padding="0,16">
-        <Label FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.UseCaseSelectionView_Choose}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
-        <Label Grid.Row="1" Text="{x:Static strings:Resource.UseCaseSelectionView_ChooseDescription}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="0,8"/>
+        <Label FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.UseCaseSelectionView_Choose}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
+        <Label Grid.Row="1" Text="{x:Static strings:Resources.UseCaseSelectionView_ChooseDescription}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="0,8"/>
         <CollectionView x:Name="PART_UseCases" Grid.Row="2" ItemsSource="{Binding UseCases}" SelectionMode="None">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"/>
