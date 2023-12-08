@@ -28,13 +28,25 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"Completed {nameof(GetUser)}");
 
-                // If user is not found, return null (as per your requirement)
-                return user ?? null;
+                if (user == null)
+                {
+                    // User not found, throw ApolloException with specific code and message
+                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.", new Exception(""));
+                }
+
+                return user;
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Failed execution of {nameof(GetUser)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.UserErrors.GetUserError, "Error while getting user", ex);
+
+                // For other exceptions, throw an ApolloApiException with a general error code and message
+                throw new ApolloApiException(ErrorCodes.UserErrors.GetUserError, "An error occurred while getting the user.", ex);
             }
         }
 
@@ -44,6 +56,7 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="query">The filter that specifies users to be retrieved.</param>
         /// <returns>List of users.</returns>
+        // TODO: More specific exception handeling for this method
         public virtual async Task<IList<User>> QueryUsers(Query query)
         {
             try
@@ -63,6 +76,7 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersError, "Error while querying users", ex);
             }
         }
+
 
 
         /// <summary>
@@ -94,14 +108,28 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"Completed {nameof(QueryUsersByGoal)}");
 
+                if (users.Count == 0)
+                {
+                    // No users found with the specified goal, throw an ApolloException with a specific code and message
+                    throw new ApolloApiException(ErrorCodes.UserErrors.NoUsersFoundByGoal, $"No users found with goal '{goal}'.", new Exception("Exeption while quering users by goal"));
+                }
+
                 return users;
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Failed execution of {nameof(QueryUsersByGoal)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByGoalError, "Error while querying users by goal", ex);
+
+                // For other exceptions, throw an ApolloApiException with a general error code and message
+                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByGoalError, "An error occurred while querying users by goal.", ex);
             }
         }
+
 
 
         /// <summary>
@@ -129,13 +157,27 @@ namespace Apollo.Api
                 };
 
                 var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+
+                if (res == null)
+                {
+                    // No results found, throw an ApolloException with a specific code and message
+                    throw new ApolloApiException(ErrorCodes.UserErrors.NoUsersFoundByKeyword, $"No users found with keyword '{keyword}'.", new Exception(""));
+                }
+
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
+                // For other exceptions, throw an ApolloApiException with a general error code and message
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByKeywordError, "Error while querying users by keyword", ex);
             }
         }
+
 
 
         /// <summary>
@@ -166,13 +208,27 @@ namespace Apollo.Api
                 };
 
                 var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+
+                if (res == null)
+                {
+                    // No results found, throw an ApolloException with specific code and message
+                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "No users found matching the criteria.", new Exception("Exeption error while matching the criteria"));
+                }
+
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
+                // For other exceptions, throw an ApolloApiException with a general error code and message
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "Error while querying users by multiple criteria", ex);
             }
         }
+
 
         /// <summary>
         /// Retrieves a paginated list of users.
@@ -193,10 +249,23 @@ namespace Apollo.Api
                 };
 
                 var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+
+                if (res == null)
+                {
+                    // No results found, throw an ApolloException with specific code and message
+                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, "No users found with the specified pagination parameters.", new Exception("Exeption error"));
+                }
+
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
+                // For other exceptions, throw an ApolloApiException with a general error code and message
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersWithPaginationError, "Error while querying users with pagination", ex);
             }
         }
@@ -228,14 +297,29 @@ namespace Apollo.Api
                 };
 
                 var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+
+                if (res == null)
+                {
+                    // No results found, throw an ApolloException with a specific code and message
+                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "No users found within the specified date range.", new Exception("Exeption"));
+                }
+
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "Error while querying users by date range", ex);
+                // Log the error
+                _logger.LogError(ex, $"Failed execution of {nameof(QueryUsersByDateRange)}: {ex.Message}");
+
+                // For other exceptions, throw an ApolloApiException with a general error code and message
+                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "An error occurred while querying users by date range", ex);
             }
         }
-
 
 
         /// <summary>
@@ -315,25 +399,39 @@ namespace Apollo.Api
             {
                 _logger?.LogTrace($"{this.User} entered {nameof(InsertUser)}");
 
-                // Placeholder for actual user insertion logic
-                string userId = Guid.NewGuid().ToString();
+                // Generate a unique user ID if it's not provided
+                if (String.IsNullOrEmpty(user.Id))
+                    user.Id = CreateUserId();
 
-                // Implement the actual user insertion logic here
-                // Example: await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
+                // Check if the user with the same ID already exists before inserting
+                var existingUser = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), user.Id);
+                if (existingUser != null)
+                {
+                    // User with the same ID already exists, throw an ApolloException with a specific code and message
+                    throw new ApolloApiException(ErrorCodes.UserErrors.UserAlreadyExists, $"User with ID '{user.Id}' already exists.", new Exception("User Error"));
+                }
+
+                await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
 
                 _logger?.LogTrace($"{this.User} completed {nameof(InsertUser)}");
+                _logger?.LogTrace($"Inserting user with Id: {user.Id}");
 
-                return userId;
+                return user.Id;
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
-                // Log the error
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertUser)}: {ex.Message}");
+                _logger.LogError(ex, $"{this.User} failed execution of {nameof(InsertUser)}: {ex.Message}");
 
-                // Throw an ApolloApiException with the specific error code
-                throw new ApolloApiException(ErrorCodes.UserErrors.InsertUserError, "Error while inserting user", ex);
+                // For other exceptions, throw an ApolloApiException with a general error code and message
+                throw new ApolloApiException(ErrorCodes.UserErrors.InsertUserError, "An error occurred while inserting the user.", ex);
             }
         }
+
 
 
 
@@ -342,25 +440,41 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="user">If the Id is specified, the update will be performed.</param>
         /// <returns></returns>
-        public virtual Task<string> CreateOrUpdateUser(User user)
+        public virtual async Task<List<string>> CreateOrUpdateUser(ICollection<User> users)
         {
             try
             {
+                List<string> ids = new List<string>();
+
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateUser)}");
 
-                // Placeholder for actual user creation or update logic
-                string result = Guid.NewGuid().ToString();
+                foreach (var user in users)
+                {
+                    var userId = CreateUserId();
+                    ids.Add(userId);
+                    user.Id = userId;
+                }
+
+                await _dal.InsertManyAsync(ApolloApi.GetCollectionName<User>(), users.Select(u => Convertor.Convert(u)).ToArray());
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
 
-                return Task.FromResult(result);
+                return ids;
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateUser)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "Error while creating or updating user", ex);
+
+                // For other exceptions, throw an ApolloApiException with a general error code and message
+                throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "An error occurred while creating or updating users.", ex);
             }
         }
+
 
 
         /// <summary>

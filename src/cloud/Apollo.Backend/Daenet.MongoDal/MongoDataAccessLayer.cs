@@ -47,6 +47,7 @@ namespace Daenet.MongoDal
 
             _logger = logger;
 
+
             //ShredKey = shredKey;
 
             this._client = new MongoClient(GetSettings(_cfg.MongoConnStr));
@@ -711,7 +712,6 @@ namespace Daenet.MongoDal
 
             return count;
         }
-
 
         /// <summary>
         /// Updates documents in the collection that match the filter with the provided update definition.

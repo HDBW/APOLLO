@@ -32,17 +32,31 @@ namespace Apollo.Api
 
                 var training = await _dal.GetByIdAsync<Training>(ApolloApi.GetCollectionName<Training>(), trainingId);
 
+                if (training == null)
+                {
+                    // No matching training found, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Training not found.", new Exception("Training not found."));
+                }
+
                 _logger?.LogTrace($"Completed {nameof(GetTraining)}");
 
                 return training;
             }
+            catch (ApolloApiException)
+            {
+               
+                throw;
+            }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(GetTraining)}: {ex.Message}");
-                throw;
+                _logger.LogError(ex, $"{this.User} failed execution of {nameof(GetTraining)}: {ex.Message}");
+
+                // Throw an ApolloApiException with the specific error code and the caught exception
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Error while getting training", ex);
             }
+
         }
+
 
 
         /// <summary>
@@ -59,20 +73,30 @@ namespace Apollo.Api
                 // Execute the query 
                 var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-                //  convert  results to a list of typed Training objects
+                if (res == null || !res.Any())
+                {
+                    // No matching records found, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.", new Exception("Expetion while quering"));
+                }
+
+                // Convert results to a list of typed Training objects
                 var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
 
                 _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainings)}");
 
                 return trainings;
             }
+            catch (ApolloApiException)
+            {
+                
+                throw;
+            }
             catch (Exception ex)
             {
-                // Log the error
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(QueryTrainings)}: {ex.Message}");
 
-                // Throw an ApolloApiException with the specific error code
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying trainings", ex);
+                // Throw a more generic exception for unexpected errors
+                throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "An error occurred while querying trainings.", ex);
             }
         }
 
@@ -186,13 +210,26 @@ namespace Apollo.Api
                 query.Top = pageSize;
 
                 var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+
+                if (res == null)
+                {
+                    // No results found, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "No results found for paginated query.", new Exception("Exeption for paginated query"));
+                }
+
                 return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+            }
+            catch (ApolloApiException)
+            {
+               
+                throw;
             }
             catch (Exception ex)
             {
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "Error while querying trainings paginated", ex);
             }
         }
+
 
 
         // <summary>
@@ -213,7 +250,19 @@ namespace Apollo.Api
                 query.Fields = selectedFields.ToList();
 
                 var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+
+                if (res == null)
+                {
+                    // No results found, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "No results found for the query.", new Exception("Exeption"));
+                }
+
                 return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+            }
+            catch (ApolloApiException)
+            {
+                
+                throw;
             }
             catch (Exception ex)
             {
@@ -236,14 +285,28 @@ namespace Apollo.Api
                 var filter = Builders<Training>.Filter.Empty;
                 var count = await _trainingCollection.CountDocumentsAsync(filter);
 
+                if (count < 0)
+                {
+                    // Negative count is unexpected, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTotalTrainingCountErr, "Invalid total training count.", new Exception("Exeption for training count"));
+                }
+
                 _logger?.LogTrace($"{this.User} completed {nameof(GetTotalTrainingCountAsync)}");
 
                 return count;
             }
+            catch (ApolloApiException)
+            {
+                
+                throw;
+            }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(GetTotalTrainingCountAsync)}: {ex.Message}");
+
+                // Throw a more generic exception for unexpected errors
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTotalTrainingCountErr, "Error while getting total training count", ex);
+
             }
         }
 
@@ -268,13 +331,24 @@ namespace Apollo.Api
 
                 return training.Id;
             }
+            catch (ApolloApiException)
+            {
+                
+                throw;
+            }
+            catch (MongoWriteException ex) when (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
+            {
+                // If the exception is due to a duplicate key error (unique constraint violation),
+                // throw a specific exception with an appropriate error code and message.
+                throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "Duplicate training ID. Training already exists.", ex);
+            }
             catch (Exception ex)
             {
                 // Log the error
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertTraining)}: {ex.Message}");
 
-                // Throw an ApolloApiException with the specific error code
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "Error while inserting training", ex);
+                // Throw a more generic exception for unexpected errors
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
             }
         }
 
@@ -293,6 +367,12 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"{this.User} entered {nameof(InsertTrainings)}");
 
+                if (trainings == null || !trainings.Any())
+                {
+                    // No trainings to insert, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "No trainings to insert.", new Exception("Exption while inserting training"));
+                }
+
                 foreach (var training in trainings)
                 {
                     var id = CreateTrainingId();
@@ -306,11 +386,17 @@ namespace Apollo.Api
 
                 return ids;
             }
+            catch (ApolloApiException)
+            {
+               
+                throw;
+            }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertTrainings)}: {ex.Message}");
 
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "Error while creating trainings", ex);
+                // Throw a more generic exception for unexpected errors
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
             }
         }
 
@@ -329,24 +415,46 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"{this.User} entered {nameof(CreateOrUpdateTraining)}");
 
+                if (trainings == null || !trainings.Any())
+                {
+                    // No training data provided, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.", new Exception("Exeption for CreateorUpdateTraining"));
+                }
+
                 foreach (var training in trainings)
                 {
-                    var id = CreateTrainingId();
-                    ids.Add(id);
-                    training.Id = id;
+                    if (string.IsNullOrEmpty(training.Id))
+                    {
+                        // Generate a new ID for the training
+                        var id = CreateTrainingId();
+                        ids.Add(id);
+                        training.Id = id;
+                    }
                 }
 
                 await _dal.InsertManyAsync(ApolloApi.GetCollectionName<Training>(), trainings.Select(t => Convertor.Convert(t)).ToArray());
+
+                if (ids.Count == 0)
+                {
+                    // No new training IDs generated, throw a specific exception
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No new training records were created.", new Exception("Expetion while creating training records"));
+                }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(CreateOrUpdateTraining)}");
 
                 return ids;
             }
+            catch (ApolloApiException)
+            {
+               
+                throw;
+            }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(CreateOrUpdateTraining)}: {ex.Message}");
 
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "Error while creating or updating training", ex);
+                // Throw a more generic exception for unexpected errors
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
             }
         }
 
@@ -382,7 +490,7 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="deletingIds">The array of training IDs to delete.</param>
         /// <returns>A list of deleted record counts for each ID.</returns>
-        public virtual async Task<IList<long>> DeleteTraining(string[] deletingIds)
+        public virtual async Task<List<long>> DeleteTraining(string[] deletingIds)
         {
             try
             {
@@ -394,7 +502,8 @@ namespace Apollo.Api
                 {
                     await _dal.DeleteAsync(GetCollectionName<Training>(), id);
 
-                    
+                    // Assuming that DeleteAsync doesn't throw an exception on failure,
+                    // you can add 1 to the deletedCounts for each successful deletion
                     deletedCounts.Add(1);
                 }
 
@@ -402,12 +511,19 @@ namespace Apollo.Api
 
                 return deletedCounts;
             }
+            catch (ApolloApiException)
+            {
+             
+                throw;
+            }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteTrainings)}: {ex.Message}");
 
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
+                // Throw a more generic exception for unexpected errors
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
             }
         }
+
     }
 }

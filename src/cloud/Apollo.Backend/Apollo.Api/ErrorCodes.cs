@@ -42,11 +42,23 @@ namespace Apollo.Api
             public const int InsertUserError = TrainingCodeBase + 100;
             public const int CreateOrUpdateUserError = TrainingCodeBase + 110;
             public const int DeleteUserError = TrainingCodeBase + 120;
+            public const int UserNotFound = TrainingCodeBase + 130;
+            public const int NoUsersFoundByGoal = TrainingCodeBase + 140;
+            public const int NoUsersFoundByKeyword = TrainingCodeBase + 150;
+            public const int UserAlreadyExists = TrainingCodeBase + 160;
+            public const int NoUsersToDelete = TrainingCodeBase + 170; 
 
             public static void HandleException(Exception ex)
             {
                 throw new ApolloApiException(TrainingCodeBase, "User Error occurred", ex);
             }
+        }
+
+        public static class GeneralErrors
+        {
+            public const int OperationFailed = 1;
+            public const string  QueryTrainingsFailed = "QTF-1";
+            // Add more general error codes as needed...
         }
     }
 }
