@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Reflection;
 using Apollo.Common.Entities;
 using MongoDB.Driver.Core.Events.Diagnostics;
 
@@ -49,11 +50,59 @@ namespace Apollo.Api
                 if (prop.Name == "Id")
                     expoDict.Add("_id", prop.GetValue(item)!);
                 else
-                    expoDict.Add(prop.Name, prop.GetValue(item)!);
+                {
+                    if (IsList(prop.PropertyType))
+                    {
+                        expoDict.Add(prop.Name, GetValueFromListOrArray(prop, prop.GetValue(item))!);
+                    }
+                    else
+                        expoDict.Add(prop.Name, prop.GetValue(item)!);
+                }
             }
 
             return expo;
         }
+
+        private static bool IsList(Type type)
+        {
+            return type.GetInterfaces().Count(i => i.Name.Contains("List")) > 0 || type.Name.Contains("List");
+        }
+
+
+        /// <summary>
+        /// Converts the list of objects to a list of expando objects.
+        /// </summary>
+        /// <param name="propertyInfo"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        private static IList<ExpandoObject> GetValueFromListOrArray(PropertyInfo propertyInfo, object? val)
+        {
+            if (val == null)
+                return null;
+
+            if (propertyInfo == null)
+                throw new NullReferenceException();
+
+            var listType = typeof(List<>);
+
+            List<ExpandoObject> list=new List<ExpandoObject>();
+
+            var arrElements = val as IEnumerable<object>;
+
+            if (arrElements != null)
+            {
+                foreach (var item in arrElements)
+                {
+                    var expandoItem = Convert(item);
+                    list.Add(expandoItem);
+                }              
+            }
+
+            return list;
+        }
+
 
         /// <summary>
         /// Converts an expando object to a Training object.
@@ -213,7 +262,7 @@ namespace Apollo.Api
         /// <param name="expandos">The list of expando objects to be converted.</param>
         /// <param name="toEntity">The function to convert each expando object to the specified entity type.</param>
         /// <returns>A list of entities of type T converted from the list of expando objects.</returns>
-        public static List<T> ToEntityList<T>(IList<ExpandoObject>? expandos, Func<ExpandoObject,T> toEntity)
+        public static List<T> ToEntityList<T>(IList<ExpandoObject>? expandos, Func<ExpandoObject, T> toEntity)
         {
             if (expandos == null)
                 throw new ArgumentNullException("Argument 'expandos' cannot be null!");
@@ -313,10 +362,10 @@ namespace Apollo.Api
             if (sortExpression == null)
                 return null;
 
-            return  new Daenet.MongoDal.Entitties.SortExpression
+            return new Daenet.MongoDal.Entitties.SortExpression
             {
                 FieldName = sortExpression.FieldName,
-                Order = Enum.Parse<Daenet.MongoDal.Entitties.SortOrder>(Enum.GetName(typeof(Common.Entities.SortOrder), sortExpression.Order)!)                       
+                Order = Enum.Parse<Daenet.MongoDal.Entitties.SortOrder>(Enum.GetName(typeof(Common.Entities.SortOrder), sortExpression.Order)!)
             };
         }
     }

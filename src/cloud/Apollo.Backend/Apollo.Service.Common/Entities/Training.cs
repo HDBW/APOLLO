@@ -76,7 +76,7 @@ namespace Apollo.Common.Entities
         public EduProvider CourseProvider { get; set; }
 
         //[BsonElement("AppointmentUrl")]
-        public List<Appointment> Appointment { get; set; }
+       public List<Appointment> Appointment { get; set; }
 
         public string TargetAudience { get; set; }
 

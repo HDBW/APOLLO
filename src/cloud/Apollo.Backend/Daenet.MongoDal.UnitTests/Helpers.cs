@@ -12,6 +12,7 @@ namespace Daenet.MongoDal.UnitTests
 {
     public class Helpers
     {
+
         internal static MongoDataAccessLayer GetDal()
         {
             MongoDataAccessLayer dal = new MongoDataAccessLayer(new Entitties.MongoDalConfig()

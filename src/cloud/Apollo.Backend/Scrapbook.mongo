@@ -1,4 +1,8 @@
 
+db.trainings.find()
+
+db.trainings.find({"AssetRefs": []})
+
 db.genericarticles.find({"UsePurposes":{$size:1}})
 db.genericarticles.find({"GenArtNo":"00412"})
 

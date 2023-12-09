@@ -5,7 +5,6 @@
 using System.Collections;
 using Apollo.Api;
 using Apollo.Common.Entities;
-using ApolloApiUnitTests;
 using Daenet.MongoDal;
 using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Logging;

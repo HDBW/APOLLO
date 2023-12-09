@@ -14,11 +14,6 @@ namespace Apollo.Api
     {
         private readonly IMongoCollection<Training> _trainingCollection;
 
-        public ApolloApi()//todo remove constructor.
-        {
-        }
-
-
         /// <summary>
         /// Gets the specific instance of the training.
         /// </summary>
@@ -375,7 +370,7 @@ namespace Apollo.Api
 
                 foreach (var training in trainings)
                 {
-                    var id = CreateTrainingId();
+                    var id = String.IsNullOrEmpty(training.Id) ? CreateTrainingId() : training.Id;
                     ids.Add(id);
                     training.Id = id;
                 }
