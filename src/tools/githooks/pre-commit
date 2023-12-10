@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+files_modified=$(git diff --cached --name-only --diff-filter=ACM)
+for f in $files_modified; do
+  if [[ $f == src/client/Maui/UI/De.HDBW.Apollo.Client/Platforms/Android/AndroidManifest.xml ]] || [[ $f == src/client/Maui/UI/De.HDBW.Apollo.Client/Platforms/iOS/Info.plist ]]; then
+    if git grep -p 'msalYOUR_CLIENT_ID_HERE' -- $f ; then
+      echo Manifest is ok.;
+    else
+      echo "You are trying to commit a file containing secrets. "$f;
+      exit 1;
+    fi
+  fi
+  if [[ $f == src/client/Maui/UI/De.HDBW.Apollo.Client/MauiProgram.cs ]]; then
+    if git grep -p 'SwaggerAPIToken' -- $f ; then
+      echo Program is ok.;
+    else
+      echo "You are trying to commit a file containing secrets. "$f;
+      exit 1;
+    fi
+  fi
+done
+#if git diff --cached --name-only --diff-filter=ACM -- '*AndroidManifest.xml' '*Info.plist';
+#then
+ # echo "Commit containing sensitive files";
+ # if git grep -p 'msalYOUR_CLIENT_ID_HERE' -- 'UI/De.HDBW.Apollo.Client/Platforms/Android/AndroidManifest.xml' \
+ #   &&
+ #   git grep -p 'msalYOUR_CLIENT_ID_HERE' -- 'UI/De.HDBW.Apollo.Client/Platforms/iOS/Info.plist'; 
+ # then
+ #     echo "You did not fucked it up";
+ # else
+ #     echo "You fucked it up";
+ #     exit 1;
+ # fi
+#else
+#echo "You did not fucked it up 1";
+#fi
