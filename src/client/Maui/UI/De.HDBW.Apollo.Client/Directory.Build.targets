@@ -6,6 +6,9 @@
     <AndroidManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/Android/AndroidManifest.xml</AndroidManifestFile>
     <IOSManifestFile Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\Platforms\iOS\Info.plist</IOSManifestFile>
     <IOSManifestFile Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/Platforms/iOS/Info.plist</IOSManifestFile>
+    
+    <MauiProgram Condition=" '$(OS)' == 'Windows_NT' ">$(MSBuildProjectDirectory)\MauiProgram.cs</MauiProgram>
+    <MauiProgram Condition=" '$(OS)' == 'Unix' ">$(MSBuildProjectDirectory)/MauiProgram.cs</MauiProgram>
 
     <JsonPeekAssembly Condition=" '$(OS)' == 'Windows_NT' ">$(NugetPackageRoot)\jsonpeek\1.2.0\build\JsonPeek.dll</JsonPeekAssembly>
     <JsonPeekAssembly Condition=" '$(OS)' == 'Unix' ">$(NugetPackageRoot)/jsonpeek/1.2.0/build/JsonPeek.dll</JsonPeekAssembly>
@@ -63,6 +66,19 @@
     </Task>
   </UsingTask>
 
+
+  <Target Name="BeforeBuild">
+    <JsonPeek ContentPath="$(UserSecretsFilePath)" Query="$.SwaggerAPIToken">
+      <Output TaskParameter="Result" PropertyName="SwaggerAPIToken" />
+    </JsonPeek>
+    <Message Text="Add API Key" />
+    <ReplaceFileText
+      InputFilename="$(MauiProgram)"
+      OutputFilename="$(MauiProgram)"
+      MatchExpression="SwaggerAPIToken"
+      ReplacementText="$(SwaggerAPIToken)" />
+  </Target>
+
   <Target Name="AddUserSecrets"
          BeforeTargets="PrepareForBuild"
          Condition=" '$(UserSecretsId)' != '' ">
@@ -104,4 +120,5 @@
      ReplacementText="$(ClientId)" />
 
   </Target>
+
 </Project>

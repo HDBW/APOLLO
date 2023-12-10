@@ -1,4 +1,4 @@
-﻿// (c) Licensed to the HDBW under one or more agreements.
+// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Maui;
@@ -32,6 +32,8 @@ using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
 namespace De.HDBW.Apollo.Client;
 public static class MauiProgram
 {
+    private const string APIToken = "SwaggerAPIToken";
+
     public static MauiApp CreateMauiApp()
     {
         Preferences.Default.Set(Preference.AllowTelemetry.ToString(), true);
