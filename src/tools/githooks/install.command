@@ -1,1 +1,1 @@
-cp pre-commit ../../../.git/hooks/ /Y
+cp pre-commit ../../../.git/hooks/
