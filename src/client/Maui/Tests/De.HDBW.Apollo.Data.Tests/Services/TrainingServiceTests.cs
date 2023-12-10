@@ -1,6 +1,4 @@
-﻿using De.HDBW.Apollo.Data.Extensions;
-using De.HDBW.Apollo.Data.Services;
-using De.HDBW.Apollo.SharedContracts.Services;
+﻿using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -8,7 +6,7 @@ using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Services
 {
-    public class TrainingServiceTests : AbstractServiceTestSetup<ITrainingService>
+    public class TrainingServiceTests : AbstractServiceTestSetup<TrainingService>
     {
         public TrainingServiceTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -129,16 +127,16 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
         }
 
-        protected override ITrainingService SetupService(string apiKey, string baseUri, ILoggerProvider provider, HttpMessageHandler httpClientHandler)
+        protected override TrainingService SetupService(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
         {
-            return new TrainingService(provider, baseUri, apiKey, httpClientHandler);
+            return new TrainingService(logger, baseUri, apiKey, httpClientHandler);
         }
 
         protected override void CleanupAdditionalServices()
         {
         }
 
-        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILoggerProvider provider, HttpMessageHandler httpClientHandler)
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
         {
         }
     }

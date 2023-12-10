@@ -7,14 +7,13 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
-using static SQLite.SQLite3;
 
 namespace De.HDBW.Apollo.Data.Services
 {
     public class TrainingService : AbstractSwaggerServiceBase, ITrainingService
     {
-        public TrainingService(ILoggerProvider logProvider, string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
-               : base(logProvider.CreateLogger(nameof(TrainingService)), $"{baseUrl}/Training", authKey, httpClientHandler)
+        public TrainingService(ILogger<TrainingService> logger, string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
+               : base(logger, $"{baseUrl}/Training", authKey, httpClientHandler)
         {
         }
 

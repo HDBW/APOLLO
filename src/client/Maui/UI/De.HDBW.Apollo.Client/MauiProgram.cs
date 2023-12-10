@@ -32,16 +32,13 @@ using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
 namespace De.HDBW.Apollo.Client;
 public static class MauiProgram
 {
-    private const string APIToken = "SwaggerAPIToken";
-
     public static MauiApp CreateMauiApp()
     {
         Preferences.Default.Set(Preference.AllowTelemetry.ToString(), true);
         var builder = MauiApp.CreateBuilder();
-        SetupSecrets(builder.Services);
+        var secretsService = SetupSecrets(builder.Services);
         SetupLogging();
         builder.Logging.AddSerilog(Log.Logger, dispose: true);
-
         Log.Information($"---------------------------------------- Application started at {DateTime.Now} ------------------------------------------");
         Log.Debug($"Model: {DeviceInfo.Current.Model}");
         Log.Debug($"Manufacturer: {DeviceInfo.Current.Manufacturer}");
@@ -54,7 +51,7 @@ public static class MauiProgram
         SetupRoutes();
         SetupHandler();
         var result = SetupB2CLogin(builder.Services);
-        SetupServices(builder.Services, result);
+        SetupServices(builder.Services, secretsService, result);
         SetupDataBaseTableProvider(builder);
         SetupRepositories(builder.Services);
         SetupViewsAndViewModels(builder.Services);
@@ -178,7 +175,7 @@ public static class MauiProgram
         return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
     }
 
-    private static void SetupServices(IServiceCollection services, bool hasRegisterdUser)
+    private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, bool hasRegisterdUser)
     {
         services.AddSingleton((s) => { return Preferences.Default; });
         services.AddSingleton<IPreferenceService, PreferenceService>();
@@ -189,6 +186,12 @@ public static class MauiProgram
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
         services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
+        var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
+        var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
+        services.AddSingleton<ITrainingService>((serviceProvider) =>
+        {
+            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, new HttpClientHandler());
+        });
     }
 
     private static void SetupRepositories(IServiceCollection services)

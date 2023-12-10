@@ -14,20 +14,19 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 {
     public abstract class AbstractServiceTestSetup<TU> : IDisposable
     {
-        protected const string BaseUri = "https://apollo-api-hdbw-tst.azurewebsites.net/api";
         private bool _disposed;
 
         protected AbstractServiceTestSetup(ITestOutputHelper outputHelper)
         {
             SetupSecrets();
             TokenSource = new CancellationTokenSource();
-            LogProvider = this.SetupLoggerProvider<TU>(outputHelper);
+            Logger = this.SetupLogger<TU>(outputHelper);
             ArgumentException.ThrowIfNullOrWhiteSpace(APIKey);
             ArgumentException.ThrowIfNullOrWhiteSpace(BaseUri);
             var logger = this.SetupLogger<LoggingHttpMessageHandler>(outputHelper);
             var handler = new ContentLoggingHttpMessageHandler(logger);
-            Service = SetupService(APIKey, BaseUri, LogProvider, handler);
-            SetupAdditionalServices(APIKey, BaseUri, LogProvider, handler);
+            Service = SetupService(APIKey, BaseUri, Logger, handler);
+            SetupAdditionalServices(APIKey, BaseUri, Logger, handler);
         }
 
         ~AbstractServiceTestSetup()
@@ -39,9 +38,11 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected CancellationTokenSource? TokenSource { get; private set; }
 
-        protected ILoggerProvider? LogProvider { get; private set; }
+        protected ILogger<TU>? Logger { get; private set; }
 
         private string? APIKey { get; set; }
+
+        private string? BaseUri { get; set; }
 
         public void Dispose()
         {
@@ -70,6 +71,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             .AddUserSecrets(GetType().Assembly, false)
             .Build();
             APIKey = configuration?.GetChildren().FirstOrDefault(c => c.Key == "SwaggerAPIToken")?.Value;
+            BaseUri = configuration?.GetChildren().FirstOrDefault(c => c.Key == "SwaggerAPIURL")?.Value;
         }
 
         protected void Cleanup()
@@ -83,9 +85,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected abstract void CleanupAdditionalServices();
 
-        protected abstract void SetupAdditionalServices(string apiKey, string baseUri, ILoggerProvider provider, HttpMessageHandler httpClientHandler);
+        protected abstract void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TU> logger, HttpMessageHandler httpClientHandler);
 
-        protected abstract TU SetupService(string apiKey, string baseUri, ILoggerProvider provider, HttpMessageHandler httpClientHandler);
-
+        protected abstract TU SetupService(string apiKey, string baseUri, ILogger<TU> logger, HttpMessageHandler httpClientHandler);
     }
 }
