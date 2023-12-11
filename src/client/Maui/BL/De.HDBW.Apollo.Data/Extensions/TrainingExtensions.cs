@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.Data.Extensions
 {
     internal static class TrainingExtensions
     {
-        internal static CourseItem? ToCourseItem(this Training item)
+        internal static CourseItem? ConvertToCourseItem(this Training item)
         {
             var result = new CourseItem();
             if (item == null)
@@ -63,7 +63,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             return result;
         }
 
-        internal static CourseAppointment? ToCourseAppointment(this Training item)
+        internal static CourseAppointment? ConvertToCourseAppointment(this Training item)
         {
             var result = new CourseAppointment();
             if (item?.Appointments == null)
@@ -85,7 +85,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             return result;
         }
 
-        internal static EduProviderItem? ToEduProviderItems(this Training item)
+        internal static EduProviderItem? ConvertToEduProviderItems(this Training item)
         {
             var result = new EduProviderItem();
             if (item?.CourseProvider == null)
@@ -104,7 +104,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             return result;
         }
 
-        internal static List<CourseContact>? ToCourseContacts(this Training item)
+        internal static List<CourseContact>? ConvertToCourseContacts(this Training item)
         {
             if (item?.Contacts?.Any() != true)
             {
@@ -132,7 +132,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             return result;
         }
 
-        internal static List<CourseContactRelation>? ToCourseContactRelation(this Training item)
+        internal static List<CourseContactRelation>? ConvertToCourseContactRelation(this Training item)
         {
             if (item?.Contacts?.Any() != true)
             {

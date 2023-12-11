@@ -23,13 +23,13 @@ namespace De.HDBW.Apollo.Data.Services
             SortExpression sortExpression = new SortExpression() { FieldName = nameof(Training.TrainingName), Order = SortOrder.__1 };
             ICollection<string> visibleFields = typeof(Training).GetProperties(BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public).Select(p => p.Name).ToList();
             var response = await GetTrainingsInternalAsync(filter, sortExpression, visibleFields, token).ConfigureAwait(false);
-            return response?.Trainings?.Select(x => x.ToCourseItem()).ToList() as IEnumerable<CourseItem> ?? Array.Empty<CourseItem>();
+            return response?.Trainings?.Select(x => x.ConvertToCourseItem()).ToList() as IEnumerable<CourseItem> ?? Array.Empty<CourseItem>();
         }
 
         public async Task<CourseItem?> GetTrainingAsync(long id, CancellationToken token)
         {
             var response = await GetTrainingInternalAsync(id, token).ConfigureAwait(false);
-            return response?.Training?.ToCourseItem();
+            return response?.Training?.ConvertToCourseItem();
         }
 
         private async Task<QueryTrainingsResponse?> GetTrainingsInternalAsync(Filter filter, SortExpression sortExpression, ICollection<string> visibleFields, CancellationToken token)

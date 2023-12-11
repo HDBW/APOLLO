@@ -3,11 +3,9 @@
 
 using De.HDBW.Apollo.Data.Tests.Extensions;
 using De.HDBW.Apollo.Data.Tests.Helper;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Http.Logging;
 using Microsoft.Extensions.Logging;
-using Moq;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Services
@@ -67,11 +65,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected void SetupSecrets()
         {
-            var configuration = new ConfigurationBuilder()
-            .AddUserSecrets(GetType().Assembly, false)
-            .Build();
-            APIKey = configuration?.GetChildren().FirstOrDefault(c => c.Key == "SwaggerAPIToken")?.Value;
-            BaseUri = configuration?.GetChildren().FirstOrDefault(c => c.Key == "SwaggerAPIURL")?.Value;
+            var userSecrets = new UserSecretsService();
+            Assert.True(userSecrets.LoadSecrets());
+            APIKey = userSecrets["SwaggerAPIToken"];
+            BaseUri = userSecrets["SwaggerAPIURL"];
         }
 
         protected void Cleanup()
