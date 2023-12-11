@@ -16,16 +16,15 @@ namespace Apollo.Api
         /// </summary>
         public int ErrorCode { get; private set; }
 
-        public ApolloApiException() { }
-
-        public ApolloApiException(int errCode, string message) : base(message)
+        public ApolloApiException(int errorCode, string message) : base(message)
         {
-            ErrorCode = errCode;
+            ErrorCode = errorCode;
         }
 
-        public ApolloApiException(int errCode, string message, Exception ex) : base(message, ex)
+        [JsonConstructor()]
+        public ApolloApiException(int errorCode, string message, Exception ex) : base(message, ex)
         {
-            ErrorCode = errCode;
+            ErrorCode = errorCode;
         }
     }
 }
