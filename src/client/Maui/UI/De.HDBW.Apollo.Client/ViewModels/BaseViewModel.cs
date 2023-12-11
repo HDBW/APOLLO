@@ -126,7 +126,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.NavigateAsnc(route, worker.Token);
+                    switch (route)
+                    {
+                        case Routes.FeedbackView:
+                            await Browser.Default.OpenAsync(Resources.Strings.Resource.FeedbackUrl, BrowserLaunchMode.SystemPreferred);
+                            break;
+                        default:
+                            await NavigationService.NavigateAsnc(route, worker.Token);
+                            break;
+                    }
                 }
                 catch (OperationCanceledException)
                 {

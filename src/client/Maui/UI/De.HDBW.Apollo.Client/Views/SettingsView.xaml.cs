@@ -33,5 +33,4 @@ public partial class SettingsView
             return BindingContext as SettingsViewModel;
         }
     }
-
 }

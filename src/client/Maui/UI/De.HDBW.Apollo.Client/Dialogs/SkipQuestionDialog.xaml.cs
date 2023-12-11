@@ -14,6 +14,7 @@ public partial class SkipQuestionDialog
         {
             view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
             view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
+            Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
         }
 
         BindingContext = model;
