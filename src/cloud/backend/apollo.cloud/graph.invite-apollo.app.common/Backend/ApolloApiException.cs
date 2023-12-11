@@ -2,7 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
-using ZstdSharp.Unsafe;
+using Newtonsoft.Json;
 
 namespace Apollo.Api
 {
@@ -17,6 +17,8 @@ namespace Apollo.Api
         public int ErrorCode { get; private set; }
 
         public ApolloApiException() { }
+
+        [JsonConstructor]
         public ApolloApiException(int errCode, string message, Exception ex) : base(message, ex)
         {
             ErrorCode = errCode;
