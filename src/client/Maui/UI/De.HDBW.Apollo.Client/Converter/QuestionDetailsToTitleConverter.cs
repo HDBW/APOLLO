@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.Client.Converter
 {
     public class QuestionDetailsToTitleConverter : IValueConverter
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == BindableProperty.UnsetValue || value == null || parameter == null)
             {
@@ -31,7 +31,7 @@ namespace De.HDBW.Apollo.Client.Converter
             return title;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotSupportedException($"Binding two way is not supported in {GetType().Name}");
         }

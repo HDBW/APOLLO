@@ -61,6 +61,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             UnscheduleWork(worker);
                         }
                     }
+
                     break;
             }
         }
