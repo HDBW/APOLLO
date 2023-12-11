@@ -64,7 +64,7 @@ namespace De.HDBW.Apollo.Data.Services
             var userId = userProfiles.First().Id;
 
             // retrive assessmentId
-            long assessmentId = answerItemResults.FirstOrDefault()!.AssessmentItemId;
+            long assessmentId = answerItemResults.FirstOrDefault() !.AssessmentItemId;
 
             // TODO: Iterate over answerItems and create Category result
             var questions = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentId, token).ConfigureAwait(false);

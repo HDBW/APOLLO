@@ -23,9 +23,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
            : base(dispatcherService, navigationService, dialogService, logger)
         {
             SessionService = sessionService;
-            //UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
-            //UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
-            //UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));
+
+            // UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
+            // UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
+            // UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));
             UseCases.Add(UseCaseEntry.Import(UseCase.D, OnUseCaseSelectionChanged));
         }
 

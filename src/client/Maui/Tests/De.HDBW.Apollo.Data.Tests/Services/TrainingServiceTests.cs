@@ -35,10 +35,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            CourseItem? training = null;
+            CourseItem training = null;
             try
             {
-                training = await Service.GetTrainingAsync(1, TokenSource!.Token).ConfigureAwait(false);
+                training = await Service.GetTrainingAsync(1, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -67,10 +67,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            IEnumerable<CourseItem>? trainings = null;
+            IEnumerable<CourseItem> trainings = null;
             try
             {
-                trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token).ConfigureAwait(false);
+                trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -80,6 +80,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
             Assert.NotNull(trainings);
             Assert.Equal(2, trainings!.Count());
+
             // var courseItems = trainings.Select(f => f.ToCourseItem());
             // var courseAppointments = trainings.Select(f => f.ToCourseAppointment());
             // var eduProviderItems = trainings.Select(f => f.ToEduProviderItems());
@@ -109,7 +110,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 Fields = fields,
             };
-            IEnumerable<CourseItem>? trainings = null;
+            IEnumerable<CourseItem> trainings = null;
             try
             {
                 trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);
