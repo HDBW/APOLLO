@@ -4,6 +4,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
+using Apollo.Api;
 using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -65,13 +66,14 @@ namespace De.HDBW.Apollo.Data.Services
                     if (statusCode != HttpStatusCode.OK || response == null)
                     {
                         var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
-                        throw new ApiException("The Response was not expected: Code = (" + statusCode + ").", (int)statusCode, responseData, responseHeaders, null);
+                        var ex = JsonConvert.DeserializeObject<ApolloApiException>(responseData);
+                        throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
                     var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
                     if (objectResponse.Object == null)
                     {
-                        throw new ApiException("Response was null which was not expected.", (int)statusCode, objectResponse.Text, responseHeaders, null);
+                        throw new ApolloApiException(-2, "Unable to read response.");
                     }
 
                     return objectResponse.Object;
@@ -137,13 +139,14 @@ namespace De.HDBW.Apollo.Data.Services
                     if (statusCode != HttpStatusCode.OK || response == null)
                     {
                         var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
-                        throw new ApiException("The Response was not expected: Code = (" + statusCode + ").", (int)statusCode, responseData, responseHeaders, null);
+                        var ex = JsonConvert.DeserializeObject<ApolloApiException>(responseData);
+                        throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
                     var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
                     if (objectResponse.Object == null)
                     {
-                        throw new ApiException("Response was null which was not expected.", (int)statusCode, objectResponse.Text, responseHeaders, null);
+                        throw new ApolloApiException(-2, "Unable to read response.");
                     }
 
                     return objectResponse.Object;
@@ -215,8 +218,9 @@ namespace De.HDBW.Apollo.Data.Services
             }
             catch (JsonException exception)
             {
+                throw;
                 var message = "Could not deserialize the response body stream as " + typeof(TU).FullName + ".";
-                throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                //throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
             }
         }
 
