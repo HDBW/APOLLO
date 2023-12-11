@@ -62,7 +62,7 @@
       </Code>
     </Task>
   </UsingTask>
-
+  
   <Target Name="AddUserSecrets"
          BeforeTargets="PrepareForBuild"
          Condition=" '$(UserSecretsId)' != '' ">
@@ -104,4 +104,5 @@
      ReplacementText="$(ClientId)" />
 
   </Target>
+
 </Project>

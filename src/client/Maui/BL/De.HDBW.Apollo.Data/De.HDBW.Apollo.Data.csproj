@@ -30,4 +30,12 @@
     <PackageReference Include="protobuf-net.Core" Version="3.2.26" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
   </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>De.HDBW.Apollo.TestRunner</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>De.HDBW.Apollo.DeviceTestRunner</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>

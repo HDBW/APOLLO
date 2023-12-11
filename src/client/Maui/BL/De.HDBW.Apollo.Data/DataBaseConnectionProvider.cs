@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.Reflection;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
