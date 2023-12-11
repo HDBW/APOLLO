@@ -1,7 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using Invite.Apollo.App.Graph.Common.Models;
+using Apollo.Common.Entities;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 
@@ -17,22 +17,22 @@ namespace De.HDBW.Apollo.Data.Extensions
                 return null;
             }
 
-            result.Benefits = string.Join(',', item.BenefitList ?? Array.Empty<string>());
+            result.Benefits = string.Join(',', (IEnumerable<string>)item.BenefitList ?? Array.Empty<string>());
             result.CourseProviderId = item.ProviderId.TryToLong();
             result.Description = item.Description ?? string.Empty;
             result.Id = item.Id.TryToLong();
             result.ShortDescription = item.ShortDescription ?? string.Empty;
             result.LoanOptions = string.Join(',', item.Loans?.Select(f => f?.Name ?? string.Empty) ?? Array.Empty<string>());
             result.Availability = item.AccessibilityAvailable ? CourseAvailability.Available : CourseAvailability.Unknown;
-            result.CourseTagType = (item.Tags ?? Array.Empty<string>()).Select(f => f.ToCourseTagType())?.FirstOrDefault() ?? CourseTagType.Unknown;
+            result.CourseTagType = ((IEnumerable<string>)item.Tags ?? Array.Empty<string>()).Select(f => f.ToCourseTagType())?.FirstOrDefault() ?? CourseTagType.Unknown;
             result.CourseUrl = item.ProductUrl ?? new Uri(string.Empty);
-            result.PublishingDate = item.PublishingDate.DateTime;
-            result.UnPublishingDate = item.UnpublishingDate.DateTime;
+            result.PublishingDate = item.PublishingDate;
+            result.UnPublishingDate = item.UnpublishingDate;
             result.Title = item.TrainingName ?? string.Empty;
             result.TrainingProviderId = item.TrainingProvider?.Id?.TryToLong() ?? 0;
 
             // TODO: CourseItem Duration, right ??
-            result.Duration = TimeSpanExtensions.ToTotalHoursAndMinutes(item.Appointments?.Duration) ?? string.Empty;
+            result.Duration = TimeSpanExtensions.ToTotalHoursAndMinutes(TimeSpan.FromTicks(item.Appointment?.Sum(x => x.Duration.Ticks) ?? 0)) ?? string.Empty;
 
             // TODO: CourseItem PredecessorId, right ??
             result.PredecessorId = item.Predecessor.TryToLong();
@@ -41,7 +41,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             result.SuccessorId = item.Successor.TryToLong();
 
             // TODO: CourseItem PreRequisitesDescription, right ??
-            result.PreRequisitesDescription = string.Join(',', item.Prerequisites ?? Array.Empty<string>());
+            result.PreRequisitesDescription = string.Join(',', (IEnumerable<string>)item.Prerequisites ?? Array.Empty<string>());
 
             // TODO: CourseItem Skills ??
             // TODO: CourseItem LatestUpdate ??
@@ -66,15 +66,15 @@ namespace De.HDBW.Apollo.Data.Extensions
         internal static CourseAppointment? ConvertToCourseAppointment(this Training item)
         {
             var result = new CourseAppointment();
-            if (item?.Appointments == null)
+            if (item?.Appointment == null)
             {
                 return null;
             }
 
-            var apiAppointments = item.Appointments;
+            var apiAppointments = item.Appointment;
 
             // appointments.AppointmentType ??
-            result.AppointmentType = apiAppointments.IsGuaranteed ? AppointmentType.IsGuaranteed : AppointmentType.Unknow;
+            result.AppointmentType = apiAppointments.Any(x => x.IsGuaranteed) ? AppointmentType.IsGuaranteed : AppointmentType.Unknow;
 
             // TODO: CourseAppointment AvailableSeats ??
             // TODO: CourseAppointment BookingCode ??

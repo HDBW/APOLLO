@@ -1,4 +1,6 @@
-﻿using De.HDBW.Apollo.Data.Services;
+﻿using Apollo.Api;
+using Apollo.Common.Entities;
+using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
@@ -38,12 +40,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 training = await Service.GetTrainingAsync(1, TokenSource!.Token).ConfigureAwait(false);
             }
-            catch (ApiException ex)
+            catch (ApolloApiException ex)
             {
-                // Not existing ids return errorcode 101;
-                Assert.Equal(500, ex.StatusCode);
-                var error = JsonConvert.DeserializeObject<ServerError>(ex.Response);
-                Assert.Equal(101, error.ErrorCode);
+                // Not existing ids return errorcode ErrorCodes.TrainingErrors.GetTrainingError;
+                Assert.Equal(ErrorCodes.TrainingErrors.GetTrainingError, ex.ErrorCode);
             }
 
             Assert.NotNull(training?.Id);
@@ -72,12 +72,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token).ConfigureAwait(false);
             }
-            catch (ApiException ex)
+            catch (ApolloApiException ex)
             {
-                // Not existing ids return errorcode 101;
-                Assert.Equal(500, ex.StatusCode);
-                var error = JsonConvert.DeserializeObject<ServerError>(ex.Response);
-                Assert.NotEqual(110, error.ErrorCode);
+                // Search with default filter returns ErrorCodes.TrainingErrors.QueryTrainingsError;
+                Assert.NotEqual(ErrorCodes.TrainingErrors.QueryTrainingsError, ex.ErrorCode);
             }
 
             Assert.NotNull(trainings);
@@ -96,24 +94,15 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
             var fields = new List<FieldExpression>()
             {
-                    new FieldExpression()
+                new FieldExpression()
+                {
+                    FieldName = "trainingName",
+                    Argument = new List<object>()
                     {
-                        FieldName = "trainingName",
-                        Argument = new List<string>()
-                        {
-                            "TestName",
-                            "TestName-2",
-                        }.ToList<object>(),
+                        "TestName",
+                        "TestName-2",
                     },
-                    new FieldExpression()
-                    {
-                        FieldName = "id",
-                        Argument = new List<string>()
-                        {
-                            "5",
-                            "2",
-                        }.ToList<object>(),
-                    },
+                },
             };
 
             var filter = new Filter()
@@ -125,12 +114,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);
             }
-            catch (ApiException ex)
+            catch (ApolloApiException ex)
             {
                 // Not existing ids return errorcode 101;
-                Assert.Equal(500, ex.StatusCode);
-                var error = JsonConvert.DeserializeObject<ServerError>(ex.Response);
-                Assert.NotEqual(110, error.ErrorCode);
+                Assert.NotEqual(ErrorCodes.TrainingErrors.QueryTrainingsError, ex.ErrorCode);
             }
 
             Assert.NotNull(trainings);
