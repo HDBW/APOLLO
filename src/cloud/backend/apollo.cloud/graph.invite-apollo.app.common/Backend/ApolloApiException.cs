@@ -18,7 +18,11 @@ namespace Apollo.Api
 
         public ApolloApiException() { }
 
-        [JsonConstructor]
+        public ApolloApiException(int errCode, string message) : base(message)
+        {
+            ErrorCode = errCode;
+        }
+
         public ApolloApiException(int errCode, string message, Exception ex) : base(message, ex)
         {
             ErrorCode = errCode;
