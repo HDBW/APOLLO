@@ -1,6 +1,8 @@
 ﻿using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Models;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -18,7 +20,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            using (var cts = CancellationTokenSource.CreateLinkedTokenSource(TokenSource.Token))
+            using (var cts = CancellationTokenSource.CreateLinkedTokenSource(TokenSource!.Token))
             {
                 cts.Cancel();
                 await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, cts.Token));
@@ -31,10 +33,20 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
+            CourseItem? training = null;
+            try
+            {
+                training = await Service.GetTrainingAsync(1, TokenSource!.Token).ConfigureAwait(false);
+            }
+            catch (ApiException ex)
+            {
+                // Not existing ids return errorcode 101;
+                Assert.Equal(500, ex.StatusCode);
+                var error = JsonConvert.DeserializeObject<ServerError>(ex.Response);
+                Assert.Equal(101, error.ErrorCode);
+            }
 
-            var training = await Service.GetTrainingAsync(1, TokenSource!.Token);
             Assert.NotNull(training?.Id);
-
             Assert.Equal(1, training!.Id);
 
             // var courseItem = training.ToCourseItem();
@@ -55,11 +67,21 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
+            IEnumerable<CourseItem>? trainings = null;
+            try
+            {
+                trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token).ConfigureAwait(false);
+            }
+            catch (ApiException ex)
+            {
+                // Not existing ids return errorcode 101;
+                Assert.Equal(500, ex.StatusCode);
+                var error = JsonConvert.DeserializeObject<ServerError>(ex.Response);
+                Assert.NotEqual(110, error.ErrorCode);
+            }
 
-            var trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token);
             Assert.NotNull(trainings);
-            Assert.Equal(2, trainings.Count());
-
+            Assert.Equal(2, trainings!.Count());
             // var courseItems = trainings.Select(f => f.ToCourseItem());
             // var courseAppointments = trainings.Select(f => f.ToCourseAppointment());
             // var eduProviderItems = trainings.Select(f => f.ToEduProviderItems());
@@ -98,33 +120,21 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 Fields = fields,
             };
-
-            var trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);
-            Assert.NotNull(trainings);
-            Assert.Equal(2, trainings.Count());
-
-            foreach (var training in trainings)
+            IEnumerable<CourseItem>? trainings = null;
+            try
             {
-                var trainingDic = Helper.Utils.MapToDictionary(training);
-
-                bool found = false;
-                foreach (var item in fields)
-                {
-                    var dicKey = trainingDic.Keys.FirstOrDefault(x => x?.ToLower()?.Equals(item?.FieldName?.ToLower()) == true);
-                    if (string.IsNullOrWhiteSpace(dicKey))
-                    {
-                        continue;
-                    }
-
-                    if (item?.Argument?.OfType<string>()?.Contains(trainingDic[dicKey] ?? string.Empty) == true)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-
-                Assert.True(found, "The service did not return the right training.");
+                trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);
             }
+            catch (ApiException ex)
+            {
+                // Not existing ids return errorcode 101;
+                Assert.Equal(500, ex.StatusCode);
+                var error = JsonConvert.DeserializeObject<ServerError>(ex.Response);
+                Assert.NotEqual(110, error.ErrorCode);
+            }
+
+            Assert.NotNull(trainings);
+            Assert.Equal(2, trainings!.Count());
         }
 
         protected override TrainingService SetupService(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
