@@ -20,15 +20,15 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
                 using (var cts = new CancellationTokenSource())
                 {
                     cts.Cancel();
-                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
-                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token); });
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token); });
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token); });
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => { await repository.UpdateItemsAsync(null, cts.Token); });
                     cts.Dispose();
-                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
-                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false); });
-                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemsAsync(null, cts.Token).ConfigureAwait(false); });
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemsAsync(null, cts.Token); });
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.AddOrUpdateItemAsync(default(TU), cts.Token); });
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemAsync(default(TU), cts.Token); });
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await repository.UpdateItemsAsync(null, cts.Token); });
                 }
             }
         }
@@ -41,25 +41,25 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
                 var repository = GetDataBaseRepository(context);
                 using (var cts = new CancellationTokenSource())
                 {
-                    Assert.False(await repository.AddOrUpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false), "Passing null resulted in success.");
-                    Assert.False(await repository.AddOrUpdateItemsAsync(null, cts.Token).ConfigureAwait(false), "Passing null resulted in success.");
-                    Assert.False(await repository.UpdateItemAsync(default(TU), cts.Token).ConfigureAwait(false), "Passing null resulted in success.");
-                    Assert.False(await repository.UpdateItemsAsync(null, cts.Token).ConfigureAwait(false), "Passing null resulted in success.");
+                    Assert.False(await repository.AddOrUpdateItemAsync(default(TU), cts.Token), "Passing null resulted in success.");
+                    Assert.False(await repository.AddOrUpdateItemsAsync(null, cts.Token), "Passing null resulted in success.");
+                    Assert.False(await repository.UpdateItemAsync(default(TU), cts.Token), "Passing null resulted in success.");
+                    Assert.False(await repository.UpdateItemsAsync(null, cts.Token), "Passing null resulted in success.");
                     var instance = Activator.CreateInstance(typeof(TU)) as IEntity;
                     Assert.NotNull(instance);
                     instance!.Id = 1;
-                    Assert.True(await repository.AddOrUpdateItemAsync((TU)instance, cts.Token).ConfigureAwait(false), "Passing instance resulted in success.");
+                    Assert.True(await repository.AddOrUpdateItemAsync((TU)instance, cts.Token), "Passing instance resulted in success.");
                     var instances = new List<TU>();
                     instances.Add((TU)instance);
                     instance = Activator.CreateInstance(typeof(TU)) as IEntity;
                     Assert.NotNull(instance);
                     instance!.Id = 2;
                     instances.Add((TU)instance);
-                    Assert.True(await repository.AddOrUpdateItemsAsync(instances, cts.Token).ConfigureAwait(false), "Passing instance resulted in success.");
+                    Assert.True(await repository.AddOrUpdateItemsAsync(instances, cts.Token), "Passing instance resulted in success.");
                     instance = Activator.CreateInstance(typeof(TU)) as IEntity;
                     Assert.NotNull(instance);
                     instance!.Id = 3;
-                    Assert.False(await repository.UpdateItemAsync((TU)instance, cts.Token).ConfigureAwait(false), "Passing instance not in DB resulted in success.");
+                    Assert.False(await repository.UpdateItemAsync((TU)instance, cts.Token), "Passing instance not in DB resulted in success.");
                 }
 
                 // TODO: Add tests for

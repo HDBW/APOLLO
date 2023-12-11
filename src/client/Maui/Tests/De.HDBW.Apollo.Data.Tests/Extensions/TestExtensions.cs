@@ -24,16 +24,16 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
             return mock.Object;
         }
 
-        internal static ILogger<TU> SetupLogger<TU>(this object test, ITestOutputHelper? output = null)
+        internal static ILogger<TU> SetupLogger<TU>(this object test, ITestOutputHelper output = null)
         {
             var mock = new Mock<ILogger<TU>>();
             mock.Setup(m => m.Log<It.IsAnyType>(
                 It.IsAny<LogLevel>(),
                 It.IsAny<EventId>(),
                 It.IsAny<It.IsAnyType>(),
-                It.IsAny<Exception?>(),
-                It.IsAny<Func<It.IsAnyType, Exception?, string>>()))
-                .Callback<LogLevel, EventId, object, Exception?, Delegate>((
+                It.IsAny<Exception>(),
+                It.IsAny<Func<It.IsAnyType, Exception, string>>()))
+                .Callback<LogLevel, EventId, object, Exception, Delegate>((
                      logLevel,
                      eventId,
                      state,
@@ -52,7 +52,7 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
             return mock.Object;
         }
 
-        internal static ILoggerProvider SetupLoggerProvider<TU>(this object test, ITestOutputHelper? output = null)
+        internal static ILoggerProvider SetupLoggerProvider<TU>(this object test, ITestOutputHelper output = null)
         {
             var mock = new Mock<ILoggerProvider>();
             var mockLogger = test.SetupLogger<TU>(output);

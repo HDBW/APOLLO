@@ -34,13 +34,13 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected TU Service { get; private set; }
 
-        protected CancellationTokenSource? TokenSource { get; private set; }
+        protected CancellationTokenSource TokenSource { get; private set; }
 
-        protected ILogger<TU>? Logger { get; private set; }
+        protected ILogger<TU> Logger { get; private set; }
 
-        private string? APIKey { get; set; }
+        private string APIKey { get; set; }
 
-        private string? BaseUri { get; set; }
+        private string BaseUri { get; set; }
 
         public void Dispose()
         {
