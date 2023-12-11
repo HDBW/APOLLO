@@ -190,7 +190,7 @@ public static class MauiProgram
         var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
         services.AddSingleton<ITrainingService>((serviceProvider) =>
         {
-            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, new HttpClientHandler());
+            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>() !, apiUrl, apiToken, new HttpClientHandler());
         });
     }
 
