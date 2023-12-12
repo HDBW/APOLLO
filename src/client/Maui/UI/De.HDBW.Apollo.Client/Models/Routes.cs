@@ -13,6 +13,8 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string StartView = "/StartView";
 
+        public const string SearchView = "/SearchView";
+
         public const string TutorialView = "/EmptyView";
 
         public const string RegistrationView = "/RegistrationView";

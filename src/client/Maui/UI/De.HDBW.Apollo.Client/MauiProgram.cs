@@ -28,6 +28,7 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.ApplicationInsights;
 using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
+using The49.Maui.BottomSheet;
 
 namespace De.HDBW.Apollo.Client;
 public static class MauiProgram
@@ -62,7 +63,8 @@ public static class MauiProgram
             {
                 fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
                 fonts.AddFont("NotoSerif-Regular.ttf", "NotoSerifRegular");
-            });
+            })
+            .UseBottomSheet();
         return builder.Build();
     }
 
@@ -188,9 +190,10 @@ public static class MauiProgram
         services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
         var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
         var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
+
         services.AddSingleton<ITrainingService>((serviceProvider) =>
         {
-            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>() !, apiUrl, apiToken, new HttpClientHandler());
+            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>() !, apiUrl, apiToken, new FakeHttpClientHandler());
         });
     }
 
@@ -268,6 +271,9 @@ public static class MauiProgram
 
         services.AddTransient<SettingsView>();
         services.AddTransient<SettingsViewModel>();
+
+        services.AddTransient<SearchView>();
+        services.AddTransient<SearchViewModel>();
     }
 
     private static void SetupRoutes()
@@ -283,6 +289,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
         Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
         Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
+        Routing.RegisterRoute(Routes.SearchView, typeof(SearchView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
