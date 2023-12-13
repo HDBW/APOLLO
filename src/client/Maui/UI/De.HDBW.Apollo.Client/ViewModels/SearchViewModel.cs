@@ -179,7 +179,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     }
 
                     token.ThrowIfCancellationRequested();
-                    var courseItems = await TrainingService.SearchTrainingsAsync(new Filter() { Fields = new List<FieldExpression>() { new FieldExpression() { FieldName = nameof(Training.TrainingName), Argument = new List<object>() { query } } } }, worker.Token);
+                    var courseItems = await TrainingService.SearchTrainingsAsync(new Filter() { Fields = new List<FieldExpression>() { new FieldExpression() { FieldName = nameof(Training.TrainingName), Argument = new List<object>() { query ?? string.Empty } } } }, worker.Token);
                     courseItems = courseItems ?? Array.Empty<CourseItem>();
                     var courses = courseItems.Select(item => CourseItemEntry.Import(item, OpenCourseItem, CanOpenCourseItem)).ToList();
                     if (!courses.Any() || string.IsNullOrWhiteSpace(query))
