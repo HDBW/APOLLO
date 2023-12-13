@@ -21,7 +21,7 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
             token.ThrowIfCancellationRequested();
             var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
-            return await asyncConnection.Table<SearchHistory>().FirstAsync(x => string.Equals(query, x.Query, StringComparison.InvariantCultureIgnoreCase)).ConfigureAwait(false);
+            return await asyncConnection.Table<SearchHistory>().FirstOrDefaultAsync(x => x.Query != null && x.Query == query).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<SearchHistory>> GetMaxItemsAsync(int limit, string? query, CancellationToken token)

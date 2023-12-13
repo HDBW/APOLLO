@@ -5,7 +5,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
-             xmlns:modelscourse="clr-namespace:De.HDBW.Apollo.Client.Models.Course"
+             xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              ios:Page.UseSafeArea="true"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
@@ -31,12 +31,34 @@
 
     <CollectionView ItemsSource="{x:Binding SearchResults}">
         <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="modelscourse:CourseItemEntry">
-                <Label Text="{x:Binding DisplayTitle}" Padding="5,0" VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding OpenCourseItemCommand}"  />
-                    </Label.GestureRecognizers>
-                </Label>
+            <DataTemplate x:DataType="interactionModels:StartViewInteractionEntry">
+                <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="3" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavigateCommand}"  />
+                    </Border.GestureRecognizers>
+                    <Grid RowDefinitions="*,auto,auto, auto" Padding="0" ColumnDefinitions="*, 28">
+                        <Image Source="{x:Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" Grid.ColumnSpan="2" InputTransparent="True"/>
+                        <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{x:Binding EntityType, Converter={StaticResource EntityTypeToColorConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0,0,0,4" />
+                            </Border.StrokeShape>
+                            <Label Text="{x:Binding DecoratorText}" LineBreakMode="TailTruncation"/>
+                        </Border>
+                        <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="2" Command="{x:Binding ToggleIsFavoriteCommand}" Source="staroutline.png" VerticalOptions="Start">
+                            <ImageButton.Triggers>
+                                <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
+                                    <Setter Property="Source"  Value="star.png" />
+                                </DataTrigger>
+                            </ImageButton.Triggers>
+                        </ImageButton>
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto12}" Padding="8" />
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto10}" Padding="8,0" />
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="3" Style="{StaticResource Noto10}" Padding="8" />
+                    </Grid>
+                </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

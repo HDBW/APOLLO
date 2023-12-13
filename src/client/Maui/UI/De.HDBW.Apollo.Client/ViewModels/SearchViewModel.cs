@@ -2,16 +2,20 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Globalization;
 using Apollo.Common.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Converter;
+using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Client.Models.Course;
+using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 
@@ -29,12 +33,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ObservableCollection<HistoricalSuggestionEntry> _recents = new ObservableCollection<HistoricalSuggestionEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<CourseItemEntry> _searchResults = new ObservableCollection<CourseItemEntry>();
+        private ObservableCollection<StartViewInteractionEntry> _searchResults = new ObservableCollection<StartViewInteractionEntry>();
 
         public SearchViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
+            ISessionService sessionService,
             ICourseItemRepository courseItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             ITrainingService trainingService,
@@ -42,15 +47,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(sessionService);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
             ArgumentNullException.ThrowIfNull(trainingService);
             ArgumentNullException.ThrowIfNull(searchHistoryRepository);
+            SessionService = sessionService;
             CourseItemRepository = courseItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
             TrainingService = trainingService;
             SearchHistoryRepository = searchHistoryRepository;
         }
+
+        private ISessionService SessionService { get; }
 
         private ICourseItemRepository CourseItemRepository { get; }
 
@@ -114,7 +123,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             SearchCommand?.NotifyCanExecuteChanged();
             foreach (var result in SearchResults)
             {
-                result.OpenCourseItemCommand?.NotifyCanExecuteChanged();
+                result.NavigateCommand?.NotifyCanExecuteChanged();
             }
         }
 
@@ -123,33 +132,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy && queryElement != null;
         }
 
-        private bool CanOpenCourseItem(CourseItemEntry entry)
+        private bool CanHandleInteract(InteractionEntry interaction)
         {
-            return !IsBusy && entry != null;
+            return !IsBusy;
         }
 
-        private async Task OpenCourseItem(CourseItemEntry entry)
+        private async Task HandleInteract(InteractionEntry interaction)
         {
-            using (var worker = ScheduleWork())
+            switch (interaction.Data)
             {
-                try
-                {
-                    var courseData = new NavigationParameters();
-                    courseData.AddValue<long?>(NavigationParameter.Id, entry.Export().Id);
-                    await NavigationService.NavigateAsnc(Routes.CourseView, worker.Token, courseData);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Search)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Search)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
+                case NavigationData navigationData:
+                    await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
+                    break;
+                default:
+                    Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType().Name}.");
+                    break;
             }
         }
 
@@ -179,12 +176,38 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     }
 
                     token.ThrowIfCancellationRequested();
+
+                    var converter = new CourseTagTypeToStringConverter();
                     var courseItems = await TrainingService.SearchTrainingsAsync(new Filter() { Fields = new List<FieldExpression>() { new FieldExpression() { FieldName = nameof(Training.TrainingName), Argument = new List<object>() { query ?? string.Empty } } } }, worker.Token);
                     courseItems = courseItems ?? Array.Empty<CourseItem>();
-                    var courses = courseItems.Select(item => CourseItemEntry.Import(item, OpenCourseItem, CanOpenCourseItem)).ToList();
-                    if (!courses.Any() || string.IsNullOrWhiteSpace(query))
+                    var interactions = new List<StartViewInteractionEntry>();
+                    foreach (var course in courseItems)
                     {
-                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(courses), worker.Token);
+                        var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
+                        var courseData = new NavigationParameters();
+                        courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
+                        var data = new NavigationData(Routes.CourseView, courseData);
+
+                        EduProviderItem eduProvider = null; //eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
+
+                        var duration = course.Duration ?? string.Empty;
+                        var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
+                        var image = "placeholdercontinuingeducation.png";
+                        switch (course.CourseTagType)
+                        {
+                            case CourseTagType.InfoEvent:
+                                image = "placeholderinfoevent.png";
+                                break;
+                        }
+
+                        var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, course.Id, data, null, null, HandleInteract, CanHandleInteract);
+                        interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == course.Id && f.Type == typeof(CourseItem));
+                        interactions.Add(interaction);
+                    }
+
+                    if (!interactions.Any() || string.IsNullOrWhiteSpace(query))
+                    {
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token);
                         return;
                     }
 
@@ -218,7 +241,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     await ExecuteOnUIThreadAsync(
                         () =>
                         {
-                            LoadonUIThread(courses);
+                            LoadonUIThread(interactions);
                             LoadonUIThread(historyEntry, suggestionEntry, history);
                         }, worker.Token);
                 }
@@ -263,9 +286,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Recents = new ObservableCollection<HistoricalSuggestionEntry>(recent);
         }
 
-        private void LoadonUIThread(IEnumerable<CourseItemEntry> courses)
+        private void LoadonUIThread(IEnumerable<StartViewInteractionEntry> interactionEntries)
         {
-            SearchResults = new ObservableCollection<CourseItemEntry>(courses);
+            SearchResults = new ObservableCollection<StartViewInteractionEntry>(interactionEntries);
         }
 
         private async Task LoadSuggestionsAsync(string inputValue, CancellationToken token)

@@ -10,7 +10,7 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:StartViewModel"
-             IsBusy="{Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy}"
              Padding="0">
     <ContentPage.Resources>
         <converter:EntityTypeToColorConverter x:Key="EntityTypeToColorConverter"
