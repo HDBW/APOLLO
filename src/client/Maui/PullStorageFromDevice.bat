@@ -52,7 +52,7 @@ rmdir AndroidStorage /s /q
 mkdir AndroidStorage
 cd AndroidStorage
 echo copy storage from transponderId=%_Id%
-"%ADB%" -t %_Id% exec-out run-as De.HDBW.Apollo.Client tar c files/ > data.tar
+"%ADB%" -t %_Id% exec-out run-as de.hdbw.apollo.client tar c files/ > data.tar
 exit /b 0
 
 :SetVar
