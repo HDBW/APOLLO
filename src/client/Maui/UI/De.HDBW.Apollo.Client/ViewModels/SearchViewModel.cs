@@ -91,7 +91,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         return;
                     }
 
-                    var recents = history.Where(h => !string.IsNullOrWhiteSpace(h.Query)).Select(h => SearchSuggestionEntry.Import(h.Query!, true));
+                    var recents = history.Where(h => !string.IsNullOrWhiteSpace(h.Query)).Select(h => HistoricalSuggestionEntry.Import(h));
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(recents), worker.Token);
                 }
@@ -134,6 +134,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     token.ThrowIfCancellationRequested();
+                    //SearchHistoryRepository.AddItemAsync(token).ConfigureAwait(false);
                     var courseItems = await TrainingService.SearchTrainingsAsync(new Filter() { Fields = new List<FieldExpression>() { new FieldExpression() { FieldName = nameof(Training.TrainingName), Argument = new List<object>() { query } } } }, token);
                     SearchResults = new ObservableCollection<CourseItemEntry>(courseItems.Select(item => CourseItemEntry.Import(item, OpenCourseItem, CanOpenCourseItem)));
                 }

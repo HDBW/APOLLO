@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.Client.Models
 
         private bool _isRecent;
 
-        private SearchSuggestionEntry(string name, bool isRecent = false)
+        protected SearchSuggestionEntry(string name, bool isRecent = false)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(name);
             Name = name;
