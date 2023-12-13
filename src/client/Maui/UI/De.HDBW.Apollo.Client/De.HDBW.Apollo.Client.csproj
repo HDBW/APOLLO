@@ -48,6 +48,8 @@
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\completed.svg" />
+    <None Remove="Resources\Images\history.svg" />
+    <None Remove="Resources\Images\magnify.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />

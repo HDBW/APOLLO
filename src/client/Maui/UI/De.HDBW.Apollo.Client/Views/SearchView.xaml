@@ -12,16 +12,17 @@
              Title="SearchView">
     <Shell.SearchHandler>
         <local:BindableSearchHandler
-            
+            QueryIcon="magnify.png"
             SearchCommand="{x:Binding SearchCommand}"
             Suggestions="{x:Binding Suggestions}"
             Recent="{Binding Recents}"
             ShowsResults="True">
-
             <local:BindableSearchHandler.ItemTemplate>
-
-                <DataTemplate x:DataType="models:SearchSuggestion">
-                    <Label Grid.Column="1" Text="{x:Binding Name}" Padding="5,0" VerticalOptions="Center"/>
+                <DataTemplate x:DataType="models:SearchSuggestionEntry">
+                    <Grid ColumnDefinitions="24,*">
+                        <Image Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" />
+                        <Label Grid.Column="1" Text="{x:Binding Name}" Padding="5,0" VerticalOptions="Center"/>
+                    </Grid>
                 </DataTemplate>
             </local:BindableSearchHandler.ItemTemplate>
         </local:BindableSearchHandler>
@@ -32,7 +33,7 @@
             <DataTemplate x:DataType="modelscourse:CourseItemEntry">
                 <Label Text="{x:Binding DisplayTitle}" Padding="5,0" VerticalOptions="Center">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenCourseItemCommand}"  />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding OpenCourseItemCommand}"  />
                     </Label.GestureRecognizers>
                 </Label>
             </DataTemplate>

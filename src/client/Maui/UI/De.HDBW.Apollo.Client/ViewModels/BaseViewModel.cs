@@ -7,7 +7,6 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.ApplicationModel;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {

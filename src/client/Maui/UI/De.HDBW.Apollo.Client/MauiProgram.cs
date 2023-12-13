@@ -15,6 +15,7 @@ using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
+using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
@@ -125,7 +126,11 @@ public static class MauiProgram
     {
         var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db.sqlite");
         var flags = SQLite.SQLiteOpenFlags.ReadWrite | SQLite.SQLiteOpenFlags.Create | SQLite.SQLiteOpenFlags.SharedCache;
-        builder.Services.AddSingleton<IDataBaseConnectionProvider>(new DataBaseConnectionProvider(dbFilePath, flags, IocServiceHelper.ServiceProvider?.GetService<ILogger<DataBaseConnectionProvider>>()));
+        var localEntities = new List<Type>()
+        {
+            typeof(SearchHistory),
+        };
+        builder.Services.AddSingleton<IDataBaseConnectionProvider>(new DataBaseConnectionProvider(dbFilePath, flags, IocServiceHelper.ServiceProvider?.GetService<ILogger<DataBaseConnectionProvider>>(), localEntities));
     }
 
     private static void SetupLogging()
@@ -193,7 +198,7 @@ public static class MauiProgram
 
         services.AddSingleton<ITrainingService>((serviceProvider) =>
         {
-            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>() !, apiUrl, apiToken, new FakeHttpClientHandler());
+            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>() !, apiUrl, apiToken, new FakeHttpClientHandler(apiUrl));
         });
     }
 
@@ -217,6 +222,7 @@ public static class MauiProgram
         services.AddSingleton<ICourseContactRelationRepository, CourseContactRelationRepository>();
         services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
         services.AddSingleton<ICategoryRecomendationItemRepository, CategoryRecomendationItemRepository>();
+        services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
     }
 
     private static void SetupViewsAndViewModels(IServiceCollection services)

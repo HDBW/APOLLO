@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Controls
 {
@@ -62,7 +61,7 @@ namespace De.HDBW.Apollo.Client.Controls
         {
             base.OnItemSelected(item);
 
-            var entry = item as SearchSuggestion;
+            var entry = item as SearchSuggestionEntry;
             SearchCommand?.Execute(entry?.Name ?? Query);
         }
 

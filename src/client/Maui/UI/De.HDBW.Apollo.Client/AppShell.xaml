@@ -57,16 +57,6 @@
             <HorizontalStackLayout Grid.ColumnSpan="3" Margin="0,8,0,8" HorizontalOptions="Start" >
                 <Image Source="apollo.png" HeightRequest="24" MaximumWidthRequest="101" Aspect="AspectFit"/>
             </HorizontalStackLayout>
-
-            <!--<Image Source="{Binding UserProfile.ImagePath}" Grid.Row="1" WidthRequest="32" HeightRequest="32" Aspect="AspectFill">
-                <Image.Clip>
-                    <EllipseGeometry RadiusX="16" RadiusY="16" Center="16,16"/>
-                </Image.Clip>
-            </Image>
-            <StackLayout Grid.Column="2" Grid.Row="1" >
-                <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold" Grid.ColumnSpan="2"/>
-                <Label Text="{Binding UserProfile.Goal}" Style="{StaticRMauiXamlesource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
-            </StackLayout>-->
         </Grid>
     </Shell.FlyoutHeader>
     <Shell.FlyoutFooter>
@@ -78,12 +68,5 @@
     </Shell.FlyoutFooter>
     <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resources.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding ChangeUseCaseCommand}"/>
     <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
-    <!--<MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SkillsAndBadges}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CertificatesAndDegrees}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_LearningPath}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CoursesFavorites}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CVGenerator}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_ViewTutorial}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />-->
     <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:SearchView}" />
 </Shell>

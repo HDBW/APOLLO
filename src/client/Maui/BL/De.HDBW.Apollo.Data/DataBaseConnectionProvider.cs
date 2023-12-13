@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.Generic;
 using System.Reflection;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using Invite.Apollo.App.Graph.Common.Models;
@@ -11,12 +12,14 @@ namespace De.HDBW.Apollo.Data
 {
     public class DataBaseConnectionProvider : IDataBaseConnectionProvider
     {
-        public DataBaseConnectionProvider(string dbFilePath, SQLiteOpenFlags flags, ILogger<DataBaseConnectionProvider>? logger)
+        public DataBaseConnectionProvider(string dbFilePath, SQLiteOpenFlags flags, ILogger<DataBaseConnectionProvider>? logger, IEnumerable<Type> additionalEntities)
         {
             Connection = new SQLiteAsyncConnection(dbFilePath, flags);
             var entityType = typeof(IEntity);
             Logger = logger;
-            Entities = Assembly.GetAssembly(typeof(BaseItem))?.GetTypes().Where(t => t.IsPublic && t.IsClass && t != typeof(BaseItem) && entityType.IsAssignableFrom(t)).ToList() ?? new List<Type>();
+            var entities = Assembly.GetAssembly(typeof(BaseItem))?.GetTypes().Where(t => t.IsPublic && t.IsClass && t != typeof(BaseItem) && entityType.IsAssignableFrom(t)).ToList() ?? new List<Type>();
+            entities.AddRange(additionalEntities);
+            Entities = entities;
         }
 
         private SQLiteAsyncConnection Connection { get; }

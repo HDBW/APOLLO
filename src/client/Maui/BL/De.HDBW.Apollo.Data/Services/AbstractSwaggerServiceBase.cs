@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using Apollo.Api;
-using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -17,12 +16,11 @@ namespace De.HDBW.Apollo.Data.Services
 
         public AbstractSwaggerServiceBase(
             ILogger logger,
-            string baseUrl,
+            Uri baseUrl,
             string authKey,
             HttpMessageHandler httpClientHandler)
         {
             ArgumentNullException.ThrowIfNull(logger);
-            ArgumentException.ThrowIfNullOrEmpty(baseUrl);
             ArgumentException.ThrowIfNullOrEmpty(authKey);
             ArgumentNullException.ThrowIfNull(httpClientHandler);
             Logger = logger;
@@ -44,7 +42,7 @@ namespace De.HDBW.Apollo.Data.Services
             }
         }
 
-        private string BaseUri { get; set; }
+        private Uri BaseUri { get; set; }
 
         protected async Task<TU?> DoGetAsync<TU>(long id, CancellationToken token, [CallerMemberName] string? callerName = null)
         {
@@ -59,7 +57,7 @@ namespace De.HDBW.Apollo.Data.Services
 
             try
             {
-                using (var response = await client.GetAsync($"{BaseUri}/{id}", token).ConfigureAwait(false))
+                using (var response = await client.GetAsync(new Uri(BaseUri, $"{id}").OriginalString, token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
                     var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;

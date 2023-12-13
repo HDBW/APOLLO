@@ -8,8 +8,10 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Course;
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 
@@ -18,10 +20,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class SearchViewModel : BaseViewModel, ILoadSuggestionsProvider
     {
         [ObservableProperty]
-        private ObservableCollection<SearchSuggestion> _suggestions = new ObservableCollection<SearchSuggestion>();
+        private ObservableCollection<SearchSuggestionEntry> _suggestions = new ObservableCollection<SearchSuggestionEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<SearchSuggestion> _recents = new ObservableCollection<SearchSuggestion>();
+        private ObservableCollection<SearchSuggestionEntry> _recents = new ObservableCollection<SearchSuggestionEntry>();
 
         [ObservableProperty]
         private ObservableCollection<CourseItemEntry> _searchResults = new ObservableCollection<CourseItemEntry>();
@@ -33,13 +35,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ICourseItemRepository courseItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             ITrainingService trainingService,
+            ISearchHistoryRepository searchHistoryRepository,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(courseItemRepository);
+            ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
+            ArgumentNullException.ThrowIfNull(trainingService);
+            ArgumentNullException.ThrowIfNull(searchHistoryRepository);
             CourseItemRepository = courseItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
             TrainingService = trainingService;
+            SearchHistoryRepository = searchHistoryRepository;
         }
 
         private ICourseItemRepository CourseItemRepository { get; }
@@ -47,6 +54,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IEduProviderItemRepository EduProviderItemRepository { get; }
 
         private ITrainingService TrainingService { get; }
+
+        private ISearchHistoryRepository SearchHistoryRepository { get; }
 
         public async void LoadSuggestionsAsync(string inputValue)
         {
@@ -70,6 +79,33 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public async override Task OnNavigatedToAsync()
+        {
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var history = await SearchHistoryRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
+                    if (!(history?.Any() ?? false))
+                    {
+                        return;
+                    }
+
+                    var recents = history.Where(h => !string.IsNullOrWhiteSpace(h.Query)).Select(h => SearchSuggestionEntry.Import(h.Query!, true));
+                    await ExecuteOnUIThreadAsync(
+                        () => LoadonUIThread(recents), worker.Token);
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
         private bool CanSearch(string query)
         {
             return true;
@@ -77,7 +113,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanOpenCourseItem(CourseItemEntry entry)
         {
-            return !IsBusy;
+            return !IsBusy && entry != null;
         }
 
         private async Task OpenCourseItem(CourseItemEntry entry)
@@ -127,20 +163,25 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private async Task LoadSuggestionsAsync(string inputValue, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            await Task.Delay(700).ConfigureAwait(false);
-
-            var trainings = await TrainingService.SearchTrainingsAsync(Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { inputValue }, QueryOperator.Contains), token);
-
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                var res = new List<SearchSuggestion>();
-                foreach (var item in trainings)
+            var trainings = await TrainingService.SearchTrainingsAsync(Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { inputValue }, QueryOperator.Contains), token).ConfigureAwait(false);
+            trainings = trainings ?? Array.Empty<CourseItem>();
+            trainings = trainings.Where(x => !string.IsNullOrWhiteSpace(x.Title)).ToList();
+            await DispatcherService.BeginInvokeOnMainThreadAsync(
+                () =>
                 {
-                    res.Add(new SearchSuggestion() { Name = $"{item?.Title}" });
-                }
+                    var res = new List<SearchSuggestionEntry>();
+                    foreach (var item in trainings)
+                    {
+                        res.Add(SearchSuggestionEntry.Import(item.Title));
+                    }
 
-                Suggestions = new ObservableCollection<SearchSuggestion>(res);
-            });
+                    Suggestions = new ObservableCollection<SearchSuggestionEntry>(res);
+                }, token);
+        }
+
+        private void LoadonUIThread(IEnumerable<SearchSuggestionEntry> recents)
+        {
+            Recents = new ObservableCollection<SearchSuggestionEntry>(recents);
         }
     }
 }

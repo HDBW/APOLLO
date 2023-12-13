@@ -3,7 +3,6 @@
 
 using System.Diagnostics;
 using De.HDBW.Apollo.Client.ViewModels;
-using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace De.HDBW.Apollo.Client.Views;
 public partial class StartView

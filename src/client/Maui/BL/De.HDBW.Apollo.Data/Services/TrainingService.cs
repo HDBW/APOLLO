@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using System.Security.Policy;
 using Apollo.Common.Entities;
 using De.HDBW.Apollo.Data.Extensions;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -15,7 +16,7 @@ namespace De.HDBW.Apollo.Data.Services
     public class TrainingService : AbstractSwaggerServiceBase, ITrainingService
     {
         public TrainingService(ILogger<TrainingService> logger, string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
-               : base(logger, $"{baseUrl}/Training", authKey, httpClientHandler)
+               : base(logger, new Uri(new Uri($"{baseUrl.TrimEnd('/')}/"), $"{nameof(Training)}"), authKey, httpClientHandler)
         {
         }
 

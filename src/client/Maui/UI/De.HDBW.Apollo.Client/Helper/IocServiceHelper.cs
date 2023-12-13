@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace De.HDBW.Apollo.Client.Helper;
+﻿namespace De.HDBW.Apollo.Client.Helper;
 
 public static class IocServiceHelper
 {
