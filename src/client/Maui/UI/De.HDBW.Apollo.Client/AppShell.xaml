@@ -20,13 +20,13 @@
         <ResourceDictionary>
             <DataTemplate x:Key="DefaultTemplate" x:DataType="BaseShellItem">
                 <Grid ColumnDefinitions="auto,*" Padding="24,8">
-                    <Image Source="{Binding Icon}"
+                    <Image Source="{x:Binding Icon}"
                            HeightRequest="24"
                            VerticalOptions="Center"
                            Margin="8,0"/>
                     <Label Grid.Column="1"
                            VerticalOptions="Center"
-                           Text="{Binding Title}"
+                           Text="{x:Binding Title}"
                            Style="{StaticResource Noto16}"
                            TextColor="{StaticResource Primary}" />
                 </Grid>
@@ -35,13 +35,13 @@
             <DataTemplate x:Key="TemplateWithSeperator" x:DataType="BaseShellItem">
                 <Grid ColumnDefinitions="auto,*" RowDefinitions="1,*" Padding="24,8">
                     <Rectangle Grid.ColumnSpan="2" BackgroundColor="{StaticResource Primary}" />
-                    <Image Source="{Binding Icon}"
+                    <Image Source="{x:Binding Icon}"
                            Grid.Row="1"
                            VerticalOptions="Center"
                            Margin="8,0"
                            HeightRequest="24" />
                     <Label Grid.Column="1"
-                           Text="{Binding Title}"
+                           Text="{x:Binding Title}"
                            Style="{StaticResource Noto16}"
                            VerticalOptions="Center"
                            TextColor="{StaticResource Primary}"
@@ -66,11 +66,11 @@
             <VerticalStackLayout >
                 <Label Text="{x:Static strings:Resources.MainNavigation_BetaTitle}" Style="{StaticResource Noto12}" FontAttributes="Bold"/>
                 <Label Text="{x:Static strings:Resources.MainNavigation_BetaDescription}" Style="{StaticResource Noto12}"/>
-                <Button Text="{x:Static strings:Resources.MainNavigation_Feedback}"  Margin="0,16,0,0" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.FeedbackView}" />
+                <Button Text="{x:Static strings:Resources.MainNavigation_Feedback}"  Margin="0,16,0,0" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.FeedbackView}" />
             </VerticalStackLayout>
         </Frame>
     </Shell.FlyoutFooter>
-    <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resources.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding ChangeUseCaseCommand}"/>
-    <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
+    <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resources.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding ChangeUseCaseCommand}"/>
+    <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
     <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:SearchView}" />
 </Shell>
