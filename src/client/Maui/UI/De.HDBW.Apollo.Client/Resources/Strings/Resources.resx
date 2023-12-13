@@ -342,10 +342,10 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Du hast zehn Jahre Erfahrung als Fachinformatikerin. Neben deiner Arbeit hast du verschiedene Möglichkeiten wahrgenommen, um dich weiterzubilden und auf dem Laufenden zu bleiben. Nun willst du den nächsten Schritt in deiner Karriere gehen. Du bist auf der Suche nach einer Qualifizierung, um eine Führungsposition zu übernehmen.</value>
   </data>
   <data name="UseCaseSelectionView_Choose" xml:space="preserve">
-    <value>Wähle dein Szenario</value>
+    <value>Wähle Deinen Testbereich</value>
   </data>
   <data name="UseCaseSelectionView_ChooseDescription" xml:space="preserve">
-    <value>Die Inhalte der Beta passen sich an dein gewähltes Ziel an.</value>
+    <value>APOLLO befindet sich noch in der Testphase. Deine Teilnahme hilft uns die App weiterzuentwickeln.</value>
   </data>
   <data name="UseCase_A_Description" xml:space="preserve">
     <value>Du möchtest dich auf einen sicheren Job vorbereiten</value>
@@ -580,9 +580,9 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Voll- und Teilzeit</value>
   </data>
   <data name="UseCase_D_Description" xml:space="preserve">
-    <value />
+    <value>Finde passende Kurse für deine Interessen</value>
   </data>
   <data name="UseCase_D_Name" xml:space="preserve">
-    <value>Entdecken</value>
+    <value>Suche</value>
   </data>
 </root>
