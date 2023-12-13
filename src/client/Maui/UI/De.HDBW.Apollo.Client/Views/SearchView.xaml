@@ -9,13 +9,14 @@
              ios:Page.UseSafeArea="true"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
-             Title="SearchView">
+             Title="SearchView"
+             IsBusy="{x:Binding IsBusy}">
     <Shell.SearchHandler>
         <local:BindableSearchHandler
             QueryIcon="magnify.png"
             SearchCommand="{x:Binding SearchCommand}"
             Suggestions="{x:Binding Suggestions}"
-            Recent="{Binding Recents}"
+            Recent="{x:Binding Recents}"
             ShowsResults="True">
             <local:BindableSearchHandler.ItemTemplate>
                 <DataTemplate x:DataType="models:SearchSuggestionEntry">
@@ -27,8 +28,8 @@
             </local:BindableSearchHandler.ItemTemplate>
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
-    
-    <CollectionView ItemsSource="{Binding SearchResults}">
+
+    <CollectionView ItemsSource="{x:Binding SearchResults}">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="modelscourse:CourseItemEntry">
                 <Label Text="{x:Binding DisplayTitle}" Padding="5,0" VerticalOptions="Center">

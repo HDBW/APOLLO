@@ -14,8 +14,8 @@
             </VerticalStackLayout>
          </Border>
         <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resources.FirstTimeDialog_OpenTutorial}" Style="{StaticResource BorderButton}" Command="{Binding OpenTutorialCommand}" />
-            <Button Text="{x:Static strings:Resources.FirstTimeDialog_Continue}"  Command="{Binding ContinueCommand}" Grid.Column="2"/>
+            <Button Text="{x:Static strings:Resources.FirstTimeDialog_OpenTutorial}" Style="{StaticResource BorderButton}" Command="{x:Binding OpenTutorialCommand}" />
+            <Button Text="{x:Static strings:Resources.FirstTimeDialog_Continue}" Command="{x:Binding ContinueCommand}" Grid.Column="2"/>
         </Grid>
     </Grid>
 </toolkit:Popup>
