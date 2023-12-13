@@ -17,6 +17,62 @@ namespace Apollo.Api.UnitTests
     [TestClass]
     public class ApolloApiTrainingUnitTests
     {
+
+        private ApolloApi _api;
+        private List<Training> _testTrainings;
+
+
+        /// <summary>
+        /// Initializes test data for the Training unit tests.
+        /// This method is called before each test to set up the test environment, 
+        /// including creating and inserting test Training instances into the database.
+        /// </summary>
+        [TestInitialize]
+        public void InitializeTestData()
+        {
+            // Arrange
+            _api = Helpers.GetApolloApi();
+
+            // Initialize test data for trainings
+            _testTrainings = new List<Training>
+            {
+                new Training
+                {
+                    Id = "T01_" + Guid.NewGuid().ToString(), // Append a unique identifier to the ID
+                    TrainingName = "Test Training 1"
+                },
+                new Training
+                {
+                    Id = "T02_" + Guid.NewGuid().ToString(), // Append a unique identifier to the ID
+                    TrainingName = "Test Training 2"
+                },
+                // Add more test training instances as needed
+            };
+
+            // Insert test trainings into the database
+            foreach (var training in _testTrainings)
+            {
+                _api.InsertTraining(training).Wait(); // Use synchronous wait in the test setup
+            }
+        }
+
+
+        /// <summary>
+        /// Cleans up test data after the Training unit tests.
+        /// This method is called after each test to clean up the test environment, 
+        /// including deleting the test Training instances from the database.
+        /// </summary>
+        [TestCleanup]
+        public void CleanupTestData()
+        {
+            // Cleanup: Delete test trainings that were inserted in the InitializeTestData method
+            foreach (var training in _testTrainings)
+            {
+                _api.DeleteTrainings(new string[] { training.Id }).Wait(); // Use synchronous wait in the test cleanup
+            }
+        }
+
+
         /// <summary>
         /// Tests the insertion of a Training object and its subsequent deletion.
         /// </summary>
@@ -25,15 +81,68 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            var training = new Training
+            // Create the test instances
+            var t01 = new Training
             {
                 Id = "T01",
-                TrainingName = "Test Training"
+                TrainingName = "Test Training 01"
+                // Set values for other properties as needed
             };
 
-            await api.InsertTraining(training);
+            var t02 = new Training
+            {
+                Id = "T02",
+                TrainingName = "Test Training 02"
+                // Set values for other properties as needed
+            };
 
-            await api.DeleteTrainings(new string[] { training.Id });
+            var t03 = new Training
+            {
+                Id = "T03",
+                TrainingName = "Test Training 03"
+                // Set values for other properties as needed
+            };
+
+            try
+            {
+                // Insert the first test training
+                await api.InsertTraining(t01);
+
+                // Perform the necessary test actions with t01
+                var retrievedT01 = await api.GetTraining(t01.Id);
+                Assert.IsNotNull(retrievedT01);
+                Assert.AreEqual(t01.Id, retrievedT01.Id);
+
+                // Delete the first test training
+                await api.DeleteTrainings(new string[] { t01.Id });
+
+                // Insert the second test training
+                await api.InsertTraining(t02);
+
+                // Perform the necessary test actions with t02
+                var retrievedT02 = await api.GetTraining(t02.Id);
+                Assert.IsNotNull(retrievedT02);
+                Assert.AreEqual(t02.Id, retrievedT02.Id);
+
+                // Delete the second test training
+                await api.DeleteTrainings(new string[] { t02.Id });
+
+                // Insert the third test training
+                await api.InsertTraining(t03);
+
+                // Perform the necessary test actions with t03
+                var retrievedT03 = await api.GetTraining(t03.Id);
+                Assert.IsNotNull(retrievedT03);
+                Assert.AreEqual(t03.Id, retrievedT03.Id);
+
+                // Delete the third test training
+                await api.DeleteTrainings(new string[] { t03.Id });
+            }
+            catch (Exception ex)
+            {
+               
+                Assert.Fail($"An exception occurred: {ex.Message}");
+            }
         }
 
 

@@ -25,7 +25,10 @@ namespace Apollo.Api.UnitTests
         [TestMethod]
         public async Task InsertUser()
         {
-            var api = Helpers.GetApolloApi();
+            // Create a mock logger
+            var logger = new Mock<ILogger<ApolloApi>>();
+
+            var api = new ApolloApi(Helpers.GetDal(), logger.Object, Helpers.GetAPIConfig());
 
             var user = new User
             {
@@ -35,14 +38,30 @@ namespace Apollo.Api.UnitTests
                 Goal = "Test Goal"
             };
 
-            await api.InsertUser(user);
+            try
+            {
+                await api.InsertUser(user);
 
-            // Optionally, can add assertions to verify the insertion was successful
-            var retrievedUser = await api.GetUser(user.Id);
-            Assert.IsNotNull(retrievedUser);
-            Assert.AreEqual(user.Id, retrievedUser.Id);
-
-            await api.DeleteUsers(new string[] { user.Id });
+                // Optionally, can add assertions to verify the insertion was successful
+                var retrievedUser = await api.GetUser(user.Id);
+                Assert.IsNotNull(retrievedUser);
+                Assert.AreEqual(user.Id, retrievedUser.Id);
+            }
+            catch (ApolloApiException ex) when (ex.InnerException is MongoWriteException mongoEx && mongoEx.WriteError.Code == 61)
+            {
+                // Handle shard key error specifically
+                Assert.Fail("Shard key error occurred: " + mongoEx.WriteError.Message);
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                Assert.Fail("An unexpected exception occurred: " + ex.Message);
+            }
+            finally
+            {
+                // Clean up
+                await api.DeleteUsers(new string[] { user.Id });
+            }
         }
 
 
