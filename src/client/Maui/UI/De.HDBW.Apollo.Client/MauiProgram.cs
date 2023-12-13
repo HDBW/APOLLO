@@ -66,6 +66,7 @@ public static class MauiProgram
                 fonts.AddFont("NotoSerif-Regular.ttf", "NotoSerifRegular");
             })
             .UseBottomSheet();
+        builder.ConfigureMauiHandlers(SetupHandlers);
         return builder.Build();
     }
 
@@ -310,5 +311,11 @@ public static class MauiProgram
 
 #endif
         });
+    }
+
+    private static void SetupHandlers(IMauiHandlersCollection handlers)
+    {
+#if IOS
+#endif
     }
 }
