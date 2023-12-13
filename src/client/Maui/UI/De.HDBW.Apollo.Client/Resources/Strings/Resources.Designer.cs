@@ -871,6 +871,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Suche.
+        /// </summary>
+        public static string SearchView_Title {
+            get {
+                return ResourceManager.GetString("SearchView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hallo Apollo-Team.
         ///.
         /// </summary>

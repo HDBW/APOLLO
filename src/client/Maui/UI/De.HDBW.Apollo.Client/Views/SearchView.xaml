@@ -9,7 +9,7 @@
              ios:Page.UseSafeArea="true"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
-             Title="SearchView"
+             Title="{x:Static strings:Resources.SearchView_Title}"
              IsBusy="{x:Binding IsBusy}">
     <Shell.SearchHandler>
         <local:BindableSearchHandler
