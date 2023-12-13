@@ -15,11 +15,30 @@ namespace De.HDBW.Apollo.Client.Models
             History = history;
         }
 
-        public SearchHistory History { get; private set; }
+        public long Ticks
+        {
+            get
+            {
+                return History?.Ticks ?? 0;
+            }
+        }
 
-        public static SearchSuggestionEntry Import(SearchHistory history)
+        private SearchHistory History { get; set; }
+
+        public static HistoricalSuggestionEntry Import(SearchHistory history)
         {
             return new HistoricalSuggestionEntry(history);
+        }
+
+        public SearchHistory Export()
+        {
+            return History;
+        }
+
+        public void Update(SearchHistory history)
+        {
+            History = history;
+            OnPropertyChanged();
         }
     }
 }

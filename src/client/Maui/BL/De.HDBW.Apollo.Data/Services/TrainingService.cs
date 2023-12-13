@@ -1,13 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using System.Reflection;
-using System.Security.Policy;
 using Apollo.Common.Entities;
 using De.HDBW.Apollo.Data.Extensions;
 using De.HDBW.Apollo.SharedContracts.Services;
-using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
 

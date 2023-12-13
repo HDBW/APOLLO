@@ -9,5 +9,8 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         IRepository<SearchHistory>,
         IDatabaseRepository<SearchHistory>
     {
+        Task<SearchHistory?> GetItemsByQueryAsync(string query, CancellationToken none);
+
+        Task<IEnumerable<SearchHistory>> GetMaxItemsAsync(int limit, string? query, CancellationToken token);
     }
 }

@@ -21,8 +21,18 @@ namespace De.HDBW.Apollo.Client.Models
 
         public bool IsRecent
         {
-            get => _isRecent;
-            set => SetProperty(_isRecent, value, OnIsRecentChanged);
+            get
+            {
+               return _isRecent;
+            }
+
+            set
+            {
+                if (SetProperty(ref _isRecent, value))
+                {
+                    OnPropertyChanged(nameof(Icon));
+                }
+            }
         }
 
         public string Icon
@@ -42,11 +52,6 @@ namespace De.HDBW.Apollo.Client.Models
         public static SearchSuggestionEntry Import(string name, bool isRecent = false)
         {
             return new SearchSuggestionEntry(name, isRecent);
-        }
-
-        private void OnIsRecentChanged(bool obj)
-        {
-            OnPropertyChanged(nameof(Icon));
         }
     }
 }

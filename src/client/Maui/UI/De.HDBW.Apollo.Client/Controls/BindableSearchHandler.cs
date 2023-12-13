@@ -45,7 +45,7 @@ namespace De.HDBW.Apollo.Client.Controls
             ItemsSource = new ObservableCollection<object>(Recent ?? Array.Empty<object>());
             SearchBoxVisibility = SearchBoxVisibility.Expanded;
             var viewModel = BindingContext as ILoadSuggestionsProvider;
-            viewModel?.LoadSuggestionsAsync(newValue);
+            viewModel?.StartLoadSuggestions(newValue);
         }
 
         protected async override void OnQueryConfirmed()
@@ -62,7 +62,7 @@ namespace De.HDBW.Apollo.Client.Controls
             base.OnItemSelected(item);
 
             var entry = item as SearchSuggestionEntry;
-            SearchCommand?.Execute(entry?.Name ?? Query);
+            SearchCommand?.Execute(entry);
         }
 
         private static void HandleSuggestionsChanged(BindableObject bindable, object oldValue, object newValue)

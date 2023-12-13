@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Course;
-using De.HDBW.Apollo.Data.Repositories;
+using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Course;
@@ -19,11 +19,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class SearchViewModel : BaseViewModel, ILoadSuggestionsProvider
     {
+        private readonly int _maxHistoryItemsCount = 10;
+        private readonly int _maxSugestionItemsCount = 10;
+
         [ObservableProperty]
         private ObservableCollection<SearchSuggestionEntry> _suggestions = new ObservableCollection<SearchSuggestionEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<SearchSuggestionEntry> _recents = new ObservableCollection<SearchSuggestionEntry>();
+        private ObservableCollection<HistoricalSuggestionEntry> _recents = new ObservableCollection<HistoricalSuggestionEntry>();
 
         [ObservableProperty]
         private ObservableCollection<CourseItemEntry> _searchResults = new ObservableCollection<CourseItemEntry>();
@@ -57,7 +60,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ISearchHistoryRepository SearchHistoryRepository { get; }
 
-        public async void LoadSuggestionsAsync(string inputValue)
+        public async void StartLoadSuggestions(string inputValue)
         {
             using (var worker = ScheduleWork())
             {
@@ -85,13 +88,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var history = await SearchHistoryRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
+                    var history = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, null, worker.Token).ConfigureAwait(false);
                     if (!(history?.Any() ?? false))
                     {
                         return;
                     }
 
-                    var recents = history.Where(h => !string.IsNullOrWhiteSpace(h.Query)).Select(h => HistoricalSuggestionEntry.Import(h));
+                    var recents = history.Select(h => HistoricalSuggestionEntry.Import(h));
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(recents), worker.Token);
                 }
@@ -106,9 +109,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private bool CanSearch(string query)
+        protected override void RefreshCommands()
         {
-            return true;
+            SearchCommand?.NotifyCanExecuteChanged();
+            foreach (var result in SearchResults)
+            {
+                result.OpenCourseItemCommand?.NotifyCanExecuteChanged();
+            }
+        }
+
+        private bool CanSearch(object queryElement)
+        {
+            return !IsBusy && queryElement != null;
         }
 
         private bool CanOpenCourseItem(CourseItemEntry entry)
@@ -142,16 +154,73 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch))]
-        private async Task Search(string query, CancellationToken token)
+        private async Task Search(object queryElement, CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
+                    string? query = null;
+                    HistoricalSuggestionEntry? historyEntry = null;
+                    SearchSuggestionEntry? suggestionEntry = null;
+                    switch (queryElement)
+                    {
+                        case string input:
+                            query = input;
+                            break;
+                        case HistoricalSuggestionEntry entry:
+                            historyEntry = entry;
+                            query = entry.Name;
+                            break;
+                        case SearchSuggestionEntry entry:
+                            suggestionEntry = entry;
+                            query = entry.Name;
+                            break;
+                    }
+
                     token.ThrowIfCancellationRequested();
-                    //SearchHistoryRepository.AddItemAsync(token).ConfigureAwait(false);
-                    var courseItems = await TrainingService.SearchTrainingsAsync(new Filter() { Fields = new List<FieldExpression>() { new FieldExpression() { FieldName = nameof(Training.TrainingName), Argument = new List<object>() { query } } } }, token);
-                    SearchResults = new ObservableCollection<CourseItemEntry>(courseItems.Select(item => CourseItemEntry.Import(item, OpenCourseItem, CanOpenCourseItem)));
+                    var courseItems = await TrainingService.SearchTrainingsAsync(new Filter() { Fields = new List<FieldExpression>() { new FieldExpression() { FieldName = nameof(Training.TrainingName), Argument = new List<object>() { query } } } }, worker.Token);
+                    courseItems = courseItems ?? Array.Empty<CourseItem>();
+                    var courses = courseItems.Select(item => CourseItemEntry.Import(item, OpenCourseItem, CanOpenCourseItem)).ToList();
+                    if (!courses.Any() || string.IsNullOrWhiteSpace(query))
+                    {
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(courses), worker.Token);
+                        return;
+                    }
+
+                    SearchHistory? history = null;
+                    long time = DateTime.UtcNow.Ticks;
+                    if (historyEntry != null)
+                    {
+                        history = historyEntry.Export();
+                        history.Ticks = time;
+                    }
+                    else if (suggestionEntry != null)
+                    {
+                        history = new SearchHistory()
+                        {
+                            Query = query,
+                            Ticks = time,
+                        };
+                    }
+                    else
+                    {
+                        history = await SearchHistoryRepository.GetItemsByQueryAsync(query, CancellationToken.None).ConfigureAwait(false);
+                        history = history ?? new SearchHistory()
+                        {
+                            Query = query,
+                        };
+
+                        history.Ticks = DateTime.UtcNow.Ticks;
+                    }
+
+                    await SearchHistoryRepository.AddOrUpdateItemAsync(history, CancellationToken.None).ConfigureAwait(false);
+                    await ExecuteOnUIThreadAsync(
+                        () =>
+                        {
+                            LoadonUIThread(courses);
+                            LoadonUIThread(historyEntry, suggestionEntry, history);
+                        }, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -176,28 +245,54 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        private void LoadonUIThread(HistoricalSuggestionEntry? historyEntry, SearchSuggestionEntry? suggestionEntry, SearchHistory history)
+        {
+            var recent = Recents.ToList();
+            historyEntry?.Update(history);
+            if (historyEntry == null)
+            {
+                recent.Add(HistoricalSuggestionEntry.Import(history));
+            }
+
+            if (suggestionEntry != null)
+            {
+                Suggestions.Remove(suggestionEntry);
+            }
+
+            recent.OrderBy(r => r.Ticks).Take(int.Max(_maxHistoryItemsCount - Suggestions.Count, 0)).ToList();
+            Recents = new ObservableCollection<HistoricalSuggestionEntry>(recent);
+        }
+
+        private void LoadonUIThread(IEnumerable<CourseItemEntry> courses)
+        {
+            SearchResults = new ObservableCollection<CourseItemEntry>(courses);
+        }
+
         private async Task LoadSuggestionsAsync(string inputValue, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             var trainings = await TrainingService.SearchTrainingsAsync(Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { inputValue }, QueryOperator.Contains), token).ConfigureAwait(false);
-            trainings = trainings ?? Array.Empty<CourseItem>();
-            trainings = trainings.Where(x => !string.IsNullOrWhiteSpace(x.Title)).ToList();
-            await DispatcherService.BeginInvokeOnMainThreadAsync(
+            var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
+            if (!(recents?.Any() ?? false))
+            {
+                recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, null, token).ConfigureAwait(false);
+            }
+
+            recents = recents ?? Array.Empty<SearchHistory>();
+            trainings = trainings.Take(_maxSugestionItemsCount) ?? Array.Empty<CourseItem>();
+            var courses = trainings.Where(x => !string.IsNullOrWhiteSpace(x.Title)).Select(x => SearchSuggestionEntry.Import(x.Title)).ToList();
+            var history = recents.Take(Math.Max(_maxHistoryItemsCount - courses.Count, 0)).Select(x => HistoricalSuggestionEntry.Import(x)).ToList();
+            await ExecuteOnUIThreadAsync(
                 () =>
                 {
-                    var res = new List<SearchSuggestionEntry>();
-                    foreach (var item in trainings)
-                    {
-                        res.Add(SearchSuggestionEntry.Import(item.Title));
-                    }
-
-                    Suggestions = new ObservableCollection<SearchSuggestionEntry>(res);
+                    Suggestions = new ObservableCollection<SearchSuggestionEntry>(courses);
+                    Recents = new ObservableCollection<HistoricalSuggestionEntry>(history);
                 }, token);
         }
 
-        private void LoadonUIThread(IEnumerable<SearchSuggestionEntry> recents)
+        private void LoadonUIThread(IEnumerable<HistoricalSuggestionEntry> recents)
         {
-            Recents = new ObservableCollection<SearchSuggestionEntry>(recents);
+            Recents = new ObservableCollection<HistoricalSuggestionEntry>(recents);
         }
     }
 }

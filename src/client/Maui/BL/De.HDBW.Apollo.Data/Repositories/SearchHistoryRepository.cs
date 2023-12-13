@@ -16,5 +16,24 @@ namespace De.HDBW.Apollo.Data.Repositories
             : base(dataBaseConnectionProvider, logger)
         {
         }
+
+        public async Task<SearchHistory?> GetItemsByQueryAsync(string query, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<SearchHistory>().FirstAsync(x => string.Equals(query, x.Query, StringComparison.InvariantCultureIgnoreCase)).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<SearchHistory>> GetMaxItemsAsync(int limit, string? query, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return await asyncConnection.Table<SearchHistory>().Where(x => x.Query != null).OrderBy(x => x.Ticks).Take(limit).Take(limit).ToListAsync().ConfigureAwait(false);
+            }
+
+            return await asyncConnection.QueryAsync<SearchHistory>("SELECT * FROM SearchHistory WHERE Query != NULL AND Query LIKE ? ORDER BY Ticks LIMIT ?", $"%{query}%", limit);
+        }
     }
 }

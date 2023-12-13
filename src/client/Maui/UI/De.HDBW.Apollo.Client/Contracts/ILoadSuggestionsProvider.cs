@@ -5,6 +5,6 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface ILoadSuggestionsProvider
     {
-        void LoadSuggestionsAsync(string inputValue);
+        void StartLoadSuggestions(string inputValue);
     }
 }
