@@ -120,9 +120,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             using (var worker = ScheduleWork())
             {
-                var courseData = new NavigationParameters();
-                courseData.AddValue<long?>(NavigationParameter.Id, entry.Export().Id);
-                await NavigationService.NavigateAsnc(Routes.CourseView, worker.Token, courseData);
+                try
+                {
+                    var courseData = new NavigationParameters();
+                    courseData.AddValue<long?>(NavigationParameter.Id, entry.Export().Id);
+                    await NavigationService.NavigateAsnc(Routes.CourseView, worker.Token, courseData);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Search)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Search)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
             }
         }
 
