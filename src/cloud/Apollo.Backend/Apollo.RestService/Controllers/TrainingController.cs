@@ -37,8 +37,9 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the requested training.</returns>
         /// <exception cref="ArgumentNullException">Thrown when the id is null or empty.</exception>"
         [HttpGet("{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 101. Error while querying trainings")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the requested training.", typeof(GetTrainingResponse))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Training not found.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<GetTrainingResponse> GetTraining(string id)
         {
             try
@@ -67,6 +68,8 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of queried trainings.", typeof(List<QueryTrainingsResponse>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<IList<QueryTrainingsResponse>> QueryTrainings([FromBody] QueryTrainingsRequest req)
         {
             try
@@ -91,6 +94,8 @@ namespace Apollo.Service.Controllers
 
 
         [HttpPut]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the updated training.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<CreateOrUpdateTrainingResponse> CreateOrUpdateTraining([FromBody] CreateOrUpdateTrainingRequest req)
         {
             try
@@ -116,6 +121,7 @@ namespace Apollo.Service.Controllers
         [HttpPost("insert")]
         [SwaggerResponse(StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of inserted trainings.", typeof(List<Training>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 400. Error while inserting the trainings.<br/>ErrorCode: 406. Error while inserting the trainings")]
         public async Task<IList<Training>> InsertTrainings([FromBody] ICollection<Training> trainings)
         {
@@ -153,7 +159,7 @@ namespace Apollo.Service.Controllers
         [HttpDelete("{id}")]
         [SwaggerResponse(StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
-
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Training deleted successfully.")]
         public async Task Delete(string id)
         {
             try
