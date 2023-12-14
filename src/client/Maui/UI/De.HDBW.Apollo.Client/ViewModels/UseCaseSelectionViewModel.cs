@@ -23,9 +23,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
            : base(dispatcherService, navigationService, dialogService, logger)
         {
             SessionService = sessionService;
-            UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
-            UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
-            UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));
+
+            // UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
+            // UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
+            // UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));
+            UseCases.Add(UseCaseEntry.Import(UseCase.D, OnUseCaseSelectionChanged));
         }
 
         public ObservableCollection<UseCaseEntry> UseCases
@@ -73,9 +75,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             selectedUseCase.UpdateSelectedState(false);
+
             var parameters = new NavigationParameters();
-            parameters.AddValue(NavigationParameter.Data, IsUseCaseSelectionFromShell);
-            await NavigationService.NavigateAsnc(Routes.UseCaseDescriptionView, CancellationToken.None, parameters);
+            switch (selectedUseCase.UseCase)
+            {
+                case UseCase.D:
+                    if (IsUseCaseSelectionFromShell == true)
+                    {
+                        await NavigationService.PushToRootAsnc(CancellationToken.None);
+                    }
+                    else
+                    {
+                        await NavigationService.PushToRootAsnc(Routes.Shell, CancellationToken.None);
+                    }
+
+                    break;
+                default:
+                    parameters.AddValue(NavigationParameter.Data, IsUseCaseSelectionFromShell);
+                    await NavigationService.NavigateAsnc(Routes.UseCaseDescriptionView, CancellationToken.None, parameters);
+                    break;
+            }
         }
     }
 }

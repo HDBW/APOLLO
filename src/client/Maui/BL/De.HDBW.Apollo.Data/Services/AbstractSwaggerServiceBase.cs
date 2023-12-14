@@ -218,9 +218,7 @@ namespace De.HDBW.Apollo.Data.Services
             }
             catch (JsonException exception)
             {
-                throw;
-                var message = "Could not deserialize the response body stream as " + typeof(TU).FullName + ".";
-                //throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                throw new ApolloApiException(-3, "Unable to deserialze Json", exception);
             }
         }
 
