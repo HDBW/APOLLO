@@ -98,8 +98,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                     FieldName = "trainingName",
                     Argument = new List<object>()
                     {
-                        "TestName",
-                        "TestName-2",
+                        "Hallo",
                     },
                 },
             };
