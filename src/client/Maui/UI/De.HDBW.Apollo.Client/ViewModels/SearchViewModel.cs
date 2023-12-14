@@ -207,7 +207,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     if (!interactions.Any() || string.IsNullOrWhiteSpace(query))
                     {
-                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token);
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token).ConfigureAwait(false);
                         return;
                     }
 
