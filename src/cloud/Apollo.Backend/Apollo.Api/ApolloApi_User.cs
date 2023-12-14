@@ -31,7 +31,7 @@ namespace Apollo.Api
                 if (user == null)
                 {
                     // User not found, throw ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.", new Exception(""));
+                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.", new Exception("Exeption while getting user"));
                 }
 
                 return user;
@@ -76,7 +76,6 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersError, "Error while querying users", ex);
             }
         }
-
 
 
         /// <summary>
@@ -131,7 +130,6 @@ namespace Apollo.Api
         }
 
 
-
         /// <summary>
         /// Searches for users based on a keyword in their names.
         /// </summary>
@@ -177,7 +175,6 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByKeywordError, "Error while querying users by keyword", ex);
             }
         }
-
 
 
         /// <summary>
@@ -433,8 +430,6 @@ namespace Apollo.Api
         }
 
 
-
-
         /// <summary>
         /// Creates or Updates the new User instance.
         /// </summary>
@@ -474,7 +469,6 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "An error occurred while creating or updating users.", ex);
             }
         }
-
 
 
         /// <summary>
