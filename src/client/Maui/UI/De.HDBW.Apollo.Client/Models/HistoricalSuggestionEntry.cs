@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using De.HDBW.Apollo.SharedContracts.Models;
+﻿using De.HDBW.Apollo.SharedContracts.Models;
 
 namespace De.HDBW.Apollo.Client.Models
 {

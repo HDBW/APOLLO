@@ -6,14 +6,20 @@ using De.HDBW.Apollo.Data.Tests.Extensions;
 using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
+using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Repositories
 {
     public class AnswerMetaDataRelationRepositoryTests : AbstractDataBaseRepositoryTest<AnswerMetaDataRelation>
     {
+        public AnswerMetaDataRelationRepositoryTests(ITestOutputHelper outputHelper)
+            : base(outputHelper)
+        {
+        }
+
         protected override IRepository<AnswerMetaDataRelation> GetRepository(DatabaseTestContext context)
         {
-            return new AnswerMetaDataRelationRepository(this.SetupDataBaseConnectionProvider(context), this.SetupLogger<AnswerMetaDataRelationRepository>());
+            return new AnswerMetaDataRelationRepository(this.SetupDataBaseConnectionProvider(context), this.SetupLogger<AnswerMetaDataRelationRepository>(OutputHelper));
         }
     }
 }

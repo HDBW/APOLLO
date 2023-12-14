@@ -9,6 +9,7 @@
     <Import_RootNamespace>De.HDBW.Apollo.Data.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AbstractTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TestExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ContentLoggingHttpMessageHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UseCaseBuilderTests.cs" />
@@ -19,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AnswerMetaDataRelationRepositoryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\MetaDataMetaDataRelationRepositoryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\MetaDataRepositoryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\SearchHistoryRepositoryTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\QuestionMetaDataRelationRepositoryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\QuestionItemRepositoryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AssessmentItemRepositoryTests.cs" />

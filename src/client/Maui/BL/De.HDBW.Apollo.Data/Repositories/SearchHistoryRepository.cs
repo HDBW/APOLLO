@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -28,12 +29,13 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
             token.ThrowIfCancellationRequested();
             var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+
             if (string.IsNullOrWhiteSpace(query))
             {
-                return await asyncConnection.Table<SearchHistory>().Where(x => x.Query != null).OrderBy(x => x.Ticks).Take(limit).Take(limit).ToListAsync().ConfigureAwait(false);
+                return await asyncConnection.Table<SearchHistory>().Where(x => x.Query != null).OrderByDescending(x => x.Ticks).Take(limit).ToListAsync().ConfigureAwait(false);
             }
 
-            return await asyncConnection.QueryAsync<SearchHistory>("SELECT * FROM SearchHistory WHERE Query != NULL AND Query LIKE ? ORDER BY Ticks LIMIT ?", $"%{query}%", limit);
+            return await asyncConnection.QueryAsync<SearchHistory>("SELECT * FROM SearchHistory WHERE Query NOTNULL AND Query LIKE ? ORDER BY Ticks DESC LIMIT ?", $"%{query}%", limit);
         }
     }
 }

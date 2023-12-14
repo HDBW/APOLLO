@@ -6,16 +6,18 @@ using De.HDBW.Apollo.Data.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Services;
-public class PreferenceServiceTests : IDisposable
+public class PreferenceServiceTests : AbstractTest, IDisposable
 {
     private Dictionary<string, object> _storage = new Dictionary<string, object>();
     private ILogger<PreferenceService> _logger;
 
-    public PreferenceServiceTests()
+    public PreferenceServiceTests(ITestOutputHelper outputHelper)
+        : base(outputHelper)
     {
-        _logger = this.SetupLogger<PreferenceService>();
+        _logger = this.SetupLogger<PreferenceService>(OutputHelper);
     }
 
     public void Dispose()
