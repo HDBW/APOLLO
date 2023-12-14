@@ -8,7 +8,10 @@ namespace Apollo.Common.Entities
     /// </summary>
     public class GeoLocation
     {
+        [Newtonsoft.Json.JsonProperty("latitude")]
         public double Latitude { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("longitude")]
         public double Longitude { get; set; }
     }
 }

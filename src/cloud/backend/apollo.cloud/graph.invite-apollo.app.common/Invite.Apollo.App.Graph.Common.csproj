@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Activities\Enums\" />
-    <Folder Include="Backend\" />
     <Folder Include="Models\Recommendation\" />
   </ItemGroup>
 

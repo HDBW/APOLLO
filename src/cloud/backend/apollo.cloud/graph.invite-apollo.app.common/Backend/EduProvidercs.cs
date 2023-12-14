@@ -13,21 +13,27 @@ namespace Apollo.Common.Entities
         #region Mobile
         //   [BsonId]
         //   [BsonRepresentation(BsonType.ObjectId)]
+        [Newtonsoft.Json.JsonProperty("id")]
         public string? Id { get; set; }
 
         //[BsonElement("Name")]
+        [Newtonsoft.Json.JsonProperty("name")]
         public string? Name { get; set; }
 
         //[BsonElement("Description")]
+        [Newtonsoft.Json.JsonProperty("description")]
         public string? Description { get; set; }
 
         //[BsonElement("Url")]
+        [Newtonsoft.Json.JsonProperty("url")]
         public Uri? Url { get; set; }
 
         //[BsonElement("Contact")]
+        [Newtonsoft.Json.JsonProperty("contact")]
         public Contact? Contact { get; set; }
 
         //[BsonElement("Image")]
+        [Newtonsoft.Json.JsonProperty("image")]
         public Uri? Image { get; set; }
 
         #endregion

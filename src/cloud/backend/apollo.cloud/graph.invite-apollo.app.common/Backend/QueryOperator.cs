@@ -1,12 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Apollo.Common.Entities
 {
     /// <summary>
@@ -17,47 +11,46 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Equalty operator.
         /// </summary>
-        Equals,
+        Equals = 0,
 
         /// <summary>
         /// For strings only
         /// </summary>
-        Contains,
+        Contains = 1,
 
         /// <summary>
         /// For strings only
         /// </summary>
-        StartsWith,
+        StartsWith = 2,
 
         /// <summary>
         /// 
         /// </summary>
-        GreaterThan,
+        GreaterThan = 3,
 
         /// <summary>
         /// 
         /// </summary>
-        LessThan,
+        LessThan = 4,
 
         /// <summary>
         /// 
         /// </summary>
-        NotEquals,
+        NotEquals = 5,
 
         /// <summary>
         /// FieldXY IN ("A", "B", "C")
         /// </summary>
-        In,
+        In = 6,
 
         /// <summary>
         /// Target empty value for string only
         /// </summary>
-        Empty,
+        Empty = 7,
 
-        GreaterThanEqualTo,
+        GreaterThanEqualTo = 8,
 
-        LessThanEqualTo
-
+        LessThanEqualTo = 9,
 
     }
 }

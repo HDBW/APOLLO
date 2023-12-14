@@ -1,11 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Apollo.Common.Entities
 {
@@ -14,8 +10,10 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specify which properties of the Entity should be returned in the response message, if Fields is empty, all fields in the database are returned
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("fields")]
         public List<string>? Fields { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("filter")]
         public Filter Filter { get; set; }
 
         /// <summary>
@@ -25,21 +23,25 @@ namespace Apollo.Common.Entities
         /// which is finally recalculated in the number of pages.
         /// In a case of FALSE (default), the second query is not executed.
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("requestCount")]
         public bool? RequestCount { get; set; }
 
         /// <summary>
         /// Number of items return e.g., pageSize
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("top")]
         public int Top { get; set; } = 100;
 
         /// <summary>
         /// Use for paging indicated by (page - 1) * pageSize
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("skip")]
         public int Skip { get; set; } = 0;
 
         /// <summary>
         /// Specify the order of the return items by the specified field.
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("sortExpression")]
         public SortExpression? SortExpression { get; set; } 
     }
 }

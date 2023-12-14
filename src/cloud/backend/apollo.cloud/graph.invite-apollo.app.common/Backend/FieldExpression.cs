@@ -1,12 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Apollo.Common.Entities
 {
@@ -19,21 +14,25 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The name of the field.
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("fieldName")]
         public string FieldName { get; set; }
 
         /// <summary>
         /// The Operator on the field.
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("operator")]
         public QueryOperator Operator { get; set; } = 0;
 
         /// <summary>
         /// The argument of the operation. Query executes the OR operator over all specified arguments in the collection.
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("argument")]
         public ICollection<object>? Argument { get; set; }
 
         /// <summary>
         /// If is set to true, the result is returned as distinct
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("distinct")]
         public bool Distinct { get; set; } = false;
     }
 }

@@ -1,11 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Apollo.Common.Entities
 {
@@ -15,11 +13,13 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specifies if FilterExpressions will be OR-ed or AND-ed.
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("isOrOperator")]
         public bool IsOrOperator { get; set; } = false;
 
         /// <summary>
         /// List of fields joined in the query operation. Currentlly the AND operation across all fields is supported only.
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("fields")]
         public List<FieldExpression> Fields { get; set; } = new List<FieldExpression>();
 
         /// <summary>

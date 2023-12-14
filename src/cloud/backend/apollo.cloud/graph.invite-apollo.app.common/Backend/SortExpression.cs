@@ -2,10 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Apollo.Common.Entities
 {
@@ -17,11 +13,13 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Field name to be sort
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("fieldName")]
         public string FieldName { get; set; }
 
         /// <summary>
         /// sort order
         /// </summary>
+        [Newtonsoft.Json.JsonProperty("order")]
         public SortOrder Order { get; set; }
 
         public override string ToString()
