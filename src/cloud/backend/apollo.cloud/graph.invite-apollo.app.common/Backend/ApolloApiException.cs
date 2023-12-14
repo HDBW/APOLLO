@@ -3,6 +3,7 @@
 
 using System;
 using Newtonsoft.Json;
+using ZstdSharp.Unsafe;
 
 namespace Apollo.Api
 {
@@ -26,5 +27,7 @@ namespace Apollo.Api
         {
             ErrorCode = errorCode;
         }
+        
+        public ApolloApiException() { }
     }
 }
