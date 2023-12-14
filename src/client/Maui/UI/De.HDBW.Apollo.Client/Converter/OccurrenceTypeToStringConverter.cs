@@ -16,13 +16,13 @@ namespace De.HDBW.Apollo.Client.Converter
             switch (course?.Occurrence)
             {
                 case OccurrenceType.FullTime:
-                    result = Resources.Strings.Resource.OccurrenceType_FullTime;
+                    result = Resources.Strings.Resources.OccurrenceType_FullTime;
                     break;
                 case OccurrenceType.PartTime:
-                    result = Resources.Strings.Resource.OccurrenceType_PartTime;
+                    result = Resources.Strings.Resources.OccurrenceType_PartTime;
                     break;
                 case OccurrenceType.FullTimeAndPartTime:
-                    result = Resources.Strings.Resource.OccurrenceType_FullTimeAndPartTime;
+                    result = Resources.Strings.Resources.OccurrenceType_FullTimeAndPartTime;
                     break;
             }
 

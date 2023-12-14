@@ -90,7 +90,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return string.Format(Resources.Strings.Resource.UseCaseDescriptionView_AgeFormat, Age);
+                return string.Format(Resources.Strings.Resources.UseCaseDescriptionView_AgeFormat, Age);
             }
         }
 
@@ -98,7 +98,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return string.Format(Resources.Strings.Resource.UseCaseDescriptionView_LocationFormat, Location);
+                return string.Format(Resources.Strings.Resources.UseCaseDescriptionView_LocationFormat, Location);
             }
         }
 
@@ -180,25 +180,25 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     switch (UseCase)
                     {
                         case UseCase.A:
-                            age = Resources.Strings.Resource.UseCaseDetail_A_Age;
-                            location = Resources.Strings.Resource.UseCaseDetail_A_Location;
-                            experience = Resources.Strings.Resource.UseCaseDetail_A_Experience;
-                            story = Resources.Strings.Resource.UseCaseDetail_A_Story;
-                            goal = Resources.Strings.Resource.UseCaseDetail_A_Goal;
+                            age = Resources.Strings.Resources.UseCaseDetail_A_Age;
+                            location = Resources.Strings.Resources.UseCaseDetail_A_Location;
+                            experience = Resources.Strings.Resources.UseCaseDetail_A_Experience;
+                            story = Resources.Strings.Resources.UseCaseDetail_A_Story;
+                            goal = Resources.Strings.Resources.UseCaseDetail_A_Goal;
                             break;
                         case UseCase.B:
-                            age = Resources.Strings.Resource.UseCaseDetail_B_Age;
-                            location = Resources.Strings.Resource.UseCaseDetail_B_Location;
-                            experience = Resources.Strings.Resource.UseCaseDetail_B_Experience;
-                            story = Resources.Strings.Resource.UseCaseDetail_B_Story;
-                            goal = Resources.Strings.Resource.UseCaseDetail_B_Goal;
+                            age = Resources.Strings.Resources.UseCaseDetail_B_Age;
+                            location = Resources.Strings.Resources.UseCaseDetail_B_Location;
+                            experience = Resources.Strings.Resources.UseCaseDetail_B_Experience;
+                            story = Resources.Strings.Resources.UseCaseDetail_B_Story;
+                            goal = Resources.Strings.Resources.UseCaseDetail_B_Goal;
                             break;
                         case UseCase.C:
-                            age = Resources.Strings.Resource.UseCaseDetail_C_Age;
-                            location = Resources.Strings.Resource.UseCaseDetail_C_Location;
-                            experience = Resources.Strings.Resource.UseCaseDetail_C_Experience;
-                            story = Resources.Strings.Resource.UseCaseDetail_C_Story;
-                            goal = Resources.Strings.Resource.UseCaseDetail_C_Goal;
+                            age = Resources.Strings.Resources.UseCaseDetail_C_Age;
+                            location = Resources.Strings.Resources.UseCaseDetail_C_Location;
+                            experience = Resources.Strings.Resources.UseCaseDetail_C_Experience;
+                            story = Resources.Strings.Resources.UseCaseDetail_C_Story;
+                            goal = Resources.Strings.Resources.UseCaseDetail_C_Goal;
                             break;
                     }
 

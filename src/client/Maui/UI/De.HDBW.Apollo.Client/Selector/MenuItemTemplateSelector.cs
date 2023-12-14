@@ -12,9 +12,9 @@ namespace De.HDBW.Apollo.Client.Selector
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             var entry = item as BaseShellItem;
-            if (entry?.Title == Resources.Strings.Resource.MainNavigation_FieldsOfInterest ||
-                entry?.Title == Resources.Strings.Resource.MainNavigation_LearningPath ||
-                entry?.Title == Resources.Strings.Resource.MainNavigation_CVGenerator)
+            if (entry?.Title == Resources.Strings.Resources.MainNavigation_FieldsOfInterest ||
+                entry?.Title == Resources.Strings.Resources.MainNavigation_LearningPath ||
+                entry?.Title == Resources.Strings.Resources.MainNavigation_CVGenerator)
             {
                 return TemplateWithSeperator;
             }

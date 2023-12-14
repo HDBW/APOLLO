@@ -38,10 +38,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET 7
+    - name: Setup .NET 8
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
     - name: Install Java 11
@@ -59,6 +59,8 @@ jobs:
         dotnet user-secrets set "TenantName" "${{secrets.B2CTENANTNAME}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "SignInPolicy" "${{secrets.SIGNINGPOLICY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "InstrumentationKey" "${{secrets.APPI_INSTUMENTATION_KEY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "SwaggerAPIToken" "${{secrets.SWAGGERAPIKEY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "SwaggerAPIURL" "${{secrets.SWAGGERENDPOINTURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
     - name: Restore Keystore
       env:
         BUILD_KEYSTOREFILE_BASE64: ${{ secrets.KEYSTOREFILE }}
@@ -72,12 +74,12 @@ jobs:
     - name: Build MAUI Android
       run: |
         $KEYSTORE_PATH = Join-Path -Path $env:RUNNER_TEMP -ChildPath "Apollo.keystore";
-        dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net7.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore=$KEYSTORE_PATH /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
+        dotnet publish src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj -o Release/Android -f:net8.0-android -c:Release /p:AndroidKeyStore=True /p:AndroidSigningKeyStore=$KEYSTORE_PATH /p:AndroidSigningKeyAlias=apollo /p:AndroidSigningKeyPass=${{secrets.KEYSTOREPASSWORD}} /p:AndroidSigningStorePass=${{secrets.KEYSTOREPASSWORD}}
     - name: Upload Android Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
         name: apollo-android-app
-        path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net7.0-android/*Signed.a*
+        path: src/client/Maui/UI/De.HDBW.Apollo.Client/bin/Release/net8.0-android/*Signed.a*
     - name: Cleanup
       if: always()
       run: dotnet nuget remove source github

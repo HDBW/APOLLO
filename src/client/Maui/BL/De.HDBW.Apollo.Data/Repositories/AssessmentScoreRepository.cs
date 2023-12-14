@@ -3,8 +3,6 @@
 
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
-using Invite.Apollo.App.Graph.Common.Models.Assessment;
-using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 

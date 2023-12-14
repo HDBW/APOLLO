@@ -24,11 +24,10 @@ namespace Apollo.Common.Entities
         /// </summary>
         public SortOrder Order { get; set; }
 
-        //WARNING: This is not working in Shared Projects
-        //public override string ToString()
-        //{
-        //    return $"Field={FieldName}-{Enum.GetName(Order)}";
-        //}
+        public override string ToString()
+        {
+            return $"Field={FieldName}-{Enum.GetName(typeof(SortOrder), Order)}";
+        }
     }
 
     /// <summary>
