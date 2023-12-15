@@ -26,5 +26,7 @@ namespace Apollo.Common.Entities
         public string? Image { get; set; } = string.Empty;
         public string? Id { get; set; }
         public string? UserName { get; set; }
+
+        public string Country { get; set; }
     }
 }
