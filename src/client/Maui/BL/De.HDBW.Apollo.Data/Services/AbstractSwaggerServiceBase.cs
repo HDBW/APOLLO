@@ -57,7 +57,7 @@ namespace De.HDBW.Apollo.Data.Services
 
             try
             {
-                using (var response = await client.GetAsync(new Uri(BaseUri, $"{id}").OriginalString, token).ConfigureAwait(false))
+                using (var response = await client.GetAsync(new Uri($"{BaseUri.OriginalString.TrimEnd('/')}/{id}"), token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
                     var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;
