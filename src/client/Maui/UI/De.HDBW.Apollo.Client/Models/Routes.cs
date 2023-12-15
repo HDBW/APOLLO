@@ -31,6 +31,8 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string CourseView = "/CourseView";
 
+        public const string FiltersSheet = "/FiltersSheet";
+
         public const string SettingsView = "/SettingsView";
 
         public const string FeedbackView = "/FeedbackView";

@@ -5,7 +5,6 @@ using System;
 using System.Reflection;
 using Apollo.Common.Entities;
 using De.HDBW.Apollo.Data.Extensions;
-using De.HDBW.Apollo.Data.Extensions;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
