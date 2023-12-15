@@ -497,8 +497,7 @@ namespace Apollo.Api
                 {
                     await _dal.DeleteAsync(GetCollectionName<Training>(), id);
 
-                    // Assuming that DeleteAsync doesn't throw an exception on failure,
-                    // you can add 1 to the deletedCounts for each successful deletion
+                   
                     deletedCounts.Add(1);
                 }
 

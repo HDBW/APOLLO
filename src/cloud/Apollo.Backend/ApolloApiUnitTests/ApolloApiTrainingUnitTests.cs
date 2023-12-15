@@ -623,7 +623,22 @@ namespace Apollo.Api.UnitTests
             var training = new Training
             {
                 Id = "T01",
-                TrainingName = "Test Training"
+                TrainingName = "Test Training 01"
+                // Set values for other properties as needed
+            };
+
+            var t02 = new Training
+            {
+                Id = "T02",
+                TrainingName = "Test Training 02"
+                // Set values for other properties as needed
+            };
+
+            var t03 = new Training
+            {
+                Id = "T03",
+                TrainingName = "Test Training 03"
+                // Set values for other properties as needed
             };
 
             await api.InsertTraining(training);

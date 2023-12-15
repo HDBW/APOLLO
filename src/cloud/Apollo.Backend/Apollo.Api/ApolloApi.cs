@@ -55,6 +55,10 @@ namespace Apollo.Api
         /// <exception cref="ArgumentNullException"></exception>
         public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
         {
+
+            _dal = dal;
+            _logger = logger;
+            config = config;
             //// Validate the logger. 
             //if (logger == null)
             //{

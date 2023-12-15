@@ -26,7 +26,7 @@ namespace Apollo.RestService.Midleware
 
             string? errorMessage;
 
-            if (context.Exception.GetType() == typeof(ApolloExceptionFilter))
+            if (context.Exception.GetType() == typeof(ApolloApiException))
             {
                 ApolloApiException e = (ApolloApiException)context.Exception;
                 JsonSerializer.Serialize(new { ErrorCode = e.ErrorCode, Message=e.Message});

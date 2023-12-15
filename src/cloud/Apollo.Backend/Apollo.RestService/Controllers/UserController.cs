@@ -4,6 +4,7 @@ using Apollo.RestService.Apollo.Common.Messages;
 using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Apollo.Service.Controllers
 {
@@ -35,6 +36,8 @@ namespace Apollo.Service.Controllers
         /// <param name="id">ID of the user to retrieve.</param>
         /// <returns>Response containing the retrieved user.</returns>
         [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the retrieved user.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<GetUserResponse> GetUser(string id)
         {
             try
@@ -63,6 +66,8 @@ namespace Apollo.Service.Controllers
         /// <param name="req">Query request object specifying user search criteria.</param>
         /// <returns>Response containing the queried users.</returns>
         [HttpPost()]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the queried users.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<QueryUsersResponse> QueryUsers([FromBody] QueryUsersRequest req)
         {
             try
@@ -91,6 +96,8 @@ namespace Apollo.Service.Controllers
         /// <param name="req">Request object containing user information for create or update.</param>
         /// <returns>Response containing the result of the create/update operation.</returns>
         [HttpPut]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the result of the create/update operation.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<CreateOrUpdateUserResponse> CreateOrUpdateUser([FromBody] CreateOrUpdateUserRequest req)
         {
             try
@@ -121,6 +128,9 @@ namespace Apollo.Service.Controllers
         /// <param name="users">List of users to be inserted.</param>
         /// <returns>ActionResult indicating the success or failure of the operation.</returns>
         [HttpPost("insert")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the list of inserted user IDs.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<IList<string>> InsertUsers([FromBody] IList<User> users)
         {
             try
@@ -162,6 +172,8 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <param name="id">ID of the user to delete.</param>
         [HttpDelete("{id}")]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Users deleted successfully.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task DeleteUser(string[] ids)
         {
             try
