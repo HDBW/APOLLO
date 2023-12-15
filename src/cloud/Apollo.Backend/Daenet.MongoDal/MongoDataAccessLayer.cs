@@ -3,8 +3,10 @@ using System.Dynamic;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Xml.Schema;
 using Amazon.Runtime.Internal.Util;
 using Daenet.MongoDal.Entitties;
+using Daenet.MongoDal.Functions;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -17,7 +19,7 @@ namespace Daenet.MongoDal
     /// Implements the Data Access Layer for communication with the Mongo Database.
     /// </summary>
     public class MongoDataAccessLayer
-    {        
+    {
         private readonly IMongoDatabase _db;
 
         private readonly MongoDalConfig _cfg;
@@ -120,7 +122,7 @@ namespace Daenet.MongoDal
                         throw new ArgumentNullException(nameof(item));
 
                     FilterDefinition<BsonDocument> filter =
-                    Builders<BsonDocument>.Filter.Eq("_id", item["_id"]);                   
+                    Builders<BsonDocument>.Filter.Eq("_id", item["_id"]);
 
                     //FilterDefinition<BsonDocument> filter = ShredKey == null ?
                     //    Builders<BsonDocument>.Filter.Eq("_id", item["_id"]) :
@@ -261,12 +263,9 @@ namespace Daenet.MongoDal
             else
                 filter = Builders<BsonDocument>.Filter.Eq("_id", "should not match anything");
 
-            // filter = Builders<BsonDocument>.Filter.Eq(EntitySet.PartitionKey, partitionKey);
-
             if (query != null)
             {
                 filter = BuildFilterFind(query, filter);
-                //filter = BuildFilter(query, filter); 
             }
 
             if (dateTime.HasValue)
@@ -297,12 +296,6 @@ namespace Daenet.MongoDal
 
             IAsyncCursor<BsonDocument> documents;
 
-            //FindOptions findOptions = new FindOptions
-            //{
-            //    BatchSize = 10000,
-            //    NoCursorTimeout = true
-            //};
-
             if (fields != null)
             {
                 projection.Add(new BsonElement("_id", 0));
@@ -311,9 +304,6 @@ namespace Daenet.MongoDal
                 {
                     projection.Add(new BsonElement(field, 1));
                 }
-
-
-                //documents = await coll.Aggregate().Unwind("ArticleInfo").Match(filter).Sort(sort).Skip(skip).Limit(top).Project(projection).ToCursorAsync();
 
                 documents = await coll.Find(filter).Sort(sort).Skip(skip).Limit(top).Project(projection).ToCursorAsync();
             }
@@ -331,37 +321,7 @@ namespace Daenet.MongoDal
 
                 results.Add(expando);
             }
-            //var counter = 0;
-            //while (await documents.MoveNextAsync())
-            //{
-            //    var docs = documents.Current;
-            //    foreach (var doc in docs)
-            //    {
-            //        counter++;
-            //        if (counter > skip)
-            //        {
-            //            dynamic dynRow = BsonSerializer.Deserialize<dynamic>(doc);
 
-            //            ExpandoObject expando = dynRow;
-
-            //            results.Add(expando);
-            //        }
-            //    }
-            //    docs = null;
-            //    GC.Collect();
-            //}
-
-
-            //var docs = await coll.Aggregate().Unwind(new StringFieldDefinition<BsonDocument>("ReferencePrices")).Match(filter).Skip(skip).Limit(top).Project(projection).ToListAsync();
-            //var res = new List<ExpandoObject>();
-            //foreach (var doc in docs)
-            //{
-            //    dynamic dynRow = BsonSerializer.Deserialize<dynamic>(doc);
-
-            //    ExpandoObject expando = dynRow;
-
-            //    res.Add(expando);
-            //}
 
             return results;
         }
@@ -402,66 +362,99 @@ namespace Daenet.MongoDal
         {
             //
             // find all filter with fields contains dot (.) character
-            var specialQueries = query.Fields.Where(f => f.FieldName.Contains('.')).GroupBy(f => f.FieldName.Split('.')[0]);
+            var nestedQueries = query.Fields.Where(f => f.FieldName.Contains('.')).GroupBy(f => f.FieldName.Split('.')[0]);
 
             if (query.IsOrOperator)
             {
-                foreach (var q in query.Fields)
+                foreach (var field in query.Fields)
                 {
-                    if (IsSpecialFilter(specialQueries, q))
+                    if (IsExpressionForNestedProperty(nestedQueries, field))
                         continue;
 
-                    filter |= BuildOrFilter(q);
+                    filter |= BuildOrFilter(field);
                 }
 
-                filter = BuildArrayElementMatchOrFilter(filter, specialQueries);
+                filter = BuildORFilterForNestedProps(filter, nestedQueries);
             }
             else
             {
                 foreach (var q in query.Fields)
                 {
-                    if (IsSpecialFilter(specialQueries, q))
+                    if (IsExpressionForNestedProperty(nestedQueries, q))
                         continue;
 
                     filter &= BuildAndFilter(q);
                 }
 
-                filter = BuildArrayElementMatchAndFilter(filter, specialQueries);
+                filter = BuildANDFilterForNestedProps(filter, nestedQueries);
             }
-
-            //object t = 115.44;
-            //filter |= Builders<BsonDocument>.Filter.Lt("HP", t);
 
             return filter;
         }
 
-        private static FilterDefinition<BsonDocument> BuildArrayElementMatchAndFilter(FilterDefinition<BsonDocument> filter, IEnumerable<IGrouping<string, FieldExpression>> specialQueries)
+
+        /// <summary>
+        /// Field NumOfElements > 0
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        private static FilterDefinition<BsonDocument> BuildNumOfElementsForOR(FieldExpression q)
         {
-            foreach (var item in specialQueries)
+            FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match");
+
+            foreach (var arg in q.Argument)
             {
-                if (item.Count() == 1)
+                orFilter |= Builders<BsonDocument>.Filter.AnyLt(q.FieldName, arg);
+            }
+
+            return orFilter;
+        }
+
+        /// <summary>
+        /// Field NumOfElements > 0
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        private static FilterDefinition<BsonDocument> BuildNumOfElementsForAND(FieldExpression q)
+        {
+            FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match");
+            //Filter = Builders<MySchema>.Filter.AnyIn("Entries.$[].Categories", CategoryFilters);
+            foreach (var arg in q.Argument)
+            {
+                orFilter &= Builders<BsonDocument>.Filter.Lte(q.FieldName, arg);
+            }
+
+            return orFilter;
+        }
+
+
+        private static FilterDefinition<BsonDocument> BuildANDFilterForNestedProps(FilterDefinition<BsonDocument> filter, IEnumerable<IGrouping<string, FieldExpression>> nestedQueries)
+        {
+            foreach (var nestedQuery in nestedQueries)
+            {
+                if (nestedQuery.Count() == 1)
                     continue;
 
                 FilterDefinition<BsonDocument> andFilter = FilterDefinition<BsonDocument>.Empty;
-                foreach (var q in item)
+                foreach (var nestedExpr in nestedQuery)
                 {
                     var f = new FieldExpression
                     {
-                        FieldName = q.FieldName.Split('.')[1],
-                        Argument = q.Argument,
-                        Operator = q.Operator
+                        FieldName = nestedExpr.FieldName.Split('.')[1],
+                        Argument = nestedExpr.Argument,
+                        Operator = nestedExpr.Operator
                     };
 
                     andFilter &= BuildAndFilter(f);
                 }
 
-                filter &= Builders<BsonDocument>.Filter.ElemMatch<BsonDocument>(item.Key, andFilter);
+                filter &= Builders<BsonDocument>.Filter.ElemMatch<BsonDocument>(nestedQuery.Key, andFilter);
             }
 
             return filter;
         }
 
-        private static FilterDefinition<BsonDocument> BuildArrayElementMatchOrFilter(FilterDefinition<BsonDocument> filter, IEnumerable<IGrouping<string, FieldExpression>> specialQueries)
+        private static FilterDefinition<BsonDocument> BuildORFilterForNestedProps(FilterDefinition<BsonDocument> filter, IEnumerable<IGrouping<string, FieldExpression>> specialQueries)
         {
             foreach (var item in specialQueries)
             {
@@ -487,7 +480,7 @@ namespace Daenet.MongoDal
             return filter;
         }
 
-        private static bool IsSpecialFilter(IEnumerable<IGrouping<string, FieldExpression>> specialQueries, FieldExpression q)
+        private static bool IsExpressionForNestedProperty(IEnumerable<IGrouping<string, FieldExpression>> specialQueries, FieldExpression q)
         {
             foreach (var item in specialQueries)
             {
@@ -501,26 +494,33 @@ namespace Daenet.MongoDal
 
         private static FilterDefinition<BsonDocument> BuildAndFilter(FieldExpression q)
         {
-            if (q.Operator == QueryOperator.Contains)
-                return BuildOrContainsFilter(q);
-            else if (q.Operator == QueryOperator.Equals)
-                return BuildOrEqFilter(q);
-            else if (q.Operator == QueryOperator.GreaterThan)
-                return BuildOrGtFilter(q);
-            else if (q.Operator == QueryOperator.LessThan)
-                return BuildOrLtFilter(q);
-            else if (q.Operator == QueryOperator.StartsWith)
-                return BuildStarsWithFilter(q);
-            else if (q.Operator == QueryOperator.NotEquals)
-                return BuildNotEqFilter(q);
-            else if (q.Operator == QueryOperator.Empty)
-                return BuildOrEmptyFilter(q);
-            else if (q.Operator == QueryOperator.GreaterThanEqualTo)
-                return BuildOrGteFilter(q);
-            else if (q.Operator == QueryOperator.LessThanEqualTo)
-                return BuildOrLteFilter(q);
+            if (q.FieldName.StartsWith("Count("))
+            {
+                return CountFncBuilder.BuildAndFilter(q);
+            }
             else
-                throw new NotSupportedException($"The operator {q.Operator} is not supported.");
+            {
+                if (q.Operator == QueryOperator.Contains)
+                    return BuildOrContainsFilter(q);
+                else if (q.Operator == QueryOperator.Equals)
+                    return BuildOrEqFilter(q);
+                else if (q.Operator == QueryOperator.GreaterThan)
+                    return BuildOrGtFilter(q);
+                else if (q.Operator == QueryOperator.LessThan)
+                    return BuildOrLtFilter(q);
+                else if (q.Operator == QueryOperator.StartsWith)
+                    return BuildStarsWithFilter(q);
+                else if (q.Operator == QueryOperator.NotEquals)
+                    return BuildNotEqANDFilter(q);
+                else if (q.Operator == QueryOperator.Empty)
+                    return BuildOrEmptyFilter(q);
+                else if (q.Operator == QueryOperator.GreaterThanEqualTo)
+                    return BuildOrGteFilter(q);
+                else if (q.Operator == QueryOperator.LessThanEqualTo)
+                    return BuildOrLteFilter(q);
+                else
+                    throw new NotSupportedException($"The operator {q.Operator} is not supported.");
+            }
         }
 
         private static FilterDefinition<BsonDocument> BuildOrGteFilter(FieldExpression q)
@@ -549,41 +549,43 @@ namespace Daenet.MongoDal
 
         private static FilterDefinition<BsonDocument> BuildOrFilter(FieldExpression q)
         {
-            if (q.Operator == QueryOperator.Contains)
-                return BuildOrContainsFilter(q);
-            else if (q.Operator == QueryOperator.Equals)
-                return BuildOrEqFilter(q);
-            else if (q.Operator == QueryOperator.GreaterThan)
-                return BuildOrGtFilter(q);
-            else if (q.Operator == QueryOperator.LessThan)
-                return BuildOrLtFilter(q);
-            else if (q.Operator == QueryOperator.StartsWith)
-                return BuildStarsWithFilter(q);
-            else if (q.Operator == QueryOperator.NotEquals)
-                return BuildNotEqFilter(q);
-            else if (q.Operator == QueryOperator.Empty)
-                return BuildOrEmptyFilter(q);
-            else if (q.Operator == QueryOperator.In)
-                return BuildInFilter(q);
-            else if (q.Operator == QueryOperator.GreaterThanEqualTo)
-                return BuildOrGteFilter(q);
-            else if (q.Operator == QueryOperator.LessThanEqualTo)
-                return BuildOrLteFilter(q);
+            if (q.FieldName.StartsWith("Count("))
+            {
+                return CountFncBuilder.BuildOrFilter(q);
+            }
             else
-                throw new NotSupportedException($"The operator {q.Operator} is not supported.");
+            {
+                if (q.Operator == QueryOperator.Contains)
+                    return BuildOrContainsFilter(q);
+                else if (q.Operator == QueryOperator.Equals)
+                    return BuildOrEqFilter(q);
+                else if (q.Operator == QueryOperator.GreaterThan)
+                    return BuildOrGtFilter(q);
+                else if (q.Operator == QueryOperator.LessThan)
+                    return BuildOrLtFilter(q);
+                else if (q.Operator == QueryOperator.StartsWith)
+                    return BuildStarsWithFilter(q);
+                else if (q.Operator == QueryOperator.NotEquals)
+                    return BuildNotEqORFilter(q);
+                else if (q.Operator == QueryOperator.Empty)
+                    return BuildOrEmptyFilter(q);
+                else if (q.Operator == QueryOperator.In)
+                    return BuildInFilter(q);
+                else if (q.Operator == QueryOperator.GreaterThanEqualTo)
+                    return BuildOrGteFilter(q);
+                else if (q.Operator == QueryOperator.LessThanEqualTo)
+                    return BuildOrLteFilter(q);
+                else
+                    throw new NotSupportedException($"The operator {q.Operator} is not supported.");
+            }
         }
 
         private static FilterDefinition<BsonDocument> BuildOrContainsFilter(FieldExpression qField)
         {
-            FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match");
-
-            orFilter |= Builders<BsonDocument>.Filter.In(qField.FieldName, qField.Argument.Select(arg =>
+            var orFilter = Builders<BsonDocument>.Filter.In(qField.FieldName, qField.Argument.Select(arg =>
             {
                 var text = arg == null ? string.Empty : arg.ToString();
-                //if (qField.FieldName == nameof(EntityBase.ObjectId))
-                //{
-                //    return new BsonRegularExpression(GetCorrectRegexPattern(text));
-                //}
+
                 return new BsonRegularExpression(GetCorrectRegexPattern(text), "i");
             }));
 
@@ -592,16 +594,16 @@ namespace Daenet.MongoDal
 
         private static FilterDefinition<BsonDocument> BuildOrEqFilter(FieldExpression qField)
         {
-            FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match");
-
             var emptyValues = new List<object> { "", null, new List<object>() };
 
             var arguments = qField.Argument;
+
             if (qField.Argument.Intersect(emptyValues).Any())
             {
                 arguments = qField.Argument.Union(emptyValues).ToList();
             }
-            orFilter |= Builders<BsonDocument>.Filter.In(qField.FieldName, arguments);
+
+            var orFilter = Builders<BsonDocument>.Filter.In(qField.FieldName, arguments);
 
             return orFilter;
         }
@@ -641,6 +643,7 @@ namespace Daenet.MongoDal
         private static FilterDefinition<BsonDocument> BuildOrLtFilter(FieldExpression qField)
         {
             FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match");
+
             foreach (var arg in qField.Argument)
             {
                 orFilter |= Builders<BsonDocument>.Filter.Lt(qField.FieldName, arg);
@@ -653,23 +656,19 @@ namespace Daenet.MongoDal
         {
             FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match");
 
-            orFilter |= Builders<BsonDocument>.Filter.In(qField.FieldName, qField.Argument.Select(arg => new BsonRegularExpression($"^{GetCorrectRegexPattern(arg.ToString())}", "i")));
-
-            //foreach (var arg in qField.Argument)
-            //{
-            //    orFilter |= Builders<BsonDocument>.Filter.Regex(qField.FieldName, $"/^{arg}/");
-            //}
+            orFilter |= Builders<BsonDocument>.Filter.In(qField.FieldName, qField.Argument.Select(arg => new BsonRegularExpression($"^{GetCorrectRegexPattern(arg.ToString()!)}", "i")));
 
             return orFilter;
         }
 
-        private static FilterDefinition<BsonDocument> BuildNotEqFilter(FieldExpression qField)
+        private static FilterDefinition<BsonDocument> BuildNotEqORFilter(FieldExpression qField)
         {
             FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match");
 
-            var emptyValues = new List<object> { "", null, new List<object>() };
+            var emptyValues = new List<object> { "", null!, new List<object>() };
 
             var arguments = qField.Argument;
+
             if (qField.Argument.Intersect(emptyValues).Any())
             {
                 arguments = qField.Argument.Union(emptyValues).ToList();
@@ -679,9 +678,25 @@ namespace Daenet.MongoDal
             return orFilter;
         }
 
-        private static string GetCorrectRegexPattern(string inputPattern)
+        private static FilterDefinition<BsonDocument> BuildNotEqANDFilter(FieldExpression qField)
         {
-            //return Regex.Replace(inputPattern, "(?=[^a-zA-Z0-9üöä ])", "\\\\");
+            FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match"); ;
+
+            var emptyValues = new List<object> { "", null!, new List<object>() };
+
+            var arguments = qField.Argument;
+
+            if (qField.Argument.Intersect(emptyValues).Any())
+            {
+                arguments = qField.Argument.Union(emptyValues).ToList();
+            }
+            orFilter &= Builders<BsonDocument>.Filter.Nin(qField.FieldName, arguments);
+
+            return orFilter;
+        }
+
+        internal static string GetCorrectRegexPattern(string inputPattern)
+        {
             var pattern = Regex.Replace(inputPattern, "(?=[\\.\\^\\$\\*\\+\\-\\?\\(\\)\\[\\]\\{\\}\\\\\\|\\—\\/])", "\\");
             return pattern;
         }

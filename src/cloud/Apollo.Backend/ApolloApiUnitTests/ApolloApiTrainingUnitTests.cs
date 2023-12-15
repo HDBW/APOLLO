@@ -4,7 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Apollo.Common.Entities;
 using Daenet.MongoDal;
@@ -18,7 +21,7 @@ namespace Apollo.Api.UnitTests
     {
         Training[] _testTrainings = new Training[]
       {
-            new Training(){  Id = "T01", ProviderId = "unittest", TrainingName = "Open AI",
+            new Training(){  Id = "LT01", ProviderId = "unittest", TrainingName = "Open AI",
             Loans = new List<Loans>(
                 new Loans[]
                 {
@@ -27,17 +30,560 @@ namespace Apollo.Api.UnitTests
                 }
                 )},
 
-            new Training(){  Id = "T02", ProviderId = "unittest", TrainingName = "Azure AI" },
+            new Training(){  Id = "LT02", ProviderId = "unittest", TrainingName = "Azure AI" },
 
-            new Training(){  Id = "T03" , ProviderId = "unittest",    Loans = new List<Loans>(
+            new Training(){  Id = "LT03" , ProviderId = "unittest",    Loans = new List<Loans>(
                 new Loans[]
                 {
                     new Loans() { Id = "L01", Name = "Loan 1" },
                     new Loans() { Id = "L02", Name = "Loan 2" }
                 }
                 )},
+
+
       };
 
+        /// <summary>
+        /// The instance of the training with all properties.
+        /// </summary>
+        private string _complexTrainingJson = @"[
+  {
+    ""id"": ""SER01"",
+    ""providerId"": ""hdbw-F626FEDE-1A30-4DE0-B17B-9DCB04A654C2"",
+    ""trainingName"": ""Training05"",
+    ""description"": ""Description of Training 05"",
+    ""shortDescription"": ""Short Description of T05"",
+    ""content"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""benefitList"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""certificate"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""prerequisites"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""loans"": [
+      {
+        ""id"": ""<string>"",
+        ""name"": ""<string>"",
+        ""description"": ""<string>"",
+        ""url"": ""<uri>"",
+        ""loanContact"": {
+          ""id"": ""<string>"",
+          ""surname"": ""<string>"",
+          ""mail"": ""<string>"",
+          ""phone"": ""<string>"",
+          ""organization"": ""<string>"",
+          ""address"": ""<string>"",
+          ""city"": ""<string>"",
+          ""zipCode"": ""<string>"",
+          ""eAppointmentUrl"": ""<uri>""
+        }
+      },
+      {
+        ""id"": ""<string>"",
+        ""name"": ""<string>"",
+        ""description"": ""<string>"",
+        ""url"": ""<uri>"",
+        ""loanContact"": {
+          ""id"": ""<string>"",
+          ""surname"": ""<string>"",
+          ""mail"": ""<string>"",
+          ""phone"": ""<string>"",
+          ""organization"": ""<string>"",
+          ""address"": ""<string>"",
+          ""city"": ""<string>"",
+          ""zipCode"": ""<string>"",
+          ""eAppointmentUrl"": ""<uri>""
+        }
+      }
+    ],
+    ""trainingProvider"": {
+      ""id"": ""<string>"",
+      ""name"": ""<string>"",
+      ""description"": ""<string>"",
+      ""url"": ""<uri>"",
+      ""contact"": {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""<string>"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      ""image"": ""<uri>""
+    },
+    ""courseProvider"": {
+      ""id"": ""<string>"",
+      ""name"": ""<string>"",
+      ""description"": ""<string>"",
+      ""url"": ""<uri>"",
+      ""contact"": {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""<string>"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      ""image"": ""<uri>""
+    },
+    ""appointments"": {
+      ""id"": ""<string>"",
+      ""appointment"": ""<uri>"",
+      ""appointmentType"": ""<string>"",
+      ""appointmentDescription"": ""<string>"",
+      ""appointmentLocation"": {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""<string>"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      ""startDate"": ""<dateTime>"",
+      ""endDate"": ""<dateTime>"",
+      ""durationDescription"": ""<string>"",
+      ""duration"": {
+        ""ticks"": ""<long>"",
+        ""days"": ""<integer>"",
+        ""hours"": ""<integer>"",
+        ""milliseconds"": ""<integer>"",
+        ""microseconds"": ""<integer>"",
+        ""nanoseconds"": ""<integer>"",
+        ""minutes"": ""<integer>"",
+        ""seconds"": ""<integer>"",
+        ""totalDays"": ""<double>"",
+        ""totalHours"": ""<double>"",
+        ""totalMilliseconds"": ""<double>"",
+        ""totalMicroseconds"": ""<double>"",
+        ""totalNanoseconds"": ""<double>"",
+        ""totalMinutes"": ""<double>"",
+        ""totalSeconds"": ""<double>""
+      },
+      ""occurences"": [
+        {
+          ""correlationId"": ""<string>"",
+          ""id"": ""<string>"",
+          ""startDate"": ""<dateTime>"",
+          ""endDate"": ""<dateTime>"",
+          ""duration"": {
+            ""ticks"": ""<long>"",
+            ""days"": ""<integer>"",
+            ""hours"": ""<integer>"",
+            ""milliseconds"": ""<integer>"",
+            ""microseconds"": ""<integer>"",
+            ""nanoseconds"": ""<integer>"",
+            ""minutes"": ""<integer>"",
+            ""seconds"": ""<integer>"",
+            ""totalDays"": ""<double>"",
+            ""totalHours"": ""<double>"",
+            ""totalMilliseconds"": ""<double>"",
+            ""totalMicroseconds"": ""<double>"",
+            ""totalNanoseconds"": ""<double>"",
+            ""totalMinutes"": ""<double>"",
+            ""totalSeconds"": ""<double>""
+          },
+          ""description"": ""<string>"",
+          ""location"": {
+            ""id"": ""<string>"",
+            ""surname"": ""<string>"",
+            ""mail"": ""<string>"",
+            ""phone"": ""<string>"",
+            ""organization"": ""<string>"",
+            ""address"": ""<string>"",
+            ""city"": ""<string>"",
+            ""zipCode"": ""<string>"",
+            ""eAppointmentUrl"": ""<uri>""
+          }
+        },
+        {
+          ""correlationId"": ""<string>"",
+          ""id"": ""<string>"",
+          ""startDate"": ""<dateTime>"",
+          ""endDate"": ""<dateTime>"",
+          ""duration"": {
+            ""ticks"": ""<long>"",
+            ""days"": ""<integer>"",
+            ""hours"": ""<integer>"",
+            ""milliseconds"": ""<integer>"",
+            ""microseconds"": ""<integer>"",
+            ""nanoseconds"": ""<integer>"",
+            ""minutes"": ""<integer>"",
+            ""seconds"": ""<integer>"",
+            ""totalDays"": ""<double>"",
+            ""totalHours"": ""<double>"",
+            ""totalMilliseconds"": ""<double>"",
+            ""totalMicroseconds"": ""<double>"",
+            ""totalNanoseconds"": ""<double>"",
+            ""totalMinutes"": ""<double>"",
+            ""totalSeconds"": ""<double>""
+          },
+          ""description"": ""<string>"",
+          ""location"": {
+            ""id"": ""<string>"",
+            ""surname"": ""<string>"",
+            ""mail"": ""<string>"",
+            ""phone"": ""<string>"",
+            ""organization"": ""<string>"",
+            ""address"": ""<string>"",
+            ""city"": ""<string>"",
+            ""zipCode"": ""<string>"",
+            ""eAppointmentUrl"": ""<uri>""
+          }
+        }
+      ],
+      ""isGuaranteed"": ""<boolean>"",
+      ""trainingType"": {},
+      ""timeInvestAttendee"": {
+        ""ticks"": ""<long>"",
+        ""days"": ""<integer>"",
+        ""hours"": ""<integer>"",
+        ""milliseconds"": ""<integer>"",
+        ""microseconds"": ""<integer>"",
+        ""nanoseconds"": ""<integer>"",
+        ""minutes"": ""<integer>"",
+        ""seconds"": ""<integer>"",
+        ""totalDays"": ""<double>"",
+        ""totalHours"": ""<double>"",
+        ""totalMilliseconds"": ""<double>"",
+        ""totalMicroseconds"": ""<double>"",
+        ""totalNanoseconds"": ""<double>"",
+        ""totalMinutes"": ""<double>"",
+        ""totalSeconds"": ""<double>""
+      },
+      ""timeModel"": ""<string>""
+    },
+    ""productUrl"": ""<uri>"",
+    ""contacts"": [
+      {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""magna_acb"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""<string>"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      }
+    ],
+    ""trainingType"": 2,
+    ""individualStartDate"": ""<string>"",
+    ""price"": 22.22,
+    ""priceDescription"": ""<string>"",
+    ""accessibilityAvailable"": true,
+    ""tags"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""categories"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""recommendedTrainings"":[],
+    ""similarTrainings"":[],
+    ""publishingDate"": ""0001-01-01T00:00:00Z"",
+    ""unpublishingDate"": ""0001-01-01T00:00:00Z"",
+    ""successor"": ""<string>"",
+    ""predecessor"": ""<string>""
+  },
+  {
+    ""id"": ""SER02"",
+    ""providerId"": ""provider2"",
+    ""trainingName"": ""Training T05"",
+    ""description"": ""Training T05 Description long"",
+    ""shortDescription"": ""Training T05 Description short"",
+    ""content"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""benefitList"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""certificate"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""prerequisites"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""loans"": [
+      {
+        ""id"": ""<string>"",
+        ""name"": ""<string>"",
+        ""description"": ""<string>"",
+        ""url"": ""<uri>"",
+        ""loanContact"": {
+          ""id"": ""<string>"",
+          ""surname"": ""<string>"",
+          ""mail"": ""<string>"",
+          ""phone"": ""<string>"",
+          ""organization"": ""<string>"",
+          ""address"": ""<string>"",
+          ""city"": ""<string>"",
+          ""zipCode"": ""<string>"",
+          ""eAppointmentUrl"": ""<uri>""
+        }
+      },
+      {
+        ""id"": ""<string>"",
+        ""name"": ""<string>"",
+        ""description"": ""<string>"",
+        ""url"": ""<uri>"",
+        ""loanContact"": {
+          ""id"": ""<string>"",
+          ""surname"": ""<string>"",
+          ""mail"": ""<string>"",
+          ""phone"": ""<string>"",
+          ""organization"": ""<string>"",
+          ""address"": ""<string>"",
+          ""city"": ""<string>"",
+          ""zipCode"": ""<string>"",
+          ""eAppointmentUrl"": ""<uri>""
+        }
+      }
+    ],
+    ""trainingProvider"": {
+      ""id"": ""<string>"",
+      ""name"": ""<string>"",
+      ""description"": ""<string>"",
+      ""url"": ""<uri>"",
+      ""contact"": {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""<string>"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      ""image"": ""<uri>""
+    },
+    ""courseProvider"": {
+      ""id"": ""<string>"",
+      ""name"": ""<string>"",
+      ""description"": ""<string>"",
+      ""url"": ""<uri>"",
+      ""contact"": {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""<string>"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      ""image"": ""<uri>""
+    },
+    ""appointments"": {
+      ""id"": ""<string>"",
+      ""appointment"": ""<uri>"",
+      ""appointmentType"": ""<string>"",
+      ""appointmentDescription"": ""<string>"",
+      ""appointmentLocation"": {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""<string>"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      ""startDate"": ""<dateTime>"",
+      ""endDate"": ""<dateTime>"",
+      ""durationDescription"": ""<string>"",
+      ""duration"": {
+        ""ticks"": ""<long>"",
+        ""days"": ""<integer>"",
+        ""hours"": ""<integer>"",
+        ""milliseconds"": ""<integer>"",
+        ""microseconds"": ""<integer>"",
+        ""nanoseconds"": ""<integer>"",
+        ""minutes"": ""<integer>"",
+        ""seconds"": ""<integer>"",
+        ""totalDays"": ""<double>"",
+        ""totalHours"": ""<double>"",
+        ""totalMilliseconds"": ""<double>"",
+        ""totalMicroseconds"": ""<double>"",
+        ""totalNanoseconds"": ""<double>"",
+        ""totalMinutes"": ""<double>"",
+        ""totalSeconds"": ""<double>""
+      },
+      ""occurences"": [
+        {
+          ""correlationId"": ""<string>"",
+          ""id"": ""<string>"",
+          ""startDate"": ""<dateTime>"",
+          ""endDate"": ""<dateTime>"",
+          ""duration"": {
+            ""ticks"": ""<long>"",
+            ""days"": ""<integer>"",
+            ""hours"": ""<integer>"",
+            ""milliseconds"": ""<integer>"",
+            ""microseconds"": ""<integer>"",
+            ""nanoseconds"": ""<integer>"",
+            ""minutes"": ""<integer>"",
+            ""seconds"": ""<integer>"",
+            ""totalDays"": ""<double>"",
+            ""totalHours"": ""<double>"",
+            ""totalMilliseconds"": ""<double>"",
+            ""totalMicroseconds"": ""<double>"",
+            ""totalNanoseconds"": ""<double>"",
+            ""totalMinutes"": ""<double>"",
+            ""totalSeconds"": ""<double>""
+          },
+          ""description"": ""<string>"",
+          ""location"": {
+            ""id"": ""<string>"",
+            ""surname"": ""<string>"",
+            ""mail"": ""<string>"",
+            ""phone"": ""<string>"",
+            ""organization"": ""<string>"",
+            ""address"": ""<string>"",
+            ""city"": ""<string>"",
+            ""zipCode"": ""<string>"",
+            ""eAppointmentUrl"": ""<uri>""
+          }
+        },
+        {
+          ""correlationId"": ""<string>"",
+          ""id"": ""<string>"",
+          ""startDate"": ""<dateTime>"",
+          ""endDate"": ""<dateTime>"",
+          ""duration"": {
+            ""ticks"": ""<long>"",
+            ""days"": ""<integer>"",
+            ""hours"": ""<integer>"",
+            ""milliseconds"": ""<integer>"",
+            ""microseconds"": ""<integer>"",
+            ""nanoseconds"": ""<integer>"",
+            ""minutes"": ""<integer>"",
+            ""seconds"": ""<integer>"",
+            ""totalDays"": ""<double>"",
+            ""totalHours"": ""<double>"",
+            ""totalMilliseconds"": ""<double>"",
+            ""totalMicroseconds"": ""<double>"",
+            ""totalNanoseconds"": ""<double>"",
+            ""totalMinutes"": ""<double>"",
+            ""totalSeconds"": ""<double>""
+          },
+          ""description"": ""<string>"",
+          ""location"": {
+            ""id"": ""<string>"",
+            ""surname"": ""<string>"",
+            ""mail"": ""<string>"",
+            ""phone"": ""<string>"",
+            ""organization"": ""<string>"",
+            ""address"": ""<string>"",
+            ""city"": ""<string>"",
+            ""zipCode"": ""<string>"",
+            ""eAppointmentUrl"": ""<uri>""
+          }
+        }
+      ],
+      ""isGuaranteed"": ""<boolean>"",
+      ""trainingType"": {},
+      ""timeInvestAttendee"": {
+        ""ticks"": ""<long>"",
+        ""days"": ""<integer>"",
+        ""hours"": ""<integer>"",
+        ""milliseconds"": ""<integer>"",
+        ""microseconds"": ""<integer>"",
+        ""nanoseconds"": ""<integer>"",
+        ""minutes"": ""<integer>"",
+        ""seconds"": ""<integer>"",
+        ""totalDays"": ""<double>"",
+        ""totalHours"": ""<double>"",
+        ""totalMilliseconds"": ""<double>"",
+        ""totalMicroseconds"": ""<double>"",
+        ""totalNanoseconds"": ""<double>"",
+        ""totalMinutes"": ""<double>"",
+        ""totalSeconds"": ""<double>""
+      },
+      ""timeModel"": ""<string>""
+    },
+    ""productUrl"": ""<uri>"",
+    ""contacts"": [
+      {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""magna_acb"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      },
+      {
+        ""id"": ""<string>"",
+        ""surname"": ""<string>"",
+        ""mail"": ""<string>"",
+        ""phone"": ""<string>"",
+        ""organization"": ""<string>"",
+        ""address"": ""<string>"",
+        ""city"": ""frankfurt"",
+        ""zipCode"": ""<string>"",
+        ""eAppointmentUrl"": ""<uri>""
+      }
+    ],
+    ""trainingType"": 1,
+    ""individualStartDate"": ""<string>"",
+    ""price"": 42.1,
+    ""priceDescription"": ""<string>"",
+    ""accessibilityAvailable"": false,
+    ""tags"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""categories"": [
+      ""<string>"",
+      ""<string>""
+    ],
+    ""publishingDate"": ""0001-01-01T00:00:00Z"",
+    ""unpublishingDate"": ""0001-01-01T00:00:00Z"",
+    ""successor"": ""<string>"",
+    ""predecessor"": ""<string>""
+  }
+]";
+
+     
         private async Task CleanTestDocuments()
         {
             var dal = Helpers.GetDal();
@@ -71,10 +617,9 @@ namespace Apollo.Api.UnitTests
         /// Tests the insertion of a Training object and its subsequent deletion.
         /// </summary>
         [TestMethod]
-        public async Task InsertTraining()
+        public async Task InsertTrainings()
         {
             var api = Helpers.GetApolloApi();
-
             var training = new Training
             {
                 Id = "T01",
@@ -84,6 +629,10 @@ namespace Apollo.Api.UnitTests
             await api.InsertTraining(training);
 
             await api.DeleteTrainings(new string[] { training.Id });
+
+            await api.InsertTrainings(_testTrainings);
+
+            await api.DeleteTrainings(_testTrainings.Select(i => i.Id).ToArray());
         }
 
 
@@ -151,7 +700,6 @@ namespace Apollo.Api.UnitTests
         [TestMethod]
         public async Task QueryTrainings()
         {
-            // Arrange
             var api = Helpers.GetApolloApi();
 
             var query = new Apollo.Common.Entities.Query
@@ -220,12 +768,29 @@ namespace Apollo.Api.UnitTests
             // add more assertions based on your specific testing requirements
         }
 
+        [TestMethod]
+        public async Task InsertComplexTraining()
+        {
+            // Arrange
+            var api = Helpers.GetApolloApi();
+
+            JsonSerializerOptions opts = new JsonSerializerOptions {
+                 PropertyNameCaseInsensitive = true,
+            };
+
+            Training[]? t = JsonSerializer.Deserialize<Training[]>(_complexTrainingJson, opts);
+
+            await api.InsertTrainings(t!);
+
+            await api.DeleteTrainings(t.Select(x=>x.Id).ToArray());
+
+        }
 
         /// <summary>
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         /// </summary>
         [TestMethod]
-        public async Task LookupTrainingsWithLoans()
+        public async Task LookupTrainingsWithLoansTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -298,5 +863,86 @@ namespace Apollo.Api.UnitTests
         }
 
 
+        /// <summary>
+        ///  A training has a list of Appointments and an Appointment can contain a Contact where the Training is taking place.
+        /// </summary>
+        /// <returns></returns>
+
+        [TestMethod]
+        public async Task TrainingWithAppointmentsTest()
+        {
+
+        }
+
+
+        /// <summary>
+        /// Filters for training with specific IndividualStartDate
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TrainingsWithIndividualStartDateTest()
+        {
+        }
+
+        /// <summary>
+        /// Filters for training with specific IndividualStartDate
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TrainingAppointmentDateTest()
+        {
+        }
+
+        /// <summary>
+        /// NOTE; Duration is an auto calculated Property that can very well be null. 3 out of 6 tenants do not support dates that would allow a duration to be calculated.
+        /// If null not recognized by the filter – therefor not in the result list.
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TrainingAppointmentDurationTest()
+        {
+        }
+
+
+        /// <summary>
+        /// A Training has an auto calculated property which is based on the TrainingType of the Appointment List of a Training.
+        /// This is a flagged Enum. And the user should be able to Multiselect in a Filter for the flagged Enum.
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TrainingTypeTest()
+        {
+        }
+
+
+        /// <summary>
+        /// Test price filter operations including th esorting by price.
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TrainingPriceTest()
+        {
+
+
+        }
+
+
+        /// <summary>
+        /// Retunrs provider1 OR provider2 or .. (Multiprovider select feature.)
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TrainingMultiProviderTest()
+        {
+        }
+
+        /// <summary>
+        /// Retrurns trainigns with accessibility flag.
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task TrainingAssessibilityTest()
+        {
+        }
     }
 }

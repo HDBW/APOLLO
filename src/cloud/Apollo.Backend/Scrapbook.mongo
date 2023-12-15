@@ -1,5 +1,15 @@
 
+db.trainings.count()
 db.trainings.find()
+
+db.accommodations.find({'Loans.4': {$exists: true}})
+
+db.trainings.find( { Loans: { $size: 4 } } );
+
+db.trainings.find({Loans: { $size: 4}}).count()
+db.trainings.find({Loans: { $size: { $gt : 1 } }}).count()
+
+db.collection.find( { "Loans.1": {  "$exists": true } } )
 
 db.trainings.find({"AssetRefs": []})
 

@@ -39,19 +39,19 @@ namespace Apollo.Common.Entities
         /// Training agenda.
         /// </summary>
         //[BsonElement("Content")]
-        public List<string> Content { get; set; }
+        public List<string>? Content { get; set; }
 
         /// <summary>
         /// Specifies the list of benefits of the training.
         /// </summary>
         //[BsonElement("Benefit")]
-        public List<string> BenefitList { get; set; }
+        public List<string>? BenefitList { get; set; }
 
         /// <summary>
         /// Specifies the list of certificates that can be obtained after the training.
         /// </summary>
         //[BsonElement("Certificate")]
-        public List<string> Certificate { get; set; }
+        public List<string>? Certificate { get; set; }
 
         //TODO: Maybe Flagged Enum for Certification Type
         //[Flags]
@@ -61,7 +61,7 @@ namespace Apollo.Common.Entities
         /// The list of recommended prerequisites for the training  
         /// </summary>
         //[BsonElement("Prerequisites")]
-        public List<string> Prerequisites { get; set; }
+        public List<string>? Prerequisites { get; set; }
 
         /// <summary>
         /// Financial Aid provided for a Training
@@ -76,26 +76,26 @@ namespace Apollo.Common.Entities
         public EduProvider CourseProvider { get; set; }
 
         //[BsonElement("AppointmentUrl")]
-       public List<Appointment> Appointment { get; set; }
+       public List<Appointment>? Appointment { get; set; }
 
-        public string TargetAudience { get; set; }
+        public string? TargetAudience { get; set; }
 
         /// <summary>
         /// Training Provider Url or Target
         /// </summary>
         //[BsonElement("ProductUrl")]
-        public Uri ProductUrl { get; set; }
+        public Uri? ProductUrl { get; set; }
 
         /// <summary>
         /// Defined as City + Contact
         /// </summary>
         // [BsonElement("Contacts")]
-        public Dictionary<string, Contact> Contacts { get; set; }
+        public List<Contact>? Contacts { get; set; }
 
         /// <summary>
         /// The type of the training.
         /// </summary>
-        public TrainingType TrainingType { get; set; }
+        public TrainingType? TrainingType { get; set; }
 
 
         // It should be bool but what do I know about education ofc it is not bool
@@ -111,7 +111,7 @@ namespace Apollo.Common.Entities
         public decimal? Price { get; set; } 
 
         // [BsonElement("PriceDescription")]
-        public string PriceDescription { get; set; }
+        public string? PriceDescription { get; set; }
 
         //[BsonElement("Accessibility")]
         public bool AccessibilityAvailable { get; set; }
@@ -128,22 +128,22 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// These are Apollo Ids not External Ids !!!
         /// </summary>
-        public List<Training> SimilarTrainings { get; set; }
+        public List<Training>? SimilarTrainings { get; set; }
 
         /// <summary>
         /// Apollo Internal Id only to be set by the Backend!
         /// </summary>
-        public List<Training> RecommendedTrainings { get; set; }
-
+        public List<Training>? RecommendedTrainings { get; set; }
+        
         #endregion
 
         #warning candidate for interface!!
         #region IContentPublising // todo.
 
         //[BsonElement("PublishingDate")]
-        public DateTime PublishingDate { get; set; }
+        public DateTime? PublishingDate { get; set; }
         //[BsonElement("UnpublishingDate")]
-        public DateTime UnpublishingDate { get; set; }
+        public DateTime? UnpublishingDate { get; set; }
         //[BsonElement("Successor")]
         public string? Successor { get; set; }
         //[BsonElement("Predecessor")]

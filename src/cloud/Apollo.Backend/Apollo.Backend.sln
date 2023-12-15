@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daenet.MongoDal.UnitTests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.Api.UnitTests", "ApolloApiUnitTests\Apollo.Api.UnitTests.csproj", "{3968DECD-3B2F-449A-AF4F-C19135BB4853}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.RestService.UnitTests", "Apollo.RestService.UnitTests\Apollo.RestService.UnitTests.csproj", "{24635A55-69C4-4517-AC44-5386BAD84F8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.RestService.UnitTests", "Apollo.RestService.UnitTests\Apollo.RestService.UnitTests.csproj", "{24635A55-69C4-4517-AC44-5386BAD84F8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +75,7 @@ Global
 		{A93E82D7-AB0A-4900-A5EE-3E794A37302C} = {6A511DB5-E0DC-4B44-B1AE-B2A8989B0A9C}
 		{B9B3F6C2-AEFB-4EF2-9655-8AA1F37642CA} = {591D705F-17FC-4D43-A0B4-85B118A2DD77}
 		{4DDE8D2F-457B-41A2-9847-D9117BB496C2} = {591D705F-17FC-4D43-A0B4-85B118A2DD77}
+		{24635A55-69C4-4517-AC44-5386BAD84F8A} = {6A511DB5-E0DC-4B44-B1AE-B2A8989B0A9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {04203D95-B548-4FCD-9BA6-5E2AAB48F565}

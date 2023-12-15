@@ -41,9 +41,12 @@ namespace Apollo.Api
             if (item == null)
                 throw new ArgumentException("Item cannot be null!");
 
+            if (item.GetType().IsClass == false)
+                throw new ArgumentException("Item must be a class!");
+
             ExpandoObject expo = new ExpandoObject();
 
-            IDictionary<string, object> expoDict = expo as IDictionary<string, object>;
+            IDictionary<string, object?> expoDict = expo as IDictionary<string, object?>;
 
             foreach (var prop in item.GetType().GetProperties())
             {
@@ -53,7 +56,19 @@ namespace Apollo.Api
                 {
                     if (IsList(prop.PropertyType))
                     {
-                        expoDict.Add(prop.Name, GetValueFromListOrArray(prop, prop.GetValue(item))!);
+                        expoDict.Add(prop.Name, ConvertFromList(prop, prop.GetValue(item))!);
+                    }
+                    else if (prop.PropertyType == typeof(Uri))
+                    {
+                        var val = prop.GetValue(item);
+
+                        expoDict.Add(prop.Name, val == null! ? null : ((Uri)val).ToString());
+                    }
+                    else if (prop.PropertyType.IsClass && prop.PropertyType != typeof(string))
+                    {
+                        var val = prop.GetValue(item);
+
+                        expoDict.Add(prop.Name, val == null! ? null : Convert(val)!);
                     }
                     else
                         expoDict.Add(prop.Name, prop.GetValue(item)!);
@@ -65,7 +80,7 @@ namespace Apollo.Api
 
         private static bool IsList(Type type)
         {
-            return type.GetInterfaces().Count(i => i.Name.Contains("List")) > 0 || type.Name.Contains("List");
+            return type.GetInterfaces().Count(i => i.Name.Contains("List")) > 0 || type.Name.Contains("List") || type.IsArray;
         }
 
 
@@ -77,7 +92,7 @@ namespace Apollo.Api
         /// <returns></returns>
         /// <exception cref="NullReferenceException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        private static IList<ExpandoObject> GetValueFromListOrArray(PropertyInfo propertyInfo, object? val)
+        private static IList<object> ConvertFromList(PropertyInfo propertyInfo, object? val)
         {
             if (val == null)
                 return null;
@@ -87,20 +102,38 @@ namespace Apollo.Api
 
             var listType = typeof(List<>);
 
-            List<ExpandoObject> list=new List<ExpandoObject>();
+            List<object?> list = new List<object?>();
 
             var arrElements = val as IEnumerable<object>;
 
             if (arrElements != null)
             {
-                foreach (var item in arrElements)
+                foreach (var listItem in arrElements)
                 {
-                    var expandoItem = Convert(item);
-                    list.Add(expandoItem);
-                }              
+                    object? convertedValue = null;
+
+                    if (listItem == null)
+                    {
+                        list.Add(null);
+                        continue;
+                    }
+
+                    var tp = listItem.GetType();
+
+                    if (tp.IsClass && tp != typeof(string))
+                    {
+                        convertedValue = Convert(listItem);
+                    }
+                    else if (tp.IsPrimitive || tp.IsValueType || tp == typeof(string))
+                        convertedValue = listItem;
+                    else
+                        throw new ArgumentException("Unsuported itm type of list item!");
+
+                    list.Add(convertedValue);
+                }
             }
 
-            return list;
+            return list!;
         }
 
 

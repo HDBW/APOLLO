@@ -14,8 +14,27 @@ namespace Daenet.MongoDal.UnitTests
     {
         Training[] _testTrainings = new Training[]
         {
-            new Training(){  Id = "T01", ProviderId = "unittest", TrainingName = "Open AI" },
-            new Training(){  Id = "T02", ProviderId = "unittest", TrainingName = "Azure AI" },
+            new Training(){  Id = "T01", ProviderId = "unittest", TrainingName = "Open AI",
+                Loans = new List<Loans>(
+                new Loans[]
+                {
+                    new Loans() { Id = "L01", Name = "Loan 1" },
+                    new Loans() { Id = "L02", Name = "Loan 2" }
+                }
+                )
+            },
+
+            new Training(){  Id = "T02", ProviderId = "unittest", TrainingName = "Azure AI",
+             Loans = new List<Loans>(
+                new Loans[]
+                {
+                    new Loans() { Id = "L01", Name = "Loan 1" },
+                    new Loans() { Id = "L02", Name = "Loan 2" },
+                    new Loans() { Id = "L03", Name = "Loan 3" },
+                    new Loans() { Id = "L04", Name = "Loan 4" }
+                }
+                )},
+
             new Training(){  Id = "T03" , ProviderId = "unittest" },
         };
 
@@ -208,6 +227,31 @@ namespace Daenet.MongoDal.UnitTests
             }, 100, 0);
 
             Assert.IsTrue(res?.Count == 3);
+        }
+
+
+        [TestMethod]
+        public async Task CountTest()
+        {
+            var dal = Helpers.GetDal();
+
+            await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
+            {
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
+                 {
+                     new Daenet.MongoDal.Entitties.FieldExpression()
+                     {
+                         FieldName = "Count(Loans)",
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.GreaterThan,
+                         Argument = new List<object>(){0},
+                      }
+                 }
+
+            }, 100, 0);
+
+            Assert.IsTrue(res?.Count == 2);
         }
     }
 }
