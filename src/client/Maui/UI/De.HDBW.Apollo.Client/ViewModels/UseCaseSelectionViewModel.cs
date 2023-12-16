@@ -28,6 +28,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(builder);
             SessionService = sessionService;
             Builder = builder;
+
             // UseCases.Add(UseCaseEntry.Import(UseCase.A, OnUseCaseSelectionChanged));
             // UseCases.Add(UseCaseEntry.Import(UseCase.B, OnUseCaseSelectionChanged));
             // UseCases.Add(UseCaseEntry.Import(UseCase.C, OnUseCaseSelectionChanged));

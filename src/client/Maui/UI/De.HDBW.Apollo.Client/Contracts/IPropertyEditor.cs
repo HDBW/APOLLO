@@ -1,4 +1,7 @@
-﻿using De.HDBW.Apollo.Client.Models.Editors;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using De.HDBW.Apollo.Client.Models.Editors;
 
 namespace De.HDBW.Apollo.Client.Contracts
 {

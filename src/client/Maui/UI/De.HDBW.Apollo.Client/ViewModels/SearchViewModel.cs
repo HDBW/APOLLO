@@ -194,6 +194,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     token.ThrowIfCancellationRequested();
 
+                    query = query ?? string.Empty;
                     var converter = new CourseTagTypeToStringConverter();
                     var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { query }, QueryOperator.Contains);
                     filter.AddExpression(nameof(Training.Description), new List<object>() { query }, QueryOperator.Contains);

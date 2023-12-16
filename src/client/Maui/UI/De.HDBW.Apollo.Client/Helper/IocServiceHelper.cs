@@ -1,4 +1,7 @@
-﻿namespace De.HDBW.Apollo.Client.Helper;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+namespace De.HDBW.Apollo.Client.Helper;
 
 public static class IocServiceHelper
 {

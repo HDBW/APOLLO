@@ -218,7 +218,7 @@ public static class MauiProgram
                 serviceProvider.GetService<ICourseAppointmentRepository>() !,
                 serviceProvider.GetService<ICourseContactRelationRepository>() !,
                 serviceProvider.GetService<IEduProviderItemRepository>() !,
-                serviceProvider.GetService<IDataBaseConnectionProvider>()!);
+                serviceProvider.GetService<IDataBaseConnectionProvider>() !);
         });
     }
 

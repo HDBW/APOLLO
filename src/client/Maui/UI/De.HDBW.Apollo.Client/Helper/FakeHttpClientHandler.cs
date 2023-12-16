@@ -25,8 +25,9 @@ namespace De.HDBW.Apollo.Client.Helper
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            ArgumentNullException.ThrowIfNull(request);
             cancellationToken.ThrowIfCancellationRequested();
-            if (!(string.Equals(request?.RequestUri?.LocalPath, TrainingUrl.LocalPath) && request?.Method == HttpMethod.Post))
+            if (!(string.Equals(request.RequestUri?.LocalPath, TrainingUrl.LocalPath) && request.Method == HttpMethod.Post))
             {
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }

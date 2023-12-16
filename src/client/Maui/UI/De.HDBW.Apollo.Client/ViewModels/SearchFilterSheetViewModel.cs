@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -28,15 +31,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
-           ITrainingService trainingService,
+           ISheetService sheetService,
            ILogger<SearchFilterSheetViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
-            ArgumentNullException.ThrowIfNull(trainingService);
-            TrainingService = trainingService;
+            ArgumentNullException.ThrowIfNull(sheetService);
+            SheetService = sheetService;
         }
 
-        private ITrainingService TrainingService { get; }
+        private ISheetService SheetService { get; }
 
         public async override Task OnNavigatedToAsync()
         {
@@ -91,20 +94,20 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanBack), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private Task Back(CancellationToken token)
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanClose), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        private Task Close(CancellationToken token)
         {
             DialogService.ClosePopup(this);
             return Task.CompletedTask;
         }
 
-        private bool CanBack()
+        private bool CanClose()
         {
             return true;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanReset), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private Task Reset(CancellationToken token)
+        private Task ResetFilter(CancellationToken token)
         {
             return Task.CompletedTask;
         }

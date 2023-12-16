@@ -1,4 +1,7 @@
-﻿using System;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +24,7 @@ namespace De.HDBW.Apollo.Client.Models.Editors
 
         public override string GetValueAsString()
         {
-            return Value == null ? string.Empty : Value.ToString();
+            return Value?.ToString() ?? string.Empty;
         }
     }
 }
