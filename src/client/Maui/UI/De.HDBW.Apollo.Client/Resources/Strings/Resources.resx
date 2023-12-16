@@ -588,4 +588,31 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="SearchView_Title" xml:space="preserve">
     <value>Suche</value>
   </data>
+  <data name="FiltersSheet_Location" xml:space="preserve">
+    <value>Standort</value>
+  </data>
+  <data name="FiltersSheet_IndividualStartDate" xml:space="preserve">
+    <value>individuelles Startdatum</value>
+  </data>
+  <data name="FiltersSheet_Price" xml:space="preserve">
+    <value>Preis</value>
+  </data>
+  <data name="FiltersSheet_SelectPrice" xml:space="preserve">
+    <value>Preis auswählen</value>
+  </data>
+  <data name="PropertyEditor_StartDate" xml:space="preserve">
+    <value>Startdatum</value>
+  </data>
+  <data name="PropertyEditor_EndDate" xml:space="preserve">
+    <value>Enddatum</value>
+  </data>
+  <data name="FiltersSheet_Sorting" xml:space="preserve">
+    <value>Sortierung</value>
+  </data>
+  <data name="FiltersSheet_RelevanceDescending" xml:space="preserve">
+    <value>Relevanz absteigend</value>
+  </data>
+  <data name="FiltersSheet_RelevanceAscending" xml:space="preserve">
+    <value>Relevanz aufsteigend</value>
+  </data>
 </root>

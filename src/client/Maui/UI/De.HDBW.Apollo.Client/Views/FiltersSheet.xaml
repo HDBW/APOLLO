@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+            xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+            x:Class="De.HDBW.Apollo.Client.Views.FiltersSheet"
+            xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+            IsCancelable="True"
+            BackgroundColor="Azure"
+            ios:Page.UseSafeArea="true"
+            HasHandle="True"
+            HasBackdrop="True"
+            CornerRadius="20"
+            xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+            xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
+            xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+            x:DataType="viewModels:FiltersSheetViewModel"
+            xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+            Padding="0,20">
+    <the49:BottomSheet.Detents>
+        <the49:FullscreenDetent />
+    </the49:BottomSheet.Detents>
+
+    <Grid RowDefinitions="auto,*,auto">
+        <Grid.Resources>
+
+            <DataTemplate x:Key="DefaultTemplate">
+            </DataTemplate>
+            
+            <selector:EditorTemplateSelector x:Key="EditorTemplateSelector"
+                                             DefaultTemplate="{StaticResource DefaultTemplate}"/>
+            
+        </Grid.Resources>
+        
+        <Grid HorizontalOptions="FillAndExpand" Padding="20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                Command="{Binding BackCommand}"
+                BackgroundColor="Transparent"
+                Padding="0"
+                HorizontalOptions="Start">
+                <Button.ImageSource>
+
+                    <FontImageSource
+                        FontFamily="MaterialIconsOutlined-Regular"
+                        Glyph="&#xe5c4;"
+                        Color="Black" />
+
+                </Button.ImageSource>
+            </Button>
+
+            <Label Grid.Column="1"
+                   Padding="0,0,10,0"
+                   Text="Zurücksetzen"
+                   FontSize="Medium"
+                   TextColor="Purple"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End" />
+
+            <Button
+                Grid.Column="2"
+                Command="{Binding ResetCommand}"
+                ImageSource="magnify.png"
+                BackgroundColor="Transparent"
+                Padding="0"
+                HorizontalOptions="End">
+            </Button>
+        </Grid>
+
+        <ScrollView VerticalOptions="FillAndExpand"
+                    Grid.Row="1"
+                    Padding="20,0">
+            <VerticalStackLayout>
+
+                <VerticalStackLayout    
+                    BindableLayout.ItemsSource="{Binding EditorList}"
+                    BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}">
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+            
+        </ScrollView>
+
+        <Button
+            TextColor="White"
+            BackgroundColor="{StaticResource Primary}"
+            Text="Filter"
+            Command="{Binding ApplyFilterCommand}"
+            Grid.Row="2"
+            Margin="20,0"/>
+    </Grid>
+
+</the49:BottomSheet>

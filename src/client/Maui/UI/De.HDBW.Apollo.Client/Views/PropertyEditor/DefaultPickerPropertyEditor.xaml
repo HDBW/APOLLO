@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultPickerPropertyEditor"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Editors"
+             x:DataType="models:PickerPropertyEditor">
+    <VerticalStackLayout>
+        <Label 
+            Text="{Binding Label}"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"/>
+
+        <Picker
+            ItemsSource="{Binding Values}"
+            SelectedItem="{Binding Value}"
+            ItemDisplayBinding="{Binding Label}">
+        </Picker>
+    </VerticalStackLayout>
+</ContentView>

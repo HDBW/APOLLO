@@ -29,6 +29,10 @@
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="OnShowFiltersSheetClicked" IconImageSource="magnify.png" />
+    </ContentPage.ToolbarItems>
+
     <CollectionView ItemsSource="{x:Binding SearchResults}">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="interactionModels:StartViewInteractionEntry">
