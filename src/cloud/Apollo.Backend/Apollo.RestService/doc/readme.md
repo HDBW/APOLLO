@@ -60,7 +60,8 @@ as the number of records and will be shown in the response if RequestCount is se
 If the number of all matches is required, set Top to < 0 (-1 for example) and RequestCount to true.
 The response will not show any result but will show the number of all matches.
 
--	*Fields* (string[] array): Specified properties that should be reflected in the result. If this is not specified, all properties are reflected instead.
+-	*Fields* (string[] array): Specified properties that should be reflected in the result. If this is not specified, all properties are reflected instead.Please note that properties must be specified in a Pascal Case convention.
+    For example, if the property name is **"trainingName"**, it should be specified as **"TrainingName"**.
 -	*Skip* (integer): Used for paging indicated by (page - 1) * pageSize. For example, if Top is 10, Skip is 0 and there are 11 matches, the result will show the 1st to 10th matches. If Skip is changed to 1, then the result will show the 2nd to 11th matches.
 
 -	RequestCount (boolean): If set to true, then the response will contain the number of pages and records (items). 
@@ -68,11 +69,13 @@ The number of records equals Top*100 and the number of records equals the number
 This argument is used to avoid a double query inside of the backend when several pages are required. To calculate the number of pages, the backend first executes the query and then executes the request to get the number of available items for the given query, which is finally recalculated in the number of pages. In the case of FALSE (default), the second query is not executed.
 
 **Filter**: A complex query that defines the criteria of a query. Each criterion is defined in a field. Queried entities must fulfill all the defined fields to be reflected. In other words, between each field is an AND operation. Each field in the filter should contain:
--	**FieldName (string)**: Name of a property in an entity.
+- **FieldName (string)**: Name of a property in an entity.Please note that properties must be specified in a Pascal Case convention.
+    For example, if the property name is **"propertyName"**, it should be specified as **"PropertyName"**.
 - **Operator (integer)**: Defined the operator. Possible values are 0 for Equals, 1 for Contains (for strings only), 2 for StartsWith (for strings only), 3 for GreaterThan, and 4 for LessThan.
 - **Argument (string)**: The argument of the operation. There can be one or several arguments. If at least one argument is fulfilled, there is a match. In other words, between each argument is an OR operation.
 - **Distinct (boolean)**: If is set to true, the result is returned as distinct.
-
+- **IsOrOperator** Speficifies whether the OR operator should be applied between each field expression in the filter. 
+        ],
 ### Example
 
 Considering a request body to query Product entities that satisfy these criteria:
@@ -89,6 +92,7 @@ Considering a request body to query Product entities that satisfy these criteria
 Then the following request body of the Training entity should be of the following:
 ```sh
 {
+"IsOrOperator": false,
   "Fields": [
     "TrainingName", "ProviderId"
   ],
@@ -101,7 +105,7 @@ Then the following request body of the Training entity should be of the followin
         "FieldName": "Description",
         "Operator": 1, // Contains
         "Argument": [
-          "Large Language Models", "005528541", "001234679"
+          "Large Language Models", "GPT", "LLM"// Means Arg1 OR Arg2 OR Arg3
         ],
         "Distinct": false
       },

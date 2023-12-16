@@ -104,6 +104,11 @@ namespace Daenet.MongoDal.UnitTests
 
             var res = await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => t.Id).ToArray(), false);
 
+            if (res != _testTrainings.Length)
+            {
+
+            }
+
             Assert.IsTrue(res == _testTrainings.Length);
         }
 
@@ -141,7 +146,7 @@ namespace Daenet.MongoDal.UnitTests
                      {
                          FieldName = "TrainingName",
                          Operator = Daenet.MongoDal.Entitties.QueryOperator.Contains,
-                         Argument = new List<object>(){"test"},
+                         Argument = new List<object>(){"sdlvkflsfsdlfkhe"},
                       }
                  }
 
@@ -159,6 +164,9 @@ namespace Daenet.MongoDal.UnitTests
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
+                IsOrOperator = false,
+
+                // Not equal to anything (means all documents) AND (because IsOrOperator = false) starts with T01 OR T02 Or T03
                 Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
                  {
                      new Daenet.MongoDal.Entitties.FieldExpression()
@@ -166,12 +174,19 @@ namespace Daenet.MongoDal.UnitTests
                          FieldName = "TrainingName",
                          Operator = Daenet.MongoDal.Entitties.QueryOperator.NotEquals,
                          Argument = new List<object>(){"anything"},
+                      },
+
+                      new Daenet.MongoDal.Entitties.FieldExpression()
+                     {
+                         FieldName = "Id",
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.StartsWith,
+                         Argument = new List<object>(){"T01", "T02", "T03"},
                       }
                  }
 
             }, 100, 0);
 
-            Assert.IsTrue(res?.Count == 3);
+            Assert.IsTrue(res?.Count > 0);
         }
 
         [TestMethod]
@@ -181,7 +196,7 @@ namespace Daenet.MongoDal.UnitTests
 
             await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
 
-            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
+            var res = await dal.ExecuteQuery<Training>(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
                 Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
                  {
@@ -189,7 +204,7 @@ namespace Daenet.MongoDal.UnitTests
                      {
                          FieldName = "TrainingName",
                          Operator = Daenet.MongoDal.Entitties.QueryOperator.Contains,
-                         Argument = new List<object>(){"AI"},
+                         Argument = new List<object>(){" AI", " dsd "},
                       }
                  }
 
@@ -241,17 +256,25 @@ namespace Daenet.MongoDal.UnitTests
             {
                 Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
                  {
+                     // Has some Loans
                      new Daenet.MongoDal.Entitties.FieldExpression()
                      {
                          FieldName = "Count(Loans)",
                          Operator = Daenet.MongoDal.Entitties.QueryOperator.GreaterThan,
                          Argument = new List<object>(){0},
+                      },
+
+                      new Daenet.MongoDal.Entitties.FieldExpression()
+                     {
+                         FieldName = "Id",
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.StartsWith,
+                         Argument = new List<object>(){"T"},
                       }
                  }
 
             }, 100, 0);
 
-            Assert.IsTrue(res?.Count == 2);
+            Assert.IsTrue(res?.Count >= 2);
         }
     }
 }

@@ -51,7 +51,11 @@ namespace Apollo.Api
             foreach (var prop in item.GetType().GetProperties())
             {
                 if (prop.Name == "Id")
+                {
+                    // We put both Id and _id to be able to deserialize automatically from Id.
+                    expoDict.Add("Id", prop.GetValue(item)!);
                     expoDict.Add("_id", prop.GetValue(item)!);
+                }
                 else
                 {
                     if (IsList(prop.PropertyType))

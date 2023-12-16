@@ -10,8 +10,11 @@ using Daenet.MongoDal.Functions;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Misc;
+using SharpCompress.Common;
 
 namespace Daenet.MongoDal
 {
@@ -54,7 +57,10 @@ namespace Daenet.MongoDal
 
             this._client = new MongoClient(GetSettings(_cfg.MongoConnStr));
 
-            this._db = this._client.GetDatabase(_cfg.MongoDatabase);
+            var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
+            ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
+
+            this._db = this._client.GetDatabase(_cfg.MongoDatabase);           
         }
 
         /// <summary>
@@ -242,12 +248,7 @@ namespace Daenet.MongoDal
             return result.DeletedCount;
         }
 
-        //public async Task<IList<T>> ExecuteQueryInternal<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
-        //{
-
-        //}
-
-        public async Task<IList<T>> ExecuteQuery<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        public async Task<IAsyncCursor<BsonDocument>> ExecuteQueryInternal(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
         {
             if (skip < 0)
                 skip = 0;
@@ -310,8 +311,26 @@ namespace Daenet.MongoDal
             else
             {
                 documents = await coll.Find(filter).Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
-                //documents = await coll.Aggregate().Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
             }
+
+            return documents; 
+        }
+
+        /// <summary>
+        /// Returns documents that match the specified criteria.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="fields"></param>
+        /// <param name="query"></param>
+        /// <param name="top"></param>
+        /// <param name="skip"></param>
+        /// <param name="sortExpression"></param>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public async Task<IList<T>> ExecuteQuery<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        {
+            var documents = await ExecuteQueryInternal(collectionName, fields, query, top, skip, sortExpression, dateTime);
 
             var results = new List<T>();
 
@@ -319,10 +338,12 @@ namespace Daenet.MongoDal
             {
                 T? doc = BsonSerializer.Deserialize<T>(bsonDoc);
 
+                // This is required, because the default mapper of the Mongo C# Driver does not correctlly map BsonDoc._id to T.Id.
+                ((dynamic)doc!).Id = bsonDoc["Id"].ToString();
+
                 results.Add(doc);
             }
 
-            // Deserialize the BsonDocument to the desired type T.
             return results;
         }
 
@@ -332,70 +353,9 @@ namespace Daenet.MongoDal
         /// </summary>
         public async Task<IList<ExpandoObject>> ExecuteQuery(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
         {
-            if (skip < 0)
-                skip = 0;
+            var documents = await ExecuteQueryInternal(collectionName, fields, query, top, skip, sortExpression, dateTime);
+
             var results = new List<ExpandoObject>();
-
-            var coll = GetCollection(collectionName);
-
-            FilterDefinition<BsonDocument> filter;
-
-            //
-            // Firts, match everything
-            if (query == null || query.IsOrOperator == false)
-                filter = FilterDefinition<BsonDocument>.Empty;
-            else
-                filter = Builders<BsonDocument>.Filter.Eq("_id", "should not match anything");
-
-            if (query != null)
-            {
-                filter = BuildFilterFind(query, filter);
-            }
-
-            if (dateTime.HasValue)
-            {
-                filter &= Builders<BsonDocument>.Filter.Gte("ChangedAt", dateTime.Value);
-            }
-
-            SortDefinition<BsonDocument> sort;
-
-            if (sortExpression != null)
-            {
-                if (sortExpression.Order == SortOrder.Ascending)
-                {
-                    sort = Builders<BsonDocument>.Sort.Ascending(sortExpression.FieldName);
-                }
-                else
-                {
-                    sort = Builders<BsonDocument>.Sort.Descending(sortExpression.FieldName);
-                }
-            }
-            else
-            {
-                sort = Builders<BsonDocument>.Sort.Descending("ChangedAt");
-            }
-            var projection = new BsonDocument();
-
-            var bsonElements = new List<BsonElement>();
-
-            IAsyncCursor<BsonDocument> documents;
-
-            if (fields != null)
-            {
-                projection.Add(new BsonElement("_id", 0));
-
-                foreach (var field in fields)
-                {
-                    projection.Add(new BsonElement(field, 1));
-                }
-
-                documents = await coll.Find(filter).Sort(sort).Skip(skip).Limit(top).Project(projection).ToCursorAsync();
-            }
-            else
-            {
-                documents = await coll.Find(filter).Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
-                //documents = await coll.Aggregate().Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
-            }
 
             foreach (var doc in documents.ToEnumerable())
             {
@@ -405,7 +365,6 @@ namespace Daenet.MongoDal
 
                 results.Add(expando);
             }
-
 
             return results;
         }
@@ -455,6 +414,9 @@ namespace Daenet.MongoDal
                     if (IsExpressionForNestedProperty(nestedQueries, field))
                         continue;
 
+                    if (field.FieldName.ToLower() == "id")
+                        field.FieldName = "_id";
+
                     filter |= BuildOrFilter(field);
                 }
 
@@ -462,12 +424,15 @@ namespace Daenet.MongoDal
             }
             else
             {
-                foreach (var q in query.Fields)
+                foreach (var field in query.Fields)
                 {
-                    if (IsExpressionForNestedProperty(nestedQueries, q))
+                    if (field.FieldName.ToLower() == "id")
+                        field.FieldName = "_id";
+
+                    if (IsExpressionForNestedProperty(nestedQueries, field))
                         continue;
 
-                    filter &= BuildAndFilter(q);
+                    filter &= BuildAndFilter(field);
                 }
 
                 filter = BuildANDFilterForNestedProps(filter, nestedQueries);
@@ -764,7 +729,7 @@ namespace Daenet.MongoDal
 
         private static FilterDefinition<BsonDocument> BuildNotEqANDFilter(FieldExpression qField)
         {
-            FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match"); ;
+            //FilterDefinition<BsonDocument> orFilter = Builders<BsonDocument>.Filter.Eq("_id", "should not match"); ;
 
             var emptyValues = new List<object> { "", null!, new List<object>() };
 
@@ -774,7 +739,8 @@ namespace Daenet.MongoDal
             {
                 arguments = qField.Argument.Union(emptyValues).ToList();
             }
-            orFilter &= Builders<BsonDocument>.Filter.Nin(qField.FieldName, arguments);
+
+            var orFilter = Builders<BsonDocument>.Filter.Nin(qField.FieldName, arguments);
 
             return orFilter;
         }
