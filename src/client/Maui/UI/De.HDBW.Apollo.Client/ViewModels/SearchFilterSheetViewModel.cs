@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Editors;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
@@ -26,6 +27,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<IPropertyEditor> _editorList = new ObservableCollection<IPropertyEditor>();
+        private string? _currentFilter;
 
         public SearchFilterSheetViewModel(
            IDispatcherService dispatcherService,
@@ -85,6 +87,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        protected override void RefreshCommands()
+        {
+            ApplyFilterCommand?.NotifyCanExecuteChanged();
+            ResetFilterCommand?.NotifyCanExecuteChanged();
+            CloseCommand?.NotifyCanExecuteChanged();
+        }
+
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            _currentFilter = navigationParameters.GetValue<string>(NavigationParameter.Data);
+        }
+
         private void LoadonUIThread(IEnumerable<IPropertyEditor> editorList)
         {
             EditorList.Clear();
@@ -95,10 +109,31 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanClose), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private Task Close(CancellationToken token)
+        private async Task Close(CancellationToken token)
         {
-            DialogService.ClosePopup(this);
-            return Task.CompletedTask;
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    await SheetService.CloseAsync(this);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Close)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Close)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(Close)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
         private bool CanClose()

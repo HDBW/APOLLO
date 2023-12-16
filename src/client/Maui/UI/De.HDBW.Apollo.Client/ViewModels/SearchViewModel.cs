@@ -18,6 +18,7 @@ using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
+using Newtonsoft.Json;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -60,6 +61,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             EduProviderItemRepository = eduProviderItemRepository;
             TrainingService = trainingService;
             SearchHistoryRepository = searchHistoryRepository;
+            Filter = CreateDefaultFilter(string.Empty);
         }
 
         private ISessionService SessionService { get; }
@@ -73,6 +75,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ITrainingService TrainingService { get; }
 
         private ISearchHistoryRepository SearchHistoryRepository { get; }
+
+        private Filter Filter { get; set; }
 
         public async void StartLoadSuggestions(string inputValue)
         {
@@ -164,7 +168,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFilterSheet))]
         private async Task OpenFilterSheet()
         {
-            await SheetService.OpenAsync(Routes.SearchFilterSheet, CancellationToken.None);
+            var parameters = new NavigationParameters();
+            parameters.Add(NavigationParameter.Data, JsonConvert.SerializeObject(Filter));
+            await SheetService.OpenAsync(Routes.SearchFilterSheet, CancellationToken.None, parameters);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch))]
@@ -196,14 +202,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     query = query ?? string.Empty;
                     var converter = new CourseTagTypeToStringConverter();
-                    var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { query }, QueryOperator.Contains);
-                    filter.AddExpression(nameof(Training.Description), new List<object>() { query }, QueryOperator.Contains);
-                    filter.AddExpression(nameof(Training.ShortDescription), new List<object>() { query }, QueryOperator.Contains);
-                    filter.AddExpression(nameof(Training.TrainingProvider), new List<object>() { query }, QueryOperator.Contains);
-                    filter.AddExpression(nameof(Training.CourseProvider), new List<object>() { query }, QueryOperator.Contains);
-                    filter.IsOrOperator = true;
-
-                    var courseItems = await TrainingService.SearchTrainingsAsync(filter, worker.Token);
+                    UpdateFilter(query);
+                    var courseItems = await TrainingService.SearchTrainingsAsync(Filter, worker.Token);
                     var eduProviderItems = await EduProviderItemRepository.GetItemsAsync(worker.Token);
                     courseItems = courseItems ?? Array.Empty<CourseItem>();
                     eduProviderItems = eduProviderItems ?? Array.Empty<EduProviderItem>();
@@ -306,8 +306,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void LoadonUIThread(HistoricalSuggestionEntry? historyEntry, SearchSuggestionEntry? suggestionEntry, SearchHistory history)
         {
-            Suggestions = new ObservableCollection<SearchSuggestionEntry>();
             Recents = new ObservableCollection<HistoricalSuggestionEntry>();
+            Suggestions = new ObservableCollection<SearchSuggestionEntry>();
         }
 
         private void LoadonUIThread(IEnumerable<StartViewInteractionEntry> interactionEntries)
@@ -318,13 +318,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private async Task LoadSuggestionsAsync(string inputValue, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { inputValue }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.Description), new List<object>() { inputValue }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.ShortDescription), new List<object>() { inputValue }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.TrainingProvider), new List<object>() { inputValue }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.CourseProvider), new List<object>() { inputValue }, QueryOperator.Contains);
-            filter.IsOrOperator = true;
-            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(filter, token).ConfigureAwait(false) : Array.Empty<string>();
+            UpdateFilter(inputValue);
+            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, token).ConfigureAwait(false) : Array.Empty<string>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
             {
@@ -338,14 +333,44 @@ namespace De.HDBW.Apollo.Client.ViewModels
             await ExecuteOnUIThreadAsync(
                 () =>
                 {
-                    Suggestions = new ObservableCollection<SearchSuggestionEntry>(courses);
                     Recents = new ObservableCollection<HistoricalSuggestionEntry>(history);
+                    Suggestions = new ObservableCollection<SearchSuggestionEntry>(courses);
                 }, token);
         }
 
         private void LoadonUIThread(IEnumerable<HistoricalSuggestionEntry> recents)
         {
             Recents = new ObservableCollection<HistoricalSuggestionEntry>(recents);
+        }
+
+        private Filter CreateDefaultFilter(string query)
+        {
+            var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.Description), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.ShortDescription), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.TrainingProvider), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.CourseProvider), new List<object>() { query }, QueryOperator.Contains);
+            filter.IsOrOperator = true;
+            return filter;
+        }
+
+        private void UpdateFilter(string query)
+        {
+            if (Filter == null)
+            {
+                Filter = CreateDefaultFilter(query);
+                return;
+            }
+
+            var defaultFilter = CreateDefaultFilter(query);
+            var defaultFieldNames = defaultFilter.Fields.Select(x => x.FieldName);
+            foreach (var fieldExpression in Filter.Fields)
+            {
+                if (defaultFieldNames.Contains(fieldExpression.FieldName))
+                {
+                    fieldExpression.Argument = new List<object> { query };
+                }
+            }
         }
     }
 }

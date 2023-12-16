@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Platforms;
 
 namespace De.HDBW.Apollo.Client.Controls
 {
@@ -51,18 +52,33 @@ namespace De.HDBW.Apollo.Client.Controls
         protected async override void OnQueryConfirmed()
         {
             base.OnQueryConfirmed();
+            while (IsFocused)
+            {
+                Unfocus();
+            }
+
+            KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
+
             SearchCommand?.Execute(Query);
-            SearchBoxVisibility = SearchBoxVisibility.Hidden;
-            await Task.Delay(200);
-            SearchBoxVisibility = SearchBoxVisibility.Expanded;
+            //SearchBoxVisibility = SearchBoxVisibility.Hidden;
+            //await Task.Delay(200);
+            //SearchBoxVisibility = SearchBoxVisibility.Expanded;
         }
 
-        protected override void OnItemSelected(object item)
+        protected async override void OnItemSelected(object item)
         {
             base.OnItemSelected(item);
+            while (IsFocused)
+            {
+                Unfocus();
+            }
 
+            KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
             var entry = item as SearchSuggestionEntry;
             SearchCommand?.Execute(entry);
+            //SearchBoxVisibility = SearchBoxVisibility.Hidden;
+            //await Task.Delay(200);
+            //SearchBoxVisibility = SearchBoxVisibility.Expanded;
         }
 
         private static void HandleSuggestionsChanged(BindableObject bindable, object oldValue, object newValue)

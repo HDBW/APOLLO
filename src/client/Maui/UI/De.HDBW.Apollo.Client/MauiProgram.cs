@@ -302,7 +302,7 @@ public static class MauiProgram
         services.AddTransient<SearchViewModel>();
 
         services.AddTransient<SearchFilterSheet>();
-        services.AddTransient<SearchFilterSheet>();
+        services.AddTransient<SearchFilterSheetViewModel>();
     }
 
     private static void SetupRoutes()

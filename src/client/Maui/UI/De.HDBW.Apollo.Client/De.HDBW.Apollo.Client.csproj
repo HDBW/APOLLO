@@ -184,6 +184,9 @@
     </MauiXaml>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Platforms\Android\KeyboardHelper.cs">
+      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+    </Compile>
     <Compile Update="Resources\Strings\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
