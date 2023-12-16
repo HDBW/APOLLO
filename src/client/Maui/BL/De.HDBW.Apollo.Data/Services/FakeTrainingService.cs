@@ -100,7 +100,7 @@ namespace De.HDBW.Apollo.Data.Services
             expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
             if (expressions.Any())
             {
-                var query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e.Query))}";
+                var query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
                 var queryResult = await asyncConnection.QueryAsync<CourseItem>(query, expressions.Select(x => x!.Parameter).ToArray());
                 result = result.Union(queryResult.Select(x => x.Title));
             }
@@ -114,31 +114,9 @@ namespace De.HDBW.Apollo.Data.Services
             expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
             if (expressions.Any())
             {
-                var query = $"SELECT * FROM EduProviderItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e.Query))}";
-                var provider = await asyncConnection.QueryAsync<EduProviderItem>(query, expressions.Select(x => x.Parameter).ToArray());
+                var query = $"SELECT * FROM EduProviderItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
+                var provider = await asyncConnection.QueryAsync<EduProviderItem>(query, expressions.Select(x => x!.Parameter).ToArray());
                 result = result.Union(provider.Select(p => p.Name).Distinct());
-                //var providerIds = provider.Select(x => x.Id).Distinct().ToList();
-                //var subExpressions = new List<QueryExpression>();
-                //foreach (var expression in expressions)
-                //{
-                //    switch (expression!.FieldName)
-                //    {
-                //        case nameof(Training.CourseProvider):
-                //            subExpressions.Add(new QueryExpression(nameof(CourseItem.CourseProviderId), $"{nameof(CourseItem.CourseProviderId)} In (?)", string.Join(',', providerIds)));
-                //            break;
-
-                //        case nameof(Training.TrainingProvider):
-                //            subExpressions.Add(new QueryExpression(nameof(CourseItem.TrainingProviderId), $"{nameof(CourseItem.TrainingProviderId)} In (?)", string.Join(',', providerIds)));
-                //            break;
-                //    }
-                //}
-
-                //query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", subExpressions.Select(e => e.Query))}";
-                //var subResult = await asyncConnection.QueryAsync<CourseItem>(query, subExpressions.Select(x => x.Parameter).ToArray());
-                //if (subResult.Any())
-                //{
-                //    result = result.Union(provider.Select(p => p.Name).Distinct());
-                //}
             }
 
             return result.Distinct().Take(maxItems);
@@ -165,7 +143,7 @@ namespace De.HDBW.Apollo.Data.Services
             expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
             if (expressions.Any())
             {
-                var query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e.Query))}";
+                var query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
                 result = await asyncConnection.QueryAsync<CourseItem>(query, expressions.Select(x => x!.Parameter).ToArray());
             }
 
@@ -178,7 +156,7 @@ namespace De.HDBW.Apollo.Data.Services
             expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
             if (expressions.Any())
             {
-                var query = $"SELECT * FROM EduProviderItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e.Query))}";
+                var query = $"SELECT * FROM EduProviderItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
                 var provider = await asyncConnection.QueryAsync<EduProviderItem>(query, expressions.Select(x => x!.Parameter).ToArray());
                 var providerIds = provider?.Select(x => x.Id).ToArray() ?? Array.Empty<long>();
                 var subExpressions = new List<QueryExpression>();
@@ -187,11 +165,11 @@ namespace De.HDBW.Apollo.Data.Services
                     switch (expression!.FieldName)
                     {
                         case nameof(Training.CourseProvider):
-                            subExpressions.Add(new QueryExpression(nameof(CourseItem.CourseProviderId), $"{nameof(CourseItem.CourseProviderId)} In (?)", providerIds.ToString()));
+                            subExpressions.Add(new QueryExpression(nameof(CourseItem.CourseProviderId), $"{nameof(CourseItem.CourseProviderId)} In (?)", providerIds));
                             break;
 
                         case nameof(Training.TrainingProvider):
-                            subExpressions.Add(new QueryExpression(nameof(CourseItem.TrainingProviderId), $"{nameof(CourseItem.TrainingProviderId)} In (?)", providerIds.ToString()));
+                            subExpressions.Add(new QueryExpression(nameof(CourseItem.TrainingProviderId), $"{nameof(CourseItem.TrainingProviderId)} In (?)", providerIds));
                             break;
                     }
                 }
@@ -246,7 +224,7 @@ namespace De.HDBW.Apollo.Data.Services
                 case QueryOperator.In:
                     return new QueryExpression(expression.FieldName, $"{fieldName} In (?)", $"{string.Join(',', expression.Argument)}");
                 case QueryOperator.Empty:
-                    return new QueryExpression(expression.FieldName, $"{fieldName} NULL", null);
+                    return new QueryExpression(expression.FieldName, $"{fieldName} NULL", DBNull.Value);
                 case QueryOperator.GreaterThanEqualTo:
                     return new QueryExpression(expression.FieldName, $"{fieldName} >= ?", $"{expression.Argument.Single()}");
                 case QueryOperator.LessThanEqualTo:

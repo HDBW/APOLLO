@@ -9,9 +9,16 @@ namespace De.HDBW.Apollo.Client.Platforms
 {
     public static class KeyboardHelper
     {
-        public static void HideKeyboard(object? view)
+        public static void HideKeyboard(object? handler)
         {
-            UIApplication.SharedApplication?.KeyWindow?.EndEditing(true);
+            // UIApplication.SharedApplication?.KeyWindow?.EndEditing(true);
+            UIApplication.SharedApplication?
+                .ConnectedScenes?
+                .OfType<UIWindowScene>()?
+                .LastOrDefault(x => x.ActivationState == UISceneActivationState.ForegroundActive)?
+                .Windows?
+                .LastOrDefault(w => w.IsKeyWindow)?
+                .EndEditing(true);
         }
     }
 }
