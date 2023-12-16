@@ -190,7 +190,7 @@ namespace Daenet.MongoDal.UnitTests
         }
 
         [TestMethod]
-        public async Task QueryTrainingsByNameTest()
+        public async Task QueryTrainingsByNameGenericTest()
         {
             var dal = Helpers.GetDal();
 
@@ -209,6 +209,44 @@ namespace Daenet.MongoDal.UnitTests
                  }
 
             }, 100, 0);
+
+            // Mongo Driver has the mapping issue form BsonDoc._id to T.Id.
+            // We have fixed this and make here sure that ID is never NULL.
+            foreach (var item in res)
+            {
+                Assert.IsNotNull(item.Id);
+            }
+          
+            Assert.IsTrue(res?.Count == 2);
+        }
+
+        [TestMethod]
+        public async Task QueryTrainingsByNameNonGenericTest()
+        {
+            var dal = Helpers.GetDal();
+
+            await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
+            {
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
+                 {
+                     new Daenet.MongoDal.Entitties.FieldExpression()
+                     {
+                         FieldName = "TrainingName",
+                         Operator = Daenet.MongoDal.Entitties.QueryOperator.Contains,
+                         Argument = new List<object>(){" AI", " dsd "},
+                      }
+                 }
+
+            }, 100, 0);
+
+            // Mongo Driver has the mapping issue form BsonDoc._id to T.Id.
+            // We have fixed this and make here sure that ID is never NULL.
+            foreach (var item in res)
+            {
+                Assert.IsNotNull(((IDictionary<string,object>)item!)["Id"]);
+            }
 
             Assert.IsTrue(res?.Count == 2);
         }
