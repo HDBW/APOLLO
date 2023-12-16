@@ -242,13 +242,15 @@ namespace Daenet.MongoDal
             return result.DeletedCount;
         }
 
+        //public async Task<IList<T>> ExecuteQueryInternal<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        //{
+
+        //}
 
         public async Task<IList<T>> ExecuteQuery<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
         {
             if (skip < 0)
                 skip = 0;
-
-            var results = new List<T>();
 
             var coll = GetCollection(collectionName);
 
@@ -311,6 +313,8 @@ namespace Daenet.MongoDal
                 //documents = await coll.Aggregate().Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
             }
 
+            var results = new List<T>();
+
             foreach (var bsonDoc in documents.ToEnumerable())
             {
                 T? doc = BsonSerializer.Deserialize<T>(bsonDoc);
@@ -325,7 +329,7 @@ namespace Daenet.MongoDal
 
         /// <summary>
         /// Looks up the set of documents.  
-        /// </summary>        
+        /// </summary>
         public async Task<IList<ExpandoObject>> ExecuteQuery(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
         {
             if (skip < 0)
