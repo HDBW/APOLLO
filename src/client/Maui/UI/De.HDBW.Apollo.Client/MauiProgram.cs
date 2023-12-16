@@ -193,6 +193,7 @@ public static class MauiProgram
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<ISessionService>(new SessionService(hasRegisterdUser));
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<ISheetService, SheetService>();
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
         services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
@@ -300,8 +301,8 @@ public static class MauiProgram
         services.AddTransient<SearchView>();
         services.AddTransient<SearchViewModel>();
 
-        services.AddTransient<FiltersSheet>();
-        services.AddTransient<FiltersSheetViewModel>();
+        services.AddTransient<SearchFilterSheet>();
+        services.AddTransient<SearchFilterSheet>();
     }
 
     private static void SetupRoutes()
@@ -318,7 +319,7 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
         Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
         Routing.RegisterRoute(Routes.SearchView, typeof(SearchView));
-        Routing.RegisterRoute(Routes.FiltersSheet, typeof(FiltersSheet));
+        Routing.RegisterRoute(Routes.SearchFilterSheet, typeof(SearchFilterSheet));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

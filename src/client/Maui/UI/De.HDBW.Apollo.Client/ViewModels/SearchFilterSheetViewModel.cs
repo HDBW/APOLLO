@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public partial class FiltersSheetViewModel : BaseViewModel
+    public partial class SearchFilterSheetViewModel : BaseViewModel
     {
         private const string SortingEditor = "Sorting";
         private const string DateRangeEditor = "DateRange";
@@ -24,12 +24,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private ObservableCollection<IPropertyEditor> _editorList = new ObservableCollection<IPropertyEditor>();
 
-        public FiltersSheetViewModel(
+        public SearchFilterSheetViewModel(
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
            ITrainingService trainingService,
-           ILogger<FiltersSheetViewModel> logger)
+           ILogger<SearchFilterSheetViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(trainingService);

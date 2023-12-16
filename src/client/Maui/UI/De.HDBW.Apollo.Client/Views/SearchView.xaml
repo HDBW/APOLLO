@@ -30,7 +30,7 @@
     </Shell.SearchHandler>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="OnShowFiltersSheetClicked" IconImageSource="magnify.png" />
+        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="magnify.png" />
     </ContentPage.ToolbarItems>
 
     <CollectionView ItemsSource="{x:Binding SearchResults}">

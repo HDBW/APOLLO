@@ -1,11 +1,10 @@
 using De.HDBW.Apollo.Client.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.Views;
 
-public partial class FiltersSheet
+public partial class SearchFilterSheet
 {
-    public FiltersSheet(FiltersSheetViewModel model)
+    public SearchFilterSheet(SearchFilterSheetViewModel model)
     {
         InitializeComponent();
         BindingContext = model;
@@ -15,16 +14,16 @@ public partial class FiltersSheet
         }
     }
 
-    public FiltersSheet()
+    public SearchFilterSheet()
     {
         InitializeComponent();
     }
 
-    public FiltersSheetViewModel? ViewModel
+    public SearchFilterSheetViewModel? ViewModel
     {
         get
         {
-            return BindingContext as FiltersSheetViewModel;
+            return BindingContext as SearchFilterSheetViewModel;
         }
     }
 

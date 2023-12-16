@@ -4,7 +4,7 @@
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-            x:Class="De.HDBW.Apollo.Client.Views.FiltersSheet"
+            x:Class="De.HDBW.Apollo.Client.Views.SearchFilterSheet"
             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
             IsCancelable="True"
             BackgroundColor="Azure"
@@ -15,7 +15,7 @@
             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
             xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
-            x:DataType="viewModels:FiltersSheetViewModel"
+            x:DataType="viewModels:SearchFilterSheetViewModel"
             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
             Padding="0,20">
     <the49:BottomSheet.Detents>
@@ -76,15 +76,10 @@
         <ScrollView VerticalOptions="FillAndExpand"
                     Grid.Row="1"
                     Padding="20,0">
-            <VerticalStackLayout>
-
-                <VerticalStackLayout    
-                    BindableLayout.ItemsSource="{Binding EditorList}"
-                    BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}">
-                </VerticalStackLayout>
-
+            <VerticalStackLayout    
+                BindableLayout.ItemsSource="{Binding EditorList}"
+                BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}">
             </VerticalStackLayout>
-            
         </ScrollView>
 
         <Button

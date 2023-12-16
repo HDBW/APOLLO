@@ -18,7 +18,6 @@ using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
-using static Android.App.DownloadManager;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -41,6 +40,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             ISessionService sessionService,
+            ISheetService sheetService,
             ICourseItemRepository courseItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             ITrainingService trainingService,
@@ -49,11 +49,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(sheetService);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
             ArgumentNullException.ThrowIfNull(trainingService);
             ArgumentNullException.ThrowIfNull(searchHistoryRepository);
             SessionService = sessionService;
+            SheetService = sheetService;
             CourseItemRepository = courseItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
             TrainingService = trainingService;
@@ -61,6 +63,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private ISessionService SessionService { get; }
+
+        private ISheetService SheetService { get; }
 
         private ICourseItemRepository CourseItemRepository { get; }
 
@@ -122,6 +126,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected override void RefreshCommands()
         {
             SearchCommand?.NotifyCanExecuteChanged();
+            OpenFilterSheetCommand?.NotifyCanExecuteChanged();
             foreach (var result in SearchResults)
             {
                 result.NavigateCommand?.NotifyCanExecuteChanged();
@@ -131,6 +136,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool CanSearch(object queryElement)
         {
             return !IsBusy && queryElement != null;
+        }
+
+        private bool CanOpenFilterSheet()
+        {
+            return !IsBusy && (SearchResults?.Any() ?? false);
         }
 
         private bool CanHandleInteract(InteractionEntry interaction)
@@ -149,6 +159,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType().Name}.");
                     break;
             }
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFilterSheet))]
+        private async Task OpenFilterSheet()
+        {
+            await SheetService.OpenAsync(Routes.SearchFilterSheet, CancellationToken.None);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch))]

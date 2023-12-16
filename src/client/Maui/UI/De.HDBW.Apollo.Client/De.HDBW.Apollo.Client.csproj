@@ -198,6 +198,9 @@
     <Compile Update="Views\ExtendedSplashScreenView.xaml.cs">
       <DependentUpon>ExtendedSplashScreenView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\SearchFilterSheet.xaml.cs">
+      <DependentUpon>SearchFilterSheet.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\RegistrationView.xaml.cs">
       <DependentUpon>RegistrationView.xaml</DependentUpon>
     </Compile>
