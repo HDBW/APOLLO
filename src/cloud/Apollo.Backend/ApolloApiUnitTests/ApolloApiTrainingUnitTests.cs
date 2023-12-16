@@ -798,7 +798,7 @@ namespace Apollo.Api.UnitTests
             await api.InsertTrainings(t!);
 
             await api.DeleteTrainings(t.Select(x=>x.Id).ToArray());
-
+            
         }
 
         /// <summary>

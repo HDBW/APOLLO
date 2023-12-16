@@ -2,6 +2,9 @@
 db.trainings.count()
 db.trainings.find()
 
+db.trainings.deleteOne({"_id" : "SER01"})
+
+
 db.accommodations.find({'Loans.4': {$exists: true}})
 
 db.trainings.find( { Loans: { $size: 4 } } );

@@ -243,6 +243,86 @@ namespace Daenet.MongoDal
         }
 
 
+        public async Task<IList<T>> ExecuteQuery<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        {
+            if (skip < 0)
+                skip = 0;
+
+            var results = new List<T>();
+
+            var coll = GetCollection(collectionName);
+
+            FilterDefinition<BsonDocument> filter;
+
+            //
+            // Firts, match everything
+            if (query == null || query.IsOrOperator == false)
+                filter = FilterDefinition<BsonDocument>.Empty;
+            else
+                filter = Builders<BsonDocument>.Filter.Eq("_id", "should not match anything");
+
+            if (query != null)
+            {
+                filter = BuildFilterFind(query, filter);
+            }
+
+            if (dateTime.HasValue)
+            {
+                filter &= Builders<BsonDocument>.Filter.Gte("ChangedAt", dateTime.Value);
+            }
+
+            SortDefinition<BsonDocument> sort;
+
+            if (sortExpression != null)
+            {
+                if (sortExpression.Order == SortOrder.Ascending)
+                {
+                    sort = Builders<BsonDocument>.Sort.Ascending(sortExpression.FieldName);
+                }
+                else
+                {
+                    sort = Builders<BsonDocument>.Sort.Descending(sortExpression.FieldName);
+                }
+            }
+            else
+            {
+                sort = Builders<BsonDocument>.Sort.Descending("ChangedAt");
+            }
+            var projection = new BsonDocument();
+
+            var bsonElements = new List<BsonElement>();
+
+            IAsyncCursor<BsonDocument> documents;
+
+            if (fields != null)
+            {
+                projection.Add(new BsonElement("_id", 0));
+
+                foreach (var field in fields)
+                {
+                    projection.Add(new BsonElement(field, 1));
+                }
+
+                documents = await coll.Find(filter).Sort(sort).Skip(skip).Limit(top).Project(projection).ToCursorAsync();
+            }
+            else
+            {
+                documents = await coll.Find(filter).Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
+                //documents = await coll.Aggregate().Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
+            }
+
+            foreach (var bsonDoc in documents.ToEnumerable())
+            {
+                T? doc = BsonSerializer.Deserialize<T>(bsonDoc);
+
+                results.Add(doc);
+            }
+
+            // Deserialize the BsonDocument to the desired type T.
+            return results;
+        }
+
+
         /// <summary>
         /// Looks up the set of documents.  
         /// </summary>        

@@ -66,7 +66,7 @@ namespace Apollo.Api
                 _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainings)}");
 
                 // Execute the query 
-                var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+                var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
                 if (res == null || !res.Any())
                 {
@@ -75,11 +75,11 @@ namespace Apollo.Api
                 }
 
                 // Convert results to a list of typed Training objects
-                var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+                //var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
 
                 _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainings)}");
 
-                return trainings;
+                return res;
             }
             catch (ApolloApiException)
             {
