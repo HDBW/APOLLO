@@ -18,6 +18,7 @@ using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
+using static Android.App.DownloadManager;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -178,9 +179,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     token.ThrowIfCancellationRequested();
 
                     var converter = new CourseTagTypeToStringConverter();
-                    var courseItems = await TrainingService.SearchTrainingsAsync(new Filter() { Fields = new List<FieldExpression>() { new FieldExpression() { FieldName = nameof(Training.TrainingName), Argument = new List<object>() { query ?? string.Empty } } } }, worker.Token);
+                    var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { query }, QueryOperator.Contains);
+                    filter.AddExpression(nameof(Training.Description), new List<object>() { query }, QueryOperator.Contains);
+                    filter.AddExpression(nameof(Training.ShortDescription), new List<object>() { query }, QueryOperator.Contains);
+                    filter.AddExpression(nameof(Training.TrainingProvider), new List<object>() { query }, QueryOperator.Contains);
+                    filter.AddExpression(nameof(Training.CourseProvider), new List<object>() { query }, QueryOperator.Contains);
+                    filter.IsOrOperator = true;
+
+                    var courseItems = await TrainingService.SearchTrainingsAsync(filter, worker.Token);
+                    var eduProviderItems = await EduProviderItemRepository.GetItemsAsync(worker.Token);
                     courseItems = courseItems ?? Array.Empty<CourseItem>();
+                    eduProviderItems = eduProviderItems ?? Array.Empty<EduProviderItem>();
                     var interactions = new List<StartViewInteractionEntry>();
+
                     foreach (var course in courseItems)
                     {
                         var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
@@ -188,7 +199,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
                         var data = new NavigationData(Routes.CourseView, courseData);
 
-                        EduProviderItem eduProvider = null; //eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
+                        EduProviderItem? eduProvider = eduProviderItems.FirstOrDefault(p => p.Id == course.CourseProviderId);
 
                         var duration = course.Duration ?? string.Empty;
                         var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
@@ -237,7 +248,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         history.Ticks = DateTime.UtcNow.Ticks;
                     }
 
-                    await SearchHistoryRepository.AddOrUpdateItemAsync(history, CancellationToken.None).ConfigureAwait(false);
+                    if (history.Id == 0)
+                    {
+                        await SearchHistoryRepository.AddItemAsync(history, CancellationToken.None).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await SearchHistoryRepository.UpdateItemAsync(history, CancellationToken.None).ConfigureAwait(false);
+                    }
+
                     await ExecuteOnUIThreadAsync(
                         () =>
                         {
@@ -270,20 +289,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void LoadonUIThread(HistoricalSuggestionEntry? historyEntry, SearchSuggestionEntry? suggestionEntry, SearchHistory history)
         {
-            var recent = Recents.ToList();
-            historyEntry?.Update(history);
-            if (historyEntry == null)
-            {
-                recent.Add(HistoricalSuggestionEntry.Import(history));
-            }
-
-            if (suggestionEntry != null)
-            {
-                Suggestions.Remove(suggestionEntry);
-            }
-
-            recent.OrderBy(r => r.Ticks).Take(int.Max(_maxHistoryItemsCount - Suggestions.Count, 0)).ToList();
-            Recents = new ObservableCollection<HistoricalSuggestionEntry>(recent);
+            Suggestions = new ObservableCollection<SearchSuggestionEntry>();
+            Recents = new ObservableCollection<HistoricalSuggestionEntry>();
         }
 
         private void LoadonUIThread(IEnumerable<StartViewInteractionEntry> interactionEntries)
@@ -294,7 +301,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private async Task LoadSuggestionsAsync(string inputValue, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var trainings = await TrainingService.SearchTrainingsAsync(Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { inputValue }, QueryOperator.Contains), token).ConfigureAwait(false);
+            var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { inputValue }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.Description), new List<object>() { inputValue }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.ShortDescription), new List<object>() { inputValue }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.TrainingProvider), new List<object>() { inputValue }, QueryOperator.Contains);
+            filter.AddExpression(nameof(Training.CourseProvider), new List<object>() { inputValue }, QueryOperator.Contains);
+            filter.IsOrOperator = true;
+            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(filter, token).ConfigureAwait(false) : Array.Empty<string>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
             {
@@ -302,8 +315,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             recents = recents ?? Array.Empty<SearchHistory>();
-            trainings = trainings.Take(_maxSugestionItemsCount) ?? Array.Empty<CourseItem>();
-            var courses = trainings.Where(x => !string.IsNullOrWhiteSpace(x.Title)).Select(x => SearchSuggestionEntry.Import(x.Title)).ToList();
+            suggestions = suggestions.Take(_maxSugestionItemsCount) ?? Array.Empty<string>();
+            var courses = suggestions.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => SearchSuggestionEntry.Import(x)).ToList();
             var history = recents.Take(Math.Max(_maxHistoryItemsCount - courses.Count, 0)).Select(x => HistoricalSuggestionEntry.Import(x)).ToList();
             await ExecuteOnUIThreadAsync(
                 () =>

@@ -8,6 +8,8 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface ITrainingService
     {
+        Task<IEnumerable<string>> SearchSuggesionsAsync(Filter? filter, CancellationToken token);
+
         Task<IEnumerable<CourseItem>> SearchTrainingsAsync(Filter? filter, CancellationToken token);
 
         Task<CourseItem?> GetTrainingAsync(long id, CancellationToken token);

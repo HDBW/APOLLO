@@ -1,10 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using System.Reflection;
 using Apollo.Common.Entities;
-using De.HDBW.Apollo.Data.Extensions;
 using De.HDBW.Apollo.Data.Extensions;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Course;
@@ -21,6 +19,12 @@ namespace De.HDBW.Apollo.Data.Services
         }
 
         private Dictionary<Type, Dictionary<string, string>> Mappings { get; } = new Dictionary<Type, Dictionary<string, string>>();
+
+        public async Task<IEnumerable<string>> SearchSuggesionsAsync(Filter? filter, CancellationToken token)
+        {
+           var results = await SearchTrainingsAsync(filter, token);
+           return results?.Select(x => x.Title).ToArray() ?? Array.Empty<string>();
+        }
 
         public async Task<IEnumerable<CourseItem>> SearchTrainingsAsync(Filter? filter, CancellationToken token)
         {
