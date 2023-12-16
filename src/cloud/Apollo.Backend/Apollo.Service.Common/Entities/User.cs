@@ -26,7 +26,16 @@ namespace Apollo.Common.Entities
         public string? Image { get; set; } = string.Empty;
         public string? Id { get; set; }
         public string? UserName { get; set; }
+        public List<Contact> ?Contacts { get; set; }
+        // Certification should also be a List
+        // A list of certificates the user has
+        public List<string>? Certificate { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string ?Biography { get; set; }
+        //Implementation of TrainingHistory would be advisable
+        //public List<TrainingHistory> TrainingHistories { get; set; }
 
-        public string Country { get; set; }
+        public string ?Skill { get; set; }
+        public string? Country { get; set; }
     }
 }
