@@ -70,7 +70,7 @@ namespace Apollo.Service.Controllers
         [HttpPost]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of queried trainings.", typeof(List<QueryTrainingsResponse>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<IList<QueryTrainingsResponse>> QueryTrainings([FromBody] QueryTrainingsRequest req)
+        public async Task<QueryTrainingsResponse> QueryTrainings([FromBody] QueryTrainingsRequest req)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace($"{nameof(QueryTrainings)} completed.");
 
                 // Return the queried trainings as a response.
-                return new List<QueryTrainingsResponse> { new QueryTrainingsResponse { Trainings = (List<Training>)trainings } };
+                return new QueryTrainingsResponse { Trainings = (List<Training>)trainings };
             }
             catch (Exception ex)
             {

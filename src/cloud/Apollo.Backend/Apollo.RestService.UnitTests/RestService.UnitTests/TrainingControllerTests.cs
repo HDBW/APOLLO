@@ -64,11 +64,11 @@ namespace Apollo.Service.Tests
                     .ReturnsAsync(expectedTrainings);
 
             // Act
-            var result = await _controller.QueryTrainings(request) as List<QueryTrainingsResponse>;
+            var result = await _controller.QueryTrainings(request) as QueryTrainingsResponse;
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count); // Expecting 2 trainings in the list
+            Assert.AreEqual(1, result.Trainings.Count); // Expecting 2 trainings in the list
         }
 
         // TODO: Change the testmethods so they work with trainingcontroller
