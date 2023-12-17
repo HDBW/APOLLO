@@ -6,6 +6,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              ios:Page.UseSafeArea="true"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
@@ -28,11 +29,15 @@
             </local:BindableSearchHandler.ItemTemplate>
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="magnify.png" />
     </ContentPage.ToolbarItems>
-
+    <ContentPage.Resources>
+        <converter:EntityTypeToColorConverter x:Key="EntityTypeToColorConverter"
+                                      DefaultColor="Transparent"
+                                      AssessmentItemColor="{StaticResource Tag1}"
+                                      CourseItemColor="{StaticResource Tag2}"/>
+    </ContentPage.Resources>
     <CollectionView ItemsSource="{x:Binding SearchResults}">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="interactionModels:StartViewInteractionEntry">

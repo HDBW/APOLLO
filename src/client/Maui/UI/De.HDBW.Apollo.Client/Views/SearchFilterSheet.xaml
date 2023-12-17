@@ -13,6 +13,8 @@
             HasBackdrop="True"
             CornerRadius="20"
             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+            xmlns:editorViewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
+            xmlns:editors="clr-namespace:De.HDBW.Apollo.Client.Views.PropertyEditor"
             xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
             x:DataType="viewModels:SearchFilterSheetViewModel"
@@ -21,15 +23,50 @@
     <the49:BottomSheet.Detents>
         <the49:FullscreenDetent />
     </the49:BottomSheet.Detents>
-
     <Grid RowDefinitions="auto,*,auto">
+       
         <Grid.Resources>
 
-            <DataTemplate x:Key="DefaultTemplate">
+            <DataTemplate x:Key="DefaultEditorTemplate">
             </DataTemplate>
-            
+
+            <DataTemplate x:Key="StringPropertyEditorTemplate" x:DataType="editorViewModels:StringPropertyEditor">
+                <editors:DefaultStringPropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="BooleanPropertyEditorTemplate" x:DataType="editorViewModels:BooleanPropertyEditor">
+                <editors:DefaultBooleanPropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="PickerPropertyEditorTemplate" x:DataType="editorViewModels:PickerPropertyEditor">
+                <editors:DefaultPickerPropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="ComboboxPropertyEditorTemplate" x:DataType="editorViewModels:ComboboxPropertyEditor">
+                <editors:DefaultComboboxPropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="DatePropertyEditorTemplate" x:DataType="editorViewModels:DatePropertyEditor">
+                <editors:DefaultDatePropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="RangePropertyEditorTemplate" x:DataType="editorViewModels:RangePropertyEditor">
+                <editors:DefaultRangePropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="ListPropertyEditorTemplate" x:DataType="editorViewModels:ListPropertyEditor">
+                <editors:DefaultListPropertyEditor />
+            </DataTemplate>
+
             <selector:EditorTemplateSelector x:Key="EditorTemplateSelector"
-                                             DefaultTemplate="{StaticResource DefaultTemplate}"/>
+                                             DefaultEditorTemplate="{StaticResource DefaultEditorTemplate}"
+                                             StringPropertyEditorTemplate="{StaticResource StringPropertyEditorTemplate}"
+                                             BooleanPropertyEditorTemplate="{StaticResource BooleanPropertyEditorTemplate}"
+                                             PickerPropertyEditorTemplate="{StaticResource PickerPropertyEditorTemplate}"
+                                             ComboboxPropertyEditorTemplate="{StaticResource ComboboxPropertyEditorTemplate}"
+                                             DatePropertyEditorTemplate="{StaticResource DatePropertyEditorTemplate}"
+                                             RangePropertyEditorTemplate="{StaticResource RangePropertyEditorTemplate}"
+                                             ListPropertyEditorTemplate="{StaticResource ListPropertyEditorTemplate}"/>
             
         </Grid.Resources>
         
@@ -46,7 +83,6 @@
                 ImageSource="magnify.png"
                 HorizontalOptions="Start" />
 
-
             <Button
                 Grid.Column="2"
                 Command="{x:Binding ResetFilterCommand}"
@@ -59,7 +95,7 @@
         <ScrollView VerticalOptions="FillAndExpand"
                     Grid.Row="1"
                     Padding="20,0">
-            <VerticalStackLayout    
+            <VerticalStackLayout 
                 BindableLayout.ItemsSource="{Binding EditorList}"
                 BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}">
             </VerticalStackLayout>

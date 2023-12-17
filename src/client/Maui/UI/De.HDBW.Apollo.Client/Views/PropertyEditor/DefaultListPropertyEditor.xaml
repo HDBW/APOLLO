@@ -1,0 +1,31 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultListPropertyEditor"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.PropertyEditor"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewModels:ListPropertyEditor">
+    <VerticalStackLayout >
+        <Label Text="{x:Binding Label}"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"/>
+        <ListView
+                ItemsSource="{x:Binding Values}"
+                SelectedItem="{x:Binding Value, Mode=TwoWay}"
+                MaximumHeightRequest="190">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:SelectionValue">
+                    <ViewCell>
+                        <Grid ColumnDefinitions="auto, *">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand}" />
+                            </Grid.GestureRecognizers>
+                            <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="{x:Binding DisplayValue}" Margin="8,0,0,0" VerticalOptions="Center"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentView>

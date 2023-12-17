@@ -1,0 +1,34 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultComboboxPropertyEditor"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.PropertyEditor"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewModels:ComboboxPropertyEditor"
+             >
+    <VerticalStackLayout >
+        <Label Text="{x:Binding Label}"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"/>
+        <toolkit:Expander IsExpanded="{x:Binding IsOpen}" x:Name="PART_Expander" Background="Red">
+            <toolkit:Expander.Header>
+                <Grid ColumnDefinitions="*,Auto" Padding="5">
+                    <Label Text="{x:Binding Value.DisplayValue}" VerticalOptions="Center" />
+                    <Image Source="magnify.png" Grid.Column="1"/>
+                </Grid>
+            </toolkit:Expander.Header>
+            <toolkit:Expander.Content>
+                <ListView
+                    ItemsSource="{x:Binding Values}"
+                    SelectedItem="{x:Binding Value, Mode=TwoWay}"
+                    MaximumHeightRequest="190">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:PickerValue">
+                            <TextCell Text="{x:Binding DisplayValue}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </toolkit:Expander.Content>
+        </toolkit:Expander>
+    </VerticalStackLayout>
+</ContentView>

@@ -152,6 +152,18 @@
     <MauiXaml Update="Views\ExtendedSplashScreenView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\PropertyEditor\DefaultListPropertyEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\PropertyEditor\DefaultDatePropertyEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\PropertyEditor\DefaultComboboxPropertyEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\PropertyEditor\DefaultRangePropertyEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\RegistrationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -200,6 +212,18 @@
     </Compile>
     <Compile Update="Views\ExtendedSplashScreenView.xaml.cs">
       <DependentUpon>ExtendedSplashScreenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PropertyEditor\DefaultListPropertyEditor.xaml.cs">
+      <DependentUpon>DefaultListPropertyEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PropertyEditor\DefaultDatePropertyEditor.xaml.cs">
+      <DependentUpon>DefaultDatePropertyEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PropertyEditor\DefaultComboboxPropertyEditor.xaml.cs">
+      <DependentUpon>DefaultComboboxPropertyEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PropertyEditor\DefaultRangePropertyEditor.xaml.cs">
+      <DependentUpon>DefaultRangePropertyEditor.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\SearchFilterSheet.xaml.cs">
       <DependentUpon>SearchFilterSheet.xaml</DependentUpon>

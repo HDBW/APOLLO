@@ -1,11 +1,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultStringPropertyEditor"
+             x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultRangePropertyEditor"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
-             x:DataType="viewModels:StringPropertyEditor">
+             xmlns:contracts="clr-namespace:De.HDBW.Apollo.Client.Contracts"
+             x:DataType="viewModels:RangePropertyEditor">
     <VerticalStackLayout>
         <Label Text="{x:Binding Label}" VerticalOptions="Center" HorizontalOptions="Start"/>
-        <Entry Text="{x:Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" MaxLength="255" Unfocused="HandleUnfocused"/>
+        <Slider Value="{x:Binding Value, Mode=TwoWay}" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}"/>
+        <Label Text="{x:Binding Value, Mode=TwoWay}" />
     </VerticalStackLayout>
 </ContentView>

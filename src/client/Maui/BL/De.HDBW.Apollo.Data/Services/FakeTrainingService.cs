@@ -176,7 +176,7 @@ namespace De.HDBW.Apollo.Data.Services
 
                 query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", subExpressions.Select(e => e.Query))}";
                 query = query.Replace("?", string.Join(",", providerIds));
-                var subResult = await asyncConnection.QueryAsync<CourseItem>(query, subExpressions.Select(x => x!.Parameter).ToArray());
+                var subResult = await asyncConnection.QueryAsync<CourseItem>(query);
                 result = result.Union(subResult);
             }
 

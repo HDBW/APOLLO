@@ -12,33 +12,39 @@ namespace De.HDBW.Apollo.Client.Platforms
     {
         public static void HideKeyboard(object? view)
         {
-            var context = Android.App.Application.Context;
-            var inputMethodManager = context.GetSystemService(Context.InputMethodService) as InputMethodManager;
-            if (inputMethodManager == null)
+            try
             {
-                return;
-            }
+                var context = Android.App.Application.Context;
+                var inputMethodManager = context.GetSystemService(Context.InputMethodService) as InputMethodManager;
+                if (inputMethodManager == null)
+                {
+                    return;
+                }
 
-            var activity = context as Activity;
-            var androidView = view as Android.Views.View;
-            IBinder? token = null;
-            if (activity != null)
-            {
-                token = activity.CurrentFocus?.WindowToken;
-            }
-            else if (androidView != null)
-            {
-                token = androidView.WindowToken;
-            }
+                var activity = context as Activity;
+                var androidView = view as Android.Views.View;
+                IBinder? token = null;
+                if (activity != null)
+                {
+                    token = activity.CurrentFocus?.WindowToken;
+                }
+                else if (androidView != null)
+                {
+                    token = androidView.WindowToken;
+                }
 
-            if (token == null)
-            {
-                return;
-            }
+                if (token == null)
+                {
+                    return;
+                }
 
-            inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None);
-            activity?.Window?.DecorView.ClearFocus();
-            androidView?.ClearFocus();
+                inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None);
+                activity?.Window?.DecorView.ClearFocus();
+                androidView?.ClearFocus();
+            }
+            catch
+            {
+            }
         }
     }
 }

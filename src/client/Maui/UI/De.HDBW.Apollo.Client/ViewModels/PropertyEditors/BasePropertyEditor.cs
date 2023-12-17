@@ -3,28 +3,34 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models.PropertyEditor;
 
-namespace De.HDBW.Apollo.Client.Models.Editors
+namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 {
     public abstract partial class BasePropertyEditor : ObservableObject, IPropertyEditor
     {
         [ObservableProperty]
         private bool _hasChanges;
 
-        protected BasePropertyEditor(
-            BaseValue data)
+        protected BasePropertyEditor(string label)
+            : this(label, null)
         {
+        }
+
+        protected BasePropertyEditor(string label, BaseValue? data)
+        {
+            Label = label;
             Data = data;
         }
 
-        public BaseValue Data { get; set; }
-
         public string Label
         {
-            get
-            {
-                return Data.Label;
-            }
+            get; private set;
+        }
+
+        public BaseValue? Data
+        {
+            get; set;
         }
     }
 }

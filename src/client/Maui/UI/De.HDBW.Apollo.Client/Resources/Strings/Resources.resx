@@ -615,4 +615,13 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="FiltersSheet_RelevanceAscending" xml:space="preserve">
     <value>Relevanz aufsteigend</value>
   </data>
+  <data name="Filter_CourseType" xml:space="preserve">
+    <value>Art</value>
+  </data>
+  <data name="Filter_EduProviders" xml:space="preserve">
+    <value>Anbieter</value>
+  </data>
+  <data name="Filter_Price" xml:space="preserve">
+    <value>Preis</value>
+  </data>
 </root>
