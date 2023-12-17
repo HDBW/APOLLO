@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using Apollo.Api;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using static SQLite.SQLite3;
 
 namespace De.HDBW.Apollo.Data.Services
 {
@@ -57,7 +58,7 @@ namespace De.HDBW.Apollo.Data.Services
 
             try
             {
-                using (var response = await client.GetAsync(new Uri($"{BaseUri.OriginalString.TrimEnd('/')}/{id}"), token).ConfigureAwait(false))
+                using (var response = await client.GetAsync(new Uri($"{BaseUri.OriginalString.TrimEnd('/')}/SER01"), token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
                     var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;
@@ -68,13 +69,8 @@ namespace De.HDBW.Apollo.Data.Services
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
-                    var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
-                    if (objectResponse.Object == null)
-                    {
-                        throw new ApolloApiException(-2, "Unable to read response.");
-                    }
-
-                    return objectResponse.Object;
+                    result = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (WebException ex)
@@ -141,13 +137,8 @@ namespace De.HDBW.Apollo.Data.Services
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
-                    var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
-                    if (objectResponse.Object == null)
-                    {
-                        throw new ApolloApiException(-2, "Unable to read response.");
-                    }
-
-                    return objectResponse.Object;
+                    result = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (WebException ex)
@@ -190,29 +181,17 @@ namespace De.HDBW.Apollo.Data.Services
             return result;
         }
 
-        private async Task<ObjectResponseResult<TU>> ReadObjectResponseAsync<TU>(HttpResponseMessage response, IReadOnlyDictionary<string, IEnumerable<string>> headers, CancellationToken cancellationToken)
+        private async Task<TU?> ReadObjectResponseAsync<TU>(HttpResponseMessage response, IReadOnlyDictionary<string, IEnumerable<string>> headers, CancellationToken cancellationToken)
         {
             if (response?.Content == null)
             {
-                return new ObjectResponseResult<TU>(default(TU), string.Empty);
+                return default(TU);
             }
 
             try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                {
-                    using (var streamReader = new StreamReader(responseStream))
-                    {
-                        // var lst = streamReader.ReadToEnd();
-                        using (var jsonTextReader = new JsonTextReader(streamReader))
-                        {
-                            var serializer = JsonSerializer.Create();
-                            var typedBody = serializer.Deserialize<TU>(jsonTextReader);
-                            return new ObjectResponseResult<TU>(typedBody, string.Empty);
-                        }
-                    }
-                }
+                var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                return JsonConvert.DeserializeObject<TU>(content);
             }
             catch (JsonException exception)
             {

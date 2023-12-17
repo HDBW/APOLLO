@@ -46,13 +46,22 @@ namespace De.HDBW.Apollo.Data.Services
             token.ThrowIfCancellationRequested();
             var mapping = Mappings[typeof(Training)];
 
+            filter.Fields = (filter.Fields != null)
+                ? filter.Fields
+                : new List<FieldExpression>();
+
             foreach (var field in filter.Fields)
             {
                 field.FieldName = mapping.ContainsKey(field.FieldName) ? mapping[field.FieldName] : field.FieldName;
             }
 
-            visibleFields = visibleFields.Select(f => mapping.ContainsKey(f) ? mapping[f] : f).ToList();
-            sortExpression.FieldName = mapping.ContainsKey(sortExpression.FieldName) ? mapping[sortExpression.FieldName] : sortExpression.FieldName;
+            visibleFields = (visibleFields != null)
+                ? visibleFields.Select(f => mapping.ContainsKey(f) ? mapping[f] : f).ToList()
+                : new List<string>();
+
+            sortExpression.FieldName = (sortExpression != null)
+                ? mapping.ContainsKey(sortExpression.FieldName) ? mapping[sortExpression.FieldName] : sortExpression.FieldName
+                : string.Empty;
 
             var query = new Query();
             query.Filter = filter;

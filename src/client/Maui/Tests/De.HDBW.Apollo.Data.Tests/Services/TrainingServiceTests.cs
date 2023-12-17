@@ -95,11 +95,13 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 new FieldExpression()
                 {
-                    FieldName = "trainingName",
+                    FieldName = "TrainingName",
                     Argument = new List<object>()
                     {
-                        "Hallo",
+                        "Train",
                     },
+
+                    Operator = QueryOperator.Contains,
                 },
             };
 
