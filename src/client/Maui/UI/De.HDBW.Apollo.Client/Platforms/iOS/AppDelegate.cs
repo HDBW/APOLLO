@@ -30,11 +30,11 @@ public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelega
         return result;
     }
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
-
     [Export("gestureRecognizer:shouldReceiveTouch:")]
     public bool ShouldReceiveTouch(UIGestureRecognizer gestureRecognizer, UITouch touch)
     {
         return false;
     }
+
+    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
