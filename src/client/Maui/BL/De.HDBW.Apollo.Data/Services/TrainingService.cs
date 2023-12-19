@@ -31,6 +31,8 @@ namespace De.HDBW.Apollo.Data.Services
             filter = filter ?? new Filter() { Fields = new List<FieldExpression>() };
             SortExpression sortExpression = new SortExpression() { FieldName = nameof(Training.TrainingName), Order = SortOrder.Descending };
             List<string> visibleFields = typeof(Training).GetProperties(BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public).Select(p => p.Name).ToList();
+            visibleFields = new List<string>();
+            sortExpression = null;
             var response = await GetTrainingsInternalAsync(filter, sortExpression, visibleFields, token).ConfigureAwait(false);
             return response?.Select(x => x.ConvertToCourseItem()).ToList() as IEnumerable<CourseItem> ?? Array.Empty<CourseItem>();
         }
@@ -59,9 +61,12 @@ namespace De.HDBW.Apollo.Data.Services
                 ? visibleFields.Select(f => mapping.ContainsKey(f) ? mapping[f] : f).ToList()
                 : new List<string>();
 
-            sortExpression.FieldName = (sortExpression != null)
+            if (sortExpression != null)
+            {
+                sortExpression.FieldName = (sortExpression != null)
                 ? mapping.ContainsKey(sortExpression.FieldName) ? mapping[sortExpression.FieldName] : sortExpression.FieldName
                 : string.Empty;
+            }
 
             var query = new Query();
             query.Filter = filter;

@@ -7,19 +7,15 @@ namespace De.HDBW.Apollo.Client.Views;
 
 public partial class SearchFilterSheet
 {
-    public SearchFilterSheet(SearchFilterSheetViewModel model)
-    {
-        InitializeComponent();
-        BindingContext = model;
-        if (ViewModel == null)
-        {
-            return;
-        }
-    }
-
     public SearchFilterSheet()
     {
         InitializeComponent();
+    }
+
+    public SearchFilterSheet(SearchFilterSheetViewModel model)
+        : this()
+    {
+        BindingContext = model;
     }
 
     public SearchFilterSheetViewModel? ViewModel
@@ -28,12 +24,6 @@ public partial class SearchFilterSheet
         {
             return BindingContext as SearchFilterSheetViewModel;
         }
-    }
-
-    protected override void OnBindingContextChanged()
-    {
-        base.OnBindingContextChanged();
-        Shown += OnShown;
     }
 
     private async void OnShown(object? sender, EventArgs e)

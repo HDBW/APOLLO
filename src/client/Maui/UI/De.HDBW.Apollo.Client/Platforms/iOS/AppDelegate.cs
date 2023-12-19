@@ -15,5 +15,16 @@ public class AppDelegate : MauiUIApplicationDelegate
         return base.OpenUrl(app, url, options);
     }
 
+    public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
+    {
+        // https://stackoverflow.com/questions/26931083/kvo-of-contentsize-in-c-sharp
+        AddObserver("UITouchPhaseBegan", NSKeyValueObservingOptions.OldNew, OnTouch);
+        return base.FinishedLaunching(application, launchOptions);
+    }
+
     protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+    private void OnTouch(NSObservedChange change)
+    {
+    }
 }

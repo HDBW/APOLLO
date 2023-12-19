@@ -24,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Microsoft.Maui.Handlers;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -338,7 +339,5 @@ public static class MauiProgram
 
     private static void SetupHandlers(IMauiHandlersCollection handlers)
     {
-#if IOS
-#endif
     }
 }

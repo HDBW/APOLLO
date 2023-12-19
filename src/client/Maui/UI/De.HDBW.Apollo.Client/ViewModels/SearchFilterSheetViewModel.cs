@@ -83,7 +83,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     var editorList = new List<IPropertyEditor>()
                     {
+                        PickerPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
                         ComboboxPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
+                        DatePropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, new DateTimeValue(null)),
+                        PickerPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
                         RangePropertyEditor.Import(Resources.Strings.Resources.Filter_Price, new DoubleValue(100d), 0d, 2000d),
                         ListPropertyEditor.Import(Resources.Strings.Resources.Filter_EduProviders, eduProviders),
                     };
