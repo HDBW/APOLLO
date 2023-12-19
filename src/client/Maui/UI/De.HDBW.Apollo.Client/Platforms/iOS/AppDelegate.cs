@@ -19,7 +19,6 @@ public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelega
 
     public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
     {
-        // https://stackoverflow.com/questions/26931083/kvo-of-contentsize-in-c-sharp
         var result = base.FinishedLaunching(application, launchOptions);
         if (result)
         {
@@ -27,8 +26,7 @@ public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelega
             tap.Delegate = (IUIGestureRecognizerDelegate)Self;
             IPlatformApplication.Current?.Application?.Windows?.Select(x => x.Handler?.PlatformView as UIWindow).Where(x => x != null).FirstOrDefault(x => x.IsKeyWindow)?.AddGestureRecognizer(tap);
         }
-        var x = IPlatformApplication.Current.Services.GetRequiredService<IImageSourceServiceProvider>();
-        x.Get
+
         return result;
     }
 

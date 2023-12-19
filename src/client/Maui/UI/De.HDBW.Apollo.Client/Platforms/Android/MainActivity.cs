@@ -28,5 +28,4 @@ public class MainActivity : MauiAppCompatActivity
         base.OnActivityResult(requestCode, resultCode, data);
         AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
     }
-
 }
