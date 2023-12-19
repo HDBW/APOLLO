@@ -52,9 +52,13 @@ namespace De.HDBW.Apollo.Client.Controls
         protected override void OnQueryConfirmed()
         {
             base.OnQueryConfirmed();
-            while (IsFocused)
+            Unfocus();
+            if (OperatingSystem.IsAndroid())
             {
-                Unfocus();
+                while (IsFocused)
+                {
+                    Unfocus();
+                }
             }
 
             KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
@@ -69,9 +73,13 @@ namespace De.HDBW.Apollo.Client.Controls
         protected override void OnItemSelected(object item)
         {
             base.OnItemSelected(item);
-            while (IsFocused)
+            Unfocus();
+            if (OperatingSystem.IsAndroid())
             {
-                Unfocus();
+                while (IsFocused)
+                {
+                    Unfocus();
+                }
             }
 
             KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
