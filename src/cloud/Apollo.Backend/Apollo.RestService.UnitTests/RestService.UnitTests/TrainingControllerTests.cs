@@ -13,6 +13,9 @@ using Moq;
 
 namespace Apollo.Service.Tests
 {
+    /// <summary>
+    /// Unit tests for the TrainingController class.
+    /// </summary>
     [TestClass]
     public class TrainingControllerTests
     {
@@ -20,6 +23,11 @@ namespace Apollo.Service.Tests
         private Mock<ApolloApi> _mockApi;
         private Mock<ILogger<TrainingController>> _mockLogger;
 
+
+        /// <summary>
+        /// Initializes the test environment before each test method runs.
+        /// This setup includes creating mock instances for ApolloApi and ILogger and initializing the TrainingController with these mocks.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
@@ -31,6 +39,10 @@ namespace Apollo.Service.Tests
             _controller = new TrainingController(_mockApi.Object, _mockLogger.Object);
         }
 
+
+        /// <summary>
+        /// Tests the GetTraining method in TrainingController to ensure it returns the correct Training response.
+        /// </summary>
         [TestMethod]
         public async Task GetTraining_ReturnsTraining()
         {
@@ -48,6 +60,9 @@ namespace Apollo.Service.Tests
         }
 
 
+        /// <summary>
+        /// Tests the QueryTrainings method in TrainingController to ensure it returns a list of Training objects.
+        /// </summary>
         [TestMethod]
         public async Task QueryTrainings_ReturnsListOfTrainings()
         {
@@ -68,50 +83,60 @@ namespace Apollo.Service.Tests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Trainings.Count); // Expecting 2 trainings in the list
+            Assert.AreEqual(2, result.Trainings.Count); // Expecting 2 trainings in the list
         }
 
-        // TODO: Change the testmethods so they work with trainingcontroller
 
-        //[TestMethod]
-        //public async Task CreateOrUpdateTraining_CreatesTrainingSuccessfully()
-        //{
-        //    // Arrange
-        //    var newTraining = new Training { TrainingName = "New Training" };
-        //    var trainingsToCreateOrUpdate = new List<Training> { newTraining };
+        /// <summary>
+        /// Tests the CreateOrUpdateTraining method in TrainingController to ensure it creates a new Training successfully.
+        /// </summary>
+        [TestMethod]
+        public async Task CreateOrUpdateTraining_CreatesTrainingSuccessfully()
+        {
+            // Arrange
+            var newTraining = new Training { TrainingName = "New Training" };
+            var trainingList = new List<Training> { newTraining };
 
-        //    // Mock the behavior of the CreateOrUpdateTraining method
-        //    _mockApi.Setup(api => api.CreateOrUpdateTraining(It.IsAny<ICollection<Training>>()))
-        //            .ReturnsAsync(new List<string> { "newId" }); // Return a list with a single ID
+            // Mock the behavior of the CreateOrUpdateTraining method
+            _mockApi.Setup(api => api.CreateOrUpdateTraining(It.IsAny<ICollection<Training>>()))
+                    .Callback<ICollection<Training>>(trainings => trainings.First().Id = "newId") // Update the ID of the first training object in the collection
+                    .ReturnsAsync(new List<string> { "newId" }); // Return a list with a single ID
 
-        //    // Act
-        //    var result = await _controller.CreateOrUpdateTraining(new CreateOrUpdateTrainingRequest { Training = trainingsToCreateOrUpdate }) as CreateOrUpdateTrainingResponse;
+            // Act
+            var result = await _controller.CreateOrUpdateTraining(new CreateOrUpdateTrainingRequest { Training = newTraining }) as CreateOrUpdateTrainingResponse;
 
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //    Assert.IsNotNull(result.Training); // Check if Training is not null
-        //    Assert.AreEqual("newId", result.Training.Id.FirstOrDefault()); // Verify the first ID in the list
-        //}
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Training); // Check if Training is not null
+            Assert.AreEqual("newId", result.Training.Id); // Verify the ID of the training
+        }
 
 
-        //[TestMethod]
-        //public async Task InsertTrainings_InsertsTrainingsSuccessfully()
-        //{
-        //    // Arrange
-        //    var trainingsToInsert = new List<Training> { new Training { TrainingName = "Training 1" } };
-        //    _mockApi.Setup(api => api.CreateOrUpdateTraining(It.IsAny<Training>()))
-        //            .ReturnsAsync("generatedId");
+        /// <summary>
+        /// Tests the InsertTrainings method in TrainingController to ensure it inserts a list of Training objects successfully.
+        /// </summary>
+        [TestMethod]
+        public async Task InsertTrainings_InsertsTrainingsSuccessfully()
+        {
+            // Arrange
+            var trainingsToInsert = new List<Training> { new Training { TrainingName = "Training 1" } };
+            _mockApi.Setup(api => api.CreateOrUpdateTraining(It.IsAny<ICollection<Training>>()))
+                    .ReturnsAsync(new List<string> { "generatedId" });  // Mocking the expected behavior of the API
 
-        //    // Act
-        //    var result = await _controller.InsertTrainings(trainingsToInsert) as IActionResult;
+            // Act
+            var result = await _controller.InsertTrainings(trainingsToInsert);
 
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //    var okResult = result as OkObjectResult;
-        //    Assert.IsNotNull(okResult);
-        //    Assert.AreEqual(200, okResult.StatusCode);
-        //}
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList<Training>));  // Check if the result is of type IList<Training>
+            Assert.AreEqual(1, result.Count);  // Expecting 1 training in the list
+            Assert.AreEqual("Training 1", result[0].TrainingName);  // Validate the content of the returned list
+        }
 
+
+        /// <summary>
+        /// Tests the Delete method in TrainingController to ensure it successfully removes a specified Training.
+        /// </summary>
         [TestMethod]
         public async Task Delete_RemovesTrainingSuccessfully()
         {
@@ -128,6 +153,10 @@ namespace Apollo.Service.Tests
         }
 
 
+        /// <summary>
+        /// Cleans up the test environment after each test method has run.
+        /// This includes resetting the mock objects for ApolloApi and ILogger.
+        /// </summary>
         [TestCleanup]
         public void Cleanup()
         {

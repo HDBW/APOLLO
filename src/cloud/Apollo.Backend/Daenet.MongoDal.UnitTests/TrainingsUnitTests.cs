@@ -4,10 +4,15 @@
 using System.Linq;
 using Apollo.Api;
 using Apollo.Common.Entities;
-using Daenet.MongoDal.Entitties;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace Daenet.MongoDal.UnitTests
 {
+    /// <summary>
+    /// Provides unit tests for the Training data access layer.
+    /// </summary>
     [TestCategory("MongoDal")]
     [TestClass]
     public class TrainingsUnitTests
@@ -45,8 +50,10 @@ namespace Daenet.MongoDal.UnitTests
             await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => t.Id).ToArray(), false);
         }
 
+
         /// <summary>
         /// Cleansup all test data.
+        /// This method is called after each test to ensure clean state for subsequent tests.
         /// </summary>
         /// <returns></returns>
         [TestCleanup]
@@ -58,6 +65,7 @@ namespace Daenet.MongoDal.UnitTests
 
         /// <summary>
         /// Cleansup all test data.
+        /// This method is called before each test to prepare necessary data for testing.
         /// </summary>
         /// <returns></returns>
         [TestInitialize]
@@ -67,6 +75,10 @@ namespace Daenet.MongoDal.UnitTests
         }
 
 
+        /// <summary>
+        /// Tests the behavior of the Delete method when attempting to delete a non-existing document.
+        /// Expects an ApplicationException to be thrown.
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ApplicationException))]
         public async Task ThrowOnDeleteNonExistingDocTest()
@@ -80,6 +92,10 @@ namespace Daenet.MongoDal.UnitTests
             await dal.DeleteAsync(Helpers.GetCollectionName<Training>(), int.MaxValue.ToString(), false);
         }
 
+
+        /// <summary>
+        /// Tests the behavior of the Delete method when attempting to delete a non-existing document without throwing an exception.
+        /// </summary>
         [TestMethod]
         public async Task DoNotThrowDeleteNonExistingDocTest()
         {
@@ -88,6 +104,7 @@ namespace Daenet.MongoDal.UnitTests
             // Deletes not existing record without exception.            
             await dal.DeleteAsync(Helpers.GetCollectionName<Training>(), int.MaxValue.ToString(), false);
         }
+
 
         /// <summary>
         /// Insert and deletes many trainings.
@@ -112,11 +129,12 @@ namespace Daenet.MongoDal.UnitTests
             Assert.IsTrue(res == _testTrainings.Length);
         }
 
+
         /// <summary>
-        /// Insert and delete training instances.
+        /// Tests the insertion and deletion of a single Training instance.
+        /// Accepts a DataRow attribute to test with different Training instances.
         /// </summary>
-        /// <param name="idx"></param>
-        /// <returns></returns>
+        /// <param name="idx">Index of the Training instance to test.</param>
         [TestMethod]
         //[TestCategory("Prod")]
         [DataRow(0)]
@@ -132,7 +150,10 @@ namespace Daenet.MongoDal.UnitTests
         }
 
 
-
+        /// <summary>
+        /// Tests querying for non-existing Training instances.
+        /// Expects the query result to be empty.
+        /// </summary>
         [TestMethod]
         public async Task QueryNonExsistingTrainingTest()
         {
@@ -155,12 +176,20 @@ namespace Daenet.MongoDal.UnitTests
             Assert.IsTrue(res?.Count == 0);
         }
 
+
+        /// <summary>
+        /// Tests querying for Training instances based on specific criteria.
+        /// </summary>
         [TestMethod]
         public async Task QueryTrainingsTest()
         {
             var dal = Helpers.GetDal();
 
             await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            var insertedTrainings = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), new List<string> { "TrainingName" }, null, 100, 0);
+
+            Console.WriteLine($"Inserted Trainings: {JsonConvert.SerializeObject(insertedTrainings)}");
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
@@ -186,9 +215,13 @@ namespace Daenet.MongoDal.UnitTests
 
             }, 100, 0);
 
-            Assert.IsTrue(res?.Count > 0);
+            Assert.IsTrue(res?.Count > 0, $"Expected bigger than 0, but got {res?.Count}");
         }
 
+
+        /// <summary>
+        /// Tests querying for Training instances by name using a generic query.
+        /// </summary>
         [TestMethod]
         public async Task QueryTrainingsByNameGenericTest()
         {
@@ -220,6 +253,10 @@ namespace Daenet.MongoDal.UnitTests
             Assert.IsTrue(res?.Count == 2);
         }
 
+
+        /// <summary>
+        /// Tests querying for Training instances by name using a non-generic query.
+        /// </summary>
         [TestMethod]
         public async Task QueryTrainingsByNameNonGenericTest()
         {
@@ -251,6 +288,11 @@ namespace Daenet.MongoDal.UnitTests
             Assert.IsTrue(res?.Count == 2);
         }
 
+
+        /// <summary>
+        /// Tests the upsert functionality on Training instances.
+        /// Verifies that the upsert operation updates the existing documents.
+        /// </summary>
         [TestMethod]
         public async Task UpsertTest()
         {
@@ -283,12 +325,20 @@ namespace Daenet.MongoDal.UnitTests
         }
 
 
+        /// <summary>
+        /// Tests the count functionality by counting Training instances with certain criteria.
+        /// </summary>
         [TestMethod]
         public async Task CountTest()
         {
             var dal = Helpers.GetDal();
 
             await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            // Debug: Verify the inserted data
+            var insertedTrainings = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), new List<string> { "Loans" }, null, 100, 0);
+
+            Console.WriteLine($"Inserted Trainings: {JsonConvert.SerializeObject(insertedTrainings)}");
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
             {
@@ -312,7 +362,14 @@ namespace Daenet.MongoDal.UnitTests
 
             }, 100, 0);
 
-            Assert.IsTrue(res?.Count >= 2);
+            // Filter for trainings with non-empty Loans array
+            var filter = Builders<BsonDocument>.Filter.SizeGt("Loans", 0);
+
+            // Count documents matching the filter
+            var countWithLoans = await dal.CountDocumentsAsync(Helpers.GetCollectionName<Training>(), filter);
+
+
+            Assert.IsTrue(res?.Count >= 2, $"Exptected >=2 trainings with loans, but got {countWithLoans}");
         }
     }
 }

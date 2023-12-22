@@ -27,6 +27,11 @@ namespace Apollo.RestService.RestService.UnitTests
         private Mock<ApolloApi> _mockApi;
         private Mock<ILogger<UserController>> _mockLogger;
 
+
+        /// <summary>
+        /// Initializes the test environment before each test method runs.
+        /// This setup includes creating mock instances for ApolloApi and ILogger and initializing the UserController with these mocks.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
@@ -35,6 +40,10 @@ namespace Apollo.RestService.RestService.UnitTests
             _controller = new UserController(_mockApi.Object, _mockLogger.Object);
         }
 
+
+        /// <summary>
+        /// Tests the GetUser method in UserController to ensure it returns the correct User response.
+        /// </summary>
         [TestMethod]
         public async Task GetUser_ReturnsUser()
         {
@@ -51,6 +60,10 @@ namespace Apollo.RestService.RestService.UnitTests
             Assert.AreEqual(expectedUser.FirstName, result.User.FirstName);
         }
 
+
+        /// <summary>
+        /// Tests the QueryUsers method in UserController to ensure it returns a list of User objects.
+        /// </summary>
         [TestMethod]
         public async Task QueryUsers_ReturnsListOfUsers()
         {
@@ -74,26 +87,34 @@ namespace Apollo.RestService.RestService.UnitTests
             Assert.AreEqual(2, result.Users.Count, "The Users count should be 2.");
         }
 
-        //TODO:
-        //[TestMethod]
-        //public async Task CreateOrUpdateUser_CreatesUserSuccessfully()
-        //{
-        //    // Arrange
-        //    var newUser = new User { FirstName = "Charlie" };
-        //    var expectedResult = "newId";
 
-        //    _mockApi.Setup(api => api.CreateOrUpdateUser(It.Is<List<User>>(users => users.Contains(newUser)))).ReturnsAsync(new List<string> { expectedResult });
+        /// <summary>
+        /// Tests the CreateOrUpdateUser method in UserController to ensure it creates or updates User objects successfully.
+        /// </summary>
+        [TestMethod]
+        public async Task CreateOrUpdateUser_CreatesUsersSuccessfully()
+        {
+            // Arrange
+            var newUser = new User { UserName = "NewUser" };
+            var request = new CreateOrUpdateUserRequest(newUser);
 
-        //    // Act
-        //    var result = await _controller.CreateOrUpdateUser(newUser) as CreateOrUpdateUserResponse;
+            // Mock the behavior of the CreateOrUpdateUser method of ApolloApi
+            _mockApi.Setup(api => api.CreateOrUpdateUser(It.IsAny<ICollection<User>>()))
+                    .ReturnsAsync(new List<string> { "newUserId" }); // Return a list with a single ID
 
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //    Assert.AreEqual(expectedResult, result.Result);
-        //}
+            // Act
+            var response = await _controller.CreateOrUpdateUser(request) as CreateOrUpdateUserResponse;
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Result); // Verify the Result property is not null
+                                               // Additional assertions can be made based on the actual structure of Result
+        }
 
 
-
+        /// <summary>
+        /// Tests the InsertUsers method in UserController to ensure it inserts User objects successfully.
+        /// </summary>
         [TestMethod]
         public async Task InsertUsers_InsertsUsersSuccessfully()
         {
@@ -113,6 +134,9 @@ namespace Apollo.RestService.RestService.UnitTests
         }
 
 
+        /// <summary>
+        /// Tests the DeleteUser method in UserController to ensure it successfully removes specified User objects.
+        /// </summary>
         [TestMethod]
         public async Task DeleteUser_RemovesUserSuccessfully()
         {
@@ -126,6 +150,11 @@ namespace Apollo.RestService.RestService.UnitTests
             _mockApi.Verify(api => api.DeleteUsers(userIds), Times.Once());
         }
 
+
+        /// <summary>
+        /// Cleans up the test environment after each test method has run.
+        /// This includes resetting the mock objects for ApolloApi and ILogger.
+        /// </summary>
         [TestCleanup]
         public void Cleanup()
         {
