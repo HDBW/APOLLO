@@ -60,7 +60,7 @@ namespace Daenet.MongoDal
             var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
             ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
 
-            this._db = this._client.GetDatabase(_cfg.MongoDatabase);           
+            this._db = this._client.GetDatabase(_cfg.MongoDatabase);
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Daenet.MongoDal
                 documents = await coll.Find(filter).Sort(sort).Skip(skip).Limit(top).ToCursorAsync();
             }
 
-            return documents; 
+            return documents;
         }
 
         /// <summary>
@@ -338,8 +338,9 @@ namespace Daenet.MongoDal
             {
                 T? doc = BsonSerializer.Deserialize<T>(bsonDoc);
 
-                // This is required, because the default mapper of the Mongo C# Driver does not correctlly map BsonDoc._id to T.Id.
-                ((dynamic)doc!).Id = bsonDoc["Id"].ToString();
+                if (bsonDoc.Contains("Id"))
+                    // This is required, because the default mapper of the Mongo C# Driver does not correctlly map BsonDoc._id to T.Id.
+                    ((dynamic)doc!).Id = bsonDoc["Id"].ToString();
 
                 results.Add(doc);
             }
