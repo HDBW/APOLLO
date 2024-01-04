@@ -198,6 +198,7 @@ public static class MauiProgram
         services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
         services.AddSingleton<IFeedbackService, FeedbackService>();
         services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
+        services.AddSingleton<ITouchService, TouchService>();
 
         // var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
         // var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;

@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
         [ObservableProperty]
         private bool _isOpen;
 
-        protected ComboboxPropertyEditor(string label, IEnumerable<PickerValue> values, PickerValue? currentValue)
+        private ComboboxPropertyEditor(string label, IEnumerable<PickerValue> values, PickerValue? currentValue)
             : base(label, values, currentValue)
         {
         }

@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using CoreGraphics;
+using De.HDBW.Apollo.Client.Contracts;
 using Foundation;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Identity.Client;
@@ -11,6 +13,8 @@ namespace De.HDBW.Apollo.Client;
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelegate
 {
+    public ITouchService? TouchService { get; set; }
+
     public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
     {
         AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
@@ -22,6 +26,7 @@ public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelega
         var result = base.FinishedLaunching(application, launchOptions);
         if (result)
         {
+            TouchService = IPlatformApplication.Current?.Services.GetService<ITouchService>();
             UITapGestureRecognizer tap = new UITapGestureRecognizer(Self, new ObjCRuntime.Selector("gestureRecognizer:shouldReceiveTouch:"));
             tap.Delegate = (IUIGestureRecognizerDelegate)Self;
             IPlatformApplication.Current?.Application?.Windows?.Select(x => x.Handler?.PlatformView as UIWindow).Where(x => x != null).FirstOrDefault(x => x.IsKeyWindow)?.AddGestureRecognizer(tap);
@@ -33,6 +38,17 @@ public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelega
     [Export("gestureRecognizer:shouldReceiveTouch:")]
     public bool ShouldReceiveTouch(UIGestureRecognizer gestureRecognizer, UITouch touch)
     {
+        var point = touch?.LocationInView(touch.Window) ?? CGPoint.Empty;
+        switch (gestureRecognizer?.State)
+        {
+            case UIGestureRecognizerState.Began:
+                TouchService?.TouchDownReceived((float)point.X, (float)point.Y);
+                break;
+            case UIGestureRecognizerState.Ended:
+                TouchService?.TouchUpReceived((float)point.X, (float)point.Y);
+                break;
+        }
+
         return false;
     }
 

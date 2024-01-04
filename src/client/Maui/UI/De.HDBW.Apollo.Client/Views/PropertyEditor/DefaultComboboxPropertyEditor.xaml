@@ -5,6 +5,8 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.PropertyEditor"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:ComboboxPropertyEditor"
+             Loaded="HandleLoaded"
+             Unloaded="HandleUnloaded"
              >
     <VerticalStackLayout >
         <Label Text="{x:Binding Label}"

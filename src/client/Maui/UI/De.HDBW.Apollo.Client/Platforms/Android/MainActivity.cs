@@ -6,7 +6,6 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Views;
 using De.HDBW.Apollo.Client.Contracts;
-using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 
 namespace De.HDBW.Apollo.Client;
@@ -15,11 +14,23 @@ public class MainActivity : MauiAppCompatActivity
 {
     public MainActivity()
     {
-        //var logger = IPlatformApplication.Current.Services.GetService<IDialogService>();
+        TouchService = IPlatformApplication.Current?.Services.GetService<ITouchService>();
     }
+
+    public ITouchService? TouchService { get; }
 
     public override bool DispatchTouchEvent(MotionEvent? e)
     {
+        switch (e?.Action)
+        {
+            case MotionEventActions.Down:
+                TouchService?.TouchDownReceived(e.RawX, e.RawY);
+                break;
+            case MotionEventActions.Up:
+                TouchService?.TouchUpReceived(e.RawX, e.RawY);
+                break;
+        }
+
         return base.DispatchTouchEvent(e);
     }
 
