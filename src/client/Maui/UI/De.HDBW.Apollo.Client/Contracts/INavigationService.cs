@@ -7,10 +7,10 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface INavigationService
     {
-        Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null);
+        Task<bool> PushToRootAsync(string route, CancellationToken token, NavigationParameters? parameters = null);
 
-        Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null);
+        Task<bool> NavigateAsync(string route, CancellationToken token, NavigationParameters? parameters = null);
 
-        Task<bool> PushToRootAsnc(CancellationToken token);
+        Task<bool> PushToRootAsync(CancellationToken token);
     }
 }

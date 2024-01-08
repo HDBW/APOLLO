@@ -1,7 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Services;
+using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 
@@ -15,12 +18,15 @@ public partial class App : Application
     public App(
         IServiceProvider provider,
         IPreferenceService preferenceService,
-        ISessionService sessionService)
+        ISessionService sessionService,
+        INavigationService navigationService)
     {
         _serviceProvider = provider;
         _sessionService = sessionService;
         _preferenceService = preferenceService;
         InitializeComponent();
+        navigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
+        return;
         if (_preferenceService.GetValue(Preference.IsFirstTime, true))
         {
             MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);

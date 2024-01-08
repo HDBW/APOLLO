@@ -8,7 +8,9 @@ using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
+using De.HDBW.Apollo.Client.ViewModels.Profile;
 using De.HDBW.Apollo.Client.Views;
+using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Data;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
@@ -191,7 +193,7 @@ public static class MauiProgram
         var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
         services.AddSingleton<ITrainingService>((serviceProvider) =>
         {
-            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>() !, apiUrl, apiToken, new HttpClientHandler());
+            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>()!, apiUrl, apiToken, new HttpClientHandler());
         });
     }
 
@@ -269,6 +271,25 @@ public static class MauiProgram
 
         services.AddTransient<SettingsView>();
         services.AddTransient<SettingsViewModel>();
+
+        services.AddTransient<ProfileView>();
+        services.AddTransient<ProfileViewModel>();
+
+        services.AddTransient<PersonalInformationEditView>();
+        services.AddTransient<PersonalInformationEditViewModel>();
+
+        services.AddTransient<MobilityEditView>();
+        services.AddTransient<MobilityEditViewModel>();
+
+        services.AddTransient<LanguageSkillEditView>();
+        services.AddTransient<LanguageSkillEditViewModel>();
+
+        services.AddTransient<WebReferenceEditView>();
+        services.AddTransient<WebReferenceEditViewModel>();
+
+        //services.AddTransient<ProfileViewModel>();
+
+        //services.AddTransient<SettingsViewModel>();
     }
 
     private static void SetupRoutes()
@@ -284,10 +305,16 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
         Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
         Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
+        Routing.RegisterRoute(Routes.ProfileView, typeof(ProfileView));
+        Routing.RegisterRoute(Routes.PersonalInformationEditView, typeof(PersonalInformationEditView));
+        Routing.RegisterRoute(Routes.MobilityEditView, typeof(MobilityEditView));
+        Routing.RegisterRoute(Routes.LanguageSkillEditView, typeof(LanguageSkillEditView));
+        Routing.RegisterRoute(Routes.WebReferenceEditView, typeof(WebReferenceEditView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
         Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
+        Routing.RegisterRoute(Routes.FavoritesView, typeof(EmptyView));
     }
 
     private static void SetupHandler()

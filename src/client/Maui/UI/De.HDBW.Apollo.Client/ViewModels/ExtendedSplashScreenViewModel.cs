@@ -56,11 +56,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (SessionService.HasRegisteredUser)
                     {
-                        await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token);
+                        await NavigationService.PushToRootAsync(Routes.UseCaseSelectionView, token);
                     }
                     else
                     {
-                        await NavigationService.PushToRootAsnc(Routes.RegistrationView, token);
+                        await NavigationService.PushToRootAsync(Routes.RegistrationView, token);
                     }
                 }
                 catch (OperationCanceledException)

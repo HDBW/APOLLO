@@ -79,6 +79,7 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="24,8"/>
+        <Setter Property="MinimumHeightRequest" Value="24"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">

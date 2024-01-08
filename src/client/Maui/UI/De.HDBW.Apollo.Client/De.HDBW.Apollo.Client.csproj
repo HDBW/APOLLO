@@ -48,10 +48,12 @@
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\completed.svg" />
+    <None Remove="Resources\Images\edit.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
     <None Remove="Resources\Images\placeholdertest.svg" />
+    <None Remove="Resources\Images\profile.svg" />
     <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\resultdeco.svg" />
     <None Remove="Resources\Images\usecase4deco.svg" />
@@ -148,6 +150,21 @@
     <MauiXaml Update="Views\ExtendedSplashScreenView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\LanguageSkillEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\MobilityEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\ProfileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\PersonalInformationEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\WebReferenceEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\RegistrationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -185,39 +202,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\AssessmentDescriptionView.xaml.cs">
-      <DependentUpon>AssessmentDescriptionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\AssessmentView.xaml.cs">
-      <DependentUpon>AssessmentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\ExtendedSplashScreenView.xaml.cs">
-      <DependentUpon>ExtendedSplashScreenView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\RegistrationView.xaml.cs">
-      <DependentUpon>RegistrationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\StartView.xaml.cs">
-      <DependentUpon>StartView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\UseCaseDescriptionView.xaml.cs">
-      <DependentUpon>UseCaseDescriptionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Dialogs\CancelAssessmentDialog.xaml.cs">
-      <DependentUpon>CancelAssessmentDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Dialogs\FirstTimeDialog.xaml.cs">
-      <DependentUpon>FirstTimeDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Dialogs\SkipQuestionDialog.xaml.cs">
-      <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Dialogs\MessageDialog.xaml.cs">
-      <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Dialogs\ConfirmDataUsageDialog.xaml.cs">
-      <DependentUpon>ConfirmDataUsageDialog.xaml</DependentUpon>
-    </Compile>
+    
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Resources.resx">

@@ -3,6 +3,7 @@
              x:Class="De.HDBW.Apollo.Client.Views.UseCaseSelectionView"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
+             Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False"
              Shell.FlyoutBehavior="Disabled"             
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"

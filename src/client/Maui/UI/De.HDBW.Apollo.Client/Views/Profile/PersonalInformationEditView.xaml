@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.PersonalInformationEditView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resources.PersonalInformationEditView_Title}"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             x:DataType="viewModels:PersonalInformationEditViewModel"
+             Shell.TabBarIsVisible="False"
+             IsBusy="{Binding IsBusy}" Padding="0">
+    <VerticalStackLayout>
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" />
+        <Entry HorizontalOptions="Fill"
+               Placeholder="{x:Static strings:Resources.PersonalInformationEditView_UserNameHint}"
+               Text="{x:Binding Name, Mode=TwoWay}"
+               VerticalOptions="Center"
+               ClearButtonVisibility="WhileEditing"/>
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" />
+        <DatePicker HorizontalOptions="Fill"
+               VerticalOptions="Center"
+               Date="{x:Binding BirthDate, Mode=TwoWay}"/>
+        <HorizontalStackLayout>
+            <CheckBox HorizontalOptions="Fill" VerticalOptions="Center" />
+            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

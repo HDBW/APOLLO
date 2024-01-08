@@ -585,4 +585,40 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="UseCase_D_Name" xml:space="preserve">
     <value>Suche</value>
   </data>
+  <data name="ProfileView_Title" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="PersonalInformationEditView_Birthdate" xml:space="preserve">
+    <value>Geburtstag</value>
+  </data>
+  <data name="PersonalInformationEditView_Handicaps" xml:space="preserve">
+    <value>Einschränkungen</value>
+  </data>
+  <data name="PersonalInformationEditView_Title" xml:space="preserve">
+    <value>Persöhnliche Informationen</value>
+  </data>
+  <data name="PersonalInformationEditView_UserName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PersonalInformationEditView_UserNameHint" xml:space="preserve">
+    <value>Benutzernamen eingeben</value>
+  </data>
+  <data name="MobilityEditView_Title" xml:space="preserve">
+    <value>Mobilität</value>
+  </data>
+  <data name="LanguageSkillEditView_Title" xml:space="preserve">
+    <value>Sprachkenntnisse</value>
+  </data>
+  <data name="MobilityEditView_DriverLicenses" xml:space="preserve">
+    <value>Führerscheine</value>
+  </data>
+  <data name="MobilityEditView_Vehicle" xml:space="preserve">
+    <value>Eigenes Fahrzeug</value>
+  </data>
+  <data name="MobilityEditView_Willing" xml:space="preserve">
+    <value>Reisebereitschaft</value>
+  </data>
+  <data name="WebReferenceEditView_Title" xml:space="preserve">
+    <value>Webprofile</value>
+  </data>
 </root>

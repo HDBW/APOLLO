@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -75,7 +74,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     var parameters = new NavigationParameters();
                     parameters.Add(NavigationParameter.Data, true);
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token, parameters);
+                    await NavigationService.PushToRootAsync(Routes.UseCaseSelectionView, token, parameters);
                 }
                 catch (OperationCanceledException)
                 {

@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private int _indexToAssociate;
         private bool _isAssociated;
 
-        private DragSourceEntry(TU data, int indexToAssociate, bool isAssociated, InteractionType interaction, AnswerType? answerType,  Action<DragSourceEntry<TU>>? dragStartingHandler, Action<DragSourceEntry<TU>>? dropCompletedHandler, ILogger logger)
+        private DragSourceEntry(TU data, int indexToAssociate, bool isAssociated, InteractionType interaction, AnswerType? answerType, Action<DragSourceEntry<TU>>? dragStartingHandler, Action<DragSourceEntry<TU>>? dropCompletedHandler, ILogger logger)
         {
             ArgumentNullException.ThrowIfNull(data);
             ArgumentNullException.ThrowIfNull(logger);

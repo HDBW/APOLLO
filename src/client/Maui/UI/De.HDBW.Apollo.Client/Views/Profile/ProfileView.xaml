@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.ProfileView"
+             Shell.FlyoutBehavior="Disabled"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resources.ProfileView_Title}"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:genericModels="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
+             x:DataType="viewModels:ProfileViewModel"
+             IsBusy="{Binding IsBusy}" Padding="0">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ProfileInteractionTemplate" x:DataType="interactionModels:InteractionEntry">
+            <Grid ColumnDefinitions="*,Auto" Padding="16,0">
+                <Label Text="{x:Binding Text}" FontAttributes="Bold" />
+                <ImageButton Command="{x:Binding NavigateCommand}" Grid.Column="1" Source="edit.png"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="StringValueTemplate" x:DataType="genericModels:StringValue">
+            <Grid ColumnDefinitions="Auto,*" Padding="16,0">
+                <Label Text="{x:Binding Text}" FontAttributes="Bold" />
+                <Label Text="{x:Binding Data}" Grid.Column="1" Margin="5,0,0,0"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SeperatorValueTemplate" x:DataType="genericModels:SeperatorValue">
+            <Border />
+        </DataTemplate>
+
+        <selector:ProfileSectionTemplateSelector x:Key="ProfileSectionTemplateSelector"
+                                                 StringValueTemplate="{StaticResource StringValueTemplate}"
+                                                 SeperatorValueTemplate="{StaticResource SeperatorValueTemplate}"
+                                                 InteractionEntryTemplate="{StaticResource ProfileInteractionTemplate}"/>
+    </ContentPage.Resources>
+    
+    <CollectionView ItemsSource="{x:Binding Sections}"
+                    ItemsLayout="VerticalList"
+                    ItemTemplate="{StaticResource ProfileSectionTemplateSelector}">
+        <CollectionView.EmptyView>
+            <ContentView>
+                <VerticalStackLayout
+                             VerticalOptions="CenterAndExpand"
+                             Padding="24,0">
+                    <Label Text="Ganz schönn leer hier." />
+                    <Label Text="Tipp: Füll jetzt Dein Profil aus. Und wir schicken Dir noch passendere Vorschläge."/>
+                    <Button Text="Los gehts" Margin="0,8" Command="{x:Binding EditPersonalInformationsCommand}"/>
+                </VerticalStackLayout>
+            </ContentView>
+        </CollectionView.EmptyView>
+    </CollectionView>
+</ContentPage>

@@ -127,11 +127,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (IsUseCaseSelectionFromShell == true)
                     {
-                        await NavigationService.PushToRootAsnc(token);
+                        await NavigationService.PushToRootAsync(token);
                     }
                     else
                     {
-                        await NavigationService.PushToRootAsnc(Routes.Shell, token);
+                        await NavigationService.PushToRootAsync(Routes.Shell, token);
                     }
                 }
                 catch (OperationCanceledException)

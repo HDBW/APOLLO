@@ -32,5 +32,17 @@ namespace De.HDBW.Apollo.Client.Models
         public const string SettingsView = "/SettingsView";
 
         public const string FeedbackView = "/FeedbackView";
+
+        public const string FavoritesView = "/EmptyView";
+
+        public const string ProfileView = "/ProfileView";
+
+        public const string PersonalInformationEditView = "/PersonalInformationEditView";
+
+        public const string MobilityEditView = "/MobilityEditView";
+
+        public const string LanguageSkillEditView = "/LanguageSkillEditView";
+
+        public const string WebReferenceEditView = "/WebReferenceEditView";
     }
 }

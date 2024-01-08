@@ -3,6 +3,7 @@
              x:Class="De.HDBW.Apollo.Client.Views.UseCaseDescriptionView"
              NavigationPage.HasBackButton="True"
              NavigationPage.HasNavigationBar="True"
+             Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="True"
              Shell.FlyoutBehavior="Disabled"
              NavigationPage.BackButtonTitle="{x:Static strings:Resources.Global_Back}"

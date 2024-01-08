@@ -55,7 +55,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
+                    await NavigationService.PushToRootAsync(Routes.UseCaseSelectionView, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -90,7 +90,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     await AuthService.SignInInteractively(worker.Token);
-                    authentication = await AuthService.AcquireTokenSilent(worker.Token);
+                    //authentication = await AuthService.AcquireTokenSilent(worker.Token);
+                    //var userId = authentication.Account?.HomeAccountId;
                 }
                 catch (OperationCanceledException)
                 {
@@ -134,7 +135,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
                         authentication = await AuthService.SignInInteractively(worker.Token);
-                        await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
+                        await NavigationService.PushToRootAsync(Routes.UseCaseSelectionView, worker.Token);
                     }
                 }
                 catch (OperationCanceledException)

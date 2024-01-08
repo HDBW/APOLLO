@@ -65,7 +65,7 @@ namespace De.HDBW.Apollo.Client.Helper.Assessment
 
             source.IsAssociated = true;
             target.AssociatedIndex = source.IndexToAssociate;
-            answer.CurrentValue = GetValueForSelectedAnswer(selectedAnswer, answer.AnswerType) !;
+            answer.CurrentValue = GetValueForSelectedAnswer(selectedAnswer, answer.AnswerType)!;
             Logger.LogDebug($"Set result of answer with id {answer.Id} to {answer.CurrentValue ?? "null"}.");
             Logger.LogDebug($"Correct answer for id {answer.Id} would be {answer.Value}.");
             Logger.LogDebug($"The answer for id {answer.Id} is {(answer.IsCorrect ? "Correct" : "Incorrect")}.");

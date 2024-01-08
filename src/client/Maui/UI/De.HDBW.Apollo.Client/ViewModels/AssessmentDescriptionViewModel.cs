@@ -135,7 +135,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     var parameters = new NavigationParameters();
                     parameters.AddValue<long?>(NavigationParameter.Id, _assessmentItemId);
-                    await NavigationService.NavigateAsnc(Routes.AssessmentView, worker.Token, parameters);
+                    await NavigationService.NavigateAsync(Routes.AssessmentView, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)
                 {

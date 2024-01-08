@@ -673,6 +673,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sprachkenntnisse.
+        /// </summary>
+        public static string LanguageSkillEditView_Title {
+            get {
+                return ResourceManager.GetString("LanguageSkillEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zukünftig werden dir hier weitere Funktionen zur Verfügung stehen.
         /// </summary>
         public static string MainNavigation_BetaDescription {
@@ -799,6 +808,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Führerscheine.
+        /// </summary>
+        public static string MobilityEditView_DriverLicenses {
+            get {
+                return ResourceManager.GetString("MobilityEditView_DriverLicenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobilität.
+        /// </summary>
+        public static string MobilityEditView_Title {
+            get {
+                return ResourceManager.GetString("MobilityEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eigenes Fahrzeug.
+        /// </summary>
+        public static string MobilityEditView_Vehicle {
+            get {
+                return ResourceManager.GetString("MobilityEditView_Vehicle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reisebereitschaft.
+        /// </summary>
+        public static string MobilityEditView_Willing {
+            get {
+                return ResourceManager.GetString("MobilityEditView_Willing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vollzeit.
         /// </summary>
         public static string OccurrenceType_FullTime {
@@ -822,6 +867,60 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string OccurrenceType_PartTime {
             get {
                 return ResourceManager.GetString("OccurrenceType_PartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geburtstag.
+        /// </summary>
+        public static string PersonalInformationEditView_Birthdate {
+            get {
+                return ResourceManager.GetString("PersonalInformationEditView_Birthdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Einschränkungen.
+        /// </summary>
+        public static string PersonalInformationEditView_Handicaps {
+            get {
+                return ResourceManager.GetString("PersonalInformationEditView_Handicaps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persöhnliche Informationen.
+        /// </summary>
+        public static string PersonalInformationEditView_Title {
+            get {
+                return ResourceManager.GetString("PersonalInformationEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string PersonalInformationEditView_UserName {
+            get {
+                return ResourceManager.GetString("PersonalInformationEditView_UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Benutzernamen eingeben.
+        /// </summary>
+        public static string PersonalInformationEditView_UserNameHint {
+            get {
+                return ResourceManager.GetString("PersonalInformationEditView_UserNameHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profil.
+        /// </summary>
+        public static string ProfileView_Title {
+            get {
+                return ResourceManager.GetString("ProfileView_Title", resourceCulture);
             }
         }
         
@@ -1443,6 +1542,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string UseCaseSelectionView_ChooseDescription {
             get {
                 return ResourceManager.GetString("UseCaseSelectionView_ChooseDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webprofile.
+        /// </summary>
+        public static string WebReferenceEditView_Title {
+            get {
+                return ResourceManager.GetString("WebReferenceEditView_Title", resourceCulture);
             }
         }
     }

@@ -43,7 +43,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
         }
 
-        public async Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
+        public async Task<bool> PushToRootAsync(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
             Logger?.LogDebug($"PushToRoot to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
@@ -55,23 +55,23 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsync)} in {GetType().Name}.");
             }
 
             return result;
         }
 
-        public async Task<bool> PushToRootAsnc(CancellationToken token)
+        public async Task<bool> PushToRootAsync(CancellationToken token)
         {
             Logger?.LogDebug($"PushToRoot.");
             token.ThrowIfCancellationRequested();
@@ -83,23 +83,23 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsync)} in {GetType().Name}.");
             }
 
             return result;
         }
 
-        public async Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
+        public async Task<bool> NavigateAsync(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
             Logger?.LogDebug($"Navigate to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
@@ -111,17 +111,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsnc)} in {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsync)} in {GetType().Name}.");
             }
 
             return result;
