@@ -877,6 +877,7 @@ namespace Apollo.Api.UnitTests
             // add more assertions based on your specific testing requirements
         }
 
+        // MUKIT: https://daenet.visualstudio.com/apollo/_sprints/taskboard/apollo%20Team/apollo/Milestone%201?workitem=7753
 
         /// <summary>
         ///  A training has a list of Appointments and an Appointment can contain a Contact where the Training is taking place.
