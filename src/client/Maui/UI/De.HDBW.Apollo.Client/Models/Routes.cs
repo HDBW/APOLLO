@@ -44,5 +44,15 @@ namespace De.HDBW.Apollo.Client.Models
         public const string LanguageSkillEditView = "/LanguageSkillEditView";
 
         public const string WebReferenceEditView = "/WebReferenceEditView";
+
+        public const string QualificationEditView = "/QualificationEditView";
+
+        public const string ContactInfoEditView = "/ContactInfoEditView";
+
+        public const string LicenseEditView = "/LicenseEditView";
+
+        public const string EducationInfoEditView = "/EducationInfoEditView";
+
+        public const string CareerInfoEditView = "/CareerInfoEditView";
     }
 }

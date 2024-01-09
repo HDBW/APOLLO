@@ -16,10 +16,14 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? SeperatorValueTemplate { get; set; }
 
+        public DataTemplate? RecommendationValueTemplate { get; set; }
+
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             switch (item)
             {
+                case RecommendationValue _:
+                    return RecommendationValueTemplate;
                 case StringValue _:
                     return StringValueTemplate;
                 case SeperatorValue _:

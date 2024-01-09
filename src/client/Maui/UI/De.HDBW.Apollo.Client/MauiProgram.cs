@@ -287,9 +287,20 @@ public static class MauiProgram
         services.AddTransient<WebReferenceEditView>();
         services.AddTransient<WebReferenceEditViewModel>();
 
-        //services.AddTransient<ProfileViewModel>();
+        services.AddTransient<QualificationEditView>();
+        services.AddTransient<QualificationEditViewModel>();
 
-        //services.AddTransient<SettingsViewModel>();
+        services.AddTransient<ContactInfoEditView>();
+        services.AddTransient<ContactInfoEditViewModel>();
+
+        services.AddTransient<LicenseEditView>();
+        services.AddTransient<LicenseEditViewModel>();
+
+        services.AddTransient<EducationInfoEditView>();
+        services.AddTransient<EducationInfoEditViewModel>();
+
+        services.AddTransient<CareerInfoEditView>();
+        services.AddTransient<CareerInfoEditViewModel>();
     }
 
     private static void SetupRoutes()
@@ -310,6 +321,11 @@ public static class MauiProgram
         Routing.RegisterRoute(Routes.MobilityEditView, typeof(MobilityEditView));
         Routing.RegisterRoute(Routes.LanguageSkillEditView, typeof(LanguageSkillEditView));
         Routing.RegisterRoute(Routes.WebReferenceEditView, typeof(WebReferenceEditView));
+        Routing.RegisterRoute(Routes.QualificationEditView, typeof(QualificationEditView));
+        Routing.RegisterRoute(Routes.ContactInfoEditView, typeof(ContactInfoEditView));
+        Routing.RegisterRoute(Routes.LicenseEditView, typeof(LicenseEditView));
+        Routing.RegisterRoute(Routes.EducationInfoEditView, typeof(EducationInfoEditView));
+        Routing.RegisterRoute(Routes.CareerInfoEditView, typeof(CareerInfoEditView));
 
         // TBD
         Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

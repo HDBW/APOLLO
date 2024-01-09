@@ -250,6 +250,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Berufserfahrung.
+        /// </summary>
+        public static string CareerInfoEditView_Title {
+            get {
+                return ResourceManager.GetString("CareerInfoEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ich stimme zu..
         /// </summary>
         public static string ConfirmDataUsageDialog_Agree {
@@ -291,6 +300,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ConfirmDataUsageDialog_Title {
             get {
                 return ResourceManager.GetString("ConfirmDataUsageDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontaktdaten.
+        /// </summary>
+        public static string ContactInfoEditView_Title {
+            get {
+                return ResourceManager.GetString("ContactInfoEditView_Title", resourceCulture);
             }
         }
         
@@ -480,6 +498,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string CourseView_VisitVendor {
             get {
                 return ResourceManager.GetString("CourseView_VisitVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schul- und Berufsbildun.
+        /// </summary>
+        public static string EducationInfoEditView_Title {
+            get {
+                return ResourceManager.GetString("EducationInfoEditView_Title", resourceCulture);
             }
         }
         
@@ -678,6 +705,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string LanguageSkillEditView_Title {
             get {
                 return ResourceManager.GetString("LanguageSkillEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lizenzen und Berechtigungen.
+        /// </summary>
+        public static string LicenseEditView_Title {
+            get {
+                return ResourceManager.GetString("LicenseEditView_Title", resourceCulture);
             }
         }
         
@@ -921,6 +957,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ProfileView_Title {
             get {
                 return ResourceManager.GetString("ProfileView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qualifikationen.
+        /// </summary>
+        public static string QualificationEditView_Title {
+            get {
+                return ResourceManager.GetString("QualificationEditView_Title", resourceCulture);
             }
         }
         

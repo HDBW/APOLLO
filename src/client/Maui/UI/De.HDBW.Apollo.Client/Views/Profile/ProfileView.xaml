@@ -27,11 +27,33 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="RecommendationValueTemplate" x:DataType="genericModels:RecommendationValue">
+            <VerticalStackLayout Padding="16,0" BackgroundColor="AliceBlue">
+                <Label Text="{x:Binding Headline}" FontAttributes="Bold" />
+                <ProgressBar Progress="{x:Binding Progress}" />
+                <Label Text="{x:Binding Subline}" FontAttributes="Bold" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Recommendations}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="interactionModels:InteractionEntry">
+                            <HorizontalStackLayout>
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                                <Image Source="watch.png" />
+                                <Label Text="{x:Binding Text}" FontAttributes="Bold" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </DataTemplate>
+
         <DataTemplate x:Key="SeperatorValueTemplate" x:DataType="genericModels:SeperatorValue">
-            <Border />
+            <Border Margin="0,8"/>
         </DataTemplate>
 
         <selector:ProfileSectionTemplateSelector x:Key="ProfileSectionTemplateSelector"
+                                                 RecommendationValueTemplate="{StaticResource RecommendationValueTemplate}"
                                                  StringValueTemplate="{StaticResource StringValueTemplate}"
                                                  SeperatorValueTemplate="{StaticResource SeperatorValueTemplate}"
                                                  InteractionEntryTemplate="{StaticResource ProfileInteractionTemplate}"/>
