@@ -920,7 +920,7 @@ namespace Apollo.Api.UnitTests
 
 
         /// <summary>
-        /// A Training has an auto calculated property which is based on the TrainingType of the Appointment List of a Training.
+        /// A Training has an auto calculated property which is based on the TrainingMode of the Appointment List of a Training.
         /// This is a flagged Enum. And the user should be able to Multiselect in a Filter for the flagged Enum.
         /// </summary>
         /// <returns></returns>

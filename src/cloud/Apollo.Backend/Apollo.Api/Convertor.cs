@@ -215,8 +215,8 @@ namespace Apollo.Api
             appointment.Duration = (TimeSpan)dict["Duration"];
             appointment.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
             appointment.IsGuaranteed = (bool)dict["IsGuaranteed"];
-            //appointment.TrainingType = ToEntityList<TrainingType>(dict["TrainingType"] as List<ExpandoObject>, ToTrainingType);
-            appointment.TrainingType = (TrainingType)dict["TrainingType"];
+            //appointment.TrainingMode = ToEntityList<TrainingMode>(dict["TrainingMode"] as List<ExpandoObject>, ToTrainingType);
+            appointment.TrainingMode = (TrainingMode)dict["TrainingMode"];
             appointment.TimeInvestAttendee = (TimeSpan)dict["TimeInvestAttendee"];
             appointment.TimeModel = (TrainingTimeModel)dict["TimeModel"];
             // Add other property mappings as needed
@@ -224,9 +224,9 @@ namespace Apollo.Api
             return appointment;
         }
 
-        //public static TrainingType ToTrainingType(ExpandoObject expandoObject)
+        //public static TrainingMode ToTrainingType(ExpandoObject expandoObject)
         //{
-        //    var trainingType = TrainingType.Unknown;
+        //    var trainingType = TrainingMode.Unknown;
 
         //    if (expandoObject != null)
         //    {
@@ -234,7 +234,7 @@ namespace Apollo.Api
 
         //        foreach (var keyValuePair in expandoDict)
         //        {
-        //            if (Enum.TryParse<TrainingType>(keyValuePair.Key, out var value))
+        //            if (Enum.TryParse<TrainingMode>(keyValuePair.Key, out var value))
         //            {
         //                trainingType |= value;
         //            }

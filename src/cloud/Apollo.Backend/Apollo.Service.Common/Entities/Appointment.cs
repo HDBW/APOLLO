@@ -15,6 +15,7 @@ namespace Apollo.Common.Entities
         //[BsonElement("AppointmentUrl")]
         public Uri AppointmentUrl { get; set; }
 
+        //TODO: Review if this is needed
         //[BsonElement("AppointmentType")]
         public string AppointmentType { get; set; }
 
@@ -38,8 +39,8 @@ namespace Apollo.Common.Entities
         //[BsonElement("IsGuaranteedAppointment")]
         public bool IsGuaranteed { get; set; }
 
-        //[BsonElement("TrainingType")]
-        public TrainingType TrainingType { get; set; }
+        //[BsonElement("TrainingMode")]
+        public TrainingMode TrainingMode { get; set; }
 
         /// <summary>
         /// Explains the Time Model for the Training
@@ -74,6 +75,7 @@ namespace Apollo.Common.Entities
         /// </summary>
         public string ExecutionDurationDescription { get; set;}
 
+        //TODO: Review if this is needed
         //[BsonElement("LessonType")]
         public string LessonType { get; set; }
 
