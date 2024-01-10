@@ -16,24 +16,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class AppShellViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new User());
 
         public AppShellViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<StartViewModel> logger,
-            IUserProfileItemRepository userProfileItemRepository,
             ISessionService sessionService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(sessionService);
-            UserProfileItemRepository = userProfileItemRepository;
             SessionService = sessionService;
         }
-
-        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         private ISessionService SessionService { get; }
 
@@ -48,7 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         try
                         {
-                            var user = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                            User user = null;
                             await ExecuteOnUIThreadAsync(() => LoadonUIThread(user), worker.Token);
                         }
                         catch (Exception ex)
@@ -100,9 +95,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy;
         }
 
-        private void LoadonUIThread(UserProfileItem? user)
+        private void LoadonUIThread(User? user)
         {
-            UserProfile = UserProfileEntry.Import(user ?? new UserProfileItem());
+            UserProfile = UserProfileEntry.Import(user ?? new User());
         }
     }
 }

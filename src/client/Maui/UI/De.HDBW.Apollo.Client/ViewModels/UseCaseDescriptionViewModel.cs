@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class UseCaseDescriptionViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new User());
 
         [ObservableProperty]
         private string? _age;
@@ -38,17 +38,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IDispatcherService dispatcherService,
            INavigationService navigationService,
            IDialogService dialogService,
-           IUserProfileItemRepository userProfileItemRepository,
            ISessionService sessionService,
            IUseCaseBuilder builder,
            ILogger<UseCaseDescriptionViewModel> logger)
            : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(builder);
-            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(sessionService);
             UseCaseBuilder = builder;
-            UserProfileItemRepository = userProfileItemRepository;
             SessionService = sessionService;
         }
 
@@ -114,8 +111,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IUseCaseBuilder UseCaseBuilder { get; }
 
-        private IUserProfileItemRepository UserProfileItemRepository { get; }
-
         private ISessionService SessionService { get; }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateUseCase))]
@@ -170,7 +165,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         return;
                     }
 
-                    var user = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    User? user = null;
 
                     string? age = null;
                     string? location = null;
@@ -227,9 +222,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IsUseCaseSelectionFromShell = navigationParameters.GetValue<bool?>(NavigationParameter.Data);
         }
 
-        private void LoadonUIThread(UserProfileItem? user, string? age, string? location, string? experience, string? story, string? goal)
+        private void LoadonUIThread(User? user, string? age, string? location, string? experience, string? story, string? goal)
         {
-            UserProfile = UserProfileEntry.Import(user ?? new UserProfileItem());
+            UserProfile = UserProfileEntry.Import(user ?? new User());
             Age = age;
             Location = location;
             Experience = experience;

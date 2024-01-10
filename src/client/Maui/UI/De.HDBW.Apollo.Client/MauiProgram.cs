@@ -199,7 +199,6 @@ public static class MauiProgram
 
     private static void SetupRepositories(IServiceCollection services)
     {
-        services.AddSingleton<IUserProfileItemRepository, UserProfileItemRepository>();
         services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
         services.AddSingleton<IAssessmentScoreRepository, AssessmentScoreRepository>();
         services.AddSingleton<IAssessmentCategoryRepository, AssessmentCategoryRepository>();
