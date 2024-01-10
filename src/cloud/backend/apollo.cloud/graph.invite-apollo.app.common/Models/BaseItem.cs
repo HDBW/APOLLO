@@ -21,11 +21,11 @@ namespace Invite.Apollo.App.Graph.Common.Models
     [ProtoInclude(10, typeof(QuestionMetaDataRelation))]
     [ProtoInclude(11, typeof(MetaDataMetaDataRelation))]
 
-    [ProtoInclude(12, typeof(UserProfileItem))]
+    //[ProtoInclude(12, typeof(User))]
     [ProtoInclude(13, typeof(AssessmentScore))]
     [ProtoInclude(14, typeof(AnswerItemResult))]
     [ProtoInclude(15, typeof(AssessmentCategoryResult))]
-    [ProtoInclude(16, typeof(UserPreferences))]
+    //[ProtoInclude(16, typeof(UserPreferences))]
 
     [ProtoInclude(17, typeof(Skill))]
     [ProtoInclude( 18, typeof(MetaDataItem))]
@@ -33,7 +33,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
     [ProtoInclude(20, typeof(ApolloLabel))]
     [ProtoInclude(21, typeof(QnAItem))]
 
-    [ProtoInclude(22, typeof(Occupation))]
+    //[ProtoInclude(22, typeof(Occupation))]
     [ProtoInclude(23, typeof(PaymentInfo))]
     [ProtoInclude(24, typeof(OccupationHasSkill))]
     [ProtoInclude(25, typeof(OccupationMetaDataRelation))]

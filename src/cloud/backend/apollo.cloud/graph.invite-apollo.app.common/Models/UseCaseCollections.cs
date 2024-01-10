@@ -57,7 +57,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
             Collection<AnswerItem> answerItems, Collection<MetaDataItem> metaDataItems,
             Collection<QuestionMetaDataRelation> questionMetaDataRelations,
             Collection<AnswerMetaDataRelation> answerMetaDataRelations,
-            Collection<MetaDataMetaDataRelation> metaDataMetaDataRelations, UserProfileItem userProfile,
+            Collection<MetaDataMetaDataRelation> metaDataMetaDataRelations, User userProfile,
             Collection<EduProviderItem> eduProviderItems, Collection<CourseContact> courseContacts,
             Collection<CourseAppointment> courseAppointments, Collection<CourseItem> courseItems,
             Collection<AssessmentCategory> assessmentCategories)
@@ -82,7 +82,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
         /// </summary>
         public UseCaseCollections()
         {
-            UserProfile = new UserProfileItem();
+            UserProfile = new User();
             AssessmentItems = new Collection<AssessmentItem>();
             QuestionItems = new Collection<QuestionItem>();
             AnswerItems = new Collection<AnswerItem>();
@@ -135,7 +135,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
         public Collection<EduProviderItem> EduProviderItems { get; set; }
 
         [DataMember(Order = 12, IsRequired = false)]
-        public UserProfileItem UserProfile { get; set; }
+        public User UserProfile { get; set; }
 
         [DataMember(Order = 13,IsRequired = false)]
         public Collection<AssessmentCategory> AssessmentCategories { get; set; }

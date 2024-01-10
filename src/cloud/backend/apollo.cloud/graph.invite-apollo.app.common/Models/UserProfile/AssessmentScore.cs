@@ -12,7 +12,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// Represents FrontEndId
         /// </summary>
         [DataMember(Order = 5, IsRequired = true)]
-        [ForeignKey(nameof(UserProfileItem))]
+        [ForeignKey(nameof(User))]
         public long UserId { get; set; }
 
         /// <summary>

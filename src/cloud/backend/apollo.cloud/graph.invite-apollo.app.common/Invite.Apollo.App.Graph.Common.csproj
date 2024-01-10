@@ -6,13 +6,13 @@
     <Nullable>enable</Nullable>
     <Title>Invite Apollo Graph</Title>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
-    <AnalysisLevel>6.0-all</AnalysisLevel>
+    <AnalysisLevel>latest</AnalysisLevel>
     <NeutralLanguage>en-001</NeutralLanguage>
     <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.0.25</AssemblyVersion>
-    <FileVersion>1.0.0.25</FileVersion>
-	  <Version>1.0.0.25</Version>
+    <AssemblyVersion>1.0.1.26</AssemblyVersion>
+    <FileVersion>1.0.1.26</FileVersion>
+	  <Version>1.0.1.26</Version>
 	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
