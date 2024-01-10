@@ -154,20 +154,24 @@ namespace Daenet.MongoDal.UnitTests
                 // Add more users as needed
             };
 
-            // Convert users to ExpandoObjects
-            var userExpandoList = users.Select(user => Convertor.Convert(user)).ToList();
+            // Clear existing test data
+            var existingUserIds = users.Select(u => u.Id).ToArray();
+            await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), existingUserIds, false);
 
+            // Convert users to ExpandoObjects and insert
+            var userExpandoList = users.Select(user => Convertor.Convert(user)).ToList();
             await dal.InsertManyAsync(Helpers.GetCollectionName<User>(), userExpandoList);
 
-            var userIds = users.Select(u => u.Id).ToArray();
-            await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), userIds);
+            // Delete the users
+            await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), existingUserIds);
 
             // Verify each user is deleted
-            foreach (var userId in userIds)
+            foreach (var userId in existingUserIds)
             {
                 var deletedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), userId);
                 Assert.IsNull(deletedUser);
             }
         }
+
     }
 }
