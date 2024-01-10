@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {

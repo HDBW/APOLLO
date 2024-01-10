@@ -1,4 +1,6 @@
-﻿namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
+﻿using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
+
+namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
     public class LeadershipSkills
     {
