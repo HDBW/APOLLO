@@ -187,6 +187,39 @@ namespace Apollo.Api.UnitTests
             // add more assertions based on your specific testing requirements
         }
 
+        [TestMethod]
+        public async Task QueryUsersByGoal_ReturnsUsersWithSpecifiedGoal()
+        {
+            var api = Helpers.GetApolloApi();
+            string testGoal = "Learn AI";
+
+            // Insert test users with the goal "Learn AI"
+            var testUsers = new List<User>
+            {
+                new User { FirstName = "John", LastName = "Doe", Goal = testGoal },
+                new User { FirstName = "Jane", LastName = "Smith", Goal = testGoal }
+            };
+
+            // Create or update users
+            foreach (var user in testUsers)
+            {
+                await api.CreateOrUpdateUser(new List<User> { user });
+            }
+
+            // Act: Query users by the specified goal
+            var result = await api.QueryUsersByGoal(testGoal);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
+            Assert.IsTrue(result.All(u => u.Goal == testGoal));
+
+            // Cleanup: Delete the test users
+            foreach (var user in result)
+            {
+                await api.DeleteUsers(new string[] { user.Id });
+            }
+        }
 
     }
 }
