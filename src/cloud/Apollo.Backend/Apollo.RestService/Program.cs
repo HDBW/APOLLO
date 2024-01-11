@@ -1,5 +1,7 @@
 
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Apollo.Api;
 using Apollo.RestService.Midleware;
 using Apollo.Service.Middleware;
@@ -7,6 +9,7 @@ using Daenet.ApiKeyAuthenticator;
 using Daenet.MongoDal;
 using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace Apollo.Service
@@ -96,6 +99,15 @@ namespace Apollo.Service
             {
                 options.Filters.Add(new ApolloExceptionFilter());
             });
+
+            // Makes sure that null values are not serialized and all props are CamelCased.
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                //options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.KebabCaseUpper;
+                //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
+            });
+            
 
             RegisterDaenetMongoDal(builder);
             RegisterApi(builder);

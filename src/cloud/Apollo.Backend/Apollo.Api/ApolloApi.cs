@@ -17,9 +17,14 @@ namespace Apollo.Api
     /// </summary>
     public partial class ApolloApi
     {
+        //reason of addition: fixes the error for UnitTests
+        public ApolloApi()
+        {
+           //Empty constructor
+        }
         #region Fields and Properties
 
-        
+
         private readonly ILogger<ApolloApi> _logger;
 
         private readonly MongoDataAccessLayer _dal;

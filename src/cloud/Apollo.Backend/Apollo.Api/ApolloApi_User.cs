@@ -38,7 +38,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -117,7 +117,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -166,7 +166,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -257,7 +257,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -305,7 +305,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -417,7 +417,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -458,7 +458,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-                
+
                 throw;
             }
             catch (Exception ex)
@@ -476,26 +476,24 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="deletingIds">The list of user identifiers.</param>
         /// <returns>The number of deleted users.</returns>
-        public virtual Task<int> DeleteUsers(string[] deletingIds)
+        public virtual async Task<long> DeleteUsers(string[] deletingIds)
         {
             try
             {
                 _logger?.LogTrace($"Entered {nameof(DeleteUsers)}");
-                //TODO: Delete User
-                // Placeholder for actual user deletion logic
-                int deletedCount = 42; // Example value
+
+                // Call the DAL method to delete the users by their IDs
+                var res = await _dal.DeleteManyAsync(GetCollectionName<User>(), deletingIds, throwIfNotDeleted: false);
 
                 _logger?.LogTrace($"Completed {nameof(DeleteUsers)}");
 
-                return Task.FromResult(deletedCount);
+                return res;
             }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"Failed execution of {nameof(DeleteUsers)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.UserErrors.DeleteUserError, "Error while deleting user", ex);
+                throw new ApolloApiException(ErrorCodes.UserErrors.DeleteUserError, "Error while deleting users", ex);
             }
         }
-
-
     }
 }

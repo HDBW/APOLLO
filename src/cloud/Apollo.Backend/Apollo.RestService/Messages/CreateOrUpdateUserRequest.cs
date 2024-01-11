@@ -11,5 +11,11 @@ namespace Apollo.RestService.Apollo.Common.Messages
     {
         // Property to hold the user to be created or updated
         public User User { get; internal set; }
+
+        //For CreateOrUpdateUser_CreatesUsersSuccessfully() in UserControllerTests
+        public CreateOrUpdateUserRequest(User user)
+        {
+            User = user;
+        }
     }
 }

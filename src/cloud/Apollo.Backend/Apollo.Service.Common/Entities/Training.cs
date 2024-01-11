@@ -124,7 +124,7 @@ namespace Apollo.Common.Entities
         public string? PriceDescription { get; set; }
 
         //[BsonElement("Accessibility")]
-        public bool AccessibilityAvailable { get; set; }
+        public bool? AccessibilityAvailable { get; set; }
 
         #region Metadata
 
