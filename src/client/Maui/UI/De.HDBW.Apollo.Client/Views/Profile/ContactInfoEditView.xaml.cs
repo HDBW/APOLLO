@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class ContactInfoEditView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public ContactInfoEditView(ContactInfoEditViewModel model)
+    public partial class ContactInfoEditView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public ContactInfoEditViewModel? ViewModel
-    {
-        get
+        public ContactInfoEditView(ContactInfoEditViewModel model)
         {
-            return BindingContext as ContactInfoEditViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public ContactInfoEditViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as ContactInfoEditViewModel;
+            }
         }
     }
 }

@@ -3,28 +3,30 @@
 
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client.Dialogs;
-public partial class MessageDialog
+namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public MessageDialog(MessageDialogViewModel model)
+    public partial class MessageDialog
     {
-        InitializeComponent();
-        var view = FindByName("Part_Root") as View;
-        if (view != null && Shell.Current != null)
+        public MessageDialog(MessageDialogViewModel model)
         {
-            view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
-            view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
-            Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
+            InitializeComponent();
+            var view = FindByName("Part_Root") as View;
+            if (view != null && Shell.Current != null)
+            {
+                view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
+                view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
+                Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
+            }
+
+            BindingContext = model;
         }
 
-        BindingContext = model;
-    }
-
-    public MessageDialogViewModel? ViewModel
-    {
-        get
+        public MessageDialogViewModel? ViewModel
         {
-            return BindingContext as MessageDialogViewModel;
+            get
+            {
+                return BindingContext as MessageDialogViewModel;
+            }
         }
     }
 }

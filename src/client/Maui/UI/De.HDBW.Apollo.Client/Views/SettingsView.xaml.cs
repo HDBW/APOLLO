@@ -6,31 +6,32 @@ using De.HDBW.Apollo.Client.ViewModels;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
-namespace De.HDBW.Apollo.Client.Views;
-
-public partial class SettingsView
+namespace De.HDBW.Apollo.Client.Views
 {
-    public SettingsView(SettingsViewModel model)
+    public partial class SettingsView
     {
-#if DEBUG
-        Debug.WriteLine($"Create {GetType()}");
-#endif
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    ~SettingsView()
-    {
-#if DEBUG
-        Debug.WriteLine($"~{GetType()}");
-#endif
-    }
-
-    public SettingsViewModel? ViewModel
-    {
-        get
+        public SettingsView(SettingsViewModel model)
         {
-            return BindingContext as SettingsViewModel;
+#if DEBUG
+            Debug.WriteLine($"Create {GetType()}");
+#endif
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        ~SettingsView()
+        {
+#if DEBUG
+            Debug.WriteLine($"~{GetType()}");
+#endif
+        }
+
+        public SettingsViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as SettingsViewModel;
+            }
         }
     }
 }

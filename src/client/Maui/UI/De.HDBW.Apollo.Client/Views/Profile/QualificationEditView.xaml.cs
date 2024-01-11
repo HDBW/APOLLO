@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class QualificationEditView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public QualificationEditView(QualificationEditViewModel model)
+    public partial class QualificationEditView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public QualificationEditViewModel? ViewModel
-    {
-        get
+        public QualificationEditView(QualificationEditViewModel model)
         {
-            return BindingContext as QualificationEditViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public QualificationEditViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as QualificationEditViewModel;
+            }
         }
     }
 }

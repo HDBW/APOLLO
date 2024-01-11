@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class MobilityEditView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public MobilityEditView(MobilityEditViewModel model)
+    public partial class MobilityEditView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public MobilityEditViewModel? ViewModel
-    {
-        get
+        public MobilityEditView(MobilityEditViewModel model)
         {
-            return BindingContext as MobilityEditViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public MobilityEditViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as MobilityEditViewModel;
+            }
         }
     }
 }

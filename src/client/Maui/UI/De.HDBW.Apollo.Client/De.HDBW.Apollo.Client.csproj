@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\add.svg" />
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\completed.svg" />
     <None Remove="Resources\Images\edit.svg" />
@@ -132,6 +133,9 @@
     <MauiXaml Update="Dialogs\FirstTimeDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\SelectOptionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="FlyoutMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -151,6 +155,18 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\CareerInfoEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\OccupationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\OtherView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\ServiceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\VoluntaryServiceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\LanguageSkillEditView.xaml">
@@ -212,10 +228,16 @@
     </MauiXaml>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Dialogs\SelectOptionDialog.xaml.cs">
+      <DependentUpon>SelectOptionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Strings\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Profile\CareerInfo\OtherView.xaml.cs">
+      <DependentUpon>OtherView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Profile\ContactInfoEditView.xaml.cs">
       <DependentUpon>ContactInfoEditView.xaml</DependentUpon>

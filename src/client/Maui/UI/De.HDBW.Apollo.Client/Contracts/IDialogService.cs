@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Client.Contracts
         bool ClosePopup<TV>(BaseViewModel viewModel, TV result)
             where TV : NavigationParameters;
 
-        Task<TV?> ShowPopupAsync<TU, TV, TW>(CancellationToken token, TW parameters)
+        Task<TV?> ShowPopupAsync<TU, TV, TW>(TW parameters, CancellationToken token)
             where TU : Popup
             where TV : NavigationParameters
             where TW : NavigationParameters?;

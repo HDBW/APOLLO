@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class LanguageSkillEditView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public LanguageSkillEditView(LanguageSkillEditViewModel model)
+    public partial class LanguageSkillEditView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public LanguageSkillEditViewModel? ViewModel
-    {
-        get
+        public LanguageSkillEditView(LanguageSkillEditViewModel model)
         {
-            return BindingContext as LanguageSkillEditViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public LanguageSkillEditViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as LanguageSkillEditViewModel;
+            }
         }
     }
 }

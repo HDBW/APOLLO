@@ -3,23 +3,24 @@
 
 using System;
 
-namespace De.HDBW.Apollo.Client.Helper;
-
-public static class IocServiceHelper
+namespace De.HDBW.Apollo.Client.Helper
 {
-    public static IServiceProvider? ServiceProvider
+    public static class IocServiceHelper
     {
-        get
+        public static IServiceProvider? ServiceProvider
         {
-            IPlatformApplication? app = null;
+            get
+            {
+                IPlatformApplication? app = null;
 #if ANDROID
-            app = MauiApplication.Current;
+                app = MauiApplication.Current;
 #elif IOS
-            app = MauiUIApplicationDelegate.Current;
+                app = MauiUIApplicationDelegate.Current;
 #elif WINDOWS
-            app = MauiWinUIApplication.Current;
+                app = MauiWinUIApplication.Current;
 #endif
-            return app?.Services;
+                return app?.Services;
+            }
         }
     }
 }

@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class WebReferenceEditView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public WebReferenceEditView(WebReferenceEditViewModel model)
+    public partial class WebReferenceEditView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public WebReferenceEditViewModel? ViewModel
-    {
-        get
+        public WebReferenceEditView(WebReferenceEditViewModel model)
         {
-            return BindingContext as WebReferenceEditViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public WebReferenceEditViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as WebReferenceEditViewModel;
+            }
         }
     }
 }

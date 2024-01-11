@@ -11,9 +11,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}" Padding="0">
     <ContentPage.Resources>
-        <ResourceDictionary>
-            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
-        </ResourceDictionary>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     </ContentPage.Resources>
     <Grid RowDefinitions="3*,7*">
         <Image Source="registrationdeco.png" Grid.Row="0" Aspect="AspectFit"/>

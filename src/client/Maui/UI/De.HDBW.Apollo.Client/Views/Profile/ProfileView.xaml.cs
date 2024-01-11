@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class ProfileView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public ProfileView(ProfileViewModel model)
+    public partial class ProfileView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public ProfileViewModel? ViewModel
-    {
-        get
+        public ProfileView(ProfileViewModel model)
         {
-            return BindingContext as ProfileViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public ProfileViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as ProfileViewModel;
+            }
         }
     }
 }

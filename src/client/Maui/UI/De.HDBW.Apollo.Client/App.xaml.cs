@@ -8,36 +8,38 @@ using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 
-namespace De.HDBW.Apollo.Client;
-public partial class App : Application
+namespace De.HDBW.Apollo.Client
 {
-    private IServiceProvider _serviceProvider;
-    private ISessionService _sessionService;
-    private IPreferenceService _preferenceService;
-
-    public App(
-        IServiceProvider provider,
-        IPreferenceService preferenceService,
-        ISessionService sessionService,
-        INavigationService navigationService)
+    public partial class App : Application
     {
-        _serviceProvider = provider;
-        _sessionService = sessionService;
-        _preferenceService = preferenceService;
-        InitializeComponent();
-        navigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
-        return;
-        if (_preferenceService.GetValue(Preference.IsFirstTime, true))
+        private IServiceProvider _serviceProvider;
+        private ISessionService _sessionService;
+        private IPreferenceService _preferenceService;
+
+        public App(
+            IServiceProvider provider,
+            IPreferenceService preferenceService,
+            ISessionService sessionService,
+            INavigationService navigationService)
         {
-            MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);
-        }
-        else if (!_sessionService.HasRegisteredUser)
-        {
-            MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.RegistrationView, _serviceProvider) as Page);
-        }
-        else
-        {
-            MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.UseCaseSelectionView, _serviceProvider) as Page);
+            _serviceProvider = provider;
+            _sessionService = sessionService;
+            _preferenceService = preferenceService;
+            InitializeComponent();
+            navigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
+            return;
+            if (_preferenceService.GetValue(Preference.IsFirstTime, true))
+            {
+                MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);
+            }
+            else if (!_sessionService.HasRegisteredUser)
+            {
+                MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.RegistrationView, _serviceProvider) as Page);
+            }
+            else
+            {
+                MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.UseCaseSelectionView, _serviceProvider) as Page);
+            }
         }
     }
 }

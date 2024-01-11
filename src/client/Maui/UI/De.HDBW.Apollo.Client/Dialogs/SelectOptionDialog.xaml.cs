@@ -5,9 +5,9 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public partial class SkipQuestionDialog
+    public partial class SelectOptionDialog
     {
-        public SkipQuestionDialog(SkipQuestionDialogViewModel model)
+        public SelectOptionDialog(SelectOptionDialogViewModel model)
         {
             InitializeComponent();
             var view = FindByName("Part_Root") as View;
@@ -21,11 +21,11 @@ namespace De.HDBW.Apollo.Client.Dialogs
             BindingContext = model;
         }
 
-        public SkipQuestionDialogViewModel? ViewModel
+        public SelectOptionDialogViewModel? ViewModel
         {
             get
             {
-                return BindingContext as SkipQuestionDialogViewModel;
+                return BindingContext as SelectOptionDialogViewModel;
             }
         }
     }

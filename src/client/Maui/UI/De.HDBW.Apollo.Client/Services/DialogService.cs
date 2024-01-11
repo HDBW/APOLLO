@@ -29,7 +29,7 @@ namespace De.HDBW.Apollo.Client.Services
 
         private IDispatcherService DispatcherService { get; }
 
-        public async Task<TV?> ShowPopupAsync<TU, TV, TW>(CancellationToken token, TW parameters)
+        public async Task<TV?> ShowPopupAsync<TU, TV, TW>(TW parameters, CancellationToken token)
             where TU : Popup
             where TV : NavigationParameters
             where TW : NavigationParameters?
@@ -92,7 +92,7 @@ namespace De.HDBW.Apollo.Client.Services
             where TU : Popup
             where TV : NavigationParameters
         {
-            return ShowPopupAsync<TU, TV, NavigationParameters?>(token, null);
+            return ShowPopupAsync<TU, TV, NavigationParameters?>(null, token);
         }
 
         public Task ShowPopupAsync<TU>(CancellationToken token)

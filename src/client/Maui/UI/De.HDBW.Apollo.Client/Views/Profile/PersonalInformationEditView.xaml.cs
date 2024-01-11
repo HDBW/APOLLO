@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class PersonalInformationEditView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public PersonalInformationEditView(PersonalInformationEditViewModel model)
+    public partial class PersonalInformationEditView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public PersonalInformationEditViewModel? ViewModel
-    {
-        get
+        public PersonalInformationEditView(PersonalInformationEditViewModel model)
         {
-            return BindingContext as PersonalInformationEditViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public PersonalInformationEditViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as PersonalInformationEditViewModel;
+            }
         }
     }
 }

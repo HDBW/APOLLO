@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 
-namespace De.HDBW.Apollo.Client.Views.Profile;
-
-public partial class LicenseEditView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public LicenseEditView(LicenseEditViewModel model)
+    public partial class LicenseEditView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public LicenseEditViewModel? ViewModel
-    {
-        get
+        public LicenseEditView(LicenseEditViewModel model)
         {
-            return BindingContext as LicenseEditViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public LicenseEditViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as LicenseEditViewModel;
+            }
         }
     }
 }

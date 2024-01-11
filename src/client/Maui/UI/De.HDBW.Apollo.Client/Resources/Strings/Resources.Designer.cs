@@ -1015,6 +1015,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abbrechen.
+        /// </summary>
+        public static string SelectOptionDialog_Cancel {
+            get {
+                return ResourceManager.GetString("SelectOptionDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiter.
+        /// </summary>
+        public static string SelectOptionDialog_Continue {
+            get {
+                return ResourceManager.GetString("SelectOptionDialog_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wähle.
+        /// </summary>
+        public static string SelectOptionDialog_Title {
+            get {
+                return ResourceManager.GetString("SelectOptionDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hallo Apollo-Team.
         ///.
         /// </summary>
