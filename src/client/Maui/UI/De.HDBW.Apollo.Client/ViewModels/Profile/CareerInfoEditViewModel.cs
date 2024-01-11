@@ -45,35 +45,50 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     var result = await DialogService.ShowPopupAsync<SelectOptionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
+                        var route = string.Empty;
                         switch (result?.GetValue<CareerType?>(NavigationParameter.Data))
                         {
                             case CareerType.Other:
+                                route = Routes.CareerInfoOtherView;
                                 break;
                             case CareerType.WorkExperience:
+                                route = Routes.CareerInfoOccupationView;
                                 break;
                             case CareerType.PartTimeWorkExperience:
+                                route = Routes.CareerInfoOccupationView;
                                 break;
                             case CareerType.Internship:
+                                route = Routes.CareerInfoOtherView;
                                 break;
                             case CareerType.SelfEmployment:
+                                route = Routes.CareerInfoOccupationView;
                                 break;
                             case CareerType.Service:
+                                route = Routes.CareerInfoServiceView;
                                 break;
                             case CareerType.CommunityService:
+                                route = Routes.CareerInfoOtherView;
                                 break;
                             case CareerType.VoluntaryService:
+                                route = Routes.CareerInfoVoluntaryServiceView;
                                 break;
                             case CareerType.ParentalLeave:
+                                route = Routes.CareerInfoOtherView;
                                 break;
                             case CareerType.Homemaker:
+                                route = Routes.CareerInfoOtherView;
                                 break;
                             case CareerType.ExtraOccupationalExperience:
+                                route = Routes.CareerInfoOtherView;
                                 break;
                             case CareerType.PersonCare:
+                                route = Routes.CareerInfoOtherView;
                                 break;
                             default:
                                 break;
                         }
+
+                        await NavigationService.NavigateAsync(route, worker.Token);
                     }
                 }
                 catch (OperationCanceledException)

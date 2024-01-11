@@ -1,9 +1,24 @@
-namespace De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
+// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
-public partial class OccupationView : ContentPage
+using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
+
+namespace De.HDBW.Apollo.Client.Views.Profile.CareerInfo
 {
-	public OccupationView()
-	{
-		InitializeComponent();
-	}
+    public partial class OccupationView : ContentPage
+    {
+        public OccupationView(OccupationViewModel model)
+        {
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public OccupationViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as OccupationViewModel;
+            }
+        }
+    }
 }

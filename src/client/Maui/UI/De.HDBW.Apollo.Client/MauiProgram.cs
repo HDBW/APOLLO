@@ -9,8 +9,10 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.ViewModels.Profile;
+using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Client.Views.Profile;
+using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
 using De.HDBW.Apollo.Data;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
@@ -304,6 +306,18 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<CareerInfoEditView>();
             services.AddTransient<CareerInfoEditViewModel>();
+
+            services.AddTransient<OccupationView>();
+            services.AddTransient<OccupationViewModel>();
+
+            services.AddTransient<OtherView>();
+            services.AddTransient<OtherViewModel>();
+
+            services.AddTransient<ServiceView>();
+            services.AddTransient<ServiceViewModel>();
+
+            services.AddTransient<VoluntaryServiceView>();
+            services.AddTransient<VoluntaryServiceViewModel>();
         }
 
         private static void SetupRoutes()
@@ -329,6 +343,10 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.LicenseEditView, typeof(LicenseEditView));
             Routing.RegisterRoute(Routes.EducationInfoEditView, typeof(EducationInfoEditView));
             Routing.RegisterRoute(Routes.CareerInfoEditView, typeof(CareerInfoEditView));
+            Routing.RegisterRoute(Routes.CareerInfoOccupationView, typeof(OccupationView));
+            Routing.RegisterRoute(Routes.CareerInfoOtherView, typeof(OtherView));
+            Routing.RegisterRoute(Routes.CareerInfoServiceView, typeof(ServiceView));
+            Routing.RegisterRoute(Routes.CareerInfoVoluntaryServiceView, typeof(VoluntaryServiceView));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
