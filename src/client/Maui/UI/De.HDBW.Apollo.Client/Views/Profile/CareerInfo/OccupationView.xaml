@@ -14,10 +14,12 @@
         <Label Text="{x:Binding OccupationName}" />
         <ImageButton Source="search.png" Command="{x:Binding SearchOccupationCommand}"/>
         <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+        <Entry Text="{x:Binding NameOfinstiture, Mode=TwoWay}" />
+        <Entry Text="{x:Binding City, Mode=TwoWay}" />
+        <Entry Text="{x:Binding Country, Mode=TwoWay}" />
         <Picker ItemsSource="{x:Binding WorkTimeModels}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedWorkTimeModel, Mode=TwoWay}"
                 IsVisible="{x:Binding ShowWorkTimeModelsSelection}" />
-
     </VerticalStackLayout>
 </ContentPage>

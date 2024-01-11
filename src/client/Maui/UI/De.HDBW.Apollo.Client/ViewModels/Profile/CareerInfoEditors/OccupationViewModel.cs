@@ -28,12 +28,22 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private string? _description;
 
         [ObservableProperty]
+        private string? _nameOfInstitution;
+
+        [ObservableProperty]
+        private string? _city;
+
+        [ObservableProperty]
+        private string? _country;
+
+        [ObservableProperty]
         private ObservableCollection<InteractionEntry> _workTimeModels = new ObservableCollection<InteractionEntry>();
 
         [ObservableProperty]
         private InteractionEntry? _selectedWorkTimeModel;
 
         private CareerInfo? _careers;
+
         private WorkingTimeModel? _workTime;
 
         public OccupationViewModel(
