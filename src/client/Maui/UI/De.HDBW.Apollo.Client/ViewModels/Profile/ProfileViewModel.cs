@@ -49,7 +49,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     sections.Add(StringValue.Import("Xing", "https://www.xing.com/"));
                     sections.Add(StringValue.Import("Facebook", "https://www.Facebook.com/"));
                     sections.Add(StringValue.Import("Youtube", "https://www.Youtube.com/"));
-                    sections.Add(SeperatorValue.Import()); 
+                    sections.Add(SeperatorValue.Import());
                     sections.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute));
                     sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, "nicht vorhanden"));
                     sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, "ja"));

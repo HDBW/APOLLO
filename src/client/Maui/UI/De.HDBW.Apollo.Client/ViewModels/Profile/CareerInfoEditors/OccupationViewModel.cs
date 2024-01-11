@@ -57,7 +57,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         public bool ShowWorkTimeModelsSelection
         {
-            get { return _workTime != WorkingTimeModel.PARTTIME; }
+            get { return _workTime != WorkingTimeModel.MINIJOB; }
         }
 
         public override async Task OnNavigatedToAsync()
@@ -67,11 +67,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 try
                 {
                     var timeModels = new List<InteractionEntry>();
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_FullTime, WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_PartTime, WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_ShiftNightWorkWeekend, WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_Minijob, WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_FullTime, WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_PartTime, WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_ShiftNightWorkWeekend, WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_Minijob, WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(timeModels), worker.Token);
@@ -99,6 +99,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             WorkTimeModels = new ObservableCollection<InteractionEntry>(timeModels);
             SelectedWorkTimeModel = _workTime != null ? WorkTimeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : WorkTimeModels.FirstOrDefault();
+            OnPropertyChanged(nameof(ShowWorkTimeModelsSelection));
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
@@ -113,7 +114,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             SearchOccupationCommand?.NotifyCanExecuteChanged();
         }
 
-
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
         private async Task SearchOccupation(CancellationToken token)
         {
@@ -121,7 +121,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(OccupationName, token);
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
                 }
                 catch (OperationCanceledException)
                 {

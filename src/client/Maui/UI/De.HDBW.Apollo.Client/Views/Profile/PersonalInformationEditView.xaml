@@ -1,5 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.PersonalInformationEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.PersonalInformationEditView_Title}"
@@ -18,7 +19,7 @@
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" />
         <DatePicker HorizontalOptions="Fill"
                VerticalOptions="Center"
-               Date="{x:Binding BirthDate, Mode=TwoWay}"/>
+               Date="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
         <HorizontalStackLayout>
             <CheckBox HorizontalOptions="Fill" VerticalOptions="Center" />
             <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" />

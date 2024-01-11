@@ -7,7 +7,7 @@
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
                Color="{StaticResource Background}"
                x:DataType="viewModels:SelectOptionDialogViewModel">
-    <Grid RowDefinitions="*, auto, 20" x:Name="Part_Root">
+    <Grid RowDefinitions="*, auto" x:Name="Part_Root">
         <Grid.Resources>
             <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">
                 <Label Text="{x:Binding Text}" Margin="0,8"/>
@@ -17,10 +17,12 @@
             <VerticalStackLayout BackgroundColor="{StaticResource Background}">
                 <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.SelectOptionDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
                 <CollectionView ItemsSource="{x:Binding Options}"
+                                HeightRequest="400"
                                 SelectionMode="Single"
                                 ItemTemplate="{StaticResource DefaultInteractionEntry}"
                                 SelectedItem="{x:Binding SelectedOption, Mode=TwoWay}"
-                                ItemsLayout="VerticalList"/>
+                                ItemsLayout="VerticalList"
+                                />
             </VerticalStackLayout>
         </Border>
         <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">

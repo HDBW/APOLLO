@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
@@ -49,6 +49,7 @@
     <None Remove="Resources\Images\add.svg" />
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\completed.svg" />
+    <None Remove="Resources\Images\delete.svg" />
     <None Remove="Resources\Images\edit.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
@@ -106,6 +107,7 @@
     <None Remove="Resources\Images\user2.svg" />
     <None Remove="Resources\Images\user3.svg" />
     <None Remove="Resources\Images\watch.svg" />
+    <None Remove="Resources\Raw\CareerInfo_JobTtitle_filtered.txt" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
@@ -158,6 +160,9 @@
     <MauiXaml Update="Views\Profile\CareerInfoEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\BasicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Profile\CareerInfo\OccupationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -170,10 +175,16 @@
     <MauiXaml Update="Views\Profile\CareerInfo\VoluntaryServiceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\BasicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Profile\LanguageSkillEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\MobilityEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\OccupationSearchView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\ProfileView.xaml">
@@ -262,5 +273,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Profile\EducationInfoEditors\" />
   </ItemGroup>
 </Project>

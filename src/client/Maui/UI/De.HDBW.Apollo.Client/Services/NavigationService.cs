@@ -99,6 +99,34 @@ namespace De.HDBW.Apollo.Client.Services
             return result;
         }
 
+        public async Task<bool> PopAsync(CancellationToken token)
+        {
+            Logger?.LogDebug($"PopAsync.");
+            token.ThrowIfCancellationRequested();
+            var result = false;
+            try
+            {
+                await DispatcherService.ExecuteOnMainThreadAsync(() => PopOnUIThreadAsnc(token), token);
+                result = true;
+            }
+            catch (OperationCanceledException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(PopAsync)} in {GetType().Name}.");
+                throw;
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(PopAsync)} in {GetType().Name}.");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(PopAsync)} in {GetType().Name}.");
+            }
+
+            return result;
+        }
+
         public async Task<bool> NavigateAsync(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
             Logger?.LogDebug($"Navigate to {route} with parameters: {parameters?.ToString() ?? "null"}.");
@@ -261,6 +289,30 @@ namespace De.HDBW.Apollo.Client.Services
             }
         }
 
+        private async Task PopOnUIThreadAsnc(CancellationToken token)
+        {
+            Logger?.LogDebug($"PopOnUIThreadAsnc.");
+            token.ThrowIfCancellationRequested();
+            if (Application.Current == null)
+            {
+                return;
+            }
+
+            var navigationPage = Application.Current.MainPage as NavigationPage;
+            if (navigationPage != null)
+            {
+                await navigationPage.Navigation.PopAsync(true);
+                return;
+            }
+
+            var shell = Application.Current.MainPage as Shell;
+            if (shell != null)
+            {
+                Shell.Current.FlyoutIsPresented = false;
+                await Shell.Current.Navigation.PopAsync();
+            }
+        }
+
         private async Task PopShellAsync(Shell shell)
         {
             foreach (var page in shell.Navigation.NavigationStack)
@@ -385,5 +437,6 @@ namespace De.HDBW.Apollo.Client.Services
         {
             return page.BindingContext as BaseViewModel;
         }
+
     }
 }

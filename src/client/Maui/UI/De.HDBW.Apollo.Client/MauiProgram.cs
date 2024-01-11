@@ -318,6 +318,12 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<VoluntaryServiceView>();
             services.AddTransient<VoluntaryServiceViewModel>();
+
+            services.AddTransient<BasicView>();
+            services.AddTransient<BasicViewModel>();
+
+            services.AddTransient<OccupationSearchView>();
+            services.AddTransient<OccupationSearchViewModel>();
         }
 
         private static void SetupRoutes()
@@ -346,7 +352,9 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.CareerInfoOccupationView, typeof(OccupationView));
             Routing.RegisterRoute(Routes.CareerInfoOtherView, typeof(OtherView));
             Routing.RegisterRoute(Routes.CareerInfoServiceView, typeof(ServiceView));
+            Routing.RegisterRoute(Routes.CareerInfoBasicView, typeof(BasicView));
             Routing.RegisterRoute(Routes.CareerInfoVoluntaryServiceView, typeof(VoluntaryServiceView));
+            Routing.RegisterRoute(Routes.OccupationSearchView, typeof(OccupationSearchView));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

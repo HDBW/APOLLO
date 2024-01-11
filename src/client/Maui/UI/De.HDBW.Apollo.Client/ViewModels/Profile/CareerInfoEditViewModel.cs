@@ -27,6 +27,36 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
         }
 
+        public override async Task OnNavigatedToAsync()
+        {
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var careeres = new List<CareerInfo>();
+                    careeres.Add(new CareerInfo());
+                    await ExecuteOnUIThreadAsync(
+                        () => LoadonUIThread(careeres), worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
         protected override void RefreshCommands()
         {
             AddCommand?.NotifyCanExecuteChanged();
@@ -46,6 +76,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
                         var route = string.Empty;
+                        NavigationParameters? editorParameters = null;
                         switch (result?.GetValue<CareerType?>(NavigationParameter.Data))
                         {
                             case CareerType.Other:
@@ -55,6 +86,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                                 route = Routes.CareerInfoOccupationView;
                                 break;
                             case CareerType.PartTimeWorkExperience:
+                                editorParameters = new NavigationParameters();
+                                editorParameters.Add(NavigationParameter.Data, WorkingTimeModel.MINIJOB);
                                 route = Routes.CareerInfoOccupationView;
                                 break;
                             case CareerType.Internship:
@@ -73,22 +106,22 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                                 route = Routes.CareerInfoVoluntaryServiceView;
                                 break;
                             case CareerType.ParentalLeave:
-                                route = Routes.CareerInfoOtherView;
+                                route = Routes.CareerInfoBasicView;
                                 break;
                             case CareerType.Homemaker:
-                                route = Routes.CareerInfoOtherView;
+                                route = Routes.CareerInfoBasicView;
                                 break;
                             case CareerType.ExtraOccupationalExperience:
-                                route = Routes.CareerInfoOtherView;
+                                route = Routes.CareerInfoBasicView;
                                 break;
                             case CareerType.PersonCare:
-                                route = Routes.CareerInfoOtherView;
+                                route = Routes.CareerInfoBasicView;
                                 break;
                             default:
                                 break;
                         }
 
-                        await NavigationService.NavigateAsync(route, worker.Token);
+                        await NavigationService.NavigateAsync(route, worker.Token, editorParameters);
                     }
                 }
                 catch (OperationCanceledException)
@@ -113,6 +146,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private bool CanAdd()
         {
             return !IsBusy;
+        }
+
+        private void LoadonUIThread(List<CareerInfo> careeres)
+        {
+            Careers = new ObservableCollection<CareerInfo>(careeres);
         }
     }
 }

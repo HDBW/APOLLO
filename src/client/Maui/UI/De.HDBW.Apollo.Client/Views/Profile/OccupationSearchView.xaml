@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.OccupationSearchView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             x:DataType="viewModels:OccupationSearchViewModel"
+             Shell.TabBarIsVisible="False"
+             Title="OccupationSearchViewModel"
+             IsBusy="{x:Binding IsBusy}" Padding="0">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">
+            <Label Text="{x:Binding Text}" Margin="0,8"/>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <VerticalStackLayout>
+        <SearchBar Text="{x:Binding SearchText, Mode=TwoWay}"
+                   SearchCommand="{x:Binding SearchCommand}"
+                   SearchCommandParameter="{x:Binding Text, Source={x:Reference PART_SearchBar}}"
+                   x:Name="PART_SearchBar"/>
+        <CollectionView SelectionMode="Single"
+                        ItemsSource="{x:Binding Items}"
+                        ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                        SelectedItem="{x:Binding SelectedItem, Mode=TwoWay}"
+                        ItemsLayout="VerticalList" />
+    </VerticalStackLayout>
+</ContentPage>

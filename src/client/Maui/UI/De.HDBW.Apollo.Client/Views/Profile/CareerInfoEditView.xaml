@@ -2,15 +2,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfoEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resources.CareerInfoEditView_Title}"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             Title="{x:Static strings:Resources.CareerInfoEditView_Title}"
              x:DataType="viewModels:CareerInfoEditViewModel"
              Shell.TabBarIsVisible="False"
              IsBusy="{x:Binding IsBusy}" Padding="0">
     <ContentPage.Resources>
         <DataTemplate x:Key="EmptyTemplate">
+            <SwipeView Threshold="100" >
+                <SwipeView.RightItems>
+                    <SwipeItems Mode="Execute">
+                        <SwipeItem Text="Delete"
+                           IconImageSource="delete.png"
+                           BackgroundColor="Red"
+                           Command="{Binding DeleteCommand}" />
+                    </SwipeItems>
+                </SwipeView.RightItems>
+                <VerticalStackLayout Padding="24,0"  Background="{StaticResource Background}" >
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Seit 01.08.2023" FontAttributes="Bold" />
+                                <Span Text=" " />
+                                <Span Text="laufend" />
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+                                <Span Text="Kaufmännische Fachkraft (Nebenbeschäftigung)" FontAttributes="Bold" />
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+                                <Span Text="Aachen" />
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+                                <Span Text="Deutschland" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </SwipeView>
         </DataTemplate>
         
         <selector:CareerInfoTemplateSelector x:Key="CareerInfoTemplateSelector"
@@ -18,6 +46,7 @@
     </ContentPage.Resources>
     <Grid>
         <CollectionView ItemsSource="{x:Binding Careers}"
+                        SelectionMode="Single"
                         ItemsLayout="VerticalList"
                         ItemTemplate="{StaticResource CareerInfoTemplateSelector}"/>
         <ImageButton HeightRequest="64" WidthRequest="64" Command="{x:Binding AddCommand}" Source="add.png" HorizontalOptions="End" VerticalOptions="End" Margin="16" />

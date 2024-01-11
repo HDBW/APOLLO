@@ -5,15 +5,17 @@ using Foundation;
 using Microsoft.Identity.Client;
 using UIKit;
 
-namespace De.HDBW.Apollo.Client;
-[Register("AppDelegate")]
-public class AppDelegate : MauiUIApplicationDelegate
+namespace De.HDBW.Apollo.Client
 {
-    public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+    [Register("AppDelegate")]
+    public class AppDelegate : MauiUIApplicationDelegate
     {
-        AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
-        return base.OpenUrl(app, url, options);
-    }
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
+            return base.OpenUrl(app, url, options);
+        }
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    }
 }

@@ -513,9 +513,6 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Global_DurationFormatHours" xml:space="preserve">
     <value>{0} Stunden</value>
   </data>
-  <data name="OccurrenceType_FullTime" xml:space="preserve">
-    <value>Vollzeit</value>
-  </data>
   <data name="OccurrenceType_PartTime" xml:space="preserve">
     <value>Teilzeit</value>
   </data>
@@ -705,23 +702,20 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Global_Start" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="Occupation_FullTime" xml:space="preserve">
+  <data name="WorkingTimeModel_FullTime" xml:space="preserve">
     <value>Vollzeit</value>
   </data>
-  <data name="Occupation_HomeTeleWork" xml:space="preserve">
+  <data name="WorkingTimeModel_HomeTeleWork" xml:space="preserve">
     <value>Homeoffice</value>
   </data>
-  <data name="Occupation_Minijob" xml:space="preserve">
+  <data name="WorkingTimeModel_Minijob" xml:space="preserve">
     <value>Minijob</value>
   </data>
-  <data name="Occupation_PartTime" xml:space="preserve">
+  <data name="WorkingTimeModel_PartTime" xml:space="preserve">
     <value>Teilzeit</value>
   </data>
-  <data name="Occupation_ShiftNightWorkWeekend" xml:space="preserve">
+  <data name="WorkingTimeModel_ShiftNightWorkWeekend" xml:space="preserve">
     <value>Schicht-/Nacht-/Wochenendarbeit</value>
-  </data>
-  <data name="Occupation_WorkTimeModel" xml:space="preserve">
-    <value>Arbeitszeitmodel</value>
   </data>
   <data name="Global_City" xml:space="preserve">
     <value>Stadt</value>
@@ -731,5 +725,53 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="Global_NameOfInstitution" xml:space="preserve">
     <value>Institution</value>
+  </data>
+  <data name="OccurrenceType_FullTime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="ServiceType_CivilianService" xml:space="preserve">
+    <value>Zivildienst</value>
+  </data>
+  <data name="ServiceType_MilitaryExercise" xml:space="preserve">
+    <value>Wehrübung</value>
+  </data>
+  <data name="ServiceType_MilitaryService" xml:space="preserve">
+    <value>Grundwehrdienst</value>
+  </data>
+  <data name="ServiceType_VoluntaryMilitaryService" xml:space="preserve">
+    <value>Freiwilliger Wehrdienst</value>
+  </data>
+  <data name="Global_Occupation" xml:space="preserve">
+    <value>Berufsbezeichnung</value>
+  </data>
+  <data name="Global_WorkTimeModel" xml:space="preserve">
+    <value>Arbeitszeitmodel</value>
+  </data>
+  <data name="VoluntaryServiceType_FederalVolunteerService" xml:space="preserve">
+    <value>Bundesfreiwilligendienst</value>
+  </data>
+  <data name="VoluntaryServiceType_Other" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntaryCulturalYear" xml:space="preserve">
+    <value>Freiwilliges Kulturelles Jahr (FKJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntaryEcologicalYear" xml:space="preserve">
+    <value>Freiwilliges Ökologisches Jahr (FÖJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntarySocialTrainingYear" xml:space="preserve">
+    <value>Freiwilliges Soziales Trainingsjahr (FSTJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntarySocialYear" xml:space="preserve">
+    <value>Freiwilliges Soziales Jahr (FSJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntarySocialYearInSport" xml:space="preserve">
+    <value>Freiwilliges Soziales Jahr im Sport</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntaryYearInMonumentConservation" xml:space="preserve">
+    <value>Freiwilliges Jahr in der Denkmalpflege (FJD)</value>
+  </data>
+  <data name="Global_ServiceType" xml:space="preserve">
+    <value>Dienstart</value>
   </data>
 </root>

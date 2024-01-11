@@ -2,11 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.MobilityEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resources.MobilityEditView_Title}"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:MobilityEditViewModel"
              Shell.TabBarIsVisible="False"
+             Title="{x:Static strings:Resources.MobilityEditView_Title}"
              IsBusy="{x:Binding IsBusy}" Padding="0">
     <VerticalStackLayout>
         <Label Text="{x:Static strings:Resources.MobilityEditView_Willing}" />

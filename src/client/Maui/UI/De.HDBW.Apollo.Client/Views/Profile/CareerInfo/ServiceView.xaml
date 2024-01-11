@@ -1,5 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfo.ServiceView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
@@ -7,7 +8,27 @@
              Shell.TabBarIsVisible="False"
              Title="ServiceView"
              IsBusy="{x:Binding IsBusy}" Padding="0">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="delete" />
+    </ContentPage.ToolbarItems>
     <VerticalStackLayout>
-        
+        <Label Text="{x:Static strings:Resources.Global_Start}"/>
+        <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        <Label Text="{x:Static strings:Resources.Global_End}"/>
+        <DatePicker Date="{x:Binding End, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_Occupation}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        <Entry Text="{x:Binding OccupationName, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_Discribtion}"/>
+        <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}"/>
+        <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_City}"/>
+        <Entry Text="{x:Binding City, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_Country}"/>
+        <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_ServiceType}"/>
+        <Picker ItemsSource="{x:Binding ServiceTypes}"
+        ItemDisplayBinding="{x:Binding Text}"
+        SelectedItem="{x:Binding SelectedServiceType, Mode=TwoWay}"/>
     </VerticalStackLayout>
 </ContentPage>

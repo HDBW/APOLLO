@@ -709,6 +709,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Berufsbezeichnung.
+        /// </summary>
+        public static string Global_Occupation {
+            get {
+                return ResourceManager.GetString("Global_Occupation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dienstart.
+        /// </summary>
+        public static string Global_ServiceType {
+            get {
+                return ResourceManager.GetString("Global_ServiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Überspringen.
         /// </summary>
         public static string Global_Skip {
@@ -732,6 +750,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_StartNow {
             get {
                 return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arbeitszeitmodel.
+        /// </summary>
+        public static string Global_WorkTimeModel {
+            get {
+                return ResourceManager.GetString("Global_WorkTimeModel", resourceCulture);
             }
         }
         
@@ -930,60 +957,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MobilityEditView_Willing {
             get {
                 return ResourceManager.GetString("MobilityEditView_Willing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vollzeit.
-        /// </summary>
-        public static string Occupation_FullTime {
-            get {
-                return ResourceManager.GetString("Occupation_FullTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Homeoffice.
-        /// </summary>
-        public static string Occupation_HomeTeleWork {
-            get {
-                return ResourceManager.GetString("Occupation_HomeTeleWork", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minijob.
-        /// </summary>
-        public static string Occupation_Minijob {
-            get {
-                return ResourceManager.GetString("Occupation_Minijob", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Teilzeit.
-        /// </summary>
-        public static string Occupation_PartTime {
-            get {
-                return ResourceManager.GetString("Occupation_PartTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Schicht-/Nacht-/Wochenendarbeit.
-        /// </summary>
-        public static string Occupation_ShiftNightWorkWeekend {
-            get {
-                return ResourceManager.GetString("Occupation_ShiftNightWorkWeekend", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Arbeitszeitmodel.
-        /// </summary>
-        public static string Occupation_WorkTimeModel {
-            get {
-                return ResourceManager.GetString("Occupation_WorkTimeModel", resourceCulture);
             }
         }
         
@@ -1299,6 +1272,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string SelectOptionsDialog_EducationType_VocationalTraining {
             get {
                 return ResourceManager.GetString("SelectOptionsDialog_EducationType_VocationalTraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zivildienst.
+        /// </summary>
+        public static string ServiceType_CivilianService {
+            get {
+                return ResourceManager.GetString("ServiceType_CivilianService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wehrübung.
+        /// </summary>
+        public static string ServiceType_MilitaryExercise {
+            get {
+                return ResourceManager.GetString("ServiceType_MilitaryExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grundwehrdienst.
+        /// </summary>
+        public static string ServiceType_MilitaryService {
+            get {
+                return ResourceManager.GetString("ServiceType_MilitaryService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilliger Wehrdienst.
+        /// </summary>
+        public static string ServiceType_VoluntaryMilitaryService {
+            get {
+                return ResourceManager.GetString("ServiceType_VoluntaryMilitaryService", resourceCulture);
             }
         }
         
@@ -1879,11 +1888,128 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bundesfreiwilligendienst.
+        /// </summary>
+        public static string VoluntaryServiceType_FederalVolunteerService {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_FederalVolunteerService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sonstiges.
+        /// </summary>
+        public static string VoluntaryServiceType_Other {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilliges Kulturelles Jahr (FKJ).
+        /// </summary>
+        public static string VoluntaryServiceType_VoluntaryCulturalYear {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_VoluntaryCulturalYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilliges Ökologisches Jahr (FÖJ).
+        /// </summary>
+        public static string VoluntaryServiceType_VoluntaryEcologicalYear {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_VoluntaryEcologicalYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilliges Soziales Trainingsjahr (FSTJ).
+        /// </summary>
+        public static string VoluntaryServiceType_VoluntarySocialTrainingYear {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_VoluntarySocialTrainingYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilliges Soziales Jahr (FSJ).
+        /// </summary>
+        public static string VoluntaryServiceType_VoluntarySocialYear {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_VoluntarySocialYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilliges Soziales Jahr im Sport.
+        /// </summary>
+        public static string VoluntaryServiceType_VoluntarySocialYearInSport {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_VoluntarySocialYearInSport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilliges Jahr in der Denkmalpflege (FJD).
+        /// </summary>
+        public static string VoluntaryServiceType_VoluntaryYearInMonumentConservation {
+            get {
+                return ResourceManager.GetString("VoluntaryServiceType_VoluntaryYearInMonumentConservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Webprofile.
         /// </summary>
         public static string WebReferenceEditView_Title {
             get {
                 return ResourceManager.GetString("WebReferenceEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vollzeit.
+        /// </summary>
+        public static string WorkingTimeModel_FullTime {
+            get {
+                return ResourceManager.GetString("WorkingTimeModel_FullTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homeoffice.
+        /// </summary>
+        public static string WorkingTimeModel_HomeTeleWork {
+            get {
+                return ResourceManager.GetString("WorkingTimeModel_HomeTeleWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minijob.
+        /// </summary>
+        public static string WorkingTimeModel_Minijob {
+            get {
+                return ResourceManager.GetString("WorkingTimeModel_Minijob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilzeit.
+        /// </summary>
+        public static string WorkingTimeModel_PartTime {
+            get {
+                return ResourceManager.GetString("WorkingTimeModel_PartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schicht-/Nacht-/Wochenendarbeit.
+        /// </summary>
+        public static string WorkingTimeModel_ShiftNightWorkWeekend {
+            get {
+                return ResourceManager.GetString("WorkingTimeModel_ShiftNightWorkWeekend", resourceCulture);
             }
         }
     }
