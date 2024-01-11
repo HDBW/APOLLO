@@ -57,6 +57,7 @@
     <None Remove="Resources\Images\profile.svg" />
     <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\resultdeco.svg" />
+    <None Remove="Resources\Images\search.svg" />
     <None Remove="Resources\Images\usecase4deco.svg" />
     <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />

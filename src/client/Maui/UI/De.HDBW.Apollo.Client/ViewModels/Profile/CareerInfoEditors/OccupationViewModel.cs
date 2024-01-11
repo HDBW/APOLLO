@@ -9,7 +9,6 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
-using Java.Nio.FileNio.Attributes;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
@@ -58,11 +57,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 try
                 {
                     var timeModels = new List<InteractionEntry>();
-                    timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; })); timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Teilzeit", WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; })); timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Schicht-/Nacht-/Wochenendarbeit", WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; })); timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Minijob", WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; })); timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Minijob", WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; })); timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import("Teilzeit", WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import("Schicht-/Nacht-/Wochenendarbeit", WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import("Minijob", WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import("Minijob", WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(timeModels), worker.Token);
