@@ -8,7 +8,7 @@
              x:DataType="viewModels:SettingsViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.SettingsView_Title}"
-             IsBusy="{Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy}"
              Padding="0">
     <Grid RowDefinitions="*, auto, auto" ColumnDefinitions="*, *" Padding="0,0,0,16">
         <ScrollView Padding="24,0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">

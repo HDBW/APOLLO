@@ -7,7 +7,7 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:LicenseEditViewModel"
              Shell.TabBarIsVisible="False"
-             IsBusy="{Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" Padding="0">
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"

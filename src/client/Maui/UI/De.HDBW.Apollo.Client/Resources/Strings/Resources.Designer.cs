@@ -628,11 +628,29 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stadt.
+        /// </summary>
+        public static string Global_City {
+            get {
+                return ResourceManager.GetString("Global_City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schließen.
         /// </summary>
         public static string Global_Close {
             get {
                 return ResourceManager.GetString("Global_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land.
+        /// </summary>
+        public static string Global_Country {
+            get {
+                return ResourceManager.GetString("Global_Country", resourceCulture);
             }
         }
         
@@ -669,6 +687,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_End {
             get {
                 return ResourceManager.GetString("Global_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Institution.
+        /// </summary>
+        public static string Global_NameOfInstitution {
+            get {
+                return ResourceManager.GetString("Global_NameOfInstitution", resourceCulture);
             }
         }
         

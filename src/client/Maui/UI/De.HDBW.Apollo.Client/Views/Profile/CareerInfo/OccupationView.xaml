@@ -7,7 +7,7 @@
              x:DataType="viewModels:OccupationViewModel"
              Shell.TabBarIsVisible="False"
              Title="OccupationView"
-             IsBusy="{Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" Padding="0">
     <VerticalStackLayout>
         <Label Text="{x:Static strings:Resources.Global_Start}"/>
         <DatePicker Date="{x:Binding Start, Mode=TwoWay}" />
@@ -23,8 +23,11 @@
         </Grid>
         <Label Text="{x:Static strings:Resources.Global_Discribtion}"/>
         <Entry Text="{x:Binding Description, Mode=TwoWay}" />
-        <Entry Text="{x:Binding NameOfinstiture, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}"/>
+        <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_City}"/>
         <Entry Text="{x:Binding City, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_Country}"/>
         <Entry Text="{x:Binding Country, Mode=TwoWay}" />
         <Label Text="{x:Static strings:Resources.Occupation_WorkTimeModel}"/>
         <Picker ItemsSource="{x:Binding WorkTimeModels}"

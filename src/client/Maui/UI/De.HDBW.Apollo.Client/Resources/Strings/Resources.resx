@@ -723,4 +723,13 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Occupation_WorkTimeModel" xml:space="preserve">
     <value>Arbeitszeitmodel</value>
   </data>
+  <data name="Global_City" xml:space="preserve">
+    <value>Stadt</value>
+  </data>
+  <data name="Global_Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="Global_NameOfInstitution" xml:space="preserve">
+    <value>Institution</value>
+  </data>
 </root>

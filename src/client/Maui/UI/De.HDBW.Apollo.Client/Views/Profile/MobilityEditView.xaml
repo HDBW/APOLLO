@@ -7,7 +7,7 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:MobilityEditViewModel"
              Shell.TabBarIsVisible="False"
-             IsBusy="{Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" Padding="0">
     <VerticalStackLayout>
         <Label Text="{x:Static strings:Resources.MobilityEditView_Willing}" />
         <!-- Combobox -->

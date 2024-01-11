@@ -8,7 +8,7 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:CareerInfoEditViewModel"
              Shell.TabBarIsVisible="False"
-             IsBusy="{Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" Padding="0">
     <ContentPage.Resources>
         <DataTemplate x:Key="EmptyTemplate">
         </DataTemplate>

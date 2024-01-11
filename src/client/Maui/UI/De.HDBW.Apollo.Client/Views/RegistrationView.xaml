@@ -9,7 +9,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:RegistrationViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             IsBusy="{Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" Padding="0">
     <ContentPage.Resources>
         <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     </ContentPage.Resources>

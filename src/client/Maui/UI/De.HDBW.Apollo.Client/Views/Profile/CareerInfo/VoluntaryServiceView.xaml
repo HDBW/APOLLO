@@ -6,7 +6,7 @@
              x:DataType="viewModels:VoluntaryServiceViewModel"
              Shell.TabBarIsVisible="False"
              Title="VoluntaryServiceView"
-             IsBusy="{Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" Padding="0">
     <VerticalStackLayout>
         
     </VerticalStackLayout>
