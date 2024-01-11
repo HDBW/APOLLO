@@ -67,11 +67,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 try
                 {
                     var timeModels = new List<InteractionEntry>();
-                    timeModels.Add(InteractionEntry.Import("Vollzeit", WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Teilzeit", WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Schicht-/Nacht-/Wochenendarbeit", WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Minijob", WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import("Minijob", WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_FullTime, WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_PartTime, WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_ShiftNightWorkWeekend, WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_Minijob, WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.Occupation_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(timeModels), worker.Token);

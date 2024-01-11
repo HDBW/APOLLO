@@ -9,14 +9,21 @@
              Title="OccupationView"
              IsBusy="{Binding IsBusy}" Padding="0">
     <VerticalStackLayout>
+        <Label Text="{x:Static strings:Resources.Global_Start}"/>
         <DatePicker Date="{x:Binding Start, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_End}"/>
         <DatePicker Date="{x:Binding End, Mode=TwoWay}" />
-        <Label Text="{x:Binding OccupationName}" />
-        <ImageButton Source="search.png" Command="{x:Binding SearchOccupationCommand}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="{x:Binding OccupationName}" Grid.Column="0"/>
+            <ImageButton Source="search.svg" Command="{x:Binding SearchOccupationCommand}" Grid.Column="1"/>
+        </Grid>
+        <Label Text="{x:Static strings:Resources.Global_Discribtion}"/>
         <Entry Text="{x:Binding Description, Mode=TwoWay}" />
-        <Entry Text="{x:Binding NameOfinstiture, Mode=TwoWay}" />
-        <Entry Text="{x:Binding City, Mode=TwoWay}" />
-        <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Occupation_WorkTimeModel}"/>
         <Picker ItemsSource="{x:Binding WorkTimeModels}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedWorkTimeModel, Mode=TwoWay}"
