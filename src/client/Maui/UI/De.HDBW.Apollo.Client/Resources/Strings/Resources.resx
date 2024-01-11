@@ -696,4 +696,31 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="SelectOptionsDialog_EducationType_VocationalTraining" xml:space="preserve">
     <value>Berufsausbildung (schulisch)</value>
   </data>
+  <data name="Global_Discribtion" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="Global_End" xml:space="preserve">
+    <value>Ende</value>
+  </data>
+  <data name="Global_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Occupation_FullTime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="Occupation_HomeTeleWork" xml:space="preserve">
+    <value>Homeoffice</value>
+  </data>
+  <data name="Occupation_Minijob" xml:space="preserve">
+    <value>Minijob</value>
+  </data>
+  <data name="Occupation_PartTime" xml:space="preserve">
+    <value>Teilzeit</value>
+  </data>
+  <data name="Occupation_ShiftNightWorkWeekend" xml:space="preserve">
+    <value>Schicht-/Nacht-/Wochenendarbeit</value>
+  </data>
+  <data name="Occupation_WorkTimeModel" xml:space="preserve">
+    <value>Arbeitszeitmodel</value>
+  </data>
 </root>

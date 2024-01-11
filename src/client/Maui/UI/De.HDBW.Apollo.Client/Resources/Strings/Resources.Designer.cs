@@ -637,6 +637,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beschreibung.
+        /// </summary>
+        public static string Global_Discribtion {
+            get {
+                return ResourceManager.GetString("Global_Discribtion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Minuten.
         /// </summary>
         public static string Global_DurationFormat {
@@ -655,6 +664,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ende.
+        /// </summary>
+        public static string Global_End {
+            get {
+                return ResourceManager.GetString("Global_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Weiter.
         /// </summary>
         public static string Global_Next {
@@ -669,6 +687,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Skip {
             get {
                 return ResourceManager.GetString("Global_Skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Global_Start {
+            get {
+                return ResourceManager.GetString("Global_Start", resourceCulture);
             }
         }
         
@@ -876,6 +903,60 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MobilityEditView_Willing {
             get {
                 return ResourceManager.GetString("MobilityEditView_Willing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vollzeit.
+        /// </summary>
+        public static string Occupation_FullTime {
+            get {
+                return ResourceManager.GetString("Occupation_FullTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homeoffice.
+        /// </summary>
+        public static string Occupation_HomeTeleWork {
+            get {
+                return ResourceManager.GetString("Occupation_HomeTeleWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minijob.
+        /// </summary>
+        public static string Occupation_Minijob {
+            get {
+                return ResourceManager.GetString("Occupation_Minijob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilzeit.
+        /// </summary>
+        public static string Occupation_PartTime {
+            get {
+                return ResourceManager.GetString("Occupation_PartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schicht-/Nacht-/Wochenendarbeit.
+        /// </summary>
+        public static string Occupation_ShiftNightWorkWeekend {
+            get {
+                return ResourceManager.GetString("Occupation_ShiftNightWorkWeekend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arbeitszeitmodel.
+        /// </summary>
+        public static string Occupation_WorkTimeModel {
+            get {
+                return ResourceManager.GetString("Occupation_WorkTimeModel", resourceCulture);
             }
         }
         
