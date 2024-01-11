@@ -42,7 +42,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private InteractionEntry? _selectedWorkTimeModel;
 
-        private CareerInfo? _careers;
+        private CareerInfo? _career;
 
         private WorkingTimeModel? _workTime;
 

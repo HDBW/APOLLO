@@ -175,7 +175,7 @@
     <MauiXaml Update="Views\Profile\CareerInfo\VoluntaryServiceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\Profile\EducationInfo\BasicView.xaml">
+    <MauiXaml Update="Views\Profile\EducationInfo\EducationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\LanguageSkillEditView.xaml">
@@ -257,6 +257,9 @@
     <Compile Update="Views\Profile\CareerInfoEditView.xaml.cs">
       <DependentUpon>CareerInfoEditView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Profile\EducationInfo\EducationView.xaml.cs">
+      <DependentUpon>EducationView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Profile\LicenseEditView.xaml.cs">
       <DependentUpon>LicenseEditView.xaml</DependentUpon>
     </Compile>
@@ -273,8 +276,5 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Profile\EducationInfoEditors\" />
   </ItemGroup>
 </Project>

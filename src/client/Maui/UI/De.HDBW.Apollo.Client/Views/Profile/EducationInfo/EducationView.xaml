@@ -1,0 +1,39 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.EducationInfo.EducationView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewModels:EducationViewModel"
+             Shell.TabBarIsVisible="False"
+             Title="EducationView"
+             IsBusy="{x:Binding IsBusy}" Padding="0">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="delete" />
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout>
+        <Label Text="{x:Static strings:Resources.Global_Start}"/>
+        <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        <Label Text="{x:Static strings:Resources.Global_End}"/>
+        <DatePicker Date="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}"/>
+        <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_City}"/>
+        <Entry Text="{x:Binding City, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_Country}"/>
+        <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_TypeOfSchool}"/>
+        <Picker ItemsSource="{x:Binding TypeOfSchools}"
+                ItemDisplayBinding="{x:Binding Text}"
+                SelectedItem="{x:Binding SelectedTypeOfSchool, Mode=TwoWay}"/>
+        <Label Text="{x:Static strings:Resources.Global_SchoolGraduation}"/>
+        <Picker ItemsSource="{x:Binding SchoolGraduations}"
+                ItemDisplayBinding="{x:Binding Text}"
+                SelectedItem="{x:Binding SelectedSchoolGraduation, Mode=TwoWay}"/>
+        <Label Text="{x:Static strings:Resources.Global_CompletionState}"/>
+        <Picker ItemsSource="{x:Binding CompletionStates}"
+                ItemDisplayBinding="{x:Binding Text}"
+                SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
+    </VerticalStackLayout>
+</ContentPage>

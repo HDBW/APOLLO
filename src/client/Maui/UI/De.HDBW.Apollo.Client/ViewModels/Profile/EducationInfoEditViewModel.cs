@@ -48,7 +48,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         switch (result?.GetValue<EducationType?>(NavigationParameter.Data))
                         {
                             case EducationType.Education:
-                                route = Routes.CareerInfoOccupationView;
+                                route = Routes.EducationInfoEducationView;
                                 break;
                             case EducationType.CompanyBasedVocationalTraining:
                                 route = Routes.CareerInfoOccupationView;

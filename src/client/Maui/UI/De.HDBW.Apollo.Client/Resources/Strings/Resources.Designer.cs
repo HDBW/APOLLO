@@ -259,6 +259,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ja.
+        /// </summary>
+        public static string CompletionState_Completed {
+            get {
+                return ResourceManager.GetString("CompletionState_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nein.
+        /// </summary>
+        public static string CompletionState_Failed {
+            get {
+                return ResourceManager.GetString("CompletionState_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anerkennung läuft.
+        /// </summary>
+        public static string CompletionState_Ongoning {
+            get {
+                return ResourceManager.GetString("CompletionState_Ongoning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ich stimme zu..
         /// </summary>
         public static string ConfirmDataUsageDialog_Agree {
@@ -646,6 +673,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anerkannt.
+        /// </summary>
+        public static string Global_CompletionState {
+            get {
+                return ResourceManager.GetString("Global_CompletionState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Land.
         /// </summary>
         public static string Global_Country {
@@ -718,6 +754,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schulabschluss.
+        /// </summary>
+        public static string Global_SchoolGraduation {
+            get {
+                return ResourceManager.GetString("Global_SchoolGraduation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dienstart.
         /// </summary>
         public static string Global_ServiceType {
@@ -750,6 +795,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_StartNow {
             get {
                 return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schulart.
+        /// </summary>
+        public static string Global_TypeOfSchool {
+            get {
+                return ResourceManager.GetString("Global_TypeOfSchool", resourceCulture);
             }
         }
         
@@ -1092,6 +1146,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string RegistrationView_UnRegisterUser {
             get {
                 return ResourceManager.GetString("RegistrationView_UnRegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fachhochschulreife.
+        /// </summary>
+        public static string SchoolGraduation_AdvancedTechnicalCollegeCertificate {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_AdvancedTechnicalCollegeCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abgänger Klasse 11-13 ohne Abschluss.
+        /// </summary>
+        public static string SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qualifizierender / erweiterter Hauptschulabschluss.
+        /// </summary>
+        public static string SchoolGraduation_ExtendedSecondarySchoolLeavingCertificate {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_ExtendedSecondarySchoolLeavingCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allgemeine Hochschulreife.
+        /// </summary>
+        public static string SchoolGraduation_HigherEducationEntranceQualificationALevel {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_HigherEducationEntranceQualificationALevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mittlere Reife / Mittlerer Bildungsabschluss.
+        /// </summary>
+        public static string SchoolGraduation_IntermediateSchoolCertificate {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_IntermediateSchoolCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to kein Schulabschluss.
+        /// </summary>
+        public static string SchoolGraduation_NoSchoolLeavingCertificate {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_NoSchoolLeavingCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hauptschulabschluss.
+        /// </summary>
+        public static string SchoolGraduation_SecondarySchoolCertificate {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_SecondarySchoolCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schulabschluss der Förderschule.
+        /// </summary>
+        public static string SchoolGraduation_SpecialSchoolLeavingCertificate {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_SpecialSchoolLeavingCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fachgebundene Hochschulreife.
+        /// </summary>
+        public static string SchoolGraduation_SubjectRelatedEntranceQualification {
+            get {
+                return ResourceManager.GetString("SchoolGraduation_SubjectRelatedEntranceQualification", resourceCulture);
             }
         }
         
@@ -1589,6 +1724,195 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string String1 {
             get {
                 return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kolleg.
+        /// </summary>
+        public static string TypeOfSchool_Colleague {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_Colleague", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abendgymnasium.
+        /// </summary>
+        public static string TypeOfSchool_EveningHighSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_EveningHighSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abendhauptschule.
+        /// </summary>
+        public static string TypeOfSchool_EveningSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_EveningSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gymnasium.
+        /// </summary>
+        public static string TypeOfSchool_HighSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_HighSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integrierte Gesamtschule.
+        /// </summary>
+        public static string TypeOfSchool_IntegratedComprehensiveSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_IntegratedComprehensiveSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hauptschule.
+        /// </summary>
+        public static string TypeOfSchool_MainSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_MainSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abendrealschule.
+        /// </summary>
+        public static string TypeOfSchool_NightSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_NightSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sonstige Schule.
+        /// </summary>
+        public static string TypeOfSchool_Other {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schulart mit mehreren Bildungsgängen.
+        /// </summary>
+        public static string TypeOfSchool_SchoolWithMultipleCourses {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_SchoolWithMultipleCourses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Realschule.
+        /// </summary>
+        public static string TypeOfSchool_SecondarySchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_SecondarySchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Förderschule.
+        /// </summary>
+        public static string TypeOfSchool_SpecialSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_SpecialSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fachakademie.
+        /// </summary>
+        public static string TypeOfSchool_TechnicalAcademy {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_TechnicalAcademy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fachoberschule.
+        /// </summary>
+        public static string TypeOfSchool_TechnicalCollege {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_TechnicalCollege", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fachgymnasium.
+        /// </summary>
+        public static string TypeOfSchool_TechnicalHighSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_TechnicalHighSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fachschule.
+        /// </summary>
+        public static string TypeOfSchool_TechnicalSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_TechnicalSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hochschule.
+        /// </summary>
+        public static string TypeOfSchool_UniversityOfAppliedScience {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_UniversityOfAppliedScience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufsfachschule.
+        /// </summary>
+        public static string TypeOfSchool_VocationalCollege {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_VocationalCollege", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufsoberschule/ Technische Oberschule.
+        /// </summary>
+        public static string TypeOfSchool_VocationalHighSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_VocationalHighSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufsschule.
+        /// </summary>
+        public static string TypeOfSchool_VocationalSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_VocationalSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufsaufbauschule.
+        /// </summary>
+        public static string TypeOfSchool_VocationalTrainingSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_VocationalTrainingSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freie Waldorfschule.
+        /// </summary>
+        public static string TypeOfSchool_WaldorfSchool {
+            get {
+                return ResourceManager.GetString("TypeOfSchool_WaldorfSchool", resourceCulture);
             }
         }
         

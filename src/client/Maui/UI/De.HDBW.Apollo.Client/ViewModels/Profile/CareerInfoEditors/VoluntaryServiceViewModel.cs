@@ -40,7 +40,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private InteractionEntry? _selectedVoluntaryServiceType;
 
-        private CareerInfo? _careers;
+        private CareerInfo? _career;
 
         public VoluntaryServiceViewModel(
             IDispatcherService dispatcherService,

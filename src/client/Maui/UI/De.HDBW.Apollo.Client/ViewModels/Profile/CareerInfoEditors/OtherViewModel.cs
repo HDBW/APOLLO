@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private string? _country;
 
-        private CareerInfo? _careers;
+        private CareerInfo? _career;
 
         public OtherViewModel(
             IDispatcherService dispatcherService,
