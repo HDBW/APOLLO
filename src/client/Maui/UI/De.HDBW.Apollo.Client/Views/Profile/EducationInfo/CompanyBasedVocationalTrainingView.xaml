@@ -17,8 +17,8 @@
         <Label Text="{x:Static strings:Resources.Global_Start}"/>
         <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
         <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-            <Label Text="{x:Static strings:Resources.Global_IsCompleted}" Grid.Column="0" />
-            <Switch x:Name="Switch" Grid.Column="1" IsToggled="True"/>
+            <Label Text="{x:Static strings:Resources.Global_IsCompleted}" VerticalOptions="Start"/>
+            <Switch x:Name="Switch" IsToggled="True" VerticalOptions="End"/>
         </FlexLayout>
         <VerticalStackLayout IsVisible="{x:Binding IsToggled, Source={x:Reference Switch}}">
             <Label Text="{x:Static strings:Resources.Global_End}"/>
@@ -31,14 +31,10 @@
         <Label Text="{x:Static strings:Resources.Global_Country}"/>
         <Entry Text="{x:Binding Country, Mode=TwoWay}" />
         <Label Text="{x:Static strings:Resources.Global_Occupation}"/>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Label Text="{x:Binding OccupationName}" Grid.Column="0"/>
-            <ImageButton Source="search.svg" Command="{x:Binding SearchOccupationCommand}" Grid.Column="1"/>
-        </Grid>
+        <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+            <Label Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
+            <ImageButton Source="search.png" Command="{x:Binding SearchOccupationCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
+        </FlexLayout>
         <Label Text="{x:Static strings:Resources.Global_SchoolGraduation}"/>
         <Picker ItemsSource="{x:Binding SchoolGraduations}"
             ItemDisplayBinding="{x:Binding Text}"

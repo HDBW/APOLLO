@@ -15,8 +15,8 @@
         <Label Text="{x:Static strings:Resources.Global_Start}"/>
         <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
         <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-            <Label Text="{x:Static strings:Resources.Global_IsCompleted}" Grid.Column="0" />
-            <Switch x:Name="Switch" Grid.Column="1" IsToggled="True"/>
+            <Label Text="{x:Static strings:Resources.Global_IsCompleted}" VerticalOptions="Start"/>
+            <Switch x:Name="Switch" IsToggled="True" VerticalOptions="End"/>
         </FlexLayout>
         <VerticalStackLayout IsVisible="{x:Binding IsToggled, Source={x:Reference Switch}}">
             <Label Text="{x:Static strings:Resources.Global_End}"/>
