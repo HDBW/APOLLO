@@ -10,6 +10,7 @@ using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
+using De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Client.Views.Profile;
@@ -301,6 +302,9 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<ContactInfoEditView>();
             services.AddTransient<ContactInfoEditViewModel>();
 
+            services.AddTransient<ContactView>();
+            services.AddTransient<ContactViewModel>();
+
             services.AddTransient<LicenseEditView>();
             services.AddTransient<LicenseEditViewModel>();
 
@@ -363,15 +367,19 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.LanguageSkillEditView, typeof(LanguageSkillEditView));
             Routing.RegisterRoute(Routes.WebReferenceEditView, typeof(WebReferenceEditView));
             Routing.RegisterRoute(Routes.QualificationEditView, typeof(QualificationEditView));
+
             Routing.RegisterRoute(Routes.ContactInfoEditView, typeof(ContactInfoEditView));
+            Routing.RegisterRoute(Routes.ContactInfoContactView, typeof(ContactView));
+
             Routing.RegisterRoute(Routes.LicenseEditView, typeof(LicenseEditView));
+
             Routing.RegisterRoute(Routes.EducationInfoEditView, typeof(EducationInfoEditView));
             Routing.RegisterRoute(Routes.EducationInfoEducationView, typeof(EducationView));
             Routing.RegisterRoute(Routes.CareerInfoEditView, typeof(CareerInfoEditView));
-            Routing.RegisterRoute(Routes.CompanyBasedVocationalTrainingView, typeof(CompanyBasedVocationalTrainingView));
-            Routing.RegisterRoute(Routes.StudyView, typeof(StudyView));
-            Routing.RegisterRoute(Routes.VocationalTrainingView, typeof(VocationalTrainingView));
-            Routing.RegisterRoute(Routes.FurtherEducationView, typeof(FurtherEducationView));
+            Routing.RegisterRoute(Routes.EducationInfoCompanyBasedVocationalTrainingView, typeof(CompanyBasedVocationalTrainingView));
+            Routing.RegisterRoute(Routes.EducationInfoStudyView, typeof(StudyView));
+            Routing.RegisterRoute(Routes.EducationInfoVocationalTrainingView, typeof(VocationalTrainingView));
+            Routing.RegisterRoute(Routes.EducationInfoFurtherEducationView, typeof(FurtherEducationView));
 
             Routing.RegisterRoute(Routes.CareerInfoOccupationView, typeof(OccupationView));
             Routing.RegisterRoute(Routes.CareerInfoOtherView, typeof(OtherView));

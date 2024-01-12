@@ -142,6 +142,9 @@
     <MauiXaml Update="FlyoutMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\ContactInfo\ContactView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\AssessmentDescriptionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

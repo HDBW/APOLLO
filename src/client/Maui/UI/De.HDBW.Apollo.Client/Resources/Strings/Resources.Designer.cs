@@ -646,6 +646,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anschrift.
+        /// </summary>
+        public static string Global_Address {
+            get {
+                return ResourceManager.GetString("Global_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zurück.
         /// </summary>
         public static string Global_Back {
@@ -682,6 +691,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Art des Kontakts.
+        /// </summary>
+        public static string Global_ContactType {
+            get {
+                return ResourceManager.GetString("Global_ContactType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Land.
         /// </summary>
         public static string Global_Country {
@@ -714,6 +732,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_DurationFormatHours {
             get {
                 return ResourceManager.GetString("Global_DurationFormatHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Mail.
+        /// </summary>
+        public static string Global_Email {
+            get {
+                return ResourceManager.GetString("Global_Email", resourceCulture);
             }
         }
         
@@ -768,6 +795,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Occupation {
             get {
                 return ResourceManager.GetString("Global_Occupation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telefon.
+        /// </summary>
+        public static string Global_Phone {
+            get {
+                return ResourceManager.GetString("Global_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region.
+        /// </summary>
+        public static string Global_Region {
+            get {
+                return ResourceManager.GetString("Global_Region", resourceCulture);
             }
         }
         
@@ -840,6 +885,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_WorkTimeModel {
             get {
                 return ResourceManager.GetString("Global_WorkTimeModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postleitzahl.
+        /// </summary>
+        public static string Global_ZipCode {
+            get {
+                return ResourceManager.GetString("Global_ZipCode", resourceCulture);
             }
         }
         

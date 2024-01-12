@@ -921,4 +921,22 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Global_Graduation" xml:space="preserve">
     <value>Abschluss</value>
   </data>
+  <data name="Global_ContactType" xml:space="preserve">
+    <value>Art des Kontakts</value>
+  </data>
+  <data name="Global_Address" xml:space="preserve">
+    <value>Anschrift</value>
+  </data>
+  <data name="Global_ZipCode" xml:space="preserve">
+    <value>Postleitzahl</value>
+  </data>
+  <data name="Global_Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Global_Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Global_Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
 </root>
