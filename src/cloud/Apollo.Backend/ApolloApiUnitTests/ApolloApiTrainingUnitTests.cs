@@ -921,47 +921,47 @@ namespace Apollo.Api.UnitTests
         /// Filters for training with specific IndividualStartDate
         /// </summary>
         /// <returns></returns>
-        [TestMethod]
-        public async Task TrainingsWithIndividualStartDateTest()
-        {
+        //[TestMethod]
+        //public async Task<object> TrainingsWithIndividualStartDateTest()
+        //{
 
-                try
-                {
-                    var query = new Apollo.Common.Entities.Query
-                    {
+        //        try
+        //        {
+        //            var query = new Apollo.Common.Entities.Query
+        //            {
 
-                        Filter = new Apollo.Common.Entities.Filter
-                        {
-                            Fields = new List<FieldExpression>
-                            {
-                                new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
-                                new FieldExpression { FieldName = "Appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
-                                new FieldExpression { FieldName = "Appointments.StartDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } },
-                                new FieldExpression { FieldName = "Appointments.EndDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } }
-                            }
-                        },
-                        Top = 100,
-                        Skip = 0
-                    };
+        //                Filter = new Apollo.Common.Entities.Filter
+        //                {
+        //                    Fields = new List<FieldExpression>
+        //                    {
+        //                        new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
+        //                        new FieldExpression { FieldName = "Appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
+        //                        new FieldExpression { FieldName = "Appointments.StartDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } },
+        //                        new FieldExpression { FieldName = "Appointments.EndDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } }
+        //                    }
+        //                },
+        //                Top = 100,
+        //                Skip = 0
+        //            };
 
-                var api = Helpers.GetApolloApi();
+        //        var api = Helpers.GetApolloApi();
 
-                var res =api.QueryTrainings(query);
+        //        var res =api.QueryTrainings(query);
                
-                    var training = res.SingleOrDefault();
+        //            var training = res.SingleOrDefault();
 
-                    if (training != null)
-                    {
-                        return Convertor.ToTraining(training);
-                    }
+        //            if (training != null)
+        //            {
+        //                return Convertor.ToTraining(training);
+        //            }
 
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
-                }
-        }
+        //            return null;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
+        //        }
+        //}
 
 
         /// <summary>

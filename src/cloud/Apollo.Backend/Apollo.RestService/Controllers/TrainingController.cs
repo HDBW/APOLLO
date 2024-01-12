@@ -66,25 +66,25 @@ namespace Apollo.Service.Controllers
             }
         }
 
-        [HttpGet("filter")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of filtered trainings.", typeof(List<Training>))]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<ActionResult<List<Training>>> GetTrainingsByDateRange(
-           [FromQuery, ValidInputString(ErrorMessage = "Invalid training Id.")] string trainingId,
-           [FromQuery, ValidDateTime(ErrorMessage = "Invalid start date.")] DateTime? startDate,
-           [FromQuery, ValidDateTime(ErrorMessage = "Invalid end date.")] DateTime? endDate)
-           {
-                try
-                {
-                    //var result = await _api.GetTrainingWithFilteredAppointmentsByIdAndDateRange(trainingId, startDate, endDate);
-                    return Ok(result);
-                }
-                catch (Exception ex)
-                {
-                    // Log and return a 500 Internal Server Error response.
-                    return StatusCode(StatusCodes.Status500InternalServerError, $"Internal server error: {ex.Message}");
-                }
-            }
+        //[HttpGet("filter")]
+        //[SwaggerResponse(StatusCodes.Status200OK, "Returns a list of filtered trainings.", typeof(List<Training>))]
+        //[SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        //public async Task<ActionResult<List<Training>>> GetTrainingsByDateRange(
+        //   [FromQuery, ValidInputString(ErrorMessage = "Invalid training Id.")] string trainingId,
+        //   [FromQuery, ValidDateTime(ErrorMessage = "Invalid start date.")] DateTime? startDate,
+        //   [FromQuery, ValidDateTime(ErrorMessage = "Invalid end date.")] DateTime? endDate)
+        //   {
+        //        try
+        //        {
+        //            //var result = await _api.GetTrainingWithFilteredAppointmentsByIdAndDateRange(trainingId, startDate, endDate);
+        //            return Ok(result);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Log and return a 500 Internal Server Error response.
+        //            return StatusCode(StatusCodes.Status500InternalServerError, $"Internal server error: {ex.Message}");
+        //        }
+        //    }
 
 
         /// <summary>
