@@ -1305,9 +1305,9 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Sonstiges.
         /// </summary>
-        public static string SelectOptionsDialog_CareerType_other {
+        public static string SelectOptionsDialog_CareerType_Other {
             get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_other", resourceCulture);
+                return ResourceManager.GetString("SelectOptionsDialog_CareerType_Other", resourceCulture);
             }
         }
         

@@ -57,7 +57,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             switch (_selectionType)
             {
                 case CareerType _:
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_other, CareerType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_Other, CareerType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_WorkExperience, CareerType.WorkExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_PartTimeWorkExperience, CareerType.PartTimeWorkExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_Internship, CareerType.Internship, (x) => { return Task.CompletedTask; }, (x) => { return true; }));

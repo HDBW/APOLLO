@@ -657,7 +657,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="SelectOptionsDialog_CareerType_MilitaryService" xml:space="preserve">
     <value>Wehrdienst/-übung/Zivildienst</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_other" xml:space="preserve">
+  <data name="SelectOptionsDialog_CareerType_Other" xml:space="preserve">
     <value>Sonstiges</value>
   </data>
   <data name="SelectOptionsDialog_CareerType_ParentalLeave" xml:space="preserve">
