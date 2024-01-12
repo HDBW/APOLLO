@@ -51,7 +51,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                                 route = Routes.EducationInfoEducationView;
                                 break;
                             case EducationType.CompanyBasedVocationalTraining:
-                                route = Routes.CareerInfoOccupationView;
+                                route = Routes.CompanyBasedVocationalTrainingView;
                                 break;
                             case EducationType.Study:
                                 route = Routes.CareerInfoOccupationView;

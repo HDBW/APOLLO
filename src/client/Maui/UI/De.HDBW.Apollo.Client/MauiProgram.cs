@@ -309,6 +309,9 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<EducationView>();
             services.AddTransient<EducationViewModel>();
 
+            services.AddTransient<CompanyBasedVocationalTrainingView>();
+            services.AddTransient<CompanyBasedVocationalTrainingViewModel>();
+
             services.AddTransient<CareerInfoEditView>();
             services.AddTransient<CareerInfoEditViewModel>();
 
@@ -355,6 +358,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.EducationInfoEditView, typeof(EducationInfoEditView));
             Routing.RegisterRoute(Routes.EducationInfoEducationView, typeof(EducationView));
             Routing.RegisterRoute(Routes.CareerInfoEditView, typeof(CareerInfoEditView));
+            Routing.RegisterRoute(Routes.CompanyBasedVocationalTrainingView, typeof(CompanyBasedVocationalTrainingView));
             Routing.RegisterRoute(Routes.CareerInfoOccupationView, typeof(OccupationView));
             Routing.RegisterRoute(Routes.CareerInfoOtherView, typeof(OtherView));
             Routing.RegisterRoute(Routes.CareerInfoServiceView, typeof(ServiceView));

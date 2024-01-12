@@ -68,5 +68,7 @@ namespace De.HDBW.Apollo.Client.Models
         public const string CareerInfoBasicView = "/CareerInfoBasicView";
 
         public const string OccupationSearchView = "/OccupationSearchView";
+
+        public const string CompanyBasedVocationalTrainingView = "/CompanyBasedVocationalTrainingView";
     }
 }

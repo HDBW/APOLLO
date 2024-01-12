@@ -882,4 +882,37 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="TypeOfSchool_WaldorfSchool" xml:space="preserve">
     <value>Freie Waldorfschule</value>
   </data>
+  <data name="UniversityDegree_Bachelor" xml:space="preserve">
+    <value>Bachelor</value>
+  </data>
+  <data name="UniversityDegree_Doctorate" xml:space="preserve">
+    <value>Promotion</value>
+  </data>
+  <data name="UniversityDegree_EcclesiasticalExam" xml:space="preserve">
+    <value>Kirchliches Examen</value>
+  </data>
+  <data name="UniversityDegree_Master" xml:space="preserve">
+    <value>Master / Diplom / Magister</value>
+  </data>
+  <data name="UniversityDegree_Other" xml:space="preserve">
+    <value>Nicht relevant</value>
+  </data>
+  <data name="UniversityDegree_PartialRecognized" xml:space="preserve">
+    <value>Teilweise anerkannter Abschluss</value>
+  </data>
+  <data name="UniversityDegree_Pending" xml:space="preserve">
+    <value>Anerkennung des Abschlusses wird geprüft</value>
+  </data>
+  <data name="UniversityDegree_RegulatedUnrecognized" xml:space="preserve">
+    <value>Reglementierter und nicht anerkannter Abschluss</value>
+  </data>
+  <data name="UniversityDegree_StateExam" xml:space="preserve">
+    <value>Staatsexamen</value>
+  </data>
+  <data name="UniversityDegree_UnregulatedUnrecognized" xml:space="preserve">
+    <value>Nicht reglementierter, nicht anerkannter Abschluss</value>
+  </data>
+  <data name="Global_UniverityDegree" xml:space="preserve">
+    <value>Hochschulabschluss</value>
+  </data>
 </root>

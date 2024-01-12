@@ -808,6 +808,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hochschulabschluss.
+        /// </summary>
+        public static string Global_UniverityDegree {
+            get {
+                return ResourceManager.GetString("Global_UniverityDegree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arbeitszeitmodel.
         /// </summary>
         public static string Global_WorkTimeModel {
@@ -1913,6 +1922,96 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TypeOfSchool_WaldorfSchool {
             get {
                 return ResourceManager.GetString("TypeOfSchool_WaldorfSchool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bachelor.
+        /// </summary>
+        public static string UniversityDegree_Bachelor {
+            get {
+                return ResourceManager.GetString("UniversityDegree_Bachelor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promotion.
+        /// </summary>
+        public static string UniversityDegree_Doctorate {
+            get {
+                return ResourceManager.GetString("UniversityDegree_Doctorate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kirchliches Examen.
+        /// </summary>
+        public static string UniversityDegree_EcclesiasticalExam {
+            get {
+                return ResourceManager.GetString("UniversityDegree_EcclesiasticalExam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master / Diplom / Magister.
+        /// </summary>
+        public static string UniversityDegree_Master {
+            get {
+                return ResourceManager.GetString("UniversityDegree_Master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nicht relevant.
+        /// </summary>
+        public static string UniversityDegree_Other {
+            get {
+                return ResourceManager.GetString("UniversityDegree_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilweise anerkannter Abschluss.
+        /// </summary>
+        public static string UniversityDegree_PartialRecognized {
+            get {
+                return ResourceManager.GetString("UniversityDegree_PartialRecognized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anerkennung des Abschlusses wird geprüft.
+        /// </summary>
+        public static string UniversityDegree_Pending {
+            get {
+                return ResourceManager.GetString("UniversityDegree_Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reglementierter und nicht anerkannter Abschluss.
+        /// </summary>
+        public static string UniversityDegree_RegulatedUnrecognized {
+            get {
+                return ResourceManager.GetString("UniversityDegree_RegulatedUnrecognized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staatsexamen.
+        /// </summary>
+        public static string UniversityDegree_StateExam {
+            get {
+                return ResourceManager.GetString("UniversityDegree_StateExam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nicht reglementierter, nicht anerkannter Abschluss.
+        /// </summary>
+        public static string UniversityDegree_UnregulatedUnrecognized {
+            get {
+                return ResourceManager.GetString("UniversityDegree_UnregulatedUnrecognized", resourceCulture);
             }
         }
         

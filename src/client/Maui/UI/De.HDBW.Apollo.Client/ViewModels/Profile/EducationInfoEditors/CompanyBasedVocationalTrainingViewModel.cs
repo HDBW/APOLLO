@@ -2,8 +2,11 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
@@ -37,6 +40,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _schoolGraduations = new ObservableCollection<InteractionEntry>();
 
+        private InteractionEntry? _selectedSchoolGraduation;
+
+        [ObservableProperty]
+        private ObservableCollection<InteractionEntry> _univerityDegrees = new ObservableCollection<InteractionEntry>();
+
+        private InteractionEntry? _selectedUniverityDegree;
+
         [ObservableProperty]
         private string _occupationName;
 
@@ -49,6 +59,40 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             ILogger<CompanyBasedVocationalTrainingViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+        }
+
+        public InteractionEntry? SelectedSchoolGraduation
+        {
+            get
+            {
+                return _selectedSchoolGraduation;
+            }
+
+            set
+            {
+                if (SetProperty(ref _selectedSchoolGraduation, value))
+                {
+                    _selectedUniverityDegree = null;
+                    OnPropertyChanged(nameof(SelectedUniverityDegree));
+                }
+            }
+        }
+
+        public InteractionEntry? SelectedUniverityDegree
+        {
+            get
+            {
+                return _selectedUniverityDegree;
+            }
+
+            set
+            {
+                if (SetProperty(ref _selectedUniverityDegree, value))
+                {
+                    _selectedSchoolGraduation = null;
+                    OnPropertyChanged(nameof(SelectedSchoolGraduation));
+                }
+            }
         }
 
         public override async Task OnNavigatedToAsync()
@@ -73,8 +117,20 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                     schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_SubjectRelatedEntranceQualification, SchoolGraduation.SubjectRelatedEntranceQualification, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate, SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
+                    var univerityDegrees = new List<InteractionEntry>();
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Master, UniversityDegree.Master, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Bachelor, UniversityDegree.Bachelor, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Pending, UniversityDegree.Pending, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Doctorate, UniversityDegree.Doctorate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_StateExam, UniversityDegree.StateExam, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_UnregulatedUnrecognized, UniversityDegree.UnregulatedUnrecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_RegulatedUnrecognized, UniversityDegree.RegulatedUnrecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_PartialRecognized, UniversityDegree.PartialRecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_EcclesiasticalExam, UniversityDegree.EcclesiasticalExam, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Other, UniversityDegree.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(completionStates, schoolGraduations), worker.Token);
+                        () => LoadonUIThread(completionStates, schoolGraduations, univerityDegrees), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -95,11 +151,51 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             }
         }
 
-        private void LoadonUIThread(List<InteractionEntry> completionStates, List<InteractionEntry> schoolGraduations)
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            SearchOccupationCommand?.NotifyCanExecuteChanged();
+        }
+
+        private void LoadonUIThread(List<InteractionEntry> completionStates, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees)
         {
             CompletionStates = new ObservableCollection<InteractionEntry>(completionStates);
             SelectedCompletionState = CompletionStates.FirstOrDefault();
             SchoolGraduations = new ObservableCollection<InteractionEntry>(schoolGraduations);
+            UniverityDegrees = new ObservableCollection<InteractionEntry>(univerityDegrees);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
+        private async Task SearchOccupation(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(SearchOccupation)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanSearchOccupation()
+        {
+            return !IsBusy;
         }
     }
 }
