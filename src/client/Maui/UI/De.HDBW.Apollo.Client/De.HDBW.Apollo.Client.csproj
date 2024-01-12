@@ -196,6 +196,12 @@
     <MauiXaml Update="Views\Profile\LanguageSkillEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\Language\LanguageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\License\LicenseView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Profile\MobilityEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -220,7 +226,13 @@
     <MauiXaml Update="Views\Profile\QualificationEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\Qualification\QualificationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Profile\WebReferenceEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\WebReference\WebReferenceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\RegistrationView.xaml">
