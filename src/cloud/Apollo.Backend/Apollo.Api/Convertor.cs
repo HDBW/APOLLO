@@ -167,6 +167,7 @@ namespace Apollo.Api
             // map other properties here
             // tr.Tags = dict.ContainsKey("Tags") ? (List<string>)dict["Tags"] : new List<string>();
             // tr.PublishingDate = dict.ContainsKey("PublishingDate") ? (DateTime)dict["PublishingDate"] : DateTime.MinValue;
+            //tr.Appointment = dict.ContainsKey("Appointment") ? ToEntityList<Appointment>(dict["Appoinment"] as List<ExpandoObject>, ToAppointments) : new List<Appointment>();
 
             return tr;
         }

@@ -76,7 +76,7 @@ namespace Apollo.Service.Controllers
            {
                 try
                 {
-                    var result = await _api.GetTrainingWithFilteredAppointmentsByIdAndDateRange(trainingId, startDate, endDate);
+                    //var result = await _api.GetTrainingWithFilteredAppointmentsByIdAndDateRange(trainingId, startDate, endDate);
                     return Ok(result);
                 }
                 catch (Exception ex)

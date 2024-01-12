@@ -16,7 +16,7 @@ namespace Apollo.Api
         public int ErrorCode { get; private set; }
 
         public ApolloApiException() { }
-        public ApolloApiException(int errCode, string message, Exception ex) : base(message, ex)
+        public ApolloApiException(int errCode, string message, Exception? ex = null) : base(message, ex)
         {
             ErrorCode = errCode;
         }
