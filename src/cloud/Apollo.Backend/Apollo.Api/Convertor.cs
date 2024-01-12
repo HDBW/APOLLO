@@ -217,7 +217,7 @@ namespace Apollo.Api
             appointment.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
             appointment.IsGuaranteed = (bool)dict["IsGuaranteed"];
             //appointment.TrainingMode = ToEntityList<TrainingMode>(dict["TrainingMode"] as List<ExpandoObject>, ToTrainingType);
-            appointment.TrainingMode = (TrainingMode)dict["TrainingMode"];
+           // appointment.TrainingType = (TrainingType)dict["TrainingType"];
             appointment.TimeInvestAttendee = (TimeSpan)dict["TimeInvestAttendee"];
             appointment.TimeModel = (TrainingTimeModel)dict["TimeModel"];
             // Add other property mappings as needed
