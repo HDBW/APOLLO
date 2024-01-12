@@ -49,11 +49,21 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string ContactInfoEditView = "/ContactInfoEditView";
 
+        public const string ContactInfoContactView = "/ContactInfoContactView";
+
         public const string LicenseEditView = "/LicenseEditView";
 
         public const string EducationInfoEditView = "/EducationInfoEditView";
 
         public const string EducationInfoEducationView = "/EducationInfoEducationView";
+
+        public const string EducationInfoCompanyBasedVocationalTrainingView = "/EducationInfoCompanyBasedVocationalTrainingView";
+
+        public const string EducationInfoStudyView = "/EducationInfoStudyView";
+
+        public const string EducationInfoVocationalTrainingView = "/EducationInfoVocationalTrainingView";
+
+        public const string EducationInfoFurtherEducationView = "/EducationInfoFurtherEducationView";
 
         public const string CareerInfoEditView = "/CareerInfoEditView";
 
@@ -68,13 +78,5 @@ namespace De.HDBW.Apollo.Client.Models
         public const string CareerInfoBasicView = "/CareerInfoBasicView";
 
         public const string OccupationSearchView = "/OccupationSearchView";
-
-        public const string CompanyBasedVocationalTrainingView = "/CompanyBasedVocationalTrainingView";
-
-        public const string StudyView = "/StudyView";
-
-        public const string VocationalTrainingView = "/VocationalTrainingView";
-
-        public const string FurtherEducationView = "/FurtherEducationView";
     }
 }
