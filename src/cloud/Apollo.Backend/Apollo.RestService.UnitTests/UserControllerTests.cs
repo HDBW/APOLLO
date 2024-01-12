@@ -14,7 +14,7 @@ using Amazon.Auth.AccessControlPolicy;
 using Moq;
 using System.Reflection;
 
-namespace Apollo.RestService.RestService.UnitTests
+namespace Apollo.RestService.UnitTests
 {
     /// <summary>
     /// Unit tests for the UserController class.
@@ -166,6 +166,8 @@ namespace Apollo.RestService.RestService.UnitTests
             // Clearing mocks
             _mockApi.Reset();
             _mockLogger.Reset();
+
+
         }
 
     }

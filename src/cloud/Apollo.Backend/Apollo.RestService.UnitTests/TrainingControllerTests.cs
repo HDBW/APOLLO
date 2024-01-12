@@ -11,7 +11,7 @@ using MongoDB.Driver;
 using Daenet.MongoDal.Entitties;
 using Moq;
 
-namespace Apollo.Service.Tests
+namespace Apollo.RestService.UnitTests
 {
     /// <summary>
     /// Unit tests for the TrainingController class.
@@ -74,7 +74,7 @@ namespace Apollo.Service.Tests
                 new Training { TrainingName = "Training 2" }
             };
 
-           
+
             _mockApi.Setup(api => api.QueryTrainings(It.IsAny<Apollo.Common.Entities.Query>()))
                     .ReturnsAsync(expectedTrainings);
 
@@ -143,7 +143,7 @@ namespace Apollo.Service.Tests
             // Arrange
             var trainingId = "trainingIdToDelete";
             _mockApi.Setup(api => api.DeleteTrainings(It.IsAny<string[]>()))
-                    .ReturnsAsync(1); 
+                    .ReturnsAsync(1);
 
             // Act
             await _controller.Delete(trainingId);
