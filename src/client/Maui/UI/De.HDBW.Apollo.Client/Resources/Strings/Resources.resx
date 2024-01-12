@@ -915,4 +915,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Global_UniverityDegree" xml:space="preserve">
     <value>Hochschulabschluss</value>
   </data>
+  <data name="Global_IsCompleted" xml:space="preserve">
+    <value>Ist abgeschlossen</value>
+  </data>
 </root>
