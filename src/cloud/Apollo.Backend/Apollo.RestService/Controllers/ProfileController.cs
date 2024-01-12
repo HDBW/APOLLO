@@ -24,7 +24,7 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <param name="api">ApolloApi instance for user operations.</param>
         /// <param name="logger">Logger for logging user controller actions.</param>
-        public ProfileController(ApolloApi api, ILogger<UserController> logger)
+        public ProfileController(ApolloApi api, ILogger<ProfileController> logger)
         {
             _api = api;
             _logger = (ILogger<ProfileController>?)logger;
