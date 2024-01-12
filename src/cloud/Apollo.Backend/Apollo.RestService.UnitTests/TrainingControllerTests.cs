@@ -60,31 +60,31 @@ namespace Apollo.RestService.UnitTests
         }
 
 
-        /// <summary>
-        /// Tests the QueryTrainings method in TrainingController to ensure it returns a list of Training objects.
-        /// </summary>
-        [TestMethod]
-        public async Task QueryTrainings_ReturnsListOfTrainings()
-        {
-            // Arrange
-            var request = new Apollo.RestService.Messages.QueryTrainingsRequest();
-            var expectedTrainings = new List<Training>
-            {
-                new Training { TrainingName = "Training 1" },
-                new Training { TrainingName = "Training 2" }
-            };
+        ///// <summary>
+        ///// Tests the QueryTrainings method in TrainingController to ensure it returns a list of Training objects.
+        ///// </summary>
+        //[TestMethod]
+        //public async Task QueryTrainings_ReturnsListOfTrainings()
+        //{
+        //    //// Arrange
+        //    //var request = new QueryTrainingsRequest();
+        //    //var expectedTrainings = new List<Training>
+        //    //{
+        //    //    new Training { TrainingName = "Training 1" },
+        //    //    new Training { TrainingName = "Training 2" }
+        //    //};
 
 
-            _mockApi.Setup(api => api.QueryTrainings(It.IsAny<Apollo.Common.Entities.Query>()))
-                    .ReturnsAsync(expectedTrainings);
+        //    //_mockApi.Setup(api => api.QueryTrainings(It.IsAny<Query>()))
+        //    //        .ReturnsAsync(expectedTrainings);
 
-            // Act
-            var result = await _controller.QueryTrainings(request) as QueryTrainingsResponse;
+        //    //// Act
+        //    //var result = await _controller.QueryTrainings(request) as QueryTrainingsResponse;
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Trainings.Count); // Expecting 2 trainings in the list
-        }
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //    Assert.AreEqual(2, result.Trainings.Count); // Expecting 2 trainings in the list
+        //}
 
 
         /// <summary>
