@@ -1087,7 +1087,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Persöhnliche Informationen.
+        ///   Looks up a localized string similar to Persönliche Informationen.
         /// </summary>
         public static string PersonalInformationEditView_Title {
             get {

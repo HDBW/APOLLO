@@ -48,7 +48,19 @@
         <CollectionView ItemsSource="{x:Binding Careers}"
                         SelectionMode="Single"
                         ItemsLayout="VerticalList"
-                        ItemTemplate="{StaticResource CareerInfoTemplateSelector}"/>
+                        ItemTemplate="{StaticResource CareerInfoTemplateSelector}">
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <VerticalStackLayout
+                     VerticalOptions="CenterAndExpand"
+                     Padding="24,0">
+                        <Label Text="Ganz schönn leer hier." />
+                        <Label Text="Tipp: Füll jetzt deinen beruflichen Werdegang aus aus. Und wir schicken Dir noch passendere Vorschläge."/>
+                        <Button Text="Los gehts" Margin="0,8" Command="{x:Binding AddCommand}"/>
+                    </VerticalStackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
+        </CollectionView>
         <ImageButton HeightRequest="64" WidthRequest="64" Command="{x:Binding AddCommand}" Source="add.png" HorizontalOptions="End" VerticalOptions="End" Margin="16" />
     </Grid>
 </ContentPage>

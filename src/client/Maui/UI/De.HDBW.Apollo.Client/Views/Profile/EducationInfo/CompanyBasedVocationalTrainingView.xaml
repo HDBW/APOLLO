@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.EducationInfo.CompanyBasedVocationalTrainingView"
-              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"

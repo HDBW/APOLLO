@@ -70,6 +70,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_VocationalCollege, TypeOfSchool.VocationalCollege, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_MainSchool, TypeOfSchool.MainSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_VocationalHighSchool, TypeOfSchool.VocationalHighSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+
                     // typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_VocationalSchool, TypeOfSchool.VocationalSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_SpecialSchool, TypeOfSchool.SpecialSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_IntegratedComprehensiveSchool, TypeOfSchool.IntegratedComprehensiveSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
@@ -83,9 +84,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_NightSchool, TypeOfSchool.NightSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_EveningSchool, TypeOfSchool.EveningSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_WaldorfSchool, TypeOfSchool.WaldorfSchool, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    //typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_TechnicalAcademy, TypeOfSchool.TechnicalAcademy, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    //typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_UniversityOfAppliedScience, TypeOfSchool.UniversityOfAppliedScience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
+                    // typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_TechnicalAcademy, TypeOfSchool.TechnicalAcademy, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    // typeOfSchools.Add(InteractionEntry.Import(Resources.Strings.Resources.TypeOfSchool_UniversityOfAppliedScience, TypeOfSchool.UniversityOfAppliedScience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     var completionStates = new List<InteractionEntry>();
                     completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Completed, CompletionState.Completed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Failed, CompletionState.Failed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));

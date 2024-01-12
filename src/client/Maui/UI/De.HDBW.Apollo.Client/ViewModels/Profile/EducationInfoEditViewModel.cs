@@ -60,7 +60,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                                 route = Routes.VocationalTrainingView;
                                 break;
                             case EducationType.FurtherEducation:
-                                route = Routes.CareerInfoOccupationView;
+                                route = Routes.FurtherEducationView;
                                 break;
                             default:
                                 break;

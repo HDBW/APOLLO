@@ -1,13 +1,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.Profile.EducationInfo.StudyView"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.EducationInfo.FurtherEducationView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             x:DataType="viewModels:StudyViewModel"
+             x:DataType="viewModels:FurtherEducationViewModel"
              Shell.TabBarIsVisible="False"
-             Title="StudyView"
+             Title="FurtherEducationView"
              IsBusy="{x:Binding IsBusy}" Padding="0">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
@@ -31,13 +31,9 @@
         <Entry Text="{x:Binding Country, Mode=TwoWay}" />
         <Label Text="{x:Static strings:Resources.Global_Graduation}"/>
         <Entry Text="{x:Binding Description, Mode=TwoWay}" />
-        <Label Text="{x:Static strings:Resources.Global_UniverityDegree}"/>
-        <Picker ItemsSource="{x:Binding UniverityDegrees}"
-                ItemDisplayBinding="{x:Binding Text}"
-                SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>
         <Label Text="{x:Static strings:Resources.Global_CompletionState}"/>
         <Picker ItemsSource="{x:Binding CompletionStates}"
-            ItemDisplayBinding="{x:Binding Text}"
-            SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
+                ItemDisplayBinding="{x:Binding Text}"
+                SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -5,19 +5,19 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo;
 
-public partial class CompanyBasedVocationalTrainingView : ContentPage
+public partial class FurtherEducationView : ContentPage
 {
-    public CompanyBasedVocationalTrainingView(CompanyBasedVocationalTrainingViewModel model)
+    public FurtherEducationView(FurtherEducationViewModel model)
     {
         InitializeComponent();
         BindingContext = model;
     }
 
-    public CompanyBasedVocationalTrainingViewModel? ViewModel
+    public FurtherEducationViewModel? ViewModel
     {
         get
         {
-            return BindingContext as CompanyBasedVocationalTrainingViewModel;
+            return BindingContext as FurtherEducationViewModel;
         }
     }
 }

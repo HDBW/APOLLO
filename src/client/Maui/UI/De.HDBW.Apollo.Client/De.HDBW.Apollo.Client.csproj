@@ -175,6 +175,9 @@
     <MauiXaml Update="Views\Profile\CareerInfo\VoluntaryServiceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\FurtherEducationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Profile\EducationInfo\VocationalTrainingView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
