@@ -8,10 +8,9 @@
              x:DataType="viewModels:LicenseEditViewModel"
              Shell.TabBarIsVisible="False"
              IsBusy="{x:Binding IsBusy}" Padding="0">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <CollectionView ItemsSource="{x:Binding Licenses}"
+                    ItemsLayout="VerticalList"/>
+        <ImageButton HeightRequest="64" WidthRequest="64" Source="add.png" HorizontalOptions="End" VerticalOptions="End" Margin="16" />
+    </Grid>
 </ContentPage>
