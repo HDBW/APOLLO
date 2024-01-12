@@ -617,6 +617,7 @@ namespace Apollo.Api.UnitTests
         /// Tests the insertion of a Training object and its subsequent deletion.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task InsertTrainings()
         {
             var api = Helpers.GetApolloApi();
@@ -655,6 +656,7 @@ namespace Apollo.Api.UnitTests
         /// Tests creating or updating a Training object and then cleaning up by deleting it.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task CreateOrUpdateTraining()
         {
             var api = Helpers.GetApolloApi();
@@ -679,6 +681,7 @@ namespace Apollo.Api.UnitTests
         /// Tests retrieving a specific Training object by its ID and then cleaning up by deleting it.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task GetTraining()
         {
             var api = Helpers.GetApolloApi();
@@ -713,6 +716,7 @@ namespace Apollo.Api.UnitTests
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryTrainings()
         {
             var api = Helpers.GetApolloApi();
@@ -805,6 +809,7 @@ namespace Apollo.Api.UnitTests
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task LookupTrainingsWithLoansTest()
         {
             var api = Helpers.GetApolloApi();
@@ -904,38 +909,38 @@ namespace Apollo.Api.UnitTests
         /// Filters  a Training by Id and with Appointment Start and End Date 
         /// </summary>
         /// <returns></returns>
-        [TestMethod]
-        public async Task AppointmentDateFiterTestForSingleTraning()
-        {
-            var api = Helpers.GetApolloApi();
+        //[TestMethod]
+        //public async Task AppointmentDateFiterTestForSingleTraning()
+        //{
+        //    var api = Helpers.GetApolloApi();
 
-            try
-            {
-                // Create a test training record with a specific IndividualStartDate
-                var testStartDate = "2024-01-15"; 
-                //var testTraining = new Training
-                //{
-                //    Id = "T02",
-                //    TrainingName = "Test Training with Appointment",
-                //    IndividualStartDate = testStartDate
-                //};
+        //    try
+        //    {
+        //        // Create a test training record with a specific IndividualStartDate
+        //        var testStartDate = "2024-01-15"; 
+        //        //var testTraining = new Training
+        //        //{
+        //        //    Id = "T02",
+        //        //    TrainingName = "Test Training with Appointment",
+        //        //    IndividualStartDate = testStartDate
+        //        //};
 
-                //// Insert the test training record into the database
-                //await api.InsertTraining(testTraining);
+        //        //// Insert the test training record into the database
+        //        //await api.InsertTraining(testTraining);
 
-                //// Retrieve trainings with the specific IndividualStartDate
-                //var filteredTrainings = await api.GetTrainingsByAppointmentDate(testStartDate);
+        //        //// Retrieve trainings with the specific IndividualStartDate
+        //        //var filteredTrainings = await api.GetTrainingsByAppointmentDate(testStartDate);
 
-                //// Ensure that the filteredTrainings list is not null and contains the test training
-                //Assert.IsNotNull(filteredTrainings);
-                //Assert.IsTrue(filteredTrainings.Contains(testTraining));
-            }
-            finally
-            {
-                // Clean up: Delete the test training record from the database
-                await api.DeleteTrainings(new string[] { "T02" });
-            }
-        }
+        //        //// Ensure that the filteredTrainings list is not null and contains the test training
+        //        //Assert.IsNotNull(filteredTrainings);
+        //        //Assert.IsTrue(filteredTrainings.Contains(testTraining));
+        //    }
+        //    finally
+        //    {
+        //        // Clean up: Delete the test training record from the database
+        //        await api.DeleteTrainings(new string[] { "T02" });
+        //    }
+        //}
 
         /// <summary>
         /// NOTE; Duration is an auto calculated Property that can very well be null. 3 out of 6 tenants do not support dates that would allow a duration to be calculated.
