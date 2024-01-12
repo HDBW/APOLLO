@@ -939,4 +939,10 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Global_Region" xml:space="preserve">
     <value>Region</value>
   </data>
+  <data name="ContactType_Private" xml:space="preserve">
+    <value>Privat</value>
+  </data>
+  <data name="ContactType_Professional" xml:space="preserve">
+    <value>Beruflich</value>
+  </data>
 </root>

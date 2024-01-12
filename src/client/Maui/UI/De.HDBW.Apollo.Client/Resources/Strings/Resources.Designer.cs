@@ -340,6 +340,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privat.
+        /// </summary>
+        public static string ContactType_Private {
+            get {
+                return ResourceManager.GetString("ContactType_Private", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beruflich.
+        /// </summary>
+        public static string ContactType_Professional {
+            get {
+                return ResourceManager.GetString("ContactType_Professional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zulassung.
         /// </summary>
         public static string CourseTagType_Admission {

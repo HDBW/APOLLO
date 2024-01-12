@@ -5,9 +5,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 {
     public partial class ContactView : ContentPage
     {
-    	public ContactView()
-    	{
-    		InitializeComponent();
-    	}
+        public ContactView(ContactViewModel model)
+        {
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public ContactViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as ContactViewModel;
+            }
+        }
     }
 }
