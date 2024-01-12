@@ -14,11 +14,11 @@ namespace Apollo.Common.Attributes
         [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
         public class ValidDateTimeAttribute : ValidationAttribute
         {
-            public override bool IsValid(object value)
+            public override bool IsValid(object? value)
             {
                 if (value is DateTime)
                 {
-                return true;
+                return value != null;
                 }
 
                 return false; // Not a DateTime
