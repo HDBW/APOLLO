@@ -31,7 +31,7 @@ namespace Apollo.Api
                 if (user == null)
                 {
                     // User not found, throw ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.", new Exception("Exeption while getting user"));
+                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.");
                 }
 
                 return user;
@@ -162,7 +162,7 @@ namespace Apollo.Api
                 if (res == null || !res.Any())
                 {
                     // No results found, throw an ApolloException with a specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.NoUsersFoundByKeyword, $"No users found with keyword '{keyword}'.", new Exception("Exception while quering users with keyword"));
+                    throw new ApolloApiException(ErrorCodes.UserErrors.NoUsersFoundByKeyword, $"No users found with keyword '{keyword}'.");
                 }
 
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
@@ -211,7 +211,7 @@ namespace Apollo.Api
                 if (res == null || !res.Any())
                 {
                     // No results found, throw an ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "No users found matching the criteria.", new Exception("Exception error while matching the criteria"));
+                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "No users found matching the criteria.");
                 }
 
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
@@ -251,7 +251,7 @@ namespace Apollo.Api
                 if (res == null || !res.Any())
                 {
                     // No results found, throw an ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, "No users found with the specified pagination parameters.", new Exception("Exeption error while querying users with pagination"));
+                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, "No users found with the specified pagination parameters.");
                 }
 
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
@@ -299,7 +299,7 @@ namespace Apollo.Api
                 if (res == null)
                 {
                     // No results found, throw an ApolloException with a specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "No users found within the specified date range.", new Exception("Exeption"));
+                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "No users found within the specified date range.");
                 }
 
                 return Convertor.ToEntityList<User>(res, Convertor.ToUser);
@@ -406,7 +406,7 @@ namespace Apollo.Api
                 if (existingUser != null)
                 {
                     // User with the same ID already exists, throw an ApolloException with a specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserAlreadyExists, $"User with ID '{user.Id}' already exists.", new Exception("User Error"));
+                    throw new ApolloApiException(ErrorCodes.UserErrors.UserAlreadyExists, $"User with ID '{user.Id}' already exists.");
                 }
 
                 await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));

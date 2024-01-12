@@ -71,7 +71,7 @@ namespace Apollo.Api
                 if (res == null || !res.Any())
                 {
                     // No matching records found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.", new Exception("Expetion while quering"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.");
                 }
 
                 // Convert results to a list of typed Training objects
@@ -211,7 +211,7 @@ namespace Apollo.Api
                 if (res == null)
                 {
                     // No results found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "No results found for paginated query.", new Exception("Exeption for paginated query"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "No results found for paginated query.");
                 }
 
                 return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
@@ -251,7 +251,7 @@ namespace Apollo.Api
                 if (res == null)
                 {
                     // No results found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "No results found for the query.", new Exception("Exeption"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "No results found for the query.");
                 }
 
                 return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
@@ -285,7 +285,7 @@ namespace Apollo.Api
                 if (count < 0)
                 {
                     // Negative count is unexpected, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTotalTrainingCountErr, "Invalid total training count.", new Exception("Exeption for training count"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTotalTrainingCountErr, "Invalid total training count.");
                 }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(GetTotalTrainingCountAsync)}");
@@ -367,7 +367,7 @@ namespace Apollo.Api
                 if (trainings == null || !trainings.Any())
                 {
                     // No trainings to insert, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "No trainings to insert.", new Exception("Exption while inserting training"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "No trainings to insert.");
                 }
 
                 foreach (var training in trainings)
@@ -415,7 +415,7 @@ namespace Apollo.Api
                 if (trainings == null || !trainings.Any())
                 {
                     // No training data provided, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.", new Exception("Exeption for CreateorUpdateTraining"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.");
                 }
 
                 foreach (var training in trainings)
@@ -434,7 +434,7 @@ namespace Apollo.Api
                 if (ids.Count == 0)
                 {
                     // No new training IDs generated, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No new training records were created.", new Exception("Expetion while creating training records"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No new training records were created.");
                 }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(CreateOrUpdateTraining)}");

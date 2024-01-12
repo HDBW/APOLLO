@@ -56,9 +56,9 @@ namespace Apollo.Api
 
         public static class GeneralErrors
         {
-            public const int OperationFailed = 1;
+            public const int OperationFailed = 1000;
             
-            public const int InvalidId = 2;
+            public const int InvalidId = 1001;
             // Add more general error codes as needed...
         }
 
