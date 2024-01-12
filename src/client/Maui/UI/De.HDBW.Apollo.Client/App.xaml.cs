@@ -3,8 +3,6 @@
 
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Client.Services;
-using De.HDBW.Apollo.Client.ViewModels;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 
