@@ -347,12 +347,13 @@ namespace Apollo.Api
 
             User user = new User
             {
-                Goal = dict.ContainsKey("Goal") ? (string)dict["Goal"] : "",
-                FirstName = dict.ContainsKey("FirstName") ? (string)dict["FirstName"] : "",
-                LastName = dict.ContainsKey("LastName") ? (string)dict["LastName"] : "",
-                Image = dict.ContainsKey("Image") ? (string)dict["Image"] : "",
                 Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
-                UserName = dict.ContainsKey("UserName") ? (string)dict["UserName"] : ""
+                ObjectId = dict.ContainsKey("ObjectId") ? (string)dict["ObjectId"] : "",
+                Upn = dict.ContainsKey("Upn") ? (string)dict["Upn"] : null,
+                Email = dict.ContainsKey("Email") ? (string)dict["Email"] : null,
+                Name = dict.ContainsKey("Name") ? (string)dict["Name"] : "",
+
+                // Should add ContactInfos,  Birthdate,  Disabilities, Profile?
             };
 
             return user;

@@ -33,9 +33,8 @@ namespace Apollo.Api.UnitTests
             var user = new User
             {
                 Id = "U01",
-                FirstName = "John",
-                LastName = "Doe",
-                Goal = "Test Goal"
+                Name = "John Doe",
+                Email = "johndoe@example.com"
             };
 
             try
@@ -75,8 +74,8 @@ namespace Apollo.Api.UnitTests
 
             var user = new User
             {
-                FirstName = "John",
-                LastName = "Doe"
+                Name = "John Doe",
+                Email = "johndoe@example.com"
             };
 
             var userIds = await api.CreateOrUpdateUser(new List<User> { user });
@@ -99,7 +98,7 @@ namespace Apollo.Api.UnitTests
             // Arrange
             var api = Helpers.GetApolloApi();
 
-            var newUser = new User { FirstName = "Test", LastName = "User" };
+            var newUser = new User { Name = "Test", Email = "test@example.com" };
             var userId = await api.CreateOrUpdateUser(new List<User> { newUser });
 
             // Act
@@ -107,8 +106,8 @@ namespace Apollo.Api.UnitTests
 
             // Assert
             Assert.IsNotNull(user);
-            Assert.AreEqual(newUser.FirstName, user.FirstName);
-            Assert.AreEqual(newUser.LastName, user.LastName);
+            Assert.AreEqual(newUser.Name, user.Name);
+            Assert.AreEqual(newUser.Email, user.Email);
 
             // Cleanup
             await api.DeleteUsers(new string[] { user.Id });
@@ -123,9 +122,10 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
+            // Adjust the query to match the fields in the updated User class
             var query = new Apollo.Common.Entities.Query
             {
-                Fields = new List<string> { "FirstName", "LastName", "UserName" }, // Specify the fields to be returned
+                Fields = new List<string> { "Name", "Email" }, // Updated fields to be returned
                 Filter = new Apollo.Common.Entities.Filter
                 {
                     IsOrOperator = false,
@@ -133,15 +133,15 @@ namespace Apollo.Api.UnitTests
             {
                 new Apollo.Common.Entities.FieldExpression
                 {
-                    FieldName = "FirstName",
-                    Operator = Apollo.Common.Entities.QueryOperator.Equals,
-                    Argument = new List<object> { "John", "Jane" }
+                    FieldName = "Name", // Use 'Name' field for filtering
+                    Operator = Apollo.Common.Entities.QueryOperator.Contains,
+                    Argument = new List<object> { "John Doe" } // Example name
                 },
                 new Apollo.Common.Entities.FieldExpression
                 {
-                    FieldName = "LastName",
-                    Operator = Apollo.Common.Entities.QueryOperator.Equals,
-                    Argument = new List<object> { "Doe" }
+                    FieldName = "Email", // Use 'Email' field for filtering
+                    Operator = Apollo.Common.Entities.QueryOperator.Contains,
+                    Argument = new List<object> { "johndoe@example.com" } // Example email
                 }
             }
                 },
@@ -150,7 +150,7 @@ namespace Apollo.Api.UnitTests
                 Skip = 0,
                 SortExpression = new Apollo.Common.Entities.SortExpression
                 {
-                    FieldName = "LastName",
+                    FieldName = "Name", // Sort by 'Name' field
                     Order = Apollo.Common.Entities.SortOrder.Ascending
                 }
             };
@@ -162,21 +162,19 @@ namespace Apollo.Api.UnitTests
             }
             catch (ApolloApiException ex)
             {
-                // Handle the case when no records are found
                 if (ex.ErrorCode == ErrorCodes.UserErrors.QueryUsersError)
                 {
                     users = new List<User>(); // Initialize an empty list
                 }
                 else
                 {
-                    // Re-throw the exception if it's not related to an empty result
                     throw;
                 }
             }
 
             // Assert
             Assert.IsNotNull(users);
-            Assert.IsTrue(users.Count >= 0); // Change the condition to allow for an empty list
+            Assert.IsTrue(users.Count >= 0); // Validate the result
 
             // Cleanup: Delete the user records inserted during the test
             foreach (var user in users)
@@ -184,41 +182,7 @@ namespace Apollo.Api.UnitTests
                 await api.DeleteUsers(new string[] { user.Id });
             }
 
-            // add more assertions based on your specific testing requirements
-        }
-
-        [TestMethod]
-        public async Task QueryUsersByGoal_ReturnsUsersWithSpecifiedGoal()
-        {
-            var api = Helpers.GetApolloApi();
-            string testGoal = "Learn AI";
-
-            // Insert test users with the goal "Learn AI"
-            var testUsers = new List<User>
-            {
-                new User { FirstName = "John", LastName = "Doe", Goal = testGoal },
-                new User { FirstName = "Jane", LastName = "Smith", Goal = testGoal }
-            };
-
-            // Create or update users
-            foreach (var user in testUsers)
-            {
-                await api.CreateOrUpdateUser(new List<User> { user });
-            }
-
-            // Act: Query users by the specified goal
-            var result = await api.QueryUsersByGoal(testGoal);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count > 0);
-            Assert.IsTrue(result.All(u => u.Goal == testGoal));
-
-            // Cleanup: Delete the test users
-            foreach (var user in result)
-            {
-                await api.DeleteUsers(new string[] { user.Id });
-            }
+            // Additional assertions based on specific testing requirements
         }
 
     }

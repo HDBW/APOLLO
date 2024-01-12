@@ -8,17 +8,25 @@ using QueryOperator = Daenet.MongoDal.Entitties.QueryOperator;
 
 namespace Daenet.MongoDal.UnitTests
 {
+    /// <summary>
+    /// Unit tests for the Users data access layer.
+    /// </summary>
     [TestCategory("MongoDal")]
     [TestClass]
     public class UsersUnitTests
     {
         User[] _testUsers = new User[]
-        {
-            new User(){ Id = "U01", UserName = "user1", FirstName = "Test", LastName = "User1", Goal = "Learn AI" },
-            new User(){ Id = "U02", UserName = "user2", FirstName = "Test", LastName = "User2", Goal = "Explore AI" },
-            new User(){ Id = "U03", UserName = "user3", FirstName = "Test", LastName = "User3" },
-        };
+         {
+            new User { Id = "U01", ObjectId = "ObjectID1", Upn = "upn1@example.com", Email = "user1@example.com", Name = "Test User1", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1990, 1, 1), Disabilities = false, Profile = new Profile() },
+            new User { Id = "U02", ObjectId = "ObjectID2", Upn = "upn2@example.com", Email = "user2@example.com", Name = "Test User2", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1991, 2, 2), Disabilities = true, Profile = new Profile() },
+            new User { Id = "U03", ObjectId = "ObjectID3", Upn = "upn3@example.com", Email = "user3@example.com", Name = "Test User3", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1992, 3, 3), Disabilities = false, Profile = new Profile() }
+         };
 
+
+        /// <summary>
+        /// Cleans up test data from the database.
+        /// This method is called to remove any test data that may have been created during the tests.
+        /// </summary>
         private async Task CleanTestDocuments()
         {
             var dal = Helpers.GetDal();
@@ -26,12 +34,20 @@ namespace Daenet.MongoDal.UnitTests
             await dal.DeleteManyAsync(Helpers.GetCollectionName<User>(), _testUsers.Select(u => u.Id).ToArray(), false);
         }
 
+
+        /// <summary>
+        /// Cleans up all test data from the database after each test method.
+        /// </summary>
         [TestCleanup]
         public async Task CleanupTest()
         {
             await CleanTestDocuments();
         }
 
+        
+        /// <summary>
+        /// Cleans up any existing test data and prepares the test environment before each test method.
+        /// </summary>
         [TestInitialize]
         public async Task InitTest()
         {
@@ -39,6 +55,9 @@ namespace Daenet.MongoDal.UnitTests
         }
 
 
+        /// <summary>
+        /// Tests the insertion and deletion of a User document.
+        /// </summary>
         [TestMethod]
         public async Task InsertDeleteUserTest()
         {
@@ -58,30 +77,39 @@ namespace Daenet.MongoDal.UnitTests
             await dal.DeleteAsync(Helpers.GetCollectionName<User>(), _testUsers[0].Id);
         }
 
+
+        /// <summary>
+        /// Tests querying for a User that does not exist in the database.
+        /// Expects the query result to be empty.
+        /// </summary>
         [TestMethod]
         public async Task QueryNonExistingUserTest()
         {
             var dal = Helpers.GetDal();
 
             // Create a Query object with a condition that should not match any user
-            var query = Query.CreateQuery("UserName", new List<object> { "nonexistentuser" }, QueryOperator.Equals);
+            var query = Query.CreateQuery("Email", new List<object> { "nonexistentemail@example.com" }, QueryOperator.Equals);
 
             // Specify the fields you want to retrieve
-            var fields = new List<string> { "UserName", "FirstName", "LastName" };
+            var fields = new List<string> { "Email", "Name", "ObjectId" }; // Adjusted fields as per the new User class
 
             // Execute the query with the specified fields and query conditions
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<User>(), fields, query, 100, 0);
 
-            Assert.IsTrue(res.Count == 0);
+            Assert.IsTrue(res.Count == 0); // Asserting that no users were found
         }
 
+
+        /// <summary>
+        /// Tests querying for existing Users in the database based on specific criteria.
+        /// </summary>
         [TestMethod]
         public async Task QueryExistingUsersTest()
         {
             var dal = Helpers.GetDal();
 
-            var query = Query.CreateQuery("UserName", new List<object> { "user" }, QueryOperator.Contains);
-            var fields = new List<string> { "UserName", "FirstName", "LastName" };
+            var query = Query.CreateQuery("Name", new List<object> { "user" }, QueryOperator.Contains);
+            var fields = new List<string> { "Name", "Email", "ObjectId" };
 
             var res = await dal.ExecuteQuery(Helpers.GetCollectionName<User>(), fields, query, 100, 0);
 
@@ -89,6 +117,11 @@ namespace Daenet.MongoDal.UnitTests
             Assert.IsNotNull(res);
             Assert.IsTrue(res.Count >= 0); // Ensures that the query execution is valid
         }
+
+
+        /// <summary>
+        /// Tests updating a User's information in the database.
+        /// </summary>
         [TestMethod]
         public async Task UpdateUserTest()
         {
@@ -102,7 +135,7 @@ namespace Daenet.MongoDal.UnitTests
             await dal.InsertAsync(Helpers.GetCollectionName<User>(), userExpando);
 
             // Update the user's property
-            userToUpdate.FirstName = "UpdatedFirstName";
+            userToUpdate.Name = "UpdatedName";
 
             // Convert the updated user to an ExpandoObject
             var updatedUserExpando = Convertor.Convert(userToUpdate);
@@ -112,12 +145,16 @@ namespace Daenet.MongoDal.UnitTests
 
             // Retrieve and verify the update
             var updatedUser = await dal.GetByIdAsync<User>(Helpers.GetCollectionName<User>(), userToUpdate.Id);
-            Assert.AreEqual("UpdatedFirstName", updatedUser.FirstName);
+            Assert.AreEqual("UpdatedName", updatedUser.Name);
 
             // Cleanup
             await dal.DeleteAsync(Helpers.GetCollectionName<User>(), userToUpdate.Id);
         }
 
+
+        /// <summary>
+        /// Tests the deletion of an existing User from the database.
+        /// </summary>
         [TestMethod]
         public async Task DeleteExistingUserTest()
         {
@@ -141,6 +178,10 @@ namespace Daenet.MongoDal.UnitTests
             Assert.IsNull(deletedUser);
         }
 
+
+        /// <summary>
+        /// Tests the deletion of multiple User documents from the database.
+        /// </summary>
         [TestMethod]
         public async Task DeleteMultipleUsersTest()
         {
@@ -149,8 +190,8 @@ namespace Daenet.MongoDal.UnitTests
             // Initialize multiple users with sample data
             var users = new List<User>
             {
-                new User { Id = "User1", UserName = "user1", FirstName = "Test", LastName = "User1", Goal = "Learn AI", Image = "user1.png" },
-                new User { Id = "User2", UserName = "user2", FirstName = "Sample", LastName = "User2", Goal = "Explore AI", Image = "user2.png" },
+                new User { Id = "User1", ObjectId = "obj1", Upn = "upn1", Email = "user1@example.com", Name = "User One", ContactInfos = new List<Contact>(), Birthdate = DateTime.Now, Disabilities = false, Profile = null },
+                new User { Id = "User2", ObjectId = "obj2", Upn = "upn2", Email = "user2@example.com", Name = "User Two", ContactInfos = new List<Contact>(), Birthdate = DateTime.Now, Disabilities = false, Profile = null },
                 // Add more users as needed
             };
 
