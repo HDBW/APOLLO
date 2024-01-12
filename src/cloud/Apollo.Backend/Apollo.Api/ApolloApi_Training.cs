@@ -30,7 +30,7 @@ namespace Apollo.Api
                 if (training == null)
                 {
                     // No matching training found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Training not found.", new Exception("Training not found."));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Training not found.");
                 }
 
                 _logger?.LogTrace($"Completed {nameof(GetTraining)}");
@@ -96,60 +96,6 @@ namespace Apollo.Api
         }
 
 
-
-            /// <summary>
-            /// Retrieves a single training with filtered appointments within a specified date range.
-            /// </summary>
-            /// <param name="startDate">Start date of the range.</param>
-            /// <param name="endDate">End date of the range.</param>
-            /// <param name="additionalFilterField">Additional field for filtering.</param>
-            /// <returns>Task that represents the asynchronous operation, containing a single Training with filtered Appointments within the date range.</returns>
-            public async Task<Training?> GetTrainingWithFilteredAppointmentsByIdAndDateRange(string trainingId,DateTime? startDate, DateTime? endDate)
-            {
-                try
-                {
-                    var query = new Apollo.Common.Entities.Query
-                    {
-                        
-                        Filter = new Apollo.Common.Entities.Filter
-                        {
-                            Fields = new List<FieldExpression>
-                            {
-                                new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
-                                new FieldExpression { FieldName = "Appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
-                                new FieldExpression { FieldName = "Appointments.StartDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } },
-                                new FieldExpression { FieldName = "Appointments.EndDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } }
-                            }
-                        },
-                                Top = 100,
-                                Skip = 0
-                            };
-
-                    var res = await _dal.ExecuteQuery(
-                        ApolloApi.GetCollectionName<Training>(),
-                         null,
-                        query: Convertor.ToDaenetQuery(query.Filter),
-                        top: query.Top,
-                        skip: query.Skip,
-                        sortExpression: null, // Provide your sort expression if needed
-                        dateTime: null // Provide your date time if needed
-                    );
-
-                    var training = res.SingleOrDefault();
-
-                    if (training != null)
-                    {
-                       return Convertor.ToTraining(training);
-                    }
-
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
-                }
-
-        }
 
 
             /// <summary>

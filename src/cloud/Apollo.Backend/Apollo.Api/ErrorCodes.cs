@@ -57,8 +57,11 @@ namespace Apollo.Api
         public static class GeneralErrors
         {
             public const int OperationFailed = 1;
-            public const string  QueryTrainingsFailed = "QTF-1";
+            
+            public const int InvalidId = 2;
             // Add more general error codes as needed...
         }
+
+       
     }
 }

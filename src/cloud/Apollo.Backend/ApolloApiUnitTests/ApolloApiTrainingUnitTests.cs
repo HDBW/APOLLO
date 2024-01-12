@@ -21,7 +21,7 @@ namespace Apollo.Api.UnitTests
     {
         Training[] _testTrainings = new Training[]
       {
-            new Training(){  Id = "LT01", ProviderId = "unittest", TrainingName = "Open AI",
+            new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
             Loans = new List<Loans>(
                 new Loans[]
                 {
@@ -30,9 +30,9 @@ namespace Apollo.Api.UnitTests
                 }
                 )},
 
-            new Training(){  Id = "LT02", ProviderId = "unittest", TrainingName = "Azure AI" },
+            new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI" },
 
-            new Training(){  Id = "LT03" , ProviderId = "unittest",    Loans = new List<Loans>(
+            new Training(){  Id = "UT03" , ProviderId = "unittest",    Loans = new List<Loans>(
                 new Loans[]
                 {
                     new Loans() { Id = "L01", Name = "Loan 1" },
@@ -42,6 +42,19 @@ namespace Apollo.Api.UnitTests
 
 
       };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// The instance of the training with all properties.
@@ -892,13 +905,59 @@ namespace Apollo.Api.UnitTests
 
 
         /// <summary>
+        /// Retrieves a single training with filtered appointments within a specified date range.
+        /// </summary>
+        /// <param name="startDate">Start date of the range.</param>
+        /// <param name="endDate">End date of the range.</param>
+        /// <param name="additionalFilterField">Additional field for filtering.</param>
+        /// <returns>Task that represents the asynchronous operation, containing a single Training with filtered Appointments within the date range.</returns>
+
+        /// <summary>
         /// Filters for training with specific IndividualStartDate
         /// </summary>
         /// <returns></returns>
         [TestMethod]
         public async Task TrainingsWithIndividualStartDateTest()
         {
+
+                try
+                {
+                    var query = new Apollo.Common.Entities.Query
+                    {
+
+                        Filter = new Apollo.Common.Entities.Filter
+                        {
+                            Fields = new List<FieldExpression>
+                            {
+                                new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
+                                new FieldExpression { FieldName = "Appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
+                                new FieldExpression { FieldName = "Appointments.StartDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } },
+                                new FieldExpression { FieldName = "Appointments.EndDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } }
+                            }
+                        },
+                        Top = 100,
+                        Skip = 0
+                    };
+
+                var api = Helpers.GetApolloApi();
+
+                var res =api.QueryTrainings(query);
+               
+                    var training = res.SingleOrDefault();
+
+                    if (training != null)
+                    {
+                        return Convertor.ToTraining(training);
+                    }
+
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
+                }
         }
+
 
         /// <summary>
         /// Filters  a Training by Id and with Appointment Start and End Date 
