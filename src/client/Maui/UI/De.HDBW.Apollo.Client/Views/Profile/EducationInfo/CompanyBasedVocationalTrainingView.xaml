@@ -16,8 +16,14 @@
     <VerticalStackLayout>
         <Label Text="{x:Static strings:Resources.Global_Start}"/>
         <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-        <Label Text="{x:Static strings:Resources.Global_End}"/>
-        <DatePicker Date="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+            <Label Text="{x:Static strings:Resources.Global_IsCompleted}" Grid.Column="0" />
+            <Switch x:Name="Switch" Grid.Column="1" IsToggled="True"/>
+        </FlexLayout>
+        <VerticalStackLayout IsVisible="{x:Binding IsToggled, Source={x:Reference Switch}}">
+            <Label Text="{x:Static strings:Resources.Global_End}"/>
+            <DatePicker Date="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        </VerticalStackLayout>
         <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}"/>
         <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
         <Label Text="{x:Static strings:Resources.Global_City}"/>
