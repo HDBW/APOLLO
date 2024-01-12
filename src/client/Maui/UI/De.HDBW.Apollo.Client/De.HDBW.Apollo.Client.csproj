@@ -175,10 +175,16 @@
     <MauiXaml Update="Views\Profile\CareerInfo\VoluntaryServiceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\VocationalTrainingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Profile\EducationInfo\CompanyBasedVocationalTrainingView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\EducationInfo\EducationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\StudyView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\LanguageSkillEditView.xaml">
@@ -259,6 +265,9 @@
     </Compile>
     <Compile Update="Views\Profile\CareerInfoEditView.xaml.cs">
       <DependentUpon>CareerInfoEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Profile\EducationInfo\VocationalTrainingView.xaml.cs">
+      <DependentUpon>VocationalTrainingView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Profile\EducationInfo\EducationView.xaml.cs">
       <DependentUpon>EducationView.xaml</DependentUpon>
