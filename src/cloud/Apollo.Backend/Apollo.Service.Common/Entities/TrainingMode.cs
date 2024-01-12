@@ -6,7 +6,7 @@ using System.Runtime.Intrinsics.X86;
 namespace Apollo.Common.Entities
 {
     [Flags]
-    public enum TrainingType
+    public enum TrainingMode
     {
         Unknown = 0,
         Online = 1,

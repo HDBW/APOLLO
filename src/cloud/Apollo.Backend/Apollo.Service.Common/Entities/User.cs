@@ -1,41 +1,63 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
+
 using System.Runtime.Serialization;
+using System.Security.Principal;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Apollo.Common.Entities
 {
-    [DataContract]
-    public class User //: BaseItem
+    public class User
     {
-        [DataMember(Order = 5, IsRequired = true)]
-        public string? Goal { get; set; } = string.Empty;
-
-        [DataMember(Order = 6, IsRequired = false)]
-        public string? FirstName { get; set; } = string.Empty;
-
-        [DataMember(Order = 7, IsRequired = false)]
-        public string? LastName { get; set; } = string.Empty;
+        /// <summary>
+        /// This is the Unique Identifier set by Apollo for the User.
+        /// </summary>
+        public string Id { get; set; }
 
         /// <summary>
-        /// For Testung the value will be:
-        /// - user1.png
-        /// - user2.png
-        /// - user3.png
+        /// This is the Unique Identifier of the User from the Identity Provider.
+        /// Object ID
         /// </summary>
-        [DataMember(Order = 8, IsRequired = false)]
-        public string? Image { get; set; } = string.Empty;
-        public string? Id { get; set; }
-        public string? UserName { get; set; }
-        public List<Contact> ?Contacts { get; set; }
-        // Certification should also be a List
-        // A list of certificates the user has
-        public List<string>? Certificate { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string ?Biography { get; set; }
-        //Implementation of TrainingHistory would be advisable
-        //public List<TrainingHistory> TrainingHistories { get; set; }
+        public string ObjectId { get; set; }
 
-        public string ?Skill { get; set; }
-        public string? Country { get; set; }
+        /// <summary>
+        /// This is the User principal name given by AADB2C.
+        /// </summary>
+        public string? Upn { get; set; }
+
+        /// <summary>
+        /// This is the email address given by the AADB2C claim.
+        /// Register user Email Claim - That is the only way for the user to persist the Account if Phone Provider changes.
+        /// 
+        /// </summary>
+        public string? Email { get; set; }
+
+        /// <summary>
+        /// The Name is the Display Name of the User
+        /// It is aquired via the Identity Provider and can be changed by the User during Registration as well as in the Profile.
+        /// PII
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Contact> ContactInfos { get; set; }
+
+        /// <summary>
+        /// Indicates the Birthdate of the User
+        /// Optional Information
+        /// PII
+        /// </summary>
+        public DateTime? Birthdate { get; set; }
+
+        /// <summary>
+        /// This indicates if the User has a Disability
+        /// We do not classify disabilities but only indicate if the User has one or not.
+        /// This is relevant for the User to get the right Information and for the Admins to know if the User needs special treatment.
+        /// </summary>
+        public bool? Disabilities { get; set; }
+
+        public Profile? Profile { get; set; }
     }
 }

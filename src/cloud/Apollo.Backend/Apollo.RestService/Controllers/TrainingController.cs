@@ -1,4 +1,6 @@
-﻿using Apollo.Api;
+﻿using System.ComponentModel.DataAnnotations;
+using Apollo.Api;
+using Apollo.Common.Attributes;
 using Apollo.Common.Entities;
 using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +42,9 @@ namespace Apollo.Service.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the requested training.", typeof(GetTrainingResponse))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Training not found.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<GetTrainingResponse> GetTraining(string id)
+        public async Task<GetTrainingResponse> GetTraining(
+         [FromRoute, ValidInputString(ErrorMessage = "Invalid training Id.")]
+         string id)
         {
             try
             {
@@ -61,6 +65,26 @@ namespace Apollo.Service.Controllers
                 throw;
             }
         }
+
+        [HttpGet("filter")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of filtered trainings.", typeof(List<Training>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        public async Task<ActionResult<List<Training>>> GetTrainingsByDateRange(
+           [FromQuery, ValidInputString(ErrorMessage = "Invalid training Id.")] string trainingId,
+           [FromQuery, ValidDateTime(ErrorMessage = "Invalid start date.")] DateTime? startDate,
+           [FromQuery, ValidDateTime(ErrorMessage = "Invalid end date.")] DateTime? endDate)
+           {
+                try
+                {
+                    var result = await _api.GetTrainingWithFilteredAppointmentsByIdAndDateRange(trainingId, startDate, endDate);
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    // Log and return a 500 Internal Server Error response.
+                    return StatusCode(StatusCodes.Status500InternalServerError, $"Internal server error: {ex.Message}");
+                }
+            }
 
 
         /// <summary>
@@ -160,7 +184,8 @@ namespace Apollo.Service.Controllers
         [SwaggerResponse(StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Training deleted successfully.")]
-        public async Task Delete(string id)
+        public async Task Delete([FromRoute, ValidInputString(ErrorMessage = "Invalid training Id.")]
+         string id)
         {
             try
             {

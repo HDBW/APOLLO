@@ -901,12 +901,40 @@ namespace Apollo.Api.UnitTests
         }
 
         /// <summary>
-        /// Filters for training with specific IndividualStartDate
+        /// Filters  a Training by Id and with Appointment Start and End Date 
         /// </summary>
         /// <returns></returns>
         [TestMethod]
-        public async Task TrainingAppointmentDateTest()
+        public async Task AppointmentDateFiterTestForSingleTraning()
         {
+            var api = Helpers.GetApolloApi();
+
+            try
+            {
+                // Create a test training record with a specific IndividualStartDate
+                var testStartDate = "2024-01-15"; 
+                //var testTraining = new Training
+                //{
+                //    Id = "T02",
+                //    TrainingName = "Test Training with Appointment",
+                //    IndividualStartDate = testStartDate
+                //};
+
+                //// Insert the test training record into the database
+                //await api.InsertTraining(testTraining);
+
+                //// Retrieve trainings with the specific IndividualStartDate
+                //var filteredTrainings = await api.GetTrainingsByAppointmentDate(testStartDate);
+
+                //// Ensure that the filteredTrainings list is not null and contains the test training
+                //Assert.IsNotNull(filteredTrainings);
+                //Assert.IsTrue(filteredTrainings.Contains(testTraining));
+            }
+            finally
+            {
+                // Clean up: Delete the test training record from the database
+                await api.DeleteTrainings(new string[] { "T02" });
+            }
         }
 
         /// <summary>
@@ -921,7 +949,7 @@ namespace Apollo.Api.UnitTests
 
 
         /// <summary>
-        /// A Training has an auto calculated property which is based on the TrainingType of the Appointment List of a Training.
+        /// A Training has an auto calculated property which is based on the TrainingMode of the Appointment List of a Training.
         /// This is a flagged Enum. And the user should be able to Multiselect in a Filter for the flagged Enum.
         /// </summary>
         /// <returns></returns>
