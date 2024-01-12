@@ -20,6 +20,16 @@ namespace Apollo.Common.Entities
         /// </summary>
         public string ProviderId { get; set; }
 
+        /// <summary>
+        /// This is the Id associated to a Training by a Training Provider.
+        /// It is used to keep track of the Training in the Training Provider's system.
+        /// So we can update the Training in our system when the Training Provider updates the Training.
+        /// More Importantly it is used to determine redundancy of Trainings in the Training Provider's systems.
+        /// </summary>
+        public string ExternalTrainingId { get; set; }
+
+        public string TrainingType { get; set; }
+
         //[Required]
         //[BsonElement("Title")]
         public string TrainingName { get; set; }
@@ -95,7 +105,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The type of the training.
         /// </summary>
-        public TrainingType? TrainingType { get; set; }
+        public TrainingMode? TrainingMode { get; set; }
 
 
         // It should be bool but what do I know about education ofc it is not bool
@@ -148,6 +158,15 @@ namespace Apollo.Common.Entities
         public string? Successor { get; set; }
         //[BsonElement("Predecessor")]
         public string? Predecessor { get; set; }
+
+        #endregion
+
+        #region Client Specific Properties
+
+        //TODO: This should be set on Insert or Update of the Element in the DAL
+        // The desired Format is: DateTime.Now.Ticks.ToString();
+        // This way the client can check if the Training has been updated since the last time he checked
+        public string Timestamp { get; set; }
 
         #endregion
 
