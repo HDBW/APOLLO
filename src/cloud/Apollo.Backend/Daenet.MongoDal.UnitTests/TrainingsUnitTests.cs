@@ -329,6 +329,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests the count functionality by counting Training instances with certain criteria.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task CountTest()
         {
             var dal = Helpers.GetDal();
