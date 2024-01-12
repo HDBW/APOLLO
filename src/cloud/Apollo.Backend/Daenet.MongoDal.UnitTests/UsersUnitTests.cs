@@ -59,6 +59,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests the insertion and deletion of a User document.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task InsertDeleteUserTest()
         {
             var dal = Helpers.GetDal();
@@ -83,6 +84,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Expects the query result to be empty.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryNonExistingUserTest()
         {
             var dal = Helpers.GetDal();
@@ -104,6 +106,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests querying for existing Users in the database based on specific criteria.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryExistingUsersTest()
         {
             var dal = Helpers.GetDal();
@@ -123,6 +126,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests updating a User's information in the database.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task UpdateUserTest()
         {
             var dal = Helpers.GetDal();
@@ -156,6 +160,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests the deletion of an existing User from the database.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task DeleteExistingUserTest()
         {
             var dal = Helpers.GetDal();
@@ -183,6 +188,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests the deletion of multiple User documents from the database.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task DeleteMultipleUsersTest()
         {
             var dal = Helpers.GetDal();

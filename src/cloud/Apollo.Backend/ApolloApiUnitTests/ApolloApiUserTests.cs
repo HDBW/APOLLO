@@ -23,6 +23,7 @@ namespace Apollo.Api.UnitTests
         /// Tests the insertion of a User object and its retrieval from the database.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task InsertUser()
         {
             // Create a mock logger
@@ -68,6 +69,7 @@ namespace Apollo.Api.UnitTests
         /// Tests creating or updating a User object and then cleaning up by deleting it.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task CreateOrUpdateUser()
         {
             var api = Helpers.GetApolloApi();
@@ -93,6 +95,7 @@ namespace Apollo.Api.UnitTests
         /// Tests retrieving a specific User object by its ID.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task GetUser()
         {
             // Arrange
@@ -118,6 +121,7 @@ namespace Apollo.Api.UnitTests
         /// Tests querying User objects based on specific criteria such as FirstName and LastName.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryUsers()
         {
             var api = Helpers.GetApolloApi();

@@ -27,7 +27,7 @@ namespace Apollo.Service.Controllers
         public ProfileController(ApolloApi api, ILogger<ProfileController> logger)
         {
             _api = api;
-            _logger = logger;
+            _logger = (ILogger<ProfileController>?)logger;
         }
 
         /// <summary>
