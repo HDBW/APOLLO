@@ -727,6 +727,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ist abgeschlossen.
+        /// </summary>
+        public static string Global_IsCompleted {
+            get {
+                return ResourceManager.GetString("Global_IsCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Institution.
         /// </summary>
         public static string Global_NameOfInstitution {

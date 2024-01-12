@@ -882,4 +882,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="TypeOfSchool_WaldorfSchool" xml:space="preserve">
     <value>Freie Waldorfschule</value>
   </data>
+  <data name="Global_IsCompleted" xml:space="preserve">
+    <value>Ist abgeschlossen</value>
+  </data>
 </root>
