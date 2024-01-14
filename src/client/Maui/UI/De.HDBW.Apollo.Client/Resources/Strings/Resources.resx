@@ -603,7 +603,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="MobilityEditView_Title" xml:space="preserve">
     <value>Mobilität</value>
   </data>
-  <data name="LanguageSkillEditView_Title" xml:space="preserve">
+  <data name="LanguageEditView_Title" xml:space="preserve">
     <value>Sprachkenntnisse</value>
   </data>
   <data name="MobilityEditView_DriverLicenses" xml:space="preserve">
@@ -625,7 +625,7 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Kontaktdaten</value>
   </data>
   <data name="EducationInfoEditView_Title" xml:space="preserve">
-    <value>Schul- und Berufsbildun</value>
+    <value>Schul- und Berufsbildung</value>
   </data>
   <data name="LicenseEditView_Title" xml:space="preserve">
     <value>Lizenzen und Berechtigungen</value>
@@ -944,5 +944,146 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="ContactType_Professional" xml:space="preserve">
     <value>Beruflich</value>
+  </data>
+  <data name="Global_Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="Global_LanguageNiveau" xml:space="preserve">
+    <value>Sprachniveau</value>
+  </data>
+  <data name="Global_ExpireDate" xml:space="preserve">
+    <value>Verfallsdatum</value>
+  </data>
+  <data name="Global_Expires" xml:space="preserve">
+    <value>Läuft ab</value>
+  </data>
+  <data name="Global_IssueDate" xml:space="preserve">
+    <value>Ausstellungsdatum</value>
+  </data>
+  <data name="LanguageNiveau_A1" xml:space="preserve">
+    <value>A1</value>
+  </data>
+  <data name="LanguageNiveau_A2" xml:space="preserve">
+    <value>A2</value>
+  </data>
+  <data name="LanguageNiveau_B1" xml:space="preserve">
+    <value>B1</value>
+  </data>
+  <data name="LanguageNiveau_B2" xml:space="preserve">
+    <value>B2</value>
+  </data>
+  <data name="LanguageNiveau_C1" xml:space="preserve">
+    <value>C1</value>
+  </data>
+  <data name="LanguageNiveau_C2" xml:space="preserve">
+    <value>C2</value>
+  </data>
+  <data name="DriversLicense_A" xml:space="preserve">
+    <value>Fahrerlaubnis A</value>
+  </data>
+  <data name="DriversLicense_A1" xml:space="preserve">
+    <value>Fahrerlaubnis A1</value>
+  </data>
+  <data name="DriversLicense_A2" xml:space="preserve">
+    <value>Fahrerlaubnis A2</value>
+  </data>
+  <data name="DriversLicense_AM" xml:space="preserve">
+    <value>Fahrerlaubnis AM</value>
+  </data>
+  <data name="DriversLicense_B" xml:space="preserve">
+    <value>Fahrerlaubnis B</value>
+  </data>
+  <data name="DriversLicense_B96" xml:space="preserve">
+    <value>Fahrerlaubnis B96</value>
+  </data>
+  <data name="DriversLicense_BE" xml:space="preserve">
+    <value>Fahrerlaubnis BE</value>
+  </data>
+  <data name="DriversLicense_C" xml:space="preserve">
+    <value>Fahrerlaubnis C</value>
+  </data>
+  <data name="DriversLicense_C1" xml:space="preserve">
+    <value>Fahrerlaubnis C1</value>
+  </data>
+  <data name="DriversLicense_C1E" xml:space="preserve">
+    <value>Fahrerlaubnis C1E</value>
+  </data>
+  <data name="DriversLicense_CE" xml:space="preserve">
+    <value>Fahrerlaubnis CE</value>
+  </data>
+  <data name="DriversLicense_Class1" xml:space="preserve">
+    <value>Triebfahrzeugführerschein Klasse 1</value>
+  </data>
+  <data name="DriversLicense_Class2" xml:space="preserve">
+    <value>Triebfahrzeugführerschein Klasse 2</value>
+  </data>
+  <data name="DriversLicense_Class3" xml:space="preserve">
+    <value>Triebfahrzeugführerschein Klasse 3</value>
+  </data>
+  <data name="DriversLicense_ConstructionMachines" xml:space="preserve">
+    <value>Führerschein Baumaschinen</value>
+  </data>
+  <data name="DriversLicense_D" xml:space="preserve">
+    <value>Fahrerlaubnis D</value>
+  </data>
+  <data name="DriversLicense_D1" xml:space="preserve">
+    <value>Fahrerlaubnis D1</value>
+  </data>
+  <data name="DriversLicense_D1E" xml:space="preserve">
+    <value>Fahrerlaubnis D1E</value>
+  </data>
+  <data name="DriversLicense_DE" xml:space="preserve">
+    <value>Fahrerlaubnis DE</value>
+  </data>
+  <data name="DriversLicense_Drivercard" xml:space="preserve">
+    <value>Fahrerkarte</value>
+  </data>
+  <data name="DriversLicense_Forklift" xml:space="preserve">
+    <value>Gabelstaplerschein</value>
+  </data>
+  <data name="DriversLicense_InstructorA" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse A</value>
+  </data>
+  <data name="DriversLicense_InstructorASF" xml:space="preserve">
+    <value>Seminarerlaubnis ASF</value>
+  </data>
+  <data name="DriversLicense_InstructorASP" xml:space="preserve">
+    <value>Seminarerlaubnis ASP</value>
+  </data>
+  <data name="DriversLicense_InstructorBE" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse BE</value>
+  </data>
+  <data name="DriversLicense_InstructorCE" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse CE</value>
+  </data>
+  <data name="DriversLicense_InstructorDE" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse DE</value>
+  </data>
+  <data name="DriversLicense_L" xml:space="preserve">
+    <value>Fahrerlaubnis L</value>
+  </data>
+  <data name="DriversLicense_Moped" xml:space="preserve">
+    <value>Fahrerlaubnis Mofa und Krankenfahrstühle</value>
+  </data>
+  <data name="DriversLicense_PassengerTransport" xml:space="preserve">
+    <value>Fahrerlaubnis Fahrgastbeförderung</value>
+  </data>
+  <data name="DriversLicense_T" xml:space="preserve">
+    <value>Fahrerlaubnis T</value>
+  </data>
+  <data name="DriversLicense_TrailerDriving" xml:space="preserve">
+    <value>Gespannführerschein</value>
+  </data>
+  <data name="Global_URL" xml:space="preserve">
+    <value>Internetadresse</value>
+  </data>
+  <data name="Willing_No" xml:space="preserve">
+    <value>nicht vorhanden</value>
+  </data>
+  <data name="Willing_Partly" xml:space="preserve">
+    <value>zeitweise vorhanden</value>
+  </data>
+  <data name="Willing_Yes" xml:space="preserve">
+    <value>vorhanden</value>
   </data>
 </root>

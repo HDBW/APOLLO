@@ -547,7 +547,295 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schul- und Berufsbildun.
+        ///   Looks up a localized string similar to Fahrerlaubnis A.
+        /// </summary>
+        public static string DriversLicense_A {
+            get {
+                return ResourceManager.GetString("DriversLicense_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis A1.
+        /// </summary>
+        public static string DriversLicense_A1 {
+            get {
+                return ResourceManager.GetString("DriversLicense_A1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis A2.
+        /// </summary>
+        public static string DriversLicense_A2 {
+            get {
+                return ResourceManager.GetString("DriversLicense_A2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis AM.
+        /// </summary>
+        public static string DriversLicense_AM {
+            get {
+                return ResourceManager.GetString("DriversLicense_AM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis B.
+        /// </summary>
+        public static string DriversLicense_B {
+            get {
+                return ResourceManager.GetString("DriversLicense_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis B96.
+        /// </summary>
+        public static string DriversLicense_B96 {
+            get {
+                return ResourceManager.GetString("DriversLicense_B96", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis BE.
+        /// </summary>
+        public static string DriversLicense_BE {
+            get {
+                return ResourceManager.GetString("DriversLicense_BE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis C.
+        /// </summary>
+        public static string DriversLicense_C {
+            get {
+                return ResourceManager.GetString("DriversLicense_C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis C1.
+        /// </summary>
+        public static string DriversLicense_C1 {
+            get {
+                return ResourceManager.GetString("DriversLicense_C1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis C1E.
+        /// </summary>
+        public static string DriversLicense_C1E {
+            get {
+                return ResourceManager.GetString("DriversLicense_C1E", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis CE.
+        /// </summary>
+        public static string DriversLicense_CE {
+            get {
+                return ResourceManager.GetString("DriversLicense_CE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Triebfahrzeugführerschein Klasse 1.
+        /// </summary>
+        public static string DriversLicense_Class1 {
+            get {
+                return ResourceManager.GetString("DriversLicense_Class1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Triebfahrzeugführerschein Klasse 2.
+        /// </summary>
+        public static string DriversLicense_Class2 {
+            get {
+                return ResourceManager.GetString("DriversLicense_Class2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Triebfahrzeugführerschein Klasse 3.
+        /// </summary>
+        public static string DriversLicense_Class3 {
+            get {
+                return ResourceManager.GetString("DriversLicense_Class3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Führerschein Baumaschinen.
+        /// </summary>
+        public static string DriversLicense_ConstructionMachines {
+            get {
+                return ResourceManager.GetString("DriversLicense_ConstructionMachines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis D.
+        /// </summary>
+        public static string DriversLicense_D {
+            get {
+                return ResourceManager.GetString("DriversLicense_D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis D1.
+        /// </summary>
+        public static string DriversLicense_D1 {
+            get {
+                return ResourceManager.GetString("DriversLicense_D1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis D1E.
+        /// </summary>
+        public static string DriversLicense_D1E {
+            get {
+                return ResourceManager.GetString("DriversLicense_D1E", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis DE.
+        /// </summary>
+        public static string DriversLicense_DE {
+            get {
+                return ResourceManager.GetString("DriversLicense_DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerkarte.
+        /// </summary>
+        public static string DriversLicense_Drivercard {
+            get {
+                return ResourceManager.GetString("DriversLicense_Drivercard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gabelstaplerschein.
+        /// </summary>
+        public static string DriversLicense_Forklift {
+            get {
+                return ResourceManager.GetString("DriversLicense_Forklift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrlehrerlaubnis Klasse A.
+        /// </summary>
+        public static string DriversLicense_InstructorA {
+            get {
+                return ResourceManager.GetString("DriversLicense_InstructorA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seminarerlaubnis ASF.
+        /// </summary>
+        public static string DriversLicense_InstructorASF {
+            get {
+                return ResourceManager.GetString("DriversLicense_InstructorASF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seminarerlaubnis ASP.
+        /// </summary>
+        public static string DriversLicense_InstructorASP {
+            get {
+                return ResourceManager.GetString("DriversLicense_InstructorASP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrlehrerlaubnis Klasse BE.
+        /// </summary>
+        public static string DriversLicense_InstructorBE {
+            get {
+                return ResourceManager.GetString("DriversLicense_InstructorBE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrlehrerlaubnis Klasse CE.
+        /// </summary>
+        public static string DriversLicense_InstructorCE {
+            get {
+                return ResourceManager.GetString("DriversLicense_InstructorCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrlehrerlaubnis Klasse DE.
+        /// </summary>
+        public static string DriversLicense_InstructorDE {
+            get {
+                return ResourceManager.GetString("DriversLicense_InstructorDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis L.
+        /// </summary>
+        public static string DriversLicense_L {
+            get {
+                return ResourceManager.GetString("DriversLicense_L", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis Mofa und Krankenfahrstühle.
+        /// </summary>
+        public static string DriversLicense_Moped {
+            get {
+                return ResourceManager.GetString("DriversLicense_Moped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis Fahrgastbeförderung.
+        /// </summary>
+        public static string DriversLicense_PassengerTransport {
+            get {
+                return ResourceManager.GetString("DriversLicense_PassengerTransport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrerlaubnis T.
+        /// </summary>
+        public static string DriversLicense_T {
+            get {
+                return ResourceManager.GetString("DriversLicense_T", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gespannführerschein.
+        /// </summary>
+        public static string DriversLicense_TrailerDriving {
+            get {
+                return ResourceManager.GetString("DriversLicense_TrailerDriving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schul- und Berufsbildung.
         /// </summary>
         public static string EducationInfoEditView_Title {
             get {
@@ -772,6 +1060,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verfallsdatum.
+        /// </summary>
+        public static string Global_ExpireDate {
+            get {
+                return ResourceManager.GetString("Global_ExpireDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Läuft ab.
+        /// </summary>
+        public static string Global_Expires {
+            get {
+                return ResourceManager.GetString("Global_Expires", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abschluss.
         /// </summary>
         public static string Global_Graduation {
@@ -786,6 +1092,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_IsCompleted {
             get {
                 return ResourceManager.GetString("Global_IsCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ausstellungsdatum.
+        /// </summary>
+        public static string Global_IssueDate {
+            get {
+                return ResourceManager.GetString("Global_IssueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprache.
+        /// </summary>
+        public static string Global_Language {
+            get {
+                return ResourceManager.GetString("Global_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprachniveau.
+        /// </summary>
+        public static string Global_LanguageNiveau {
+            get {
+                return ResourceManager.GetString("Global_LanguageNiveau", resourceCulture);
             }
         }
         
@@ -898,6 +1231,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internetadresse.
+        /// </summary>
+        public static string Global_URL {
+            get {
+                return ResourceManager.GetString("Global_URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arbeitszeitmodel.
         /// </summary>
         public static string Global_WorkTimeModel {
@@ -936,9 +1278,63 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Sprachkenntnisse.
         /// </summary>
-        public static string LanguageSkillEditView_Title {
+        public static string LanguageEditView_Title {
             get {
-                return ResourceManager.GetString("LanguageSkillEditView_Title", resourceCulture);
+                return ResourceManager.GetString("LanguageEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A1.
+        /// </summary>
+        public static string LanguageNiveau_A1 {
+            get {
+                return ResourceManager.GetString("LanguageNiveau_A1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A2.
+        /// </summary>
+        public static string LanguageNiveau_A2 {
+            get {
+                return ResourceManager.GetString("LanguageNiveau_A2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B1.
+        /// </summary>
+        public static string LanguageNiveau_B1 {
+            get {
+                return ResourceManager.GetString("LanguageNiveau_B1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B2.
+        /// </summary>
+        public static string LanguageNiveau_B2 {
+            get {
+                return ResourceManager.GetString("LanguageNiveau_B2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C1.
+        /// </summary>
+        public static string LanguageNiveau_C1 {
+            get {
+                return ResourceManager.GetString("LanguageNiveau_C1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C2.
+        /// </summary>
+        public static string LanguageNiveau_C2 {
+            get {
+                return ResourceManager.GetString("LanguageNiveau_C2", resourceCulture);
             }
         }
         
@@ -2478,6 +2874,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string WebReferenceEditView_Title {
             get {
                 return ResourceManager.GetString("WebReferenceEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nicht vorhanden.
+        /// </summary>
+        public static string Willing_No {
+            get {
+                return ResourceManager.GetString("Willing_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to zeitweise vorhanden.
+        /// </summary>
+        public static string Willing_Partly {
+            get {
+                return ResourceManager.GetString("Willing_Partly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to vorhanden.
+        /// </summary>
+        public static string Willing_Yes {
+            get {
+                return ResourceManager.GetString("Willing_Yes", resourceCulture);
             }
         }
         

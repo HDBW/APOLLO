@@ -5,19 +5,19 @@ using De.HDBW.Apollo.Client.ViewModels.Profile;
 
 namespace De.HDBW.Apollo.Client.Views.Profile
 {
-    public partial class LanguageSkillEditView : ContentPage
+    public partial class LanguageEditView : ContentPage
     {
-        public LanguageSkillEditView(LanguageSkillEditViewModel model)
+        public LanguageEditView(LanguageEditViewModel model)
         {
             InitializeComponent();
             BindingContext = model;
         }
 
-        public LanguageSkillEditViewModel? ViewModel
+        public LanguageEditViewModel? ViewModel
         {
             get
             {
-                return BindingContext as LanguageSkillEditViewModel;
+                return BindingContext as LanguageEditViewModel;
             }
         }
     }

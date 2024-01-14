@@ -12,10 +12,18 @@ using De.HDBW.Apollo.Client.ViewModels.Profile;
 using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors;
+using De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors;
+using De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors;
+using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
+using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
 using De.HDBW.Apollo.Client.Views.Profile.EducationInfo;
+using De.HDBW.Apollo.Client.Views.Profile.Language;
+using De.HDBW.Apollo.Client.Views.Profile.License;
+using De.HDBW.Apollo.Client.Views.Profile.Qualification;
+using De.HDBW.Apollo.Client.Views.Profile.WebReference;
 using De.HDBW.Apollo.Data;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
@@ -290,14 +298,22 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<MobilityEditView>();
             services.AddTransient<MobilityEditViewModel>();
 
-            services.AddTransient<LanguageSkillEditView>();
-            services.AddTransient<LanguageSkillEditViewModel>();
+            services.AddTransient<LanguageEditView>();
+            services.AddTransient<LanguageEditViewModel>();
+            services.AddTransient<LanguageView>();
+            services.AddTransient<LanguageViewModel>();
+            services.AddTransient<LanguageSearchView>();
+            services.AddTransient<LanguageSearchViewModel>();
 
             services.AddTransient<WebReferenceEditView>();
             services.AddTransient<WebReferenceEditViewModel>();
+            services.AddTransient<WebReferenceView>();
+            services.AddTransient<WebReferenceViewModel>();
 
             services.AddTransient<QualificationEditView>();
             services.AddTransient<QualificationEditViewModel>();
+            services.AddTransient<QualificationView>();
+            services.AddTransient<QualificationViewModel>();
 
             services.AddTransient<ContactInfoEditView>();
             services.AddTransient<ContactInfoEditViewModel>();
@@ -307,6 +323,8 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<LicenseEditView>();
             services.AddTransient<LicenseEditViewModel>();
+            services.AddTransient<LicenseView>();
+            services.AddTransient<LicenseViewModel>();
 
             services.AddTransient<EducationInfoEditView>();
             services.AddTransient<EducationInfoEditViewModel>();
@@ -361,17 +379,26 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
             Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
             Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
+
             Routing.RegisterRoute(Routes.ProfileView, typeof(ProfileView));
             Routing.RegisterRoute(Routes.PersonalInformationEditView, typeof(PersonalInformationEditView));
             Routing.RegisterRoute(Routes.MobilityEditView, typeof(MobilityEditView));
-            Routing.RegisterRoute(Routes.LanguageSkillEditView, typeof(LanguageSkillEditView));
+
+            Routing.RegisterRoute(Routes.LanguageEditView, typeof(LanguageEditView));
+            Routing.RegisterRoute(Routes.LanguageView, typeof(LanguageView));
+            Routing.RegisterRoute(Routes.LanguageSearchView, typeof(LanguageSearchView));
+
             Routing.RegisterRoute(Routes.WebReferenceEditView, typeof(WebReferenceEditView));
+            Routing.RegisterRoute(Routes.WebReferenceView, typeof(WebReferenceView));
+
             Routing.RegisterRoute(Routes.QualificationEditView, typeof(QualificationEditView));
+            Routing.RegisterRoute(Routes.QualificationView, typeof(QualificationView));
 
             Routing.RegisterRoute(Routes.ContactInfoEditView, typeof(ContactInfoEditView));
             Routing.RegisterRoute(Routes.ContactInfoContactView, typeof(ContactView));
 
             Routing.RegisterRoute(Routes.LicenseEditView, typeof(LicenseEditView));
+            Routing.RegisterRoute(Routes.LicenseView, typeof(LicenseView));
 
             Routing.RegisterRoute(Routes.EducationInfoEditView, typeof(EducationInfoEditView));
             Routing.RegisterRoute(Routes.EducationInfoEducationView, typeof(EducationView));

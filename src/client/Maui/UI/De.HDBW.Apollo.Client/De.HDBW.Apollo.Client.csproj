@@ -193,7 +193,7 @@
     <MauiXaml Update="Views\Profile\EducationInfo\StudyView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\Profile\LanguageSkillEditView.xaml">
+    <MauiXaml Update="Views\Profile\LanguageEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\Language\LanguageView.xaml">
@@ -203,6 +203,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\MobilityEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\LanguageSearchView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\OccupationSearchView.xaml">
@@ -290,11 +293,17 @@
     <Compile Update="Views\Profile\EducationInfo\EducationView.xaml.cs">
       <DependentUpon>EducationView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Profile\LanguageEditView.xaml.cs">
+      <DependentUpon>LanguageEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Profile\LicenseEditView.xaml.cs">
       <DependentUpon>LicenseEditView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Profile\EducationInfoEditView.xaml.cs">
       <DependentUpon>EducationInfoEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Profile\LanguageSearchView.xaml.cs">
+      <DependentUpon>LanguageSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Profile\QualificationEditView.xaml.cs">
       <DependentUpon>QualificationEditView.xaml</DependentUpon>

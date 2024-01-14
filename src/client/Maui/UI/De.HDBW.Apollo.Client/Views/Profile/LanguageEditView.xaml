@@ -1,11 +1,11 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.Profile.LanguageSkillEditView"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.LanguageEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resources.LanguageSkillEditView_Title}"
+             Title="{x:Static strings:Resources.LanguageEditView_Title}"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
-             x:DataType="viewModels:LanguageSkillEditViewModel"
+             x:DataType="viewModels:LanguageEditViewModel"
              Shell.TabBarIsVisible="False"
              IsBusy="{x:Binding IsBusy}" Padding="0">
     <Grid>
@@ -15,12 +15,12 @@
                 <ContentView>
                     <VerticalStackLayout  VerticalOptions="CenterAndExpand" Padding="24,0">
                         <Label Text="Ganz schön leer hier." />
-                        <Label Text="Tipp: Füll jetzt deinen Bildungsweg aus. Und wir schicken Dir noch passendere Vorschläge."/>
-                        <Button Text="Los gehts" Margin="0,8" />
+                        <Label Text="Tipp: Füll jetzt deine Sprachkentnisse aus. Und wir schicken Dir noch passendere Vorschläge."/>
+                        <Button Text="Los gehts" Margin="0,8" Command="{x:Binding AddCommand}"/>
                     </VerticalStackLayout>
                 </ContentView>
             </CollectionView.EmptyView>
         </CollectionView>
-        <ImageButton HeightRequest="64" WidthRequest="64" Source="add.png" HorizontalOptions="End" VerticalOptions="End" Margin="16" />
+        <ImageButton Command="{x:Binding AddCommand}" HeightRequest="64" WidthRequest="64" Source="add.png" HorizontalOptions="End" VerticalOptions="End" Margin="16" />
     </Grid>
 </ContentPage>

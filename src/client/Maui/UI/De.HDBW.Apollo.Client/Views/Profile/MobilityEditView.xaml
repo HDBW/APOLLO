@@ -8,12 +8,27 @@
              Shell.TabBarIsVisible="False"
              Title="{x:Static strings:Resources.MobilityEditView_Title}"
              IsBusy="{x:Binding IsBusy}" Padding="0">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="DriverLicenseTemplate"  x:DataType="models:InstructionEntry">
+            <HorizontalStackLayout>
+                <CheckBox />
+                <Image Source="edit.png" WidthRequest="24" HeightRequest="24" />
+                <Label Text="{x:Binding Text}"/>
+            </HorizontalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
     <VerticalStackLayout>
         <Label Text="{x:Static strings:Resources.MobilityEditView_Willing}" />
-        <!-- Combobox -->
+        <Picker ItemsSource="{x:Binding WillingsToTravel}"
+                ItemDisplayBinding="{x:Binding Text}"
+                SelectedItem="{x:Binding SelectedWillingToTravel, Mode=TwoWay}"/>
+        
         <Label Text="{x:Static strings:Resources.MobilityEditView_Vehicle}" />
         <CheckBox />
         <Label Text="{x:Static strings:Resources.MobilityEditView_DriverLicenses}" />
-        <ListView />
+        <CollectionView ItemsSource="{x:Binding DriverLicenses}"
+                        ItemTemplate="{StaticResource DriverLicenseTemplate}"
+            ItemsLayout="VerticalList">
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>

@@ -1,12 +1,26 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.Language.LanguageView"
-             Title="LanguageView">
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewModels:LanguageViewModel"
+             Shell.TabBarIsVisible="False"
+             Title="LanguageView"
+             IsBusy="{x:Binding IsBusy}" Padding="0">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="delete" />
+    </ContentPage.ToolbarItems>
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="{x:Static strings:Resources.Global_Language}"/>
+        <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+            <Label Text="{x:Binding LanguageName}" VerticalOptions="Start"/>
+            <ImageButton Source="search.png" Command="{x:Binding SearchLanguageCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
+        </FlexLayout>
+        <Label Text="{x:Static strings:Resources.Global_LanguageNiveau}"/>
+        <Picker ItemsSource="{x:Binding LanguageNiveaus}"
+            ItemDisplayBinding="{x:Binding Text}"
+            SelectedItem="{x:Binding SelectedLanguageNiveau, Mode=TwoWay}"/>
     </VerticalStackLayout>
 </ContentPage>

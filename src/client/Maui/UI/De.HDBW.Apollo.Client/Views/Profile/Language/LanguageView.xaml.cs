@@ -1,9 +1,24 @@
-namespace De.HDBW.Apollo.Client.Views.Profile.Language;
+// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
-public partial class LanguageView : ContentPage
+using De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors;
+
+namespace De.HDBW.Apollo.Client.Views.Profile.Language
 {
-	public LanguageView()
-	{
-		InitializeComponent();
-	}
+    public partial class LanguageView : ContentPage
+    {
+        public LanguageView(LanguageViewModel model)
+        {
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public LanguageViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as LanguageViewModel;
+            }
+        }
+    }
 }

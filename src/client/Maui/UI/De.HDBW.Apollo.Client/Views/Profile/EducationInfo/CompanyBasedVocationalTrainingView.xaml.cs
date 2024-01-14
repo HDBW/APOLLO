@@ -3,21 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors;
 
-namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo;
-
-public partial class CompanyBasedVocationalTrainingView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo
 {
-    public CompanyBasedVocationalTrainingView(CompanyBasedVocationalTrainingViewModel model)
+    public partial class CompanyBasedVocationalTrainingView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public CompanyBasedVocationalTrainingViewModel? ViewModel
-    {
-        get
+        public CompanyBasedVocationalTrainingView(CompanyBasedVocationalTrainingViewModel model)
         {
-            return BindingContext as CompanyBasedVocationalTrainingViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public CompanyBasedVocationalTrainingViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as CompanyBasedVocationalTrainingViewModel;
+            }
         }
     }
 }

@@ -11,47 +11,18 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
-    public partial class ContactInfoEditViewModel : BaseViewModel
+    public partial class LanguageEditViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private ObservableCollection<ContactInfo> _contacts = new ObservableCollection<ContactInfo>();
+        private ObservableCollection<Language> _laguages = new ObservableCollection<Language>();
 
-        public ContactInfoEditViewModel(
+        public LanguageEditViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<PersonalInformationEditViewModel> logger)
+            ILogger<LanguageEditViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-        }
-
-        public override async Task OnNavigatedToAsync()
-        {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    var contacts = new List<ContactInfo>();
-                    await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(contacts), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
         }
 
         protected override void RefreshCommands()
@@ -67,7 +38,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                   await NavigationService.NavigateAsync(Routes.ContactInfoContactView, worker.Token);
+                    await NavigationService.NavigateAsync(Routes.LanguageView, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -91,11 +62,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private bool CanAdd()
         {
             return !IsBusy;
-        }
-
-        private void LoadonUIThread(List<ContactInfo> contacts)
-        {
-            Contacts = new ObservableCollection<ContactInfo>(contacts);
         }
     }
 }

@@ -1,12 +1,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.Profile.OccupationSearchView"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.LanguageSearchView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
-             x:DataType="viewModels:OccupationSearchViewModel"
+             x:DataType="viewModels:LanguageSearchViewModel"
              Shell.TabBarIsVisible="False"
-             Title="OccupationSearchViewModel"
+             Title="LanguageSearchView"
              IsBusy="{x:Binding IsBusy}" Padding="0">
     <ContentPage.Resources>
         <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">

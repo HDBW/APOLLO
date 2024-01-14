@@ -55,7 +55,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, "ja"));
                     sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, "A1, C1E, B96, Gabelstaplerschein"));
                     sections.Add(SeperatorValue.Import());
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageSkillEditView_Title, new NavigationData(Routes.LanguageSkillEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute));
                     sections.Add(StringValue.Import("Deutsch", "C2"));
                     sections.Add(StringValue.Import("English", "B2"));
                     sections.Add(StringValue.Import("Französich", "A1"));

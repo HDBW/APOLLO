@@ -22,7 +22,7 @@
                 <ContentView>
                     <VerticalStackLayout VerticalOptions="CenterAndExpand" Padding="24,0">
                         <Label Text="Ganz schönn leer hier." />
-                        <Label Text="Tipp: Füll jetzt deinen Kontaktdaten aus. Und wir schicken Dir noch passendere Vorschläge."/>
+                        <Label Text="Tipp: Füll jetzt deine Kontaktdaten aus. Und wir schicken Dir noch passendere Vorschläge."/>
                         <Button Text="Los gehts" Margin="0,8" Command="{x:Binding AddCommand}"/>
                     </VerticalStackLayout>
                 </ContentView>

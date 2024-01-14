@@ -1,12 +1,29 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.License.LicenseView"
-             Title="LicenseView">
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewModels:LicenseViewModel"
+             Shell.TabBarIsVisible="False"
+             Title="LicenseView"
+             IsBusy="{x:Binding IsBusy}" Padding="0">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="delete" />
+    </ContentPage.ToolbarItems>
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="{x:Static strings:Resources.Global_IssueDate}"/>
+        <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+            <Label Text="{x:Static strings:Resources.Global_Expires}"/>
+            <Switch x:Name="Switch" IsToggled="True" />
+        </FlexLayout>
+        <VerticalStackLayout IsVisible="{x:Binding IsToggled, Source={x:Reference Switch}}">
+            <Label Text="{x:Static strings:Resources.Global_ExpireDate}"/>
+            <DatePicker Date="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        </VerticalStackLayout>
+        <Label Text="{x:Static strings:Resources.Global_Discribtion}"/>
+        <Entry Text="{x:Binding Description, Mode=TwoWay}" />
     </VerticalStackLayout>
 </ContentPage>
