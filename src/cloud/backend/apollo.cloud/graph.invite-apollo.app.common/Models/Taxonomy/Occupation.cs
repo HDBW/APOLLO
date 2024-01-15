@@ -68,7 +68,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// <summary>
         /// Related Taxonomy
         /// </summary>
-        public TaxonomyType TaxonomyInfo { get; set; }
+        public Taxonomy TaxonomyInfo { get; set; }
 
         /// <summary>
         /// This information is relevant since some Taxonomies have different versions.

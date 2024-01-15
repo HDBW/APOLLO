@@ -23,6 +23,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 
         public CultureInfo Language { get; set; }
 
-        public TaxonomyType TaxonomieInfo { get; set; }
+        public Taxonomy TaxonomieInfo { get; set; }
     }
 }

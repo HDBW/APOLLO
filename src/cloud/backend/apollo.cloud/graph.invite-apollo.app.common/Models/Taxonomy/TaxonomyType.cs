@@ -1,6 +1,6 @@
 ﻿namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
-    public enum TaxonomyType
+    public enum Taxonomy
     {
         Unknown = 0,
         ISCO = 1,

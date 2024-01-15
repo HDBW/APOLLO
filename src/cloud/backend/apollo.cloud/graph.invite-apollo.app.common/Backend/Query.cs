@@ -40,6 +40,6 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specify the order of the return items by the specified field.
         /// </summary>
-        public SortExpression? SortExpression { get; set; } 
+        public SortExpression? SortExpression { get; set; }
     }
 }

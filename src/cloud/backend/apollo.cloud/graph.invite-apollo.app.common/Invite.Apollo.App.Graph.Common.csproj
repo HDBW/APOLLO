@@ -10,9 +10,9 @@
     <NeutralLanguage>en-001</NeutralLanguage>
     <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.1.26</AssemblyVersion>
-    <FileVersion>1.0.1.26</FileVersion>
-	  <Version>1.0.1.26</Version>
+    <AssemblyVersion>1.0.1.27</AssemblyVersion>
+    <FileVersion>1.0.1.27</FileVersion>
+	  <Version>1.0.1.27</Version>
 	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Activities\Enums\" />
-    <Folder Include="Backend\" />
     <Folder Include="Models\Recommendation\" />
   </ItemGroup>
 
