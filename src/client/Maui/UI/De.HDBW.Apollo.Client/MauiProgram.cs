@@ -94,7 +94,7 @@ namespace De.HDBW.Apollo.Client
             return userSecretsService;
         }
 
-        private static bool SetupB2CLogin(IServiceCollection services)
+        private static AccountId? SetupB2CLogin(IServiceCollection services)
         {
             var b2cClientApplicationBuilder = PublicClientApplicationBuilder.Create(B2CConstants.ClientId)
 #if ANDROID
@@ -121,20 +121,20 @@ namespace De.HDBW.Apollo.Client
             }
 
             services.AddSingleton<IAuthService>(authService);
-            bool hasRegisteredUser = false;
+            AccountId? registerdUserHomeAccountId = null;
             try
             {
                 var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
                 task.Wait();
                 var authenticationResult = task.Result;
-                hasRegisteredUser = authenticationResult?.Account != null;
+                registerdUserHomeAccountId = authenticationResult?.Account?.HomeAccountId;
             }
             catch (Exception ex)
             {
                 Log.Error($"Unknow Error while AcquireTokenSilent in {nameof(MauiProgram)}. Error was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
             }
 
-            return hasRegisteredUser;
+            return registerdUserHomeAccountId;
         }
 
         private static void SetupDataBaseTableProvider(MauiAppBuilder builder)
@@ -193,13 +193,13 @@ namespace De.HDBW.Apollo.Client
             return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
         }
 
-        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, bool hasRegisterdUser)
+        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AccountId registerdUserHomeAccountId)
         {
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();
             services.AddSingleton<IDispatcherService, DispatcherService>();
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<ISessionService>(new SessionService(hasRegisterdUser));
+            services.AddSingleton<ISessionService>(new SessionService(registerdUserHomeAccountId));
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
             services.AddSingleton<IFeedbackService, FeedbackService>();
