@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Maui;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
@@ -202,6 +203,8 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
             services.AddSingleton<IFeedbackService, FeedbackService>();
+            services.AddSingleton<IMessenger, WeakReferenceMessenger>();
+            services.AddSingleton<INetworkService, NetworkService>();
             services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
