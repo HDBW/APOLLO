@@ -9,7 +9,8 @@
              Title="{x:Static strings:Resources.CareerInfoEditView_Title}"
              x:DataType="viewModels:CareerInfoEditViewModel"
              Shell.TabBarIsVisible="False"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" 
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="EmptyTemplate">
             <SwipeView Threshold="100" >

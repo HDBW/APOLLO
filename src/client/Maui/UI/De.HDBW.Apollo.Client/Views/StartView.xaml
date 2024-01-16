@@ -11,7 +11,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:StartViewModel"
              IsBusy="{x:Binding IsBusy}"
-             Padding="0">
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <converter:EntityTypeToColorConverter x:Key="EntityTypeToColorConverter"
                                               DefaultColor="Transparent"

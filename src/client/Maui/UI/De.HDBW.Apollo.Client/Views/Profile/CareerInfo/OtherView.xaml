@@ -7,7 +7,8 @@
              x:DataType="viewModels:OtherViewModel"
              Shell.TabBarIsVisible="False"
              Title="OtherView"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>

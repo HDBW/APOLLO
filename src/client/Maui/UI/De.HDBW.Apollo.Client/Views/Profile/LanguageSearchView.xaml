@@ -7,7 +7,8 @@
              x:DataType="viewModels:LanguageSearchViewModel"
              Shell.TabBarIsVisible="False"
              Title="LanguageSearchView"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">
             <Label Text="{x:Binding Text}" Margin="0,8"/>

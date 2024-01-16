@@ -8,7 +8,8 @@
              x:DataType="viewModels:BasicViewModel"
              Shell.TabBarIsVisible="False"
              Title="BasicView"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>

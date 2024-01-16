@@ -7,7 +7,8 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:WebReferenceEditViewModel"
              Shell.TabBarIsVisible="False"
-             IsBusy="{x:Binding IsBusy}" Style="{StaticResource DefaultPageStyle}">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <Grid>
         <CollectionView ItemsSource="{x:Binding WebReferences}"
                 ItemsLayout="VerticalList">

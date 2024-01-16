@@ -8,7 +8,8 @@
              Title="{x:Static strings:Resources.EducationInfoEditView_Title}"
              x:DataType="viewModels:EducationInfoEditViewModel"
              Shell.TabBarIsVisible="False"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="EmptyTemplate">
         </DataTemplate>

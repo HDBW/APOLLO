@@ -11,7 +11,7 @@
              x:DataType="viewModels:AssessmentViewModel"
              IsBusy="{x:Binding IsBusy}"
              Shell.FlyoutBehavior="Disabled"
-             Padding="0">
+             Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding CancelCommand}" />
     </Shell.BackButtonBehavior>

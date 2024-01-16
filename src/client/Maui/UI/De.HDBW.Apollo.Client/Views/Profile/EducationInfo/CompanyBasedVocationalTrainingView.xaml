@@ -8,7 +8,8 @@
              x:DataType="viewModels:CompanyBasedVocationalTrainingViewModel"
              Shell.TabBarIsVisible="False"
              Title="CompanyBasedVocationalTrainingView"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>

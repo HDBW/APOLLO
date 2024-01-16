@@ -7,7 +7,8 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:LanguageEditViewModel"
              Shell.TabBarIsVisible="False"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <Grid>
         <CollectionView ItemsSource="{x:Binding Laguages}"
                     ItemsLayout="VerticalList">

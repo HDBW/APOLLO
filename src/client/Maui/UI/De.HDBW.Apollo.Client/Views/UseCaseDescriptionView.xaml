@@ -11,7 +11,8 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{x:Binding IsBusy}"
-             x:DataType="viewModels:UseCaseDescriptionViewModel" Padding="0">
+             x:DataType="viewModels:UseCaseDescriptionViewModel"
+             Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*, auto">
         <ScrollView Padding="24,0" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
             <VerticalStackLayout>

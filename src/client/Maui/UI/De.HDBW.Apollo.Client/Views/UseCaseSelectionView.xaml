@@ -11,7 +11,8 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:UseCaseSelectionViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             IsBusy="{x:Binding IsBusy}">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="Auto, Auto, *" Padding="0,16">
         <Label FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.UseCaseSelectionView_Choose}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
         <Label Grid.Row="1" Text="{x:Static strings:Resources.UseCaseSelectionView_ChooseDescription}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="0,8"/>

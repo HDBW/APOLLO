@@ -7,7 +7,8 @@
              x:DataType="viewModels:VoluntaryServiceViewModel"
              Shell.TabBarIsVisible="False"
              Title="VoluntaryServiceView"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>

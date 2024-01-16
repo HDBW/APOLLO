@@ -9,7 +9,7 @@
              xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:genericModels="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
              x:DataType="viewModels:ProfileViewModel"
-             IsBusy="{x:Binding IsBusy}" Padding="0"
+             IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="ProfileInteractionTemplate" x:DataType="interactionModels:InteractionEntry">

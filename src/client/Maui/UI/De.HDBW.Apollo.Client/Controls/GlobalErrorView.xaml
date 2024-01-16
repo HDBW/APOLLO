@@ -6,9 +6,7 @@
              Unloaded="HandleUnloaded"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:GlobalErrorViewModel">
-    <VerticalStackLayout Background="Red">
-        <Label
-            TextColor="White"
-            Text="Welcome to .NET MAUI!" />
+    <VerticalStackLayout Background="Red" Padding="8">
+        <Label TextColor="White" Text="{x:Binding Message}" />
     </VerticalStackLayout>
 </ContentView>

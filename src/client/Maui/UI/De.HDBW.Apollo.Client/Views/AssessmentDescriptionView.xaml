@@ -6,7 +6,8 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.AssessmentDescriptionView_Title}"
              Shell.FlyoutBehavior="Disabled"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
 
     <Grid RowDefinitions="auto, 60, *, auto, auto">
         <Image Source="{Binding ImagePath}" IsVisible="{Binding HasImage}" HeightRequest="200" Aspect="AspectFill" Grid.RowSpan="2"/>
