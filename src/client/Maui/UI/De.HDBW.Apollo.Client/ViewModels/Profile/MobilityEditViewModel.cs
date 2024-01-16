@@ -12,7 +12,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
     public partial class MobilityEditViewModel : BaseViewModel
     {
-
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _willingsToTravel = new ObservableCollection<InteractionEntry>();
 

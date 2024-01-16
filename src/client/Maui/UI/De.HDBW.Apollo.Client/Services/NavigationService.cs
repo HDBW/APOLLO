@@ -437,6 +437,5 @@ namespace De.HDBW.Apollo.Client.Services
         {
             return page.BindingContext as BaseViewModel;
         }
-
     }
 }

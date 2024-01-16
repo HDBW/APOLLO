@@ -364,6 +364,8 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<OccupationSearchView>();
             services.AddTransient<OccupationSearchViewModel>();
+
+            services.AddSingleton<GlobalErrorViewModel>();
         }
 
         private static void SetupRoutes()

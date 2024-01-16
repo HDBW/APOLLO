@@ -38,10 +38,10 @@
         <Picker ItemsSource="{x:Binding SchoolGraduations}"
             ItemDisplayBinding="{x:Binding Text}"
             SelectedItem="{x:Binding SelectedSchoolGraduation, Mode=TwoWay}"/>
-        <Label Text="{x:Static strings:Resources.Global_UniverityDegree}"/>
+        <!--<Label Text="{x:Static strings:Resources.Global_UniverityDegree}"/>
         <Picker ItemsSource="{x:Binding UniverityDegrees}"
                 ItemDisplayBinding="{x:Binding Text}"
-                SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>
+                SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>-->
         <Label Text="{x:Static strings:Resources.Global_CompletionState}"/>
         <Picker ItemsSource="{x:Binding CompletionStates}"
             ItemDisplayBinding="{x:Binding Text}"

@@ -7,7 +7,8 @@
              x:DataType="viewModels:MobilityEditViewModel"
              Shell.TabBarIsVisible="False"
              Title="{x:Static strings:Resources.MobilityEditView_Title}"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}" Padding="0"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="DriverLicenseTemplate"  x:DataType="models:InstructionEntry">
             <HorizontalStackLayout>
@@ -17,18 +18,18 @@
             </HorizontalStackLayout>
         </DataTemplate>
     </ContentPage.Resources>
-    <VerticalStackLayout>
+    <Grid RowDefinitions="Auto, Auto,Auto, Auto, Auto, *">
         <Label Text="{x:Static strings:Resources.MobilityEditView_Willing}" />
-        <Picker ItemsSource="{x:Binding WillingsToTravel}"
+        <Picker Grid.Row="1" ItemsSource="{x:Binding WillingsToTravel}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedWillingToTravel, Mode=TwoWay}"/>
-        
-        <Label Text="{x:Static strings:Resources.MobilityEditView_Vehicle}" />
-        <CheckBox />
-        <Label Text="{x:Static strings:Resources.MobilityEditView_DriverLicenses}" />
-        <CollectionView ItemsSource="{x:Binding DriverLicenses}"
+
+        <Label Grid.Row="2" Text="{x:Static strings:Resources.MobilityEditView_Vehicle}" />
+        <CheckBox Grid.Row="3" />
+        <Label Grid.Row="4" Text="{x:Static strings:Resources.MobilityEditView_DriverLicenses}" />
+        <CollectionView Grid.Row="5" ItemsSource="{x:Binding DriverLicenses}"
                         ItemTemplate="{StaticResource DriverLicenseTemplate}"
             ItemsLayout="VerticalList">
         </CollectionView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
