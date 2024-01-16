@@ -167,6 +167,7 @@ namespace Apollo.Api
             // map other properties here
             // tr.Tags = dict.ContainsKey("Tags") ? (List<string>)dict["Tags"] : new List<string>();
             // tr.PublishingDate = dict.ContainsKey("PublishingDate") ? (DateTime)dict["PublishingDate"] : DateTime.MinValue;
+            //tr.Appointment = dict.ContainsKey("Appointment") ? ToEntityList<Appointment>(dict["Appoinment"] as List<ExpandoObject>, ToAppointments) : new List<Appointment>();
 
             return tr;
         }
@@ -216,7 +217,7 @@ namespace Apollo.Api
             appointment.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
             appointment.IsGuaranteed = (bool)dict["IsGuaranteed"];
             //appointment.TrainingMode = ToEntityList<TrainingMode>(dict["TrainingMode"] as List<ExpandoObject>, ToTrainingType);
-            appointment.TrainingMode = (TrainingMode)dict["TrainingMode"];
+           // appointment.TrainingType = (TrainingType)dict["TrainingType"];
             appointment.TimeInvestAttendee = (TimeSpan)dict["TimeInvestAttendee"];
             appointment.TimeModel = (TrainingTimeModel)dict["TimeModel"];
             // Add other property mappings as needed
@@ -347,12 +348,13 @@ namespace Apollo.Api
 
             User user = new User
             {
-                Goal = dict.ContainsKey("Goal") ? (string)dict["Goal"] : "",
-                FirstName = dict.ContainsKey("FirstName") ? (string)dict["FirstName"] : "",
-                LastName = dict.ContainsKey("LastName") ? (string)dict["LastName"] : "",
-                Image = dict.ContainsKey("Image") ? (string)dict["Image"] : "",
                 Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
-                UserName = dict.ContainsKey("UserName") ? (string)dict["UserName"] : ""
+                ObjectId = dict.ContainsKey("ObjectId") ? (string)dict["ObjectId"] : "",
+                Upn = dict.ContainsKey("Upn") ? (string)dict["Upn"] : null,
+                Email = dict.ContainsKey("Email") ? (string)dict["Email"] : null,
+                Name = dict.ContainsKey("Name") ? (string)dict["Name"] : "",
+
+                // Should add ContactInfos,  Birthdate,  Disabilities, Profile?
             };
 
             return user;

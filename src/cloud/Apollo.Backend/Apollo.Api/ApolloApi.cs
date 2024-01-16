@@ -60,10 +60,9 @@ namespace Apollo.Api
         /// <exception cref="ArgumentNullException"></exception>
         public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
         {
-
             _dal = dal;
             _logger = logger;
-            config = config;
+            _config = config;
             //// Validate the logger. 
             //if (logger == null)
             //{
@@ -76,22 +75,31 @@ namespace Apollo.Api
             //{
             //    _logger = logger;
             //}
-
-            _logger = logger;
-
+           
             try
             {
-                _dal = dal ?? throw new ArgumentNullException(nameof(dal));
-                _config = config ?? throw new ArgumentNullException(nameof(config));
+                if (_dal == null)
+                {
+                    throw new ArgumentNullException(nameof(dal));
+                }
+
+                if (_config == null)
+                {
+                    throw new ArgumentNullException(nameof(config));
+                }
+
                 ValidateConfig(_config);
 
                 // Additional initialization or method calls can be added here.
             }
+            catch (ApolloApiException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                //since we made sure the logger is not null we can then do the logging here.
                 _logger?.LogError($"An error occurred in ApolloApi constructor: {ex.Message}", ex);
-                throw; // Re-throwing the exception to maintain the flow, can be handled differently based on requirements.
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while initializing ApolloApi.", ex);
             }
         }
 
@@ -113,12 +121,17 @@ namespace Apollo.Api
                 // Assuming there's another instance or static method to get the name
                 return GetCollectionName(item.GetType().Name);
             }
+            catch (ApolloApiException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 _logger?.LogError($"Error in GetCollectionName: {ex.Message}", ex);
-                throw;
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while getting the collection name.", ex);
             }
         }
+
 
         /// <summary>
         /// Gets the name of the collection from type. 
@@ -161,13 +174,26 @@ namespace Apollo.Api
             // Add further validation as required for other properties
         }
 
+
         /// <summary>
         /// Creates the unique identifier for the new training instance.
         /// </summary>
         /// <returns></returns>
         private string CreateTrainingId()
         {
-            return CreateId(nameof(Training));
+            try
+            {
+                return CreateId(nameof(Training));
+            }
+            catch (ApolloApiException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError($"Error in CreateTrainingId: {ex.Message}", ex);
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while creating a training ID.", ex);
+            }
         }
 
 
@@ -177,8 +203,21 @@ namespace Apollo.Api
         /// <returns></returns>
         private string CreateUserId()
         {
-            return CreateId(nameof(User));
+            try
+            {
+                return CreateId(nameof(User));
+            }
+            catch (ApolloApiException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError($"Error in CreateUserId: {ex.Message}", ex);
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while creating a user ID.", ex);
+            }
         }
+
 
         /// <summary>
         /// Creates the unique identifier for the new instance of the specified entity.
@@ -187,7 +226,20 @@ namespace Apollo.Api
         /// <returns></returns>
         private string CreateId(string entityName)
         {
-            return $"{entityName}-{Guid.NewGuid().ToString()}";
+            try
+            {
+                return $"{entityName}-{Guid.NewGuid().ToString()}";
+            }
+            catch (ApolloApiException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError($"Error in CreateId: {ex.Message}", ex);
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while creating an ID.", ex);
+            }
         }
+
     }
 }

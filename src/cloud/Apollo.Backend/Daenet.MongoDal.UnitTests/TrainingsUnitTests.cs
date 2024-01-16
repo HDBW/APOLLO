@@ -80,6 +80,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Expects an ApplicationException to be thrown.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         [ExpectedException(typeof(ApplicationException))]
         public async Task ThrowOnDeleteNonExistingDocTest()
         {
@@ -97,6 +98,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests the behavior of the Delete method when attempting to delete a non-existing document without throwing an exception.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task DoNotThrowDeleteNonExistingDocTest()
         {
             var dal = Helpers.GetDal();
@@ -136,7 +138,7 @@ namespace Daenet.MongoDal.UnitTests
         /// </summary>
         /// <param name="idx">Index of the Training instance to test.</param>
         [TestMethod]
-        //[TestCategory("Prod")]
+        [TestCategory("Prod")]
         [DataRow(0)]
         [DataRow(1)]
         [DataRow(2)]
@@ -155,6 +157,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Expects the query result to be empty.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryNonExsistingTrainingTest()
         {
             var dal = Helpers.GetDal();
@@ -181,6 +184,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests querying for Training instances based on specific criteria.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryTrainingsTest()
         {
             var dal = Helpers.GetDal();
@@ -223,6 +227,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests querying for Training instances by name using a generic query.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryTrainingsByNameGenericTest()
         {
             var dal = Helpers.GetDal();
@@ -258,6 +263,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests querying for Training instances by name using a non-generic query.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task QueryTrainingsByNameNonGenericTest()
         {
             var dal = Helpers.GetDal();
@@ -294,6 +300,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Verifies that the upsert operation updates the existing documents.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task UpsertTest()
         {
             var dal = Helpers.GetDal();
@@ -329,6 +336,7 @@ namespace Daenet.MongoDal.UnitTests
         /// Tests the count functionality by counting Training instances with certain criteria.
         /// </summary>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task CountTest()
         {
             var dal = Helpers.GetDal();

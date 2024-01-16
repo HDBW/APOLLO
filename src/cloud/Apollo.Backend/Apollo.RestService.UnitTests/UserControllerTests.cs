@@ -14,7 +14,7 @@ using Amazon.Auth.AccessControlPolicy;
 using Moq;
 using System.Reflection;
 
-namespace Apollo.RestService.RestService.UnitTests
+namespace Apollo.RestService.UnitTests
 {
     /// <summary>
     /// Unit tests for the UserController class.
@@ -49,7 +49,7 @@ namespace Apollo.RestService.RestService.UnitTests
         {
             // Arrange
             var userId = "someId";
-            var expectedUser = new User { Id = userId, FirstName = "John", LastName = "Doe" };
+            var expectedUser = new User { Id = userId, Name = "John Doe" };
             _mockApi.Setup(api => api.GetUser(userId)).ReturnsAsync(expectedUser);
 
             // Act
@@ -57,7 +57,9 @@ namespace Apollo.RestService.RestService.UnitTests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(expectedUser.FirstName, result.User.FirstName);
+            Assert.IsNotNull(result.User);
+            Assert.AreEqual(expectedUser.Id, result.User.Id);
+            Assert.AreEqual(expectedUser.Name, result.User.Name);
         }
 
 
@@ -70,10 +72,11 @@ namespace Apollo.RestService.RestService.UnitTests
             // Arrange
             var request = new QueryUsersRequest();
             var expectedUsers = new List<User>
-            {
-                new User { FirstName = "Alice" },
-                new User { FirstName = "Bob" }
-            };
+             {
+                new User { Name = "Alice", Id = "1", ObjectId = "OID1", Upn = "alice@example.com", Email = "alice@example.com", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1990, 1, 1), Disabilities = false, Profile = new Profile() },
+                new User { Name = "Bob", Id = "2", ObjectId = "OID2", Upn = "bob@example.com", Email = "bob@example.com", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1992, 2, 2), Disabilities = false, Profile = new Profile() }
+             };
+
             _mockApi.Setup(api => api.QueryUsers(It.IsAny<QueryUsersRequest>())).ReturnsAsync(expectedUsers);
 
             // Act
@@ -95,7 +98,7 @@ namespace Apollo.RestService.RestService.UnitTests
         public async Task CreateOrUpdateUser_CreatesUsersSuccessfully()
         {
             // Arrange
-            var newUser = new User { UserName = "NewUser" };
+            var newUser = new User { Name = "NewUser" };
             var request = new CreateOrUpdateUserRequest(newUser);
 
             // Mock the behavior of the CreateOrUpdateUser method of ApolloApi
@@ -119,7 +122,7 @@ namespace Apollo.RestService.RestService.UnitTests
         public async Task InsertUsers_InsertsUsersSuccessfully()
         {
             // Arrange
-            var usersToInsert = new List<User> { new User { FirstName = "Dave" } };
+            var usersToInsert = new List<User> { new User { Name = "Dave", ObjectId = "ObjectID1", Upn = "upn1@example.com", Email = "dave@example.com", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1980, 1, 1), Disabilities = false, Profile = new Profile() } };
             _mockApi.Setup(api => api.InsertUser(It.IsAny<User>()))
                     .ReturnsAsync(() => Guid.NewGuid().ToString());
 
@@ -164,7 +167,7 @@ namespace Apollo.RestService.RestService.UnitTests
             _mockApi.Reset();
             _mockLogger.Reset();
 
-         
+
         }
 
     }

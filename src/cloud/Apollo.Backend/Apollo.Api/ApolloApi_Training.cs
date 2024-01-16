@@ -30,7 +30,7 @@ namespace Apollo.Api
                 if (training == null)
                 {
                     // No matching training found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Training not found.", new Exception("Training not found."));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Training not found.");
                 }
 
                 _logger?.LogTrace($"Completed {nameof(GetTraining)}");
@@ -71,7 +71,7 @@ namespace Apollo.Api
                 if (res == null || !res.Any())
                 {
                     // No matching records found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.", new Exception("Expetion while quering"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.");
                 }
 
                 // Convert results to a list of typed Training objects
@@ -96,108 +96,110 @@ namespace Apollo.Api
         }
 
 
-        /// <summary>
-        /// Searches for trainings containing a specified keyword.
-        /// </summary>
-        /// <param name="keyword">The keyword to search within the training names.</param>
-        /// <returns>Task that represents the asynchronous operation, containing a list of Trainings matching the keyword.</returns>
-        //public async Task<IList<Training>> SearchTrainingsByKeyword(string keyword)
-        //{
-        //    try
-        //    {
-        //        var query = new Apollo.Common.Entities.Query
-        //        {
-        //            Fields = new List<string> { /* Fields to return */ },
-        //            Filter = new Apollo.Common.Entities.Filter
-        //            {
-        //                Fields = new List<FieldExpression> { new FieldExpression { FieldName = "TrainingName", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } } }
-        //            },
-        //            Top = 100,
-        //            Skip = 0
-        //        };
-
-        //        var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-        //        return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.SearchTrainingsByKeywordErr, "Error while searching trainings by keyword", ex);
-        //    }
-        //}
 
 
-        /// <summary>
-        /// Retrieves trainings within a specified date range.
-        /// </summary>
-        /// <param name="startDate">Start date of the range.</param>
-        /// <param name="endDate">End date of the range.</param>
-        /// <returns>Task that represents the asynchronous operation, containing a list of Trainings within the date range.</returns>
-        //public async Task<IList<Training>> QueryTrainingsByDateRange(DateTime startDate, DateTime endDate)
-        //{
-        //    try
-        //    {
-        //        var query = new Apollo.Common.Entities.Query
-        //        {
-        //            Fields = new List<string> { /* Fields to return */ },
-        //            Filter = new Apollo.Common.Entities.Filter
-        //            {
-        //                Fields = new List<FieldExpression>
-        //        {
-        //            new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } },
-        //            new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } }
-        //        }
-        //            },
-        //            Top = 100,
-        //            Skip = 0
-        //        };
+            /// <summary>
+            /// Searches for trainings containing a specified keyword.
+            /// </summary>
+            /// <param name="keyword">The keyword to search within the training names.</param>
+            /// <returns>Task that represents the asynchronous operation, containing a list of Trainings matching the keyword.</returns>
+            //public async Task<IList<Training>> SearchTrainingsByKeyword(string keyword)
+            //{
+            //    try
+            //    {
+            //        var query = new Apollo.Common.Entities.Query
+            //        {
+            //            Fields = new List<string> { /* Fields to return */ },
+            //            Filter = new Apollo.Common.Entities.Filter
+            //            {
+            //                Fields = new List<FieldExpression> { new FieldExpression { FieldName = "TrainingName", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } } }
+            //            },
+            //            Top = 100,
+            //            Skip = 0
+            //        };
 
-        //        var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-        //        return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsByDateRangeErr, "Error while querying trainings by date range", ex);
-        //    }
-        //}
+            //        var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+            //        return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new ApolloApiException(ErrorCodes.TrainingErrors.SearchTrainingsByKeywordErr, "Error while searching trainings by keyword", ex);
+            //    }
+            //}
 
 
-        /// <summary>
-        /// Counts the number of trainings provided by a specific provider.
-        /// </summary>
-        /// <param name="providerId">The identifier of the training provider.</param>
-        /// <returns>Task that represents the asynchronous operation, containing the count of trainings.</returns>
-        //public async Task<int> CountTrainingsByProvider(string providerId)
-        //{
-        //    try
-        //    {
-        //        var query = new Query
-        //        {
-        //            Filter = new Filter
-        //            {
-        //                Fields = new List<FieldExpression> { new FieldExpression { FieldName = "ProviderId", Operator = QueryOperator.Equals, Argument = new List<object> { providerId } } },
-        //            },
-        //            Top = int.MaxValue, // may need to be adjusted to actual data size
-        //            Skip = 0
-        //        };
+            /// <summary>
+            /// Retrieves trainings within a specified date range.
+            /// </summary>
+            /// <param name="startDate">Start date of the range.</param>
+            /// <param name="endDate">End date of the range.</param>
+            /// <returns>Task that represents the asynchronous operation, containing a list of Trainings within the date range.</returns>
+            //public async Task<IList<Training>> QueryTrainingsByDateRange(DateTime startDate, DateTime endDate)
+            //{
+            //    try
+            //    {
+            //        var query = new Apollo.Common.Entities.Query
+            //        {
+            //            Fields = new List<string> { /* Fields to return */ },
+            //            Filter = new Apollo.Common.Entities.Filter
+            //            {
+            //                Fields = new List<FieldExpression>
+            //        {
+            //            new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } },
+            //            new FieldExpression { FieldName = "PublishingDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } }
+            //        }
+            //            },
+            //            Top = 100,
+            //            Skip = 0
+            //        };
 
-        //        var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-        //        return res.Count;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.CountTrainingsByProviderErr, "Error while counting trainings by provider", ex);
-        //    }
-        //}
+            //        var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+            //        return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsByDateRangeErr, "Error while querying trainings by date range", ex);
+            //    }
+            //}
 
 
-        /// <summary>
-        /// Retrieves a paginated list of trainings based on a specified query filter.
-        /// </summary>
-        /// <param name="query">The query object containing filter criteria for the trainings.</param>
-        /// <param name="pageNumber">Page number for pagination.</param>
-        /// <param name="pageSize">Number of items per page.</param>
-        /// <returns>Task that represents the asynchronous operation, containing a list of paginated Training objects.</returns>
-        public async Task<IList<Training>> QueryTrainingsPaginated(Query query, int pageNumber, int pageSize)
+            /// <summary>
+            /// Counts the number of trainings provided by a specific provider.
+            /// </summary>
+            /// <param name="providerId">The identifier of the training provider.</param>
+            /// <returns>Task that represents the asynchronous operation, containing the count of trainings.</returns>
+            //public async Task<int> CountTrainingsByProvider(string providerId)
+            //{
+            //    try
+            //    {
+            //        var query = new Query
+            //        {
+            //            Filter = new Filter
+            //            {
+            //                Fields = new List<FieldExpression> { new FieldExpression { FieldName = "ProviderId", Operator = QueryOperator.Equals, Argument = new List<object> { providerId } } },
+            //            },
+            //            Top = int.MaxValue, // may need to be adjusted to actual data size
+            //            Skip = 0
+            //        };
+
+            //        var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), null, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+            //        return res.Count;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new ApolloApiException(ErrorCodes.TrainingErrors.CountTrainingsByProviderErr, "Error while counting trainings by provider", ex);
+            //    }
+            //}
+
+
+            /// <summary>
+            /// Retrieves a paginated list of trainings based on a specified query filter.
+            /// </summary>
+            /// <param name="query">The query object containing filter criteria for the trainings.</param>
+            /// <param name="pageNumber">Page number for pagination.</param>
+            /// <param name="pageSize">Number of items per page.</param>
+            /// <returns>Task that represents the asynchronous operation, containing a list of paginated Training objects.</returns>
+            public async Task<IList<Training>> QueryTrainingsPaginated(Query query, int pageNumber, int pageSize)
         {
             try
             {
@@ -209,7 +211,7 @@ namespace Apollo.Api
                 if (res == null)
                 {
                     // No results found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "No results found for paginated query.", new Exception("Exeption for paginated query"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "No results found for paginated query.");
                 }
 
                 return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
@@ -249,7 +251,7 @@ namespace Apollo.Api
                 if (res == null)
                 {
                     // No results found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "No results found for the query.", new Exception("Exeption"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "No results found for the query.");
                 }
 
                 return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
@@ -283,7 +285,7 @@ namespace Apollo.Api
                 if (count < 0)
                 {
                     // Negative count is unexpected, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTotalTrainingCountErr, "Invalid total training count.", new Exception("Exeption for training count"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTotalTrainingCountErr, "Invalid total training count.");
                 }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(GetTotalTrainingCountAsync)}");
@@ -365,7 +367,7 @@ namespace Apollo.Api
                 if (trainings == null || !trainings.Any())
                 {
                     // No trainings to insert, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "No trainings to insert.", new Exception("Exption while inserting training"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.InsertTrainingErr, "No trainings to insert.");
                 }
 
                 foreach (var training in trainings)
@@ -413,7 +415,7 @@ namespace Apollo.Api
                 if (trainings == null || !trainings.Any())
                 {
                     // No training data provided, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.", new Exception("Exeption for CreateorUpdateTraining"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.");
                 }
 
                 foreach (var training in trainings)
@@ -432,7 +434,7 @@ namespace Apollo.Api
                 if (ids.Count == 0)
                 {
                     // No new training IDs generated, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No new training records were created.", new Exception("Expetion while creating training records"));
+                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No new training records were created.");
                 }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(CreateOrUpdateTraining)}");
