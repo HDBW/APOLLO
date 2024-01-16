@@ -10,9 +10,9 @@
     <NeutralLanguage>en-001</NeutralLanguage>
     <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.1.27</AssemblyVersion>
-    <FileVersion>1.0.1.27</FileVersion>
-	  <Version>1.0.1.27</Version>
+    <AssemblyVersion>1.0.1.28</AssemblyVersion>
+    <FileVersion>1.0.1.28</FileVersion>
+	  <Version>1.0.1.28</Version>
 	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
