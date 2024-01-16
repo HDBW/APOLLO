@@ -10,7 +10,7 @@ namespace Apollo.Common.Entities
     /// 
     /// </summary>
     /// <remarks>
-    ///          Unknown = 0,
+    /// Unknown = 0,
     /// // Sonstiges
     /// Other = 1,
     /// // Berufspraxis
