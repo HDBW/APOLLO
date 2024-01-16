@@ -18,7 +18,7 @@
                     <Setter.Value>
                         <ControlTemplate>
                             <Grid RowDefinitions="Auto, *" Background="AliceBlue">
-                                <controls:ErrorView />
+                                <controls:GlobalErrorView />
                                 <ContentPresenter Grid.Row="1" />
                             </Grid>
                         </ControlTemplate>
