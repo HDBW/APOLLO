@@ -68,7 +68,7 @@ namespace De.HDBW.Apollo.Client
             Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
             SetupRoutes();
             SetupHandler();
-            var result = SetupB2CLogin(builder.Services);
+            var result = SetupB2CLogin(builder.Services) ?? new AccountId("dummy", "dummy", "dummy");
             SetupServices(builder.Services, secretsService, result);
             SetupDataBaseTableProvider(builder);
             SetupRepositories(builder.Services);
@@ -193,7 +193,7 @@ namespace De.HDBW.Apollo.Client
             return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
         }
 
-        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AccountId accountId)
+        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AccountId? accountId)
         {
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();
@@ -233,9 +233,9 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<ICourseContactRelationRepository, CourseContactRelationRepository>();
             services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
             services.AddSingleton<ICategoryRecomendationItemRepository, CategoryRecomendationItemRepository>();
-            services.AddSingleton<IProfileRepository>((serviceProvider) =>
+            services.AddSingleton<IUserRepository>((serviceProvider) =>
             {
-                return new ProfileRepository(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), serviceProvider.GetService<ILogger<ProfileRepository>>()!);
+                return new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"User_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<UserRepository>>()!);
             });
         }
 

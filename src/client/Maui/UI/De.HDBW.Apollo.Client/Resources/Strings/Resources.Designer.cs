@@ -1591,6 +1591,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Je besser das Profil gefüllt ist, desto bessere Vorschläge liefern wir dir..
+        /// </summary>
+        public static string ProfileView_RecommendationSection_SubTitle {
+            get {
+                return ResourceManager.GetString("ProfileView_RecommendationSection_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hier fehlt noch was..
+        /// </summary>
+        public static string ProfileView_RecommendationSection_Title {
+            get {
+                return ResourceManager.GetString("ProfileView_RecommendationSection_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profil.
         /// </summary>
         public static string ProfileView_Title {

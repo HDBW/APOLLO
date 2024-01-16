@@ -1089,4 +1089,10 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="GlobalError_NoInternet" xml:space="preserve">
     <value>Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung.</value>
   </data>
+  <data name="ProfileView_RecommendationSection_SubTitle" xml:space="preserve">
+    <value>Je besser das Profil gefüllt ist, desto bessere Vorschläge liefern wir dir.</value>
+  </data>
+  <data name="ProfileView_RecommendationSection_Title" xml:space="preserve">
+    <value>Hier fehlt noch was.</value>
+  </data>
 </root>

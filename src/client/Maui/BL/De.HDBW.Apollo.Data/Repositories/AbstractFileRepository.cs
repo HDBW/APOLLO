@@ -22,11 +22,11 @@ namespace De.HDBW.Apollo.Data.Repositories
             BasePath = basePath;
         }
 
-        public ILogger Logger { get; }
+        protected ILogger Logger { get; }
 
         private string BasePath { get; }
 
-        private TU? Cache
+        protected TU? Cache
         {
             get
             {

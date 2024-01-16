@@ -10,7 +10,9 @@ using De.HDBW.Apollo.Client.Models.Generic;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using static System.Collections.Specialized.BitVector32;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
@@ -27,17 +29,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<ProfileViewModel> logger,
-            IProfileRepository profileRepository,
+            IUserRepository userRepository,
             ISessionService sessionService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            ArgumentNullException.ThrowIfNull(profileRepository);
+            ArgumentNullException.ThrowIfNull(userRepository);
             ArgumentNullException.ThrowIfNull(sessionService);
-            ProfileRepository = profileRepository;
+            UserRepository = userRepository;
             SessionService = sessionService;
         }
 
-        private IProfileRepository ProfileRepository { get; }
+        private IUserRepository UserRepository { get; }
 
         private ISessionService SessionService { get; }
 
@@ -50,62 +52,67 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     var sections = new List<ObservableObject>();
                     if (!SessionService.HasRegisteredUser)
                     {
-                        await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
                         return;
                     }
 
-                    var interactions = new List<InteractionEntry>
+                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
+                    if (user == null)
                     {
-                        InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute),
-                        InteractionEntry.Import(Resources.Strings.Resources.ContactInfoEditView_Title, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute),
-                    };
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
+                        return;
+                    }
 
-                    sections.Add(RecommendationValue.Import("Hier fehlt noch was.", "Je besser das Profil gefüllt ist, desto bessere Vorschläge liefern wir dir.", 0.75, interactions));
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    sections.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_UserName, "Fritz24"));
-                    sections.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_Birthdate, DateTime.Today.ToString()));
-                    sections.Add(SeperatorValue.Import());
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    sections.Add(StringValue.Import("LinkedIn", "https://www.linkedin.com/"));
-                    sections.Add(StringValue.Import("Xing", "https://www.xing.com/"));
-                    sections.Add(StringValue.Import("Facebook", "https://www.Facebook.com/"));
-                    sections.Add(StringValue.Import("Youtube", "https://www.Youtube.com/"));
-                    sections.Add(SeperatorValue.Import());
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, "nicht vorhanden"));
-                    sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, "ja"));
-                    sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, "A1, C1E, B96, Gabelstaplerschein"));
-                    sections.Add(SeperatorValue.Import());
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    sections.Add(StringValue.Import("Deutsch", "C2"));
-                    sections.Add(StringValue.Import("English", "B2"));
-                    sections.Add(StringValue.Import("Französich", "A1"));
-                    sections.Add(SeperatorValue.Import());
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    sections.Add(StringValue.Import("Seit 01.08.2023", "Laufend"));
-                    sections.Add(StringValue.Import("Kaufmännische Fachkraft (Nebenbeschäftigung)", string.Empty));
-                    sections.Add(StringValue.Import(string.Empty, "Aachen"));
-                    sections.Add(StringValue.Import(string.Empty, "Deutschland"));
-                    sections.Add(StringValue.Import("01.11.2017 - 30.06.2023", string.Empty));
-                    sections.Add(StringValue.Import("Kaufmännische Fachkraft", string.Empty));
-                    sections.Add(StringValue.Import(string.Empty, "vorbereitende Buchhaltung, Rechnungserstellung, Personalwesen + Funker"));
-                    sections.Add(StringValue.Import("01.12.2001 - 30.10.2017", string.Empty));
-                    sections.Add(StringValue.Import("Funker/in", string.Empty));
-                    sections.Add(StringValue.Import(string.Empty, "Funker, Telefonist"));
-                    sections.Add(SeperatorValue.Import());
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    sections.Add(StringValue.Import("01.08.2000 - 30.10.2000", "Ohne Abschluss"));
-                    sections.Add(StringValue.Import("Kaufmann/-frau - Kurier-, Express- u. Postdienstleistungen", string.Empty));
-                    sections.Add(StringValue.Import("01.09.1987 - 31.08.1997", string.Empty));
-                    sections.Add(StringValue.Import("Mittlere Reife / Mittlerer Bildungsabschluss", string.Empty));
-                    sections.Add(StringValue.Import(string.Empty, "Integrierte Gesamtschule"));
-                    sections.Add(SeperatorValue.Import());
-                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    sections.Add(StringValue.Import("WIG - Rohrschweißer - Prüfung", string.Empty));
-                    sections.Add(StringValue.Import(string.Empty, "Erworben: 15.08.2012 Gültig bis: 14.08.2014"));
-                    sections.Add(StringValue.Import("SCC-Zertifikat (Sicherheits-Certifikat-Contractoren)", string.Empty));
-                    sections.Add(StringValue.Import(string.Empty, "Erworben: 01.09.2007"));
+                    var recommendationValue = CreateRecommendationValue(user);
+                    if (recommendationValue != null)
+                    {
+                        sections.Add(recommendationValue);
+                    }
+
+                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    //sections.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_UserName, "Fritz24"));
+                    //sections.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_Birthdate, DateTime.Today.ToString()));
+                    //sections.Add(SeperatorValue.Import());
+                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    //sections.Add(StringValue.Import("LinkedIn", "https://www.linkedin.com/"));
+                    //sections.Add(StringValue.Import("Xing", "https://www.xing.com/"));
+                    //sections.Add(StringValue.Import("Facebook", "https://www.Facebook.com/"));
+                    //sections.Add(StringValue.Import("Youtube", "https://www.Youtube.com/"));
+                    //sections.Add(SeperatorValue.Import());
+                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    //sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, "nicht vorhanden"));
+                    //sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, "ja"));
+                    //sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, "A1, C1E, B96, Gabelstaplerschein"));
+                    //sections.Add(SeperatorValue.Import());
+                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    //sections.Add(StringValue.Import("Deutsch", "C2"));
+                    //sections.Add(StringValue.Import("English", "B2"));
+                    //sections.Add(StringValue.Import("Französich", "A1"));
+                    //sections.Add(SeperatorValue.Import());
+                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    //sections.Add(StringValue.Import("Seit 01.08.2023", "Laufend"));
+                    //sections.Add(StringValue.Import("Kaufmännische Fachkraft (Nebenbeschäftigung)", string.Empty));
+                    //sections.Add(StringValue.Import(string.Empty, "Aachen"));
+                    //sections.Add(StringValue.Import(string.Empty, "Deutschland"));
+                    //sections.Add(StringValue.Import("01.11.2017 - 30.06.2023", string.Empty));
+                    //sections.Add(StringValue.Import("Kaufmännische Fachkraft", string.Empty));
+                    //sections.Add(StringValue.Import(string.Empty, "vorbereitende Buchhaltung, Rechnungserstellung, Personalwesen + Funker"));
+                    //sections.Add(StringValue.Import("01.12.2001 - 30.10.2017", string.Empty));
+                    //sections.Add(StringValue.Import("Funker/in", string.Empty));
+                    //sections.Add(StringValue.Import(string.Empty, "Funker, Telefonist"));
+                    //sections.Add(SeperatorValue.Import());
+                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    //sections.Add(StringValue.Import("01.08.2000 - 30.10.2000", "Ohne Abschluss"));
+                    //sections.Add(StringValue.Import("Kaufmann/-frau - Kurier-, Express- u. Postdienstleistungen", string.Empty));
+                    //sections.Add(StringValue.Import("01.09.1987 - 31.08.1997", string.Empty));
+                    //sections.Add(StringValue.Import("Mittlere Reife / Mittlerer Bildungsabschluss", string.Empty));
+                    //sections.Add(StringValue.Import(string.Empty, "Integrierte Gesamtschule"));
+                    //sections.Add(SeperatorValue.Import());
+                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute));
+                    //sections.Add(StringValue.Import("WIG - Rohrschweißer - Prüfung", string.Empty));
+                    //sections.Add(StringValue.Import(string.Empty, "Erworben: 15.08.2012 Gültig bis: 14.08.2014"));
+                    //sections.Add(StringValue.Import("SCC-Zertifikat (Sicherheits-Certifikat-Contractoren)", string.Empty));
+                    //sections.Add(StringValue.Import(string.Empty, "Erworben: 01.09.2007"));
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
                 }
@@ -257,6 +264,76 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        private RecommendationValue? CreateRecommendationValue(User user)
+        {
+            var weights = new Dictionary<string, double>();
+            weights.Add(Routes.PersonalInformationEditView, 2);
+            weights.Add(Routes.ContactInfoEditView, 1);
+            weights.Add(Routes.QualificationEditView, 2);
+            weights.Add(Routes.LicenseEditView, 2);
+            weights.Add(Routes.CareerInfoEditView, 2);
+            weights.Add(Routes.EducationInfoEditView, 1);
+            weights.Add(Routes.LanguageEditView, 2);
+            weights.Add(Routes.WebReferenceEditView, 1);
+            weights.Add(Routes.MobilityEditView, 0);
+
+            var interactions = new List<InteractionEntry>();
+            if (string.IsNullOrWhiteSpace(user.Name))
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.ContactInfos?.Any() ?? true)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactInfoEditView_Title, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.ContactInfos?.Any() ?? true)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.Profile?.Licenses.Any() ?? true)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.Profile?.CareerInfos.Any() ?? true)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.Profile?.EducationInfos.Any() ?? true)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.Profile?.LanguageSkills.Any() ?? true)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.Profile?.WebReferences.Any() ?? true)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (user.Profile?.MobilityInfo?.WillingToTravel != null)
+            {
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute));
+            }
+
+            if (!interactions.Any())
+            {
+                return null;
+            }
+
+            var totalWeight = weights.Sum(x => x.Value);
+            var currentWeight = interactions.Select(x => x.Data).OfType<NavigationData>().Sum(i => weights[i.Route]);
+            var score = (totalWeight - currentWeight) / totalWeight;
+            return RecommendationValue.Import(Resources.Strings.Resources.ProfileView_RecommendationSection_Title, Resources.Strings.Resources.ProfileView_RecommendationSection_SubTitle, score, interactions);
         }
     }
 }
