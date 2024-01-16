@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         bool HasRegisteredUser { get; }
 
-        AccountId? RegisteredUserHomeAccountId { get; }
+        AccountId? AccountId { get; }
 
         bool ChangedUseCase { get; }
 
@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         IEnumerable<(long Id, Type Type)> GetFavorites();
 
-        void UpdateRegisteredUser(AccountId? registeredUserHomeAccountId);
+        void UpdateRegisteredUser(AccountId? accountId);
 
         void UpdateUseCase(UseCase? useCase);
     }

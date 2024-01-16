@@ -5,5 +5,8 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface INetworkService
     {
+        bool HasNetworkConnection { get; }
+
+        bool HasWifi { get; }
     }
 }

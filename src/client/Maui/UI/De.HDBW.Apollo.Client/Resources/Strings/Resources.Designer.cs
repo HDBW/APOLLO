@@ -1258,6 +1258,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung..
+        /// </summary>
+        public static string GlobalError_NoInternet {
+            get {
+                return ResourceManager.GetString("GlobalError_NoInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trifft garnicht zu.
         /// </summary>
         public static string IntegerInput_Negative {

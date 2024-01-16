@@ -1086,4 +1086,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Willing_Yes" xml:space="preserve">
     <value>vorhanden</value>
   </data>
+  <data name="GlobalError_NoInternet" xml:space="preserve">
+    <value>Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung.</value>
+  </data>
 </root>

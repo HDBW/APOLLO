@@ -25,9 +25,10 @@ namespace De.HDBW.Apollo.Client.Controls
             BindingContext = null;
         }
 
-        private void HandleLoaded(object sender, EventArgs e)
+        private async void HandleLoaded(object sender, EventArgs e)
         {
             BindingContext = Handler?.MauiContext?.Services?.GetService<GlobalErrorViewModel>();
+            await (ViewModel?.OnNavigatedToAsync() ?? Task.CompletedTask);
         }
     }
 }

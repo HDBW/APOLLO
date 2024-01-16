@@ -11,14 +11,14 @@ namespace De.HDBW.Apollo.Data.Services
     {
         private readonly List<(long Id, Type Type)> _favorites = new List<(long Id, Type Type)>();
 
-        public SessionService(AccountId? registeredUserHomeAccountId)
+        public SessionService(AccountId? accountId)
         {
-            RegisteredUserHomeAccountId = registeredUserHomeAccountId;
+            AccountId = accountId;
         }
 
-        public bool HasRegisteredUser => RegisteredUserHomeAccountId != null;
+        public bool HasRegisteredUser => AccountId != null;
 
-        public AccountId? RegisteredUserHomeAccountId { get; private set; }
+        public AccountId? AccountId { get; private set; }
 
         public UseCase? UseCase { get; private set; }
 
@@ -54,9 +54,9 @@ namespace De.HDBW.Apollo.Data.Services
             }
         }
 
-        public void UpdateRegisteredUser(AccountId? registeredUserHomeAccountId)
+        public void UpdateRegisteredUser(AccountId? accountId)
         {
-            RegisteredUserHomeAccountId = registeredUserHomeAccountId;
+            AccountId = accountId;
         }
 
         public void UpdateUseCase(UseCase? useCase)

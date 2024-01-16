@@ -193,13 +193,13 @@ namespace De.HDBW.Apollo.Client
             return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
         }
 
-        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AccountId registerdUserHomeAccountId)
+        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AccountId accountId)
         {
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();
             services.AddSingleton<IDispatcherService, DispatcherService>();
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<ISessionService>(new SessionService(registerdUserHomeAccountId));
+            services.AddSingleton<ISessionService>(new SessionService(accountId));
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
             services.AddSingleton<IFeedbackService, FeedbackService>();
