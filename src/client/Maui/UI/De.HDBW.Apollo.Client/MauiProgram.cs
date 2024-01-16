@@ -35,6 +35,7 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
@@ -125,8 +126,7 @@ namespace De.HDBW.Apollo.Client
             try
             {
                 var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
-                task.Wait();
-                var authenticationResult = task.Result;
+                var authenticationResult = task.GetAwaiter().GetResult();
                 registerdUserHomeAccountId = authenticationResult?.Account?.HomeAccountId;
             }
             catch (Exception ex)
@@ -233,6 +233,10 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<ICourseContactRelationRepository, CourseContactRelationRepository>();
             services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
             services.AddSingleton<ICategoryRecomendationItemRepository, CategoryRecomendationItemRepository>();
+            services.AddSingleton<IProfileRepository>((serviceProvider) =>
+            {
+                return new ProfileRepository(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), serviceProvider.GetService<ILogger<ProfileRepository>>()!);
+            });
         }
 
         private static void SetupViewsAndViewModels(IServiceCollection services)

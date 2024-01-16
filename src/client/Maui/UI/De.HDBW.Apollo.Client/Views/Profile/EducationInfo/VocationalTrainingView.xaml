@@ -37,6 +37,10 @@
         </FlexLayout>
         <Label Text="{x:Static strings:Resources.Global_Graduation}"/>
         <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+        <Label Text="{x:Static strings:Resources.Global_SchoolGraduation}"/>
+        <Picker ItemsSource="{x:Binding SchoolGraduations}"
+                ItemDisplayBinding="{x:Binding Text}"
+                SelectedItem="{x:Binding SelectedSchoolGraduation, Mode=TwoWay}"/>
         <Label Text="{x:Static strings:Resources.Global_UniverityDegree}"/>
         <Picker ItemsSource="{x:Binding UniverityDegrees}"
                 ItemDisplayBinding="{x:Binding Text}"

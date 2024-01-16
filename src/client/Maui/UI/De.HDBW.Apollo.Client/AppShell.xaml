@@ -88,6 +88,7 @@
         <Tab Title="{x:Static strings:Resources.ProfileView_Title}"
             Icon="profile.png">
             <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" />
+            
         </Tab>
         <Tab Title="Favorites"
             Icon="mail.png">

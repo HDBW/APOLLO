@@ -6,10 +6,12 @@
              Title="{x:Static strings:Resources.ProfileView_Title}"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:genericModels="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
              x:DataType="viewModels:ProfileViewModel"
              IsBusy="{x:Binding IsBusy}"
+             x:Name="PART_Root"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="ProfileInteractionTemplate" x:DataType="interactionModels:InteractionEntry">
@@ -50,27 +52,41 @@
         <DataTemplate x:Key="SeperatorValueTemplate" x:DataType="genericModels:SeperatorValue">
             <Border Margin="0,8"/>
         </DataTemplate>
-
+        
         <selector:ProfileSectionTemplateSelector x:Key="ProfileSectionTemplateSelector"
-                                                 RecommendationValueTemplate="{StaticResource RecommendationValueTemplate}"
-                                                 StringValueTemplate="{StaticResource StringValueTemplate}"
-                                                 SeperatorValueTemplate="{StaticResource SeperatorValueTemplate}"
-                                                 InteractionEntryTemplate="{StaticResource ProfileInteractionTemplate}"/>
+                                          RecommendationValueTemplate="{StaticResource RecommendationValueTemplate}"
+                                          StringValueTemplate="{StaticResource StringValueTemplate}"
+                                          SeperatorValueTemplate="{StaticResource SeperatorValueTemplate}"
+                                          InteractionEntryTemplate="{StaticResource ProfileInteractionTemplate}"/>
+
+        <DataTemplate x:Key="RegisteredUserTemplate" x:DataType="viewModels:ProfileViewModel">
+            <VerticalStackLayout VerticalOptions="CenterAndExpand" Padding="24,0" BindingContext="{x:Binding BindingContext, Source={x:Reference PART_Root}}">
+                <Label Text="Ganz schönn leer hier." />
+                <Label Text="Tipp: Füll jetzt Dein Profil aus. Und wir schicken Dir noch passendere Vorschläge."/>
+                <Button Text="Los gehts" Margin="0,8" Command="{x:Binding BindingContext.EditPersonalInformationsCommand, Source={x:Reference PART_Root}}"/>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="UnregisteredUserTemplate" x:DataType="viewModels:ProfileViewModel">
+            <VerticalStackLayout VerticalOptions="CenterAndExpand" Padding="24,0">
+                <Label Text="Damit du dein Profile erstellen kannst musst du dich anmelden."/>
+                <Button Text="Anmelden" Margin="0,8" Command="{x:Binding BindingContext.RegisterCommand, Source={x:Reference PART_Root}}"/>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+
+        <converter:RegisteredStateToEmptyViewTemplateConverter x:Key="RegisteredStateToEmptyViewTemplateConverter"
+                                                               RegisteredUserTemplate="{StaticResource RegisteredUserTemplate}"
+                                                               UnregisteredUserTemplate="{StaticResource UnregisteredUserTemplate}"/>
     </ContentPage.Resources>
-    
+
     <CollectionView ItemsSource="{x:Binding Sections}"
                     ItemsLayout="VerticalList"
-                    ItemTemplate="{StaticResource ProfileSectionTemplateSelector}">
+                    ItemTemplate="{StaticResource ProfileSectionTemplateSelector}"
+                    EmptyViewTemplate="{x:Binding IsRegistered, Converter={StaticResource RegisteredStateToEmptyViewTemplateConverter}}">
         <CollectionView.EmptyView>
-            <ContentView>
-                <VerticalStackLayout
-                             VerticalOptions="CenterAndExpand"
-                             Padding="24,0">
-                    <Label Text="Ganz schönn leer hier." />
-                    <Label Text="Tipp: Füll jetzt Dein Profil aus. Und wir schicken Dir noch passendere Vorschläge."/>
-                    <Button Text="Los gehts" Margin="0,8" Command="{x:Binding EditPersonalInformationsCommand}"/>
-                </VerticalStackLayout>
-            </ContentView>
+            <ContentPage />
         </CollectionView.EmptyView>
+
     </CollectionView>
 </ContentPage>

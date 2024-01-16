@@ -52,7 +52,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         private InteractionEntry? _selectedUniverityDegree;
 
         [ObservableProperty]
-        private string _occupationName;
+        private ObservableCollection<InteractionEntry> _schoolGraduations = new ObservableCollection<InteractionEntry>();
+
+        [ObservableProperty]
+        private InteractionEntry? _selectedSchoolGraduation;
+
+        [ObservableProperty]
+        private string? _occupationName;
 
         private EducationInfo? _education;
 
@@ -99,8 +105,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                     univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_EcclesiasticalExam, UniversityDegree.EcclesiasticalExam, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Other, UniversityDegree.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
+                    var schoolGraduations = new List<InteractionEntry>();
+                    //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_SecondarySchoolCertificate, SchoolGraduation.SecondarySchoolCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeCertificate, SchoolGraduation.AdvancedTechnicalCollegeCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_HigherEducationEntranceQualificationALevel, SchoolGraduation.HigherEducationEntranceQualificationALevel, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_IntermediateSchoolCertificate, SchoolGraduation.IntermediateSchoolCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_ExtendedSecondarySchoolLeavingCertificate, SchoolGraduation.ExtendedSecondarySchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_NoSchoolLeavingCertificate, SchoolGraduation.NoSchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_SpecialSchoolLeavingCertificate, SchoolGraduation.SpecialSchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_SubjectRelatedEntranceQualification, SchoolGraduation.SubjectRelatedEntranceQualification, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate, SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(completionStates, typeOfSchools, univerityDegrees), worker.Token);
+                        () => LoadonUIThread(completionStates, typeOfSchools, schoolGraduations, univerityDegrees), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -127,11 +144,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             SearchOccupationCommand?.NotifyCanExecuteChanged();
         }
 
-        private void LoadonUIThread(List<InteractionEntry> completionStates, List<InteractionEntry> typeOfSchools, List<InteractionEntry> univerityDegrees)
+        private void LoadonUIThread(List<InteractionEntry> completionStates, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees)
         {
             CompletionStates = new ObservableCollection<InteractionEntry>(completionStates);
             SelectedCompletionState = CompletionStates.FirstOrDefault();
             TypeOfSchools = new ObservableCollection<InteractionEntry>(typeOfSchools);
+            SchoolGraduations = new ObservableCollection<InteractionEntry>(schoolGraduations);
             UniverityDegrees = new ObservableCollection<InteractionEntry>(univerityDegrees);
         }
 

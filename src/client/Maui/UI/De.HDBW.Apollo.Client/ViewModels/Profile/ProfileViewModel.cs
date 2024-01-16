@@ -8,6 +8,8 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Generic;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
@@ -17,14 +19,27 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [ObservableProperty]
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
+        [ObservableProperty]
+        private bool _isRegistered;
+
         public ProfileViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<ProfileViewModel> logger)
+            ILogger<ProfileViewModel> logger,
+            IProfileRepository profileRepository,
+            ISessionService sessionService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(profileRepository);
+            ArgumentNullException.ThrowIfNull(sessionService);
+            ProfileRepository = profileRepository;
+            SessionService = sessionService;
         }
+
+        private IProfileRepository ProfileRepository { get; }
+
+        private ISessionService SessionService { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -33,6 +48,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     var sections = new List<ObservableObject>();
+                    if (!SessionService.HasRegisteredUser)
+                    {
+                        await ExecuteOnUIThreadAsync(
+                        () => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
+                        return;
+                    }
+
                     var interactions = new List<InteractionEntry>
                     {
                         InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute),
@@ -85,7 +107,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     sections.Add(StringValue.Import("SCC-Zertifikat (Sicherheits-Certifikat-Contractoren)", string.Empty));
                     sections.Add(StringValue.Import(string.Empty, "Erworben: 01.09.2007"));
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(sections), worker.Token);
+                        () => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -110,6 +132,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             base.RefreshCommands();
             EditPersonalInformationsCommand?.NotifyCanExecuteChanged();
+            RegisterCommand?.NotifyCanExecuteChanged();
             foreach (var section in Sections?.OfType<InteractionEntry>() ?? Array.Empty<InteractionEntry>())
             {
                 section.NavigateCommand?.NotifyCanExecuteChanged();
@@ -152,14 +175,48 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        private bool CanEditPersonalInformations()
+        private bool CanRegister()
         {
-            return !IsBusy;
+            return !IsBusy && !IsRegistered;
         }
 
-        private void LoadonUIThread(IEnumerable<ObservableObject> sections)
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
+        private async Task Register(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.RegistrationView, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(EditPersonalInformations)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(EditPersonalInformations)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(EditPersonalInformations)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanEditPersonalInformations()
+        {
+            return !IsBusy && IsRegistered;
+        }
+
+        private void LoadonUIThread(IEnumerable<ObservableObject> sections, bool isRegistered)
         {
             Sections = new ObservableCollection<ObservableObject>(sections);
+            IsRegistered = isRegistered;
         }
 
         private bool CanNavigateToRoute(InteractionEntry entry)
