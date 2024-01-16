@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
-using ProtoBuf;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models

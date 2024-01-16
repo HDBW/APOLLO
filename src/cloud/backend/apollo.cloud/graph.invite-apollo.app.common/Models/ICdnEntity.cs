@@ -1,6 +1,5 @@
 ﻿using System;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
-using ProtoBuf;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models

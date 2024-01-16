@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using ProtoBuf;
-using ProtoBuf.Grpc;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {

@@ -3,7 +3,6 @@
 
 using System;
 using Newtonsoft.Json;
-using ZstdSharp.Unsafe;
 
 namespace Apollo.Api
 {

@@ -2,7 +2,6 @@
 using System;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Esco;
-using System.ComponentModel;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
