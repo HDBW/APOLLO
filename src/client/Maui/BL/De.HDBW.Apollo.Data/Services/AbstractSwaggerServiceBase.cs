@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using Apollo.Api;
-using Invite.Apollo.App.Graph.Common.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
