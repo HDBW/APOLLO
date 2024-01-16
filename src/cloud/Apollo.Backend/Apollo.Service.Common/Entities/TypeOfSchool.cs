@@ -51,7 +51,7 @@ namespace Apollo.Common.Entities
     /// // Freie Waldorfschule
     /// WaldorfSchool = 19,
     /// // Fachakademie
-    /// TechnicalAcademy = 20,  
+    /// TechnicalAcademy = 20,
     /// </remarks>
     public class TypeOfSchool
     {
@@ -62,8 +62,5 @@ namespace Apollo.Common.Entities
         public string Value { get; set; }
 
         public CultureInfo CultureInfo { get; set; }
-
     }
-
-
 }

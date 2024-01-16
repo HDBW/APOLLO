@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Globalization;
+
 namespace Apollo.Common.Entities
 {
     /// <summary>
@@ -22,6 +24,6 @@ namespace Apollo.Common.Entities
 
         public string Name { get; set; }
 
-        //public CultureInfo CultureInfo { get; set; }
+        public CultureInfo CultureInfo { get; set; }
     }
 }

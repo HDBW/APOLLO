@@ -6,11 +6,11 @@ using Apollo.Common.Entities;
 namespace Apollo.RestService.Messages
 {
     /// <summary>
-    /// Defines the requeste message of the GetTrainings operation.
+    /// Defines the request message of the GetTrainings operation.
     /// </summary>
     public class QueryTrainingsRequest : Query
     {
-        Query Query { get; set; }
+
 
        
     }
