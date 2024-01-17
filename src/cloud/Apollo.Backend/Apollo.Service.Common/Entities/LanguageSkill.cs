@@ -9,7 +9,7 @@ namespace Apollo.Common.Entities
     /// A Language Skill is defined as ISO 639-2.
     /// Thankfully C# has a CultureInfo Class that implements ISO 639-2 can be used for this.
     /// </summary>
-    public class Language
+    public class LanguageSkill
     {
         public string Name { get; set; }
 
