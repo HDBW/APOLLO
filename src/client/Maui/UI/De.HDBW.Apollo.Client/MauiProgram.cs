@@ -68,7 +68,13 @@ namespace De.HDBW.Apollo.Client
             Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
             SetupRoutes();
             SetupHandler();
-            var result = SetupB2CLogin(builder.Services) ?? new AccountId("dummy", "dummy", "dummy");
+            var result = SetupB2CLogin(builder.Services);
+#if DEBUG
+            if ( result == null )
+            {
+                result = new AccountId("dummy", "dummy", "dummy");
+            }
+#endif
             SetupServices(builder.Services, secretsService, result);
             SetupDataBaseTableProvider(builder);
             SetupRepositories(builder.Services);

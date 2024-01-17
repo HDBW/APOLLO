@@ -179,8 +179,10 @@ namespace De.HDBW.Apollo.Client.Services
                     queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
                 }
 
+                page.NavigatedTo -= NavigatedToPage;
                 page.NavigatedTo += NavigatedToPage;
                 await navigationPage.PushAsync(page, false);
+                page.NavigatedFrom -= NavigatedFromPage;
                 page.NavigatedFrom += NavigatedFromPage;
                 return;
             }
@@ -217,8 +219,7 @@ namespace De.HDBW.Apollo.Client.Services
                 queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
             }
 
-            page.NavigatedTo += NavigatedToPage;
-            page.NavigatedFrom += NavigatedFromPage;
+            SubscribePageEvents(page);
 
             var navigationPage = Application.Current.MainPage as NavigationPage;
             if (navigationPage != null && !(page is Shell))
@@ -232,8 +233,7 @@ namespace De.HDBW.Apollo.Client.Services
                         continue;
                     }
 
-                    existingPage.NavigatedTo -= NavigatedToPage;
-                    existingPage.NavigatedFrom -= NavigatedFromPage;
+                    UnsubscribePageEvents(existingPage);
 
                     if (existingPage != navigationPage.CurrentPage)
                     {
@@ -269,8 +269,7 @@ namespace De.HDBW.Apollo.Client.Services
                 var existingPages = navigationPage?.Navigation?.NavigationStack?.ToList() ?? new List<Page>();
                 foreach (var existingPage in existingPages)
                 {
-                    existingPage.NavigatedTo -= NavigatedToPage;
-                    existingPage.NavigatedFrom -= NavigatedFromPage;
+                    UnsubscribePageEvents(existingPage);
                     if (navigationPage?.CurrentPage != existingPage)
                     {
                         navigationPage?.Navigation?.RemovePage(existingPage);
@@ -282,6 +281,8 @@ namespace De.HDBW.Apollo.Client.Services
                 shell = Application.Current.MainPage as Shell;
                 if (shell != null)
                 {
+                    shell.Navigating -= NavigatedFromPageInShell;
+                    shell.Navigated -= NavigatedToPageInShell;
                     shell.Navigating += NavigatedFromPageInShell;
                     shell.Navigated += NavigatedToPageInShell;
                     NavigatedToPageInShell(shell, null);
@@ -322,12 +323,34 @@ namespace De.HDBW.Apollo.Client.Services
                     continue;
                 }
 
-                page.NavigatedTo -= NavigatedToPage;
-                page.NavigatedFrom -= NavigatedFromPage;
-                await (GetViewModel(page)?.OnNavigatingFromAsync(false) ?? Task.CompletedTask);
+                UnsubscribePageEvents(page);
+                await (GetViewModel(page)?.OnNavigatingFromAsync() ?? Task.CompletedTask);
             }
 
             await Shell.Current.Navigation.PopToRootAsync(false);
+        }
+
+        private void SubscribePageEvents(Page page)
+        {
+            UnsubscribePageEvents(page);
+            if (page == null)
+            {
+                return;
+            }
+
+            page.NavigatedTo += NavigatedToPage;
+            page.NavigatedFrom += NavigatedFromPage;
+        }
+
+        private void UnsubscribePageEvents(Page page)
+        {
+            if (page == null)
+            {
+                return;
+            }
+
+            page.NavigatedTo -= NavigatedToPage;
+            page.NavigatedFrom -= NavigatedFromPage;
         }
 
         private async Task PushToRootOnUIThreadAsnc(CancellationToken token)
@@ -383,16 +406,6 @@ namespace De.HDBW.Apollo.Client.Services
         {
             try
             {
-                bool isForwardNavigation = true;
-                if (Shell.Current?.CurrentPage != null)
-                {
-                    isForwardNavigation = Shell.Current?.CurrentPage == sender || (Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender);
-                }
-                else
-                {
-                    isForwardNavigation = Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender;
-                }
-
                 var page = sender as Page;
                 if (page == null)
                 {
@@ -400,13 +413,8 @@ namespace De.HDBW.Apollo.Client.Services
                     return;
                 }
 
-                if (!isForwardNavigation)
-                {
-                    page.NavigatedTo -= NavigatedToPage;
-                    page.NavigatedFrom -= NavigatedFromPage;
-                }
-
-                await (GetViewModel(page)?.OnNavigatingFromAsync(isForwardNavigation) ?? Task.CompletedTask);
+                UnsubscribePageEvents(page);
+                await (GetViewModel(page)?.OnNavigatingFromAsync() ?? Task.CompletedTask);
             }
             catch (Exception ex)
             {

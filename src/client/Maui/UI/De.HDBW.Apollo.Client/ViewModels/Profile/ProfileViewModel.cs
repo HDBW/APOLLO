@@ -69,10 +69,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         sections.Add(recommendationValue);
                     }
 
-                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    //sections.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_UserName, "Fritz24"));
-                    //sections.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_Birthdate, DateTime.Today.ToString()));
-                    //sections.Add(SeperatorValue.Import());
+                    var missingParts = recommendationValue?.Recommendations?.ToList() ?? new List<InteractionEntry>();
+                    var missingRoutes = missingParts.Select(x => x.Data).OfType<NavigationData>().Select(x => x.Route).ToList();
+                    if (!missingRoutes.Contains(Routes.PersonalInformationEditView))
+                    {
+                        sections.AddRange(CreatePersonalInformations(user));
+                    }
+                    
                     //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
                     //sections.Add(StringValue.Import("LinkedIn", "https://www.linkedin.com/"));
                     //sections.Add(StringValue.Import("Xing", "https://www.xing.com/"));
@@ -133,6 +136,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        private IEnumerable<ObservableObject> CreatePersonalInformations(User user)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
+            if (!string.IsNullOrEmpty(user.Name))
+            {
+                informations.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_UserName, user.Name));
+            }
+
+            if (user.Birthdate.HasValue)
+            {
+                informations.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_Birthdate, user.Birthdate.Value.ToLocalTime().ToString("d")));
+            }
+
+            informations.Add(SeperatorValue.Import());
+            return informations;
         }
 
         protected override void RefreshCommands()
@@ -320,7 +341,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
             }
 
-            if (user.Profile?.MobilityInfo?.WillingToTravel != null)
+            if (user.Profile?.MobilityInfo?.WillingToTravel == null)
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute));
             }

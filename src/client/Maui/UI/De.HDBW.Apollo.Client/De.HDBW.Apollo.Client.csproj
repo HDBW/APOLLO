@@ -35,6 +35,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
     <ProvisioningType>automatic</ProvisioningType>
+    <CodesignKey>Apple Development: Lars Heinrich (827CKHW3LL)</CodesignKey>
+    <CodesignProvision>VS: de.hdbw.apollo.client Development</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <!-- App Icon -->

@@ -101,7 +101,7 @@ namespace De.HDBW.Apollo.Data.Repositories
                         Converters = { new CultureInfoJsonConverter() },
                     };
                     await JsonSerializer.SerializeAsync<TU>(stream, data, options, token).ConfigureAwait(false);
-                    File.Move(path, profilePath);
+                    File.Move(path, profilePath, true);
                     Cache = data;
                     return true;
                 }

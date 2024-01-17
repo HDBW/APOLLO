@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -16,6 +17,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         [ObservableProperty]
         private DateTime? _birthDate;
+
+        [ObservableProperty]
+        private bool? _disabilities;
 
         private User? _user;
 
@@ -62,9 +66,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        public override async Task OnNavigatingFromAsync(bool isForwardNavigation)
+        public override async Task OnNavigatingFromAsync()
         {
-            if (isForwardNavigation || _user == null)
+            if (_user == null)
             {
                 return;
             }
@@ -73,8 +77,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                    _user.Birthdate = BirthDate?.ToUniversalTime();
+                    _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
                     _user.Name = Name ?? string.Empty;
+                    _user.Disabilities = Disabilities;
                     if (!await UserRepository.SaveAsync(_user, worker.Token).ConfigureAwait(false))
                     {
 
@@ -82,15 +87,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatingFromAsync)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatingFromAsync)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatingFromAsync)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -99,11 +104,30 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            ToggleDisabilitiesCommand?.NotifyCanExecuteChanged();
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleDisabilities))]
+        private Task ToggleDisabilities(CancellationToken token)
+        {
+            Disabilities = !Disabilities;
+            return Task.CompletedTask;
+        }
+
+        private bool CanToggleDisabilities()
+        {
+            return !IsBusy;
+        }
+
         private void LoadonUIThread(User? user)
         {
             _user = user;
             Name = user?.Name;
-            BirthDate = user?.Birthdate?.ToLocalTime();
+            BirthDate = user?.Birthdate != null ? new DateTime(user.Birthdate.Value.Year, user.Birthdate.Value.Month, user.Birthdate.Value.Day, 0, 0, 0, DateTimeKind.Local) : null;
+            Disabilities = user?.Disabilities ?? false;
         }
     }
 }

@@ -70,7 +70,8 @@
         <DataTemplate x:Key="UnregisteredUserTemplate" x:DataType="viewModels:ProfileViewModel">
             <VerticalStackLayout VerticalOptions="CenterAndExpand" Padding="24,0">
                 <Label Text="Damit du dein Profile erstellen kannst musst du dich anmelden."/>
-                <Button Text="Anmelden" Margin="0,8" Command="{x:Binding BindingContext.RegisterCommand, Source={x:Reference PART_Root}}"/>
+                <!--- If we have time -->
+                <!--<Button Text="Anmelden" Margin="0,8" Command="{x:Binding BindingContext.RegisterCommand, Source={x:Reference PART_Root}}"/>-->
             </VerticalStackLayout>
         </DataTemplate>
 

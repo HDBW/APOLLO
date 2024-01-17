@@ -29,6 +29,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             SessionService = sessionService;
         }
 
+        public bool IsRegistered
+        {
+            get
+            {
+                return SessionService?.HasRegisteredUser ?? false;
+            }
+        }
+
         private ISessionService SessionService { get; }
 
         public override async Task OnNavigatedToAsync()
@@ -97,6 +105,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(User? user)
         {
             UserProfile = UserProfileEntry.Import(user ?? new User());
+            OnPropertyChanged(nameof(IsRegistered));
         }
     }
 }

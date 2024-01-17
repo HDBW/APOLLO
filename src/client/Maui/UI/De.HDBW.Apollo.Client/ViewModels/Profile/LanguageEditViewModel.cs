@@ -63,5 +63,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             return !IsBusy;
         }
+
     }
 }
