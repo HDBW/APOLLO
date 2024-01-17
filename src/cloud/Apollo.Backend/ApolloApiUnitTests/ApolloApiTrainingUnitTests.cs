@@ -596,7 +596,7 @@ namespace Apollo.Api.UnitTests
   }
 ]";
 
-     
+
         private async Task CleanTestDocuments()
         {
             var dal = Helpers.GetDal();
