@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Course;
-using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Assessment
 {

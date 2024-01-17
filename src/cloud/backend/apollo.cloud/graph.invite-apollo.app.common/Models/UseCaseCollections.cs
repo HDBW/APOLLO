@@ -1,10 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
-using System.Security.Principal;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
-using ProtoBuf;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models

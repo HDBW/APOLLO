@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {

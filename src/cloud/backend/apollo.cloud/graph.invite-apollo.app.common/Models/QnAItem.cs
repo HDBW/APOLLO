@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Runtime.Serialization;
-using ProtoBuf;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models

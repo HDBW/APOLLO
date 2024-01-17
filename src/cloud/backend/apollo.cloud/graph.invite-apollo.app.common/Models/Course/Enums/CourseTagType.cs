@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Invite.Apollo.App.Graph.Common.Models.Course.Enums
+﻿namespace Invite.Apollo.App.Graph.Common.Models.Course.Enums
 {
     public enum CourseTagType
     {

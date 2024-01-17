@@ -1,8 +1,5 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
