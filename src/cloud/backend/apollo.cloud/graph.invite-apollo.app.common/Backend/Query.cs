@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
-    public class Query
+    public abstract class Query
     {
         /// <summary>
         /// Specify which properties of the Entity should be returned in the response message, if Fields is empty, all fields in the database are returned

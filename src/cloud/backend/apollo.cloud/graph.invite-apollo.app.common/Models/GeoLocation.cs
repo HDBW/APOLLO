@@ -1,7 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Models
 {
     /// <summary>
     /// Needed for Filter and Wolfram Alpha Implementation

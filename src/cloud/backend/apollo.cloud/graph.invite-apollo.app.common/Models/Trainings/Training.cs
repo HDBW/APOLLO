@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
+using Invite.Apollo.App.Graph.Common.Models;
 
 //using MongoDB.Bson;
 //using MongoDB.Bson.Serialization.Attributes;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Models.Trainings
 {
     public class Training
     {

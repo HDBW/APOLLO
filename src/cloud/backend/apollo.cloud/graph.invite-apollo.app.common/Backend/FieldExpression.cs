@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     /// <summary>
     /// Defines the query operation on the specified field.

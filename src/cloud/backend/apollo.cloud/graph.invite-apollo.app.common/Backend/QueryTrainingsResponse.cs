@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Apollo.Common.Entities;
+﻿using System.Collections.Generic;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 
-namespace Invite.Apollo.App.Graph.Common.Backend.RestService.Messages
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
-    internal class QueryTrainingsResponse
+    public class QueryTrainingsResponse
     {
         public List<Training> Trainings { get; set; }
     }
