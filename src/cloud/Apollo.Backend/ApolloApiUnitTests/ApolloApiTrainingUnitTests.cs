@@ -876,7 +876,7 @@ namespace Apollo.Api.UnitTests
                  PropertyNameCaseInsensitive = true,
             };
 
-            Training[]? t = JsonSerializer.Deserialize<Training[]>(_complexTrainingJson, opts);
+            Training[]? t = System.Text.Json.JsonSerializer.Deserialize<Training[]>(_complexTrainingJson, opts);
 
             await api.InsertTrainings(t!);
 
@@ -1022,7 +1022,7 @@ namespace Apollo.Api.UnitTests
 
                 var api = Helpers.GetApolloApi(); // Assuming GetApolloApi() is a static method in your Helpers class.
 
-                var res = await api.QueryTrainings(query); // Assuming QueryTrainings is an asynchronous method.
+                var res = await api.QueryTrainingsAsync(query); // Assuming QueryTrainings is an asynchronous method.
 
                 var training = res.SingleOrDefault();
 
@@ -1116,7 +1116,7 @@ namespace Apollo.Api.UnitTests
             Console.WriteLine($"Generated Query: {JsonConvert.SerializeObject(query)}");
 
             // Act
-            IList<Training> trainings = await api.QueryTrainings(query);
+            IList<Training> trainings = await api.QueryTrainingsAsync(query);
 
             // Log the retrieved trainings for debugging
             Console.WriteLine($"Retrieved Trainings: {JsonConvert.SerializeObject(trainings)}");
