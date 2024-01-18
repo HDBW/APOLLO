@@ -26,7 +26,7 @@ namespace Apollo.Common.Entities
         /// So we can update the Training in our system when the Training Provider updates the Training.
         /// More Importantly it is used to determine redundancy of Trainings in the Training Provider's systems.
         /// </summary>
-        public string ExternalTrainingId { get; set; }
+        public string? ExternalTrainingId { get; set; }
 
         public string TrainingType { get; set; }
 
@@ -80,10 +80,10 @@ namespace Apollo.Common.Entities
         public List<Loans>? Loans { get; set; }
 
         //[BsonElement("TrainingsProvider")]
-        public EduProvider TrainingProvider { get; set; }
+        public EduProvider? TrainingProvider { get; set; }
 
         //[BsonElement("CourseProvider")]
-        public EduProvider CourseProvider { get; set; }
+        public EduProvider? CourseProvider { get; set; }
 
         //[BsonElement("AppointmentUrl")]
        public List<Appointment>? Appointment { get; set; }
@@ -128,10 +128,8 @@ namespace Apollo.Common.Entities
 
         #region Metadata
 
-        // [BsonElement("SeoTags")]
         public List<string> Tags { get; set; }
 
-        //[BsonElement("Categories")]
         public List<string> Categories { get; set; }
 
         //TODO: Review Not to be set by the API, API may Use Id room of Training Provider and ExternalTrainingId
@@ -166,8 +164,16 @@ namespace Apollo.Common.Entities
         //TODO: This should be set on Insert or Update of the Element in the DAL
         // The desired Format is: DateTime.Now.Ticks.ToString();
         // This way the client can check if the Training has been updated since the last time he checked
-        public string Timestamp { get; set; }
+        public string? ChangedAt { get; set; }
 
+        // This way the client can check if the Training has been updated since the last time he checked
+        public string? CreatedAt { get; set; }
+
+        // This way the client can check if the Training has been updated since the last time he checked
+        public string? ChangedBy { get; set; }
+
+        // This way the client can check if the Training has been updated since the last time he checked
+        public string? CreatedBy { get; set; }
         #endregion
 
 
