@@ -61,11 +61,12 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         private string _complexTrainingJson = @"[
   {
-    ""id"": ""SER01"",
+    ""id"": ""SER04"",
     ""providerId"": ""hdbw-F626FEDE-1A30-4DE0-B17B-9DCB04A654C2"",
     ""trainingName"": ""Training05"",
     ""description"": ""Description of Training 05"",
     ""shortDescription"": ""Short Description of T05"",
+    ""trainingType"": ""Type of Training for Training 05"",
     ""content"": [
       ""<string>"",
       ""<string>""
@@ -308,7 +309,7 @@ namespace Apollo.Api.UnitTests
         ""eAppointmentUrl"": ""<uri>""
       }
     ],
-    ""trainingType"": 2,
+    ""trainingType"": ""<string>"",
     ""individualStartDate"": ""<string>"",
     ""price"": 22.22,
     ""priceDescription"": ""<string>"",
@@ -329,7 +330,7 @@ namespace Apollo.Api.UnitTests
     ""predecessor"": ""<string>""
   },
   {
-    ""id"": ""SER02"",
+    ""id"": ""SER05"",
     ""providerId"": ""provider2"",
     ""trainingName"": ""Training T05"",
     ""description"": ""Training T05 Description long"",
@@ -576,7 +577,7 @@ namespace Apollo.Api.UnitTests
         ""eAppointmentUrl"": ""<uri>""
       }
     ],
-    ""trainingType"": 1,
+    ""trainingType"": ""<string>"",
     ""individualStartDate"": ""<string>"",
     ""price"": 42.1,
     ""priceDescription"": ""<string>"",
@@ -596,7 +597,6 @@ namespace Apollo.Api.UnitTests
   }
 ]";
 
-     
         private async Task CleanTestDocuments()
         {
             var dal = Helpers.GetDal();
@@ -801,6 +801,7 @@ namespace Apollo.Api.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task InsertComplexTraining()
         {
             // Arrange
@@ -814,7 +815,7 @@ namespace Apollo.Api.UnitTests
 
             await api.InsertTrainings(t!);
 
-            //await api.DeleteTrainings(t.Select(x=>x.Id).ToArray());
+            await api.DeleteTrainings(t.Select(x=>x.Id).ToArray());
             
         }
 
