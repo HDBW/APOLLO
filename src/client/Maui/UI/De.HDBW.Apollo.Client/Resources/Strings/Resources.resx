@@ -1117,4 +1117,67 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="DatePicker_Watermark" xml:space="preserve">
     <value>Datum eingeben</value>
   </data>
+  <data name="CareerInfoEditView_ButtonTxt" xml:space="preserve">
+    <value>Berufserfahrung hinzufügen</value>
+  </data>
+  <data name="CareerInfoEditView_Headline" xml:space="preserve">
+    <value>Du hast noch kein Berufserfahrungen hinterlegt</value>
+  </data>
+  <data name="CareerInfoEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deine ersten Berufserfahrungen hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="ContactInfoEditView_ButtonTxt" xml:space="preserve">
+    <value>Kontaktdaten hinzufügen</value>
+  </data>
+  <data name="ContactInfoEditView_Headline" xml:space="preserve">
+    <value>Du hast noch kein Kontaktdaten hinterlegt</value>
+  </data>
+  <data name="ContactInfoEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deine ersten Kontaktdaten hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="EducationInfoEditView_ButtonTxt" xml:space="preserve">
+    <value>Bildungsweg hinzufügen</value>
+  </data>
+  <data name="EducationInfoEditView_Headline" xml:space="preserve">
+    <value>Du hast noch keinen Bildungsweg hinterlegt</value>
+  </data>
+  <data name="EducationInfoEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deinen Bildungsweg hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="LanguageEditView_ButtonTxt" xml:space="preserve">
+    <value>Sprachkenntnisse hinzufügen</value>
+  </data>
+  <data name="LanguageEditView_Headline" xml:space="preserve">
+    <value>Du hast noch kein Sprachkenntnisse hinterlegt</value>
+  </data>
+  <data name="LanguageEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deine ersten Sprachkenntnisse hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="LicenseEditView_ButtonTxt" xml:space="preserve">
+    <value>Lizenzen hinzufügen</value>
+  </data>
+  <data name="LicenseEditView_Headline" xml:space="preserve">
+    <value>Du hast noch kein Lizenzen hinterlegt</value>
+  </data>
+  <data name="LicenseEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deine ersten Lizenzen hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="QualificationEditView_ButtonTxt" xml:space="preserve">
+    <value>Qualifikationen hinzufügen</value>
+  </data>
+  <data name="QualificationEditView_Headline" xml:space="preserve">
+    <value>Du hast noch kein Qualifikationen hinterlegt</value>
+  </data>
+  <data name="QualificationEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deine ersten Qualifikationen hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="WebReferenceEditView_ButtonTxt" xml:space="preserve">
+    <value>Webprofile hinzufügen</value>
+  </data>
+  <data name="WebReferenceEditView_Headline" xml:space="preserve">
+    <value>Du hast noch kein Webprofile hinterlegt</value>
+  </data>
+  <data name="WebReferenceEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deine ersten Webprofile hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
 </root>
