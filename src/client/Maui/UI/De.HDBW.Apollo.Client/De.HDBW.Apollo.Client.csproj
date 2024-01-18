@@ -117,7 +117,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.29" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.31" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.22.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.58.1" />
@@ -154,6 +154,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="FlyoutMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\PickUserNameView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Profile\ContactInfo\ContactView.xaml">
@@ -300,6 +303,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PickUserNameView.xaml.cs">
+      <DependentUpon>PickUserNameView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Profile\CareerInfo\OtherView.xaml.cs">
       <DependentUpon>OtherView.xaml</DependentUpon>

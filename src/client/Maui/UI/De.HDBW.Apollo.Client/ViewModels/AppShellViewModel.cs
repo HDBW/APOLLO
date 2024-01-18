@@ -67,41 +67,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanChangeUseCase), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private async Task ChangeUseCase(CancellationToken token)
-        {
-            using (var work = ScheduleWork(token))
-            {
-                try
-                {
-                    var parameters = new NavigationParameters();
-                    parameters.Add(NavigationParameter.Data, true);
-                    await NavigationService.PushToRootAsync(Routes.UseCaseSelectionView, token, parameters);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(work);
-                }
-            }
-        }
-
-        private bool CanChangeUseCase()
-        {
-            return !IsBusy;
-        }
-
         private void LoadonUIThread(User? user)
         {
             UserProfile = UserProfileEntry.Import(user ?? new User());

@@ -1,5 +1,5 @@
-﻿using Apollo.Api;
-using De.HDBW.Apollo.Data.Services;
+﻿using De.HDBW.Apollo.Data.Services;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -22,7 +22,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(TokenSource!.Token))
             {
                 cts.Cancel();
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.CreateAsync(null, cts.Token));
                 await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SaveAsync(null, cts.Token));
             }
         }
@@ -32,11 +31,11 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            string? userId = null;
+            User? user = null;
             try
             {
-                var testuser = new User() { ObjectId = "Dummy", Name = "Dummy", ContactInfos = new List<ContactInfo>() };
-                userId = await Service.SaveAsync(testuser, TokenSource!.Token);
+                var testuser = new User() { ObjectId = "Dummy", Name = "Dummy" };
+                user = await Service.SaveAsync(testuser, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -44,19 +43,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
             }
 
-            Assert.NotNull(userId);
-
-            // var courseItem = training.ToCourseItem();
-            // Assert.NotNull(courseItem);
-
-            // var courseAppointment = training.ToCourseAppointment();
-            // Assert.NotNull(courseAppointment);
-
-            // var eduProviderItem = training.ToEduProviderItems();
-            // Assert.NotNull(eduProviderItem);
-
-            // var courseContactRelation = training.ToCourseContactRelation();
-            // Assert.NotNull(courseContactRelation);
+            Assert.NotNull(user);
         }
 
         protected override UserService SetupService(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)

@@ -63,13 +63,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     if (user == null)
                     {
-                        user = new User()
-                        {
-                            ObjectId = SessionService.AccountId.ObjectId,
-                            Name = "Dummy"
-                        };
-
-                        user = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
                         await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
                         return;
                     }

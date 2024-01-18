@@ -17,6 +17,8 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string RegistrationView = "/RegistrationView";
 
+        public const string PickUserNameView = "/PickUserNameView";
+
         public const string UseCaseDescriptionView = "/UseCaseDescriptionView";
 
         public const string UseCaseSelectionView = "/UseCaseSelectionView";

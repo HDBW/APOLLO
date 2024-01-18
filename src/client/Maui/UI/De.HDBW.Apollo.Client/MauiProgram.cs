@@ -68,12 +68,6 @@ namespace De.HDBW.Apollo.Client
             SetupRoutes();
             SetupHandler();
             var result = SetupB2CLogin(builder.Services);
-#if DEBUG
-            if ( result == null )
-            {
-                result = new AccountId("dummy", "dummy", "dummy");
-            }
-#endif
             SetupServices(builder.Services, secretsService, result);
             SetupDataBaseTableProvider(builder);
             SetupRepositories(builder.Services);
@@ -266,6 +260,9 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<RegistrationView>();
             services.AddTransient<RegistrationViewModel>();
 
+            services.AddTransient<PickUserNameView>();
+            services.AddTransient<PickUserNameViewModel>();
+
             services.AddTransient<UseCaseDescriptionView>();
             services.AddTransient<UseCaseDescriptionViewModel>();
 
@@ -397,6 +394,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.ExtendedSplashScreenView, typeof(ExtendedSplashScreenView));
             Routing.RegisterRoute(Routes.Shell, typeof(AppShell));
             Routing.RegisterRoute(Routes.RegistrationView, typeof(RegistrationView));
+            Routing.RegisterRoute(Routes.PickUserNameView, typeof(PickUserNameView));
             Routing.RegisterRoute(Routes.UseCaseDescriptionView, typeof(UseCaseDescriptionView));
             Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
             Routing.RegisterRoute(Routes.StartView, typeof(StartView));

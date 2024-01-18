@@ -3,6 +3,7 @@
 
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 
@@ -24,10 +25,9 @@ namespace De.HDBW.Apollo.Client
             _sessionService = sessionService;
             _preferenceService = preferenceService;
             InitializeComponent();
-            navigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
-            return;
             if (_preferenceService.GetValue(Preference.IsFirstTime, true))
             {
+                _preferenceService.SetValue(Preference.IsFirstTime, false);
                 MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);
             }
             else if (!_sessionService.HasRegisteredUser)
@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client
             }
             else
             {
-                MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.UseCaseSelectionView, _serviceProvider) as Page);
+                navigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
             }
         }
     }

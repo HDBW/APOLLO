@@ -55,7 +55,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.PushToRootAsync(Routes.UseCaseSelectionView, worker.Token);
+                    SessionService.UpdateRegisteredUser(null);
+                    await NavigationService.PushToRootAsync(Routes.StartView, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -90,8 +91,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     await AuthService.SignInInteractively(worker.Token);
-                    //authentication = await AuthService.AcquireTokenSilent(worker.Token);
-                    //var userId = authentication.Account?.HomeAccountId;
                 }
                 catch (OperationCanceledException)
                 {
@@ -123,6 +122,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy && HasRegisterdUser;
         }
 
+#if DEBUG
+        public class DummyAccount : IAccount
+        {
+            public string Username { get; } = "Dummy";
+
+            public string Environment { get; } = "Dummy";
+
+            public AccountId HomeAccountId { get; } = new AccountId("Dummy", "Dummy", "Dummy");
+        }
+#endif
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
@@ -134,8 +144,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var result = await DialogService.ShowPopupAsync<ConfirmDataUsageDialog, NavigationParameters>(worker.Token);
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
+#if !DEBUG
                         authentication = await AuthService.SignInInteractively(worker.Token);
-                        await NavigationService.PushToRootAsync(Routes.UseCaseSelectionView, worker.Token);
+#else
+                        authentication = new AuthenticationResult(
+                              accessToken: "Mock",
+                              isExtendedLifeTimeToken: true,
+                              uniqueId: "Mock",
+                              expiresOn: DateTimeOffset.MaxValue,
+                              extendedExpiresOn: DateTimeOffset.MaxValue,
+                              tenantId: "Mock",
+                              account: new DummyAccount(),
+                              idToken: "Mock",
+                              scopes: new List<string>(),
+                              correlationId: Guid.Empty,
+                              tokenType: "Bearer",
+                              authenticationResultMetadata: null,
+                              claimsPrincipal: null,
+                              spaAuthCode: null,
+                              additionalResponseParameters: null);
+#endif
                     }
                 }
                 catch (OperationCanceledException)
@@ -157,6 +185,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 finally
                 {
                     SessionService.UpdateRegisteredUser(authentication?.Account.HomeAccountId);
+                    if (SessionService.HasRegisteredUser)
+                    {
+                        await NavigationService.PushToRootAsync(Routes.PickUserNameView, worker.Token);
+                    }
+
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     UnscheduleWork(worker);
                 }

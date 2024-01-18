@@ -40,7 +40,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
         [ObservableProperty]
         private string? _phone;
 
-        private ContactInfo? _contact;
+        private Contact? _contact;
 
         public ContactViewModel(
             IDispatcherService dispatcherService,

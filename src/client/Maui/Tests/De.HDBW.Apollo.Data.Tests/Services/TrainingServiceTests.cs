@@ -1,6 +1,5 @@
-﻿using Apollo.Api;
-using Apollo.Common.Entities;
-using De.HDBW.Apollo.Data.Services;
+﻿using De.HDBW.Apollo.Data.Services;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
 using Xunit;

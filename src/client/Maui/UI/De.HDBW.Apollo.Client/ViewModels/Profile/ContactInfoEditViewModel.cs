@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
     public partial class ContactInfoEditViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private ObservableCollection<ContactInfo> _contacts = new ObservableCollection<ContactInfo>();
+        private ObservableCollection<Contact> _contacts = new ObservableCollection<Contact>();
 
         public ContactInfoEditViewModel(
             IDispatcherService dispatcherService,
@@ -31,7 +31,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                    var contacts = new List<ContactInfo>();
+                    var contacts = new List<Contact>();
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(contacts), worker.Token);
                 }
@@ -93,9 +93,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             return !IsBusy;
         }
 
-        private void LoadonUIThread(List<ContactInfo> contacts)
+        private void LoadonUIThread(List<Contact> contacts)
         {
-            Contacts = new ObservableCollection<ContactInfo>(contacts);
+            Contacts = new ObservableCollection<Contact>(contacts);
         }
     }
 }
