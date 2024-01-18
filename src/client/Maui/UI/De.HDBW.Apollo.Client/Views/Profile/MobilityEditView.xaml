@@ -5,7 +5,6 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:MobilityEditViewModel"
-             Shell.TabBarIsVisible="False"
              Title="{x:Static strings:Resources.MobilityEditView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">

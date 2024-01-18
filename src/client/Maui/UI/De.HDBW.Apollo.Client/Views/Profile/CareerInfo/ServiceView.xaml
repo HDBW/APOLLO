@@ -5,7 +5,6 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
              x:DataType="viewModels:ServiceViewModel"
-             Shell.TabBarIsVisible="False"
              Title="ServiceView"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
