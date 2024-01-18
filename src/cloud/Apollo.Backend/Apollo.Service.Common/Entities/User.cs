@@ -12,7 +12,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// This is the Unique Identifier set by Apollo for the User.
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// This is the Unique Identifier of the User from the Identity Provider.
