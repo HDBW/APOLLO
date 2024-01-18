@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     /// <summary>
     /// Used in the query methods to specifiy the operator.

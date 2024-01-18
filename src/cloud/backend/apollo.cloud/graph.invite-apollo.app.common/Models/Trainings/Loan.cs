@@ -5,8 +5,9 @@
 //using MongoDB.Bson.Serialization.Attributes;
 
 using System;
+using Invite.Apollo.App.Graph.Common.Models;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Models.Trainings
 {
     public record Loans
     {

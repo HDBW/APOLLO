@@ -1,4 +1,7 @@
-﻿using System.ServiceModel;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using ProtoBuf.Grpc;
