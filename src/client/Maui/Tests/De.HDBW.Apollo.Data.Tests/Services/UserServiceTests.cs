@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         }
 
         [Fact]
-        public async Task CreateUserAsyncTest()
+        public async Task SaveUserAsyncTest()
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             try
             {
                 var testuser = new User() { ObjectId = "Dummy", Name = "Dummy", ContactInfos = new List<ContactInfo>() };
-                userId = await Service.CreateAsync(testuser, TokenSource!.Token);
+                userId = await Service.SaveAsync(testuser, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {

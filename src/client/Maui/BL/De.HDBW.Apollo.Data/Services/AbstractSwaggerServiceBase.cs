@@ -4,7 +4,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
-using Apollo.Api;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -112,7 +112,7 @@ namespace De.HDBW.Apollo.Data.Services
             return result;
         }
 
-        protected async Task<TU?> DoPostAsync<TU>(object content, CancellationToken token, [CallerMemberName] string? callerName = null, string action = null)
+        protected async Task<TU?> DoPostAsync<TU>(object content, CancellationToken token, [CallerMemberName] string? callerName = null, string? action = null)
         {
             ArgumentNullException.ThrowIfNull(content);
             token.ThrowIfCancellationRequested();
@@ -135,7 +135,7 @@ namespace De.HDBW.Apollo.Data.Services
                 var url = BaseUri;
                 if (!string.IsNullOrEmpty(action))
                 {
-                    url = $"{BaseUri.TrimEnd( '/' )}/{action.TrimStart('/')}";
+                    url = $"{BaseUri.TrimEnd('/')}/{action.TrimStart('/')}";
                 }
 
                 using (var response = await client.PostAsJsonAsync(url, content, token).ConfigureAwait(false))

@@ -1,9 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using Apollo.Common.Entities;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 
 namespace De.HDBW.Apollo.Data.Extensions
 {

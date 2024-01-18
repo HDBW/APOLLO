@@ -69,8 +69,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                             Name = "Dummy"
                         };
 
-                        var id = await UserService.CreateAsync(user, worker.Token).ConfigureAwait(false);
-
+                        user = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
                         await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
                         return;
                     }

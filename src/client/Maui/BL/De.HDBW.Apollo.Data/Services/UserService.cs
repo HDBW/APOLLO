@@ -2,6 +2,8 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Backend;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -18,18 +20,12 @@ namespace De.HDBW.Apollo.Data.Services
         {
         }
 
-        public async Task<string?> CreateAsync(User user, CancellationToken token)
+        public async Task<User?> SaveAsync(User user, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var request = new CreateOrUpdateUserRequest()
-            var ids = await DoPostAsync<List<string>?>(user, token, action: "insert").ConfigureAwait(false);
-            return ids?.FirstOrDefault();
-        }
-
-        public async Task<bool> SaveAsync(User user, CancellationToken token)
-        {
-            token.ThrowIfCancellationRequested();
-            return await DoPutAsync<bool>(user, token).ConfigureAwait(false);
+            var request = new CreateOrUpdateUserRequest(user);
+            var response = await DoPutAsync<CreateOrUpdateUserResponse>(request, token).ConfigureAwait(false);
+            return response?.Result;
         }
     }
 }

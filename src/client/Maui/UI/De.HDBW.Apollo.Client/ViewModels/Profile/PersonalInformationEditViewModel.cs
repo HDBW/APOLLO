@@ -134,19 +134,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
             _user.Name = Name ?? string.Empty;
             _user.Disabilities = Disabilities;
-
-            if (!await UserService.SaveAsync(_user, token).ConfigureAwait(false))
+            var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
+            if (response == null)
             {
                 Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
-            if (!await UserRepository.SaveAsync(_user, token).ConfigureAwait(false))
+            if (!await UserRepository.SaveAsync(response, token).ConfigureAwait(false))
             {
                 Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
-
+            _user = response;
             IsDirty = false;
             return !IsDirty;
         }
