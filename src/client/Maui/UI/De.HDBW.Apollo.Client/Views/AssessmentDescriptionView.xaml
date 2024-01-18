@@ -5,7 +5,6 @@
              x:DataType="viewModels:AssessmentDescriptionViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.AssessmentDescriptionView_Title}"
-             Shell.FlyoutBehavior="Disabled"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
 

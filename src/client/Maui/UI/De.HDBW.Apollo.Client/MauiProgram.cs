@@ -35,7 +35,6 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
@@ -212,6 +211,7 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IMessenger, WeakReferenceMessenger>();
             services.AddSingleton<INetworkService, NetworkService>();
             services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
+            services.AddSingleton<IUserService, UserService>();
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
@@ -278,7 +278,11 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<ConfirmDataUsageDialogViewModel>();
 
             services.AddTransient<MessageDialog>();
+            services.AddTransient<ErrorDialog>();
             services.AddTransient<MessageDialogViewModel>();
+
+            services.AddTransient<RetryDialog>();
+            services.AddTransient<ConfirmCancelDialogViewModel>();
 
             services.AddTransient<SelectOptionDialog>();
             services.AddTransient<SelectOptionDialogViewModel>();

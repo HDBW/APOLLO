@@ -547,6 +547,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Datum eingeben.
+        /// </summary>
+        public static string DatePicker_Watermark {
+            get {
+                return ResourceManager.GetString("DatePicker_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fahrerlaubnis A.
         /// </summary>
         public static string DriversLicense_A {
@@ -840,6 +849,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string EducationInfoEditView_Title {
             get {
                 return ResourceManager.GetString("EducationInfoEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fehler.
+        /// </summary>
+        public static string ErrorDialog_Title {
+            get {
+                return ResourceManager.GetString("ErrorDialog_Title", resourceCulture);
             }
         }
         
@@ -1141,6 +1159,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nein.
+        /// </summary>
+        public static string Global_No {
+            get {
+                return ResourceManager.GetString("Global_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Berufsbezeichnung.
         /// </summary>
         public static string Global_Occupation {
@@ -1249,6 +1276,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ja.
+        /// </summary>
+        public static string Global_Yes {
+            get {
+                return ResourceManager.GetString("Global_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Postleitzahl.
         /// </summary>
         public static string Global_ZipCode {
@@ -1263,6 +1299,28 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string GlobalError_NoInternet {
             get {
                 return ResourceManager.GetString("GlobalError_NoInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beim Speichern der Daten ist ein Fehler aufgetreten.
+        ///
+        ///Möchtest du es erneut versuchen?
+        ///
+        ///Hinweis: Nicht gespeicherte Daten gehen verlohren..
+        /// </summary>
+        public static string GlobalError_RetryUnableToSaveData {
+            get {
+                return ResourceManager.GetString("GlobalError_RetryUnableToSaveData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beim Speichern der Daten ist ein Fehler aufgetreten..
+        /// </summary>
+        public static string GlobalError_UnableToSaveData {
+            get {
+                return ResourceManager.GetString("GlobalError_UnableToSaveData", resourceCulture);
             }
         }
         

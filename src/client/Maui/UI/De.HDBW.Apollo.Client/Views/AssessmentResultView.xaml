@@ -7,7 +7,6 @@
              x:DataType="viewModels:AssessmentResultViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.AssessmentResultView_Title}"
-             Shell.FlyoutBehavior="Disabled"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior />

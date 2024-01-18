@@ -5,21 +5,19 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
-    public partial class PersonalInformationEditViewModel : BaseViewModel
+    public partial class PersonalInformationEditViewModel : AbstractSaveDataViewModel
     {
-        [ObservableProperty]
         private string? _name;
 
-        [ObservableProperty]
         private DateTime? _birthDate;
 
-        [ObservableProperty]
-        private bool? _disabilities;
+        private bool _disabilities;
 
         private User? _user;
 
@@ -28,14 +26,67 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<PersonalInformationEditViewModel> logger,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IUserService userService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(userService);
             UserRepository = userRepository;
+            UserService = userService;
+        }
+
+        public string? Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                if (SetProperty(ref _name, value))
+                {
+                    IsDirty = true;
+                }
+            }
+        }
+
+        public DateTime? BirthDate
+        {
+            get
+            {
+                return _birthDate;
+            }
+
+            set
+            {
+                if (SetProperty(ref _birthDate, value))
+                {
+                    IsDirty = true;
+                }
+            }
+        }
+
+        public bool Disabilities
+        {
+            get
+            {
+                return _disabilities;
+            }
+
+            set
+            {
+                if (SetProperty(ref _disabilities, value))
+                {
+                    IsDirty = true;
+                }
+            }
         }
 
         private IUserRepository UserRepository { get; }
+
+        private IUserService UserService { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -66,48 +117,38 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        public override async Task OnNavigatingFromAsync()
-        {
-            if (_user == null)
-            {
-                return;
-            }
-
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
-                    _user.Name = Name ?? string.Empty;
-                    _user.Disabilities = Disabilities;
-                    if (!await UserRepository.SaveAsync(_user, worker.Token).ConfigureAwait(false))
-                    {
-
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatingFromAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatingFromAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatingFromAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
             ToggleDisabilitiesCommand?.NotifyCanExecuteChanged();
+        }
+
+        protected override async Task<bool> SaveAsync(CancellationToken token)
+        {
+            if (_user == null || !IsDirty)
+            {
+                return !IsDirty;
+            }
+
+            token.ThrowIfCancellationRequested();
+            _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
+            _user.Name = Name ?? string.Empty;
+            _user.Disabilities = Disabilities;
+
+            if (!await UserService.SaveAsync(_user, token).ConfigureAwait(false))
+            {
+                Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
+                return !IsDirty;
+            }
+
+            if (!await UserRepository.SaveAsync(_user, token).ConfigureAwait(false))
+            {
+                Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
+                return !IsDirty;
+            }
+
+            IsDirty = false;
+            return !IsDirty;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleDisabilities))]
@@ -128,6 +169,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             Name = user?.Name;
             BirthDate = user?.Birthdate != null ? new DateTime(user.Birthdate.Value.Year, user.Birthdate.Value.Month, user.Birthdate.Value.Day, 0, 0, 0, DateTimeKind.Local) : null;
             Disabilities = user?.Disabilities ?? false;
+            IsDirty = false;
         }
     }
 }

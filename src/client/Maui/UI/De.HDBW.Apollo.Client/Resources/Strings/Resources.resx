@@ -1095,4 +1095,26 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="ProfileView_RecommendationSection_Title" xml:space="preserve">
     <value>Hier fehlt noch was.</value>
   </data>
+  <data name="ErrorDialog_Title" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="GlobalError_RetryUnableToSaveData" xml:space="preserve">
+    <value>Beim Speichern der Daten ist ein Fehler aufgetreten.
+
+Möchtest du es erneut versuchen?
+
+Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
+  </data>
+  <data name="GlobalError_UnableToSaveData" xml:space="preserve">
+    <value>Beim Speichern der Daten ist ein Fehler aufgetreten.</value>
+  </data>
+  <data name="Global_No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Global_Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="DatePicker_Watermark" xml:space="preserve">
+    <value>Datum eingeben</value>
+  </data>
 </root>

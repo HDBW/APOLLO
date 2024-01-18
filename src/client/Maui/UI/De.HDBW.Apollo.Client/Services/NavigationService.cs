@@ -387,6 +387,15 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
+            var interceptor = page as IBackNavigationInterceptor ?? page.BindingContext as IBackNavigationInterceptor;
+            if ((interceptor?.NeedsToCancel ?? false) && (e?.Source == ShellNavigationSource.Pop || e?.Source == ShellNavigationSource.PopToRoot) && (e?.CanCancel ?? false))
+            {
+                // It was a back navigation;
+                e.Cancel();
+                interceptor.CanceledNavigation();
+                return;
+            }
+
             NavigatedFromPage(page, null);
         }
 

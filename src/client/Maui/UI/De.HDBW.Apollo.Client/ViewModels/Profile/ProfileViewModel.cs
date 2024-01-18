@@ -12,7 +12,6 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
-using static System.Collections.Specialized.BitVector32;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
@@ -136,24 +135,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     UnscheduleWork(worker);
                 }
             }
-        }
-
-        private IEnumerable<ObservableObject> CreatePersonalInformations(User user)
-        {
-            var informations = new List<ObservableObject>();
-            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
-            if (!string.IsNullOrEmpty(user.Name))
-            {
-                informations.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_UserName, user.Name));
-            }
-
-            if (user.Birthdate.HasValue)
-            {
-                informations.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_Birthdate, user.Birthdate.Value.ToLocalTime().ToString("d")));
-            }
-
-            informations.Add(SeperatorValue.Import());
-            return informations;
         }
 
         protected override void RefreshCommands()
@@ -285,6 +266,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        private IEnumerable<ObservableObject> CreatePersonalInformations(User user)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
+            if (!string.IsNullOrEmpty(user.Name))
+            {
+                informations.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_UserName, user.Name));
+            }
+
+            if (user.Birthdate.HasValue)
+            {
+                informations.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_Birthdate, user.Birthdate.Value.ToLocalTime().ToString("d")));
+            }
+
+            informations.Add(SeperatorValue.Import());
+            return informations;
         }
 
         private RecommendationValue? CreateRecommendationValue(User user)

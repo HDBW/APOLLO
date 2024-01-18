@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
@@ -141,7 +141,13 @@
     <MauiXaml Update="Controls\GlobalErrorView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\RetryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Dialogs\FirstTimeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Dialogs\ErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Dialogs\SelectOptionDialog.xaml">
@@ -280,6 +286,12 @@
   <ItemGroup>
     <Compile Update="Controls\GlobalErrorView.xaml.cs">
       <DependentUpon>GlobalErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\RetryDialog.xaml.cs">
+      <DependentUpon>RetryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\ErrorDialog.xaml.cs">
+      <DependentUpon>ErrorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Update="Dialogs\SelectOptionDialog.xaml.cs">
       <DependentUpon>SelectOptionDialog.xaml</DependentUpon>

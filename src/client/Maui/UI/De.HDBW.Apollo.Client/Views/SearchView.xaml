@@ -2,6 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
              Title="SearchView"
+             Shell.TabBarIsVisible="True"
+             Shell.FlyoutBehavior="Flyout"
              Style="{StaticResource DefaultPageStyle}">
     <VerticalStackLayout>
         <Label 
