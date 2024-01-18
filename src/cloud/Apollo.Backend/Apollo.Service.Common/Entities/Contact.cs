@@ -13,36 +13,36 @@ namespace Apollo.Common.Entities
         public string? Id { get; set; }
 
         //[BsonElement("Firstname")]
-        public string Firstname { get; set; }
+        public string? Firstname { get; set; }
 
         //[BsonElement("Surname")]
-        public string Surname { get; set; }
+        public string? Surname { get; set; }
 
         //[BsonElement("Mail")]
-        public string Mail { get; set; }
+        public string? Mail { get; set; }
 
         //[BsonElement("Phone")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         //[BsonElement("Organization")]
-        public string Organization { get; set; }
+        public string? Organization { get; set; }
 
         //[BsonElement("Address")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         //[BsonElement("City")]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         //[BsonElement("ZipCode")]
-        public string ZipCode { get; set; }
+        public string? ZipCode { get; set; }
 
-        public string Region { get; set; }
+        public string? Region { get; set; }
 
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
         //[BsonElement("AppointmentUrl")]
         public Uri EAppointmentUrl { get; set; }
 
-        public ContactType ContactType { get; set; }
+        public ContactType? ContactType { get; set; }
     }
 }
