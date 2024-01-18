@@ -58,6 +58,9 @@ namespace Apollo.Common.Entities
         /// </summary>
         public bool? Disabilities { get; set; }
 
+        /// <summary>
+        /// The user profile is the Profile of the User.
+        /// </summary>
         public Profile? Profile { get; set; }
     }
 }

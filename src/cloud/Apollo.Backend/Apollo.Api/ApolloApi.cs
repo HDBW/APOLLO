@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System;
 using System.Dynamic;
 using System.Security.Claims;
 using Amazon.Runtime.Internal.Util;
@@ -228,7 +229,7 @@ namespace Apollo.Api
         {
             try
             {
-                return $"{entityName}-{Guid.NewGuid().ToString()}";
+                return $"{entityName}-{Guid.NewGuid().ToString("N").ToUpper()}";
             }
             catch (ApolloApiException)
             {

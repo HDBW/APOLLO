@@ -65,7 +65,7 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<Language> LanguageSkills { get; set; }
+        public List<LanguageSkill> LanguageSkills { get; set; }
 
         /// <summary>
         /// Skills that are directly associated to the User.
