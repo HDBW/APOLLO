@@ -41,7 +41,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <summary>
         /// 
         /// </summary>
-        public List<Contact> ContactInfos { get; set; }
+        public List<Contact> ContactInfos { get; set; } = new List<Contact>();
 
         /// <summary>
         /// Indicates the Birthdate of the User
