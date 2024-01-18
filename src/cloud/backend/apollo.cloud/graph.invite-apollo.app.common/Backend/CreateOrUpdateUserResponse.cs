@@ -10,7 +10,7 @@ namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     public class CreateOrUpdateUserResponse
     {
-        // Property to store the result of the create/update operation.
-        public User? Result { get; set; }
+        // The created user id.
+        public string Result { get; set; }
     }
 }
