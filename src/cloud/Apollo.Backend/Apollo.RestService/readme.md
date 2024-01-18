@@ -84,3 +84,86 @@ Useful properties engaged in the embedding calculation
     "Grundkenntnisse" : [ "Tabellenkalkulation Excel (MS Office)", "Auftragsannahme, -bearbeitung", "Telefondienst", "Besucherberatung, -betreuung (Veranstaltungen)", "Terminplanung, -überwachung", "Daten-, Texterfassung", "Garten-, Grünflächenpflege", "Büromaschinen bedienen", "Kurierdienst" ]
   },
   ~~~
+
+  ### Prompt Draft for qualification
+  User's qualification is described by the following pseudo object list in JSON. Your task is to 
+generate the plain text from the list of objects to describe the qualification of the user by all listed occupations.
+To create the plain text use following template for each occupation found in JSON. 
+If the qualification ihas expired one or more years ago, please remark that the user's quilifaction might be old.
+If the user's qualification is between 5 and 10 years remark user as a senior. If it is less than 5 years remark user as a junior. Qualifications with longer than 10 years belong to expert users.
+
+Follow example bellow.
+
+START TEMPLATE
+The user has achieved following QUAL_NUMBER qulifications, which we have found in the user's profile:
+
+1. The name of the qualification 1
+The description of the qualification1.
+When is the qualification achieved, till when is the qualification1 valid. How much time is the qualification1 valid.
+
+2. The name of the qualification 2
+The description of the qualification 2.
+When is the qualification2 achieved, till when is the qualification2 valid. How much time is the qualification2 valid.
+
+...
+
+Last qualification. The name of the last qualification.
+The description of the last qualification.
+When is the last qualification achieved, till when is the last qualification valid. How much time is the last qualification valid.
+
+END TEMPLATE
+
+Following example demonstrats how to produce the text from example JSON.
+
+START EXAMPLE
+PSEUDO OBJECT LIST START
+[
+{
+	Name:"Gabelstaplerschein",
+	Description: "Fahren und Bedienen eines Gabelstaplerscheines"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+},
+{
+	Name:"IATA New Gen ISS Workshop",
+	Description: "IATA-Kunde und START/Amadeus"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+}
+]
+PSEUDO OBJECT LIST START
+
+Text create from template based on the given pseudo list example:
+
+The user has following two qualifications 
+
+1. Gabelstaplerschein
+Fahren und Bedienen eines Gabelstaplerscheines.
+Achieved at 01.01.2021, valid till 01.01.2024, 3 years Junior user
+
+2. IATA New Gen ISS Workshop
+IATA-Kunde und START/Amadeus
+Achieved at 17.10.2010, valid till 17.10.2015, The user has 5 qualification as a senior. However, the qualification has expired a long time ago and user must refresh skills.
+
+END EXAMPLE
+
+
+PSEUDO OBJECT LIST START
+[
+{
+	Name:"Gabelstaplerschein",
+	Description: "Fahren und Bedienen eines Gabelstaplerscheines"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+},
+{
+	Name:"IATA New Gen ISS Workshop",
+	Description: "IATA-Kunde und START/Amadeus"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+}
+
+]
+PSEUDO OBJECT LIST END
+
+

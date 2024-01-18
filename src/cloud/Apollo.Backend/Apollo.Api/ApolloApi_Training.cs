@@ -59,11 +59,11 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="query">The query object containing filter criteria for the trainings.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of matching Training objects.</returns>
-        public virtual async Task<IList<Training>> QueryTrainings(Apollo.Common.Entities.Query query)
+        public virtual async Task<IList<Training>> QueryTrainingsAsync(Apollo.Common.Entities.Query query)
         {
             try
             {
-                _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainings)}");
+                _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainingsAsync)}");
 
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
@@ -77,7 +77,7 @@ namespace Apollo.Api
                 // Convert results to a list of typed Training objects
                 //var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
 
-                _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainings)}");
+                _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
 
                 return res;
             }
@@ -88,7 +88,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(QueryTrainings)}: {ex.Message}");
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(QueryTrainingsAsync)}: {ex.Message}");
 
                 // Throw a more generic exception for unexpected errors
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "An error occurred while querying trainings.", ex);

@@ -101,7 +101,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace($"{nameof(QueryTrainings)} entered.");
 
                 // Call the Apollo API to query trainings based on the request.
-                var trainings = await _api.QueryTrainings(req);
+                var trainings = await _api.QueryTrainingsAsync(req);
 
                 _logger.LogTrace($"{nameof(QueryTrainings)} completed.");
 

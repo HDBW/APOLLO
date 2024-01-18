@@ -770,7 +770,7 @@ namespace Apollo.Api.UnitTests
             IList<Training> trainings;
             try
             {
-                trainings = await api.QueryTrainings(query);
+                trainings = await api.QueryTrainingsAsync(query);
             }
             catch (ApolloApiException ex)
             {
@@ -865,7 +865,7 @@ namespace Apollo.Api.UnitTests
             IList<Training> trainings;
             try
             {
-                trainings = await api.QueryTrainings(query);
+                trainings = await api.QueryTrainingsAsync(query);
             }
             catch (ApolloApiException ex)
             {

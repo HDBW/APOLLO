@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ApolloApi_User - Copy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
     <ProjectReference Include="..\Daenet.MongoDal\Daenet.MongoDal.csproj" />
   </ItemGroup>
@@ -20,6 +24,10 @@
     <Content Include="ApolloApi_User.cs">
       <DependentUpon>ApolloApi.cs</DependentUpon>
     </Content>
+    <Content Include="ApolloApi_Profile.cs">
+      <DependentUpon>ApolloApi.cs</DependentUpon>
+    </Content>
+    
   </ItemGroup>
 
   <ItemGroup>

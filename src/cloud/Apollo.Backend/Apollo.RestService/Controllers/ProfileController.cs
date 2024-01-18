@@ -75,7 +75,7 @@ namespace Apollo.Service.Controllers
                 _logger?.LogTrace("Enter {method}", nameof(QueryUsers));
 
                 // Call the Apollo API to query users based on the request.
-                var users = await _api.QueryUsers(req);
+                var users = await _api.QueryProfilesAsync(req);
 
                 _logger?.LogTrace("Leave {method}", nameof(QueryUsers));
 
