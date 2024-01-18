@@ -14,6 +14,7 @@ namespace De.HDBW.Apollo.Data.Repositories
             ILogger<UserRepository> logger)
             : base(basePath, logger)
         {
+            Cache = new User();
         }
 
         public async Task<User?> GetItemAsync(CancellationToken token)
