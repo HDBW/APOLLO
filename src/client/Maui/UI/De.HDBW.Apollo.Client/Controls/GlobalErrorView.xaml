@@ -6,7 +6,7 @@
              Unloaded="HandleUnloaded"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:GlobalErrorViewModel">
-    <VerticalStackLayout Background="Red" Padding="8">
-        <Label TextColor="White" Text="{x:Binding Message}" />
+    <VerticalStackLayout Background="{StaticResource ErrorBrush}" Padding="24,10">
+        <Label TextColor="{StaticResource White}" Text="{x:Binding Message}" Style="{StaticResource Noto14}" HorizontalTextAlignment="Center"/>
     </VerticalStackLayout>
 </ContentView>

@@ -250,6 +250,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Berufserfahrung hinzufügen.
+        /// </summary>
+        public static string CareerInfoEditView_ButtonTxt {
+            get {
+                return ResourceManager.GetString("CareerInfoEditView_ButtonTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch kein Berufserfahrungen hinterlegt.
+        /// </summary>
+        public static string CareerInfoEditView_Headline {
+            get {
+                return ResourceManager.GetString("CareerInfoEditView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Füge jetzt deine ersten Berufserfahrungen hinzu und verbessere deine Kursvorschläge..
+        /// </summary>
+        public static string CareerInfoEditView_Subline {
+            get {
+                return ResourceManager.GetString("CareerInfoEditView_Subline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Berufserfahrung.
         /// </summary>
         public static string CareerInfoEditView_Title {
@@ -327,6 +354,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ConfirmDataUsageDialog_Title {
             get {
                 return ResourceManager.GetString("ConfirmDataUsageDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontaktdaten hinzufügen.
+        /// </summary>
+        public static string ContactInfoEditView_ButtonTxt {
+            get {
+                return ResourceManager.GetString("ContactInfoEditView_ButtonTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch kein Kontaktdaten hinterlegt.
+        /// </summary>
+        public static string ContactInfoEditView_Headline {
+            get {
+                return ResourceManager.GetString("ContactInfoEditView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Füge jetzt deine ersten Kontaktdaten hinzu und verbessere deine Kursvorschläge..
+        /// </summary>
+        public static string ContactInfoEditView_Subline {
+            get {
+                return ResourceManager.GetString("ContactInfoEditView_Subline", resourceCulture);
             }
         }
         
@@ -844,6 +898,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bildungsweg hinzufügen.
+        /// </summary>
+        public static string EducationInfoEditView_ButtonTxt {
+            get {
+                return ResourceManager.GetString("EducationInfoEditView_ButtonTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch keinen Bildungsweg hinterlegt.
+        /// </summary>
+        public static string EducationInfoEditView_Headline {
+            get {
+                return ResourceManager.GetString("EducationInfoEditView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Füge jetzt deinen Bildungsweg hinzu und verbessere deine Kursvorschläge..
+        /// </summary>
+        public static string EducationInfoEditView_Subline {
+            get {
+                return ResourceManager.GetString("EducationInfoEditView_Subline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schul- und Berufsbildung.
         /// </summary>
         public static string EducationInfoEditView_Title {
@@ -1343,6 +1424,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sprachkenntnisse hinzufügen.
+        /// </summary>
+        public static string LanguageEditView_ButtonTxt {
+            get {
+                return ResourceManager.GetString("LanguageEditView_ButtonTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch kein Sprachkenntnisse hinterlegt.
+        /// </summary>
+        public static string LanguageEditView_Headline {
+            get {
+                return ResourceManager.GetString("LanguageEditView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Füge jetzt deine ersten Sprachkenntnisse hinzu und verbessere deine Kursvorschläge..
+        /// </summary>
+        public static string LanguageEditView_Subline {
+            get {
+                return ResourceManager.GetString("LanguageEditView_Subline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sprachkenntnisse.
         /// </summary>
         public static string LanguageEditView_Title {
@@ -1402,6 +1510,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string LanguageNiveau_C2 {
             get {
                 return ResourceManager.GetString("LanguageNiveau_C2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lizenzen hinzufügen.
+        /// </summary>
+        public static string LicenseEditView_ButtonTxt {
+            get {
+                return ResourceManager.GetString("LicenseEditView_ButtonTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch kein Lizenzen hinterlegt.
+        /// </summary>
+        public static string LicenseEditView_Headline {
+            get {
+                return ResourceManager.GetString("LicenseEditView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Füge jetzt deine ersten Lizenzen hinzu und verbessere deine Kursvorschläge..
+        /// </summary>
+        public static string LicenseEditView_Subline {
+            get {
+                return ResourceManager.GetString("LicenseEditView_Subline", resourceCulture);
             }
         }
         
@@ -1672,6 +1807,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ProfileView_Title {
             get {
                 return ResourceManager.GetString("ProfileView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qualifikationen hinzufügen.
+        /// </summary>
+        public static string QualificationEditView_ButtonTxt {
+            get {
+                return ResourceManager.GetString("QualificationEditView_ButtonTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch kein Qualifikationen hinterlegt.
+        /// </summary>
+        public static string QualificationEditView_Headline {
+            get {
+                return ResourceManager.GetString("QualificationEditView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Füge jetzt deine ersten Qualifikationen hinzu und verbessere deine Kursvorschläge..
+        /// </summary>
+        public static string QualificationEditView_Subline {
+            get {
+                return ResourceManager.GetString("QualificationEditView_Subline", resourceCulture);
             }
         }
         
@@ -2950,6 +3112,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string VoluntaryServiceType_VoluntaryYearInMonumentConservation {
             get {
                 return ResourceManager.GetString("VoluntaryServiceType_VoluntaryYearInMonumentConservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webprofile hinzufügen.
+        /// </summary>
+        public static string WebReferenceEditView_ButtonTxt {
+            get {
+                return ResourceManager.GetString("WebReferenceEditView_ButtonTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast noch kein Webprofile hinterlegt.
+        /// </summary>
+        public static string WebReferenceEditView_Headline {
+            get {
+                return ResourceManager.GetString("WebReferenceEditView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Füge jetzt deine ersten Webprofile hinzu und verbessere deine Kursvorschläge..
+        /// </summary>
+        public static string WebReferenceEditView_Subline {
+            get {
+                return ResourceManager.GetString("WebReferenceEditView_Subline", resourceCulture);
             }
         }
         

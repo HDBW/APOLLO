@@ -8,19 +8,27 @@
              x:DataType="viewModels:QualificationEditViewModel"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <Grid>
+    <Grid RowDefinitions="*, auto">
         <CollectionView ItemsSource="{x:Binding Qualifications}"
                 ItemsLayout="VerticalList">
             <CollectionView.EmptyView>
                 <ContentView>
-                    <VerticalStackLayout  VerticalOptions="CenterAndExpand" Padding="24,0">
-                        <Label Text="Ganz schön leer hier." />
-                        <Label Text="Tipp: Füll jetzt deine Qualifikationen aus. Und wir schicken Dir noch passendere Vorschläge."/>
-                        <Button Text="Los gehts" Margin="0,8" Command="{x:Binding AddCommand}"/>
+                    <VerticalStackLayout Padding="24">
+                        <Label Text="{x:Static strings:Resources.QualificationEditView_Headline}" Margin="0,0,0,16" Style="{StaticResource Noto16SemiBold}"/>
+                        <Label Text="{x:Static strings:Resources.QualificationEditView_Subline}" Margin="0,0,0,24" Style="{StaticResource Noto16}"/>
+                        <Image Source="emptyscreenimage.png" Aspect="AspectFit"/>
                     </VerticalStackLayout>
                 </ContentView>
             </CollectionView.EmptyView>
         </CollectionView>
-        <ImageButton Command="{x:Binding AddCommand}" HeightRequest="64" WidthRequest="64" Source="add.png" HorizontalOptions="End" VerticalOptions="End" Margin="16" />
+        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="{StaticResource Black}" Offset="0,0" Radius="16" Opacity="0.2"/>
+            </Border.Shadow>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="16,16,0,0" />
+            </Border.StrokeShape>
+        </Border>
+        <Button Grid.Row="1" Text="{x:Static strings:Resources.QualificationEditView_ButtonTxt}" Command="{x:Binding AddCommand}" Margin="24,16"/>
     </Grid>
 </ContentPage>
