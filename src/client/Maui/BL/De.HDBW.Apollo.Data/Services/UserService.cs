@@ -20,7 +20,7 @@ namespace De.HDBW.Apollo.Data.Services
         {
         }
 
-        public async Task<User?> SaveAsync(User user, CancellationToken token)
+        public async Task<string?> SaveAsync(User user, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             var request = new CreateOrUpdateUserRequest(user);

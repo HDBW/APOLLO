@@ -27,7 +27,7 @@ namespace De.HDBW.Apollo.Data.Services
             return response?.Trainings?.Select(x => x.ConvertToCourseItem()).ToList() as IEnumerable<CourseItem> ?? Array.Empty<CourseItem>();
         }
 
-        public async Task<CourseItem?> GetTrainingAsync(long id, CancellationToken token)
+        public async Task<CourseItem?> GetTrainingAsync(string id, CancellationToken token)
         {
             var response = await GetTrainingInternalAsync(id, token).ConfigureAwait(false);
             return response?.ConvertToCourseItem();
@@ -43,7 +43,7 @@ namespace De.HDBW.Apollo.Data.Services
             return await DoPostAsync<QueryTrainingsResponse?>(query, token).ConfigureAwait(false);
         }
 
-        private async Task<Training?> GetTrainingInternalAsync(long id, CancellationToken token)
+        private async Task<Training?> GetTrainingInternalAsync(string id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             return await DoGetAsync<Training>(id, token);

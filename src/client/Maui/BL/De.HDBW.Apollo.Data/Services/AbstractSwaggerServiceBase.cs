@@ -45,7 +45,7 @@ namespace De.HDBW.Apollo.Data.Services
 
         private string BaseUri { get; set; }
 
-        protected async Task<TU?> DoGetAsync<TU>(long id, CancellationToken token, [CallerMemberName] string? callerName = null)
+        protected async Task<TU?> DoGetAsync<TU>(string id, CancellationToken token, [CallerMemberName] string? callerName = null)
         {
             token.ThrowIfCancellationRequested();
             TU? result = default;

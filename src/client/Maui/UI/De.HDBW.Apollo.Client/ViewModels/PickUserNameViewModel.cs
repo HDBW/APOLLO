@@ -71,15 +71,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var user = new User();
+#if DEBUG
+                    user.Id = "User-5DE545AEF9974FD6826151725A9961F8";
+#endif
                     user.Name = Name!;
                     user.ObjectId = SessionService.AccountId!.ObjectId;
                     var result = await UserService.SaveAsync(user, token).ConfigureAwait(false);
-                    if (result == null)
+                    if (string.IsNullOrWhiteSpace(result))
                     {
                         throw new NotSupportedException("Unable to create user.");
                     }
 
-                    await UserRepository.SaveAsync(result, token).ConfigureAwait(false);
+                    user.Id = result;
+                    await UserRepository.SaveAsync(user, token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {

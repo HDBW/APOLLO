@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 cts.Cancel();
                 await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, cts.Token));
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync(1, cts.Token));
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync("SER01", cts.Token));
             }
         }
 
@@ -35,7 +35,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             CourseItem training = null;
             try
             {
-                training = await Service.GetTrainingAsync(1, TokenSource!.Token);
+                training = await Service.GetTrainingAsync("SER01", TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {

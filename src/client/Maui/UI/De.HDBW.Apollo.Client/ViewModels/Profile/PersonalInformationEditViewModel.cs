@@ -135,18 +135,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             _user.Name = Name ?? string.Empty;
             _user.Disabilities = Disabilities;
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
-            if (response == null)
+            if (string.IsNullOrWhiteSpace(response))
             {
                 Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
-            if (!await UserRepository.SaveAsync(response, token).ConfigureAwait(false))
+            _user.Id = response;
+            if (!await UserRepository.SaveAsync(_user, token).ConfigureAwait(false))
             {
                 Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
-            _user = response;
+
             IsDirty = false;
             return !IsDirty;
         }

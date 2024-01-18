@@ -10,6 +10,6 @@ namespace De.HDBW.Apollo.SharedContracts.Services
     {
         Task<IEnumerable<CourseItem>> SearchTrainingsAsync(Filter? filter, CancellationToken token);
 
-        Task<CourseItem?> GetTrainingAsync(long id, CancellationToken token);
+        Task<CourseItem?> GetTrainingAsync(string id, CancellationToken token);
     }
 }

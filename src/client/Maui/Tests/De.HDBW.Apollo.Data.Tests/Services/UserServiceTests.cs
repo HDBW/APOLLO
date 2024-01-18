@@ -31,11 +31,11 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            User? user = null;
+            string? userId = null;
             try
             {
-                var testuser = new User() { ObjectId = "Dummy", Name = "Dummy" };
-                user = await Service.SaveAsync(testuser, TokenSource!.Token);
+                var testuser = new User() {Id = "SER01", ObjectId = "Dummy", Name = "Dummy" };
+                userId = await Service.SaveAsync(testuser, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -43,7 +43,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
             }
 
-            Assert.NotNull(user);
+            Assert.NotNull(userId);
         }
 
         protected override UserService SetupService(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)
