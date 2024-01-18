@@ -2,6 +2,8 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Models;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -35,13 +37,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public bool NeedsToCancel
+        {
+            get
+            {
+                return IsDirty;
+            }
+        }
+
         protected override void RefreshCommands()
         {
             SaveCommand?.NotifyCanExecuteChanged();
             base.RefreshCommands();
         }
 
-        protected abstract Task SaveAsync(CancellationToken token);
+        protected abstract Task<bool> SaveAsync(CancellationToken token);
 
         protected virtual bool CanSave()
         {
@@ -55,7 +65,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await SaveAsync(worker.Token).ConfigureAwait(false);
+                    if (!await SaveAsync(worker.Token).ConfigureAwait(false))
+                    {
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_UnableToSaveData);
+                        await DialogService.ShowPopupAsync<ErrorDialog, NavigationParameters, NavigationParameters>(parameters, token).ConfigureAwait(false);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -68,6 +83,47 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error in {nameof(Save)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        public async void CanceledNavigation()
+        {
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var savedData = false;
+                    while (!savedData)
+                    {
+                        savedData = await SaveAsync(worker.Token).ConfigureAwait(false);
+                        if (!savedData)
+                        {
+                            var parameters = new NavigationParameters();
+                            parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_RetryUnableToSaveData);
+                            var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+                            savedData = !(result?.GetValue<bool?>(NavigationParameter.Result) ?? false);
+                        }
+                    }
+
+                    _isDirty = false;
+                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(CanceledNavigation)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(CanceledNavigation)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(CanceledNavigation)} in {GetType().Name}.");
                 }
                 finally
                 {

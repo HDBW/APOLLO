@@ -5,5 +5,8 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface IBackNavigationInterceptor
     {
+        bool NeedsToCancel { get; }
+
+        void CanceledNavigation();
     }
 }

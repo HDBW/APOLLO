@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -25,11 +26,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<PersonalInformationEditViewModel> logger,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IUserService userService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(userService);
             UserRepository = userRepository;
+            UserService = userService;
         }
 
         public string? Name
@@ -82,6 +86,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         private IUserRepository UserRepository { get; }
 
+        private IUserService UserService { get; }
+
         public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
@@ -117,6 +123,34 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             ToggleDisabilitiesCommand?.NotifyCanExecuteChanged();
         }
 
+        protected override async Task<bool> SaveAsync(CancellationToken token)
+        {
+            if (_user == null || !IsDirty)
+            {
+                return !IsDirty;
+            }
+
+            token.ThrowIfCancellationRequested();
+            _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
+            _user.Name = Name ?? string.Empty;
+            _user.Disabilities = Disabilities;
+
+            if (!await UserService.SaveAsync(_user, token).ConfigureAwait(false))
+            {
+                Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
+                return !IsDirty;
+            }
+
+            if (!await UserRepository.SaveAsync(_user, token).ConfigureAwait(false))
+            {
+                Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
+                return !IsDirty;
+            }
+
+            IsDirty = false;
+            return !IsDirty;
+        }
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleDisabilities))]
         private Task ToggleDisabilities(CancellationToken token)
         {
@@ -136,22 +170,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             BirthDate = user?.Birthdate != null ? new DateTime(user.Birthdate.Value.Year, user.Birthdate.Value.Month, user.Birthdate.Value.Day, 0, 0, 0, DateTimeKind.Local) : null;
             Disabilities = user?.Disabilities ?? false;
             IsDirty = false;
-        }
-
-        protected override async Task SaveAsync(CancellationToken token)
-        {
-            if (_user == null)
-            {
-                return;
-            }
-
-            _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
-            _user.Name = Name ?? string.Empty;
-            _user.Disabilities = Disabilities;
-            if (!await UserRepository.SaveAsync(_user, token).ConfigureAwait(false))
-            {
-
-            }
         }
     }
 }
