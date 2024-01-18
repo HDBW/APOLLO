@@ -29,16 +29,21 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             IDialogService dialogService,
             ILogger<ProfileViewModel> logger,
             IUserRepository userRepository,
+            IUserService userService,
             ISessionService sessionService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(userService);
             ArgumentNullException.ThrowIfNull(sessionService);
             UserRepository = userRepository;
+            UserService = userService;
             SessionService = sessionService;
         }
 
         private IUserRepository UserRepository { get; }
+
+        private IUserService UserService { get; }
 
         private ISessionService SessionService { get; }
 
@@ -58,6 +63,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     if (user == null)
                     {
+                        user = new User()
+                        {
+                            ObjectId = SessionService.AccountId.ObjectId,
+                            Name = "Dummy"
+                        };
+
+                        var id = await UserService.CreateAsync(user, worker.Token).ConfigureAwait(false);
+
                         await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
                         return;
                     }

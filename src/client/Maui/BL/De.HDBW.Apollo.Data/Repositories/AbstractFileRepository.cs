@@ -10,9 +10,7 @@ namespace De.HDBW.Apollo.Data.Repositories
 {
     public abstract class AbstractFileRepository<TU>
     {
-        private static readonly object _lockObject = new object();
-
-        private TU? _cache;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
         protected AbstractFileRepository(string basePath, ILogger logger)
         {
@@ -26,36 +24,16 @@ namespace De.HDBW.Apollo.Data.Repositories
 
         private string BasePath { get; }
 
-        protected TU? Cache
-        {
-            get
-            {
-                return _cache;
-            }
-
-            set
-            {
-                try
-                {
-                    Monitor.Enter(_lockObject);
-                    _cache = value;
-                }
-                finally
-                {
-                    Monitor.Exit(_lockObject);
-                }
-            }
-        }
-
-        public async Task<bool> LoadAsync(CancellationToken token)
+        public async Task<TU?> LoadAsync(CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             try
             {
+                await _semaphore.WaitAsync(token).ConfigureAwait(false);
                 var profilePath = BasePath;
                 if (!File.Exists(profilePath))
                 {
-                    return false;
+                    return default;
                 }
 
                 using (var stream = File.OpenRead(profilePath))
@@ -66,8 +44,8 @@ namespace De.HDBW.Apollo.Data.Repositories
                         Converters = { new CultureInfoJsonConverter() },
                     };
 
-                    Cache = await JsonSerializer.DeserializeAsync<TU>(stream, options, token).ConfigureAwait(false);
-                    return true;
+                    var profile = await JsonSerializer.DeserializeAsync<TU>(stream, options, token).ConfigureAwait(false);
+                    return profile;
                 }
             }
             catch (OperationCanceledException)
@@ -82,8 +60,12 @@ namespace De.HDBW.Apollo.Data.Repositories
             {
                 Logger.LogError(ex, $"Unknown error in {nameof(LoadAsync)} in {GetType().Name}.");
             }
+            finally
+            {
+                _semaphore.Release(1);
+            }
 
-            return false;
+            return default;
         }
 
         public async Task<bool> SaveAsync(TU data, CancellationToken token)
@@ -91,6 +73,7 @@ namespace De.HDBW.Apollo.Data.Repositories
             token.ThrowIfCancellationRequested();
             try
             {
+                await _semaphore.WaitAsync(token).ConfigureAwait(false);
                 var profilePath = BasePath;
                 var path = Path.GetTempFileName();
                 using (var stream = File.OpenWrite(path))
@@ -102,7 +85,6 @@ namespace De.HDBW.Apollo.Data.Repositories
                     };
                     await JsonSerializer.SerializeAsync<TU>(stream, data, options, token).ConfigureAwait(false);
                     File.Move(path, profilePath, true);
-                    Cache = data;
                     return true;
                 }
             }
@@ -117,6 +99,10 @@ namespace De.HDBW.Apollo.Data.Repositories
             catch (Exception ex)
             {
                 Logger.LogError(ex, $"Unknown error in {nameof(LoadAsync)} in {GetType().Name}.");
+            }
+            finally
+            {
+                _semaphore.Release(1);
             }
 
             return false;

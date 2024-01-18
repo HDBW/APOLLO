@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Data.Services
     public class TrainingService : AbstractSwaggerServiceBase, ITrainingService
     {
         public TrainingService(ILogger<TrainingService> logger, string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
-               : base(logger, $"{baseUrl}/Training", authKey, httpClientHandler)
+               : base(logger, $"{baseUrl}/{nameof(Training)}", authKey, httpClientHandler)
         {
         }
 

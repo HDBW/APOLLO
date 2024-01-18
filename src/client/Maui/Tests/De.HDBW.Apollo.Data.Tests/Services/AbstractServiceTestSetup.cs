@@ -24,7 +24,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             var logger = this.SetupLogger<LoggingHttpMessageHandler>(outputHelper);
             var handler = new ContentLoggingHttpMessageHandler(logger);
             Service = SetupService(APIKey, BaseUri, Logger, handler);
-            SetupAdditionalServices(APIKey, BaseUri, Logger, handler);
+            SetupAdditionalServices(APIKey, BaseUri, handler);
         }
 
         ~AbstractServiceTestSetup()
@@ -82,7 +82,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected abstract void CleanupAdditionalServices();
 
-        protected abstract void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TU> logger, HttpMessageHandler httpClientHandler);
+        protected abstract void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler);
 
         protected abstract TU SetupService(string apiKey, string baseUri, ILogger<TU> logger, HttpMessageHandler httpClientHandler);
     }

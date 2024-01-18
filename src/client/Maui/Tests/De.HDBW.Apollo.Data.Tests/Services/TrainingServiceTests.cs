@@ -1,10 +1,8 @@
 ﻿using Apollo.Api;
 using Apollo.Common.Entities;
 using De.HDBW.Apollo.Data.Services;
-using Invite.Apollo.App.Graph.Common.Models;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -134,7 +132,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
         }
 
-        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler)
         {
         }
     }

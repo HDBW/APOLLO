@@ -14,35 +14,12 @@ namespace De.HDBW.Apollo.Data.Repositories
             ILogger<UserRepository> logger)
             : base(basePath, logger)
         {
-            Cache = new User();
         }
 
-        public async Task<User?> GetItemAsync(CancellationToken token)
+        public Task<User?> GetItemAsync(CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            try
-            {
-                if (Cache == null)
-                {
-                    await LoadAsync(token).ConfigureAwait(false);
-                }
-
-                return Cache;
-            }
-            catch (OperationCanceledException)
-            {
-                Logger.LogDebug($"Canceled {nameof(GetItemAsync)} in {GetType().Name}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger.LogDebug($"Canceled {nameof(GetItemAsync)} in {GetType().Name}.");
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, $"Unknown error in {nameof(GetItemAsync)} in {GetType().Name}.");
-            }
-
-            return null;
+            return LoadAsync(token);
         }
     }
 }

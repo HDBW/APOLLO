@@ -211,12 +211,17 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IMessenger, WeakReferenceMessenger>();
             services.AddSingleton<INetworkService, NetworkService>();
             services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
-            services.AddSingleton<IUserService, UserService>();
+
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
             {
                 return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>()!, apiUrl, apiToken, new HttpClientHandler());
+            });
+
+            services.AddSingleton<IUserService>((serviceProvider) =>
+            {
+                return new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new HttpClientHandler());
             });
         }
 

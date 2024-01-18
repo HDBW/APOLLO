@@ -112,8 +112,9 @@ namespace De.HDBW.Apollo.Data.Services
             return result;
         }
 
-        protected async Task<TU?> DoPostAsync<TU>(object content, CancellationToken token, [CallerMemberName] string? callerName = null)
+        protected async Task<TU?> DoPostAsync<TU>(object content, CancellationToken token, [CallerMemberName] string? callerName = null, string action = null)
         {
+            ArgumentNullException.ThrowIfNull(content);
             token.ThrowIfCancellationRequested();
             TU? result = default;
             var requestId = Guid.NewGuid().ToString();
@@ -130,8 +131,14 @@ namespace De.HDBW.Apollo.Data.Services
 #endif
             try
             {
-                Logger?.LogDebug($"#HTTP# #{requestId}# --------->        Start {nameof(DoPostAsync)} {callerName} in {GetType().Name}.");
-                using (var response = await client.PostAsJsonAsync(BaseUri, content, token).ConfigureAwait(false))
+                Logger?.LogDebug($"#HTTP# #{requestId}# --------->        Start {nameof(DoPostAsync)} with action:{action ?? string.Empty} from {callerName} in {GetType().Name}.");
+                var url = BaseUri;
+                if (!string.IsNullOrEmpty(action))
+                {
+                    url = $"{BaseUri.TrimEnd( '/' )}/{action.TrimStart('/')}";
+                }
+
+                using (var response = await client.PostAsJsonAsync(url, content, token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
                     var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;
@@ -186,6 +193,86 @@ namespace De.HDBW.Apollo.Data.Services
                 Logger?.LogDebug($"#HTTP# #{requestId}# Request took {end.Subtract(start).TotalMilliseconds} ms.");
 #endif
                 Logger?.LogDebug($"#HTTP# #{requestId}# <---------        End {nameof(DoPostAsync)} {callerName} in {GetType().Name}.");
+            }
+
+            return result;
+        }
+
+        protected async Task<TU?> DoPutAsync<TU>(object content, CancellationToken token, [CallerMemberName] string? callerName = null)
+        {
+            ArgumentNullException.ThrowIfNull(content);
+            token.ThrowIfCancellationRequested();
+            TU? result = default;
+            var requestId = Guid.NewGuid().ToString();
+
+            var client = HttpClient;
+            if (client == null)
+            {
+                return result;
+            }
+
+#if DEBUG
+            var start = DateTime.Now;
+            Logger?.LogDebug($"#HTTP# #{requestId}# {start}: Start {callerName} in {GetType().Name}.");
+#endif
+            try
+            {
+                Logger?.LogDebug($"#HTTP# #{requestId}# --------->        Start {nameof(DoPutAsync)} {callerName} in {GetType().Name}.");
+                using (var response = await client.PutAsJsonAsync(BaseUri, content, token).ConfigureAwait(false))
+                {
+                    var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
+                    var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;
+                    if (statusCode != HttpStatusCode.OK || response == null)
+                    {
+                        var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
+                        var ex = JsonConvert.DeserializeObject<ApolloApiException>(responseData);
+                        throw ex ?? new ApolloApiException(-1, "Unknown response.");
+                    }
+
+                    var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
+                    if (objectResponse.Object == null)
+                    {
+                        throw new ApolloApiException(-2, "Unable to read response.");
+                    }
+
+                    return objectResponse.Object;
+                }
+            }
+            catch (WebException ex)
+            {
+                Logger?.LogError(ex, $"#HTTP# #{requestId}# WebException in {callerName} from {GetType().Name}.");
+            }
+            catch (HttpRequestException ex)
+            {
+                Logger?.LogError(ex, $"#HTTP# #{requestId}# HttpRequestException in {callerName} from {GetType().Name}.");
+            }
+            catch (AggregateException ex)
+            {
+                Logger?.LogError(ex, $"#HTTP# #{requestId}# AggregateException in {callerName} from {GetType().Name}.");
+            }
+            catch (OperationCanceledException ex)
+            {
+                Logger?.LogInformation(ex, $"#HTTP# #{requestId}# Canceled {callerName} from {GetType().Name}.");
+                throw;
+            }
+            catch (ObjectDisposedException ex)
+            {
+                Logger?.LogInformation(ex, $"#HTTP# #{requestId}# Canceled {callerName} from {GetType().Name}.");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"#HTTP# #{requestId}# Unknown Error in {callerName} from {GetType().Name}.");
+                throw;
+            }
+            finally
+            {
+#if DEBUG
+                var end = DateTime.Now;
+                Logger?.LogDebug($"#HTTP# #{requestId}# {end}: End {callerName} in {GetType().Name}.");
+                Logger?.LogDebug($"#HTTP# #{requestId}# Request took {end.Subtract(start).TotalMilliseconds} ms.");
+#endif
+                Logger?.LogDebug($"#HTTP# #{requestId}# <---------        End {nameof(DoPutAsync)} {callerName} in {GetType().Name}.");
             }
 
             return result;
