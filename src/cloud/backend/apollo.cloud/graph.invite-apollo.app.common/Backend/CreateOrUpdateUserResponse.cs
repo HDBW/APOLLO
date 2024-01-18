@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
-namespace Invite.Apollo.App.Graph.Common.Backend
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     public class CreateOrUpdateUserResponse
     {

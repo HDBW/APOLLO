@@ -7,14 +7,23 @@
     <Title>Invite Apollo Graph</Title>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
-    <NeutralLanguage>en-001</NeutralLanguage>
+    <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.1.29</AssemblyVersion>
-    <FileVersion>1.0.1.29</FileVersion>
-	  <Version>1.0.1.29</Version>
+    <AssemblyVersion>1.0.1.30</AssemblyVersion>
+    <FileVersion>1.0.1.30</FileVersion>
+	  <Version>1.0.1.30</Version>
 	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\Activities\**" />
+    <Compile Remove="Models\Recommendation\**" />
+    <EmbeddedResource Remove="Models\Activities\**" />
+    <EmbeddedResource Remove="Models\Recommendation\**" />
+    <None Remove="Models\Activities\**" />
+    <None Remove="Models\Recommendation\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -30,11 +39,6 @@
     <PackageReference Include="System.Text.Encoding" Version="4.3.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.0" />
     <PackageReference Include="ZstdSharp.Port" Version="0.7.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Activities\Enums\" />
-    <Folder Include="Models\Recommendation\" />
   </ItemGroup>
 
 </Project>
