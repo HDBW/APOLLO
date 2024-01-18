@@ -88,7 +88,6 @@ namespace De.HDBW.Apollo.Client
                     fonts.AddFont("NotoSerif-Regular.ttf", "NotoSerifRegular");
                 });
             builder.ConfigureMauiHandlers(SetupHandlers);
-            builder.UseCustomDatePicker();
             return builder.Build();
         }
 
