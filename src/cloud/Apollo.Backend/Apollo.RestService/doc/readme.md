@@ -1,353 +1,183 @@
-﻿# Apollo REST Service operations
+﻿This file contains useful information about the APOLLO project.
 
-## Table of Contents
 
-- [Apollo REST Service operations](#apollo-rest-service-operations)
-- [Returning a specific entity](#returning-a-specific-entity)
-- [Searching (Querying) entities](#searching-querying-entities)
-  - [Request URL](#request-url)
-  - [Query Criteria](#query-criteria)
-  - [Example](#example)
-- [Querying Users](#querying-users)
-  - [User Query Criteria](#user-query-criteria)
-  - [Query Structure](#query-structure)
-  - [Example for Users](#example-1)
-- [Querying Trainings](#querying-trainings)
-  - [Training Query Criteria](#training-query-criteria)
-  - [Structure of Training Query](#structure-of-training-query)
-  - [Example for Trainings](#example-2)
+https://github.com/HDBW/APOLLO/tree/development/src/cloud/invite-apollo.app
 
-## Returning a specific entity 
-Every time some specific entity needs to be returned from the service, the CPDM offers specific GET operations for every entity, which is implemented as an HTTP-GET-Method.
-To retrieve some entity, the HTTP-GET request has to be formed that uniquely describes the entity. The URL of a GET request for entities looks like this:
+https://github.com/HDBW/APOLLO/blob/development/src/cloud/invite-apollo.app/Apollo.API.Public.Training/Models/Contact.cs
 
-~~~
-https://{serviceurl}/{EntityName}/{entityId}
-~~~
 
-For example, the URL of a GET request for Asset would be:
+# Auth
 
-~~~
-https://serviceurl/Training/0000
-~~~
 
-The response projects all entity’s properties by default. 
+AppId: 6a17b692-2ce3-4c94-9d07-3b54a2d2662d
 
-The detailed description of the request URL and the schema of response for each entity can be seen at Swagger.
+TenantId: 857332e7-9da9-46a2-ba04-5616116258e1
 
-## Searching (Querying) entities
-Every time some specific entities need to be returned from the service if they match certain searching criteria, the CPDM offers POST-operations for every entity, which is implemented as an HTTP-POST-Method.
+apolloappb2c.onmicrosoft.com
 
-### Request URL
 
-The URL of a POST request for entities looks like this:
-```sh
-{baseUrl}/{EntityName}/query
-```
+# REST API Postman Collection
 
-For example, the URL of the POST request training is:
-~~~
-https://serviceurl/training/query
-~~~
+https://dark-resonance-7673.postman.co/workspace/Apollo-Workspace~062f247f-5ff6-4e49-91d9-ac4fde051a85/overview
 
-### Query Criteria
-The request requires a request body to store the query request’s criteria. The criteria used in a query are listed below:
 
--	*Top* (integer): Number of items return e.g., pageSize. If this parameter is not set, then the number of all documents is counted. 
-This might be a very slow operation that can take time. To prevent a full scan, the caller can specify any number here that will limit the execution 
-time of the scan operation. For example, if there are 30000 matches and Top is set to 200, this method will quickly return 20000 (200*100) 
-as the number of records and will be shown in the response if RequestCount is set to true. 
-If the number of all matches is required, set Top to < 0 (-1 for example) and RequestCount to true.
-The response will not show any result but will show the number of all matches.
+# Where is the data?
 
--	*Fields* (string[] array): Specified properties that should be reflected in the result. If this is not specified, all properties are reflected instead.Please note that properties must be specified in a Pascal Case convention.
-    For example, if the property name is **"trainingName"**, it should be specified as **"TrainingName"**.
--	*Skip* (integer): Used for paging indicated by (page - 1) * pageSize. For example, if Top is 10, Skip is 0 and there are 11 matches, the result will show the 1st to 10th matches. If Skip is changed to 1, then the result will show the 2nd to 11th matches.
+## 1000000 user profiles
+https://portal.azure.com/#@student.hdbw-hochschule.de/resource/subscriptions/f83b64c1-d950-44e7-9004-80d6c393dafa/resourceGroups/rg-apollo-dac/overview
 
--	RequestCount (boolean): If set to true, then the response will contain the number of pages and records (items). 
-The number of records equals Top*100 and the number of records equals the number of records/Top.If set to false, the number of pages is set to -1. 
-This argument is used to avoid a double query inside of the backend when several pages are required. To calculate the number of pages, the backend first executes the query and then executes the request to get the number of available items for the given query, which is finally recalculated in the number of pages. In the case of FALSE (default), the second query is not executed.
+https://portal.azure.com/#view/Microsoft_Azure_Storage/ContainerMenuBlade/~/overview/storageAccountId/%2Fsubscriptions%2Ff83b64c1-d950-44e7-9004-80d6c393dafa%2FresourceGroups%2Frg-apollo-dac%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fapollotxtanalytics/path/ingressbaprofile/etag/%220x8DB4249DC95079C%22/defaultEncryptionScope/%24account-encryption-key/denyEncryptionScopeOverride~/false/defaultId//publicAccessVal/None
 
-**Filter**: A complex query that defines the criteria of a query. Each criterion is defined in a field. Queried entities must fulfill all the defined fields to be reflected. In other words, between each field is an AND operation. Each field in the filter should contain:
-- **FieldName (string)**: Name of a property in an entity.Please note that properties must be specified in a Pascal Case convention.
-    For example, if the property name is **"propertyName"**, it should be specified as **"PropertyName"**.
-- **Operator (integer)**: Defined the operator. Possible values are 0 for Equals, 1 for Contains (for strings only), 2 for StartsWith (for strings only), 3 for GreaterThan, and 4 for LessThan.
-- **Argument (string)**: The argument of the operation. There can be one or several arguments. If at least one argument is fulfilled, there is a match. In other words, between each argument is an OR operation.
-- **Distinct (boolean)**: If is set to true, the result is returned as distinct.
-- **IsOrOperator** Speficifies whether the OR operator should be applied between each field expression in the filter. 
-        ],
-### Example
+## Trainings Examples
 
-Considering a request body to query Product entities that satisfy these criteria:
-- 	The fields should be set so that only 2 properties that are DocNo and Width are reflected in the query response.
--	The NumberOfPages and NumberOfRecords (RequestCount) should be reflected.
--	**Maximum** 10 entities per page (top).
--	Skip the first matched entity, only showing the 2nd matched entity and so on.
--	German language.
--	Only reflected entities that were created after 14/12/2017.
--	The filter should have:
--	DocNo equals (operator 0) to either "005528540" **OR** "005528541" **OR** "001234679". The result should not be distinct.
--	AND DocType contains the string “0”. The result should be distinct.
+https://portal.azure.com/#view/Microsoft_Azure_Storage/ContainerMenuBlade/~/overview/storageAccountId/%2Fsubscriptions%2Ff83b64c1-d950-44e7-9004-80d6c393dafa%2FresourceGroups%2Frg-apollo-dac%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fapollotxtanalytics/path/ingressbbw/etag/%220x8DAFEDC26850AF9%22/defaultEncryptionScope/%24account-encryption-key/denyEncryptionScopeOverride~/false/defaultId//publicAccessVal/None
 
-Then the following request body of the Training entity should be of the following:
-```sh
-{
-"IsOrOperator": false,
-  "Fields": [
-    "TrainingName", "ProviderId"
-  ],
-  "RequestCount": false,
-  "Top":10,
-  "Skip": 1,
-  "Filter": {
-    "Fields": [
-      {
-        "FieldName": "Description",
-        "Operator": 1, // Contains
-        "Argument": [
-          "Large Language Models", "GPT", "LLM"// Means Arg1 OR Arg2 OR Arg3
-        ],
-        "Distinct": false
-      },
-      {
-        "FieldName": "DocType",
-        "Operator": 1,
-        "Argument": [
-          "0"
-        ],
-        "Distinct": true
-      }
-    ]
-  }
+
+# AI Concept Draft
+
+## Approach
+The goal: Match the profile to trainings
+
+Useful properties engaged in the embedding calculation
+
+### Training
+
+~~~JSON
+"basics"{
+    "shortTeaser": Der optimale Einstieg in das internationale Business-English. Anhand von authentischen Gespr&auml;chssituationen und praxisnahen Kommunikationsbeispielen lernen Sie schnell, auf Englisch in Ihrem vertrauten beruflichen Umfeld zu kommunizieren.
+    "subTitle": Grundlegende  Englischsprachkenntnisse f\u00fcr das Gesch\u00e4ftsleben",
 }
-```
+~~~
 
-Below is the following response to the such request:
-```sh
-{
-    "Result": [
-        {
-            "DocNo": "005528540",
-            "Width": 0,
-            "DocumentType": "Asset"
-        }
-    ],
-    "NumberOfPages": 1,
-    "NumberOfRecords": 2
-}
-```
+~~~JSON
+"content": {
+    "AdditonalContent3": "<p><strong>Gruppengr\u00f6\u00dfe:<\/strong> <br \/> max. 6 Personen<\/p>",
+    "AdditonalContent4": "",
+    "Lernziele": "<ul>\r\n<li>Sie vertiefen Ihre vorhandenen Kenntnisse<\/li>\r\n<li>Sie erweitern den businessrelevanten Wortschatz<\/li>\r\n<li>Sie lernen den allt&auml;glichen Umgang f&uuml;r die Gesch&auml;ftswelt<\/li>\r\n<li>Sie erwerben einfache kommunikative Kompetenzen um im Gesch&auml;ftsleben zu Recht zu kommen.<\/li>\r\n<\/ul>",
+    "longTeaser": "<p>Der optimale Einstieg in das internationale Business-English. Anhand von authentischen Gespr&auml;chssituationen und praxisnahen Kommunikationsbeispielen lernen Sie schnell, auf Englisch in Ihrem vertrauten beruflichen Umfeld zu kommunizieren. Der Kurs ist f&uuml;r diejenigen geeignet, die Business Basics beherrschen, aber ihre Englischkenntnisse in Gesch&auml;ftssituationen effektiver und professioneller anwenden wollen. Mit dem Abschluss dieser Kursstufe erreichen Sie das Niveau A2\/B1<\/p>",
+    "matters": "<p>Grundlegende Englischsprachkenntnisse f&uuml;r das Gesch&auml;ftsleben<\/p>\r\n<ul>\r\n<li>Writing and answering emails<\/li>\r\n<li>Talking with customers &ndash; on the phone or face to face in your company<\/li>\r\n<li>Small Talk and Socializing<\/li>\r\n<li>Visitors,&nbsp; trade fairs<\/li>\r\n<li>Talking about your company and its products<\/li>\r\n<li>Customer Services &ndash; Complaints &ndash; Payments &ndash; Orders<\/li>\r\n<li>Meetings<\/li>\r\n<li>Making arrangements<\/li>\r\n<li>Business travel<\/li>\r\n<\/ul>\r\n<p>&nbsp;<\/p>",
+    "targetDescription": "F\u00fchrungskr\u00e4fte, Projektleiter, Fachkr\u00e4fte, Assistenz, Nachwuchsf\u00fchrungskr\u00e4fte, Trainer",
+    "MetaDescription": "<p>Im Kurs Business English A2\/B1 erwerben Sie die Englischkenntnisse, die Sie ben&ouml;tigen, um im Gesch&auml;ftsleben sicher und professionell zu kommunizieren.&nbsp;<\/p>",
+},
+~~~ 
+### Profile
 
+~~~JSON
 
--	NumberOfPages: There are fewer than 10 matches, so it took only 1 page.
--	NumberOfRecords: There are 2 matches in total which are Products with DocNo of "005528540", and "005528541 (there is no match for "001234679"). 
-However, because of Skip, the 1st match is not shown in the result.
--	Result: As defined in Fields, only the matched DocNo and Width (with DocumentType as an exception) are shown.
-Detail description of the request URL, the schema of the request, the and response for each entity can be found on **Swagger**.
+  "erwartungAnDieStelle" : "Erste Erfahrungen im Bürobereich konnte ich während meines Zivildienstes als Hausmeister mit Verwaltungstätigkeiten sammeln. Zu meinen Aufgabenbereichen zählten: - Schließdienst - Erledigungen kleinerer Bankgeschäfte - Bearbeitung der Post - Reinigungsarbeiten Nach einer Orientierungsphase, besetzte ich die Position einer Verwaltungskraft bei der Schuldnerberatung des Diakonischen Werkes. Dort übernahm ich weitergehende Aufgaben wie: - Telefondienst - Betreuung des EDV-Datenbestandes - Kunden-Betreuung - den Postein-/Ausgang Teamfähigkeit und Flexibilität konnte ich bei dem Transportdienst für einen Second- Hand- Laden der Diakonie unter Beweis stellen",
+  "abschluss" : "Mittlere Reife / Mittlerer Bildungsabschluss",
 
-## Querying Users
-
-Similar to other entities, querying User entities follows the same approach using the POST method.
-
-### User Query criteria
-
-The request body for querying User entities includes the following criteria:
--	Top (integer): Number of items to return.
--	Fields (string[] array): Properties to be reflected in the result.
--	Skip (integer): For paging purposes.
--	RequestCount (boolean): To include the count of pages and records in the response.
--	Filter: Criteria defining the query for user entities.
-
-The filter criteria in the request body includes:
--	FieldName (string): Property name in the User entity.
--	Operator (integer): Operator code (0 for Equals, 1 for Contains - strings only, 2 for StartsWith - strings only, 3 for GreaterThan, and 4 for LessThan).
--	Argument (string[]): Argument(s) for the operation. The OR operation is applied between each argument.
--	Distinct (boolean): To return distinct results.
-
-
-### Query Structure
-The Query structure allows specifying query criteria:
-```sh
-public class Query
-{
-    public List<string> Fields { get; set; }
-    public Filter Filter { get; set; }
-    public bool RequestCount { get; set; }
-    public int Top { get; set; } = 200;
-    public int Skip { get; set; } = 0;
-    public SortExpression SortExpression { get; set; }
-}
-```
-
-This structure allows specifying:
--	Fields to return.
--	Filter criteria using the Filter object.
--	Pagination settings (Top, Skip).
--	Sorting based on a specified field.The internal API method **(_api.QueryTrainings)** uses this information to construct and execute a query against the training data.
-The **Filter** class enables setting complex query criteria.
-
-
-### Example
-
-Here's an example request body for querying User entities:
-```sh
-{
-  "Fields": [
-    "UserName",
-    "Email"
-  ],
-  "RequestCount": true,
-  "Top": 10,
-  "Skip": 0,
-  "Filter": {
-    "Fields": [
-      {
-        "FieldName": "UserName",
-        "Operator": 1,
-        "Argument": [
-          "testuser1",
-          "testuser2"
-        ],
-        "Distinct": false
-      }
-    ]
-  }
-}
-```
-
-**Response**
-
-The response to the above query request includes the following structure:
-```sh
-{
-    "Result": [
-        {
-            "UserName": "testuser1",
-            "Email": "testuser1@example.com"
-        },
-        {
-            "UserName": "testuser2",
-            "Email": "testuser2@example.com"
-        }
-    ],
-    "NumberOfPages": 1,
-    "NumberOfRecords": 2
-}
-```
--	Result: Contains matched UserName and Email properties.
--	NumberOfPages: Indicates the total number of pages in the response.
--	NumberOfRecords: Shows the total number of records that match the query criteria.
-
-
-## Querying Trainings
-
-The QueryTrainings method is an API endpoint responsible for querying trainings based on the request. Here's a high-level explanation:
-1.	**Request and Handling**:
--	The method QueryTrainings accepts a QueryTrainingsRequest from the API.
--	Inside, it logs the entry and attempts to query the trainings based on the provided request.
-2.	**Execution**:
--	It calls an internal API method _api.QueryTrainings(req), passing the request.
--	This internal method likely processes the request parameters (defined in QueryTrainingsRequest), creates a query based on the provided criteria (fields, filters, pagination, sorting), and retrieves the desired trainings.
-3.	**Response**:
--	After obtaining the queried trainings, it logs completion and returns a response.
--	The response is a list of QueryTrainingsResponse, typically containing the queried training data.
-
-### Structure of training query
-
-```sh
-public class QueryTrainingsRequest : Query
-{
-    public Query Query { get; set; }
-}
-```
-
-### Training Query Criteria
-
-The **_api.QueryTrainings(req)** method processes this request, performs the query, and returns the corresponding training data based on the defined criteria.
-QueryTrainingsRequest
-
--	Fields: Specifies which fields of the training entities should be returned in the response. It's a list of field names. For instance, **["TrainingName", "Description"]** indicates you want only these two fields to be included in the response.
--	Filter: Defines the criteria to filter the training entities. In this template, it's set up to filter based on two fields **(FilterField1 and FilterField2)**. 
-You can define the field names, operators, and values for filtering. For instance, FilterField1 might be **"TrainingType"** with an operator **Equals** and **FilterValue1** might be "Online".
--	RequestCount: A boolean value indicating whether the response should contain the count of pages and records based on the query. 
-If true, it includes this information; otherwise, it's set to -1.
--	Top: Specifies the number of items (trainings) to be returned in the response.
--	Skip: Indicates the number of items to skip before beginning to return items. It's used for pagination.
--	SortExpression: Specifies the field name for sorting and the order (ascending or descending).
-
-### Example
-
-**Request Example**
-
-```sh
-{
-  "Fields": [
-    "TrainingName", "Description", "StartDate", "EndDate", 
-    "DurationDescription", "Duration", "IsGuaranteed", 
-    "TrainingType", "TimeInvestAttendee", "TimeModel"
-  ],
-  "RequestCount": true,
-  "Top": 10,
-  "Skip": 0,
-  "Filter": {
-    "Fields": [
-      {
-        "FieldName": "StartDate",
-        "Operator": 3, // GreaterThan
-        "Argument": ["2023-11-20T00:00:00Z"],
-        "Distinct": false
-      },
-      {
-        "FieldName": "TrainingType",
-        "Operator": 0, // Equals
-        "Argument": ["Online", "Offline"],
-        "Distinct": false
-      }
-    ]
+  "kenntnisse" : {
+    "Erweiterte Kenntnisse" : [ "E-Mail-Programm Outlook (MS Office)", "Postbearbeitung", "Kunden-, Besucherempfang", "Inventur", "Auskünfte erteilen", "E-Mail-Kommunikation, -Korrespondenz", "Büromaterialverwaltung", "Büro- und Verwaltungsarbeiten", "Ablage, Registratur", "Textverarbeitung Word (MS Office)", "Handwerkliche Kenntnisse" ],
+    "Grundkenntnisse" : [ "Tabellenkalkulation Excel (MS Office)", "Auftragsannahme, -bearbeitung", "Telefondienst", "Besucherberatung, -betreuung (Veranstaltungen)", "Terminplanung, -überwachung", "Daten-, Texterfassung", "Garten-, Grünflächenpflege", "Büromaschinen bedienen", "Kurierdienst" ]
   },
-  "SortExpression": {
-    "FieldName": "StartDate",
-    "Order": 1 
-  }
-}
-```
 
-**Response Example**
-
-```sh
-{
-  "Result": [
-    {
-      "TrainingName": "Training 1",
-      "Description": "Description of Training 1",
-      "StartDate": "2023-11-21T08:00:00Z",
-      "EndDate": "2023-11-21T16:00:00Z",
-      "DurationDescription": "Full-day training",
-      "Duration": "08:00:00",
-      "IsGuaranteed": true,
-      "TrainingType": "Online",
-      "TimeInvestAttendee": "04:00:00",
-      "TimeModel": "1UE = 45 Minutes"
-    },
-    {
-      "TrainingName": "Training 2",
-      "Description": "Description of Training 2",
-      "StartDate": "2023-11-22T09:00:00Z",
-      "EndDate": "2023-11-22T17:00:00Z",
-      "DurationDescription": "Full-day training",
-      "Duration": "08:00:00",
-      "IsGuaranteed": false,
-      "TrainingType": "Offline",
-      "TimeInvestAttendee": "05:00:00",
-      "TimeModel": "1UE = 45 Minutes"
+   "erfahrung" : {
+    "gesamterfahrung" : "P1Y2M26D",
+    "berufsfeldErfahrung" : [ {
+      "berufsfeld" : "Büro und Sekretariat",
+      "erfahrung" : "P11M29D"
     }
-  ],
-  "NumberOfPages": 2,
-  "NumberOfRecords": 15
-}
-```
 
-The QueryTrainingsResponse shows a hypothetical response based on the request:
--	Result: Contains an array of training objects that match the specified criteria in the request's Filter and are filtered based on Fields. 
-Each object represents a training entity and includes the requested fields such as **"TrainingName"**, **"Description"**, **"StartDate"**, **"EndDate"**, etc.
--	NumberOfPages: Indicates the total number of pages available based on the applied query criteria.
--	NumberOfRecords: Represents the total count of records (trainings) that satisfy the applied query conditions.This structured response provides filtered training entities based on the criteria provided in the QueryTrainingsRequest, along with metadata regarding the number of pages and total records meeting the criteria.
+    "kenntnisse" : {
+    "Erweiterte Kenntnisse" : [ "E-Mail-Programm Outlook (MS Office)", "Postbearbeitung", "Kunden-, Besucherempfang", "Inventur", "Auskünfte erteilen", "E-Mail-Kommunikation, -Korrespondenz", "Büromaterialverwaltung", "Büro- und Verwaltungsarbeiten", "Ablage, Registratur", "Textverarbeitung Word (MS Office)", "Handwerkliche Kenntnisse" ],
+    "Grundkenntnisse" : [ "Tabellenkalkulation Excel (MS Office)", "Auftragsannahme, -bearbeitung", "Telefondienst", "Besucherberatung, -betreuung (Veranstaltungen)", "Terminplanung, -überwachung", "Daten-, Texterfassung", "Garten-, Grünflächenpflege", "Büromaschinen bedienen", "Kurierdienst" ]
+  },
+  ~~~
+
+  ### Prompt Draft for qualification
+
+  Following prompt should a verbal description of the user's qualification. The prompt should be generated from the user's profile and the training description. The prompt should be generated in a way that the user can read it and understand it.
+  The prompt should be generated in a way that the user can read it and understand it.
+
+
+User's qualification is described by the following pseudo object list in JSON. Your task is to 
+generate the plain text from the list of objects to describe the qualification of the user by all listed occupations.
+To create the plain text use following template for each occupation found in JSON. 
+If the qualification has expired one or more years ago, please remark that the user's quilifaction might be old and the
+user needs to refresh the qualification.
+If the user's qualification is between 5 and 10 years remark user as a senior. If it is less than 5 years remark user as a junior. Qualifications with longer than 10 years belong to expert users.
+
+Follow example bellow.
+
+START TEMPLATE
+
+The user has achieved following QUAL_NUMBER qulifications, which we have found in the user's profile:
+
+1. The name of the qualification 1
+The description of the qualification1.
+When is the qualification achieved, till when is the qualification1 valid. How much time is the qualification1 valid.
+
+2. The name of the qualification 2
+The description of the qualification 2.
+When is the qualification2 achieved, till when is the qualification2 valid. How much time is the qualification2 valid.
+
+...
+
+Last qualification. The name of the last qualification.
+The description of the last qualification.
+When is the last qualification achieved, till when is the last qualification valid. How much time is the last qualification valid.
+
+END TEMPLATE
+
+Following example demonstrats how to produce the text from an exampl in JSON format.
+
+START EXAMPLE
+PSEUDO OBJECT LIST START
+[
+{
+	Name:"Gabelstaplerschein",
+	Description: "Fahren und Bedienen eines Gabelstaplerscheines"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+},
+{
+	Name:"IATA New Gen ISS Workshop",
+	Description: "IATA-Kunde und START/Amadeus"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+}
+]
+PSEUDO OBJECT LIST START
+
+Text create from template based on the given pseudo list example:
+
+The user has following two qualifications 
+
+1. Gabelstaplerschein
+Fahren und Bedienen eines Gabelstaplerscheines.
+Achieved at 01.01.2021, valid till 01.01.2024, 3 years Junior user
+
+2. IATA New Gen ISS Workshop
+IATA-Kunde und START/Amadeus
+Achieved at 17.10.2010, valid till 17.10.2015, The user has 5 qualification as a senior. However, the qualification has expired a long time ago and user must refresh skills.
+
+END EXAMPLE
+
+=========================================
+
+PSEUDO OBJECT LIST START
+[
+{
+	Name:"Gabelstaplerschein",
+	Description: "Fahren und Bedienen eines Gabelstaplerscheines"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+},
+{
+	Name:"IATA New Gen ISS Workshop",
+	Description: "IATA-Kunde und START/Amadeus"
+	IssuedDate: "17.10.2021",
+	ExpirationDate:"01.01.2024",
+},
+{
+	Name:"Software developer",
+	Description: "Developing software in C#"
+	IssuedDate: "12.11.2021",
+	ExpirationDate:"01.01.2024",
+}
+
+]
+PSEUDO OBJECT LIST END
+
+

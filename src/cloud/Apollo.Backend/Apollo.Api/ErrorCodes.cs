@@ -56,6 +56,34 @@ namespace Apollo.Api
             }
         }
 
+
+        public static class ProfileErrors
+        {
+            public const int TrainingCodeBase = 300;
+            public const int GetProfileError = TrainingCodeBase + 1;
+            public const int QueryProfilesError = TrainingCodeBase + 10;
+            //Will update error code in future for other types of Query
+            //public const int QueryProfilesByGoalError = TrainingCodeBase + 30;
+            //public const int QueryProfilesByKeywordError = TrainingCodeBase + 40;
+            //public const int QueryProfilesByMultipleCriteriaError = TrainingCodeBase + 50;
+            //public const int QueryProfilesWithPaginationError = TrainingCodeBase + 60;
+            //public const int QueryProfilesByDateRangeError = TrainingCodeBase + 70;
+            //public const int QueryProfilesByFirstNameError = TrainingCodeBase + 80;
+            //public const int QueryProfilesByLastNameError = TrainingCodeBase + 90;
+            public const int InsertProfileError = TrainingCodeBase + 100;
+            public const int CreateOrUpdateProfileError = TrainingCodeBase + 110;
+            public const int DeleteProfileError = TrainingCodeBase + 120;
+            public const int ProfileNotFound = TrainingCodeBase + 130;
+            public const int ProfileAlreadyExists = TrainingCodeBase + 140;
+            public const int NoProfilesToDelete = TrainingCodeBase + 150;
+
+            public static void HandleException(Exception ex)
+            {
+                throw new ApolloApiException(TrainingCodeBase, "Profile Error occurred", ex);
+            }
+        }
+
+
         public static class GeneralErrors
         {
             public const int OperationFailed = 1000;

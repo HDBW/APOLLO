@@ -752,11 +752,20 @@ namespace Daenet.MongoDal
             return pattern;
         }
 
-        public async Task<T> GetByIdAsync<T>(string collectionName, string id)
+
+        /// <summary>
+        /// Gets the document by id.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="id"></param>
+        /// <param name="idEntityName">Default value _id. Additionally any other alternative property can be used as id.</param>
+        /// <returns>The single entity.</returns>
+        public async Task<T> GetByIdAsync<T>(string collectionName, string id, string? idEntityName = "_id")
         {
             var coll = GetCollection(collectionName);
 
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            var filter = Builders<BsonDocument>.Filter.Eq(idEntityName, id);
 
             var document = await coll.Find(filter).FirstOrDefaultAsync();
 
@@ -786,7 +795,7 @@ namespace Daenet.MongoDal
         /// <param name="filter">The filter to match documents for the update.</param>
         /// <param name="updateDefinition">The update definition to apply to matching documents.</param>
         /// <returns>A task representing the asynchronous update operation.</returns>
-        public async Task<UpdateResult> UpdateAsync(string collectionName, FilterDefinition<BsonDocument> filter, UpdateDefinition<BsonDocument> updateDefinition)
+        private async Task<UpdateResult> UpdateAsync(string collectionName, FilterDefinition<BsonDocument> filter, UpdateDefinition<BsonDocument> updateDefinition)
         {
             var coll = GetCollection(collectionName);
 
