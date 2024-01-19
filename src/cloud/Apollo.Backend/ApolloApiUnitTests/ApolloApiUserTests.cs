@@ -121,7 +121,7 @@ namespace Apollo.Api.UnitTests
         /// Tests querying User objects based on specific criteria such as FirstName and LastName.
         /// </summary>
         [TestMethod]
-        [TestCategory("Prod")]
+        // [TestCategory("Prod")]
         public async Task QueryUsersTest()
         {
             var api = Helpers.GetApolloApi();
@@ -159,22 +159,8 @@ namespace Apollo.Api.UnitTests
                 }
             };
 
-            IList<User> users;
-            try
-            {
-                users = await api.QueryUsers(query);
-            }
-            catch (ApolloApiException ex)
-            {
-                if (ex.ErrorCode == ErrorCodes.UserErrors.QueryUsersError)
-                {
-                    users = new List<User>(); // Initialize an empty list
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            // Act
+            IList<User> users = await api.QueryUsers(query);
 
             // Assert
             Assert.IsNotNull(users);
@@ -188,6 +174,7 @@ namespace Apollo.Api.UnitTests
 
             // Additional assertions based on specific testing requirements
         }
+
 
     }
 }

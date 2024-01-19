@@ -117,6 +117,13 @@ namespace Apollo.Service.Controllers
         }
 
 
+        /// <summary>
+        /// Updates an existing training or creates a new one based on the provided training data.
+        /// </summary>
+        /// <param name="req">The request containing the training data for creation or update.</param>
+        /// <returns>A response containing the updated or created training.</returns>
+        /// <response code="200">Returns the updated training.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpPut]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the updated training.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
@@ -142,6 +149,15 @@ namespace Apollo.Service.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Inserts a collection of training objects into the system.
+        /// </summary>
+        /// <param name="trainings">The collection of trainings to be inserted.</param>
+        /// <returns>A list of inserted training objects.</returns>
+        /// <response code="200">Returns a list of inserted trainings.</response>
+        /// <response code="400">Invalid input data.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpPost("insert")]
         [SwaggerResponse(StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
