@@ -12,7 +12,7 @@ namespace Apollo.Common.Entities
     public class Training
     {
         //[BsonId]
-        //[BsonRepresentation(BsonType.ObjectId)]
+       
         public string Id { get; set; }
 
         /// <summary>
@@ -30,8 +30,9 @@ namespace Apollo.Common.Entities
 
         public string TrainingType { get; set; }
 
-        //[Required]
-        //[BsonElement("Title")]
+        
+
+
         public string TrainingName { get; set; }
 
         /// <summary>
@@ -39,16 +40,17 @@ namespace Apollo.Common.Entities
         /// </summary>
         public Uri? Image { get; set; }
 
-        //[BsonElement("Description")]
+
+
         public string Description { get; set; }
 
-        //[BsonElement("ShortDescription")]
+       
         public string ShortDescription { get; set; }
 
         /// <summary>
         /// Training agenda.
         /// </summary>
-        //[BsonElement("Content")]
+        
         public List<string>? Content { get; set; }
 
         /// <summary>
@@ -128,9 +130,9 @@ namespace Apollo.Common.Entities
 
         #region Metadata
 
-        public List<string> Tags { get; set; }
+        public List<string>? Tags { get; set; }
 
-        public List<string> Categories { get; set; }
+        public List<string>? Categories { get; set; }
 
         //TODO: Review Not to be set by the API, API may Use Id room of Training Provider and ExternalTrainingId
         /// <summary>

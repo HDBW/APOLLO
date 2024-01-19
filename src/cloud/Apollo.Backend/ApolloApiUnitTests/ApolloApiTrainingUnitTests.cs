@@ -13,6 +13,7 @@ using Apollo.Common.Entities;
 using Daenet.MongoDal;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Newtonsoft.Json;
 
 namespace Apollo.Api.UnitTests
 {
@@ -20,28 +21,92 @@ namespace Apollo.Api.UnitTests
     public class ApolloApiTrainingUnitTests
     {
         Training[] _testTrainings = new Training[]
-      {
-            new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
-            Loans = new List<Loans>(
-                new Loans[]
-                {
-                    new Loans() { Id = "L01", Name = "Loan 1" },
-                    new Loans() { Id = "L02", Name = "Loan 2" }
-                }
-                )},
+          {
+                new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
+                Loans = new List<Loans>(
+                    new Loans[]
+                    {
+                        new Loans() { Id = "L01", Name = "Loan 1" },
+                        new Loans() { Id = "L02", Name = "Loan 2" }
+                    }
+                    )},
 
-            new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI" },
+                new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI" },
 
-            new Training(){  Id = "UT03" , ProviderId = "unittest",    Loans = new List<Loans>(
-                new Loans[]
-                {
-                    new Loans() { Id = "L01", Name = "Loan 1" },
-                    new Loans() { Id = "L02", Name = "Loan 2" }
-                }
-                )},
+                new Training(){  Id = "UT03" , ProviderId = "unittest",    Loans = new List<Loans>(
+                    new Loans[]
+                    {
+                        new Loans() { Id = "L01", Name = "Loan 1" },
+                        new Loans() { Id = "L02", Name = "Loan 2" }
+                    }
+                    )},
 
 
-      };
+          };
+
+        Training[] _testTrainingwithAppointments = new Training[]
+         {
+                new Training(){
+                    Id = "UT01",
+                    ProviderId = "unittest",
+                    TrainingName = "Open AI",
+                    Loans = new List<Loans>(
+                        new Loans[]
+                        {
+                            new Loans() { Id = "L01", Name = "Loan 1" },
+                            new Loans() { Id = "L02", Name = "Loan 2" }
+                        }),
+                    Appointment = new List<Appointment>(
+
+                        new Appointment[]
+                        {
+                            new Appointment(){
+                                AppointmentUrl = null,
+                                AppointmentType = "In-person",
+                                AppointmentDescription = "Introduction session",
+                                AppointmentLocation = null,
+                                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
+                                EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
+                                DurationDescription = "2 hours",
+                                //Duration = TimeSpan.Zero,
+                                Occurences = null,
+                                IsGuaranteed = true,
+                                TrainingMode = TrainingMode.Offline,
+                                //TimeInvestAttendee = TimeSpan.MinValue,
+                                TimeModel = TrainingTimeModel.Unkonwn,
+                                OccurenceNoteOnTime = "Weekly",
+                                ExecutionDuration = "2",
+                                ExecutionDurationUnit = "UE",
+                                ExecutionDurationDescription = "Weekly",
+                                LessonType = "Practical",
+                                BookingUrl = null
+                            },
+                            new Appointment(){
+                                AppointmentUrl = null,
+                                AppointmentType = "In-person",
+                                AppointmentDescription = "Introduction session",
+                                AppointmentLocation = null,
+                                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
+                                EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
+                                DurationDescription = "2 hours",
+                                //Duration = TimeSpan.MaxValue,
+                                Occurences = null,
+                                IsGuaranteed = true,
+                                TrainingMode = TrainingMode.Offline,
+                                //TimeInvestAttendee = TimeSpan.MinValue,
+                                TimeModel = TrainingTimeModel.Unkonwn,
+                                OccurenceNoteOnTime = "Weekly",
+                                ExecutionDuration = "2",
+                                ExecutionDurationUnit = "UE",
+                                ExecutionDurationDescription = "Weekly",
+                                LessonType = "Practical",
+                                BookingUrl = null
+                            },
+
+                        }
+                        ),
+                 },
+         };
 
 
 
@@ -631,7 +696,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task InsertTrainings()
+        public async Task InsertTrainingsTest()
         {
             var api = Helpers.GetApolloApi();
             var training = new Training
@@ -670,7 +735,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task CreateOrUpdateTraining()
+        public async Task CreateOrUpdateTrainingTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -695,7 +760,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task GetTraining()
+        public async Task GetTrainingTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -710,7 +775,7 @@ namespace Apollo.Api.UnitTests
                 // Insert a test training record into the database
                 await api.InsertTraining(training);
 
-                // Retrieve the inserted training using the GetTraining method
+                // Retrieve the inserted training using the GetTrainingTest method
                 var retrievedTraining = await api.GetTraining(training.Id);
 
                 // Ensure that the retrieved training is not null and has the same ID as the inserted training
@@ -729,8 +794,8 @@ namespace Apollo.Api.UnitTests
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         /// </summary>
         [TestMethod]
-        [TestCategory("Prod")]
-        public async Task QueryTrainings()
+        // [TestCategory("Prod")]
+        public async Task QueryTrainingsTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -767,24 +832,7 @@ namespace Apollo.Api.UnitTests
             };
 
             // Act
-            IList<Training> trainings;
-            try
-            {
-                trainings = await api.QueryTrainingsAsync(query);
-            }
-            catch (ApolloApiException ex)
-            {
-                // Handle the case when no records are found
-                if (ex.ErrorCode == ErrorCodes.TrainingErrors.QueryTrainingsError)
-                {
-                    trainings = new List<Training>(); // Initialize an empty list
-                }
-                else
-                {
-                    // Re-throw the exception if it's not related to an empty result
-                    throw;
-                }
-            }
+            IList<Training> trainings = await api.QueryTrainingsAsync(query);
 
             // Assert
             // Ensure that trainings are retrieved based on the query
@@ -800,9 +848,10 @@ namespace Apollo.Api.UnitTests
             // add more assertions based on your specific testing requirements
         }
 
+
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task InsertComplexTraining()
+        public async Task InsertComplexTrainingTest()
         {
             // Arrange
             var api = Helpers.GetApolloApi();
@@ -811,7 +860,7 @@ namespace Apollo.Api.UnitTests
                  PropertyNameCaseInsensitive = true,
             };
 
-            Training[]? t = JsonSerializer.Deserialize<Training[]>(_complexTrainingJson, opts);
+            Training[]? t = System.Text.Json.JsonSerializer.Deserialize<Training[]>(_complexTrainingJson, opts);
 
             await api.InsertTrainings(t!);
 
@@ -904,103 +953,88 @@ namespace Apollo.Api.UnitTests
         /// <returns></returns>
 
         [TestMethod]
-        public async Task TrainingWithAppointmentsTest()
+        public async Task TrainingWithAppointmentsInsertTest()
         {
+            var api = Helpers.GetApolloApi();
+
+            // Insert a test training record into the database
+            await api.InsertTrainings(_testTrainingwithAppointments);
+
+            // Retrieve the inserted training using the GetTrainingTest method
+            var retrievedTraining = await api.GetTraining(_testTrainingwithAppointments.Select(i => i.Id).ToArray().First());
+
+            // Ensure that the retrieved training is not null and has the same ID as the inserted training
+            Assert.IsNotNull(retrievedTraining);
+            Assert.AreEqual(_testTrainingwithAppointments.Select(i => i.Id).ToArray().First(), retrievedTraining.Id);
+            
 
         }
-
-
-        /// <summary>
-        /// Retrieves a single training with filtered appointments within a specified date range.
-        /// </summary>
-        /// <param name="startDate">Start date of the range.</param>
-        /// <param name="endDate">End date of the range.</param>
-        /// <param name="additionalFilterField">Additional field for filtering.</param>
-        /// <returns>Task that represents the asynchronous operation, containing a single Training with filtered Appointments within the date range.</returns>
-
-        /// <summary>
-        /// Filters for training with specific IndividualStartDate
-        /// </summary>
-        /// <returns></returns>
-        //[TestMethod]
-        //public async Task<object> TrainingsWithIndividualStartDateTest()
-        //{
-
-        //        try
-        //        {
-        //            var query = new Apollo.Common.Entities.Query
-        //            {
-
-        //                Filter = new Apollo.Common.Entities.Filter
-        //                {
-        //                    Fields = new List<FieldExpression>
-        //                    {
-        //                        new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
-        //                        new FieldExpression { FieldName = "Appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
-        //                        new FieldExpression { FieldName = "Appointments.StartDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } },
-        //                        new FieldExpression { FieldName = "Appointments.EndDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } }
-        //                    }
-        //                },
-        //                Top = 100,
-        //                Skip = 0
-        //            };
-
-        //        var api = Helpers.GetApolloApi();
-
-        //        var res =api.QueryTrainings(query);
-               
-        //            var training = res.SingleOrDefault();
-
-        //            if (training != null)
-        //            {
-        //                return Convertor.ToTraining(training);
-        //            }
-
-        //            return null;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
-        //        }
-        //}
-
 
         /// <summary>
         /// Filters  a Training by Id and with Appointment Start and End Date 
         /// </summary>
         /// <returns></returns>
-        //[TestMethod]
-        //public async Task AppointmentDateFiterTestForSingleTraning()
-        //{
-        //    var api = Helpers.GetApolloApi();
+        /// <param name="startDate">Start date of the range.</param>
+        /// <param name="endDate">End date of the range.</param>
+        [TestMethod]
+        public async Task TrainingWithAppointmentFilterWithDateTest()
+        {
+            // Dummy initialization or specify default values for parameters
+            string trainingId = "defaultTrainingId";
+            DateTime startDate = DateTime.MinValue;
+            DateTime endDate = DateTime.MaxValue;
+            TimeSpan minDuration = TimeSpan.Zero;
+            TimeSpan maxDuration = TimeSpan.MaxValue;
 
-        //    try
-        //    {
-        //        // Create a test training record with a specific IndividualStartDate
-        //        var testStartDate = "2024-01-15"; 
-        //        //var testTraining = new Training
-        //        //{
-        //        //    Id = "T02",
-        //        //    TrainingName = "Test Training with Appointment",
-        //        //    IndividualStartDate = testStartDate
-        //        //};
+            try
+            {
+                var query = new Query
+                {
+                    Filter = new Filter
+                    {
+                        Fields = new List<FieldExpression>
+                        {
+                            new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
+                            new FieldExpression { FieldName = "appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
+                            new FieldExpression { FieldName = "appointments.startdate", Operator = QueryOperator.Equals, Argument = new List<object> { endDate } },
+                            //new FieldExpression { FieldName = "appointments.enddate", Operator = QueryOperator.Equals, Argument = new List<object> { startDate } },
+                        }
+                    },
+                    Top = 100,
+                    Skip = 0
+                };
 
-        //        //// Insert the test training record into the database
-        //        //await api.InsertTraining(testTraining);
+                var api = Helpers.GetApolloApi(); // Assuming GetApolloApi() is a static method in your Helpers class.
 
-        //        //// Retrieve trainings with the specific IndividualStartDate
-        //        //var filteredTrainings = await api.GetTrainingsByAppointmentDate(testStartDate);
+                var res = await api.QueryTrainingsAsync(query); // Assuming QueryTrainingsTest is an asynchronous method.
 
-        //        //// Ensure that the filteredTrainings list is not null and contains the test training
-        //        //Assert.IsNotNull(filteredTrainings);
-        //        //Assert.IsTrue(filteredTrainings.Contains(testTraining));
-        //    }
-        //    finally
-        //    {
-        //        // Clean up: Delete the test training record from the database
-        //        await api.DeleteTrainings(new string[] { "T02" });
-        //    }
-        //}
+                var training = res.SingleOrDefault();
+
+                Assert.IsNotNull(training);
+            }
+            catch (Exception ex)
+            {
+                throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
+            }
+            
+          }
+
+
+
+
+        /// <summary>
+        /// Filters for training with specific IndividualStartDate
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task  trainingswithindividualstartdatetest()
+        {
+
+           
+        }
+
+
+        
 
         /// <summary>
         /// NOTE; Duration is an auto calculated Property that can very well be null. 3 out of 6 tenants do not support dates that would allow a duration to be calculated.
@@ -1031,9 +1065,58 @@ namespace Apollo.Api.UnitTests
         [TestMethod]
         public async Task TrainingPriceTest()
         {
+            var api = Helpers.GetApolloApi();
+
+            await api.InsertTrainings(_testTrainings);
+
+            var query = new Apollo.Common.Entities.Query
+            {
+                Fields = new List<string> { "TrainingName", "StartDate", "Price" },
+                Filter = new Apollo.Common.Entities.Filter
+                {
+                    IsOrOperator = false,
+                    Fields = new List<Apollo.Common.Entities.FieldExpression>
+            {
+                new Apollo.Common.Entities.FieldExpression
+                {
+                    FieldName = "Price",
+                    Operator = Apollo.Common.Entities.QueryOperator.LessThanEqualTo,
+                    Argument = new List<object> { 42.2 }
+                }
+            }
+                },
+                RequestCount = true,
+                Top = 200,
+                Skip = 0,
+                SortExpression = new Apollo.Common.Entities.SortExpression
+                {
+                    FieldName = "Price",
+                    Order = Apollo.Common.Entities.SortOrder.Ascending
+                }
+            };
 
 
+            // Log the generated query for debugging
+            Console.WriteLine($"Generated Query: {JsonConvert.SerializeObject(query)}");
+
+            // Act
+            IList<Training> trainings = await api.QueryTrainingsAsync(query);
+
+            // Log the retrieved trainings for debugging
+            Console.WriteLine($"Retrieved Trainings: {JsonConvert.SerializeObject(trainings)}");
+
+            // Assert
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count > 0);
+
+            foreach (var training in trainings)
+            {
+                // Additional assertions based on your specific requirements
+                Assert.IsTrue(training.Price <= Convert.ToDecimal(42.2));
+            }
         }
+
+
 
 
         /// <summary>
@@ -1053,5 +1136,8 @@ namespace Apollo.Api.UnitTests
         public async Task TrainingAssessibilityTest()
         {
         }
+
+
     }
 }
+
