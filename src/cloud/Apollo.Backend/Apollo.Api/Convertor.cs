@@ -360,6 +360,26 @@ namespace Apollo.Api
             return user;
         }
 
+        /// <summary>
+        /// Converts an expando object to a Profile object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A Profile object converted from the expando object.</returns>
+        public static Profile ToProfile(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            Profile profile = new Profile
+            {
+                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
+                //to do mapp all properties in profile entity ... #Mukit
+
+                
+            };
+
+            return profile;
+        }
+
 
         /// <summary>
         /// Converts an Apollo API query filter to a Daenet query.

@@ -221,6 +221,28 @@ namespace Apollo.Api
 
 
         /// <summary>
+        /// Creates the unique identifier for the new prfile instance.
+        /// </summary>
+        /// <returns></returns>
+        private string CreateProfileId()
+        {
+            try
+            {
+                return CreateId(nameof(Profile));
+            }
+            catch (ApolloApiException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError($"Error in CreateProfileId: {ex.Message}", ex);
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while creating a profile ID.", ex);
+            }
+        }
+
+
+        /// <summary>
         /// Creates the unique identifier for the new instance of the specified entity.
         /// </summary>
         /// <param name="entityName"></param>

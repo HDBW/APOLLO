@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using Amazon.Runtime.Internal.Util;
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -14,27 +15,27 @@ namespace Apollo.Api
 
         /// <summary>
         /// <summary>
-        /// Gets the specific instance of the user.
+        /// Gets the specific instance of the profile.
         /// </summary>
         /// <param name="trainingId"></param>
         /// <returns></returns>
-        public virtual async Task<User> GetProfile(string userId)
+        public virtual async Task<Profile> GetProfile(string profileId)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(GetUser)}");
+                _logger?.LogTrace($"Entered {nameof(GetProfile)}");
 
-                var user = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), userId);
+                var profile = await _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profileId);
 
-                _logger?.LogTrace($"Completed {nameof(GetUser)}");//todo..
+                _logger?.LogTrace($"Completed {nameof(GetProfile)}");//todo..
 
-                if (user == null)
+                if (profile == null)
                 {
-                    // User not found, throw ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.");
+                    // Profile not found, throw ApolloException with specific code and message
+                    throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileNotFound, $"Profile with ID '{profileId}' not found.");
                 }
 
-                return user;
+                return profile;
             }
             catch (ApolloApiException)
             {
@@ -43,70 +44,70 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed execution of {nameof(GetUser)}: {ex.Message}");
+                _logger.LogError(ex, $"Failed execution of {nameof(GetProfile)}: {ex.Message}");
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.UserErrors.GetUserError, "An error occurred while getting the user.", ex);
+                throw new ApolloApiException(ErrorCodes.ProfileErrors.GetProfileError, "An error occurred while getting the profile.", ex);
             }
         }
 
 
         /// <summary>
-        /// Queries for a set of users that match specified criteria.
+        /// Queries for a set of prfiles that match specified criteria.
         /// </summary>
-        /// <param name="query">The filter that specifies users to be retrieved.</param>
-        /// <returns>List of users.</returns>
+        /// <param name="query">The filter that specifies profiles to be retrieved.</param>
+        /// <returns>List of profiles.</returns>
         // TODO: More specific exception handeling for this method
-        public virtual async Task<IList<User>> QueryProfilesAsync(Query query)
+        public virtual async Task<IList<Profile>> QueryProfilesAsync(Query query)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(QueryUsers)}");
+                _logger?.LogTrace($"Entered {nameof(QueryProfilesAsync)}");
 
-                var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
-                var users = Convertor.ToEntityList<User>(res, Convertor.ToUser);//todo...
+                var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<Profile>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+                var profiles = Convertor.ToEntityList<Profile>(res, Convertor.ToProfile);
 
-                _logger?.LogTrace($"Completed {nameof(QueryUsers)}");
+                _logger?.LogTrace($"Completed {nameof(QueryProfilesAsync)}");
 
-                return users;
+                return profiles;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(QueryUsers)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersError, "Error while querying users", ex);
+                _logger?.LogError(ex, $"Failed execution of {nameof(QueryProfilesAsync)}: {ex.Message}");
+                throw new ApolloApiException(ErrorCodes.ProfileErrors.GetProfileError, "Error while querying profiles", ex);
             }
         }
 
 
         /// <summary>
-        /// Inserts a new user into the system.
+        /// Inserts a new profile into the system.
         /// </summary>
-        /// <param name="user">The User object to be inserted.</param>
-        /// <returns>Task that represents the asynchronous operation, containing the unique identifier of the inserted user.</returns>
-        public virtual async Task<string> InsertProfileAsync(Profile user)
+        /// <param name="profile">The Profile object to be inserted.</param>
+        /// <returns>Task that represents the asynchronous operation, containing the unique identifier of the inserted profile.</returns>
+        public virtual async Task<string> InsertProfileAsync(Profile profile)
         {
+
             try
             {
-                _logger?.LogTrace($"{this.User} entered {nameof(InsertUser)}");
+                _logger?.LogTrace($"Entered {nameof(InsertProfileAsync)}");
 
-                // Generate a unique user ID if it's not provided
-                if (String.IsNullOrEmpty(user.Id))
-                    user.Id = CreateUserId();
+                // Generate a unique profile ID if it's not provided
+                if (String.IsNullOrEmpty(profile.Id))
+                    profile.Id = CreateProfileId();
 
-                // Check if the user with the same ID already exists before inserting
-                var existingUser = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), user.Id);
-                if (existingUser != null)
+                // Check if the profile with the same ID already exists before inserting
+                var existingProfile = await _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profile.Id);
+                if (existingProfile != null)
                 {
-                    // User with the same ID already exists, throw an ApolloException with a specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserAlreadyExists, $"User with ID '{user.Id}' already exists.");
+                    // Profile with the same ID already exists, throw an ApolloException with a specific code and message
+                    throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileAlreadyExists, $"Profile with ID '{profile.Id}' already exists.");
                 }
 
-                await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
+                await _dal.InsertAsync(ApolloApi.GetCollectionName<Profile>(), Convertor.Convert(profile));
 
-                _logger?.LogTrace($"{this.User} completed {nameof(InsertUser)}");
-                _logger?.LogTrace($"Inserting user with Id: {user.Id}");
+                _logger?.LogTrace($"Inserting profile with Id: {profile.Id}");
 
-                return user.Id;
+                return profile.Id;
             }
             catch (ApolloApiException)
             {
@@ -115,37 +116,37 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{this.User} failed execution of {nameof(InsertUser)}: {ex.Message}");
+                _logger.LogError(ex, $" failed execution of {nameof(InsertProfileAsync)}: {ex.Message}");
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.UserErrors.InsertUserError, "An error occurred while inserting the user.", ex);
+                throw new ApolloApiException(ErrorCodes.ProfileErrors.InsertProfileError, "An error occurred while inserting the profile.", ex);
             }
         }
 
 
         /// <summary>
-        /// Creates or Updates the new User instance.
+        /// Creates or Updates the new Profile instance.
         /// </summary>
-        /// <param name="user">If the Id is specified, the update will be performed.</param>
+        /// <param name="profile">If the Id is specified, the update will be performed.</param>
         /// <returns></returns>
-        public virtual async Task<List<string>> CreateOrUpdateProfiles(ICollection<User> profiles)
+        public virtual async Task<List<string>> CreateOrUpdateProfiles(ICollection<Profile> profiles)
         {
             try
             {
                 List<string> ids = new List<string>();
 
-                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateUser)}");
+                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateProfiles)}");
 
-                foreach (var user in profiles)
+                foreach (var profile in profiles)
                 {
-                    var userId = CreateUserId();
-                    ids.Add(userId);
-                    user.Id = userId;
+                    var profileId = CreateProfileId();
+                    ids.Add(profileId);
+                    profile.Id = profileId;
                 }
 
-                await _dal.InsertManyAsync(ApolloApi.GetCollectionName<User>(), profiles.Select(pr => Convertor.Convert(pr)).ToArray());
+                await _dal.InsertManyAsync(ApolloApi.GetCollectionName<Profile>(), profiles.Select(pr => Convertor.Convert(pr)).ToArray());
 
-                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
+                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfiles)}");
 
                 return ids;
             }
@@ -156,36 +157,36 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateUser)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateProfiles)}: {ex.Message}");
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "An error occurred while creating or updating users.", ex);
+                throw new ApolloApiException(ErrorCodes.ProfileErrors.CreateOrUpdateProfileError, "An error occurred while creating or updating profiles.", ex);
             }
         }
 
 
         /// <summary>
-        /// Delete Users with specified Ids.
+        /// Delete Profiles with specified Ids.
         /// </summary>
-        /// <param name="deletingIds">The list of user identifiers.</param>
-        /// <returns>The number of deleted users.</returns>
+        /// <param name="deletingIds">The list of profile identifiers.</param>
+        /// <returns>The number of deleted Profiles</returns>
         public virtual async Task<long> DeleteProfiles(string[] deletingIds)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(DeleteUsers)}");
+                _logger?.LogTrace($"Entered {nameof(DeleteProfiles)}");
 
-                // Call the DAL method to delete the users by their IDs
-                var res = await _dal.DeleteManyAsync(GetCollectionName<User>(), deletingIds, throwIfNotDeleted: false);
+                // Call the DAL method to delete the profile by their IDs
+                var res = await _dal.DeleteManyAsync(GetCollectionName<Profile>(), deletingIds, throwIfNotDeleted: false);
 
-                _logger?.LogTrace($"Completed {nameof(DeleteUsers)}");
+                _logger?.LogTrace($"Completed {nameof(DeleteProfiles)}");
 
                 return res;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteUsers)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.UserErrors.DeleteUserError, "Error while deleting users", ex);
+                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteProfiles)}: {ex.Message}");
+                throw new ApolloApiException(ErrorCodes.ProfileErrors.DeleteProfileError, "Error while deleting profiles", ex);
             }
         }
 
