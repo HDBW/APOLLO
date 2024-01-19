@@ -4,6 +4,7 @@
 using System.Dynamic;
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
+using static Apollo.Api.ErrorCodes;
 
 namespace Apollo.Api
 {
@@ -160,9 +161,8 @@ namespace Apollo.Api
                             }
                             else
                             {
-                                user.Id = CreateUserId();
-                                await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user)); ;
-                            }
+                                throw new ApolloApiException(UserErrors.CreateOrUpdateUserError, $"The user with the specified ObjectId = {user.ObjectId} does not exist.");
+                             }
                         }
                     }
                 }
