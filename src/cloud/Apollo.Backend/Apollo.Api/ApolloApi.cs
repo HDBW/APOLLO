@@ -21,7 +21,7 @@ namespace Apollo.Api
         //reason of addition: fixes the error for UnitTests
         public ApolloApi()
         {
-           //Empty constructor
+            //Empty constructor
         }
         #region Fields and Properties
 
@@ -76,7 +76,7 @@ namespace Apollo.Api
             //{
             //    _logger = logger;
             //}
-           
+
             try
             {
                 if (_dal == null)
@@ -222,23 +222,13 @@ namespace Apollo.Api
 
         /// <summary>
         /// Creates the unique identifier for the new profile instance.
+        /// The profile id contains the same identifier as userId preficed with the profile.
         /// </summary>
         /// <returns></returns>
-        private string CreateProfileId()
+        private static string CreateProfileId(string userId)
         {
-            try
-            {
-                return CreateId(nameof(Profile));
-            }
-            catch (ApolloApiException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError($"Error in CreateProfileId: {ex.Message}", ex);
-                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while creating a profile ID.", ex);
-            }
+            // Creating the default version of the profile identifier.
+            return $"{FormatId(nameof(Profile), userId)}_v01";
         }
 
 
@@ -247,21 +237,14 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="entityName"></param>
         /// <returns></returns>
-        private string CreateId(string entityName)
+        private static string CreateId(string entityName)
         {
-            try
-            {
-                return $"{entityName}-{Guid.NewGuid().ToString("N").ToUpper()}";
-            }
-            catch (ApolloApiException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError($"Error in CreateId: {ex.Message}", ex);
-                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while creating an ID.", ex);
-            }
+            return FormatId(entityName, Guid.NewGuid().ToString("N").ToUpper());
+        }
+
+        private static string FormatId(string entityName, string id)
+        {
+            return $"{entityName}-{id}";
         }
 
     }

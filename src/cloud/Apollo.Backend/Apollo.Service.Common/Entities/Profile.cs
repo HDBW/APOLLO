@@ -21,7 +21,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// This is the Unique Identifier set by Apollo for the User.
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         ///  This is the Professional career information of the User.
@@ -29,7 +29,7 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<CareerInfo> CareerInfos { get; set; }
+        public List<CareerInfo>? CareerInfos { get; set; }
 
         /// <summary>
         /// This is the education and apprenticeship information of the User.
@@ -37,7 +37,7 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>1</value>
         /// </remarks>
-        public List<EducationInfo> EducationInfos { get; set; }
+        public List<EducationInfo>? EducationInfos { get; set; }
 
         /// <summary>
         /// This is the qualifications a User has.
@@ -49,7 +49,7 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<Qualification> Qualifications { get; set; }
+        public List<Qualification>? Qualifications { get; set; }
 
         /// <summary>
         /// This is the driving license information of the User.
@@ -57,7 +57,7 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>0</value>
         /// </remarks>
-        public Mobility MobilityInfo { get; set; }
+        public Mobility? MobilityInfo { get; set; }
 
         /// <summary>
         /// This is the Language Skills of the User.
@@ -65,7 +65,7 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<LanguageSkill> LanguageSkills { get; set; }
+        public List<LanguageSkill>? LanguageSkills { get; set; }
 
         /// <summary>
         /// Skills that are directly associated to the User.
@@ -77,14 +77,14 @@ namespace Apollo.Common.Entities
         /// </remarks>
         /// <Note>Not part of UI</Note>
         /// <Note>Backend only</Note>
-        public List<Skill> Skills { get; set; }
+        public List<Skill>? Skills { get; set; }
 
 
         /// <summary>
         /// This is for the Backend only to classify the Occupations a User has.
         /// Should not be shared with the Client or the User.
         /// </summary>
-        public List<Occupation> Occupations { get; set; }
+        public List<Occupation>? Occupations { get; set; }
 
         /// <summary>
         /// Knowledge is part of the original BA Dataset for Machine Learning.
@@ -96,7 +96,7 @@ namespace Apollo.Common.Entities
         /// </remarks>
         /// <Note>Not part of UI</Note>
         /// <Note>Backend only</Note>
-        public Knowledge Knowledge { get; set; }
+        public Knowledge? Knowledge { get; set; }
 
         /// <summary>
         /// Apprenticeship is part of the original BA Dataset for Machine Learning.
@@ -108,7 +108,7 @@ namespace Apollo.Common.Entities
         /// </remarks>
         /// <Note>Not part of UI</Note>
         /// <Note>Backend only</Note>
-        public List<Apprenticeship> Apprenticeships { get; set; }
+        public List<Apprenticeship>? Apprenticeships { get; set; }
 
         /// <summary>
         /// License that are directly associated to the User.
@@ -119,7 +119,7 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<License> Licenses { get; set; }
+        public List<License>? Licenses { get; set; }
 
         // not in ui
         public LeadershipSkills? LeadershipSkills { get; set; }
@@ -132,6 +132,6 @@ namespace Apollo.Common.Entities
         /// <remarks>
         ///     Relevance <value>1</value>
         /// </remarks>
-        public List<WebReference> WebReferences { get; set; }
+        public List<WebReference>? WebReferences { get; set; }
     }
 }
