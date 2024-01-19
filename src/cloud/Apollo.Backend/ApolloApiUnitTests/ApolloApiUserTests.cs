@@ -24,7 +24,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task InsertUser()
+        public async Task InsertUserTest()
         {
             // Create a mock logger
             var logger = new Mock<ILogger<ApolloApi>>();
@@ -70,7 +70,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task CreateOrUpdateUser()
+        public async Task CreateOrUpdateUserTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -96,7 +96,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task GetUser()
+        public async Task GetUserTest()
         {
             // Arrange
             var api = Helpers.GetApolloApi();
@@ -122,7 +122,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task QueryUsers()
+        public async Task QueryUsersTest()
         {
             var api = Helpers.GetApolloApi();
 

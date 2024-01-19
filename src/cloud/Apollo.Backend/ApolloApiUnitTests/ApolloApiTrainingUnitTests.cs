@@ -696,7 +696,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task InsertTrainings()
+        public async Task InsertTrainingsTest()
         {
             var api = Helpers.GetApolloApi();
             var training = new Training
@@ -735,7 +735,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task CreateOrUpdateTraining()
+        public async Task CreateOrUpdateTrainingTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -760,7 +760,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task GetTraining()
+        public async Task GetTrainingTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -775,7 +775,7 @@ namespace Apollo.Api.UnitTests
                 // Insert a test training record into the database
                 await api.InsertTraining(training);
 
-                // Retrieve the inserted training using the GetTraining method
+                // Retrieve the inserted training using the GetTrainingTest method
                 var retrievedTraining = await api.GetTraining(training.Id);
 
                 // Ensure that the retrieved training is not null and has the same ID as the inserted training
@@ -795,7 +795,7 @@ namespace Apollo.Api.UnitTests
         /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task QueryTrainings()
+        public async Task QueryTrainingsTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -867,7 +867,7 @@ namespace Apollo.Api.UnitTests
 
         [TestMethod]
         [TestCategory("Prod")]
-        public async Task InsertComplexTraining()
+        public async Task InsertComplexTrainingTest()
         {
             // Arrange
             var api = Helpers.GetApolloApi();
@@ -976,7 +976,7 @@ namespace Apollo.Api.UnitTests
             // Insert a test training record into the database
             await api.InsertTrainings(_testTrainingwithAppointments);
 
-            // Retrieve the inserted training using the GetTraining method
+            // Retrieve the inserted training using the GetTrainingTest method
             var retrievedTraining = await api.GetTraining(_testTrainingwithAppointments.Select(i => i.Id).ToArray().First());
 
             // Ensure that the retrieved training is not null and has the same ID as the inserted training
@@ -1022,7 +1022,7 @@ namespace Apollo.Api.UnitTests
 
                 var api = Helpers.GetApolloApi(); // Assuming GetApolloApi() is a static method in your Helpers class.
 
-                var res = await api.QueryTrainingsAsync(query); // Assuming QueryTrainings is an asynchronous method.
+                var res = await api.QueryTrainingsAsync(query); // Assuming QueryTrainingsTest is an asynchronous method.
 
                 var training = res.SingleOrDefault();
 
