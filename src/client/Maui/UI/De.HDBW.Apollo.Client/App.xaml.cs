@@ -25,6 +25,7 @@ namespace De.HDBW.Apollo.Client
             _sessionService = sessionService;
             _preferenceService = preferenceService;
             InitializeComponent();
+            _preferenceService.SetValue(Preference.IsFirstTime, true);
             if (_preferenceService.GetValue(Preference.IsFirstTime, true))
             {
                 _preferenceService.SetValue(Preference.IsFirstTime, false);

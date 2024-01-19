@@ -175,7 +175,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             BirthDate = user?.Birthdate != null ? new DateTime(user.Birthdate.Value.Year, user.Birthdate.Value.Month, user.Birthdate.Value.Day, 0, 0, 0, DateTimeKind.Local) : null;
             Disabilities = user?.Disabilities ?? false;
             IsDirty = false;
-            ValidateCommand?.Execute();
+            ValidateCommand?.Execute(null);
         }
     }
 }
