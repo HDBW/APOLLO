@@ -5,6 +5,8 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
@@ -19,13 +21,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
+            IPreferenceService preferenceService,
+            IUserRepository userRepository,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(authService);
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(userRepository);
             AuthService = authService;
             SessionService = sessionService;
+            PreferenceService = preferenceService;
+            UserRepository = userRepository;
         }
 
         public bool HasRegisterdUser
@@ -39,6 +47,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IAuthService AuthService { get; }
 
         private ISessionService SessionService { get; }
+
+        private IPreferenceService PreferenceService { get; }
+
+        private IUserRepository UserRepository { get; }
 
         protected override void RefreshCommands()
         {
@@ -90,7 +102,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
+#if !DEBUG
                     await AuthService.SignInInteractively(worker.Token);
+#endif
+                    await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
+                    PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
                 }
                 catch (OperationCanceledException)
                 {
@@ -121,17 +137,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             return !IsBusy && HasRegisterdUser;
         }
-
-#if DEBUG
-        public class DummyAccount : IAccount
-        {
-            public string Username { get; } = "Dummy";
-
-            public string Environment { get; } = "Dummy";
-
-            public AccountId HomeAccountId { get; } = new AccountId("Dummy", "Dummy", "Dummy");
-        }
-#endif
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
@@ -201,4 +206,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy && !HasRegisterdUser;
         }
     }
+
+#if DEBUG
+#pragma warning disable SA1402 // File may only contain a single type
+    public class DummyAccount : IAccount
+    {
+        public string Username { get; } = "Dummy";
+
+        public string Environment { get; } = "Dummy";
+
+        public AccountId HomeAccountId { get; } = new AccountId("Dummy", "Dummy", "Dummy");
+    }
+#pragma warning restore SA1402 // File may only contain a single type
+#endif
 }

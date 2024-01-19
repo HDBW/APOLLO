@@ -16,6 +16,34 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
         }
 
+        public Task<bool> DeleteUserAsync(CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            try
+            {
+                if (File.Exists(BasePath))
+                {
+                    File.Delete(BasePath);
+                }
+
+                return Task.FromResult(true);
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.LogDebug($"Canceled {nameof(DeleteUserAsync)} in {GetType().Name}.");
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger.LogDebug($"Canceled {nameof(DeleteUserAsync)} in {GetType().Name}.");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, $"Unknown error in {nameof(DeleteUserAsync)} in {GetType().Name}.");
+            }
+
+            return Task.FromResult(false);
+        }
+
         public Task<User?> GetItemAsync(CancellationToken token)
         {
             token.ThrowIfCancellationRequested();

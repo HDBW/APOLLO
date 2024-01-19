@@ -22,7 +22,7 @@ namespace De.HDBW.Apollo.Data.Repositories
 
         protected ILogger Logger { get; }
 
-        private string BasePath { get; }
+        protected string BasePath { get; }
 
         public async Task<TU?> LoadAsync(CancellationToken token)
         {
@@ -30,13 +30,12 @@ namespace De.HDBW.Apollo.Data.Repositories
             try
             {
                 await _semaphore.WaitAsync(token).ConfigureAwait(false);
-                var profilePath = BasePath;
-                if (!File.Exists(profilePath))
+                if (!File.Exists(BasePath))
                 {
                     return default;
                 }
 
-                using (var stream = File.OpenRead(profilePath))
+                using (var stream = File.OpenRead(BasePath))
                 {
                     var options = new JsonSerializerOptions()
                     {
@@ -74,7 +73,6 @@ namespace De.HDBW.Apollo.Data.Repositories
             try
             {
                 await _semaphore.WaitAsync(token).ConfigureAwait(false);
-                var profilePath = BasePath;
                 var path = Path.GetTempFileName();
                 using (var stream = File.OpenWrite(path))
                 {
@@ -84,7 +82,7 @@ namespace De.HDBW.Apollo.Data.Repositories
                         Converters = { new CultureInfoJsonConverter() },
                     };
                     await JsonSerializer.SerializeAsync<TU>(stream, data, options, token).ConfigureAwait(false);
-                    File.Move(path, profilePath, true);
+                    File.Move(path, BasePath, true);
                     return true;
                 }
             }

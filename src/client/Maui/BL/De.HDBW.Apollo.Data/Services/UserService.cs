@@ -20,6 +20,13 @@ namespace De.HDBW.Apollo.Data.Services
         {
         }
 
+        public async Task<User?> GetUserAsync(string id, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var response = await DoGetAsync<GetUserResponse>(id, token).ConfigureAwait(false);
+            return response.User;
+        }
+
         public async Task<string?> SaveAsync(User user, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();

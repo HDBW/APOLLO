@@ -27,6 +27,51 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         }
 
         [Fact]
+        public async Task RegisterUserAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+            string? userId = null;
+            var testuser = new User() { ObjectId = "NewUser", Name = "NewUser" };
+            User? createdUser = null;
+            User? updatedUser = null;
+            try
+            {
+                userId = await Service.SaveAsync(testuser, TokenSource!.Token);
+                createdUser = await Service.GetUserAsync(userId, TokenSource!.Token);
+            }
+            catch (ApolloApiException ex)
+            {
+                // Not existing ids return errorcode ErrorCodes.TrainingErrors.GetTrainingError;
+                Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
+            }
+
+            Assert.NotNull(userId);
+            Assert.NotNull(createdUser);
+            Assert.Equal(testuser.ObjectId, createdUser.ObjectId);
+            Assert.Equal(testuser.Name, createdUser.Name);
+
+            testuser.Id = userId;
+            testuser.Name = "Fritz";
+            try
+            {
+                var updatedId = await Service.SaveAsync(testuser, TokenSource!.Token);
+                updatedUser = await Service.GetUserAsync(userId, TokenSource!.Token);
+                createdUser = await Service.GetUserAsync(userId, TokenSource!.Token);
+            }
+            catch (ApolloApiException ex)
+            {
+                // Not existing ids return errorcode ErrorCodes.TrainingErrors.GetTrainingError;
+                Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
+            }
+
+            Assert.NotNull(createdUser);
+            Assert.NotNull(updatedUser);
+            Assert.Equal(testuser.ObjectId, updatedUser.ObjectId);
+            Assert.Equal(testuser.Name, createdUser.Name);
+        }
+
+        [Fact]
         public async Task SaveUserAsyncTest()
         {
             Assert.NotNull(TokenSource);

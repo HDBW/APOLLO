@@ -6,6 +6,7 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Data.Services;
+using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -24,15 +25,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ILogger<PickUserNameViewModel> logger,
             IUserRepository userRepository,
             IUserService userService,
-            ISessionService sessionService)
+            ISessionService sessionService,
+            IPreferenceService preferenceService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(userRepository);
             ArgumentNullException.ThrowIfNull(userService);
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(preferenceService);
             UserRepository = userRepository;
             UserService = userService;
             SessionService = sessionService;
+            PreferenceService = preferenceService;
         }
 
         public string? Name
@@ -57,6 +61,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ISessionService SessionService { get; }
 
+        private IPreferenceService PreferenceService { get; }
+
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
@@ -77,16 +83,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     user.Name = Name!;
                     user.ObjectId = SessionService.AccountId!.ObjectId;
                     var result = await UserService.SaveAsync(user, token).ConfigureAwait(false);
+
                     if (string.IsNullOrWhiteSpace(result))
                     {
                         throw new NotSupportedException("Unable to create user.");
                     }
 
-                    user.Id = result;
+                    user = await UserService.GetUserAsync(result, token).ConfigureAwait(false);
+                    if (user == null)
+                    {
+                        throw new NotSupportedException("Unable to create user.");
+                    }
+
                     if (!await UserRepository.SaveAsync(user, token).ConfigureAwait(false))
                     {
                         throw new NotSupportedException("Unable to save user.");
                     }
+
+                    PreferenceService.SetValue(Preference.RegisteredUserId, user.Id);
 
                     await NavigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
                 }

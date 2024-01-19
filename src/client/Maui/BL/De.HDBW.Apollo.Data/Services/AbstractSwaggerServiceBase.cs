@@ -69,13 +69,11 @@ namespace De.HDBW.Apollo.Data.Services
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
-                    var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
-                    if (objectResponse.Object == null)
+                    result = await Deserialize<TU>(response, responseHeaders, token).ConfigureAwait(false);
+                    if (result == null)
                     {
                         throw new ApolloApiException(-2, "Unable to read response.");
                     }
-
-                    return objectResponse.Object;
                 }
             }
             catch (WebException ex)
@@ -149,13 +147,11 @@ namespace De.HDBW.Apollo.Data.Services
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
-                    var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
-                    if (objectResponse.Object == null)
+                    result = await Deserialize<TU>(response, responseHeaders, token).ConfigureAwait(false);
+                    if (result == null)
                     {
                         throw new ApolloApiException(-2, "Unable to read response.");
                     }
-
-                    return objectResponse.Object;
                 }
             }
             catch (WebException ex)
@@ -229,13 +225,11 @@ namespace De.HDBW.Apollo.Data.Services
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
-                    var objectResponse = await ReadObjectResponseAsync<TU>(response, responseHeaders, token).ConfigureAwait(false);
-                    if (objectResponse.Object == null)
+                    result = await Deserialize<TU>(response, responseHeaders, token).ConfigureAwait(false);
+                    if (result == null)
                     {
                         throw new ApolloApiException(-2, "Unable to read response.");
                     }
-
-                    return objectResponse.Object;
                 }
             }
             catch (WebException ex)
@@ -278,26 +272,26 @@ namespace De.HDBW.Apollo.Data.Services
             return result;
         }
 
-        private async Task<ObjectResponseResult<TU>> ReadObjectResponseAsync<TU>(HttpResponseMessage response, IReadOnlyDictionary<string, IEnumerable<string>> headers, CancellationToken cancellationToken)
+        private async Task<TU?> Deserialize<TU>(HttpResponseMessage response, IReadOnlyDictionary<string, IEnumerable<string>> headers, CancellationToken cancellationToken)
         {
+            TU? result = default;
+
             if (response?.Content == null)
             {
-                return new ObjectResponseResult<TU>(default(TU), string.Empty);
+                return result;
             }
 
             try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                using (var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false))
                 {
                     using (var streamReader = new StreamReader(responseStream))
                     {
-                        // var lst = streamReader.ReadToEnd();
                         using (var jsonTextReader = new JsonTextReader(streamReader))
                         {
-                            var serializer = JsonSerializer.Create();
-                            var typedBody = serializer.Deserialize<TU>(jsonTextReader);
-                            return new ObjectResponseResult<TU>(typedBody, string.Empty);
+                            var serializer = new JsonSerializer();
+                            result = serializer.Deserialize<TU>(jsonTextReader);
                         }
                     }
                 }
@@ -306,6 +300,8 @@ namespace De.HDBW.Apollo.Data.Services
             {
                 throw new ApolloApiException(-3, "Unable to deserialze Json", exception);
             }
+
+            return result;
         }
 
         private void SetupHttpClient(string authKey)
@@ -326,19 +322,6 @@ namespace De.HDBW.Apollo.Data.Services
                 Logger.LogError(ex, $"Unknown Error while SetupHttpClient in {GetType().Name}.");
                 throw;
             }
-        }
-
-        protected struct ObjectResponseResult<TU>
-        {
-            public ObjectResponseResult(TU? responseObject, string responseText)
-            {
-                Object = responseObject;
-                Text = responseText;
-            }
-
-            public TU? Object { get; }
-
-            public string Text { get; }
         }
     }
 }

@@ -7,6 +7,8 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
 {
     public interface IUserRepository
     {
+        Task<bool> DeleteUserAsync(CancellationToken token);
+
         Task<User?> GetItemAsync(CancellationToken token);
 
         Task<bool> SaveAsync(User user, CancellationToken token);
