@@ -68,13 +68,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IPreferenceService PreferenceService { get; }
 
-        public async virtual Task OnNavigatedToAsync()
+        public override Task OnNavigatedToAsync()
         {
-            await ExecuteOnUIThreadAsync(
-                () =>
-                {
-                    ValidateCommand?.Execute(null);
-                }, CancellationToken.None);
+            return ExecuteOnUIThreadAsync(
+               () =>
+               {
+                   ValidateCommand?.Execute(null);
+               }, CancellationToken.None);
         }
 
         protected override void RefreshCommands()

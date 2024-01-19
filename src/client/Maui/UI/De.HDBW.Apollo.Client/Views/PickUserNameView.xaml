@@ -15,8 +15,8 @@
                 <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
             </Entry.Behaviors>
         </Entry>
-        <Label x:Name="lblValidationErrorPassword" Text="{x:Binding [Name]}" TextColor="Red" />
-        <Border Grid.Row="3" Background="{StaticResource Neutral0Brush}" StrokeThickness="0">
+        <Label Grid.Row="2" Text="{x:Binding [Name]}" TextColor="Red" Margin="24,0"/>
+        <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0">
             <Border.Shadow>
                 <Shadow Brush="{StaticResource Black}" Offset="0,0" Radius="16" Opacity="0.2"/>
             </Border.Shadow>
@@ -24,6 +24,6 @@
                 <RoundRectangle CornerRadius="16,16,0,0" />
             </Border.StrokeShape>
         </Border>
-        <Button Grid.Row="3" Text="Weiter" Command="{x:Binding CreateAccountCommand}" Margin="24,16"/>
+        <Button Grid.Row="4" Text="Weiter" Command="{x:Binding CreateAccountCommand}" Margin="24,16"/>
     </Grid>
 </ContentPage>

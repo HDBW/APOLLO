@@ -21,7 +21,7 @@
                 <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
             </Entry.Behaviors>
         </Entry>
-        <Label x:Name="lblValidationErrorPassword" Text="{x:Binding [Name]}" TextColor="Red" />
+        <Label Text="{x:Binding [Name]}" TextColor="Red" />
 
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" />
         <DatePicker HorizontalOptions="Fill"
