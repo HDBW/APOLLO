@@ -10,14 +10,14 @@ namespace De.HDBW.Apollo.Client.Dialogs
         public ConfirmDataUsageDialog(ConfirmDataUsageDialogViewModel model)
         {
             InitializeComponent();
-            var view = FindByName("Part_Root") as View;
-            var page = Shell.Current ?? Application.Current?.MainPage;
-            if (view != null && page != null)
-            {
-                view.MaximumWidthRequest = page.Width - 16;
-                view.MaximumHeightRequest = page.Height - 16;
-                Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
-            }
+            //var view = FindByName("Part_Root") as View;
+            //var page = Shell.Current ?? Application.Current?.MainPage;
+            //if (view != null && page != null)
+            //{
+            //    view.MaximumWidthRequest = page.Width - 16;
+            //    view.MaximumHeightRequest = page.Height - 16;
+            //    Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
+            //}
 
             BindingContext = model;
         }

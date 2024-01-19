@@ -30,6 +30,12 @@
         <Setter Property="FontSize" Value="14" />
     </Style>
 
+    <Style x:Key="Noto14SemiBold" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}" />
+        <Setter Property="FontFamily" Value="NotoSansSemiBold" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
     <Style x:Key="Noto12" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}" />
         <Setter Property="FontFamily" Value="NotoSansRegular" />
@@ -51,6 +57,12 @@
     <Style x:Key="NotoSerif24" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}" />
         <Setter Property="FontFamily" Value="NotoSerifRegular" />
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
+    <Style x:Key="NotoSerif24Bold" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}" />
+        <Setter Property="FontFamily" Value="NotoSerifBold" />
         <Setter Property="FontSize" Value="24" />
     </Style>
 
@@ -90,7 +102,7 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="MinimumHeightRequest" Value="36"/>
+        <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -152,6 +164,7 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">

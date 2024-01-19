@@ -4,25 +4,22 @@
              x:Class="De.HDBW.Apollo.Client.Dialogs.ConfirmDataUsageDialog"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-             Color="{StaticResource Background}"
+             Color="{StaticResource Neutral0}"
              x:DataType="viewModels:ConfirmDataUsageDialogViewModel">
-    <Grid RowDefinitions="*, auto, 20" Padding="0" x:Name="Part_Root" >
-        <Border StrokeThickness="0" Stroke="{StaticResource Background}"  HorizontalOptions="Fill" VerticalOptions="Fill">
-            <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}" BackgroundColor="{StaticResource Background}">
-                <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
-                <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
-                <Grid ColumnDefinitions="auto, *">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleAgreeCommand}" />
-                    </Grid.GestureRecognizers>
-                    <CheckBox InputTransparent="True" IsChecked="{Binding Agree, Mode=TwoWay}" VerticalOptions="Center"/>
-                    <Label Grid.Column="1" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Agree}" Margin="8,0,0,0" VerticalOptions="Center"/>
-                </Grid>
-            </VerticalStackLayout>
-        </Border>
-       
-        <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{Binding CancelCommand}" />
+    <Grid x:Name="Part_Root" RowDefinitions="20, auto, auto, auto, 32, auto" Padding="{OnPlatform '0,0,0,20', Android='20,0,20,20'}" HorizontalOptions="Fill">
+        <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Title}" Style="{StaticResource Noto20Bold}" Margin="0,0,0,16"/>
+        <ScrollView VerticalOptions="Center" HorizontalOptions="Start" Grid.Row="2" MaximumHeightRequest="180" HorizontalScrollBarVisibility="Never" >
+            <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Message}" Style="{StaticResource Noto16}" Margin="{OnPlatform '0,0,0,40', Android='0'}"/>
+        </ScrollView>
+        <Grid Grid.Row="3" ColumnDefinitions="auto, *" Margin="0,16,0,0">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleAgreeCommand}" />
+            </Grid.GestureRecognizers>
+            <CheckBox InputTransparent="True" IsChecked="{Binding Agree, Mode=TwoWay}" VerticalOptions="Center" AutomationProperties.LabeledBy="{x:Reference ChkbxLbl}"/>
+            <Label x:Name="ChkbxLbl" Grid.Column="1" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Agree}" Margin="8,0,0,0" VerticalOptions="Center" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+        </Grid>
+        <Grid ColumnDefinitions="*,8,*" Grid.Row="5">
+            <Button Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{Binding CancelCommand}"/>
             <Button Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Continue}" Command="{Binding ContinueCommand}" Grid.Column="2"/>
         </Grid>
     </Grid>
