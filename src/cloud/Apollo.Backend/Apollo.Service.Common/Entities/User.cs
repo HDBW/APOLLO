@@ -21,6 +21,11 @@ namespace Apollo.Common.Entities
         public string ObjectId { get; set; }
 
         /// <summary>
+        /// The name of the identity provider.
+        /// </summary>
+        public string IdentityProvicer { get; set; }
+
+        /// <summary>
         /// This is the User principal name given by AADB2C.
         /// </summary>
         public string? Upn { get; set; }

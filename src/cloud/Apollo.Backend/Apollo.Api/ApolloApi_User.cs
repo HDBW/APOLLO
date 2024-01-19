@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Dynamic;
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -240,8 +241,8 @@ namespace Apollo.Api
             {
                 var query = new Query
                 {
-                    Fields = new List<string> { "Name", "Email" }, 
-                    Filter = new Filter(), 
+                    Fields = new List<string> { "Name", "Email" },
+                    Filter = new Filter(),
                     Top = pageSize,
                     Skip = (pageNumber - 1) * pageSize
                 };
@@ -398,7 +399,7 @@ namespace Apollo.Api
                 _logger?.LogTrace($"{this.User} entered {nameof(InsertUser)}");
 
                 // Generate a unique user ID if it's not provided
-                if (String.IsNullOrEmpty(user.Id))
+                if (String.IsNullOrEmpty(user.Id) && String.IsNullOrEmpty(user.ObjectId))
                     user.Id = CreateUserId();
 
                 // Check if the user with the same ID already exists before inserting
@@ -446,12 +447,31 @@ namespace Apollo.Api
 
                 foreach (var user in users)
                 {
-                    var userId = CreateUserId();
-                    ids.Add(userId);
-                    user.Id = userId;
+                    if (String.IsNullOrEmpty(user.Id) && String.IsNullOrEmpty(user.ObjectId))
+                    {
+                        user.Id = CreateUserId();
+                        await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
+                    }
+                    else
+                    {
+                        if (String.IsNullOrEmpty(user.Id) && !String.IsNullOrEmpty(user.ObjectId))
+                        {
+                            var existingUser = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), user.ObjectId, nameof(user.ObjectId));
+                            if (existingUser != null)
+                            {
+                                user.Id = existingUser.Id;
+                                await _dal.UpsertAsync(GetCollectionName<User>(),new List<ExpandoObject> { Convertor.Convert(user) } );
+                            }
+                            else
+                            {
+                                user.Id = CreateUserId();
+                                await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user)); ;
+                            }
+                        }
+                    }
                 }
 
-                await _dal.InsertManyAsync(ApolloApi.GetCollectionName<User>(), users.Select(u => Convertor.Convert(u)).ToArray());
+
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
 
