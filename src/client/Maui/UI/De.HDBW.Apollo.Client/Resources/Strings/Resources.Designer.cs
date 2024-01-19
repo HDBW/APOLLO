@@ -360,15 +360,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profil anlegen.
-        /// </summary>
-        public static string ConfirmDataUsageDialogView_Title {
-            get {
-                return ResourceManager.GetString("ConfirmDataUsageDialogView_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Kontaktdaten hinzufügen.
         /// </summary>
         public static string ContactInfoEditView_ButtonTxt {
@@ -1818,6 +1809,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string PersonalInformationEditView_UserNameHint {
             get {
                 return ResourceManager.GetString("PersonalInformationEditView_UserNameHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Benutzer anlegen.
+        /// </summary>
+        public static string PickUserNameView_Title {
+            get {
+                return ResourceManager.GetString("PickUserNameView_Title", resourceCulture);
             }
         }
         

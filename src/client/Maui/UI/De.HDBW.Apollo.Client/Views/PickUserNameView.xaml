@@ -5,18 +5,17 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:PickUserNameViewModel"
-             Title="{x:Static strings:Resources.ConfirmDataUsageDialogView_Title}"
+             Title="{x:Static strings:Resources.PickUserNameView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="Auto, Auto, Auto,*, Auto">
         <Label Grid.Row="0" Text="{x:Static strings:Resources.Global_Benutzername}" Margin="24,24,24,4" Style="{StaticResource Noto14SemiBold}"/>
         <Entry Grid.Row="1" Text="{x:Binding Name, Mode=TwoWay}" Margin="24,0">
-                <Entry.Behaviors>
-                    <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
-                </Entry.Behaviors>
-            </Entry>
-        <Label x:Name="lblValidationErrorPassword" Text="{x:Binding [Name]}" TextColor="Red" />
+            <Entry.Behaviors>
+                <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+            </Entry.Behaviors>
         </Entry>
+        <Label x:Name="lblValidationErrorPassword" Text="{x:Binding [Name]}" TextColor="Red" />
         <Border Grid.Row="3" Background="{StaticResource Neutral0Brush}" StrokeThickness="0">
             <Border.Shadow>
                 <Shadow Brush="{StaticResource Black}" Offset="0,0" Radius="16" Opacity="0.2"/>
