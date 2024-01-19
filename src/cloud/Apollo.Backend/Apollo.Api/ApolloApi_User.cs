@@ -31,8 +31,12 @@ namespace Apollo.Api
 
                 if (user == null)
                 {
-                    // User not found, throw ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.");
+                    user = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), userId, "ObjectId");
+
+                    if (user == null)
+
+                        // User not found, throw ApolloException with specific code and message
+                        throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.");
                 }
 
                 return user;
@@ -152,7 +156,7 @@ namespace Apollo.Api
                             if (existingUser != null)
                             {
                                 user.Id = existingUser.Id;
-                                await _dal.UpsertAsync(GetCollectionName<User>(),new List<ExpandoObject> { Convertor.Convert(user) } );
+                                await _dal.UpsertAsync(GetCollectionName<User>(), new List<ExpandoObject> { Convertor.Convert(user) });
                             }
                             else
                             {
