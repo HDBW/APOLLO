@@ -221,7 +221,7 @@ namespace Apollo.Api
 
 
         /// <summary>
-        /// Creates the unique identifier for the new prfile instance.
+        /// Creates the unique identifier for the new profile instance.
         /// </summary>
         /// <returns></returns>
         private string CreateProfileId()
