@@ -19,6 +19,8 @@ namespace Apollo.Api
             public const int CountTrainingsByProviderErr = TrainingCodeBase + 90;
             public const int QueryTrainingsByDateRangeErr = TrainingCodeBase + 100;
             public const int SearchTrainingsByKeywordErr = TrainingCodeBase + 110;
+            public const int UpdateTrainingErr = TrainingCodeBase + 120;
+            public const int CheckTrainingExistenceErr = TrainingCodeBase + 130; 
 
             public static void HandleException(Exception ex)
             {
