@@ -83,7 +83,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     }
 
                     user.Id = result;
-                    await UserRepository.SaveAsync(user, token).ConfigureAwait(false);
+                    if (!await UserRepository.SaveAsync(user, token).ConfigureAwait(false))
+                    {
+                        throw new NotSupportedException("Unable to save user.");
+                    }
+
+                    await NavigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
                 }
                 catch (OperationCanceledException)
                 {

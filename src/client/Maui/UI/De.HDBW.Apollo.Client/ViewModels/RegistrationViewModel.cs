@@ -56,7 +56,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     SessionService.UpdateRegisteredUser(null);
-                    await NavigationService.PushToRootAsync(Routes.StartView, worker.Token);
+                    await NavigationService.PushToRootAsync(Routes.Shell, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {

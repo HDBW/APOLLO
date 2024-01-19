@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             result.LoanOptions = string.Join(',', item.Loans?.Select(f => f?.Name ?? string.Empty) ?? Array.Empty<string>());
             result.Availability = (item.AccessibilityAvailable ?? false) ? CourseAvailability.Available : CourseAvailability.Unknown;
             result.CourseTagType = ((IEnumerable<string>)item.Tags ?? Array.Empty<string>()).Select(f => f.ToCourseTagType())?.FirstOrDefault() ?? CourseTagType.Unknown;
-            result.CourseUrl = item.ProductUrl ?? new Uri(string.Empty);
+            result.CourseUrl = item.ProductUrl ?? new Uri("about:blank");
             result.PublishingDate = item.PublishingDate;
             result.UnPublishingDate = item.UnpublishingDate;
             result.Title = item.TrainingName ?? string.Empty;
@@ -95,10 +95,10 @@ namespace De.HDBW.Apollo.Data.Extensions
 
             var courseProvider = item.CourseProvider;
             result.Id = courseProvider.Id.TryToLong();
-            result.Logo = courseProvider.Image ?? new Uri(string.Empty);
+            result.Logo = courseProvider.Image ?? new Uri("about:blank");
             result.Name = courseProvider.Name ?? string.Empty;
             result.Description = courseProvider.Description ?? string.Empty;
-            result.Website = courseProvider.Url ?? new Uri(string.Empty);
+            result.Website = courseProvider.Url ?? new Uri("about:blank");
 
             // result.Ticks??
             return result;
