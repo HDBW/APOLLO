@@ -92,6 +92,8 @@ namespace Apollo.Service.Controllers
 
         /// <summary>
         /// Handles HTTP PUT requests to create or update a user based on a request object.
+        /// The object will be updated if the User's Id or User's ObjectId is set.
+        /// If none of them is set, the insert operation is performed.
         /// </summary>
         /// <param name="req">Request object containing user information for create or update.</param>
         /// <returns>Response containing the result of the create/update operation.</returns>
@@ -124,13 +126,12 @@ namespace Apollo.Service.Controllers
 
 
         /// <summary>
-        /// Handles HTTP POST requests to insert multiple users.
-        /// </summary>
-        /// <param name="users">List of users to be inserted.</param>
+        /// Handles HTTP POST requests to insert users. Every user in the list must not have the Id property set.        /// </summary>
+        /// <param name="users">List of users to be inserted. Must not be null or empty.</param>
         /// <returns>ActionResult indicating the success or failure of the operation.</returns>
         [HttpPost("insert")]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the list of inserted user IDs.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data. For example, if the user's Id is set or no user object is contained in the list.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<IList<string>> InsertUsers([FromBody] IList<User> users)
         {
@@ -144,15 +145,17 @@ namespace Apollo.Service.Controllers
                 }
 
                 var userIds = new List<string>();
+
                 foreach (var user in users)
                 {
                     // Generate new ID if not provided
                     if (string.IsNullOrEmpty(user.Id))
                     {
-                        user.Id = Guid.NewGuid().ToString();
+                        throw new ApolloApiException(ErrorCodes.UserErrors.UserIdNotNeeded, "Id of the user must not be set when creating the new used.");
                     }
 
                     await _api.InsertUser(user);
+
                     userIds.Add(user.Id);
                 }
 

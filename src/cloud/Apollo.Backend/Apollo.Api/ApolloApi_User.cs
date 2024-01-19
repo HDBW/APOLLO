@@ -94,9 +94,7 @@ namespace Apollo.Api
             {
                 _logger?.LogTrace($"{this.User} entered {nameof(InsertUser)}");
 
-                // Generate a unique user ID if it's not provided
-                if (String.IsNullOrEmpty(user.Id) && String.IsNullOrEmpty(user.ObjectId))
-                    user.Id = CreateUserId();
+                user.Id = CreateUserId();
 
                 // Check if the user with the same ID already exists before inserting
                 var existingUser = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), user.Id);
