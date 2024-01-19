@@ -1375,6 +1375,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Der Name darf nicht leer sein..
+        /// </summary>
+        public static string GlobalError_NameIsRequired {
+            get {
+                return ResourceManager.GetString("GlobalError_NameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Der Name muss mindestens 4 Buchstaben lang sein..
+        /// </summary>
+        public static string GlobalError_NameMinLength {
+            get {
+                return ResourceManager.GetString("GlobalError_NameMinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung..
         /// </summary>
         public static string GlobalError_NoInternet {

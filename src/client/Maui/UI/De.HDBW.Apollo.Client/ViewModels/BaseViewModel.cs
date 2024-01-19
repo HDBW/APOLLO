@@ -1,8 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
@@ -10,8 +12,11 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public abstract partial class BaseViewModel : ObservableObject, IQueryAttributable
+    public abstract partial class BaseViewModel : ObservableValidator, IQueryAttributable, IDataErrorInfo
     {
+        [ObservableProperty()]
+        private string _error;
+
         public BaseViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -50,9 +55,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get { return Shell.Current; }
         }
 
+        [IndexerName("Item")]
+        public string this[string columnName]
+        {
+            get
+            {
+                return GetErrors(columnName)?.FirstOrDefault()?.ErrorMessage ?? string.Empty;
+            }
+        }
+
         private Dictionary<string, CancellationTokenSource> Workers { get; } = new Dictionary<string, CancellationTokenSource>();
 
-        public virtual Task OnNavigatedToAsync() => Task.CompletedTask;
+        public virtual Task OnNavigatedToAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         public virtual Task OnNavigatingFromAsync() => Task.CompletedTask;
 
@@ -116,6 +133,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected Task ExecuteOnUIThreadAsync(Action methodeToExecute, CancellationToken token)
         {
             return DispatcherService.SafeExecuteOnMainThreadAsync(methodeToExecute, Logger, token);
+        }
+
+        [RelayCommand]
+        private void Validate(string propertyName)
+        {
+            ValidateAllProperties();
+            Error = HasErrors ? string.Join(Environment.NewLine, GetErrors().Select(e => e.ErrorMessage)) : string.Empty;
+            if (string.IsNullOrWhiteSpace(propertyName))
+            {
+                OnPropertyChanged(string.Empty);
+            }
+            else
+            {
+                OnPropertyChanged($"Item[{propertyName}]");
+            }
         }
 
         [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]

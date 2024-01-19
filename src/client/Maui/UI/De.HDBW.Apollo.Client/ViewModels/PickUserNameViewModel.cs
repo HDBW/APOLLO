@@ -1,11 +1,13 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -39,6 +41,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             PreferenceService = preferenceService;
         }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_NameIsRequired))]
+        [MinLength(4, ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_NameMinLength))]
         public string? Name
         {
             get
@@ -50,6 +54,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 if (SetProperty(ref _name, value))
                 {
+                    ValidateProperty(value);
                     RefreshCommands();
                 }
             }
@@ -62,6 +67,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ISessionService SessionService { get; }
 
         private IPreferenceService PreferenceService { get; }
+
+        public async virtual Task OnNavigatedToAsync()
+        {
+            await ExecuteOnUIThreadAsync(
+                () =>
+                {
+                    ValidateCommand?.Execute(null);
+                }, CancellationToken.None);
+        }
 
         protected override void RefreshCommands()
         {
@@ -128,7 +142,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanCreateAccount()
         {
-            return !IsBusy && Name?.Length > 4 && !string.IsNullOrWhiteSpace(SessionService.AccountId?.ObjectId);
+            return !IsBusy && !HasErrors && !string.IsNullOrWhiteSpace(SessionService.AccountId?.ObjectId);
         }
     }
 }

@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.PersonalInformationEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.PersonalInformationEditView_Title}"
@@ -15,7 +16,13 @@
                Placeholder="{x:Static strings:Resources.PersonalInformationEditView_UserNameHint}"
                Text="{x:Binding Name, Mode=TwoWay}"
                VerticalOptions="Center"
-               ClearButtonVisibility="WhileEditing"/>
+               ClearButtonVisibility="WhileEditing">
+            <Entry.Behaviors>
+                <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+            </Entry.Behaviors>
+        </Entry>
+        <Label x:Name="lblValidationErrorPassword" Text="{x:Binding [Name]}" TextColor="Red" />
+
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" />
         <DatePicker HorizontalOptions="Fill"
                VerticalOptions="Center"

@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -36,6 +37,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             UserService = userService;
         }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_NameIsRequired))]
+        [MinLength(4, ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_NameMinLength))]
         public string? Name
         {
             get
@@ -45,6 +48,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
             set
             {
+                value = value?.Trim();
                 if (SetProperty(ref _name, value))
                 {
                     IsDirty = true;
@@ -132,7 +136,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
             token.ThrowIfCancellationRequested();
             _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
-            _user.Name = Name ?? string.Empty;
+            _user.Name =  Name ?? string.Empty;
             _user.Disabilities = Disabilities;
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))
@@ -171,6 +175,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             BirthDate = user?.Birthdate != null ? new DateTime(user.Birthdate.Value.Year, user.Birthdate.Value.Month, user.Birthdate.Value.Day, 0, 0, 0, DateTimeKind.Local) : null;
             Disabilities = user?.Disabilities ?? false;
             IsDirty = false;
+            ValidateCommand?.Execute();
         }
     }
 }

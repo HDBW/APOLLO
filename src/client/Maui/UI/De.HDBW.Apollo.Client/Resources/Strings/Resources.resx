@@ -1180,4 +1180,10 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="WebReferenceEditView_Subline" xml:space="preserve">
     <value>Füge jetzt deine ersten Webprofile hinzu und verbessere deine Kursvorschläge.</value>
   </data>
+  <data name="GlobalError_NameIsRequired" xml:space="preserve">
+    <value>Der Name darf nicht leer sein.</value>
+  </data>
+  <data name="GlobalError_NameMinLength" xml:space="preserve">
+    <value>Der Name muss mindestens 4 Buchstaben lang sein.</value>
+  </data>
 </root>
