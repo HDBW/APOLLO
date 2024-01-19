@@ -67,8 +67,8 @@ namespace De.HDBW.Apollo.Client
             Log.Debug($"-------------------------------------------------------------------------------------------------------------------------------");
             SetupRoutes();
             SetupHandler();
-            var result = SetupB2CLogin(builder.Services);
-            SetupServices(builder.Services, secretsService, result);
+            var authenticationResult = SetupB2CLogin(builder.Services);
+            SetupServices(builder.Services, secretsService, authenticationResult);
             SetupDataBaseTableProvider(builder);
             SetupRepositories(builder.Services);
             SetupViewsAndViewModels(builder.Services);
@@ -96,7 +96,7 @@ namespace De.HDBW.Apollo.Client
             return userSecretsService;
         }
 
-        private static AccountId? SetupB2CLogin(IServiceCollection services)
+        private static AuthenticationResult? SetupB2CLogin(IServiceCollection services)
         {
             var b2cClientApplicationBuilder = PublicClientApplicationBuilder.Create(B2CConstants.ClientId)
 #if ANDROID
@@ -122,20 +122,19 @@ namespace De.HDBW.Apollo.Client
                 authService = new AuthServiceB2C(null!);
             }
 
+            AuthenticationResult? authenticationResult = null;
             services.AddSingleton<IAuthService>(authService);
-            AccountId? registerdUserHomeAccountId = null;
             try
             {
                 var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
-                var authenticationResult = task.GetAwaiter().GetResult();
-                registerdUserHomeAccountId = authenticationResult?.Account?.HomeAccountId;
+                authenticationResult = task.GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
                 Log.Error($"Unknow Error while AcquireTokenSilent in {nameof(MauiProgram)}. Error was Message:{ex.Message} Stacktrace:{ex.StackTrace}.");
             }
 
-            return registerdUserHomeAccountId;
+            return authenticationResult;
         }
 
         private static void SetupDataBaseTableProvider(MauiAppBuilder builder)
@@ -194,13 +193,13 @@ namespace De.HDBW.Apollo.Client
             return Preferences.Default.Get(Preference.AllowTelemetry.ToString(), false);
         }
 
-        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AccountId? accountId)
+        private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AuthenticationResult? authenticationResult)
         {
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();
             services.AddSingleton<IDispatcherService, DispatcherService>();
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<ISessionService>(new SessionService(accountId));
+            services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.Account.HomeAccountId));
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
             services.AddSingleton<IFeedbackService, FeedbackService>();
@@ -217,7 +216,9 @@ namespace De.HDBW.Apollo.Client
 
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
-                return new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new HttpClientHandler());
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new HttpClientHandler());
+                service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
+                return service;
             });
         }
 

@@ -7,6 +7,8 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface IUserService
     {
+        void UpdateAuthorizationHeader(string? authorizationHeader);
+
         Task<User?> GetUserAsync(string id, CancellationToken token);
 
         Task<string?> SaveAsync(User user, CancellationToken token);

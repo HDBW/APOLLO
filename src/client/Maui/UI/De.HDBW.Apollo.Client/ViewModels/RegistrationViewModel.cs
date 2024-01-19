@@ -22,6 +22,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IAuthService authService,
             ISessionService sessionService,
             IPreferenceService preferenceService,
+            IUserService userService,
             IUserRepository userRepository,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
@@ -29,10 +30,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(authService);
             ArgumentNullException.ThrowIfNull(sessionService);
             ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(userService);
             ArgumentNullException.ThrowIfNull(userRepository);
             AuthService = authService;
             SessionService = sessionService;
             PreferenceService = preferenceService;
+            UserService = userService;
             UserRepository = userRepository;
         }
 
@@ -45,6 +48,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private IAuthService AuthService { get; }
+
+        private IUserService UserService { get; }
 
         private ISessionService SessionService { get; }
 
@@ -107,6 +112,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 #endif
                     await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
                     PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
+                    UserService?.UpdateAuthorizationHeader(null);
                 }
                 catch (OperationCanceledException)
                 {
@@ -189,6 +195,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
+                    UserService?.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
                     SessionService.UpdateRegisteredUser(authentication?.Account.HomeAccountId);
                     if (SessionService.HasRegisteredUser)
                     {

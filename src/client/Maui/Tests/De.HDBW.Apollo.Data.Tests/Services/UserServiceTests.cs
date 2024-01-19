@@ -72,6 +72,27 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         }
 
         [Fact]
+        public async Task GetUserAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+            string userId = "SER01";
+            User? user = null;
+            try
+            {
+                user = await Service.GetUserAsync(userId, TokenSource!.Token);
+            }
+            catch (ApolloApiException ex)
+            {
+                // Not existing ids return errorcode ErrorCodes.TrainingErrors.GetTrainingError;
+                Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
+            }
+
+            Assert.NotNull(user);
+            Assert.Equal(userId, user.Id);
+        }
+
+        [Fact]
         public async Task SaveUserAsyncTest()
         {
             Assert.NotNull(TokenSource);

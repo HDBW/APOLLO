@@ -100,7 +100,7 @@ namespace De.HDBW.Apollo.Data.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error in {callerName} from {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error in {callerName} from {GetType().Name}.");
                 throw;
             }
             finally
@@ -319,7 +319,7 @@ namespace De.HDBW.Apollo.Data.Services
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, $"Unknown Error while SetupHttpClient in {GetType().Name}.");
+                Logger.LogError(ex, $"Unknown error while SetupHttpClient in {GetType().Name}.");
                 throw;
             }
         }

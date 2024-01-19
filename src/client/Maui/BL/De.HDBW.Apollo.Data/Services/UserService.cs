@@ -2,14 +2,13 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.SharedContracts.Services;
-using Invite.Apollo.App.Graph.Common.Backend;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Services
 {
-    public class UserService : AbstractSwaggerServiceBase, IUserService
+    public class UserService : AbstractAuthorizedSwaggerServiceBase, IUserService
     {
         public UserService(
             ILogger<UserService> logger,
@@ -23,8 +22,8 @@ namespace De.HDBW.Apollo.Data.Services
         public async Task<User?> GetUserAsync(string id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var response = await DoGetAsync<GetUserResponse>(id, token).ConfigureAwait(false);
-            return response.User;
+            var response = await DoGetAsync<GetUserRespnse>(id, token).ConfigureAwait(false);
+            return response?.User;
         }
 
         public async Task<string?> SaveAsync(User user, CancellationToken token)
