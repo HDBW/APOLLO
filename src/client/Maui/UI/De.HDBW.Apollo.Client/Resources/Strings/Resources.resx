@@ -148,25 +148,25 @@
     <value>Qualifikation</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
-    <value>Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte</value>
+    <value>Komm an Bord! Wir unterstützen Dich beim Erreichen Deiner persönlichen Lernziele.</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction1Detail" xml:space="preserve">
     <value>Entdecke passende Weiterbildungen</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction2" xml:space="preserve">
-    <value>Erkenne Trends in deinem Berufsfeld und sei immer auf dem neuesten Stand</value>
+    <value>Erkenne Trends in Deinem Berufsfeld und sei immer auf dem neuesten Stand.</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction2Detail" xml:space="preserve">
-    <value>Halte dein Wissen aktuell</value>
+    <value>Halte Dein Wissen aktuell</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction3" xml:space="preserve">
-    <value>Teste dein Wissen und analysiere deine Fähigkeiten</value>
+    <value>Teste Dein Wissen und analysiere Deine Fähigkeiten.</value>
   </data>
   <data name="ExtendedSplashScreenView_Instruction3Detail" xml:space="preserve">
-    <value>Entfalte dein Potential</value>
+    <value>Entfalte Dein Potential</value>
   </data>
   <data name="ExtendedSplashScreenView_Welcome" xml:space="preserve">
-    <value>Willkommen zur Beta von Apollo</value>
+    <value>Willkommen bei APOLLO</value>
   </data>
   <data name="FeedbackUrl" xml:space="preserve">
     <value>https://forms.office.com/e/cmES4qec8q</value>
@@ -235,16 +235,16 @@
     <value>Tutorial anzeigen</value>
   </data>
   <data name="RegistrationView_Continue" xml:space="preserve">
-    <value>Ohne Anmeldung fortfahren</value>
+    <value>Als Gast fortfahren</value>
   </data>
   <data name="RegistrationView_Description" xml:space="preserve">
-    <value>Während der Testung benötigst Du keine Registrierung/Anmeldung. Wenn Du Dich allerdings für zukünftige Testversionen registrieren möchtest, kannst Du das über "Jetzt anmelden" vornehmen. Solltest Du Deine Meinung ändern, kannst Du über Einstellungen → "Benutzer abmelden" die Registrierung/Anmeldung löschen.</value>
+    <value>Melde Dich an, um Deine Inhalte und Einstellungen für zukünftige Versionen zu speichern.</value>
   </data>
   <data name="RegistrationView_RegisterNow" xml:space="preserve">
-    <value>Jetzt Anmelden</value>
+    <value>Jetzt anmelden</value>
   </data>
   <data name="RegistrationView_RegisterUser" xml:space="preserve">
-    <value>Jetzt anmelden</value>
+    <value>Anmelden</value>
   </data>
   <data name="RegistrationView_UnRegisterUser" xml:space="preserve">
     <value>Abmelden</value>
@@ -547,10 +547,12 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Trifft voll zu</value>
   </data>
   <data name="ConfirmDataUsageDialog_Title" xml:space="preserve">
-    <value>Wir benötigen Ihre Zustimmung</value>
+    <value>Wir benötigen Deine Zustimmung</value>
   </data>
   <data name="ConfirmDataUsageDialog_Message" xml:space="preserve">
-    <value>Mit Ihrer Anmeldung stimmen Sie einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Beta zu. Die Anmeldung kann in den Einstellungen der App jeder Zeit wiederrufen werden.</value>
+    <value>Mit der Erstellung Deines Profils stimmst Du einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Testversionen zu. 
+
+APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur Verbesserung der App. Deine Daten werden nicht an Dritte verkauft oder weitergegeben. Du kannst Dein Profil jederzeit über die App-Einstellungen löschen.</value>
   </data>
   <data name="ConfirmDataUsageDialog_Agree" xml:space="preserve">
     <value>Ich stimme zu.</value>
@@ -1180,6 +1182,13 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="WebReferenceEditView_Subline" xml:space="preserve">
     <value>Füge jetzt deine ersten Webprofile hinzu und verbessere deine Kursvorschläge.</value>
   </data>
+  <data name="ConfirmDataUsageDialogView_Title" xml:space="preserve">
+    <value>Benutzer anlegen</value>
+  </data>
+  <data name="Global_Benutzername" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+</root>
   <data name="GlobalError_NameIsRequired" xml:space="preserve">
     <value>Der Name darf nicht leer sein.</value>
   </data>

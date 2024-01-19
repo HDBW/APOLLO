@@ -340,7 +340,9 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mit Ihrer Anmeldung stimmen Sie einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Beta zu. Die Anmeldung kann in den Einstellungen der App jeder Zeit wiederrufen werden..
+        ///   Looks up a localized string similar to Mit der Erstellung Deines Profils stimmst Du einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Testversionen zu. 
+        ///
+        ///APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur Verbesserung der App. Deine Daten werden nicht an Dritte verkauft oder weitergegeben. Du kannst Dein Profil jederzeit über die App-Einstellungen löschen..
         /// </summary>
         public static string ConfirmDataUsageDialog_Message {
             get {
@@ -349,11 +351,20 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wir benötigen Ihre Zustimmung.
+        ///   Looks up a localized string similar to Wir benötigen Deine Zustimmung.
         /// </summary>
         public static string ConfirmDataUsageDialog_Title {
             get {
                 return ResourceManager.GetString("ConfirmDataUsageDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profil anlegen.
+        /// </summary>
+        public static string ConfirmDataUsageDialogView_Title {
+            get {
+                return ResourceManager.GetString("ConfirmDataUsageDialogView_Title", resourceCulture);
             }
         }
         
@@ -943,7 +954,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte.
+        ///   Looks up a localized string similar to Komm an Bord! Wir unterstützen Dich beim Erreichen Deiner persönlichen Lernziele..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction1 {
             get {
@@ -961,7 +972,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erkenne Trends in deinem Berufsfeld und sei immer auf dem neuesten Stand.
+        ///   Looks up a localized string similar to Erkenne Trends in Deinem Berufsfeld und sei immer auf dem neuesten Stand..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction2 {
             get {
@@ -970,7 +981,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Halte dein Wissen aktuell.
+        ///   Looks up a localized string similar to Halte Dein Wissen aktuell.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction2Detail {
             get {
@@ -979,7 +990,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Teste dein Wissen und analysiere deine Fähigkeiten.
+        ///   Looks up a localized string similar to Teste Dein Wissen und analysiere Deine Fähigkeiten..
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction3 {
             get {
@@ -988,7 +999,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entfalte dein Potential.
+        ///   Looks up a localized string similar to Entfalte Dein Potential.
         /// </summary>
         public static string ExtendedSplashScreenView_Instruction3Detail {
             get {
@@ -997,7 +1008,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Willkommen zur Beta von Apollo.
+        ///   Looks up a localized string similar to Willkommen bei APOLLO.
         /// </summary>
         public static string ExtendedSplashScreenView_Welcome {
             get {
@@ -1065,6 +1076,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Back {
             get {
                 return ResourceManager.GetString("Global_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Benutzername.
+        /// </summary>
+        public static string Global_Benutzername {
+            get {
+                return ResourceManager.GetString("Global_Benutzername", resourceCulture);
             }
         }
         
@@ -1865,7 +1885,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ohne Anmeldung fortfahren.
+        ///   Looks up a localized string similar to Als Gast fortfahren.
         /// </summary>
         public static string RegistrationView_Continue {
             get {
@@ -1874,7 +1894,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Während der Testung benötigst Du keine Registrierung/Anmeldung. Wenn Du Dich allerdings für zukünftige Testversionen registrieren möchtest, kannst Du das über &quot;Jetzt anmelden&quot; vornehmen. Solltest Du Deine Meinung ändern, kannst Du über Einstellungen → &quot;Benutzer abmelden&quot; die Registrierung/Anmeldung löschen..
+        ///   Looks up a localized string similar to Melde Dich an, um Deine Inhalte und Einstellungen für zukünftige Versionen zu speichern..
         /// </summary>
         public static string RegistrationView_Description {
             get {
@@ -1883,7 +1903,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jetzt Anmelden.
+        ///   Looks up a localized string similar to Jetzt anmelden.
         /// </summary>
         public static string RegistrationView_RegisterNow {
             get {
@@ -1892,7 +1912,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jetzt anmelden.
+        ///   Looks up a localized string similar to Anmelden.
         /// </summary>
         public static string RegistrationView_RegisterUser {
             get {

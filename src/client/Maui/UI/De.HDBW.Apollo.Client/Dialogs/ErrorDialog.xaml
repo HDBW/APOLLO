@@ -4,16 +4,23 @@
                x:Class="De.HDBW.Apollo.Client.Dialogs.ErrorDialog"
                xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-               Color="{StaticResource Neutral0}"
                CanBeDismissedByTappingOutsideOfPopup="False"
                x:DataType="viewModels:MessageDialogViewModel">
-    <Grid RowDefinitions="20, auto,32, auto" x:Name="Part_Root">
-        <ScrollView Grid.Row="1" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never" VerticalOptions="Center">
-            <VerticalStackLayout Padding="{OnPlatform '0', Android='20,0'}" >
-                <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ErrorDialog_Title}"  Margin="0,0,0,16" Style="{StaticResource Noto20Bold}"/>
-                <Label HorizontalTextAlignment="Center" Text="{Binding Message}" Style="{StaticResource Noto16}"/>
-            </VerticalStackLayout>
-        </ScrollView>
-        <Button Text="{x:Static strings:Resources.Global_Close}" Command="{Binding CancelCommand}" Grid.Row="3" Margin="{OnPlatform '0,0,0,20', Android='20,0,20,20'}"/>
+    <toolkit:Popup.Color>
+        <OnPlatform x:TypeArguments="Color" Default="{StaticResource Neutral0}">
+            <On Platform="Android" Value="Transparent" />
+        </OnPlatform>
+    </toolkit:Popup.Color>
+    <Grid x:Name="Part_Root">
+        <Grid RowDefinitions="20,auto,auto,32,auto" Background="{StaticResource Neutral0Brush}" Margin="{OnPlatform '0', Android='16'}" Padding="{OnPlatform '0,0,0,20', Android='20,0,20,20'}">
+            <Grid.Shadow>
+                <Shadow Brush="{StaticResource Black}" Offset="0,0" Radius="16" Opacity="{OnPlatform '0', Android='0.2'}"/>
+            </Grid.Shadow>
+            <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ErrorDialog_Title}"  Margin="0,0,0,16" Style="{StaticResource Noto20Bold}"/>
+            <ScrollView Grid.Row="2" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never" VerticalOptions="Center">
+                    <Label HorizontalTextAlignment="Center" Text="{Binding Message}" Style="{StaticResource Noto16}"/>
+            </ScrollView>
+            <Button Text="{x:Static strings:Resources.Global_Close}" Command="{Binding CancelCommand}" Grid.Row="4"/>
+        </Grid>
     </Grid>
 </toolkit:Popup>
