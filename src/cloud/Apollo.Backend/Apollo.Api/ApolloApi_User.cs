@@ -127,10 +127,12 @@ namespace Apollo.Api
 
 
         /// <summary>
-        /// Creates or Updates the new User instance.
+        /// Creates or Updates the new User.
         /// </summary>
-        /// <param name="user">If the Id is specified, the update will be performed.</param>
-        /// <returns></returns>
+        /// <param name="user">If neither Id nor ObjectId is set, the new user will be created.
+        /// If the Id or ObjectId is specified, the update will be performed.</param>
+        /// <remarks>Please note the update operation with specified Id is is faster and produces lower costs than update operation with ObjectId.</remarks>
+        /// <returns>The Id of the user.</returns>
         public virtual async Task<List<string>> CreateOrUpdateUser(ICollection<User> users)
         {
             try
@@ -164,8 +166,6 @@ namespace Apollo.Api
                         }
                     }
                 }
-
-
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
 
