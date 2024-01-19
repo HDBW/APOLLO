@@ -1182,4 +1182,10 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="WebReferenceEditView_Subline" xml:space="preserve">
     <value>Füge jetzt deine ersten Webprofile hinzu und verbessere deine Kursvorschläge.</value>
   </data>
+  <data name="ConfirmDataUsageDialogView_Title" xml:space="preserve">
+    <value>Profil anlegen</value>
+  </data>
+  <data name="Global_Benutzername" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
 </root>

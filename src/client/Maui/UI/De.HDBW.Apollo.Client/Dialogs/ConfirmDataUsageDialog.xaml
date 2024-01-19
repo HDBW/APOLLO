@@ -16,7 +16,7 @@
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleAgreeCommand}" />
             </Grid.GestureRecognizers>
             <CheckBox InputTransparent="True" IsChecked="{Binding Agree, Mode=TwoWay}" VerticalOptions="Center" AutomationProperties.LabeledBy="{x:Reference ChkbxLbl}"/>
-            <Label x:Name="ChkbxLbl" Grid.Column="1" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Agree}" Margin="8,0,0,0" VerticalOptions="Center" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+            <Label x:Name="ChkbxLbl" Grid.Column="1" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Agree}" Margin="8,0,0,0" VerticalOptions="Center" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}"/>
         </Grid>
         <Grid ColumnDefinitions="*,8,*" Grid.Row="5">
             <Button Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{Binding CancelCommand}"/>
