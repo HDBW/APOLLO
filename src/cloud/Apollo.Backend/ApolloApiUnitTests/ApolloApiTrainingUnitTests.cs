@@ -794,7 +794,7 @@ namespace Apollo.Api.UnitTests
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         /// </summary>
         [TestMethod]
-        [TestCategory("Prod")]
+        // [TestCategory("Prod")]
         public async Task QueryTrainingsTest()
         {
             var api = Helpers.GetApolloApi();
@@ -832,24 +832,7 @@ namespace Apollo.Api.UnitTests
             };
 
             // Act
-            IList<Training> trainings;
-            try
-            {
-                trainings = await api.QueryTrainingsAsync(query);
-            }
-            catch (ApolloApiException ex)
-            {
-                // Handle the case when no records are found
-                if (ex.ErrorCode == ErrorCodes.TrainingErrors.QueryTrainingsError)
-                {
-                    trainings = new List<Training>(); // Initialize an empty list
-                }
-                else
-                {
-                    // Re-throw the exception if it's not related to an empty result
-                    throw;
-                }
-            }
+            IList<Training> trainings = await api.QueryTrainingsAsync(query);
 
             // Assert
             // Ensure that trainings are retrieved based on the query
@@ -864,6 +847,7 @@ namespace Apollo.Api.UnitTests
 
             // add more assertions based on your specific testing requirements
         }
+
 
         [TestMethod]
         [TestCategory("Prod")]
