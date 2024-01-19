@@ -136,47 +136,47 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="keyword">The keyword to search in user's names.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of User objects that match the keyword.</returns>
-        public async Task<IList<User>> QueryUsersByKeyword(string keyword)
-        {
-            try
-            {
-                var query = new Query
-                {
-                    // Specifying which fields to return in the query results
-                    Fields = new List<string> { "Name", "Email", "ObjectId", "Upn", "ContactInfos", "Birthdate" },
-                    Filter = new Filter
-                    {
-                        Fields = new List<FieldExpression>
-                {
-                    new FieldExpression { FieldName = "Name", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } },
-                    new FieldExpression { FieldName = "Email", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } }
-                    // You can add other fields to be queried if necessary
-                }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //public async Task<IList<User>> QueryUsersByKeyword(string keyword)
+        //{
+        //    try
+        //    {
+        //        var query = new Query
+        //        {
+        //            // Specifying which fields to return in the query results
+        //            Fields = new List<string> { "Name", "Email", "ObjectId", "Upn", "ContactInfos", "Birthdate" },
+        //            Filter = new Filter
+        //            {
+        //                Fields = new List<FieldExpression>
+        //        {
+        //            new FieldExpression { FieldName = "Name", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } },
+        //            new FieldExpression { FieldName = "Email", Operator = QueryOperator.Contains, Argument = new List<object> { keyword } }
+        //            // You can add other fields to be queried if necessary
+        //        }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
 
-                if (res == null || !res.Any())
-                {
-                    // No results found, throw an ApolloException with a specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.NoUsersFoundByKeyword, $"No users found with keyword '{keyword}'.");
-                }
+        //        if (res == null || !res.Any())
+        //        {
+        //            // No results found, throw an ApolloException with a specific code and message
+        //            throw new ApolloApiException(ErrorCodes.UserErrors.NoUsersFoundByKeyword, $"No users found with keyword '{keyword}'.");
+        //        }
 
-                return Convertor.ToEntityList<User>(res, Convertor.ToUser);
-            }
-            catch (ApolloApiException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByKeywordError, "Error while querying users by keyword", ex);
-            }
-        }
+        //        return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        //    }
+        //    catch (ApolloApiException)
+        //    {
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // For other exceptions, throw an ApolloApiException with a general error code and message
+        //        throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByKeywordError, "Error while querying users by keyword", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -186,46 +186,46 @@ namespace Apollo.Api
         /// <param name="email">The last name to filter by.</param>
         /// <param name="profileCriteria">The goal to filter by.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of User objects that match the specified criteria.</returns>
-        public async Task<IList<User>> QueryUsersByMultipleCriteria(string name, string email, string profileCriteria)
-        {
-            try
-            {
-                var query = new Query
-                {
-                    Fields = new List<string> { "Name", "Email", "Profile" },
-                    Filter = new Filter
-                    {
-                        Fields = new List<FieldExpression>
-                {
-                    new FieldExpression { FieldName = "Name", Operator = QueryOperator.Equals, Argument = new List<object> { name } },
-                    new FieldExpression { FieldName = "Email", Operator = QueryOperator.Equals, Argument = new List<object> { email } },
-                    new FieldExpression { FieldName = "Profile.SomeProfileField", Operator = QueryOperator.Equals, Argument = new List<object> { profileCriteria } }
-                }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //public async Task<IList<User>> QueryUsersByMultipleCriteria(string name, string email, string profileCriteria)
+        //{
+        //    try
+        //    {
+        //        var query = new Query
+        //        {
+        //            Fields = new List<string> { "Name", "Email", "Profile" },
+        //            Filter = new Filter
+        //            {
+        //                Fields = new List<FieldExpression>
+        //        {
+        //            new FieldExpression { FieldName = "Name", Operator = QueryOperator.Equals, Argument = new List<object> { name } },
+        //            new FieldExpression { FieldName = "Email", Operator = QueryOperator.Equals, Argument = new List<object> { email } },
+        //            new FieldExpression { FieldName = "Profile.SomeProfileField", Operator = QueryOperator.Equals, Argument = new List<object> { profileCriteria } }
+        //        }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
 
-                if (res == null || !res.Any())
-                {
-                    // No results found, throw an ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "No users found matching the criteria.");
-                }
+        //        if (res == null || !res.Any())
+        //        {
+        //            // No results found, throw an ApolloException with specific code and message
+        //            throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "No users found matching the criteria.");
+        //        }
 
-                return Convertor.ToEntityList<User>(res, Convertor.ToUser);
-            }
-            catch (ApolloApiException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "Error while querying users by multiple criteria", ex);
-            }
-        }
+        //        return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        //    }
+        //    catch (ApolloApiException)
+        //    {
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // For other exceptions, throw an ApolloApiException with a general error code and message
+        //        throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByMultipleCriteriaError, "Error while querying users by multiple criteria", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -234,39 +234,39 @@ namespace Apollo.Api
         /// <param name="pageNumber">The page number of the results.</param>
         /// <param name="pageSize">The number of results per page.</param>
         /// <returns>Task that represents the asynchronous operation, containing a paginated list of User objects.</returns>
-        public async Task<IList<User>> QueryUsersWithPagination(int pageNumber, int pageSize)
-        {
-            try
-            {
-                var query = new Query
-                {
-                    Fields = new List<string> { "Name", "Email" }, 
-                    Filter = new Filter(), 
-                    Top = pageSize,
-                    Skip = (pageNumber - 1) * pageSize
-                };
+        //public async Task<IList<User>> QueryUsersWithPagination(int pageNumber, int pageSize)
+        //{
+        //    try
+        //    {
+        //        var query = new Query
+        //        {
+        //            Fields = new List<string> { "Name", "Email" }, 
+        //            Filter = new Filter(), 
+        //            Top = pageSize,
+        //            Skip = (pageNumber - 1) * pageSize
+        //        };
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
 
-                if (res == null || !res.Any())
-                {
-                    // No results found, throw an ApolloException with specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, "No users found with the specified pagination parameters.");
-                }
+        //        if (res == null || !res.Any())
+        //        {
+        //            // No results found, throw an ApolloException with specific code and message
+        //            throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, "No users found with the specified pagination parameters.");
+        //        }
 
-                return Convertor.ToEntityList<User>(res, Convertor.ToUser);
-            }
-            catch (ApolloApiException)
-            {
+        //        return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        //    }
+        //    catch (ApolloApiException)
+        //    {
 
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersWithPaginationError, "Error while querying users with pagination", ex);
-            }
-        }
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // For other exceptions, throw an ApolloApiException with a general error code and message
+        //        throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersWithPaginationError, "Error while querying users with pagination", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -275,49 +275,49 @@ namespace Apollo.Api
         /// <param name="startDate">The start date of the registration period.</param>
         /// <param name="endDate">The end date of the registration period.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of User objects registered within the date range.</returns>
-        public async Task<IList<User>> QueryUsersByDateRange(DateTime startDate, DateTime endDate)
-        {
-            try
-            {
-                var query = new Query
-                {
-                    Fields = new List<string> { "FirstName", "LastName" },
-                    Filter = new Filter
-                    {
-                        Fields = new List<FieldExpression>
-                {
-                    new FieldExpression { FieldName = "RegistrationDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } },
-                    new FieldExpression { FieldName = "RegistrationDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } }
-                }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //public async Task<IList<User>> QueryUsersByDateRange(DateTime startDate, DateTime endDate)
+        //{
+        //    try
+        //    {
+        //        var query = new Query
+        //        {
+        //            Fields = new List<string> { "FirstName", "LastName" },
+        //            Filter = new Filter
+        //            {
+        //                Fields = new List<FieldExpression>
+        //        {
+        //            new FieldExpression { FieldName = "RegistrationDate", Operator = QueryOperator.GreaterThanEqualTo, Argument = new List<object> { startDate } },
+        //            new FieldExpression { FieldName = "RegistrationDate", Operator = QueryOperator.LessThanEqualTo, Argument = new List<object> { endDate } }
+        //        }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
 
-                if (res == null)
-                {
-                    // No results found, throw an ApolloException with a specific code and message
-                    throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "No users found within the specified date range.");
-                }
+        //        if (res == null)
+        //        {
+        //            // No results found, throw an ApolloException with a specific code and message
+        //            throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "No users found within the specified date range.");
+        //        }
 
-                return Convertor.ToEntityList<User>(res, Convertor.ToUser);
-            }
-            catch (ApolloApiException)
-            {
+        //        return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        //    }
+        //    catch (ApolloApiException)
+        //    {
 
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // Log the error
-                _logger.LogError(ex, $"Failed execution of {nameof(QueryUsersByDateRange)}: {ex.Message}");
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the error
+        //        _logger.LogError(ex, $"Failed execution of {nameof(QueryUsersByDateRange)}: {ex.Message}");
 
-                // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "An error occurred while querying users by date range", ex);
-            }
-        }
+        //        // For other exceptions, throw an ApolloApiException with a general error code and message
+        //        throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByDateRangeError, "An error occurred while querying users by date range", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -325,29 +325,29 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="firstName">The first name to filter users by.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of User objects with the specified first name.</returns>
-        public async Task<IList<User>> QueryUsersByFirstName(string firstName)
-        {
-            try
-            {
-                var query = new Query
-                {
-                    Fields = new List<string> { /* Add field names to return here */ },
-                    Filter = new Filter
-                    {
-                        Fields = new List<FieldExpression> { new FieldExpression { FieldName = "FirstName", Operator = QueryOperator.Equals, Argument = new List<object> { firstName } } }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //public async Task<IList<User>> QueryUsersByFirstName(string firstName)
+        //{
+        //    try
+        //    {
+        //        var query = new Query
+        //        {
+        //            Fields = new List<string> { /* Add field names to return here */ },
+        //            Filter = new Filter
+        //            {
+        //                Fields = new List<FieldExpression> { new FieldExpression { FieldName = "FirstName", Operator = QueryOperator.Equals, Argument = new List<object> { firstName } } }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-                return Convertor.ToEntityList<User>(res, Convertor.ToUser);
-            }
-            catch (Exception ex)
-            {
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByFirstNameError, "Error while querying users by first name", ex);
-            }
-        }
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByFirstNameError, "Error while querying users by first name", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -355,35 +355,35 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="lastName">The last name to filter users by.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of User objects with the specified last name.</returns>
-        public async Task<IList<User>> QueryUsersByLastName(string lastName)
-        {
-            try
-            {
-                _logger?.LogTrace($"Entered {nameof(QueryUsersByLastName)}");
+        //public async Task<IList<User>> QueryUsersByLastName(string lastName)
+        //{
+        //    try
+        //    {
+        //        _logger?.LogTrace($"Entered {nameof(QueryUsersByLastName)}");
 
-                var query = new Query
-                {
-                    Fields = new List<string>(), // Specify the required fields
-                    Filter = new Filter
-                    {
-                        Fields = new List<FieldExpression>
-                {
-                    new FieldExpression { FieldName = "LastName", Operator = QueryOperator.Equals, Argument = new List<object> { lastName } }
-                }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //        var query = new Query
+        //        {
+        //            Fields = new List<string>(), // Specify the required fields
+        //            Filter = new Filter
+        //            {
+        //                Fields = new List<FieldExpression>
+        //        {
+        //            new FieldExpression { FieldName = "LastName", Operator = QueryOperator.Equals, Argument = new List<object> { lastName } }
+        //        }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
-                return Convertor.ToEntityList<User>(res, Convertor.ToUser);
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex, $"Failed execution of {nameof(QueryUsersByLastName)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByLastNameError, "Error while querying users by last name", ex);
-            }
-        }
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<User>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, null);
+        //        return Convertor.ToEntityList<User>(res, Convertor.ToUser);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger?.LogError(ex, $"Failed execution of {nameof(QueryUsersByLastName)}: {ex.Message}");
+        //        throw new ApolloApiException(ErrorCodes.UserErrors.QueryUsersByLastNameError, "Error while querying users by last name", ex);
+        //    }
+        //}
 
 
         /// <summary>

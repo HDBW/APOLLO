@@ -200,7 +200,7 @@ namespace Apollo.Api
             /// <param name="pageSize">Number of items per page.</param>
             /// <returns>Task that represents the asynchronous operation, containing a list of paginated Training objects.</returns>
             public async Task<IList<Training>> QueryTrainingsPaginated(Query query, int pageNumber, int pageSize)
-        {
+            {
             try
             {
                 query.Skip = (pageNumber - 1) * pageSize;
@@ -235,37 +235,37 @@ namespace Apollo.Api
         /// <param name="query">The query object containing filter criteria and field selections for the trainings.</param>
         /// <param name="selectedFields">A collection of field names to be included in the result set.</param>
         /// <returns>Task that represents the asynchronous operation, containing a list of Trainings with selected fields.</returns>
-        public async Task<IList<Training>> QueryTrainingsWithCustomFields(Query query, IEnumerable<string> selectedFields)
-        {
-            try
-            {
-                if (selectedFields == null || !selectedFields.Any())
-                {
-                    selectedFields = new List<string> { /* Default fields */ };
-                }
+        //public async Task<IList<Training>> QueryTrainingsWithCustomFields(Query query, IEnumerable<string> selectedFields)
+        //{
+        //    try
+        //    {
+        //        if (selectedFields == null || !selectedFields.Any())
+        //        {
+        //            selectedFields = new List<string> { /* Default fields */ };
+        //        }
 
-                query.Fields = selectedFields.ToList();
+        //        query.Fields = selectedFields.ToList();
 
-                var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+        //        var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-                if (res == null)
-                {
-                    // No results found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "No results found for the query.");
-                }
+        //        if (res == null)
+        //        {
+        //            // No results found, throw a specific exception
+        //            throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "No results found for the query.");
+        //        }
 
-                return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
-            }
-            catch (ApolloApiException)
-            {
+        //        return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+        //    }
+        //    catch (ApolloApiException)
+        //    {
                 
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "Error while querying trainings with custom fields", ex);
-            }
-        }
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsWithCustomFieldsErr, "Error while querying trainings with custom fields", ex);
+        //    }
+        //}
 
 
         /// <summary>
