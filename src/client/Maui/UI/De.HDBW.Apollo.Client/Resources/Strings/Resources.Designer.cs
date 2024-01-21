@@ -981,6 +981,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inhalte.
+        /// </summary>
+        public static string FavoriteView_Title {
+            get {
+                return ResourceManager.GetString("FavoriteView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://forms.office.com/e/cmES4qec8q.
         /// </summary>
         public static string FeedbackUrl {
@@ -1998,6 +2007,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string SchoolGraduation_SubjectRelatedEntranceQualification {
             get {
                 return ResourceManager.GetString("SchoolGraduation_SubjectRelatedEntranceQualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suche.
+        /// </summary>
+        public static string SearchView_Title {
+            get {
+                return ResourceManager.GetString("SearchView_Title", resourceCulture);
             }
         }
         

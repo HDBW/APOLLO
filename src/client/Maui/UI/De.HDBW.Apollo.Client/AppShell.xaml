@@ -81,16 +81,16 @@
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_ViewTutorial}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
     <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />-->
     <TabBar x:Name="PART_Tabs">
-        <Tab Title="Search"
-             Icon="mail.png">
+        <Tab Title="{x:Static strings:Resources.SearchView_Title}"
+             Icon="search.png">
             <ShellContent ContentTemplate="{DataTemplate views:SearchView}" />
         </Tab>
         <Tab Title="{x:Static strings:Resources.ProfileView_Title}"
             Icon="profile.png">
             <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
-        <Tab Title="Favorites"
-            Icon="mail.png">
+        <Tab Title="{x:Static strings:Resources.FavoriteView_Title}"
+            Icon="favorite.png">
             <ShellContent ContentTemplate="{DataTemplate views:EmptyView}" />
         </Tab>
     </TabBar>

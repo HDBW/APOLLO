@@ -1191,4 +1191,10 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="RegistrationView_Instruction2" xml:space="preserve">
     <value>Inhalte merken und Erinnerungen erhalten</value>
   </data>
+  <data name="FavoriteView_Title" xml:space="preserve">
+    <value>Inhalte</value>
+  </data>
+  <data name="SearchView_Title" xml:space="preserve">
+    <value>Suche</value>
+  </data>
 </root>
