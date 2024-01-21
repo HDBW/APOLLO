@@ -10,24 +10,30 @@
              x:DataType="viewModels:PersonalInformationEditViewModel"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <VerticalStackLayout>
-        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" />
-        <Entry HorizontalOptions="Fill"
-               Placeholder="{x:Static strings:Resources.PersonalInformationEditView_UserNameHint}"
-               Text="{x:Binding Name, Mode=TwoWay}"
-               VerticalOptions="Center"
-               ClearButtonVisibility="WhileEditing">
-            <Entry.Behaviors>
-                <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
-            </Entry.Behaviors>
-        </Entry>
-        <Label Text="{x:Binding [Name]}" TextColor="Red" />
+    <VerticalStackLayout Padding="24,0">
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" Style="{StaticResource Noto14SemiBold}"/>
+        <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+            <Entry  Text="{x:Binding Name, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+                </Entry.Behaviors>
+            </Entry>
+        </Border>
+        <Label Grid.Row="2" Text="{x:Binding [Name]}" TextColor="{StaticResource Error}" />
 
-        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" />
-        <DatePicker HorizontalOptions="Fill"
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}"/>
+        <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+            <DatePicker HorizontalOptions="Fill"
                VerticalOptions="Center"
                Date="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-        <HorizontalStackLayout >
+        </Border>             
+        <HorizontalStackLayout Padding="0,20,0,0">
             <HorizontalStackLayout.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleDisabilitiesCommand}" />
             </HorizontalStackLayout.GestureRecognizers>

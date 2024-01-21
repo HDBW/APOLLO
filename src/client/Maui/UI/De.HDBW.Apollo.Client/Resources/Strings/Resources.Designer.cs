@@ -313,25 +313,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ich stimme zu..
-        /// </summary>
-        public static string ConfirmDataUsageDialog_Agree {
-            get {
-                return ResourceManager.GetString("ConfirmDataUsageDialog_Agree", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Abbrechen.
-        /// </summary>
-        public static string ConfirmDataUsageDialog_Cancel {
-            get {
-                return ResourceManager.GetString("ConfirmDataUsageDialog_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Weiter.
+        ///   Looks up a localized string similar to Okay.
         /// </summary>
         public static string ConfirmDataUsageDialog_Continue {
             get {
@@ -351,7 +333,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wir benötigen Deine Zustimmung.
+        ///   Looks up a localized string similar to Nutzungsbedingungen.
         /// </summary>
         public static string ConfirmDataUsageDialog_Title {
             get {
@@ -945,56 +927,47 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Komm an Bord! Wir unterstützen Dich beim Erreichen Deiner persönlichen Lernziele..
+        ///   Looks up a localized string similar to Nutzungsbedingungen.
         /// </summary>
-        public static string ExtendedSplashScreenView_Instruction1 {
+        public static string ExtendedSplashScreenView_AGB {
             get {
-                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction1", resourceCulture);
+                return ResourceManager.GetString("ExtendedSplashScreenView_AGB", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entdecke passende Weiterbildungen.
+        ///   Looks up a localized string similar to akzeptieren, um fortzufahren.
         /// </summary>
-        public static string ExtendedSplashScreenView_Instruction1Detail {
+        public static string ExtendedSplashScreenView_AGBText {
             get {
-                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction1Detail", resourceCulture);
+                return ResourceManager.GetString("ExtendedSplashScreenView_AGBText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erkenne Trends in Deinem Berufsfeld und sei immer auf dem neuesten Stand..
+        ///   Looks up a localized string similar to Datenschutz.
         /// </summary>
-        public static string ExtendedSplashScreenView_Instruction2 {
+        public static string ExtendedSplashScreenView_DSGVO {
             get {
-                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction2", resourceCulture);
+                return ResourceManager.GetString("ExtendedSplashScreenView_DSGVO", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Halte Dein Wissen aktuell.
+        ///   Looks up a localized string similar to bestätigen um fortzufahren.
         /// </summary>
-        public static string ExtendedSplashScreenView_Instruction2Detail {
+        public static string ExtendedSplashScreenView_DSGVOText {
             get {
-                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction2Detail", resourceCulture);
+                return ResourceManager.GetString("ExtendedSplashScreenView_DSGVOText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Teste Dein Wissen und analysiere Deine Fähigkeiten..
+        ///   Looks up a localized string similar to Komm an Bord! Wir unterstützen Dich beim Erreichen deiner persönlichen Lernziele..
         /// </summary>
-        public static string ExtendedSplashScreenView_Instruction3 {
+        public static string ExtendedSplashScreenView_Text {
             get {
-                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Entfalte Dein Potential.
-        /// </summary>
-        public static string ExtendedSplashScreenView_Instruction3Detail {
-            get {
-                return ResourceManager.GetString("ExtendedSplashScreenView_Instruction3Detail", resourceCulture);
+                return ResourceManager.GetString("ExtendedSplashScreenView_Text", resourceCulture);
             }
         }
         
@@ -1112,6 +1085,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_ContactType {
             get {
                 return ResourceManager.GetString("Global_ContactType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Als Gast fortfahren.
+        /// </summary>
+        public static string Global_ContinueAsGuest {
+            get {
+                return ResourceManager.GetString("Global_ContinueAsGuest", resourceCulture);
             }
         }
         
@@ -1287,6 +1269,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anmelden.
+        /// </summary>
+        public static string Global_RegisterUser {
+            get {
+                return ResourceManager.GetString("Global_RegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schulabschluss.
         /// </summary>
         public static string Global_SchoolGraduation {
@@ -1346,6 +1337,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_UniverityDegree {
             get {
                 return ResourceManager.GetString("Global_UniverityDegree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abmelden.
+        /// </summary>
+        public static string Global_UnRegisterUser {
+            get {
+                return ResourceManager.GetString("Global_UnRegisterUser", resourceCulture);
             }
         }
         
@@ -1822,7 +1822,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Je besser das Profil gefüllt ist, desto bessere Vorschläge liefern wir dir..
+        ///   Looks up a localized string similar to Je besser Dein Profil gefüllt ist, desto bessere Vorschläge liefern wir Dir..
         /// </summary>
         public static string ProfileView_RecommendationSection_SubTitle {
             get {
@@ -1831,7 +1831,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hier fehlt noch was..
+        ///   Looks up a localized string similar to Profilstatus.
         /// </summary>
         public static string ProfileView_RecommendationSection_Title {
             get {
@@ -1840,7 +1840,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profil.
+        ///   Looks up a localized string similar to Dein Profil.
         /// </summary>
         public static string ProfileView_Title {
             get {
@@ -1885,16 +1885,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Als Gast fortfahren.
-        /// </summary>
-        public static string RegistrationView_Continue {
-            get {
-                return ResourceManager.GetString("RegistrationView_Continue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Melde Dich an, um Deine Inhalte und Einstellungen für zukünftige Versionen zu speichern..
+        ///   Looks up a localized string similar to Melde Dich an, um Zugriff auf weitere Features zu erhalten..
         /// </summary>
         public static string RegistrationView_Description {
             get {
@@ -1903,29 +1894,29 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jetzt anmelden.
+        ///   Looks up a localized string similar to Passgenaue Vorschläge für Deine Interessen.
         /// </summary>
-        public static string RegistrationView_RegisterNow {
+        public static string RegistrationView_Instruction1 {
             get {
-                return ResourceManager.GetString("RegistrationView_RegisterNow", resourceCulture);
+                return ResourceManager.GetString("RegistrationView_Instruction1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anmelden.
+        ///   Looks up a localized string similar to Inhalte merken und Erinnerungen erhalten.
         /// </summary>
-        public static string RegistrationView_RegisterUser {
+        public static string RegistrationView_Instruction2 {
             get {
-                return ResourceManager.GetString("RegistrationView_RegisterUser", resourceCulture);
+                return ResourceManager.GetString("RegistrationView_Instruction2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abmelden.
+        ///   Looks up a localized string similar to Entdecke neue Funktionen.
         /// </summary>
-        public static string RegistrationView_UnRegisterUser {
+        public static string RegistrationView_Title {
             get {
-                return ResourceManager.GetString("RegistrationView_UnRegisterUser", resourceCulture);
+                return ResourceManager.GetString("RegistrationView_Title", resourceCulture);
             }
         }
         

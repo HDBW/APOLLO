@@ -20,7 +20,7 @@
                     <Image WidthRequest="24" HeightRequest="24" Source="mail.png" />
                     <Label Text="{x:Static strings:Resources.SettingsView_QuestionEmail}" LineBreakMode="WordWrap" MaxLines="2" Style="{StaticResource NotoSerif16}"/>
                 </HorizontalStackLayout>
-                <Button Text="{x:Static strings:Resources.RegistrationView_UnRegisterUser}" Command="{Binding UnRegisterCommand}" Margin="0,24,0,0"/>
+                <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{Binding UnRegisterCommand}" Margin="0,24,0,0"/>
             </VerticalStackLayout>
         </ScrollView>
         <Button Grid.Column="0" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Terms}" Command="{Binding OpenTermsCommand}"/>

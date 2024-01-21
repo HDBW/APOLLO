@@ -38,6 +38,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Microsoft.Maui.Controls.Platform;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -217,7 +218,11 @@ namespace De.HDBW.Apollo.Client
 
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
+#if DEBUG
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new MockUserHttpClientHandler());
+#else
                 var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new HttpClientHandler());
+#endif
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
             });
@@ -449,10 +454,27 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupHandler()
         {
-            Microsoft.Maui.Handlers.RadioButtonHandler.Mapper.AppendToMapping("TextColor", (handler, view) =>
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(Entry), (handler, view) =>
+            {
+#if ANDROID
+                // remove underline from entry;
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+            });
+
+            Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping(nameof(DatePicker), (handler, view) =>
+            {
+#if ANDROID
+                // remove underline from entry;
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+            });
+
+            Microsoft.Maui.Handlers.ButtonHandler.Mapper.AppendToMapping("Text", (handler, view) =>
             {
 #if IOS
 
+#elif ANDROID
 #endif
             });
         }
@@ -460,6 +482,7 @@ namespace De.HDBW.Apollo.Client
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
 #if IOS
+#elif ANDROID
 #endif
         }
     }

@@ -17,6 +17,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
     public partial class ProfileViewModel : BaseViewModel
     {
+        private const string PersonalInfoIcon = "profilepersonalinfo.png";
+        private const string ContactInfoIcon = "profilecontactinfo.png";
+        private const string QualificationInfoIcon = "profilequalificationinfo.png";
+        private const string LicensInfoIcon = "profilelicensinfo.png";
+        private const string CareerInfoIcon = "profilecareerinfo.png";
+        private const string EducationInfoIcon = "profileeducationinfo.png";
+        private const string LanguageIcon = "profilelanguage.png";
+        private const string WebReferenceIcon = "profilewebreference.png";
+        private const string MobilityInfoIcon = "profilemobilityinfo.png";
+
         [ObservableProperty]
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
@@ -276,7 +286,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private IEnumerable<ObservableObject> CreatePersonalInformations(User user)
         {
             var informations = new List<ObservableObject>();
-            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute, PersonalInfoIcon));
             if (!string.IsNullOrEmpty(user.Name))
             {
                 informations.Add(StringValue.Import(Resources.Strings.Resources.PersonalInformationEditView_UserName, user.Name));
@@ -307,47 +317,47 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             var interactions = new List<InteractionEntry>();
             if (string.IsNullOrWhiteSpace(user.Name))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.PersonalInformationEditView_Title, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute, PersonalInfoIcon));
             }
 
-            if (user.ContactInfos?.Any() ?? true)
+            if (!(user.ContactInfos?.Any() ?? false))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactInfoEditView_Title, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactInfoEditView_Title, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute, ContactInfoIcon));
             }
 
-            if (user.ContactInfos?.Any() ?? true)
+            if (!(user.Profile?.Qualifications.Any() ?? false))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute, QualificationInfoIcon));
             }
 
-            if (user.Profile?.Licenses.Any() ?? true)
+            if (!(user.Profile?.Licenses.Any() ?? false))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute, LicensInfoIcon));
             }
 
-            if (user.Profile?.CareerInfos.Any() ?? true)
+            if (!(user.Profile?.CareerInfos.Any() ?? false))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute, CareerInfoIcon));
             }
 
-            if (user.Profile?.EducationInfos.Any() ?? true)
+            if (!(user.Profile?.EducationInfos.Any() ?? false))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute, EducationInfoIcon));
             }
 
-            if (user.Profile?.LanguageSkills.Any() ?? true)
+            if (!(user.Profile?.LanguageSkills.Any() ?? false))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute, LanguageIcon));
             }
 
-            if (user.Profile?.WebReferences.Any() ?? true)
+            if (!(user.Profile?.WebReferences.Any() ?? false))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute, WebReferenceIcon));
             }
 
-            if (user.Profile?.MobilityInfo?.WillingToTravel == null)
+            if (!(user.Profile?.MobilityInfo?.WillingToTravel == null))
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute));
+                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
             }
 
             if (!interactions.Any())

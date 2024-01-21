@@ -1,9 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -15,6 +15,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class RegistrationViewModel : BaseViewModel
     {
+        private readonly ObservableCollection<InstructionEntry> _instructions = new ObservableCollection<InstructionEntry>();
+
         public RegistrationViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -37,6 +39,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             PreferenceService = preferenceService;
             UserService = userService;
             UserRepository = userRepository;
+            Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resources.RegistrationView_Instruction1, null));
+            Instructions.Add(InstructionEntry.Import("splashdeco2.png", null, Resources.Strings.Resources.RegistrationView_Instruction2, null));
+        }
+
+        public ObservableCollection<InstructionEntry> Instructions
+        {
+            get { return _instructions; }
         }
 
         public bool HasRegisterdUser
@@ -152,30 +161,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
-                    var result = await DialogService.ShowPopupAsync<ConfirmDataUsageDialog, NavigationParameters>(worker.Token);
-                    if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
-                    {
 #if !DEBUG
-                        authentication = await AuthService.SignInInteractively(worker.Token);
+                    authentication = await AuthService.SignInInteractively(worker.Token);
 #else
-                        authentication = new AuthenticationResult(
-                              accessToken: "Mock",
-                              isExtendedLifeTimeToken: true,
-                              uniqueId: "Mock",
-                              expiresOn: DateTimeOffset.MaxValue,
-                              extendedExpiresOn: DateTimeOffset.MaxValue,
-                              tenantId: "Mock",
-                              account: new DummyAccount(),
-                              idToken: "Mock",
-                              scopes: new List<string>(),
-                              correlationId: Guid.Empty,
-                              tokenType: "Bearer",
-                              authenticationResultMetadata: null,
-                              claimsPrincipal: null,
-                              spaAuthCode: null,
-                              additionalResponseParameters: null);
+                    authentication = new AuthenticationResult(
+                          accessToken: "Mock",
+                          isExtendedLifeTimeToken: true,
+                          uniqueId: "Mock",
+                          expiresOn: DateTimeOffset.MaxValue,
+                          extendedExpiresOn: DateTimeOffset.MaxValue,
+                          tenantId: "Mock",
+                          account: new DummyAccount(),
+                          idToken: "Mock",
+                          scopes: new List<string>(),
+                          correlationId: Guid.Empty,
+                          tokenType: "Bearer",
+                          authenticationResultMetadata: null,
+                          claimsPrincipal: null,
+                          spaAuthCode: null,
+                          additionalResponseParameters: null);
 #endif
-                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -213,17 +218,4 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy && !HasRegisterdUser;
         }
     }
-
-#if DEBUG
-#pragma warning disable SA1402 // File may only contain a single type
-    public class DummyAccount : IAccount
-    {
-        public string Username { get; } = "Dummy";
-
-        public string Environment { get; } = "Dummy";
-
-        public AccountId HomeAccountId { get; } = new AccountId("Dummy", "Dummy", "Dummy");
-    }
-#pragma warning restore SA1402 // File may only contain a single type
-#endif
 }

@@ -147,24 +147,6 @@
   <data name="CourseTagType_Qualification" xml:space="preserve">
     <value>Qualifikation</value>
   </data>
-  <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
-    <value>Komm an Bord! Wir unterstützen Dich beim Erreichen Deiner persönlichen Lernziele.</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction1Detail" xml:space="preserve">
-    <value>Entdecke passende Weiterbildungen</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction2" xml:space="preserve">
-    <value>Erkenne Trends in Deinem Berufsfeld und sei immer auf dem neuesten Stand.</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction2Detail" xml:space="preserve">
-    <value>Halte Dein Wissen aktuell</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction3" xml:space="preserve">
-    <value>Teste Dein Wissen und analysiere Deine Fähigkeiten.</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction3Detail" xml:space="preserve">
-    <value>Entfalte Dein Potential</value>
-  </data>
   <data name="ExtendedSplashScreenView_Welcome" xml:space="preserve">
     <value>Willkommen bei APOLLO</value>
   </data>
@@ -234,19 +216,13 @@
   <data name="MainNavigation_ViewTutorial" xml:space="preserve">
     <value>Tutorial anzeigen</value>
   </data>
-  <data name="RegistrationView_Continue" xml:space="preserve">
-    <value>Als Gast fortfahren</value>
-  </data>
   <data name="RegistrationView_Description" xml:space="preserve">
-    <value>Melde Dich an, um Deine Inhalte und Einstellungen für zukünftige Versionen zu speichern.</value>
+    <value>Melde Dich an, um Zugriff auf weitere Features zu erhalten.</value>
   </data>
-  <data name="RegistrationView_RegisterNow" xml:space="preserve">
-    <value>Jetzt anmelden</value>
-  </data>
-  <data name="RegistrationView_RegisterUser" xml:space="preserve">
+  <data name="Global_RegisterUser" xml:space="preserve">
     <value>Anmelden</value>
   </data>
-  <data name="RegistrationView_UnRegisterUser" xml:space="preserve">
+  <data name="Global_UnRegisterUser" xml:space="preserve">
     <value>Abmelden</value>
   </data>
   <data name="SettingsView_Title" xml:space="preserve">
@@ -547,21 +523,15 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Trifft voll zu</value>
   </data>
   <data name="ConfirmDataUsageDialog_Title" xml:space="preserve">
-    <value>Wir benötigen Deine Zustimmung</value>
+    <value>Nutzungsbedingungen</value>
   </data>
   <data name="ConfirmDataUsageDialog_Message" xml:space="preserve">
     <value>Mit der Erstellung Deines Profils stimmst Du einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Testversionen zu. 
 
 APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur Verbesserung der App. Deine Daten werden nicht an Dritte verkauft oder weitergegeben. Du kannst Dein Profil jederzeit über die App-Einstellungen löschen.</value>
   </data>
-  <data name="ConfirmDataUsageDialog_Agree" xml:space="preserve">
-    <value>Ich stimme zu.</value>
-  </data>
   <data name="ConfirmDataUsageDialog_Continue" xml:space="preserve">
-    <value>Weiter</value>
-  </data>
-  <data name="ConfirmDataUsageDialog_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Okay</value>
   </data>
   <data name="AssessmentResultView_Description" xml:space="preserve">
     <value>Im Rahmen der Testversion zeigen wir dir hier dein vorläufiges Ergebnis. Wie du im Vergleich zu anderen abschneidest, erfährst du in der finalen Version der App!</value>
@@ -585,7 +555,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>Suche</value>
   </data>
   <data name="ProfileView_Title" xml:space="preserve">
-    <value>Profil</value>
+    <value>Dein Profil</value>
   </data>
   <data name="PersonalInformationEditView_Birthdate" xml:space="preserve">
     <value>Geburtstag</value>
@@ -1092,10 +1062,10 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung.</value>
   </data>
   <data name="ProfileView_RecommendationSection_SubTitle" xml:space="preserve">
-    <value>Je besser das Profil gefüllt ist, desto bessere Vorschläge liefern wir dir.</value>
+    <value>Je besser Dein Profil gefüllt ist, desto bessere Vorschläge liefern wir Dir.</value>
   </data>
   <data name="ProfileView_RecommendationSection_Title" xml:space="preserve">
-    <value>Hier fehlt noch was.</value>
+    <value>Profilstatus</value>
   </data>
   <data name="ErrorDialog_Title" xml:space="preserve">
     <value>Fehler</value>
@@ -1193,5 +1163,32 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   </data>
   <data name="GlobalError_NameMinLength" xml:space="preserve">
     <value>Der Name muss mindestens 4 Buchstaben lang sein.</value>
+  </data>
+  <data name="ExtendedSplashScreenView_DSGVO" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="ExtendedSplashScreenView_DSGVOText" xml:space="preserve">
+    <value>bestätigen um fortzufahren</value>
+  </data>
+  <data name="ExtendedSplashScreenView_Text" xml:space="preserve">
+    <value>Komm an Bord! Wir unterstützen Dich beim Erreichen deiner persönlichen Lernziele.</value>
+  </data>
+  <data name="Global_ContinueAsGuest" xml:space="preserve">
+    <value>Als Gast fortfahren</value>
+  </data>
+  <data name="RegistrationView_Title" xml:space="preserve">
+    <value>Entdecke neue Funktionen</value>
+  </data>
+  <data name="ExtendedSplashScreenView_AGB" xml:space="preserve">
+    <value>Nutzungsbedingungen</value>
+  </data>
+  <data name="ExtendedSplashScreenView_AGBText" xml:space="preserve">
+    <value>akzeptieren, um fortzufahren</value>
+  </data>
+  <data name="RegistrationView_Instruction1" xml:space="preserve">
+    <value>Passgenaue Vorschläge für Deine Interessen</value>
+  </data>
+  <data name="RegistrationView_Instruction2" xml:space="preserve">
+    <value>Inhalte merken und Erinnerungen erhalten</value>
   </data>
 </root>

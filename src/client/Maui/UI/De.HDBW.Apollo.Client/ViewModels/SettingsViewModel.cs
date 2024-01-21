@@ -157,35 +157,5 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             return !IsBusy;
         }
-
-        private async Task OpenUrlAsync(string url, CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    if (!await Launcher.TryOpenAsync(url))
-                    {
-                        Logger?.LogWarning($"Unabled to open url {url} in {GetType().Name}.");
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenUrlAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
     }
 }

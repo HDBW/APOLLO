@@ -50,12 +50,23 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_icon_tint.xml" />
+    <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_tint.xml" />
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
     <None Remove="Resources\Images\add.svg" />
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\completed.svg" />
     <None Remove="Resources\Images\delete.svg" />
     <None Remove="Resources\Images\edit.svg" />
+    <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileLanguage.svg" />
+    <None Remove="Resources\Images\Icon_ProfileMobilityInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfilePersonalInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileWebReference.svg" />
+    <None Remove="Resources\Images\Icon_ProfilLicensInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfilQualificationInfo.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
@@ -64,6 +75,9 @@
     <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\resultdeco.svg" />
     <None Remove="Resources\Images\search.svg" />
+    <None Remove="Resources\Images\splashdeco.svg" />
+    <None Remove="Resources\Images\splashdeco1.svg" />
+    <None Remove="Resources\Images\splashdeco2.svg" />
     <None Remove="Resources\Images\usecase4deco.svg" />
     <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
@@ -99,7 +113,6 @@
     <None Remove="Resources\Images\sk34f04_karte.png" />
     <None Remove="Resources\Images\sk34g01_nettobedarfsrechnung.png" />
     <None Remove="Resources\Images\sk34g03_vergleichsmatrix.png" />
-    <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\star.svg" />
     <None Remove="Resources\Images\stardashed.svg" />
     <None Remove="Resources\Images\staroutline.svg" />

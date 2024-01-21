@@ -5,6 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Color x:Key="Neutral0">#FEFCF7</Color>
+    <Color x:Key="Neutral100">#F9F4EB</Color>
+    <Color x:Key="Neutral200">#F7EEE1</Color>
+    <Color x:Key="Neutral300">#F4E8D7</Color>
+    <Color x:Key="Neutral400">#F1DFC5</Color>
+    <Color x:Key="Neutral500">#E9D2B1</Color>
+    <Color x:Key="Neutral600">#C5A87F</Color>
+    <Color x:Key="Neutral700">#967E5C</Color>
+    <Color x:Key="Neutral800">#64533B</Color>
+    <Color x:Key="Neutral900">#403320</Color>
     <Color x:Key="Background">#F7EEE1</Color>
     <Color x:Key="Surface">#E9D2B1</Color>
     <Color x:Key="TextColor">#1D1D1D</Color>

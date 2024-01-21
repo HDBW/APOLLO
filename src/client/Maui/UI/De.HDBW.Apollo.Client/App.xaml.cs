@@ -25,10 +25,8 @@ namespace De.HDBW.Apollo.Client
             _sessionService = sessionService;
             _preferenceService = preferenceService;
             InitializeComponent();
-            _preferenceService.SetValue(Preference.IsFirstTime, true);
-            if (_preferenceService.GetValue(Preference.IsFirstTime, true))
+            if (!_preferenceService.GetValue(Preference.ConfirmedDataUsage, false))
             {
-                _preferenceService.SetValue(Preference.IsFirstTime, false);
                 MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);
             }
             else if (!_sessionService.HasRegisteredUser)

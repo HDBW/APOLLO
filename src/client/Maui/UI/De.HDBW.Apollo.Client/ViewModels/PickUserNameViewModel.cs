@@ -52,6 +52,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             set
             {
+                value = value?.Replace(" ", string.Empty);
                 if (SetProperty(ref _name, value))
                 {
                     ValidateProperty(value);
@@ -74,6 +75,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                () =>
                {
                    ValidateCommand?.Execute(null);
+                   RefreshCommands();
                }, CancellationToken.None);
         }
 

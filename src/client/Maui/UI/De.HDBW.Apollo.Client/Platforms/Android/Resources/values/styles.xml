@@ -11,6 +11,7 @@
     <item name="materialButtonStyle">@style/MauiMaterialButton</item>
     <item name="checkboxStyle">@style/MauiCheckBox</item>
     <item name="android:textAllCaps">false</item>
+    <item name="alertDialogTheme">@style/MauiAlertDialogTheme</item>
   </style>
 
   <!-- Remark: Change colorPrimary for Actionbar to avoid animation with primary color. -->
@@ -64,6 +65,7 @@
     <item name="android:insetBottom">0dp</item>
     <item name="android:insetLeft">0dp</item>
     <item name="android:insetRight">0dp</item>
+    <item name="android:gravity">center</item>
   </style>
 
   <style name="MauiCheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
@@ -71,6 +73,11 @@
     <item name="android:minWidth">0dp</item>
     <item name="android:minHeight">0dp</item>
   </style>
+
+  <style name="MauiAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <item name="colorPrimary">?attr/colorOnSurface</item>
+  </style>
+
 
   <!-- 
     The collectionViewScrollBars style will be used as the default style for ItemsViewRenderer (the base renderer

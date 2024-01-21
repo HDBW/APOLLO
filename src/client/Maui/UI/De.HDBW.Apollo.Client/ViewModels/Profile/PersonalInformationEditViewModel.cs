@@ -48,7 +48,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
             set
             {
-                value = value?.Trim();
+                value = value?.Replace(" ", string.Empty);
                 if (SetProperty(ref _name, value))
                 {
                     IsDirty = true;

@@ -19,6 +19,9 @@ namespace De.HDBW.Apollo.Client.Models.Generic
         private double? _progress;
 
         [ObservableProperty]
+        private string? _progressDisplayText;
+
+        [ObservableProperty]
         private ObservableCollection<InteractionEntry> _recommendations;
 
         protected RecommendationValue(string? headline, string? subline, double? progress, List<InteractionEntry> recommendations)
@@ -26,6 +29,7 @@ namespace De.HDBW.Apollo.Client.Models.Generic
             Headline = headline;
             Subline = subline;
             Progress = progress;
+            ProgressDisplayText = Progress != null ? string.Format("{0:P0}", Progress) : null;
             Recommendations = new ObservableCollection<InteractionEntry>(recommendations);
         }
 
