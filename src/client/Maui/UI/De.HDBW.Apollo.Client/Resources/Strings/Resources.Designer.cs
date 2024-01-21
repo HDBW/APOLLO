@@ -351,7 +351,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast noch kein Kontaktdaten hinterlegt.
+        ///   Looks up a localized string similar to Du hast noch keine Kontaktdaten hinterlegt.
         /// </summary>
         public static string ContactInfoEditView_Headline {
             get {
@@ -360,7 +360,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Füge jetzt deine ersten Kontaktdaten hinzu und verbessere deine Kursvorschläge..
+        ///   Looks up a localized string similar to Füge jetzt deinen ersten Kontakt hinzu und verbessere deine Kursvorschläge..
         /// </summary>
         public static string ContactInfoEditView_Subline {
             get {

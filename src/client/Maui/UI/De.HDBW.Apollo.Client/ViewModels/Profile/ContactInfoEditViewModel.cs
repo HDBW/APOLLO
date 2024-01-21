@@ -6,8 +6,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using Microsoft.Extensions.Logging;
+using Contact = Invite.Apollo.App.Graph.Common.Models.Contact;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
@@ -20,10 +21,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<PersonalInformationEditViewModel> logger)
+            ILogger<PersonalInformationEditViewModel> logger,
+            IUserRepository userRepository)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(userRepository);
+            UserRepository = userRepository;
         }
+
+        private IUserRepository UserRepository { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -31,7 +37,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
+                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     var contacts = new List<Contact>();
+                    contacts.AddRange(user?.ContactInfos ?? new List<Contact>());
+                    contacts = contacts.OrderBy(x => x.ContactType).ToList();
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(contacts), worker.Token);
                 }

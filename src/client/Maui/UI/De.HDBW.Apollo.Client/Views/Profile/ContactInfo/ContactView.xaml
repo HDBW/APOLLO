@@ -13,33 +13,74 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
-    <VerticalStackLayout>
-
-        <Label Text="{x:Static strings:Resources.Global_ContactType}"/>
-        <Picker ItemsSource="{x:Binding ContactTypes}"
+    <ScrollView>
+        <VerticalStackLayout Margin="24,0">
+            <Label Text="{x:Static strings:Resources.Global_ContactType}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Picker ItemsSource="{x:Binding ContactTypes}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedContactType, Mode=TwoWay}"/>
+            </Border>
+            
+            <Label Text="{x:Static strings:Resources.Global_Address}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{x:Binding Address, Mode=TwoWay}" />
+            </Border>
 
-        <Label Text="{x:Static strings:Resources.Global_Address}"/>
-        <Entry Text="{x:Binding Address, Mode=TwoWay}" />
+            <Label Text="{x:Static strings:Resources.Global_ZipCode}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry  Text="{x:Binding ZipCode, Mode=TwoWay}" />
+            </Border>
 
-        <Label Text="{x:Static strings:Resources.Global_ZipCode}"/>
-        <Entry Text="{x:Binding ZipCode, Mode=TwoWay}" />
+            <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{x:Binding City, Mode=TwoWay}" />
+            </Border>
 
-        <Label Text="{x:Static strings:Resources.Global_City}"/>
-        <Entry Text="{x:Binding City, Mode=TwoWay}" />
+            <Label Text="{x:Static strings:Resources.Global_Region}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{x:Binding Region, Mode=TwoWay}" />
+            </Border>
 
+            <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+            </Border>
 
-        <Label Text="{x:Static strings:Resources.Global_Region}"/>
-        <Entry Text="{x:Binding Region, Mode=TwoWay}" />
+            <Label Text="{x:Static strings:Resources.Global_Email}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{x:Binding Email, Mode=TwoWay}" />
+            </Border>
 
-        <Label Text="{x:Static strings:Resources.Global_Country}"/>
-        <Entry Text="{x:Binding Country, Mode=TwoWay}" />
-        
-        <Label Text="{x:Static strings:Resources.Global_Email}"/>
-        <Entry Text="{x:Binding Email, Mode=TwoWay}" />
-        
-        <Label Text="{x:Static strings:Resources.Global_Phone}"/>
-        <Entry Text="{x:Binding Phone, Mode=TwoWay}" />
-    </VerticalStackLayout>
+            <Label Text="{x:Static strings:Resources.Global_Phone}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{x:Binding Phone, Mode=TwoWay}" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -1102,10 +1102,10 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
     <value>Kontaktdaten hinzufügen</value>
   </data>
   <data name="ContactInfoEditView_Headline" xml:space="preserve">
-    <value>Du hast noch kein Kontaktdaten hinterlegt</value>
+    <value>Du hast noch keine Kontaktdaten hinterlegt</value>
   </data>
   <data name="ContactInfoEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine ersten Kontaktdaten hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt deinen ersten Kontakt hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="EducationInfoEditView_ButtonTxt" xml:space="preserve">
     <value>Bildungsweg hinzufügen</value>

@@ -55,7 +55,9 @@
         </DataTemplate>
 
         <DataTemplate x:Key="SeperatorValueTemplate" x:DataType="genericModels:SeperatorValue">
-            <Border StrokeThickness="0" HeightRequest="24"/>
+            <Border StrokeThickness="0" HeightRequest="24">
+                <Border StrokeThickness="1" HeightRequest="2" VerticalOptions="Center" BackgroundColor="{StaticResource Neutral500}" Stroke="{StaticResource Neutral500}"/>
+            </Border>
         </DataTemplate>
         
         <selector:ProfileSectionTemplateSelector x:Key="ProfileSectionTemplateSelector"

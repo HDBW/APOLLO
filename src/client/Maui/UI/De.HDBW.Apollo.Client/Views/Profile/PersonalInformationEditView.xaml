@@ -38,7 +38,7 @@
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleDisabilitiesCommand}" />
             </HorizontalStackLayout.GestureRecognizers>
             <CheckBox InputTransparent="True" IsChecked="{x:Binding Disabilities, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" />
-            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" />
+            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" VerticalOptions="Center"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

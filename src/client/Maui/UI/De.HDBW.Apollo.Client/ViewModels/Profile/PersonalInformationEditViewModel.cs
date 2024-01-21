@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.ComponentModel.DataAnnotations;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -98,7 +97,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                    var sections = new List<ObservableObject>();
                     var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     await ExecuteOnUIThreadAsync( () => LoadonUIThread(user), worker.Token);
                 }
