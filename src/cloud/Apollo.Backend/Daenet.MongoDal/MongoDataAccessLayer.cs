@@ -299,7 +299,7 @@ namespace Daenet.MongoDal
 
             if (fields != null)
             {
-                projection.Add(new BsonElement("_id", 0));
+                projection.Add(new BsonElement("_id", 1));
 
                 foreach (var field in fields)
                 {
@@ -341,6 +341,9 @@ namespace Daenet.MongoDal
                 if (bsonDoc.Contains("Id"))
                     // This is required, because the default mapper of the Mongo C# Driver does not correctlly map BsonDoc._id to T.Id.
                     ((dynamic)doc!).Id = bsonDoc["Id"].ToString();
+                else if (bsonDoc.Contains("_id"))
+                    // This is required, because the default mapper of the Mongo C# Driver does not correctlly map BsonDoc._id to T.Id.
+                    ((dynamic)doc!).Id = bsonDoc["_id"].ToString();
 
                 results.Add(doc);
             }

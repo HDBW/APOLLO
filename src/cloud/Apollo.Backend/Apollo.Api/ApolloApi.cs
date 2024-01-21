@@ -231,6 +231,11 @@ namespace Apollo.Api
             return $"{FormatId(nameof(Profile), userId)}_v01";
         }
 
+        private static string CreateQualificationId()
+        {
+            return CreateId(nameof(User));
+        }
+
 
         /// <summary>
         /// Creates the unique identifier for the new instance of the specified entity.

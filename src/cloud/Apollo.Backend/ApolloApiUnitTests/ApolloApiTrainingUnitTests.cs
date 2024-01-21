@@ -23,6 +23,7 @@ namespace Apollo.Api.UnitTests
         Training[] _testTrainings = new Training[]
           {
                 new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
+                    IndividualStartDate = DateTime.Now,
                 Loans = new List<Loans>(
                     new Loans[]
                     {
@@ -31,9 +32,11 @@ namespace Apollo.Api.UnitTests
                     }
                     )},
 
-                new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI" },
+                new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI",
+                    IndividualStartDate = DateTime.Now.AddDays(1),},
 
-                new Training(){  Id = "UT03" , ProviderId = "unittest",    Loans = new List<Loans>(
+                new Training(){  Id = "UT03" , ProviderId = "unittest",
+                    IndividualStartDate = DateTime.Now.AddDays(3) ,   Loans = new List<Loans>(
                     new Loans[]
                     {
                         new Loans() { Id = "L01", Name = "Loan 1" },
@@ -794,58 +797,90 @@ namespace Apollo.Api.UnitTests
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         /// </summary>
         [TestMethod]
-        // [TestCategory("Prod")]
-        public async Task QueryTrainingsTest()
+        [TestCategory("Prod")]
+        public async Task QueryTrainingsByDateTimeTest()
         {
             var api = Helpers.GetApolloApi();
 
+            await api.InsertTrainings(_testTrainings);
+
             var query = new Apollo.Common.Entities.Query
             {
-                Fields = new List<string> { "TrainingName", "StartDate" }, // Specify the fields to be returned
+                // TODO: There is not this property!!!
+                Fields = new List<string> { "TrainingName", "IndividualStartDate" }, // Specify the fields to be returned
                 Filter = new Apollo.Common.Entities.Filter
                 {
                     IsOrOperator = false,
                     Fields = new List<Apollo.Common.Entities.FieldExpression>
-            {
-                new Apollo.Common.Entities.FieldExpression
-                {
-                    FieldName = "TrainingName", // Specify the field name for filtering
-                    Operator = Apollo.Common.Entities.QueryOperator.Equals, // Specify the operator for the filter
-                    Argument = new List<object> { "Sample Training" } // Specify filter values
-                },
-                new Apollo.Common.Entities.FieldExpression
-                {
-                    FieldName = "StartDate", // Specify another field name for filtering
-                    Operator = Apollo.Common.Entities.QueryOperator.GreaterThanEqualTo, // Specify the operator for the filter
-                    Argument = new List<object> { DateTime.Now.AddMonths(-1) } // Specify filter values
-                }
-            }
+                    {
+                        new Apollo.Common.Entities.FieldExpression
+                        {
+                            FieldName = "TrainingName", // Specify the field name for filtering
+                            Operator = Apollo.Common.Entities.QueryOperator.Equals, // Specify the operator for the filter
+                            Argument = new List<object> { "Open AI" } // Specify filter values
+                        },
+                        new Apollo.Common.Entities.FieldExpression
+                        {
+                            FieldName = "IndividualStartDate", // Specify another field name for filtering
+                            Operator = Apollo.Common.Entities.QueryOperator.GreaterThanEqualTo, // Specify the operator for the filter
+                            Argument = new List<object> { DateTime.Now.AddMonths(-1) } // Specify filter values
+                        }
+                    }
                 },
                 RequestCount = true, // Set to true if you want to include count in the response
                 Top = 200, // Specify the number of items to return
                 Skip = 0, // Specify the skip value for paging
                 SortExpression = new Apollo.Common.Entities.SortExpression
                 {
-                    FieldName = "StartDate", // Specify the field name for sorting
+                    FieldName = "IndividualStartDate", // Specify the field name for sorting
                     Order = Apollo.Common.Entities.SortOrder.Ascending // Specify the sorting direction as Ascending
                 }
             };
 
-            // Act
+            // Execute the query
             IList<Training> trainings = await api.QueryTrainingsAsync(query);
 
             // Assert
             // Ensure that trainings are retrieved based on the query
             Assert.IsNotNull(trainings);
-            Assert.IsTrue(trainings.Count >= 0); // Change the condition to allow for an empty list
+            Assert.IsTrue(trainings.Count == 1); 
+
+            // Case 2
+            // We remove here the lookup by name. We want to query by time only.
+            query.Filter.Fields.RemoveAt(0);
+
+            // We should get all 3 test trainings.
+            trainings = await api.QueryTrainingsAsync(query);
+
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count == 3);
+
+
+            // Case 3
+
+            query.Filter.Fields[0].Argument = new List<object> { DateTime.Now };
+
+            // We should get all 2 test trainings.
+            trainings = await api.QueryTrainingsAsync(query);
+
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count == 2);
+
+            // Case 4
+
+            query.Filter.Fields[0].Argument = new List<object> { DateTime.Now.AddDays(2) };
+
+            // We should get all 2 test trainings.
+            trainings = await api.QueryTrainingsAsync(query);
+
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count == 1);
 
             // Cleanup: Delete the training records inserted during the test
             foreach (var training in trainings)
             {
                 await api.DeleteTrainings(new string[] { training.Id });
             }
-
-            // add more assertions based on your specific testing requirements
         }
 
 
