@@ -30,7 +30,6 @@ namespace Invite.Apollo.App.Graph.Common.Models
     [ProtoInclude(15, typeof(AssessmentCategoryResult))]
     //[ProtoInclude(16, typeof(UserPreferences))]
 
-    [ProtoInclude(17, typeof(Skill))]
     [ProtoInclude( 18, typeof(MetaDataItem))]
     [ProtoInclude(19, typeof(DocumentItem))]
     [ProtoInclude(20, typeof(ApolloLabel))]
