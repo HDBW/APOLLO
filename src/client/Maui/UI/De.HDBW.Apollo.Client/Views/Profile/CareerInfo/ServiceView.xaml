@@ -37,26 +37,37 @@
                 </Grid>
             </Border>
 
-
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Entry Text="{x:Binding OccupationName, Mode=TwoWay}" />
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry Text="{x:Binding OccupationName, Mode=TwoWay}" />
+            </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Discribtion}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+            </Border>
 
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+            </Border>
 
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Entry Text="{x:Binding City, Mode=TwoWay}" />
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry Text="{x:Binding City, Mode=TwoWay}" />
+            </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+            </Border>
 
             <Label Text="{x:Static strings:Resources.Global_ServiceType}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Picker ItemsSource="{x:Binding ServiceTypes}"
-                ItemDisplayBinding="{x:Binding Text}"
-                SelectedItem="{x:Binding SelectedServiceType, Mode=TwoWay}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Picker ItemsSource="{x:Binding ServiceTypes}"
+                        ItemDisplayBinding="{x:Binding Text}"
+                        SelectedItem="{x:Binding SelectedServiceType, Mode=TwoWay}"/>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

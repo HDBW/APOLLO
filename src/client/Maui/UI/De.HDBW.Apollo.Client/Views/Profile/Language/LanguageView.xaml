@@ -15,15 +15,20 @@
     <ScrollView>
         <VerticalStackLayout Margin="24,0">
             <Label Text="{x:Static strings:Resources.Global_Language}"/>
-            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-                <Label Text="{x:Binding LanguageName}" VerticalOptions="Start"/>
-                <ImageButton Source="search.png" Command="{x:Binding SearchLanguageCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
-            </FlexLayout>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+                    <Label Text="{x:Binding LanguageName}" VerticalOptions="Start"/>
+                    <ImageButton Source="search.png" Command="{x:Binding SearchLanguageCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
+                </FlexLayout>
+            </Border>
 
             <Label Text="{x:Static strings:Resources.Global_LanguageNiveau}" Margin="0,20,0,0"/>
-            <Picker ItemsSource="{x:Binding LanguageNiveaus}"
-            ItemDisplayBinding="{x:Binding Text}"
-            SelectedItem="{x:Binding SelectedLanguageNiveau, Mode=TwoWay}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Picker ItemsSource="{x:Binding LanguageNiveaus}"
+                        ItemDisplayBinding="{x:Binding Text}"
+                        SelectedItem="{x:Binding SelectedLanguageNiveau, Mode=TwoWay}"/>
+            </Border>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
