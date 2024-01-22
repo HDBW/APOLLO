@@ -1,16 +1,54 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.WebReferenceEditView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resources.WebReferenceEditView_Title}"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
-             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Profile"
              x:DataType="viewModels:WebReferenceEditViewModel"
+             Title="{x:Static strings:Resources.WebReferenceEditView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="DefaultContactTemplate" x:DataType="models:WebReferenceEntry">
+            <ContentView MinimumHeightRequest="70" BackgroundColor="{StaticResource Neutral500}">
+                <SwipeView Threshold="100" Margin="0,0,0,2">
+                    <SwipeView.RightItems>
+                        <SwipeItems Mode="Execute">
+                            <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image WidthRequest="32" HeightRequest="32" Source="deletelight.png" />
+                                    <Label Text="{x:Static strings:Resources.Global_Delete}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource White}"/>
+                                </VerticalStackLayout>
+                            </SwipeItemView>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Grid Background="{StaticResource Background}" RowDefinitions="auto, auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}"  />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{x:Binding FirstLine, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AdditionalLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="system:String">
+                                    <Label Text="{x:Binding ., Mode=OneTime}" Style="{StaticResource Noto14}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Grid>
+                </SwipeView>
+            </ContentView>
+        </DataTemplate>
+    </ContentPage.Resources>
     <Grid RowDefinitions="*, auto">
-        <CollectionView ItemsSource="{x:Binding WebReferences}"
-                ItemsLayout="VerticalList">
+        <CollectionView ItemsSource="{x:Binding Items}"
+                    x:Name="PART_List"
+                    SelectionMode="None"
+                    ItemTemplate="{StaticResource DefaultContactTemplate}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+            </CollectionView.ItemsLayout>
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="StartAndExpand">
                     <VerticalStackLayout Padding="24">

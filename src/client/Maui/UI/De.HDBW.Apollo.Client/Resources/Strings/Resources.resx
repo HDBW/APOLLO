@@ -1144,13 +1144,13 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
     <value>Füge jetzt deine erste Qualifikation hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="WebReferenceEditView_ButtonTxt" xml:space="preserve">
-    <value>Webprofile hinzufügen</value>
+    <value>Webprofil hinzufügen</value>
   </data>
   <data name="WebReferenceEditView_Headline" xml:space="preserve">
     <value>Du hast noch kein Webprofile hinterlegt</value>
   </data>
   <data name="WebReferenceEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine ersten Webprofile hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt deine erstes Webprofil hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="PickUserNameView_Title" xml:space="preserve">
     <value>Benutzer anlegen</value>

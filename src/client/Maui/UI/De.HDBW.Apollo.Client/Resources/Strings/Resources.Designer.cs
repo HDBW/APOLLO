@@ -3181,7 +3181,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Webprofile hinzufügen.
+        ///   Looks up a localized string similar to Webprofil hinzufügen.
         /// </summary>
         public static string WebReferenceEditView_ButtonTxt {
             get {
@@ -3199,7 +3199,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Füge jetzt deine ersten Webprofile hinzu und verbessere deine Kursvorschläge..
+        ///   Looks up a localized string similar to Füge jetzt deine erstes Webprofil hinzu und verbessere deine Kursvorschläge..
         /// </summary>
         public static string WebReferenceEditView_Subline {
             get {
