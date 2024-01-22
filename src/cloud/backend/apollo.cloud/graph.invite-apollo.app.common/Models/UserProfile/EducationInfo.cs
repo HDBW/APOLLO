@@ -59,6 +59,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
     /// </remarks>
     public class EducationInfo
     {
+        public string? Id { get; set; }
+
         /// <summary>
         /// Start Date of the education
         /// </summary>

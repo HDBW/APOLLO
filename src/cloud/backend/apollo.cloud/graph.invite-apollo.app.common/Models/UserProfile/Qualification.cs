@@ -7,6 +7,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
     public class Qualification
     {
+        public string? Id { get; set; }
+
         // Qualification_Name_filtered.txt
         // FreiText
         public string Name { get; set; }

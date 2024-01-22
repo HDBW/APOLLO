@@ -14,6 +14,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
     /// </summary>
     public class CareerInfo
     {
+        public string? Id { get; set; }
+
         /// <summary>
         /// Start date of the Experience
         /// </summary>
