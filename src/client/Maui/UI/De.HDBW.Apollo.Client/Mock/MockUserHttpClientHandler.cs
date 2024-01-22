@@ -31,7 +31,7 @@ namespace De.HDBW.Apollo.Data.Services
                             }
                         }
 
-                        foreach (var item in (_user.Profile?.LanguageSkills ?? new List<Language>())
+                        foreach (var item in (_user.Profile?.LanguageSkills ?? new List<Language>()))
                         {
                             if (item.Id == null)
                             {
@@ -39,7 +39,7 @@ namespace De.HDBW.Apollo.Data.Services
                             }
                         }
 
-                        foreach (var item in (_user.Profile?.Qualifications ?? new List<Qualification>())
+                        foreach (var item in (_user.Profile?.Qualifications ?? new List<Qualification>()))
                         {
                             if (item.Id == null)
                             {
@@ -47,7 +47,7 @@ namespace De.HDBW.Apollo.Data.Services
                             }
                         }
 
-                        foreach (var item in (_user.Profile?.Licenses ?? new List<License>())
+                        foreach (var item in (_user.Profile?.Licenses ?? new List<License>()))
                         {
                             if (item.Id == null)
                             {
@@ -55,7 +55,7 @@ namespace De.HDBW.Apollo.Data.Services
                             }
                         }
 
-                        foreach (var item in (_user.Profile?.CareerInfos ?? new List<CareerInfo>())
+                        foreach (var item in (_user.Profile?.CareerInfos ?? new List<CareerInfo>()))
                         {
                             if (item.Id == null)
                             {
@@ -63,7 +63,7 @@ namespace De.HDBW.Apollo.Data.Services
                             }
                         }
 
-                        foreach (var item in (_user.Profile?.EducationInfos ?? new List<EducationInfo>())
+                        foreach (var item in (_user.Profile?.EducationInfos ?? new List<EducationInfo>()))
                         {
                             if (item.Id == null)
                             {
@@ -71,7 +71,7 @@ namespace De.HDBW.Apollo.Data.Services
                             }
                         }
 
-                        foreach (var item in (_user.Profile?.WebReferences ??new List<WebReference>())
+                        foreach (var item in (_user.Profile?.WebReferences ??new List<WebReference>()))
                         {
                             if (item.Id == null)
                             {
