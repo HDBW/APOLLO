@@ -30,22 +30,25 @@ namespace FedericoNembrini.Maui.CustomDatePicker.Handlers
     {
         MauiDatePicker mauiDatePicker;
 
-        UIDatePicker uiDatePicker { get => mauiDatePicker.InputView as UIDatePicker; }
+        UIDatePicker? UiDatePicker { get => mauiDatePicker?.InputView as UIDatePicker; }
 
         protected override MauiDatePicker CreatePlatformView()
         {
             mauiDatePicker = base.CreatePlatformView();
+            if (UiDatePicker == null)
+            {
+                return mauiDatePicker;
+            }
+            UiDatePicker.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
+            UiDatePicker.ValueChanged += HandleValueChanged;
 
-            uiDatePicker.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
-            uiDatePicker.ValueChanged += HandleValueChanged;
+            UIToolbar? originalToolbar = mauiDatePicker?.InputAccessoryView as UIToolbar;
 
-            UIToolbar originalToolbar = mauiDatePicker.InputAccessoryView as UIToolbar;
-
-            UIBarButtonItem newDoneButton = new("Ok", UIBarButtonItemStyle.Done, HandleDoneButton);
-            UIBarButtonItem clearButton = new("Clear", UIBarButtonItemStyle.Plain, HandleClearButton);
+            UIBarButtonItem newDoneButton = new(Resources.OkButton, UIBarButtonItemStyle.Done, HandleDoneButton);
+            UIBarButtonItem clearButton = new(Resources.ClearButton, UIBarButtonItemStyle.Plain, HandleClearButton);
 
             List<UIBarButtonItem> newToolbarItems = new();
-            foreach (UIBarButtonItem toolbarItem in originalToolbar.Items)
+            foreach (UIBarButtonItem toolbarItem in originalToolbar?.Items ?? Array.Empty<UIBarButtonItem>())
             {
                 if (toolbarItem.Style == UIBarButtonItemStyle.Done)
                     newToolbarItems.Add(newDoneButton);
@@ -53,13 +56,16 @@ namespace FedericoNembrini.Maui.CustomDatePicker.Handlers
                     newToolbarItems.Add(toolbarItem);
             }
 
-            if ((VirtualView as INullableDatePicker).IsClearButtonVisible)
+            if ((VirtualView as INullableDatePicker)?.IsClearButtonVisible ?? false)
                 newToolbarItems.Insert(0, clearButton);
 
-            originalToolbar.Items = newToolbarItems.ToArray();
-            originalToolbar.SetNeedsDisplay();
+            if(originalToolbar != null)
+            {
+                originalToolbar.Items = newToolbarItems.ToArray();
+                originalToolbar.SetNeedsDisplay();
+            }
 
-            return mauiDatePicker;
+            return mauiDatePicker!;
         }
 
         protected override void ConnectHandler(MauiDatePicker platformView)
@@ -87,13 +93,23 @@ namespace FedericoNembrini.Maui.CustomDatePicker.Handlers
 
         void HandleDoneButton(object? sender, EventArgs e)
         {
-            (VirtualView as INullableDatePicker).NullableDate = uiDatePicker.Date.ToDateTime();
+            var view = VirtualView as INullableDatePicker;
+            if(view != null && UiDatePicker != null)
+            {
+                view.NullableDate = UiDatePicker.Date.ToDateTime();
+            }
+
             PlatformView.ResignFirstResponder();
         }
 
         void HandleClearButton(object? sender, EventArgs e)
         {
-            (VirtualView as INullableDatePicker).NullableDate = null;
+            var view = VirtualView as INullableDatePicker;
+            if (view != null)
+            {
+                view.NullableDate = null;
+            }
+
             PlatformView.ResignFirstResponder();
         }
 
