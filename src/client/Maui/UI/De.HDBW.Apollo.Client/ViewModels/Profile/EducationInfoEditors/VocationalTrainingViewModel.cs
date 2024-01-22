@@ -71,6 +71,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
         }
 
+        public bool HasEnd
+        {
+            get
+            {
+                return End.HasValue;
+            }
+        }
+
         public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
@@ -142,6 +150,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             base.RefreshCommands();
             SearchOccupationCommand?.NotifyCanExecuteChanged();
+            ClearEndCommand?.NotifyCanExecuteChanged();
+        }
+
+        partial void OnEndChanged(DateTime? value)
+        {
+            OnPropertyChanged(nameof(HasEnd));
+            RefreshCommands();
+        }
+
+        [RelayCommand(CanExecute = nameof(CanClearEnd))]
+        private void ClearEnd()
+        {
+            End = null;
+        }
+
+        private bool CanClearEnd()
+        {
+            return !IsBusy && HasEnd;
         }
 
         private void LoadonUIThread(List<InteractionEntry> completionStates, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees)

@@ -66,7 +66,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 if (SetProperty(ref _birthDate, value))
                 {
+                    OnPropertyChanged(nameof(HasBirthDate));
                     IsDirty = true;
+                    RefreshCommands();
                 }
             }
         }
@@ -84,6 +86,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     IsDirty = true;
                 }
+            }
+        }
+
+        public bool HasBirthDate
+        {
+            get
+            {
+                return BirthDate.HasValue;
             }
         }
 
@@ -123,6 +133,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             base.RefreshCommands();
             ToggleDisabilitiesCommand?.NotifyCanExecuteChanged();
+            ClearBirthDateCommand?.NotifyCanExecuteChanged();
         }
 
         protected override async Task<bool> SaveAsync(CancellationToken token)
@@ -164,6 +175,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private bool CanToggleDisabilities()
         {
             return !IsBusy;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanClearBirthDate))]
+        private void ClearBirthDate()
+        {
+            BirthDate = null;
+        }
+
+        private bool CanClearBirthDate()
+        {
+            return !IsBusy && HasBirthDate;
         }
 
         private void LoadonUIThread(User? user)

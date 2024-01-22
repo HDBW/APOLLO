@@ -24,10 +24,15 @@
 
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
         <Border Style="{StaticResource InputBorderStyle}">
-            <cdp:NullableDatePicker HorizontalOptions="Fill"
-               VerticalOptions="Center"
-               NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-        </Border>             
+            <Grid ColumnDefinitions="*, auto, auto">
+                <cdp:NullableDatePicker HorizontalOptions="Fill"
+                                        VerticalOptions="Center"
+                                        IsClearButtonVisible="False"
+                                        NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                <ImageButton Source="delete.png" Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" />
+                <Image Source="calendar.png" Grid.Column="2"/>
+            </Grid>
+        </Border>
         <HorizontalStackLayout Padding="0,20,0,0">
             <HorizontalStackLayout.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ToggleDisabilitiesCommand}" />

@@ -1,7 +1,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfo.VoluntaryServiceView"
+             xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
              x:DataType="viewModels:VoluntaryServiceViewModel"
@@ -12,27 +13,44 @@
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
     <VerticalStackLayout>
-        <Label Text="{x:Static strings:Resources.Global_Start}"/>
-        <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-        <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-            <Label Text="{x:Static strings:Resources.Global_IsCompleted}" VerticalOptions="Start"/>
-            <Switch x:Name="Switch" IsToggled="True" VerticalOptions="End"/>
-        </FlexLayout>
-        <VerticalStackLayout IsVisible="{x:Binding IsToggled, Source={x:Reference Switch}}">
-            <Label Text="{x:Static strings:Resources.Global_End}"/>
-            <DatePicker Date="{x:Binding End, Mode=TwoWay}"/>
-        </VerticalStackLayout>
-        <Label Text="{x:Static strings:Resources.Global_Occupation}" ios:DatePicker.UpdateMode="WhenFinished"/>
+        <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
+        <Border Style="{StaticResource InputBorderStyle}">
+            <Grid ColumnDefinitions="*, auto">
+                <cdp:NullableDatePicker HorizontalOptions="Fill"
+                                IsClearButtonVisible="False"
+                                VerticalOptions="Center"
+                                Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                <Image Source="calendar.png" Grid.Column="1"/>
+            </Grid>
+        </Border>
+        
+        <Label Text="{x:Static strings:Resources.Global_End}" Style="{StaticResource Noto14SemiBold}"/>
+        <Border Style="{StaticResource InputBorderStyle}">
+            <Grid ColumnDefinitions="*, auto, auto">
+                <cdp:NullableDatePicker HorizontalOptions="Fill"
+                                        IsClearButtonVisible="False"
+                                        VerticalOptions="Center"
+                                        NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" />
+                <Image Source="calendar.png" Grid.Column="2"/>
+            </Grid>
+        </Border>
+
+        <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}"/>
         <Entry Text="{x:Binding OccupationName, Mode=TwoWay}" />
-        <Label Text="{x:Static strings:Resources.Global_Discribtion}"/>
+
+        <Label Text="{x:Static strings:Resources.Global_Discribtion}" Style="{StaticResource Noto14SemiBold}"/>
         <Entry Text="{x:Binding Description, Mode=TwoWay}" />
-        <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}"/>
+        
+        <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}"/>
         <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
-        <Label Text="{x:Static strings:Resources.Global_City}"/>
+        
+        <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}"/>
         <Entry Text="{x:Binding City, Mode=TwoWay}" />
-        <Label Text="{x:Static strings:Resources.Global_Country}"/>
+        <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}"/>
         <Entry Text="{x:Binding Country, Mode=TwoWay}" />
-        <Label Text="{x:Static strings:Resources.Global_ServiceType}"/>
+
+        <Label Text="{x:Static strings:Resources.Global_ServiceType}" Style="{StaticResource Noto14SemiBold}"/>
         <Picker ItemsSource="{x:Binding VoluntaryServiceTypes}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedVoluntaryServiceType, Mode=TwoWay}"/>

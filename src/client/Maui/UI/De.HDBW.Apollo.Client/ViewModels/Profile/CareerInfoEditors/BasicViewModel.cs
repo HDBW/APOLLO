@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +26,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ILogger<BasicViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+        }
+
+        public bool HasEnd
+        {
+            get
+            {
+                return End.HasValue;
+            }
         }
 
         public override async Task OnNavigatedToAsync()
@@ -53,6 +62,29 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            ClearEndCommand?.NotifyCanExecuteChanged();
+        }
+
+        partial void OnEndChanged(DateTime? value)
+        {
+            OnPropertyChanged(nameof(HasEnd));
+            RefreshCommands();
+        }
+
+        [RelayCommand(CanExecute = nameof(CanClearEnd))]
+        private void ClearEnd()
+        {
+            End = null;
+        }
+
+        private bool CanClearEnd()
+        {
+            return !IsBusy && HasEnd;
         }
 
         private void LoadonUIThread()
