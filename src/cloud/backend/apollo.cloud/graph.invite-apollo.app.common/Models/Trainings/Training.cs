@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
+using Invite.Apollo.App.Graph.Common.Models;
 
 //using MongoDB.Bson;
 //using MongoDB.Bson.Serialization.Attributes;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Models.Trainings
 {
     public class Training
     {
@@ -21,6 +22,16 @@ namespace Apollo.Common.Entities
         /// External Identifier from the Training Providers.
         /// </summary>
         public string ProviderId { get; set; }
+
+        /// <summary>
+        /// This is the Id associated to a Training by a Training Provider.
+        /// It is used to keep track of the Training in the Training Provider's system.
+        /// So we can update the Training in our system when the Training Provider updates the Training.
+        /// More Importantly it is used to determine redundancy of Trainings in the Training Provider's systems.
+        /// </summary>
+        public string ExternalTrainingId { get; set; }
+
+        public string TrainingType { get; set; }
 
         //[Required]
         //[BsonElement("Title")]
@@ -41,19 +52,19 @@ namespace Apollo.Common.Entities
         /// Training agenda.
         /// </summary>
         //[BsonElement("Content")]
-        public List<string> Content { get; set; }
+        public List<string>? Content { get; set; }
 
         /// <summary>
         /// Specifies the list of benefits of the training.
         /// </summary>
         //[BsonElement("Benefit")]
-        public List<string> BenefitList { get; set; }
+        public List<string>? BenefitList { get; set; }
 
         /// <summary>
         /// Specifies the list of certificates that can be obtained after the training.
         /// </summary>
         //[BsonElement("Certificate")]
-        public List<string> Certificate { get; set; }
+        public List<string>? Certificate { get; set; }
 
         //TODO: Maybe Flagged Enum for Certification Type
         //[Flags]
@@ -63,7 +74,7 @@ namespace Apollo.Common.Entities
         /// The list of recommended prerequisites for the training  
         /// </summary>
         //[BsonElement("Prerequisites")]
-        public List<string> Prerequisites { get; set; }
+        public List<string>? Prerequisites { get; set; }
 
         /// <summary>
         /// Financial Aid provided for a Training
@@ -78,26 +89,26 @@ namespace Apollo.Common.Entities
         public EduProvider CourseProvider { get; set; }
 
         //[BsonElement("AppointmentUrl")]
-        public List<Appointment> Appointment { get; set; }
+        public List<Appointment>? Appointment { get; set; }
 
-        public string TargetAudience { get; set; }
+        public string? TargetAudience { get; set; }
 
         /// <summary>
         /// Training Provider Url or Target
         /// </summary>
         //[BsonElement("ProductUrl")]
-        public Uri ProductUrl { get; set; }
+        public Uri? ProductUrl { get; set; }
 
         /// <summary>
         /// Defined as City + Contact
         /// </summary>
         // [BsonElement("Contacts")]
-        public Dictionary<string, Contact> Contacts { get; set; }
+        public List<Contact>? Contacts { get; set; }
 
         /// <summary>
         /// The type of the training.
         /// </summary>
-        public TrainingType TrainingType { get; set; }
+        public TrainingMode? TrainingMode { get; set; }
 
 
         // It should be bool but what do I know about education ofc it is not bool
@@ -110,13 +121,13 @@ namespace Apollo.Common.Entities
         /// Since comparison is done by more information such as where does it happens, what does it include ...
         /// </summary>
         //[BsonElement("Price")]
-        public decimal? Price { get; set; } 
+        public decimal? Price { get; set; }
 
         // [BsonElement("PriceDescription")]
-        public string PriceDescription { get; set; }
+        public string? PriceDescription { get; set; }
 
         //[BsonElement("Accessibility")]
-        public bool AccessibilityAvailable { get; set; }
+        public bool? AccessibilityAvailable { get; set; }
 
         #region Metadata
 
@@ -130,26 +141,35 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// These are Apollo Ids not External Ids !!!
         /// </summary>
-        public List<Training> SimilarTrainings { get; set; }
+        public List<Training>? SimilarTrainings { get; set; }
 
         /// <summary>
         /// Apollo Internal Id only to be set by the Backend!
         /// </summary>
-        public List<Training> RecommendedTrainings { get; set; }
+        public List<Training>? RecommendedTrainings { get; set; }
 
         #endregion
 
-        #warning candidate for interface!!
+#warning candidate for interface!!
         #region IContentPublising // todo.
 
         //[BsonElement("PublishingDate")]
-        public DateTime PublishingDate { get; set; }
+        public DateTime? PublishingDate { get; set; }
         //[BsonElement("UnpublishingDate")]
-        public DateTime UnpublishingDate { get; set; }
+        public DateTime? UnpublishingDate { get; set; }
         //[BsonElement("Successor")]
         public string? Successor { get; set; }
         //[BsonElement("Predecessor")]
         public string? Predecessor { get; set; }
+
+        #endregion
+
+        #region Client Specific Properties
+
+        //TODO: This should be set on Insert or Update of the Element in the DAL
+        // The desired Format is: DateTime.Now.Ticks.ToString();
+        // This way the client can check if the Training has been updated since the last time he checked
+        public string Timestamp { get; set; }
 
         #endregion
 

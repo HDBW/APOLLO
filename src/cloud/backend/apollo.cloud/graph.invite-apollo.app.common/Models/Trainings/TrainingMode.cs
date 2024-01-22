@@ -3,10 +3,10 @@
 
 using System;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Models.Trainings
 {
     [Flags]
-    public enum TrainingType
+    public enum TrainingMode
     {
         Unknown = 0,
         Online = 1,

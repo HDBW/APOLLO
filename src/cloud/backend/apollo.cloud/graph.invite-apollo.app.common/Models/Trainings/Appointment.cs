@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Models.Trainings
 {
     public record Appointment
     {
@@ -42,7 +42,7 @@ namespace Apollo.Common.Entities
         public bool IsGuaranteed { get; set; }
 
         //[BsonElement("TrainingType")]
-        public TrainingType TrainingType { get; set; }
+        public TrainingMode TrainingMode { get; set; }
 
         /// <summary>
         /// Explains the Time Model for the Training
@@ -75,7 +75,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// NOT UI RELEVANT
         /// </summary>
-        public string ExecutionDurationDescription { get; set;}
+        public string ExecutionDurationDescription { get; set; }
 
         //[BsonElement("LessonType")]
         public string LessonType { get; set; }

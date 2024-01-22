@@ -1,4 +1,7 @@
-﻿using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {

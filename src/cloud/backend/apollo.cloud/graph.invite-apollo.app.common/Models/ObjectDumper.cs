@@ -1,6 +1,8 @@
-﻿using System.Text;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.Text;
 using Newtonsoft.Json;
-using ProtoBuf;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models

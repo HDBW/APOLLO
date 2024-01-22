@@ -1,9 +1,9 @@
-﻿using System;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Runtime.Serialization;
-using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
@@ -68,7 +68,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// <summary>
         /// Related Taxonomy
         /// </summary>
-        public TaxonomyType TaxonomyInfo { get; set; }
+        public Taxonomy TaxonomyInfo { get; set; }
 
         /// <summary>
         /// This information is relevant since some Taxonomies have different versions.

@@ -1,15 +1,11 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
-    public class Query
+    public abstract class Query
     {
         /// <summary>
         /// Specify which properties of the Entity should be returned in the response message, if Fields is empty, all fields in the database are returned
@@ -40,6 +36,6 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specify the order of the return items by the specified field.
         /// </summary>
-        public SortExpression? SortExpression { get; set; } 
+        public SortExpression? SortExpression { get; set; }
     }
 }
