@@ -8,11 +8,11 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:ContactViewModel"
-             Title="ContactView"
+             Title="{x:Static strings:Resources.ContactView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="delete" />
+        <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Margin="24,0">

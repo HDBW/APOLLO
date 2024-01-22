@@ -342,7 +342,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kontaktdaten hinzufügen.
+        ///   Looks up a localized string similar to Kontakt hinzufügen.
         /// </summary>
         public static string ContactInfoEditView_ButtonTxt {
             get {
@@ -392,6 +392,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ContactType_Professional {
             get {
                 return ResourceManager.GetString("ContactType_Professional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontakt.
+        /// </summary>
+        public static string ContactView_Title {
+            get {
+                return ResourceManager.GetString("ContactView_Title", resourceCulture);
             }
         }
         

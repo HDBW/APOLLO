@@ -3,6 +3,7 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
@@ -185,6 +186,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             IsDirty = true;
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            DeleteCommand?.NotifyCanExecuteChanged();
+        }
+
         private void LoadonUIThread(User? user, Contact? contact, List<InteractionEntry> contactTypes)
         {
             _user = user;
@@ -197,8 +204,59 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             // TODO: Wait for new Contract
             //Country = _contact?.Country;
             //Region = _contact?.Region;
+
             ContactTypes = new ObservableCollection<InteractionEntry>(contactTypes);
-            SelectedContactType = (_contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => x.Data == (object)_contact.ContactType) : ContactTypes.FirstOrDefault();
+            SelectedContactType = (_contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => ((ContactType?)x.Data) == _contact.ContactType) : ContactTypes.FirstOrDefault();
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
+        private async Task Delete(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    _user!.ContactInfos.Remove(_contact!);
+                    var response = await UserService.SaveAsync(_user, worker.Token).ConfigureAwait(false);
+                    if (string.IsNullOrWhiteSpace(response))
+                    {
+                        Logger.LogError($"Unable to delete user remotely {nameof(Delete)} in {GetType().Name}.");
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                        return;
+                    }
+
+                    if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
+                    {
+                        Logger.LogError($"Unable to save user locally {nameof(Delete)} in {GetType().Name}.");
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                        return;
+                    }
+
+                    IsDirty = false;
+                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Delete)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanDelete()
+        {
+            return !IsBusy && _user != null && _contact != null;
         }
     }
 }
