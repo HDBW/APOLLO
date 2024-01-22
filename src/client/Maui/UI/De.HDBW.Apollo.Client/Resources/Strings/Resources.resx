@@ -1135,13 +1135,13 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
     <value>Füge jetzt deine erste Lizenz hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="QualificationEditView_ButtonTxt" xml:space="preserve">
-    <value>Qualifikationen hinzufügen</value>
+    <value>Qualifikation hinzufügen</value>
   </data>
   <data name="QualificationEditView_Headline" xml:space="preserve">
     <value>Du hast noch kein Qualifikationen hinterlegt</value>
   </data>
   <data name="QualificationEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine ersten Qualifikationen hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt deine erste Qualifikation hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="WebReferenceEditView_ButtonTxt" xml:space="preserve">
     <value>Webprofile hinzufügen</value>

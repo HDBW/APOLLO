@@ -1876,7 +1876,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Qualifikationen hinzufügen.
+        ///   Looks up a localized string similar to Qualifikation hinzufügen.
         /// </summary>
         public static string QualificationEditView_ButtonTxt {
             get {
@@ -1894,7 +1894,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Füge jetzt deine ersten Qualifikationen hinzu und verbessere deine Kursvorschläge..
+        ///   Looks up a localized string similar to Füge jetzt deine erste Qualifikation hinzu und verbessere deine Kursvorschläge..
         /// </summary>
         public static string QualificationEditView_Subline {
             get {

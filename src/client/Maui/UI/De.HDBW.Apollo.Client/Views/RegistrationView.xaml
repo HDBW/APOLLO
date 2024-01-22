@@ -41,13 +41,7 @@
                SelectedIndicatorColor="{StaticResource Primary}"
                HorizontalOptions="Center"
                Margin="24,16,24,10"/>
-        <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0">
-            <Border.Shadow>
-                <Shadow Brush="{StaticResource Black}" Offset="0,0" Radius="16" Opacity="0.2"/>
-            </Border.Shadow>
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="16,16,0,0" />
-            </Border.StrokeShape>
+        <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
             <VerticalStackLayout Margin="24,16">
                 <Button Margin="0,0,0,8" Text="{x:Static strings:Resources.Global_ContinueAsGuest}" Style="{StaticResource BorderButton}" Command="{Binding SkipCommand}"/>
                 <Button Text="{x:Static strings:Resources.Global_RegisterUser}" Command="{Binding RegisterCommand}" IsVisible="{Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>
