@@ -50,21 +50,25 @@ namespace Apollo.Common.Entities
 
         /// <summary>
         /// This indicates wheter a occupation has/is a apprenticeship or not.
+        /// UI Query related
         /// </summary>
         public bool HasApprenticeShip { get; set; }
 
         /// <summary>
         /// Indicates if this is an Occupation which is regulated and has a university degree.
+        /// UI Query related
         /// </summary>
         public bool IsUniversityOccupation { get; set; }
 
         /// <summary>
         /// Indicates if this is an Academic Career.
+        /// UI Query related
         /// </summary>
         public bool IsUniversityDegree { get; set; }
 
         /// <summary>
         /// The prefered term is the term that is used in the Taxonomie. For example the prefered term for the occupation "baker" is "Bäcker/in".
+        /// UI Query related
         /// </summary>
         public List<string> PreferedTerm { get; set; }
 

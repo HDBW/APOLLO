@@ -33,7 +33,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// This is the email address given by the AADB2C claim.
         /// Register user Email Claim - That is the only way for the user to persist the Account if Phone Provider changes.
-        /// 
+        ///
         /// </summary>
         public string? Email { get; set; }
 
