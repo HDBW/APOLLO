@@ -138,13 +138,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             }
 
             _user.Id = response;
-            _user = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
-            if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
+            var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
+            if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
             {
                 Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
+            _user = userResult;
             IsDirty = false;
             return !IsDirty;
         }

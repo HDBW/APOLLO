@@ -43,7 +43,7 @@
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="*, auto">
-        <CollectionView ItemsSource="{x:Binding Contacts}"
+        <CollectionView ItemsSource="{x:Binding Items}"
                         x:Name="PART_List"
                         SelectionMode="None"
                         ItemTemplate="{StaticResource DefaultContactTemplate}">

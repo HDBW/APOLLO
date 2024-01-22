@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         protected override ObservableCollection<string> GetAdditionalLines(Contact data)
         {
-            var items = new List<string>();
+            var items = new List<string?>();
             items.Add(data.Address);
             items.Add(data.City);
             items.Add(data.ZipCode);
@@ -33,7 +33,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             items.Add(data.Country);
             items.Add(data.Mail);
             items.Add(data.Phone);
-            return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x)));
+            return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x)).OfType<string>());
         }
 
         protected override string GetFristLine(Contact data)

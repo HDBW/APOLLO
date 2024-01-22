@@ -20,7 +20,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<PersonalInformationEditViewModel> logger)
+            ILogger<QualificationEditViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
         }

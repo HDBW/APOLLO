@@ -4,7 +4,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
@@ -21,11 +23,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<StartViewModel> logger,
-            ISessionService sessionService)
+            ISessionService sessionService,
+            IUserRepository userRepository)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(userRepository);
             SessionService = sessionService;
+            UserRepository = userRepository;
         }
 
         public bool IsRegistered
@@ -38,31 +43,25 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ISessionService SessionService { get; }
 
+        private IUserRepository UserRepository { get; }
+
         public override async Task OnNavigatedToAsync()
         {
-            switch (SessionService?.UseCase)
+            using (var worker = ScheduleWork())
             {
-                case UseCase.D:
-                    break;
-                default:
-                    using (var worker = ScheduleWork())
-                    {
-                        try
-                        {
-                            User user = null;
-                            await ExecuteOnUIThreadAsync(() => LoadonUIThread(user), worker.Token);
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                        }
-                        finally
-                        {
-                            UnscheduleWork(worker);
-                        }
-                    }
-
-                    break;
+                try
+                {
+                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user), worker.Token).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
             }
         }
 

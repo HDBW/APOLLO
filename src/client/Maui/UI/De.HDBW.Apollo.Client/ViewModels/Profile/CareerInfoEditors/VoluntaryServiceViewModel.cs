@@ -20,7 +20,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private DateTime? _end;
 
         [ObservableProperty]
-        private string _occupationName;
+        private string? _occupationName;
 
         [ObservableProperty]
         private string? _description;

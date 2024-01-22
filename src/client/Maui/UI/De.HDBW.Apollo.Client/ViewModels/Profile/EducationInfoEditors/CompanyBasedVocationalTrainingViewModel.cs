@@ -47,7 +47,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         //private InteractionEntry? _selectedUniverityDegree;
 
         [ObservableProperty]
-        private string _occupationName;
+        private string? _occupationName;
 
         private EducationInfo? _education;
 
