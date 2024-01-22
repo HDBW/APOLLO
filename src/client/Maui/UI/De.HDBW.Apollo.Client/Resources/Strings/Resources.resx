@@ -1203,4 +1203,23 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="ContactView_Title" xml:space="preserve">
     <value>Kontakt</value>
   </data>
+  <data name="GlobalError_InvalidData" xml:space="preserve">
+    <value>Nicht alle Daten sind richtig ausgefüllt.
+
+Möchtest du weiter deine Daten eingeben?
+
+Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
+  </data>
+  <data name="GlobalError_InvalidEmail" xml:space="preserve">
+    <value>Die E-Mail ist ungültig.</value>
+  </data>
+  <data name="GlobalError_InvalidPhoneNumber" xml:space="preserve">
+    <value>Die Telefonnummer ist ungültig.</value>
+  </data>
+  <data name="GlobalError_InvalidZipCode" xml:space="preserve">
+    <value>Die Postleitzahl ist ungültig.</value>
+  </data>
+  <data name="GlobalError_PropertyRequired" xml:space="preserve">
+    <value>Pflichtfeld.</value>
+  </data>
 </root>

@@ -51,6 +51,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    if (HasErrors)
+                    {
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_InvalidData);
+                        var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+                        if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
+                        {
+                            return;
+                        }
+
+                        _isDirty = false;
+                        await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                        return;
+                    }
+
                     var savedData = false;
                     while (!savedData)
                     {
@@ -106,6 +121,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    if (HasErrors)
+                    {
+                        return;
+                    }
+
                     if (!await SaveAsync(worker.Token).ConfigureAwait(false))
                     {
                         var parameters = new NavigationParameters();

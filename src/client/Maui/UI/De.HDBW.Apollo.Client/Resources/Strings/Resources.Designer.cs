@@ -1413,6 +1413,46 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nicht alle Daten sind richtig ausgefüllt.
+        ///
+        ///Möchtest du weiter deine Daten eingeben?
+        ///
+        ///Hinweis: Nicht gespeicherte Daten gehen verlohren..
+        /// </summary>
+        public static string GlobalError_InvalidData {
+            get {
+                return ResourceManager.GetString("GlobalError_InvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die E-Mail ist ungültig..
+        /// </summary>
+        public static string GlobalError_InvalidEmail {
+            get {
+                return ResourceManager.GetString("GlobalError_InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die Telefonnummer ist ungültig..
+        /// </summary>
+        public static string GlobalError_InvalidPhoneNumber {
+            get {
+                return ResourceManager.GetString("GlobalError_InvalidPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die Postleitzahl ist ungültig..
+        /// </summary>
+        public static string GlobalError_InvalidZipCode {
+            get {
+                return ResourceManager.GetString("GlobalError_InvalidZipCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Der Name darf nicht leer sein..
         /// </summary>
         public static string GlobalError_NameIsRequired {
@@ -1436,6 +1476,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string GlobalError_NoInternet {
             get {
                 return ResourceManager.GetString("GlobalError_NoInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pflichtfeld..
+        /// </summary>
+        public static string GlobalError_PropertyRequired {
+            get {
+                return ResourceManager.GetString("GlobalError_PropertyRequired", resourceCulture);
             }
         }
         

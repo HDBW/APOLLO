@@ -582,5 +582,9 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="ValidationErrorLabel" TargetType="Label" BasedOn="{StaticResource Noto12}">
+        <Setter Property="TextColor" Value="{StaticResource Error}" />
+    </Style>
+
 </ResourceDictionary>

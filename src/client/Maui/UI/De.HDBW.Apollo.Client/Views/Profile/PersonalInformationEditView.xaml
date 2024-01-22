@@ -22,9 +22,9 @@
                 </Entry.Behaviors>
             </Entry>
         </Border>
-        <Label Grid.Row="2" Text="{x:Binding [Name]}" TextColor="{StaticResource Error}" />
+        <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
 
-        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}"/>
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
         <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="8" />

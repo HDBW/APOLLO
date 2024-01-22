@@ -50,12 +50,12 @@
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
             </CollectionView.ItemsLayout>
             <CollectionView.EmptyView>
-                <ContentView VerticalOptions="StartAndExpand">
-                    <VerticalStackLayout Padding="24">
-                        <Label Text="{x:Static strings:Resources.ContactInfoEditView_Headline}" Margin="0,0,0,16" Style="{StaticResource Noto16SemiBold}"/>
-                        <Label Text="{x:Static strings:Resources.ContactInfoEditView_Subline}" Margin="0,0,0,24" Style="{StaticResource Noto16}"/>
-                        <Image Source="emptyscreenimage.png" Aspect="AspectFit"/>
-                    </VerticalStackLayout>
+                <ContentView VerticalOptions="Fill">
+                    <Grid Padding="24" RowDefinitions="auto, auto, *">
+                        <Label Grid.Row="0" Text="{x:Static strings:Resources.ContactInfoEditView_Headline}" Margin="0,0,0,16" Style="{StaticResource Noto16SemiBold}"/>
+                        <Label Grid.Row="1" Text="{x:Static strings:Resources.ContactInfoEditView_Subline}" Margin="0,0,0,24" Style="{StaticResource Noto16}"/>
+                        <Image Grid.Row="2" Source="emptyscreenimage.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                    </Grid>
                 </ContentView>
             </CollectionView.EmptyView>
         </CollectionView>

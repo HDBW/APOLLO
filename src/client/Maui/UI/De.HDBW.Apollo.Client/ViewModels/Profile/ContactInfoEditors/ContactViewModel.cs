@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -25,12 +26,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
         private InteractionEntry? _selectedContactType;
 
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private string? _address;
 
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private string? _city;
 
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
+        [RegularExpression("^[0-9]{5}$", ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidZipCode))]
         private string? _zipCode;
 
         [ObservableProperty]
@@ -40,9 +45,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
         private string? _country;
 
         [ObservableProperty]
+        [EmailAddress(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidEmail))]
         private string? _email;
 
         [ObservableProperty]
+        [Phone(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidPhoneNumber))]
         private string? _phone;
 
         private Contact? _contact;
@@ -163,16 +170,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
         partial void OnAddressChanged(string? value)
         {
+            ValidateProperty(value, nameof(Address));
             IsDirty = true;
         }
 
         partial void OnCityChanged(string? value)
         {
+            ValidateProperty(value, nameof(City));
             IsDirty = true;
         }
 
         partial void OnZipCodeChanged(string? value)
         {
+            ValidateProperty(value, nameof(ZipCode));
             IsDirty = true;
         }
 
@@ -181,13 +191,25 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             IsDirty = true;
         }
 
+        partial void OnEmailChanging(string? value)
+        {
+            value = string.IsNullOrWhiteSpace(value) ? null : value;
+        }
+
         partial void OnEmailChanged(string? value)
         {
+            ValidateProperty(value, nameof(Email));
             IsDirty = true;
+        }
+
+        partial void OnPhoneChanging(string? value)
+        {
+            value = string.IsNullOrWhiteSpace(value) ? null : value;
         }
 
         partial void OnPhoneChanged(string? value)
         {
+            ValidateProperty(value, nameof(Phone));
             IsDirty = true;
         }
 
@@ -205,6 +227,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
             ContactTypes = new ObservableCollection<InteractionEntry>(contactTypes);
             SelectedContactType = (_contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => ((ContactType?)x.Data) == _contact.ContactType) : ContactTypes.FirstOrDefault();
+            IsDirty = false;
+            ValidateCommand?.Execute(null);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
