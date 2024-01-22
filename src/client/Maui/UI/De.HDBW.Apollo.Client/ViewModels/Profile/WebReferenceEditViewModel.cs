@@ -6,51 +6,51 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Models.Profile;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
-    public partial class WebReferenceEditViewModel : BaseViewModel
+    public partial class WebReferenceEditViewModel : AbstractListViewModel<WebReferenceEntry, WebReference>
     {
-        [ObservableProperty]
-        private ObservableCollection<WebReference> _webReferences = new ObservableCollection<WebReference>();
-
         public WebReferenceEditViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<WebReferenceEditViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<WebReferenceEditViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService, Routes.WebReferenceView)
         {
         }
 
-        protected override void RefreshCommands()
+        public override async Task OnNavigatedToAsync()
         {
-            base.RefreshCommands();
-            AddCommand?.NotifyCanExecuteChanged();
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanAdd))]
-        private async Task Add(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
+            using (var worker = ScheduleWork())
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(Routes.WebReferenceView, worker.Token);
+                    User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
+                    var items = new List<WebReference>();
+                    items.AddRange(User?.Profile?.WebReferences ?? new List<WebReference>());
+                    items = items.OrderBy(x => x.Title).ToList();
+                    await ExecuteOnUIThreadAsync(
+                        () => LoadonUIThread(items.Select(x => WebReferenceEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete))), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Add)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(Add)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Add)} in {GetType().Name}.");
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -59,9 +59,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        private bool CanAdd()
+        protected override string? GetIdFromItem(AbstractProfileEntry<WebReference> entry)
         {
-            return !IsBusy;
+            return entry.Export().Id;
+        }
+
+        protected override void RemoveItemFromUser(User user, AbstractProfileEntry<WebReference> entry)
+        {
+            user.Profile?.WebReferences.Remove(entry.Export());
         }
     }
 }
