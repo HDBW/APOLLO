@@ -4,46 +4,52 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.ContactInfoEditView_Title}"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
-             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Profile"
              xmlns:sharedModel="clr-namespace:Invite.Apollo.App.Graph.Common.Models;assembly=Invite.Apollo.App.Graph.Common"
              x:DataType="viewModels:ContactInfoEditViewModel"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <DataTemplate x:Key="DefaultContactTemplate" x:DataType="sharedModel:Contact">
+        <DataTemplate x:Key="DefaultContactTemplate" x:DataType="models:ContactEntry">
             <SwipeView Threshold="100" >
                 <SwipeView.RightItems>
                     <SwipeItems Mode="Execute">
-                        <SwipeItemView BackgroundColor="{StaticResource Error}" >
+                        <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
                             <VerticalStackLayout Margin="10" VerticalOptions="Center">
-                                <Image WidthRequest="32" HeightRequest="32" Source="delete.png">
-                                    <Image.Behaviors>
-                                        <toolkit:IconTintColorBehavior TintColor="White" />
-                                    </Image.Behaviors>
-                                </Image>
-                                <Label Text="Delete" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource White}"/>
+                                <Image WidthRequest="32" HeightRequest="32" Source="deletelight.png" />
+                                <Label Text="{x:Static strings:Resources.Global_Delete}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource White}"/>
                             </VerticalStackLayout>
                         </SwipeItemView>
                     </SwipeItems>
                 </SwipeView.RightItems>
-                <VerticalStackLayout Background="{StaticResource Background}">
-                    <Label Text="{x:Binding ContactType, Mode=OneTime}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
-                    <Label Text="{x:Binding Address, Mode=OneTime}" Style="{StaticResource Noto14}" Margin="24,0"/>
-                    <Label Text="{x:Binding ZipCode, Mode=OneTime}" Style="{StaticResource Noto14}" Margin="24,0"/>
-                    <Label Text="{x:Binding City, Mode=OneTime}" Style="{StaticResource Noto14}" Margin="24,0"/>
+                <Grid Background="{StaticResource Background}" RowDefinitions="auto, auto, auto">
+                    <Label Text="{x:Binding FirstLine, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AdditionalLines, Mode=OneWay}" Grid.Row="1" Margin="24,0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="system:String">
+                                <Label Text="{x:Binding ., Mode=OneTime}" Style="{StaticResource Noto14}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <!--<Label Text="{x:Binding ZipCode, Mode=OneTime}" Style="{StaticResource Noto14}" Margin="24,0"/>
+                    <Label Text="{x:Binding City, Mode=OneTime}" Style="{StaticResource Noto14}" Margin="24,0"/>-->
                     <!--<Label Text="{x:Binding Region, Mode=OneTime}" Style="{StaticResource Noto14}" Margin="24,0"/>-->
                     <!--<Label Text="{x:Binding Country, Mode=OneTime}" Style="{StaticResource Noto14}" Margin="24,0"/>-->
-                    <Border StrokeThickness="1" HeightRequest="2" VerticalOptions="Center" BackgroundColor="{StaticResource Neutral500}" Stroke="{StaticResource Neutral500}" Margin="0,12,0,12"/>
-                </VerticalStackLayout>
+                    <Border Grid.Row="2" StrokeThickness="1" HeightRequest="2" VerticalOptions="Center" BackgroundColor="{StaticResource Neutral500}" Stroke="{StaticResource Neutral500}" Margin="0,12,0,12"/>
+                </Grid>
             </SwipeView>
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="*, auto">
         <CollectionView ItemsSource="{x:Binding Contacts}"
-                    SelectionMode="Single"
-                    ItemsLayout="VerticalList"
-                    ItemTemplate="{StaticResource DefaultContactTemplate}">
+                        x:Name="PART_List"
+                        SelectionMode="Single"
+                        ItemsLayout="VerticalList"
+                        SelectionChangedCommand="{x:Binding EditCommand}"
+                        SelectionChangedCommandParameter="{x:Binding SelectedItem, Source={x:Reference PART_List}}"
+                        ItemTemplate="{StaticResource DefaultContactTemplate}">
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="StartAndExpand">
                     <VerticalStackLayout Padding="24">

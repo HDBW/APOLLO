@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
@@ -140,7 +139,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             }
 
             _user.Id = response;
-            if (!await UserRepository.SaveAsync(_user, token).ConfigureAwait(false))
+            if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
             {
                 Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;

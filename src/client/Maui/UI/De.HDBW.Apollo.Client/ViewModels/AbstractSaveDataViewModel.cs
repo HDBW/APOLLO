@@ -45,52 +45,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        protected override void RefreshCommands()
-        {
-            SaveCommand?.NotifyCanExecuteChanged();
-            base.RefreshCommands();
-        }
-
-        protected abstract Task<bool> SaveAsync(CancellationToken token);
-
-        protected virtual bool CanSave()
-        {
-            return !IsBusy && IsDirty;
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSave))]
-        private async Task Save(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    if (!await SaveAsync(worker.Token).ConfigureAwait(false))
-                    {
-                        var parameters = new NavigationParameters();
-                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_UnableToSaveData);
-                        await DialogService.ShowPopupAsync<ErrorDialog, NavigationParameters, NavigationParameters>(parameters, token).ConfigureAwait(false);
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Save)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Save)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Save)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
         public async void CanceledNavigation()
         {
             using (var worker = ScheduleWork())
@@ -124,6 +78,52 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error in {nameof(CanceledNavigation)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        protected override void RefreshCommands()
+        {
+            SaveCommand?.NotifyCanExecuteChanged();
+            base.RefreshCommands();
+        }
+
+        protected abstract Task<bool> SaveAsync(CancellationToken token);
+
+        protected virtual bool CanSave()
+        {
+            return !IsBusy && IsDirty;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSave))]
+        private async Task Save(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (!await SaveAsync(worker.Token).ConfigureAwait(false))
+                    {
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_UnableToSaveData);
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, token).ConfigureAwait(false);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Save)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Save)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Save)} in {GetType().Name}.");
                 }
                 finally
                 {

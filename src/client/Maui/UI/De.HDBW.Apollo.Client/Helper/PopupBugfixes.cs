@@ -5,7 +5,6 @@ namespace De.HDBW.Apollo.Client.Helper
 {
     public static class PopupBugFixes
     {
-
         // https://github.com/CommunityToolkit/Maui/issues/1489
         public static void FixButtonTextLayout(this Popup popup, Button? button)
         {

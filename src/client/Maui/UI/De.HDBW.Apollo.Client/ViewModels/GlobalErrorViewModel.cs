@@ -65,8 +65,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void LoadOnUIThread(string message)
         {
-           Message = message;
-           OnPropertyChanged(nameof(HasError));
+            Message = message;
+            OnPropertyChanged(nameof(HasError));
         }
     }
 }

@@ -98,7 +98,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
-                    await ExecuteOnUIThreadAsync( () => LoadonUIThread(user), worker.Token);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -134,7 +134,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
             token.ThrowIfCancellationRequested();
             _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
-            _user.Name =  Name ?? string.Empty;
+            _user.Name = Name ?? string.Empty;
             _user.Disabilities = Disabilities;
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))

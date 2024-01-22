@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using Microsoft.Extensions.Logging;
@@ -55,6 +56,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get { return Shell.Current; }
         }
 
+        private Dictionary<string, CancellationTokenSource> Workers { get; } = new Dictionary<string, CancellationTokenSource>();
+
         [IndexerName("Item")]
         public string this[string columnName]
         {
@@ -63,8 +66,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return GetErrors(columnName)?.FirstOrDefault()?.ErrorMessage ?? string.Empty;
             }
         }
-
-        private Dictionary<string, CancellationTokenSource> Workers { get; } = new Dictionary<string, CancellationTokenSource>();
 
         public virtual Task OnNavigatedToAsync()
         {
@@ -76,6 +77,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
         public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             OnPrepare(NavigationParameters.FromQueryDictionary(query));
+        }
+
+        protected async Task ShowErrorAsync(string message, CancellationToken token)
+        {
+            var parameters = new NavigationParameters();
+            parameters.AddValue(NavigationParameter.Data, message);
+            await DialogService.ShowPopupAsync<ErrorDialog, NavigationParameters, NavigationParameters>(parameters, token).ConfigureAwait(false);
         }
 
         protected virtual void OnPrepare(NavigationParameters navigationParameters)
@@ -133,6 +141,36 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected Task ExecuteOnUIThreadAsync(Action methodeToExecute, CancellationToken token)
         {
             return DispatcherService.SafeExecuteOnMainThreadAsync(methodeToExecute, Logger, token);
+        }
+
+        protected async Task OpenUrlAsync(string url, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (!await Launcher.TryOpenAsync(url))
+                    {
+                        Logger?.LogWarning($"Unabled to open url {url} in {GetType().Name}.");
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
         [RelayCommand]
@@ -196,36 +234,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             OnPropertyChanged(nameof(IsBusy));
             RefreshCommands();
-        }
-
-        protected async Task OpenUrlAsync(string url, CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    if (!await Launcher.TryOpenAsync(url))
-                    {
-                        Logger?.LogWarning($"Unabled to open url {url} in {GetType().Name}.");
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenUrlAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
         }
     }
 }

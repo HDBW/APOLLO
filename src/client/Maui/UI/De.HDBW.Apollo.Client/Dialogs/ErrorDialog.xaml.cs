@@ -22,7 +22,6 @@ namespace De.HDBW.Apollo.Client.Dialogs
             }
         }
 
-
         private void OnSizeChanged(object sender, EventArgs e)
         {
             var button = sender as Button;

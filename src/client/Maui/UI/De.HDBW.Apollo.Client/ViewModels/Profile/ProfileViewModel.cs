@@ -89,7 +89,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     {
                         sections.AddRange(CreatePersonalInformations(user));
                     }
-                    
+
                     //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
                     //sections.Add(StringValue.Import("LinkedIn", "https://www.linkedin.com/"));
                     //sections.Add(StringValue.Import("Xing", "https://www.xing.com/"));

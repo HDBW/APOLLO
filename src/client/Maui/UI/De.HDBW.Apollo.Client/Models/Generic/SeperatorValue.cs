@@ -7,7 +7,6 @@ namespace De.HDBW.Apollo.Client.Models.Generic
 {
     public partial class SeperatorValue : ObservableObject
     {
-
         protected SeperatorValue()
         {
         }

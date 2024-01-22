@@ -19,8 +19,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private string? _description;
 
-        private CareerInfo? _career;
-
         public BasicViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,

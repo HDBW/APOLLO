@@ -131,9 +131,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                    var parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_UnableToSaveData);
-                    await DialogService.ShowPopupAsync<ErrorDialog, NavigationParameters, NavigationParameters>(parameters, token).ConfigureAwait(false);
+                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, token).ConfigureAwait(false);
                 }
                 finally
                 {

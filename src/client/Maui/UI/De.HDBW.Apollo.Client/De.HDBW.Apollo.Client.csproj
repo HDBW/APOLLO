@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
@@ -57,6 +57,7 @@
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\completed.svg" />
     <None Remove="Resources\Images\delete.svg" />
+    <None Remove="Resources\Images\deletelight.svg" />
     <None Remove="Resources\Images\edit.svg" />
     <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />

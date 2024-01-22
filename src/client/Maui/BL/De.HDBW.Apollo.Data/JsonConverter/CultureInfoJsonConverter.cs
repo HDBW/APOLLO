@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Data.JsonConverter
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-            return new CultureInfo(reader.GetString());
+            return new CultureInfo(reader.GetString() ?? string.Empty);
         }
 
         public override void Write(

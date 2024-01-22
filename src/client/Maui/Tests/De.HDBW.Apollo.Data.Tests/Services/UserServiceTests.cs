@@ -100,7 +100,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             string? userId = null;
             try
             {
-                var testuser = new User() {Id = "SER01", ObjectId = "Dummy", Name = "Dummy" };
+                var testuser = new User() { Id = "SER01", ObjectId = "Dummy", Name = "Dummy" };
                 userId = await Service.SaveAsync(testuser, TokenSource!.Token);
             }
             catch (ApolloApiException ex)

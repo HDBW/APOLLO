@@ -6,8 +6,6 @@ namespace De.HDBW.Apollo.Data.Services
 {
     public abstract class AbstractAuthorizedSwaggerServiceBase : AbstractSwaggerServiceBase
     {
-        private static HttpClient? httpClient;
-
         public AbstractAuthorizedSwaggerServiceBase(
             ILogger logger,
             string baseUrl,

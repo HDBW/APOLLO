@@ -1197,4 +1197,7 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="SearchView_Title" xml:space="preserve">
     <value>Suche</value>
   </data>
+  <data name="Global_Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
 </root>

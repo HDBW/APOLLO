@@ -88,15 +88,15 @@ namespace De.HDBW.Apollo.Data.Repositories
             }
             catch (OperationCanceledException)
             {
-                Logger.LogDebug($"Canceled {nameof(LoadAsync)} in {GetType().Name}.");
+                Logger.LogDebug($"Canceled {nameof(SaveAsync)} in {GetType().Name}.");
             }
             catch (ObjectDisposedException)
             {
-                Logger.LogDebug($"Canceled {nameof(LoadAsync)} in {GetType().Name}.");
+                Logger.LogDebug($"Canceled {nameof(SaveAsync)} in {GetType().Name}.");
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, $"Unknown error in {nameof(LoadAsync)} in {GetType().Name}.");
+                Logger.LogError(ex, $"Unknown error in {nameof(SaveAsync)} in {GetType().Name}.");
             }
             finally
             {

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors.ContactView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors"
@@ -21,8 +22,8 @@
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
                 <Picker ItemsSource="{x:Binding ContactTypes}"
-                ItemDisplayBinding="{x:Binding Text}"
-                SelectedItem="{x:Binding SelectedContactType, Mode=TwoWay}"/>
+                        ItemDisplayBinding="{x:Binding Text}"
+                        SelectedItem="{x:Binding SelectedContactType, Mode=TwoWay}"/>
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_Address}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
@@ -30,7 +31,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
-                <Entry Text="{x:Binding Address, Mode=TwoWay}" />
+                <Entry x:Name="PART_Address" Text="{x:Binding Address, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_ZipCode}" />
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_ZipCode}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
@@ -38,7 +39,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
-                <Entry  Text="{x:Binding ZipCode, Mode=TwoWay}" />
+                <Entry x:Name="PART_ZipCode" Text="{x:Binding ZipCode, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}" MaxLength="5" Keyboard="Numeric"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
@@ -46,7 +47,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
-                <Entry Text="{x:Binding City, Mode=TwoWay}" />
+                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Region}" />
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Region}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
@@ -54,7 +55,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
-                <Entry Text="{x:Binding Region, Mode=TwoWay}" />
+                <Entry x:Name="PART_Region" Text="{x:Binding Region, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}" />
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
@@ -62,7 +63,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
-                <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Email}" />
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Email}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
@@ -70,7 +71,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
-                <Entry Text="{x:Binding Email, Mode=TwoWay}" />
+                <Entry x:Name="PART_Email" Text="{x:Binding Email, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Phone}" Keyboard="Email"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Phone}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
@@ -78,7 +79,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
-                <Entry Text="{x:Binding Phone, Mode=TwoWay}" />
+                <Entry x:Name="PART_Phone" Text="{x:Binding Phone, Mode=TwoWay}" Keyboard="Telephone"/>
             </Border>
 
         </VerticalStackLayout>
