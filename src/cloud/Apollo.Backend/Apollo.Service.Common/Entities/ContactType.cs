@@ -24,9 +24,14 @@ namespace Apollo.Common.Entities
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Defines the Value of Enum ContactType
+        /// </summary>
+        public int Value { get; set; }
+
         ///// <summary>
         ///// Defines the Culture of the Contact Type
         ///// </summary>
-        //public CultureInfo CultureInfo { get; set; }
+        public CultureInfo CultureInfo { get; set; }
     }
 }
