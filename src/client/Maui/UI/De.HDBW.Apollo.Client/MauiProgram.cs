@@ -470,6 +470,14 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
 
+            Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(nameof(Picker), (handler, view) =>
+            {
+#if ANDROID
+                // remove underline from entry;
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+            });
+
             Microsoft.Maui.Handlers.ButtonHandler.Mapper.AppendToMapping("Text", (handler, view) =>
             {
 #if IOS
