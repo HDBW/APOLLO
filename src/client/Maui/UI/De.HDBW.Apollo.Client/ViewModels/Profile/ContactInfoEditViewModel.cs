@@ -116,55 +116,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             return !IsBusy && _user != null;
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanEdit))]
-        private async Task Edit(ContactEntry entry, CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    var id = entry.Export().Id;
-                    if (string.IsNullOrWhiteSpace(id))
-                    {
-                        return;
-                    }
-
-                    var parameter = new NavigationParameters();
-                    parameter.AddValue<string>(NavigationParameter.Id, id);
-                    await NavigationService.NavigateAsync(Routes.ContactInfoContactView, worker.Token, parameter);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Edit)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Edit)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Edit)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        private bool CanEdit(ContactEntry entry)
-        {
-            return !IsBusy && _user != null && entry != null;
-        }
-
         private void LoadonUIThread(List<Contact> contacts)
         {
-            Contacts = new ObservableCollection<ContactEntry>(contacts.Select(x => ContactEntry.Import(x, DeleteAsync, CanDelete)));
+            Contacts = new ObservableCollection<ContactEntry>(contacts.Select(x => ContactEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete)));
         }
 
         private bool CanDelete(AbstractProfileEntry<Contact> entry)
         {
-            return !IsBusy && _user != null;
+            return !IsBusy && _user != null && entry != null;
         }
 
         private async Task DeleteAsync(AbstractProfileEntry<Contact> entry)
@@ -202,6 +161,46 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error in {nameof(DeleteAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanEdit(AbstractProfileEntry<Contact> entry)
+        {
+            return !IsBusy && _user != null && entry != null;
+        }
+
+        private async Task EditAsync(AbstractProfileEntry<Contact> entry)
+        {
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var id = entry.Export().Id;
+                    if (string.IsNullOrWhiteSpace(id))
+                    {
+                        return;
+                    }
+
+                    var parameter = new NavigationParameters();
+                    parameter.AddValue<string>(NavigationParameter.Id, id);
+                    await NavigationService.NavigateAsync(Routes.ContactInfoContactView, worker.Token, parameter);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(EditAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(EditAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(EditAsync)} in {GetType().Name}.");
                 }
                 finally
                 {

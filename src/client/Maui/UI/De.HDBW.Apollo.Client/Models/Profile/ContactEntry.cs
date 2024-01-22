@@ -10,15 +10,17 @@ namespace De.HDBW.Apollo.Client.Models.Profile
     {
         private ContactEntry(
             Contact data,
+            Func<AbstractProfileEntry<Contact>, Task> editHandle,
+            Func<AbstractProfileEntry<Contact>, bool> canEditHandle,
             Func<AbstractProfileEntry<Contact>, Task> deleteHandle,
             Func<AbstractProfileEntry<Contact>, bool> canDeleteHandle)
-            : base(data, deleteHandle, canDeleteHandle)
+            : base(data, editHandle, canEditHandle, deleteHandle, canDeleteHandle)
         {
         }
 
-        public static ContactEntry Import(Contact data, Func<AbstractProfileEntry<Contact>, Task> deleteHandle, Func<AbstractProfileEntry<Contact>, bool> canDeleteHandle)
+        public static ContactEntry Import(Contact data, Func<AbstractProfileEntry<Contact>, Task> editHandle, Func<AbstractProfileEntry<Contact>, bool> canEditHandle, Func<AbstractProfileEntry<Contact>, Task> deleteHandle, Func<AbstractProfileEntry<Contact>, bool> canDeleteHandle)
         {
-            return new ContactEntry(data, deleteHandle, canDeleteHandle);
+            return new ContactEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
         }
 
         protected override ObservableCollection<string> GetAdditionalLines(Contact data)

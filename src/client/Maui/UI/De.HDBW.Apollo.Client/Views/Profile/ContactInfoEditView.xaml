@@ -25,6 +25,9 @@
                     </SwipeItems>
                 </SwipeView.RightItems>
                 <Grid Background="{StaticResource Background}" RowDefinitions="auto, auto, auto">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}"  />
+                    </Grid.GestureRecognizers>
                     <Label Text="{x:Binding FirstLine, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
                     <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AdditionalLines, Mode=OneWay}" Grid.Row="1" Margin="24,0">
                         <BindableLayout.ItemTemplate>
@@ -45,10 +48,8 @@
     <Grid RowDefinitions="*, auto">
         <CollectionView ItemsSource="{x:Binding Contacts}"
                         x:Name="PART_List"
-                        SelectionMode="Single"
+                        SelectionMode="None"
                         ItemsLayout="VerticalList"
-                        SelectionChangedCommand="{x:Binding EditCommand}"
-                        SelectionChangedCommandParameter="{x:Binding SelectedItem, Source={x:Reference PART_List}}"
                         ItemTemplate="{StaticResource DefaultContactTemplate}">
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="StartAndExpand">

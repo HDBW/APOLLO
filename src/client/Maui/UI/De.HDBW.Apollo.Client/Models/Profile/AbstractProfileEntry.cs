@@ -17,26 +17,34 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         [ObservableProperty]
         private ObservableCollection<string> _additionalLines = new ObservableCollection<string>();
 
-        public AbstractProfileEntry(TU data, Func<AbstractProfileEntry<TU>, Task> deleteHandle, Func<AbstractProfileEntry<TU>, bool> canDeleteHandle)
+        public AbstractProfileEntry(TU data, Func<AbstractProfileEntry<TU>, Task> editHandle, Func<AbstractProfileEntry<TU>, bool> canEditHandle, Func<AbstractProfileEntry<TU>, Task> deleteHandle, Func<AbstractProfileEntry<TU>, bool> canDeleteHandle)
         {
             ArgumentNullException.ThrowIfNull(data);
+            ArgumentNullException.ThrowIfNull(editHandle);
+            ArgumentNullException.ThrowIfNull(canEditHandle);
             ArgumentNullException.ThrowIfNull(deleteHandle);
             ArgumentNullException.ThrowIfNull(canDeleteHandle);
             _data = data;
             FirstLine = GetFristLine(_data);
             AdditionalLines = GetAdditionalLines(_data);
+            CanEditHandle = canEditHandle;
+            EditHandle = editHandle;
             CanDeleteHandle = canDeleteHandle;
             DeleteHandle = deleteHandle;
         }
+
+        protected Func<AbstractProfileEntry<TU>, bool> CanEditHandle { get; }
+
+        protected Func<AbstractProfileEntry<TU>, Task> EditHandle { get; }
+
+        protected Func<AbstractProfileEntry<TU>, bool> CanDeleteHandle { get; }
+
+        protected Func<AbstractProfileEntry<TU>, Task> DeleteHandle { get; }
 
         public TU Export()
         {
             return _data;
         }
-
-        protected Func<AbstractProfileEntry<TU>, bool> CanDeleteHandle { get; }
-
-        protected Func<AbstractProfileEntry<TU>, Task> DeleteHandle { get; }
 
         protected abstract ObservableCollection<string> GetAdditionalLines(TU data);
 
@@ -51,6 +59,17 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         private Task Delete()
         {
             return DeleteHandle?.Invoke(this) ?? Task.CompletedTask;
+        }
+
+        protected virtual bool CanEdit()
+        {
+            return CanEditHandle?.Invoke(this) ?? false;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanEdit))]
+        private Task Edit()
+        {
+            return EditHandle?.Invoke(this) ?? Task.CompletedTask;
         }
     }
 }
