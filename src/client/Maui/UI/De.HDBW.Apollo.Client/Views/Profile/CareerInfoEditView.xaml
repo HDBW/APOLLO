@@ -8,7 +8,7 @@
              xmlns:system="clr-namespace:System;assembly=netstandard"
              Title="{x:Static strings:Resources.CareerInfoEditView_Title}"
              x:DataType="viewModels:CareerInfoEditViewModel"
-             IsBusy="{x:Binding IsBusy}" 
+             IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="EmptyTemplate">

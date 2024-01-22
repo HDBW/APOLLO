@@ -13,50 +13,52 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
-    <VerticalStackLayout>
-        <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
-        <Border Style="{StaticResource InputBorderStyle}">
-            <Grid ColumnDefinitions="*, auto">
-                <cdp:NullableDatePicker HorizontalOptions="Fill"
+    <ScrollView>
+        <VerticalStackLayout Margin="24,0">
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto">
+                    <cdp:NullableDatePicker HorizontalOptions="Fill"
                                 IsClearButtonVisible="False"
                                 VerticalOptions="Center"
                                 Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                <Image Source="calendar.png" Grid.Column="1"/>
-            </Grid>
-        </Border>
+                    <Image Source="calendar.png" Grid.Column="1"/>
+                </Grid>
+            </Border>
 
-        <Label Text="{x:Static strings:Resources.Global_End}" Style="{StaticResource Noto14SemiBold}"/>
-        <Border Style="{StaticResource InputBorderStyle}">
-            <Grid ColumnDefinitions="*, auto, auto">
-                <cdp:NullableDatePicker HorizontalOptions="Fill"
+            <Label Text="{x:Static strings:Resources.Global_End}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto, auto">
+                    <cdp:NullableDatePicker HorizontalOptions="Fill"
                                 IsClearButtonVisible="False"
                                 VerticalOptions="Center"
                                 NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" />
-                <Image Source="calendar.png" Grid.Column="2"/>
-            </Grid>
-        </Border>
-        
-        <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}"/>
-        <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+                    <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" />
+                    <Image Source="calendar.png" Grid.Column="2"/>
+                </Grid>
+            </Border>
 
-        <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}"/>
-        <Entry Text="{x:Binding City, Mode=TwoWay}" />
+            <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
 
-        <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}"/>
-        <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+            <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Entry Text="{x:Binding City, Mode=TwoWay}" />
 
-        <Label Text="{x:Static strings:Resources.Global_Graduation}" Style="{StaticResource Noto14SemiBold}"/>
-        <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+            <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Entry Text="{x:Binding Country, Mode=TwoWay}" />
 
-        <Label Text="{x:Static strings:Resources.Global_UniverityDegree}" Style="{StaticResource Noto14SemiBold}"/>
-        <Picker ItemsSource="{x:Binding UniverityDegrees}"
+            <Label Text="{x:Static strings:Resources.Global_Graduation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+
+            <Label Text="{x:Static strings:Resources.Global_UniverityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Picker ItemsSource="{x:Binding UniverityDegrees}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>
 
-        <Label Text="{x:Static strings:Resources.Global_CompletionState}" Style="{StaticResource Noto14SemiBold}"/>
-        <Picker ItemsSource="{x:Binding CompletionStates}"
+            <Label Text="{x:Static strings:Resources.Global_CompletionState}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Picker ItemsSource="{x:Binding CompletionStates}"
             ItemDisplayBinding="{x:Binding Text}"
             SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
