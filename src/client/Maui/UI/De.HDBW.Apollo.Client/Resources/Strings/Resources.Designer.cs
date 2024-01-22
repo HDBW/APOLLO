@@ -1570,7 +1570,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lizenzen hinzufügen.
+        ///   Looks up a localized string similar to Lizenz hinzufügen.
         /// </summary>
         public static string LicenseEditView_ButtonTxt {
             get {
@@ -1588,7 +1588,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Füge jetzt deine ersten Lizenzen hinzu und verbessere deine Kursvorschläge..
+        ///   Looks up a localized string similar to Füge jetzt deine erste Lizenz hinzu und verbessere deine Kursvorschläge..
         /// </summary>
         public static string LicenseEditView_Subline {
             get {

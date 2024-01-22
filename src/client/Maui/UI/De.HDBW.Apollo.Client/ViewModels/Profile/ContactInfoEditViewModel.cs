@@ -32,11 +32,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
-                    var contacts = new List<Contact>();
-                    contacts.AddRange(User?.ContactInfos ?? new List<Contact>());
-                    contacts = contacts.OrderBy(x => x.ContactType).ToList();
+                    var items = new List<Contact>();
+                    items.AddRange(User?.ContactInfos ?? new List<Contact>());
+                    items = items.OrderBy(x => x.ContactType).ToList();
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(contacts.Select(x => ContactEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete))), worker.Token);
+                        () => LoadonUIThread(items.Select(x => ContactEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete))), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {

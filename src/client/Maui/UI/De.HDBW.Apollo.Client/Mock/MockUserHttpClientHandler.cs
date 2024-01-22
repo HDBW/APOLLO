@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
-
+using License = Invite.Apollo.App.Graph.Common.Models.UserProfile.License;
 namespace De.HDBW.Apollo.Data.Services
 {
     public class MockUserHttpClientHandler : HttpClientHandler
@@ -28,6 +28,54 @@ namespace De.HDBW.Apollo.Data.Services
                             if (contact.Id == null)
                             {
                                 contact.Id = $"{nameof(Contact)}-{Guid.NewGuid()}";
+                            }
+                        }
+
+                        foreach (var item in (_user.Profile?.LanguageSkills ?? new List<Language>())
+                        {
+                            if (item.Id == null)
+                            {
+                                item.Id = $"{nameof(License)}-{Guid.NewGuid()}";
+                            }
+                        }
+
+                        foreach (var item in (_user.Profile?.Qualifications ?? new List<Qualification>())
+                        {
+                            if (item.Id == null)
+                            {
+                                item.Id = $"{nameof(License)}-{Guid.NewGuid()}";
+                            }
+                        }
+
+                        foreach (var item in (_user.Profile?.Licenses ?? new List<License>())
+                        {
+                            if (item.Id == null)
+                            {
+                                item.Id = $"{nameof(License)}-{Guid.NewGuid()}";
+                            }
+                        }
+
+                        foreach (var item in (_user.Profile?.CareerInfos ?? new List<CareerInfo>())
+                        {
+                            if (item.Id == null)
+                            {
+                                item.Id = $"{nameof(CareerInfo)}-{Guid.NewGuid()}";
+                            }
+                        }
+
+                        foreach (var item in (_user.Profile?.EducationInfos ?? new List<EducationInfo>())
+                        {
+                            if (item.Id == null)
+                            {
+                                item.Id = $"{nameof(EducationInfo)}-{Guid.NewGuid()}";
+                            }
+                        }
+
+                        foreach (var item in (_user.Profile?.WebReferences ??new List<WebReference>())
+                        {
+                            if (item.Id == null)
+                            {
+                                item.Id = $"{nameof(WebReference)}-{Guid.NewGuid()}";
                             }
                         }
 

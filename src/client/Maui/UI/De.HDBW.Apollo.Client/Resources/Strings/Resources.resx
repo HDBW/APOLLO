@@ -1126,13 +1126,13 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
     <value>Füge jetzt deine ersten Sprachkenntnisse hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="LicenseEditView_ButtonTxt" xml:space="preserve">
-    <value>Lizenzen hinzufügen</value>
+    <value>Lizenz hinzufügen</value>
   </data>
   <data name="LicenseEditView_Headline" xml:space="preserve">
     <value>Du hast noch kein Lizenzen hinterlegt</value>
   </data>
   <data name="LicenseEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine ersten Lizenzen hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt deine erste Lizenz hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="QualificationEditView_ButtonTxt" xml:space="preserve">
     <value>Qualifikationen hinzufügen</value>

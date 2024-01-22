@@ -57,7 +57,7 @@
     </Shell.Resources>
     <Shell.FlyoutHeader>
         <Border Margin="0" BackgroundColor="Transparent" Stroke="Transparent" StrokeThickness="0">
-            <HorizontalStackLayout Padding="30,12,30,0">
+            <HorizontalStackLayout Padding="30,32,30,12">
                 <Image Source="apollo.png" HeightRequest="24" MaximumWidthRequest="101" Aspect="AspectFit"/>
             </HorizontalStackLayout>
         </Border>
