@@ -91,12 +91,13 @@ namespace Apollo.Service.Controllers
         }
 
         /// <summary>
-        /// Handles HTTP PUT requests to create or update a user based on a request object.
+        /// Creates or updates the user.
         /// The object will be updated if the User's Id or User's ObjectId is set.
         /// If none of them is set, the insert operation is performed.
+        /// Please note the update operation with specified Id is is faster and produces lower costs than update operation with ObjectId.
         /// </summary>
-        /// <param name="req">Request object containing user information for create or update.</param>
-        /// <returns>Response containing the result of the create/update operation.</returns>
+        /// <param name="req"></param>
+        /// <returns></returns>
         [HttpPut]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the result of the create/update operation.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]

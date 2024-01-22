@@ -72,6 +72,7 @@ namespace Apollo.Api
             //public const int QueryProfilesByLastNameError = TrainingCodeBase + 90;
             public const int InsertProfileError = TrainingCodeBase + 100;
             public const int CreateOrUpdateProfileError = TrainingCodeBase + 110;
+            public const int CreateOrUpdateProfileUserDoesNotExistError = TrainingCodeBase + 111;
             public const int DeleteProfileError = TrainingCodeBase + 120;
             public const int ProfileNotFound = TrainingCodeBase + 130;
             public const int ProfileAlreadyExists = TrainingCodeBase + 140;

@@ -105,8 +105,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace("Enter {method}", nameof(CreateOrUpdateProfile));
 
                 // Call the Apollo API to create or update a profile based on the request.
-                var profiles = new List<Profile> { req.Profile };
-                var result = await _api.CreateOrUpdateProfiles(profiles);
+                var result = await _api.CreateOrUpdateProfile(req.UserId, req.Profile);
 
                 _logger.LogTrace("Leave {method}", nameof(CreateOrUpdateProfile));
 
@@ -122,50 +121,50 @@ namespace Apollo.Service.Controllers
         }
 
 
-        /// <summary>
-        /// Handles HTTP POST requests to insert multiple profiles.
-        /// </summary>
-        /// <param name="profiles">List of profiles to be inserted.</param>
-        /// <returns>ActionResult indicating the success or failure of the operation.</returns>
-        [HttpPost("insert")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Returns the list of inserted profile IDs.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<IList<string>> InsertProfiles([FromBody] IList<Profile> profiles)
-        {
-            try
-            {
-                _logger.LogTrace("Enter {method}", nameof(InsertProfiles));
+        ///// <summary>
+        ///// Handles HTTP POST requests to insert multiple profiles.
+        ///// </summary>
+        ///// <param name="profiles">List of profiles to be inserted.</param>
+        ///// <returns>ActionResult indicating the success or failure of the operation.</returns>
+        //[HttpPost("insert")]
+        //[SwaggerResponse(StatusCodes.Status200OK, "Returns the list of inserted profile IDs.")]
+        //[SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
+        //[SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        //public async Task<string> InsertProfile([FromBody] IList<Profile> profiles)
+        //{
+        //    try
+        //    {
+        //        _logger.LogTrace("Enter {method}", nameof(InsertProfile));
 
-                if (profiles == null || profiles.Count == 0)
-                {
-                    throw new ArgumentException("No valid profile provided");
-                }
+        //        if (profiles == null || profiles.Count == 0)
+        //        {
+        //            throw new ArgumentException("No valid profile provided");
+        //        }
 
-                var profileIds = new List<string>();
-                foreach (var profile in profiles)
-                {
-                    // Generate new ID if not provided
-                    if (string.IsNullOrEmpty(profile.Id))
-                    {
-                        profile.Id = Guid.NewGuid().ToString();
-                    }
+        //        var profileIds = new List<string>();
+        //        foreach (var profile in profiles)
+        //        {
+        //            // Generate new ID if not provided
+        //            if (string.IsNullOrEmpty(profile.Id))
+        //            {
+        //                profile.Id = Guid.NewGuid().ToString();
+        //            }
 
-                    await _api.InsertProfileAsync(profile);
-                    profileIds.Add(profile.Id);
-                }
+        //            await _api.InsertProfileAsync(profile);
+        //            profileIds.Add(profile.Id);
+        //        }
 
-                _logger.LogTrace("Leave {method}", nameof(InsertProfiles));
+        //        _logger.LogTrace("Leave {method}", nameof(InsertProfile));
 
-                // Return the list of profile IDs
-                return profileIds;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{nameof(InsertProfiles)} failed: {ex.Message}");
-                throw; // Rethrow the exception for the middleware to handle
-            }
-        }
+        //        // Return the list of profile IDs
+        //        return profileIds;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"{nameof(InsertProfile)} failed: {ex.Message}");
+        //        throw; // Rethrow the exception for the middleware to handle
+        //    }
+        //}
 
         /// <summary>
         /// Handles HTTP DELETE requests to delete a profile by ID.

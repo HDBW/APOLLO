@@ -1,10 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Apollo\**" />
+    <Content Remove="Apollo\**" />
+    <EmbeddedResource Remove="Apollo\**" />
+    <None Remove="Apollo\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Daenet.ApiKeyAuthenticator" Version="1.1.0" />
@@ -24,10 +31,6 @@
     <ProjectReference Include="..\Apollo.Api\Apollo.Api.csproj" />
     <ProjectReference Include="..\Apollo.GrpcService.UnitTests\Apollo.GrpcService.UnitTests.csproj" />
     <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Apollo\Common\Entities\" />
   </ItemGroup>
 
 </Project>

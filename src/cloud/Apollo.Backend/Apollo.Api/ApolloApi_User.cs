@@ -4,6 +4,7 @@
 using System.Dynamic;
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
+using static Apollo.Api.ErrorCodes;
 
 namespace Apollo.Api
 {
@@ -127,10 +128,12 @@ namespace Apollo.Api
 
 
         /// <summary>
-        /// Creates or Updates the new User instance.
+        /// Creates or Updates the new User.
         /// </summary>
-        /// <param name="user">If the Id is specified, the update will be performed.</param>
-        /// <returns></returns>
+        /// <param name="user">If neither Id nor ObjectId is set, the new user will be created.
+        /// If the Id or ObjectId is specified, the update will be performed.</param>
+        /// <remarks>Please note the update operation with specified Id is is faster and produces lower costs than update operation with ObjectId.</remarks>
+        /// <returns>The Id of the user.</returns>
         public virtual async Task<List<string>> CreateOrUpdateUser(ICollection<User> users)
         {
             try
@@ -158,14 +161,11 @@ namespace Apollo.Api
                             }
                             else
                             {
-                                user.Id = CreateUserId();
-                                await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user)); ;
-                            }
+                                throw new ApolloApiException(UserErrors.CreateOrUpdateUserError, $"The user with the specified ObjectId = {user.ObjectId} does not exist.");
+                             }
                         }
                     }
                 }
-
-
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
 

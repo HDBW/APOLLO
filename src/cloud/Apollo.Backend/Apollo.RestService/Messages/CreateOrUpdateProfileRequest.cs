@@ -6,16 +6,19 @@ using Apollo.Common.Entities;
 
 namespace Apollo.RestService.Apollo.Common.Messages
 {
-    // Define a request message for creating or updating a profile.
+    /// <summary>
+    /// Defines the request for creating or updating a profile.
+    /// </summary>
     public class CreateOrUpdateProfileRequest
     {
+        /// <summary>
+        /// The Id of the user to whom the profile belongs.
+        /// </summary>
+        public string UserId { get; set; }
+
         // Property to hold the profile to be created or updated
         public Profile Profile { get; internal set; }
 
-        //For CreateOrUpdateProfile_CreatesProfilessSuccessfully() in ProfileControllerTests
-        public CreateOrUpdateProfileRequest(Profile profile)
-        {
-            Profile = profile;
-        }
+        
     }
 }

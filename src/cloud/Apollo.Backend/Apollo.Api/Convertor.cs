@@ -367,6 +367,8 @@ namespace Apollo.Api
         /// <returns>A Profile object converted from the expando object.</returns>
         public static Profile ToProfile(ExpandoObject expando)
         {
+            // TODO
+
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
             Profile profile = new Profile
@@ -378,6 +380,28 @@ namespace Apollo.Api
             };
 
             return profile;
+        }
+
+        /// <summary>
+        /// Converts an expando object to a Qualification object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A Profile object converted from the expando object.</returns>
+        public static Qualification ToQualification(ExpandoObject expando)
+        {
+            // TODO
+
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            Qualification quali = new Qualification
+            {
+                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
+                //to do mapp all properties in profile entity ... #Mukit
+
+
+            };
+
+            return quali;
         }
 
 

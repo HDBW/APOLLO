@@ -248,7 +248,7 @@ namespace Daenet.MongoDal
             return result.DeletedCount;
         }
 
-        public async Task<IAsyncCursor<BsonDocument>> ExecuteQueryInternal(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        internal async Task<IAsyncCursor<BsonDocument>> ExecuteQueryInternal(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
         {
             if (skip < 0)
                 skip = 0;
@@ -299,7 +299,7 @@ namespace Daenet.MongoDal
 
             if (fields != null)
             {
-                projection.Add(new BsonElement("_id", 0));
+                projection.Add(new BsonElement("_id", 1));
 
                 foreach (var field in fields)
                 {
@@ -341,6 +341,9 @@ namespace Daenet.MongoDal
                 if (bsonDoc.Contains("Id"))
                     // This is required, because the default mapper of the Mongo C# Driver does not correctlly map BsonDoc._id to T.Id.
                     ((dynamic)doc!).Id = bsonDoc["Id"].ToString();
+                else if (bsonDoc.Contains("_id"))
+                    // This is required, because the default mapper of the Mongo C# Driver does not correctlly map BsonDoc._id to T.Id.
+                    ((dynamic)doc!).Id = bsonDoc["_id"].ToString();
 
                 results.Add(doc);
             }
@@ -779,30 +782,61 @@ namespace Daenet.MongoDal
             return BsonSerializer.Deserialize<T>(document);
         }
 
-        public async Task<long> CountDocumentsAsync(string collectionName, FilterDefinition<BsonDocument> filter)
-        {
-            var coll = GetCollection(collectionName);
-
-            long count = await coll.CountDocumentsAsync(filter);
-
-            return count;
-        }
-
         /// <summary>
-        /// Updates documents in the collection that match the filter with the provided update definition.
+        /// Checks if the document ecists in the collection.
         /// </summary>
-        /// <param name="collectionName">The name of the collection to update documents in.</param>
-        /// <param name="filter">The filter to match documents for the update.</param>
-        /// <param name="updateDefinition">The update definition to apply to matching documents.</param>
-        /// <returns>A task representing the asynchronous update operation.</returns>
-        private async Task<UpdateResult> UpdateAsync(string collectionName, FilterDefinition<BsonDocument> filter, UpdateDefinition<BsonDocument> updateDefinition)
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collectionName"></param>
+        /// <param name="id"></param>
+        /// <param name="idEntityName">Default value _id. Additionally any other alternative property can be used as id.</param>
+        /// <returns>True if document exists.</returns>
+        public async Task<bool> IsExistAsync<T>(string collectionName, string id, string? idEntityName = "_id")
         {
             var coll = GetCollection(collectionName);
 
-            UpdateResult result = await coll.UpdateManyAsync(filter, updateDefinition);
+            var filter = Builders<BsonDocument>.Filter.Eq(idEntityName, id);
 
-            return result;
+            var projection = new BsonDocument();
+
+            projection.Add(new BsonElement("_id", 0));
+
+            var document = await coll.Find(filter).Limit(1).Project(projection).ToCursorAsync();
+
+            if (document == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
+
+
+public async Task<long> CountDocumentsAsync(string collectionName, FilterDefinition<BsonDocument> filter)
+{
+    var coll = GetCollection(collectionName);
+
+    long count = await coll.CountDocumentsAsync(filter);
+
+    return count;
+}
+
+/// <summary>
+/// Updates documents in the collection that match the filter with the provided update definition.
+/// </summary>
+/// <param name="collectionName">The name of the collection to update documents in.</param>
+/// <param name="filter">The filter to match documents for the update.</param>
+/// <param name="updateDefinition">The update definition to apply to matching documents.</param>
+/// <returns>A task representing the asynchronous update operation.</returns>
+private async Task<UpdateResult> UpdateAsync(string collectionName, FilterDefinition<BsonDocument> filter, UpdateDefinition<BsonDocument> updateDefinition)
+{
+    var coll = GetCollection(collectionName);
+
+    UpdateResult result = await coll.UpdateManyAsync(filter, updateDefinition);
+
+    return result;
+}
 
 
     }
