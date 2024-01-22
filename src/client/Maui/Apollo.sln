@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "De.HDBW.Apollo.TestRunner",
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "De.HDBW.Apollo.Data.Tests", "Tests\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.shproj", "{44C8E060-087D-4BB3-A2B4-DCD4C38ECCEC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullableDatePicker", "UI\NullableDatePicker\NullableDatePicker\NullableDatePicker.csproj", "{63E15996-2DB8-46BA-B1CF-2FD2E5FE8A6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{08BEB538-CE19-4DFF-9EB6-B357A57D86B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08BEB538-CE19-4DFF-9EB6-B357A57D86B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08BEB538-CE19-4DFF-9EB6-B357A57D86B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63E15996-2DB8-46BA-B1CF-2FD2E5FE8A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63E15996-2DB8-46BA-B1CF-2FD2E5FE8A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63E15996-2DB8-46BA-B1CF-2FD2E5FE8A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63E15996-2DB8-46BA-B1CF-2FD2E5FE8A6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{B724DC8A-B8AD-4C80-BC94-E72BA4A6BAB6} = {ACCF3B6E-D26E-479E-8AB8-CB312D8CF211}
 		{08BEB538-CE19-4DFF-9EB6-B357A57D86B9} = {ACCF3B6E-D26E-479E-8AB8-CB312D8CF211}
 		{44C8E060-087D-4BB3-A2B4-DCD4C38ECCEC} = {ACCF3B6E-D26E-479E-8AB8-CB312D8CF211}
+		{63E15996-2DB8-46BA-B1CF-2FD2E5FE8A6C} = {8531B12A-0995-4276-83FA-A6401A104005}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
