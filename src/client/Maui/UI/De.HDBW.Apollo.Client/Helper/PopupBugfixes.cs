@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Platform;
 
 namespace De.HDBW.Apollo.Client.Helper

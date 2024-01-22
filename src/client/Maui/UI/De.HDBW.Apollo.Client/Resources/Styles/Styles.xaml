@@ -583,8 +583,19 @@
         </Setter>
     </Style>
 
+    <Style x:Key="InputBorderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="StaticResource" Value="{StaticResource Neutral0}" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="ValidationErrorLabel" TargetType="Label" BasedOn="{StaticResource Noto12}">
         <Setter Property="TextColor" Value="{StaticResource Error}" />
     </Style>
-
+   
+    
 </ResourceDictionary>

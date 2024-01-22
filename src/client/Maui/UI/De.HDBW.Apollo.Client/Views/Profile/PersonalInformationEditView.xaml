@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.PersonalInformationEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
@@ -12,10 +13,7 @@
              Style="{StaticResource DefaultPageStyle}">
     <VerticalStackLayout Padding="24,0">
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" Style="{StaticResource Noto14SemiBold}"/>
-        <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="8" />
-            </Border.StrokeShape>
+        <Border Style="{StaticResource InputBorderStyle}">
             <Entry  Text="{x:Binding Name, Mode=TwoWay}">
                 <Entry.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
@@ -25,13 +23,10 @@
         <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
 
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
-        <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="8" />
-            </Border.StrokeShape>
-            <DatePicker HorizontalOptions="Fill"
+        <Border Style="{StaticResource InputBorderStyle}">
+            <cdp:NullableDatePicker HorizontalOptions="Fill"
                VerticalOptions="Center"
-               Date="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+               NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
         </Border>             
         <HorizontalStackLayout Padding="0,20,0,0">
             <HorizontalStackLayout.GestureRecognizers>

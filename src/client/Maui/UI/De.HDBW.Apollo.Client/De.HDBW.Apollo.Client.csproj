@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>De.HDBW.Apollo.Client</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -18,8 +17,6 @@
     <ApplicationVersion>23</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
     <NeutralLanguage>de</NeutralLanguage>
   </PropertyGroup>
@@ -55,6 +52,7 @@
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
     <None Remove="Resources\Images\add.svg" />
     <None Remove="Resources\Images\calendar.svg" />
+    <None Remove="Resources\Images\calender.svg" />
     <None Remove="Resources\Images\completed.svg" />
     <None Remove="Resources\Images\delete.svg" />
     <None Remove="Resources\Images\deletelight.svg" />
@@ -68,6 +66,7 @@
     <None Remove="Resources\Images\Icon_ProfileWebReference.svg" />
     <None Remove="Resources\Images\Icon_ProfilLicensInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfilQualificationInfo.svg" />
+    <None Remove="Resources\Images\longlist.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
@@ -76,6 +75,7 @@
     <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\resultdeco.svg" />
     <None Remove="Resources\Images\search.svg" />
+    <None Remove="Resources\Images\shortlist.svg" />
     <None Remove="Resources\Images\splashdeco.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\splashdeco2.svg" />
@@ -150,6 +150,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BL\De.HDBW.Apollo.Data\De.HDBW.Apollo.Data.csproj" />
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
+    <ProjectReference Include="..\NullableDatePicker\NullableDatePicker\NullableDatePicker.csproj" />
   </ItemGroup>
   <ItemGroup>
     <MauiXaml Update="Controls\GlobalErrorView.xaml">

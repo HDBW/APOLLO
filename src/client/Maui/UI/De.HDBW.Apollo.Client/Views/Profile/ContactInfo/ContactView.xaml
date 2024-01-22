@@ -17,20 +17,14 @@
     <ScrollView>
         <VerticalStackLayout Margin="24,0">
             <Label Text="{x:Static strings:Resources.Global_ContactType}" Style="{StaticResource Noto14SemiBold}"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Picker ItemsSource="{x:Binding ContactTypes}"
                         ItemDisplayBinding="{x:Binding Text}"
                         SelectedItem="{x:Binding SelectedContactType, Mode=TwoWay}"/>
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_Address}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Address" Text="{x:Binding Address, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_ZipCode}" >
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Address" />
@@ -40,10 +34,7 @@
             <Label Grid.Row="2" Text="{x:Binding [Address]}" Style="{StaticResource ValidationErrorLabel}"/>
             
             <Label Text="{x:Static strings:Resources.Global_ZipCode}" Style="{StaticResource Noto14SemiBold}" Padding="0,2,0,0"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_ZipCode" Text="{x:Binding ZipCode, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}" MaxLength="5" Keyboard="Numeric" >
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="ZipCode" />
@@ -53,10 +44,7 @@
             <Label Grid.Row="2" Text="{x:Binding [ZipCode]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Padding="0,2,0,0"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Region}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="City" />
@@ -66,26 +54,17 @@
             <Label Grid.Row="2" Text="{x:Binding [City]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_Region}" Style="{StaticResource Noto14SemiBold}" Padding="0,2,0,0"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Region" Text="{x:Binding Region, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}" />
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Email}" />
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Email}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Email" Text="{x:Binding Email, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Phone}" Keyboard="Email">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Email" />
@@ -95,10 +74,7 @@
             <Label Grid.Row="2" Text="{x:Binding [Email]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_Phone}" Style="{StaticResource Noto14SemiBold}" Padding="0,2,0,0"/>
-            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Phone" Text="{x:Binding Phone, Mode=TwoWay}" Keyboard="Telephone">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Phone" />

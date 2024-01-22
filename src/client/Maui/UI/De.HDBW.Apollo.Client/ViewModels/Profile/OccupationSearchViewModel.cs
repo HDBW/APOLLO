@@ -112,7 +112,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch))]
-        private async Task Search(string searchtext, CancellationToken token)
+        private Task Search(string searchtext, CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
@@ -142,6 +142,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     UnscheduleWork(worker);
                 }
+
+                return Task.CompletedTask;
             }
         }
 
