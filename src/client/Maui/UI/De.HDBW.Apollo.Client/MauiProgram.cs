@@ -38,7 +38,6 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
-using Microsoft.Maui.Controls.Platform;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;

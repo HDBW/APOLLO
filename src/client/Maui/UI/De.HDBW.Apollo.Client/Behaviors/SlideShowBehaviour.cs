@@ -7,7 +7,7 @@ namespace De.HDBW.Apollo.Client.Behaviors
 {
     public class SlideShowBehaviour : Behavior<CarouselView>
     {
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource? _cts;
 
         protected override void OnAttachedTo(CarouselView bindable)
         {
@@ -48,11 +48,11 @@ namespace De.HDBW.Apollo.Client.Behaviors
                     }
 
                     view.Position = next;
-
                 }
             }
             catch (Exception)
-            { }
+            {
+            }
         }
     }
 }

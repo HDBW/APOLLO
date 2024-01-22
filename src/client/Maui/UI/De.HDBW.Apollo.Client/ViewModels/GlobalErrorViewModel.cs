@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
-using De.HDBW.Apollo.Client.Services;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
