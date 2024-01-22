@@ -109,7 +109,7 @@ namespace Apollo.Common.Entities
 
         // It should be bool but what do I know about education ofc it is not bool
         //[BsonElement("IndividualStartDate")]
-        public DateTime? IndividualStartDate { get; set; }
+        public string? IndividualStartDate { get; set; }
 
         //TODO: Review
         /// <summary>
