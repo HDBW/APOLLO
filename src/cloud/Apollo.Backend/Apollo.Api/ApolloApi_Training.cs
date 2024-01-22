@@ -4,6 +4,7 @@
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 
 namespace Apollo.Api
 {
@@ -68,11 +69,12 @@ namespace Apollo.Api
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-                if (res == null || !res.Any())
-                {
-                    // No matching records found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.");
-                }
+                // Removed. This is not needed. If no results are found, an empty list will be returned.
+                //if (res == null || !res.Any())
+                //{
+                //    // No matching records found, throw a specific exception
+                //    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.");
+                //}
 
                 // Convert results to a list of typed Training objects
                 //var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
@@ -404,13 +406,13 @@ namespace Apollo.Api
         /// <param name="training">The training identifier must be specified if the update operation is performed.
         /// If the identifier not specified </param>
         /// <returns>Returns the </returns>
-        public virtual async Task<IList<string>> CreateOrUpdateTraining(ICollection<Training> trainings)
+        public virtual async Task<IList<string>> CreateOrUpdateTrainingAsync(ICollection<Training> trainings)
         {
             try
             {
                 List<string> ids = new List<string>();
 
-                _logger?.LogTrace($"{this.User} entered {nameof(CreateOrUpdateTraining)}");
+                _logger?.LogTrace($"{this.User} entered {nameof(CreateOrUpdateTrainingAsync)}");
 
                 if (trainings == null || !trainings.Any())
                 {
@@ -423,21 +425,16 @@ namespace Apollo.Api
                     if (string.IsNullOrEmpty(training.Id))
                     {
                         // Generate a new ID for the training
-                        var id = CreateTrainingId();
-                        ids.Add(id);
+                        var id = CreateTrainingId();                        
                         training.Id = id;
                     }
+
+                    ids.Add(training.Id);
                 }
 
                 await _dal.InsertManyAsync(ApolloApi.GetCollectionName<Training>(), trainings.Select(t => Convertor.Convert(t)).ToArray());
 
-                if (ids.Count == 0)
-                {
-                    // No new training IDs generated, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No new training records were created.");
-                }
-
-                _logger?.LogTrace($"{this.User} completed {nameof(CreateOrUpdateTraining)}");
+                _logger?.LogTrace($"{this.User} completed {nameof(CreateOrUpdateTrainingAsync)}");
 
                 return ids;
             }
@@ -448,7 +445,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(CreateOrUpdateTraining)}: {ex.Message}");
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(CreateOrUpdateTrainingAsync)}: {ex.Message}");
 
                 // Throw a more generic exception for unexpected errors
                 throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);

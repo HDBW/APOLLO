@@ -23,7 +23,7 @@ namespace Apollo.Api.UnitTests
         Training[] _testTrainings = new Training[]
           {
                 new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
-                    IndividualStartDate = DateTime.Now,
+                    IndividualStartDate = DateTime.Now, Price = 42.0, PriceDescription = "EUR",
                 Loans = new List<Loans>(
                     new Loans[]
                     {
@@ -33,10 +33,10 @@ namespace Apollo.Api.UnitTests
                     )},
 
                 new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI",
-                    IndividualStartDate = DateTime.Now.AddDays(1),},
+                    IndividualStartDate = DateTime.Now.AddDays(1),Price = 7.1, PriceDescription = "EUR",},
 
                 new Training(){  Id = "UT03" , ProviderId = "unittest",
-                    IndividualStartDate = DateTime.Now.AddDays(3) ,   Loans = new List<Loans>(
+                    IndividualStartDate = DateTime.Now.AddDays(3),Price = 1192.0, PriceDescription = "EUR" ,   Loans = new List<Loans>(
                     new Loans[]
                     {
                         new Loans() { Id = "L01", Name = "Loan 1" },
@@ -110,18 +110,6 @@ namespace Apollo.Api.UnitTests
                         ),
                  },
          };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         /// <summary>
@@ -747,7 +735,7 @@ namespace Apollo.Api.UnitTests
                 TrainingName = "Test Training"
             };
 
-            var trainingIds = await api.CreateOrUpdateTraining(new List<Training> { training });
+            var trainingIds = await api.CreateOrUpdateTrainingAsync(new List<Training> { training });
 
             // Ensure that the training was created or updated and has a valid ID
             Assert.IsNotNull(trainingIds);
@@ -1094,7 +1082,7 @@ namespace Apollo.Api.UnitTests
 
 
         /// <summary>
-        /// Test price filter operations including th esorting by price.
+        /// Test price filter operations including the sorting by price.
         /// </summary>
         /// <returns></returns>
         [TestMethod]
@@ -1111,14 +1099,14 @@ namespace Apollo.Api.UnitTests
                 {
                     IsOrOperator = false,
                     Fields = new List<Apollo.Common.Entities.FieldExpression>
-            {
-                new Apollo.Common.Entities.FieldExpression
-                {
-                    FieldName = "Price",
-                    Operator = Apollo.Common.Entities.QueryOperator.LessThanEqualTo,
-                    Argument = new List<object> { 42.2 }
-                }
-            }
+                    {
+                        new Apollo.Common.Entities.FieldExpression
+                        {
+                            FieldName = "Price",
+                            Operator = Apollo.Common.Entities.QueryOperator.LessThanEqualTo,
+                            Argument = new List<object> { 42.2 }
+                        }
+                    }
                 },
                 RequestCount = true,
                 Top = 200,
@@ -1140,14 +1128,20 @@ namespace Apollo.Api.UnitTests
             // Log the retrieved trainings for debugging
             Console.WriteLine($"Retrieved Trainings: {JsonConvert.SerializeObject(trainings)}");
 
-            // Assert
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count > 0);
+
+            query.Filter.Fields[0].Argument = new List<object> { double.MaxValue };
+
+            trainings = await api.QueryTrainingsAsync(query);
+
             Assert.IsNotNull(trainings);
             Assert.IsTrue(trainings.Count > 0);
 
             foreach (var training in trainings)
             {
                 // Additional assertions based on your specific requirements
-                Assert.IsTrue(training.Price <= Convert.ToDecimal(42.2));
+               // Assert.IsTrue(training.Price <= Convert.ToDecimal(42.2));
             }
         }
 

@@ -52,7 +52,7 @@ namespace Apollo.RestService.UnitTests
             _mockApi.Setup(api => api.GetTraining(trainingId)).ReturnsAsync(expectedTraining);
 
             // Act
-            var result = await _controller.GetTraining(trainingId) as GetTrainingResponse;
+            var result = await _controller.GetTrainingAsync(trainingId) as GetTrainingResponse;
 
             // Assert
             Assert.IsNotNull(result);
@@ -98,12 +98,12 @@ namespace Apollo.RestService.UnitTests
             var trainingList = new List<Training> { newTraining };
 
             // Mock the behavior of the CreateOrUpdateTraining method
-            _mockApi.Setup(api => api.CreateOrUpdateTraining(It.IsAny<ICollection<Training>>()))
+            _mockApi.Setup(api => api.CreateOrUpdateTrainingAsync(It.IsAny<ICollection<Training>>()))
                     .Callback<ICollection<Training>>(trainings => trainings.First().Id = "newId") // Update the ID of the first training object in the collection
                     .ReturnsAsync(new List<string> { "newId" }); // Return a list with a single ID
 
             // Act
-            var result = await _controller.CreateOrUpdateTraining(new CreateOrUpdateTrainingRequest { Training = newTraining }) as CreateOrUpdateTrainingResponse;
+            var result = await _controller.CreateOrUpdateTrainingAsync(new CreateOrUpdateTrainingRequest { Training = newTraining }) as CreateOrUpdateTrainingResponse;
 
             // Assert
             Assert.IsNotNull(result);
@@ -120,11 +120,11 @@ namespace Apollo.RestService.UnitTests
         {
             // Arrange
             var trainingsToInsert = new List<Training> { new Training { TrainingName = "Training 1" } };
-            _mockApi.Setup(api => api.CreateOrUpdateTraining(It.IsAny<ICollection<Training>>()))
+            _mockApi.Setup(api => api.CreateOrUpdateTrainingAsync(It.IsAny<ICollection<Training>>()))
                     .ReturnsAsync(new List<string> { "generatedId" });  // Mocking the expected behavior of the API
 
             // Act
-            var result = await _controller.InsertTrainings(trainingsToInsert);
+            var result = await _controller.InsertTrainingsAsync(trainingsToInsert);
 
             // Assert
             Assert.IsNotNull(result);
@@ -146,7 +146,7 @@ namespace Apollo.RestService.UnitTests
                     .ReturnsAsync(1);
 
             // Act
-            await _controller.Delete(trainingId);
+            await _controller.DeleteAsync(trainingId);
 
             // Assert
             _mockApi.Verify(api => api.DeleteTrainings(It.Is<string[]>(ids => ids.Contains(trainingId))), Times.Once());

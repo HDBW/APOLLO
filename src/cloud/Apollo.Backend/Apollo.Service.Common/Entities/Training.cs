@@ -117,7 +117,7 @@ namespace Apollo.Common.Entities
         /// Since comparison is done by more information such as where does it happens, what does it include ...
         /// </summary>
         //[BsonElement("Price")]
-        public decimal? Price { get; set; } 
+        public double? Price { get; set; } 
 
         // [BsonElement("PriceDescription")]
         public string? PriceDescription { get; set; }
