@@ -23,6 +23,14 @@ namespace De.HDBW.Apollo.Data.Services
                         var user = JsonSerializer.Deserialize<User>(JsonSerializer.Serialize(userRequest?.User));
                         _user = user;
                         _user.Id = _userId;
+                        foreach (var contact in _user.ContactInfos)
+                        {
+                            if(contact.Id == null)
+                            {
+                                contact.Id = $"{nameof(Contact)}-{Guid.NewGuid()}";
+                            }
+                        }
+
                         var response = new CreateOrUpdateUserResponse();
                         response.Result = _userId;
                         return new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response) };
