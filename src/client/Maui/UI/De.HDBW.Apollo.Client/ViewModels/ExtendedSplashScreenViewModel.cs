@@ -23,18 +23,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
+            ILogger<ExtendedSplashScreenViewModel> logger,
             IUserService userService,
             IPreferenceService preferenceService,
             ISessionService sessionService,
-            ILogger<ExtendedSplashScreenViewModel> logger)
+            IAuthService authService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(userService);
             ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(authService);
             UserService = userService;
             PreferenceService = preferenceService;
             SessionService = sessionService;
+            AuthService = authService;
         }
 
         public bool ConfirmedDataUsage
@@ -88,6 +91,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IPreferenceService PreferenceService { get; }
 
         private ISessionService SessionService { get; }
+
+        private IAuthService AuthService { get; }
 
         protected override void RefreshCommands()
         {
