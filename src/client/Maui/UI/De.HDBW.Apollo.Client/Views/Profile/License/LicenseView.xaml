@@ -12,18 +12,35 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
-    <VerticalStackLayout>
-        <Label Text="{x:Static strings:Resources.Global_IssueDate}"/>
-        <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-        <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-            <Label Text="{x:Static strings:Resources.Global_Expires}"/>
-            <Switch x:Name="Switch" IsToggled="True" />
-        </FlexLayout>
-        <VerticalStackLayout IsVisible="{x:Binding IsToggled, Source={x:Reference Switch}}">
-            <Label Text="{x:Static strings:Resources.Global_ExpireDate}"/>
-            <DatePicker Date="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+    <ScrollView>
+        <VerticalStackLayout Margin="24,0">
+            <Label Text="{x:Static strings:Resources.Global_IssueDate}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+
+                <DatePicker Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+            </Border>
+
+            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+                <Label Text="{x:Static strings:Resources.Global_Expires}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+                <Switch x:Name="Switch" IsToggled="True" />
+            </FlexLayout>
+
+            <VerticalStackLayout IsVisible="{x:Binding IsToggled, Source={x:Reference Switch}}">
+                <Label Text="{x:Static strings:Resources.Global_ExpireDate}"/>
+                <DatePicker Date="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+            </VerticalStackLayout>
+
+            <Label Text="{x:Static strings:Resources.Global_Discribtion}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
+            <Border Padding="16,0" BackgroundColor="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+            </Border>
         </VerticalStackLayout>
-        <Label Text="{x:Static strings:Resources.Global_Discribtion}"/>
-        <Entry Text="{x:Binding Description, Mode=TwoWay}" />
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
