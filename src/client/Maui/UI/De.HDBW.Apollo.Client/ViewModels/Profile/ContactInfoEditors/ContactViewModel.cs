@@ -123,14 +123,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             _contact.Mail = Email ?? string.Empty;
             _contact.City = City ?? string.Empty;
             _contact.ZipCode = ZipCode ?? string.Empty;
+            _contact.Country = Country ?? string.Empty;
+            _contact.Region = Region ?? string.Empty;
             if (string.IsNullOrWhiteSpace(_contact.Id))
             {
                 _user.ContactInfos.Add(_contact);
             }
-
-            // TODO: Wait for new Contract
-            //_contact.Country = Country ?? string.Empty;
-            //_contact.Region = Region ?? string.Empty;
 
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))
@@ -149,6 +147,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
             IsDirty = false;
             return !IsDirty;
+        }
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            DeleteCommand?.NotifyCanExecuteChanged();
         }
 
         partial void OnSelectedContactTypeChanged(InteractionEntry? value)
@@ -186,12 +190,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             IsDirty = true;
         }
 
-        protected override void RefreshCommands()
-        {
-            base.RefreshCommands();
-            DeleteCommand?.NotifyCanExecuteChanged();
-        }
-
         private void LoadonUIThread(User? user, Contact? contact, List<InteractionEntry> contactTypes)
         {
             _user = user;
@@ -201,9 +199,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             Email = _contact?.Mail;
             City = _contact?.City;
             ZipCode = _contact?.ZipCode;
-            // TODO: Wait for new Contract
-            //Country = _contact?.Country;
-            //Region = _contact?.Region;
+            Country = _contact?.Country;
+            Region = _contact?.Region;
 
             ContactTypes = new ObservableCollection<InteractionEntry>(contactTypes);
             SelectedContactType = (_contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => ((ContactType?)x.Data) == _contact.ContactType) : ContactTypes.FirstOrDefault();

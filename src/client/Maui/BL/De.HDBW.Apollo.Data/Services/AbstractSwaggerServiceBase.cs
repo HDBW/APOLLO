@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.Data.Services
 {
     public abstract class AbstractSwaggerServiceBase
     {
-        protected static HttpClient? httpClient;
+        protected static HttpClient? _httpClient;
 
         public AbstractSwaggerServiceBase(
             ILogger logger,
@@ -26,9 +26,9 @@ namespace De.HDBW.Apollo.Data.Services
             ArgumentNullException.ThrowIfNull(httpClientHandler);
             Logger = logger;
             BaseUri = baseUrl;
-            if (httpClient == null)
+            if (_httpClient == null)
             {
-                httpClient = new HttpClient(httpClientHandler);
+                _httpClient = new HttpClient(httpClientHandler);
                 SetupHttpClient(authKey);
             }
         }
@@ -39,7 +39,7 @@ namespace De.HDBW.Apollo.Data.Services
         {
             get
             {
-                return httpClient;
+                return _httpClient;
             }
         }
 
@@ -308,14 +308,14 @@ namespace De.HDBW.Apollo.Data.Services
         {
             try
             {
-                if (httpClient == null)
+                if (_httpClient == null)
                 {
-                    httpClient = new HttpClient();
+                    _httpClient = new HttpClient();
                 }
 
-                httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.Add("ApiKey", authKey);
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                _httpClient.DefaultRequestHeaders.Clear();
+                _httpClient.DefaultRequestHeaders.Add("ApiKey", authKey);
+                _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             }
             catch (Exception ex)
             {

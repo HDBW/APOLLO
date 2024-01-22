@@ -50,20 +50,20 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         protected abstract string GetFristLine(TU data);
 
-        protected virtual bool CanDelete()
+        private bool CanDelete()
         {
             return CanDeleteHandle?.Invoke(this) ?? false;
+        }
+
+        private bool CanEdit()
+        {
+            return CanEditHandle?.Invoke(this) ?? false;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
         private Task Delete()
         {
             return DeleteHandle?.Invoke(this) ?? Task.CompletedTask;
-        }
-
-        protected virtual bool CanEdit()
-        {
-            return CanEditHandle?.Invoke(this) ?? false;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanEdit))]

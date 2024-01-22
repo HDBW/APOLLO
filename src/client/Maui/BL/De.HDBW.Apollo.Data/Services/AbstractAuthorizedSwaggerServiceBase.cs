@@ -19,16 +19,16 @@ namespace De.HDBW.Apollo.Data.Services
         {
             try
             {
-                if (httpClient?.DefaultRequestHeaders == null)
+                if (_httpClient?.DefaultRequestHeaders == null)
                 {
                     return;
                 }
 
                 var key = "Authorization";
 
-                if (httpClient.DefaultRequestHeaders.Contains(key))
+                if (_httpClient.DefaultRequestHeaders.Contains(key))
                 {
-                    httpClient.DefaultRequestHeaders.Remove(key);
+                    _httpClient.DefaultRequestHeaders.Remove(key);
                 }
 
                 if (string.IsNullOrWhiteSpace(authorizationHeader))
@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Data.Services
                     return;
                 }
 
-                httpClient?.DefaultRequestHeaders.Add(key, authorizationHeader);
+                _httpClient?.DefaultRequestHeaders.Add(key, authorizationHeader);
             }
             catch (Exception ex)
             {

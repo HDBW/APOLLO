@@ -29,10 +29,8 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             items.Add(data.Address);
             items.Add(data.City);
             items.Add(data.ZipCode);
-
-            //TODO:
-            //items.Add(data.Region);
-            //items.Add(data.Country);
+            items.Add(data.Region);
+            items.Add(data.Country);
             items.Add(data.Mail);
             items.Add(data.Phone);
             return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x)));

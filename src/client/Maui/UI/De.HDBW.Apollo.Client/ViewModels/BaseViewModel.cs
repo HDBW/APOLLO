@@ -15,7 +15,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public abstract partial class BaseViewModel : ObservableValidator, IQueryAttributable, IDataErrorInfo
     {
-        [ObservableProperty()]
+        [ObservableProperty]
         private string _error;
 
         public BaseViewModel(

@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Data.Services
                         _user.Id = _userId;
                         foreach (var contact in _user.ContactInfos)
                         {
-                            if(contact.Id == null)
+                            if (contact.Id == null)
                             {
                                 contact.Id = $"{nameof(Contact)}-{Guid.NewGuid()}";
                             }
