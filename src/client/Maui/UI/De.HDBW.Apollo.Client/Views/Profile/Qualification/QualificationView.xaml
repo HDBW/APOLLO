@@ -18,9 +18,9 @@
         <VerticalStackLayout Margin="24,0">
             <Label Text="{x:Static strings:Resources.Global_Qualification}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Name, Mode=TwoWay}">
+                <Entry x:Name="PART_Name" Text="{x:Binding Name, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Description}" >
                     <Entry.Behaviors>
-                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name"/>
                     </Entry.Behaviors>
                 </Entry>
             </Border>
@@ -28,7 +28,7 @@
 
             <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}"  Margin="0,2,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" />
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_IssueDate}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" />

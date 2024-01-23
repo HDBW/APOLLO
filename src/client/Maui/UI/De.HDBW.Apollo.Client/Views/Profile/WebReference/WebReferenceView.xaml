@@ -17,23 +17,23 @@
         <VerticalStackLayout Margin="24,0">
             <Label Text="{x:Static strings:Resources.Global_Title}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Description, Mode=TwoWay}">
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}"  ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Url}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Grid.Row="2" Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}"/>
 
-            <Label Text="{x:Static strings:Resources.Global_URL}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_URL}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Url, Mode=TwoWay}">
+                <Entry x:Name="PART_Url" Text="{x:Binding Url, Mode=TwoWay}" Keyboard="Url">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Url" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Grid.Row="2" Text="{x:Binding [Url]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [Url]}" Style="{StaticResource ValidationErrorLabel}"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
