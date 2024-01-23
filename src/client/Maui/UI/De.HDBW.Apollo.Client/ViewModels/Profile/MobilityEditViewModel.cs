@@ -5,13 +5,16 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
+using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
-    public partial class MobilityEditViewModel : BaseViewModel
+    public partial class MobilityEditViewModel : AbstractSaveDataViewModel
     {
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _willingsToTravel = new ObservableCollection<InteractionEntry>();
@@ -27,14 +30,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         private Mobility? _mobility;
 
+        private User? _user;
+
         public MobilityEditViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<MobilityEditViewModel> logger)
+            ILogger<MobilityEditViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            UserRepository = userRepository;
+            UserService = userService;
         }
+
+        private IUserRepository UserRepository { get; }
+
+        private IUserService UserService { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -80,8 +93,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     driverLicenses.Add(InteractionEntry.Import(Resources.Strings.Resources.DriversLicense_Class2, DriversLicense.Class2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     driverLicenses.Add(InteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorASF, DriversLicense.InstructorASF, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     driverLicenses.Add(InteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorASP, DriversLicense.InstructorASP, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+
+                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
+                    var mobility = user?.Profile?.MobilityInfo;
+
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(willingsToTravel, driverLicenses), worker.Token);
+                        () => LoadonUIThread(user, mobility, willingsToTravel, driverLicenses), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -102,8 +119,40 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        private void LoadonUIThread(List<InteractionEntry> willingsToTravel, List<InteractionEntry> driverLicenses)
+        protected override async Task<bool> SaveAsync(CancellationToken token)
         {
+            if (_user == null || !IsDirty)
+            {
+                return !IsDirty;
+            }
+
+            token.ThrowIfCancellationRequested();
+            _user.Profile = _user.Profile ?? new UserProfile();
+            var mobility = _mobility ?? new Mobility();
+
+            var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
+            if (string.IsNullOrWhiteSpace(response))
+            {
+                Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
+                return !IsDirty;
+            }
+
+            _user.Id = response;
+            var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
+            if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
+            {
+                Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
+                return !IsDirty;
+            }
+
+            IsDirty = false;
+            return !IsDirty;
+        }
+
+        private void LoadonUIThread(User? user, Mobility? mobility, List<InteractionEntry> willingsToTravel, List<InteractionEntry> driverLicenses)
+        {
+            _mobility = mobility;
+            _user = user;
             WillingsToTravel = new ObservableCollection<InteractionEntry>(willingsToTravel);
             SelectedWillingToTravel = WillingsToTravel.FirstOrDefault();
             DriverLicenses = new ObservableCollection<InteractionEntry>(driverLicenses);
