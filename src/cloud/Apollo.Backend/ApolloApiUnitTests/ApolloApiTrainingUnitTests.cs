@@ -366,7 +366,7 @@ namespace Apollo.Api.UnitTests
       }
     ],
     ""trainingType"": ""<string>"",
-    ""individualStartDate"": ""<string>"",
+    ""individualStartDate"": ""2025-01-01T00:00:00.000Z"",
     ""price"": 22.22,
     ""priceDescription"": ""<string>"",
     ""accessibilityAvailable"": true,
