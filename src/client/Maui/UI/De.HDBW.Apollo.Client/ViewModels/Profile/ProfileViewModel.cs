@@ -355,7 +355,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute, WebReferenceIcon));
             }
 
-            if (!(user.Profile?.MobilityInfo?.WillingToTravel == null))
+            if ((user.Profile?.MobilityInfo?.WillingToTravel == null))
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
             }
