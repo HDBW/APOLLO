@@ -7,6 +7,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
     public class Apprenticeship
     {
+        public string? Id { get; set; }
+
         // Apprenticeship_Kind_filtered.txt
         // Freitext oder Vorschlagsliste
         public Occupation Kind { get; set; }

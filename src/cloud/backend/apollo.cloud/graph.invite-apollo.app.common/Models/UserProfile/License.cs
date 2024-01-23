@@ -12,6 +12,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
     /// </summary>
     public class License
     {
+        public string? Id { get; set; }
+
         /// <summary>
         /// License as of defined in the BA Dataset for Machine Learning.
         /// See Sample Data for more Information.

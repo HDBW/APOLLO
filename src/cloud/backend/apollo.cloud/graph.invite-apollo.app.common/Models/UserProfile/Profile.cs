@@ -30,7 +30,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<CareerInfo> CareerInfos { get; set; }
+        public List<CareerInfo> CareerInfos { get; set; } = new List<CareerInfo>();
 
         /// <summary>
         /// This is the education and apprenticeship information of the User.
@@ -38,7 +38,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <remarks>
         ///     Relevance <value>1</value>
         /// </remarks>
-        public List<EducationInfo> EducationInfos { get; set; }
+        public List<EducationInfo> EducationInfos { get; set; } = new List<EducationInfo>();
 
         /// <summary>
         /// This is the qualifications a User has.
@@ -50,7 +50,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<Qualification> Qualifications { get; set; }
+        public List<Qualification> Qualifications { get; set; } = new List<Qualification>();
 
         /// <summary>
         /// This is the driving license information of the User.
@@ -58,7 +58,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <remarks>
         ///     Relevance <value>0</value>
         /// </remarks>
-        public Mobility MobilityInfo { get; set; }
+        public Mobility MobilityInfo { get; set; } = new Mobility();
 
         /// <summary>
         /// This is the Language Skills of the User.
@@ -66,7 +66,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<Language> LanguageSkills { get; set; }
+        public List<Language> LanguageSkills { get; set; } = new List<Language>();
 
         /// <summary>
         /// Skills that are directly associated to the User.
@@ -78,14 +78,14 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// </remarks>
         /// <Note>Not part of UI</Note>
         /// <Note>Backend only</Note>
-        public List<Skill> Skills { get; set; }
+        public List<Skill> Skills { get; set; } = new List<Skill>();
 
 
         /// <summary>
         /// This is for the Backend only to classify the Occupations a User has.
         /// Should not be shared with the Client or the User.
         /// </summary>
-        public List<Occupation> Occupations { get; set; }
+        public List<Occupation> Occupations { get; set; } = new List<Occupation>();
 
         /// <summary>
         /// Knowledge is part of the original BA Dataset for Machine Learning.
@@ -97,7 +97,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// </remarks>
         /// <Note>Not part of UI</Note>
         /// <Note>Backend only</Note>
-        public Knowledge Knowledge { get; set; }
+        public Knowledge Knowledge { get; set; } = new Knowledge();
 
         /// <summary>
         /// Apprenticeship is part of the original BA Dataset for Machine Learning.
@@ -109,7 +109,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// </remarks>
         /// <Note>Not part of UI</Note>
         /// <Note>Backend only</Note>
-        public List<Apprenticeship> Apprenticeships { get; set; }
+        public List<Apprenticeship> Apprenticeships { get; set; } = new List<Apprenticeship>();
 
         /// <summary>
         /// License that are directly associated to the User.
@@ -120,7 +120,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <remarks>
         ///     Relevance <value>2</value>
         /// </remarks>
-        public List<License> Licenses { get; set; }
+        public List<License> Licenses { get; set; } = new List<License>();
 
         // not in ui
         public LeadershipSkills? LeadershipSkills { get; set; }
@@ -133,6 +133,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <remarks>
         ///     Relevance <value>1</value>
         /// </remarks>
-        public List<WebReference> WebReferences { get; set; }
+        public List<WebReference> WebReferences { get; set; } = new List<WebReference>();
     }
 }
