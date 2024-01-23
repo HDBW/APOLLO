@@ -382,6 +382,46 @@ namespace Apollo.Api
             return profile;
         }
 
+
+        /// <summary>
+        /// Converts an expando object to a List object.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A list object converted from the expando object.</returns>
+        public static List ToList(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            List list = new List
+            {
+                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
+
+                Items = new List<ListItem>(),
+            };
+
+            if (dict.ContainsKey("Items"))
+            {
+                var expLst = dict["Items"] as IList<ExpandoObject>;
+
+                if (expLst != null)
+                {
+                    foreach (var item in expLst)
+                    {
+                        ListItem listItem = new ListItem();
+
+                        IDictionary<string, object> expItem = item as IDictionary<string, object>;
+
+                        listItem.Name = dict.ContainsKey(nameof(ListItem.Name)) ? (string)dict[nameof(ListItem.Name)] : "";
+                        listItem.Name = dict.ContainsKey(nameof(ListItem.Description)) ? (string)dict[nameof(ListItem.Description)] : "";
+
+                        list.Items.Add(listItem);
+                    }
+                }
+            }
+
+            return list;
+        }
+
         /// <summary>
         /// Converts an expando object to a Qualification object.
         /// </summary>

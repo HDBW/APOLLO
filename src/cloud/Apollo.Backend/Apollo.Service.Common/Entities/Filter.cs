@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace Apollo.Common.Entities
 {
+    /// <summary>
+    /// Defines the set of field expressions that are used to filter items.
+    /// </summary>
     public class Filter
     {
-
         /// <summary>
         /// Specifies if FilterExpressions will be OR-ed or AND-ed.
         /// </summary>
@@ -97,8 +99,6 @@ namespace Apollo.Common.Entities
             });
 
             return this;
-        }
-
-      
+        }      
     }
 }

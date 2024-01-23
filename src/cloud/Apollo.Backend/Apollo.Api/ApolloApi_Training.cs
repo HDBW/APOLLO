@@ -194,41 +194,6 @@ namespace Apollo.Api
             //}
 
 
-            /// <summary>
-            /// Retrieves a paginated list of trainings based on a specified query filter.
-            /// </summary>
-            /// <param name="query">The query object containing filter criteria for the trainings.</param>
-            /// <param name="pageNumber">Page number for pagination.</param>
-            /// <param name="pageSize">Number of items per page.</param>
-            /// <returns>Task that represents the asynchronous operation, containing a list of paginated Training objects.</returns>
-            public async Task<IList<Training>> QueryTrainingsPaginated(Query query, int pageNumber, int pageSize)
-            {
-            try
-            {
-                query.Skip = (pageNumber - 1) * pageSize;
-                query.Top = pageSize;
-
-                var res = await _dal.ExecuteQuery(GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
-
-                if (res == null)
-                {
-                    // No results found, throw a specific exception
-                    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "No results found for paginated query.");
-                }
-
-                return Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
-            }
-            catch (ApolloApiException)
-            {
-               
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsPaginatedErr, "Error while querying trainings paginated", ex);
-            }
-        }
-
 
 
         // <summary>

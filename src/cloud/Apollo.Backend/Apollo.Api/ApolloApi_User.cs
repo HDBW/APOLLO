@@ -173,7 +173,7 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-
+                // TODO Logging is missing
                 throw;
             }
             catch (Exception ex)

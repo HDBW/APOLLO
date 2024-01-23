@@ -51,6 +51,8 @@ namespace Apollo.Api
             public const int NoUsersToDelete = UserCodeBase + 170;
             public const int UserIdNotNeeded = UserCodeBase + 171;
 
+            public static int CreateOrUpdateList { get; internal set; }
+
             public static void HandleException(Exception ex)
             {
                 throw new ApolloApiException(UserCodeBase, "User Error occurred", ex);
@@ -84,12 +86,26 @@ namespace Apollo.Api
             }
         }
 
+        public static class ListErrors
+        {
+            public const int ListCodeBase = 400;
 
-        public static class GeneralErrors
+            public const int GetListError = ListCodeBase + 1;
+
+            public const int QueryListError = ListCodeBase + 5;
+
+            public const int CreateOrUpdateListError = ListCodeBase + 10;
+
+            public const int DeleteListError = ListCodeBase + 15;
+        }
+
+            public static class GeneralErrors
         {
             public const int OperationFailed = 1000;
             
             public const int InvalidId = 1001;
+
+            public static int InvalidQuery = 1002;
             // Add more general error codes as needed...
         }
 

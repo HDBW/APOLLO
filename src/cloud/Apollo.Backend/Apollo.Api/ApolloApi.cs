@@ -231,9 +231,15 @@ namespace Apollo.Api
             return $"{FormatId(nameof(Profile), userId)}_v01";
         }
 
-        private static string CreateQualificationId()
+
+        /// <summary>
+        /// Creates the Id for list of items.
+        /// </summary>
+        /// <param name="itemType">The type of the item in the list</param>
+        /// <returns></returns>
+        private static string CreateListId(string itemType)
         {
-            return CreateId(nameof(User));
+            return CreateId($"{itemType}-{nameof(List)}");
         }
 
 

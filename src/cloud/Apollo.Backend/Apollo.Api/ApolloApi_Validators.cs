@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Apollo.Common.Entities;
 
 namespace Apollo.Api
 {
@@ -28,6 +29,24 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.GeneralErrors.InvalidId, "Invalid Id.");
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Validates the query.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="throwIfInvalid"></param>
+        /// <returns></returns>
+        /// <exception cref="ApolloApiException"></exception>
+        public bool IsQueryValid(Query query, bool throwIfInvalid = false)
+        {
+            if (query == null && throwIfInvalid)
+                throw new ApolloApiException(ErrorCodes.GeneralErrors.InvalidQuery, "Invalid query.");
+            else
+                return false;
+
+            return true;;
         }
     }
 }

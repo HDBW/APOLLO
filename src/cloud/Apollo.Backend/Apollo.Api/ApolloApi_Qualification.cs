@@ -24,7 +24,7 @@ namespace Apollo.Api
         /// <param name="query">The filter that specifies profiles to be retrieved.</param>
         /// <returns>List of profiles.</returns>
         // TODO: More specific exception handeling for this method
-        public virtual async Task<IList<Qualification>> QueryQualificationssAsync(Query query)
+        public virtual async Task<IList<Qualification>> QueryQualificationssAsync(string lng, Query query)
         {
             try
             {
