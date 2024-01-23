@@ -4,6 +4,7 @@
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -144,7 +145,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
 
             token.ThrowIfCancellationRequested();
-            _user.Birthdate = BirthDate != null ? new DateTime(BirthDate.Value.Year, BirthDate.Value.Month, BirthDate.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
+            _user.Birthdate = BirthDate.ToDTODate();
             _user.Name = Name ?? string.Empty;
             _user.Disabilities = Disabilities;
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
@@ -192,7 +193,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             _user = user;
             Name = user?.Name;
-            BirthDate = user?.Birthdate != null ? new DateTime(user.Birthdate.Value.Year, user.Birthdate.Value.Month, user.Birthdate.Value.Day, 0, 0, 0, DateTimeKind.Local) : null;
+            BirthDate = user?.Birthdate.ToUIDate();
             Disabilities = user?.Disabilities ?? false;
             IsDirty = false;
             ValidateCommand?.Execute(null);

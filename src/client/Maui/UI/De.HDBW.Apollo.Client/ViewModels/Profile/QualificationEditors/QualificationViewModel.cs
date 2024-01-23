@@ -4,6 +4,7 @@
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -148,11 +149,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             token.ThrowIfCancellationRequested();
 
             _user.Profile = _user.Profile ?? new UserProfile();
-            _user.Profile.Qualifications = _user.Profile.Qualifications ?? new List<Qualification>();
             var qualification = _qualification ?? new Qualification();
             qualification.Description = Description;
-            qualification.ExpirationDate = End != null ? new DateTime(End.Value.Year, End.Value.Month, End.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
-            qualification.IssueDate = Start != null ? new DateTime(Start.Value.Year, Start.Value.Month, Start.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
+            qualification.ExpirationDate = End.ToDTODate();
+            qualification.IssueDate = Start.ToDTODate();
             if (!_user.Profile.Qualifications.Contains(qualification))
             {
                 _user.Profile.Qualifications.Add(qualification);
@@ -200,8 +200,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             _qualification = qualification;
             _user = user;
             Description = qualification?.Description;
-            Start = qualification?.IssueDate;
-            End = qualification?.ExpirationDate;
+            Start = qualification?.IssueDate.ToUIDate();
+            End = qualification?.ExpirationDate.ToUIDate();
             IsDirty = false;
             ValidateCommand?.Execute(null);
         }
