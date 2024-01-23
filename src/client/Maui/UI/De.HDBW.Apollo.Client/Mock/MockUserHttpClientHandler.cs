@@ -3,6 +3,7 @@
 
 using System.Net.Http.Json;
 using System.Text.Json;
+using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using License = Invite.Apollo.App.Graph.Common.Models.UserProfile.License;
@@ -24,7 +25,7 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         var jsonContent = request.Content as JsonContent;
                         var userRequest = jsonContent?.Value as CreateOrUpdateUserRequest;
-                        var user = JsonSerializer.Deserialize<User>(JsonSerializer.Serialize(userRequest?.User));
+                        var user = userRequest?.User.Serialize()!.Deserialize<User>();
                         _user = user!;
                         _user.Id = _userId;
                         foreach (var contact in _user.ContactInfos)
@@ -39,7 +40,7 @@ namespace De.HDBW.Apollo.Data.Services
                         {
                             if (item.Id == null)
                             {
-                                item.Id = $"{nameof(License)}-{Guid.NewGuid()}";
+                                item.Id = $"{nameof(Language)}-{Guid.NewGuid()}";
                             }
                         }
 
@@ -85,7 +86,7 @@ namespace De.HDBW.Apollo.Data.Services
 
                         var response = new CreateOrUpdateUserResponse();
                         response.Result = _userId;
-                        return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response) });
+                        return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response, options: SerializationHelper.Options) });
                     }
 
                     return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
@@ -94,7 +95,7 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         var response = new GetUserRespnse();
                         response.User = _user;
-                        return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response) });
+                        return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response, options: SerializationHelper.Options) });
                     }
 
                     return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));

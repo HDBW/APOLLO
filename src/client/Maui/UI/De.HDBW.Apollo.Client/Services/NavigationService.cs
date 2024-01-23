@@ -99,14 +99,14 @@ namespace De.HDBW.Apollo.Client.Services
             return result;
         }
 
-        public async Task<bool> PopAsync(CancellationToken token)
+        public async Task<bool> PopAsync(CancellationToken token, NavigationParameters? parameters)
         {
             Logger?.LogDebug($"PopAsync.");
             token.ThrowIfCancellationRequested();
             var result = false;
             try
             {
-                await DispatcherService.ExecuteOnMainThreadAsync(() => PopOnUIThreadAsnc(token), token);
+                await DispatcherService.ExecuteOnMainThreadAsync(() => PopOnUIThreadAsnc(token, parameters), token);
                 result = true;
             }
             catch (OperationCanceledException)
@@ -290,7 +290,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
         }
 
-        private async Task PopOnUIThreadAsnc(CancellationToken token)
+        private async Task PopOnUIThreadAsnc(CancellationToken token, NavigationParameters? parameters)
         {
             Logger?.LogDebug($"PopOnUIThreadAsnc.");
             token.ThrowIfCancellationRequested();
@@ -310,7 +310,15 @@ namespace De.HDBW.Apollo.Client.Services
             if (shell != null)
             {
                 Shell.Current.FlyoutIsPresented = false;
-                await Shell.Current.Navigation.PopAsync();
+                if (parameters != null)
+                {
+
+                    await Shell.Current.GoToAsync("..", parameters.ToQueryDictionary());
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync("..");
+                }
             }
         }
 

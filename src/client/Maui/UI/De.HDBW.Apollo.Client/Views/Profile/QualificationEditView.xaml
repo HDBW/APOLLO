@@ -26,7 +26,7 @@
                     </SwipeView.RightItems>
                     <Grid Background="{StaticResource Background}" RowDefinitions="auto, auto">
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}"  />
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
                         </Grid.GestureRecognizers>
                         <Label Text="{x:Binding FirstLine, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
                         <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AdditionalLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >

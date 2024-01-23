@@ -50,5 +50,6 @@ namespace De.HDBW.Apollo.Client.Models
 
             return (TU)value;
         }
+
     }
 }

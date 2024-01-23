@@ -18,7 +18,7 @@
                         <SwipeItem Text="Delete"
                            IconImageSource="delete.png"
                            BackgroundColor="Red"
-                           Command="{Binding DeleteCommand}" />
+                           Command="{x:Binding DeleteCommand}" />
                     </SwipeItems>
                 </SwipeView.RightItems>
                 <VerticalStackLayout Padding="24,0"  Background="{StaticResource Background}" >

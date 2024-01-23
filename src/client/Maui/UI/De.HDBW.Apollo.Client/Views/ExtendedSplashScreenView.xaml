@@ -23,7 +23,7 @@
                             <FormattedString>
                                 <Span Text="{x:Static strings:Resources.ExtendedSplashScreenView_DSGVO}" TextDecorations="Underline" FontAttributes="Bold">
                                     <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenPrivacyCommand}" />
+                                        <TapGestureRecognizer Command="{x:Binding OpenPrivacyCommand}" />
                                     </Span.GestureRecognizers>
                                 </Span>
                                 <Span Text="{x:Static system:Environment.NewLine}"/>
@@ -40,7 +40,7 @@
                             <FormattedString>
                                 <Span Text="{x:Static strings:Resources.ExtendedSplashScreenView_AGB}" TextDecorations="Underline" FontAttributes="Bold">
                                     <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenDataUsageDialogCommand}" />
+                                        <TapGestureRecognizer Command="{x:Binding OpenDataUsageDialogCommand}" />
                                     </Span.GestureRecognizers>
                                 </Span>
                                 <Span Text="{x:Static system:Environment.NewLine}"/>
@@ -50,8 +50,8 @@
                     </Label>
                 </HorizontalStackLayout>
 
-                <Button Text="{x:Static strings:Resources.Global_ContinueAsGuest}" Style="{StaticResource BorderButton}" Command="{Binding SkipCommand}" IsVisible="{x:Binding ConfirmedDataUsage}" Margin="24,0,24,8"/>
-                <Button Text="{x:Static strings:Resources.Global_RegisterUser}" Command="{Binding RegisterCommand}" IsVisible="{x:Binding ConfirmedDataUsage}" Margin="24,0,24,16"/>
+                <Button Text="{x:Static strings:Resources.Global_ContinueAsGuest}" Style="{StaticResource BorderButton}" Command="{x:Binding SkipCommand}" IsVisible="{x:Binding ConfirmedDataUsage}" Margin="24,0,24,8"/>
+                <Button Text="{x:Static strings:Resources.Global_RegisterUser}" Command="{x:Binding RegisterCommand}" IsVisible="{x:Binding ConfirmedDataUsage}" Margin="24,0,24,16"/>
             </VerticalStackLayout>
         </Border>
     </Grid>

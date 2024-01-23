@@ -14,7 +14,8 @@ namespace De.HDBW.Apollo.Data.JsonConverter
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-            return new CultureInfo(reader.GetString() ?? string.Empty);
+            var name = reader.GetString();
+            return CultureInfo.GetCultures(CultureTypes.AllCultures).First(c => c.Name == name);
         }
 
         public override void Write(
@@ -22,7 +23,7 @@ namespace De.HDBW.Apollo.Data.JsonConverter
             CultureInfo value,
             JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value.ToString());
+            writer.WriteStringValue(value.Name);
         }
     }
 }

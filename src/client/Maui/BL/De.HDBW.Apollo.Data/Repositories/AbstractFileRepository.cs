@@ -3,6 +3,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.JsonConverter;
 using Microsoft.Extensions.Logging;
 
@@ -37,13 +38,7 @@ namespace De.HDBW.Apollo.Data.Repositories
 
                 using (var stream = File.OpenRead(BasePath))
                 {
-                    var options = new JsonSerializerOptions()
-                    {
-                        ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                        Converters = { new CultureInfoJsonConverter() },
-                    };
-
-                    var profile = await JsonSerializer.DeserializeAsync<TU>(stream, options, token).ConfigureAwait(false);
+                    var profile = await stream.DeserializeAsync<TU>(token).ConfigureAwait(false);
                     return profile;
                 }
             }
@@ -76,12 +71,7 @@ namespace De.HDBW.Apollo.Data.Repositories
                 var path = Path.GetTempFileName();
                 using (var stream = File.OpenWrite(path))
                 {
-                    var options = new JsonSerializerOptions()
-                    {
-                        ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                        Converters = { new CultureInfoJsonConverter() },
-                    };
-                    await JsonSerializer.SerializeAsync<TU>(stream, data, options, token).ConfigureAwait(false);
+                    await stream.SerializeAsync(data, token).ConfigureAwait(false);
                     File.Move(path, BasePath, true);
                     return true;
                 }

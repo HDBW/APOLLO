@@ -94,12 +94,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
 
         protected override async Task<bool> SaveAsync(CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             if (_user == null || !IsDirty)
             {
                 return !IsDirty;
             }
 
-            token.ThrowIfCancellationRequested();
             _user.Profile = _user.Profile ?? new UserProfile();
             var license = _license ?? new License();
 

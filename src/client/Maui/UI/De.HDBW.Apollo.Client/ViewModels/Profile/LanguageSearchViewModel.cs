@@ -6,6 +6,7 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private List<string> _occupationNames = new List<string>();
 
         private IEnumerable<InteractionEntry>? _allCultures;
+        private NavigationParameters _parameters;
 
         public LanguageSearchViewModel(
             IDispatcherService dispatcherService,
@@ -45,6 +47,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 if (SetProperty(ref _searchText, value))
                 {
                     RefreshCommands();
+                    if (SearchCommand.CanExecute(SearchText))
+                    {
+                        SearchCommand.Execute(SearchText);
+                    }
                 }
             }
         }
@@ -69,6 +75,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            _parameters = navigationParameters;
+        }
+
         public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
@@ -78,7 +89,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     var allCultures = new List<InteractionEntry>();
                     foreach (var cultuer in CultureInfo.GetCultures(CultureTypes.AllCultures))
                     {
-                        allCultures.Add(InteractionEntry.Import(cultuer.DisplayName, cultuer.ThreeLetterISOLanguageName, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                        allCultures.Add(InteractionEntry.Import(cultuer.DisplayName, cultuer.Name, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     }
 
                     allCultures = allCultures.OrderBy(x => x.Text).ToList();
@@ -163,7 +174,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                    await NavigationService.PopAsync(worker.Token);
+                    _parameters = _parameters ?? new NavigationParameters();
+                    _parameters.AddValue(NavigationParameter.Result, SelectedItem?.Data?.ToString());
+                    await NavigationService.PopAsync(worker.Token, _parameters);
                 }
                 catch (OperationCanceledException)
                 {

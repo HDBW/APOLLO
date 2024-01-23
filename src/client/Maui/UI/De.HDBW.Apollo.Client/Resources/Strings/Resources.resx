@@ -1117,13 +1117,13 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
     <value>Füge jetzt deinen Bildungsweg hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="LanguageEditView_ButtonTxt" xml:space="preserve">
-    <value>Sprachkenntnisse hinzufügen</value>
+    <value>Sprachkenntnis hinzufügen</value>
   </data>
   <data name="LanguageEditView_Headline" xml:space="preserve">
-    <value>Du hast noch kein Sprachkenntnisse hinterlegt</value>
+    <value>Du hast noch keine Sprachkenntnisse hinterlegt</value>
   </data>
   <data name="LanguageEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine ersten Sprachkenntnisse hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt deine erste Sprachkenntnis hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="LicenseEditView_ButtonTxt" xml:space="preserve">
     <value>Lizenz hinzufügen</value>
@@ -1236,5 +1236,11 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   </data>
   <data name="WebReferenceView_Title" xml:space="preserve">
     <value>Webreferenz</value>
+  </data>
+  <data name="LanguageSearchView_Title" xml:space="preserve">
+    <value>Sprachauswahl</value>
+  </data>
+  <data name="LanguageView_Title" xml:space="preserve">
+    <value>Sprachkenntnis</value>
   </data>
 </root>

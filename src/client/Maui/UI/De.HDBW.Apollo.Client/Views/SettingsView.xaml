@@ -15,17 +15,17 @@
                 <Label Text="{x:Static strings:Resources.SettingsView_QuestionDescription}" Style="{StaticResource NotoSerif16}" TextColor="{StaticResource TextColor}"/>
                 <HorizontalStackLayout BackgroundColor="Transparent" Spacing="8">
                     <HorizontalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenMailCommand}" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding OpenMailCommand}" />
                     </HorizontalStackLayout.GestureRecognizers>
                     <Image WidthRequest="24" HeightRequest="24" Source="mail.png" />
                     <Label Text="{x:Static strings:Resources.SettingsView_QuestionEmail}" LineBreakMode="WordWrap" MaxLines="2" Style="{StaticResource NotoSerif16}"/>
                 </HorizontalStackLayout>
-                <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{Binding UnRegisterCommand}" Margin="0,24,0,0"/>
+                <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{x:Binding UnRegisterCommand}" Margin="0,24,0,0"/>
             </VerticalStackLayout>
         </ScrollView>
-        <Button Grid.Column="0" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Terms}" Command="{Binding OpenTermsCommand}"/>
-        <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Privacy}" Command="{Binding OpenPrivacyCommand}"/>
-        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Imprint}" Command="{Binding OpenImprintCommand}"/>
+        <Button Grid.Column="0" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Terms}" Command="{x:Binding OpenTermsCommand}"/>
+        <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Privacy}" Command="{x:Binding OpenPrivacyCommand}"/>
+        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Imprint}" Command="{x:Binding OpenImprintCommand}"/>
     </Grid>
    
 </ContentPage>

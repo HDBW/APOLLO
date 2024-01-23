@@ -26,8 +26,8 @@
             </VerticalStackLayout>
         </Border>
         <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resources.SelectOptionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{Binding CancelCommand}" />
-            <Button Text="{x:Static strings:Resources.SelectOptionDialog_Continue}" Command="{Binding ContinueCommand}" Grid.Column="2"/>
+            <Button Text="{x:Static strings:Resources.SelectOptionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}" />
+            <Button Text="{x:Static strings:Resources.SelectOptionDialog_Continue}" Command="{x:Binding ContinueCommand}" Grid.Column="2"/>
         </Grid>
     </Grid>
 </toolkit:Popup>

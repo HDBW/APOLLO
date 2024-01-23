@@ -18,9 +18,9 @@
             </Grid.Shadow>
             <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ErrorDialog_Title}"  Margin="0,0,0,16" Style="{StaticResource Noto20Bold}"/>
             <ScrollView Grid.Row="2" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never" VerticalOptions="Center">
-                    <Label HorizontalTextAlignment="Center" Text="{Binding Message}" Style="{StaticResource Noto16}"/>
+                <Label HorizontalTextAlignment="Center" Text="{x:Binding Message}" Style="{StaticResource Noto16}"/>
             </ScrollView>
-            <Button Text="{x:Static strings:Resources.Global_Close}" Command="{Binding CancelCommand}" Grid.Row="4" SizeChanged="OnSizeChanged"/>
+            <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}" Grid.Row="4" SizeChanged="OnSizeChanged"/>
         </Grid>
     </Grid>
 </toolkit:Popup>

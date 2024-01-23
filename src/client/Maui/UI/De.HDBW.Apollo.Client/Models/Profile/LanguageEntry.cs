@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<string> GetAdditionalLines(Language data)
         {
             var items = new List<string?>();
-            items.Add(data.Name);
+            items.Add(data.Code?.DisplayName);
             items.Add(data.Niveau?.ToString());
             return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x) && x != FirstLine).OfType<string>());
         }
@@ -34,7 +34,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override string GetFristLine(Language data)
         {
             var items = new List<string?>();
-            items.Add(data.Name);
+            items.Add(data.Code?.DisplayName);
             items.Add(data.Niveau?.ToString());
             return items.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
         }

@@ -30,11 +30,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <UseInterpreter>true</UseInterpreter>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-    <ProvisioningType>automatic</ProvisioningType>
-    <CodesignKey>Apple Development: Lars Heinrich (827CKHW3LL)</CodesignKey>
-    <CodesignProvision>VS: de.hdbw.apollo.client Development</CodesignProvision>
-  </PropertyGroup>
+  
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
@@ -57,6 +53,7 @@
     <None Remove="Resources\Images\delete.svg" />
     <None Remove="Resources\Images\deletelight.svg" />
     <None Remove="Resources\Images\edit.svg" />
+    <None Remove="Resources\Images\emptysearchdeco.svg" />
     <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />

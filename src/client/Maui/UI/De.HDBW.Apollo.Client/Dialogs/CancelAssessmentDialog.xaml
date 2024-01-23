@@ -14,8 +14,8 @@
             </VerticalStackLayout>
         </Border>
         <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Continue}" Style="{StaticResource BorderButton}"  Command="{Binding ContinueCommand}" />
-            <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Cancel}" Command="{Binding CancelCommand}" Grid.Column="2"/>
+            <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Continue}" Style="{StaticResource BorderButton}"  Command="{x:Binding ContinueCommand}" />
+            <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Cancel}" Command="{x:Binding CancelCommand}" Grid.Column="2"/>
         </Grid>
     </Grid>
 </toolkit:Popup>
