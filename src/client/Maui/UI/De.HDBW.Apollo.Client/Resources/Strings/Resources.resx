@@ -1225,4 +1225,7 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="QualificationView_Title" xml:space="preserve">
     <value>Qualifikation</value>
   </data>
+  <data name="Global_Qualification" xml:space="preserve">
+    <value>Qualifikation</value>
+  </data>
 </root>

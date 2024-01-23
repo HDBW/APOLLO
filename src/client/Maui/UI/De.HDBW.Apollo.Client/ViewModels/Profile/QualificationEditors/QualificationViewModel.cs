@@ -27,6 +27,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         private User? _user;
 
         private string? _qualificationId;
+        private string? _name;
 
         public QualificationViewModel(
             IDispatcherService dispatcherService,
@@ -50,6 +51,23 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
+        public string? Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                if (SetProperty(ref _name, value))
+                {
+                    ValidateProperty(value);
+                    IsDirty = true;
+                }
+            }
+        }
+
         public string? Description
         {
             get
@@ -150,6 +168,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
 
             _user.Profile = _user.Profile ?? new UserProfile();
             var qualification = _qualification ?? new Qualification();
+            qualification.Name = Name!;
             qualification.Description = Description;
             qualification.ExpirationDate = End.ToDTODate();
             qualification.IssueDate = Start.ToDTODate();
@@ -199,6 +218,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         {
             _qualification = qualification;
             _user = user;
+            Name = qualification?.Name;
             Description = qualification?.Description;
             Start = qualification?.IssueDate.ToUIDate();
             End = qualification?.ExpirationDate.ToUIDate();

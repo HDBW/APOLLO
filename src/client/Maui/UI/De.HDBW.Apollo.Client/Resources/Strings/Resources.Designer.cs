@@ -1287,6 +1287,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Qualifikation.
+        /// </summary>
+        public static string Global_Qualification {
+            get {
+                return ResourceManager.GetString("Global_Qualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region.
         /// </summary>
         public static string Global_Region {
