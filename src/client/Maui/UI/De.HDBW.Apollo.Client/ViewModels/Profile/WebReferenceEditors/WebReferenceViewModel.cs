@@ -17,6 +17,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
     public partial class WebReferenceViewModel : AbstractSaveDataViewModel
     {
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private string? _description;
 
         [ObservableProperty]
@@ -92,8 +93,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
 
             _user.Profile = _user.Profile ?? new UserProfile();
             var webReference = _webReference ?? new WebReference();
-            webReference.Url = new Uri(Url ?? string.Empty);
-            webReference.Title = Description ?? string.Empty;
+            webReference.Url = new Uri(Url?.Trim() ?? "about:blank");
+            webReference.Title = Description?.Trim() ?? string.Empty;
 
             if (!_user.Profile.WebReferences.Contains(webReference))
             {
@@ -103,7 +104,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))
             {
-                Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to save webReference remotely {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
@@ -111,7 +112,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
             var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
             if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
             {
-                Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to save webReference locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
@@ -127,13 +128,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
 
         partial void OnUrlChanging(string? value)
         {
-            value = string.IsNullOrWhiteSpace(value) ? null : value;
+            value = string.IsNullOrWhiteSpace(value) ? null : value?.Trim();
         }
 
         partial void OnUrlChanged(string? value)
         {
             ValidateProperty(value, nameof(Url));
             IsDirty = true;
+        }
+
+        partial void OnDescriptionChanging(string? value)
+        {
+            value = string.IsNullOrWhiteSpace(value) ? null : value;
         }
 
         partial void OnDescriptionChanged(string? value)

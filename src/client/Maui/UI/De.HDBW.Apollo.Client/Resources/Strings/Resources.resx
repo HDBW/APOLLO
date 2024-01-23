@@ -665,7 +665,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
   <data name="SelectOptionsDialog_EducationType_VocationalTraining" xml:space="preserve">
     <value>Berufsausbildung (schulisch)</value>
   </data>
-  <data name="Global_Discribtion" xml:space="preserve">
+  <data name="Global_Description" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
   <data name="Global_End" xml:space="preserve">
@@ -1242,5 +1242,11 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   </data>
   <data name="LanguageView_Title" xml:space="preserve">
     <value>Sprachkenntnis</value>
+  </data>
+  <data name="Global_Designation" xml:space="preserve">
+    <value>Bezeichnung</value>
+  </data>
+  <data name="Global_Title" xml:space="preserve">
+    <value>Titel</value>
   </data>
 </root>

@@ -172,14 +172,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))
             {
-                Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to language user remotely {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
             var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
             if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
             {
-                Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to language user locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 

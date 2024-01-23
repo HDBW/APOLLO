@@ -15,7 +15,7 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Margin="24,0">
-            <Label Text="{x:Static strings:Resources.Global_Discribtion}" Style="{StaticResource Noto14SemiBold}"/>
+            <Label Text="{x:Static strings:Resources.Global_Title}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry Text="{x:Binding Description, Mode=TwoWay}">
                     <Entry.Behaviors>

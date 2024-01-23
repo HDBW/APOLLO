@@ -125,13 +125,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
             _contact = _contact ?? new Contact();
             _contact.ContactType = (ContactType)(SelectedContactType?.Data ?? ContactType.Unknown);
-            _contact.Address = Address ?? string.Empty;
-            _contact.Phone = Phone ?? string.Empty;
-            _contact.Mail = Email ?? string.Empty;
-            _contact.City = City ?? string.Empty;
-            _contact.ZipCode = ZipCode ?? string.Empty;
-            _contact.Country = Country ?? string.Empty;
-            _contact.Region = Region ?? string.Empty;
+            _contact.Address = Address?.Trim() ?? string.Empty;
+            _contact.Phone = Phone?.Trim() ?? string.Empty;
+            _contact.Mail = Email?.Trim() ?? string.Empty;
+            _contact.City = City?.Trim() ?? string.Empty;
+            _contact.ZipCode = ZipCode?.Trim() ?? string.Empty;
+            _contact.Country = Country?.Trim() ?? string.Empty;
+            _contact.Region = Region?.Trim() ?? string.Empty;
             if (string.IsNullOrWhiteSpace(_contact.Id))
             {
                 _user.ContactInfos.Add(_contact);
@@ -140,7 +140,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))
             {
-                Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to contact user remotely {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
@@ -148,7 +148,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
             if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
             {
-                Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to contact user locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
@@ -193,7 +193,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
         partial void OnEmailChanging(string? value)
         {
-            value = string.IsNullOrWhiteSpace(value) ? null : value;
+            value = string.IsNullOrWhiteSpace(value) ? null : value?.Trim();
         }
 
         partial void OnEmailChanged(string? value)
@@ -204,7 +204,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
         partial void OnPhoneChanging(string? value)
         {
-            value = string.IsNullOrWhiteSpace(value) ? null : value;
+            value = string.IsNullOrWhiteSpace(value) ? null : value?.Trim();
         }
 
         partial void OnPhoneChanged(string? value)

@@ -1136,9 +1136,18 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Beschreibung.
         /// </summary>
-        public static string Global_Discribtion {
+        public static string Global_Description {
             get {
-                return ResourceManager.GetString("Global_Discribtion", resourceCulture);
+                return ResourceManager.GetString("Global_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bezeichnung.
+        /// </summary>
+        public static string Global_Designation {
+            get {
+                return ResourceManager.GetString("Global_Designation", resourceCulture);
             }
         }
         
@@ -1355,6 +1364,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_StartNow {
             get {
                 return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Titel.
+        /// </summary>
+        public static string Global_Title {
+            get {
+                return ResourceManager.GetString("Global_Title", resourceCulture);
             }
         }
         

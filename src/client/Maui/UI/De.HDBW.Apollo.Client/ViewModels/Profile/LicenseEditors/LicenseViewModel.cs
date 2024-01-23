@@ -103,7 +103,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
             _user.Profile = _user.Profile ?? new UserProfile();
             var license = _license ?? new License();
 
-            license.Name = Name ?? string.Empty;
+            license.Name = Name?.Trim() ?? string.Empty;
             license.Expires = End.ToDTODate();
             license.Granted = Start.ToDTODate();
 
@@ -115,7 +115,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))
             {
-                Logger.LogError($"Unable to save user remotely {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to save license remotely {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
@@ -123,7 +123,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
             var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
             if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
             {
-                Logger.LogError($"Unable to save user locally {nameof(SaveAsync)} in {GetType().Name}.");
+                Logger.LogError($"Unable to save license locally {nameof(SaveAsync)} in {GetType().Name}.");
                 return !IsDirty;
             }
 
