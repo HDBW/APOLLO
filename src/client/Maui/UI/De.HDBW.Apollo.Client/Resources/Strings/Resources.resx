@@ -1235,7 +1235,7 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
     <value>Lizenz</value>
   </data>
   <data name="WebReferenceView_Title" xml:space="preserve">
-    <value>Webreferenz</value>
+    <value>Webprofile</value>
   </data>
   <data name="LanguageSearchView_Title" xml:space="preserve">
     <value>Sprachauswahl</value>

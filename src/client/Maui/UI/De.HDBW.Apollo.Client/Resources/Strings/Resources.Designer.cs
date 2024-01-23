@@ -3320,7 +3320,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Webreferenz.
+        ///   Looks up a localized string similar to Webprofile.
         /// </summary>
         public static string WebReferenceView_Title {
             get {
