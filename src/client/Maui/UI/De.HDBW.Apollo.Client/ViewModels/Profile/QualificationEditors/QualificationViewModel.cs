@@ -27,6 +27,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         private User? _user;
 
         private string? _qualificationId;
+
         private string? _name;
 
         public QualificationViewModel(
@@ -79,7 +80,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             {
                 if (SetProperty(ref _description, value))
                 {
-                    ValidateProperty(value);
                     IsDirty = true;
                 }
             }
