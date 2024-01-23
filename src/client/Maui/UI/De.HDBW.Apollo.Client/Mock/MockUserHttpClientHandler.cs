@@ -47,7 +47,7 @@ namespace De.HDBW.Apollo.Data.Services
                         {
                             if (item.Id == null)
                             {
-                                item.Id = $"{nameof(License)}-{Guid.NewGuid()}";
+                                item.Id = $"{nameof(Qualification)}-{Guid.NewGuid()}";
                             }
                         }
 
