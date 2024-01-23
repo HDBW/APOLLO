@@ -254,5 +254,55 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         {
             return !IsBusy;
         }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
+        private async Task Delete(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    _user!.Profile!.LanguageSkills.Remove(_language!);
+                    var response = await UserService.SaveAsync(_user, worker.Token).ConfigureAwait(false);
+                    if (string.IsNullOrWhiteSpace(response))
+                    {
+                        Logger.LogError($"Unable to delete language remotely {nameof(Delete)} in {GetType().Name}.");
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                        return;
+                    }
+
+                    if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
+                    {
+                        Logger.LogError($"Unable to save language locally {nameof(Delete)} in {GetType().Name}.");
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                        return;
+                    }
+
+                    IsDirty = false;
+                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Delete)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanDelete()
+        {
+            return !IsBusy && _user?.Profile != null && _language != null;
+        }
     }
 }

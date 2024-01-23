@@ -192,14 +192,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
                     var response = await UserService.SaveAsync(_user, worker.Token).ConfigureAwait(false);
                     if (string.IsNullOrWhiteSpace(response))
                     {
-                        Logger.LogError($"Unable to delete user remotely {nameof(Delete)} in {GetType().Name}.");
+                        Logger.LogError($"Unable to delete license remotely {nameof(Delete)} in {GetType().Name}.");
                         await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                         return;
                     }
 
                     if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
                     {
-                        Logger.LogError($"Unable to save user locally {nameof(Delete)} in {GetType().Name}.");
+                        Logger.LogError($"Unable to save license locally {nameof(Delete)} in {GetType().Name}.");
                         await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                         return;
                     }
