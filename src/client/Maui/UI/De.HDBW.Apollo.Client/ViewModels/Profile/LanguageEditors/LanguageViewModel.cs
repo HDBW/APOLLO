@@ -147,6 +147,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         {
             base.RefreshCommands();
             SearchLanguageCommand?.NotifyCanExecuteChanged();
+            DeleteCommand?.NotifyCanExecuteChanged();
         }
 
         protected override async Task<bool> SaveAsync(CancellationToken token)
