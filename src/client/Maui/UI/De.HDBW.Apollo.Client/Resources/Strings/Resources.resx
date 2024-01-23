@@ -1222,4 +1222,7 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="GlobalError_PropertyRequired" xml:space="preserve">
     <value>Pflichtfeld.</value>
   </data>
+  <data name="QualificationView_Title" xml:space="preserve">
+    <value>Qualifikation</value>
+  </data>
 </root>

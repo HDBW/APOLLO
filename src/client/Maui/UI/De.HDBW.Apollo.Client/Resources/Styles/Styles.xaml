@@ -585,6 +585,7 @@
 
     <Style x:Key="InputBorderStyle" TargetType="Border">
         <Setter Property="Padding" Value="16,0" />
+        <Setter Property="MinimumHeightRequest" Value="46" />
         <Setter Property="BackgroundColor" Value="{StaticResource Neutral0}" />
         <Setter Property="StrokeShape">
             <Setter.Value>

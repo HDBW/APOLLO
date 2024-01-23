@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
@@ -8,6 +9,7 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
 {
@@ -46,6 +48,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             }
         }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         public string? Description
         {
             get
@@ -57,6 +60,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             {
                 if (SetProperty(ref _description, value))
                 {
+                    ValidateProperty(value);
                     IsDirty = true;
                 }
             }
@@ -108,12 +112,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
                 {
                     var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     var qualification = user?.Profile?.Qualifications?.FirstOrDefault(x => x.Id == _qualificationId);
-                    if (user != null && user.Profile == null)
-                    {
-                        user.Profile = new Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile();
-                    }
-
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, qualification ?? new Qualification()), worker.Token);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, qualification), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -141,24 +140,22 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
 
         protected override async Task<bool> SaveAsync(CancellationToken token)
         {
-            if (_user == null || _user.Profile == null || _qualification == null || !IsDirty)
+            if (_user == null || !IsDirty)
             {
                 return !IsDirty;
             }
 
             token.ThrowIfCancellationRequested();
-            _qualification.Description = Description ?? string.Empty;
-            _qualification.ExpirationDate = End != null ? new DateTime(End.Value.Year, End.Value.Month, End.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
-            _qualification.IssueDate = Start != null ? new DateTime(Start.Value.Year, Start.Value.Month, Start.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
-            var toUpdate = _user?.Profile?.Qualifications?.FirstOrDefault(f => f.Id == _qualification.Id);
-            if (toUpdate != null)
+
+            _user.Profile = _user.Profile ?? new UserProfile();
+            _user.Profile.Qualifications = _user.Profile.Qualifications ?? new List<Qualification>();
+            var qualification = _qualification ?? new Qualification();
+            qualification.Description = Description;
+            qualification.ExpirationDate = End != null ? new DateTime(End.Value.Year, End.Value.Month, End.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
+            qualification.IssueDate = Start != null ? new DateTime(Start.Value.Year, Start.Value.Month, Start.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
+            if (!_user.Profile.Qualifications.Contains(qualification))
             {
-                toUpdate = _qualification;
-            }
-            else
-            {
-                _user.Profile.Qualifications = new List<Qualification>();
-                _user.Profile.Qualifications.Add(_qualification);
+                _user.Profile.Qualifications.Add(qualification);
             }
 
             var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
@@ -168,7 +165,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
                 return !IsDirty;
             }
 
-            _user.Id = response;
             var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
             if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
             {
@@ -176,6 +172,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
                 return !IsDirty;
             }
 
+            _user = userResult;
             IsDirty = false;
             return !IsDirty;
         }
@@ -183,6 +180,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
+            DeleteCommand?.NotifyCanExecuteChanged();
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
@@ -255,7 +253,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
 
         private bool CanDelete()
         {
-            return !IsBusy && _user != null && _user.Profile != null && _qualification != null;
+            return !IsBusy && _qualification != null;
         }
     }
 }

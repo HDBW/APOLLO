@@ -1961,6 +1961,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Qualifikation.
+        /// </summary>
+        public static string QualificationView_Title {
+            get {
+                return ResourceManager.GetString("QualificationView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Melde Dich an, um Zugriff auf weitere Features zu erhalten..
         /// </summary>
         public static string RegistrationView_Description {
