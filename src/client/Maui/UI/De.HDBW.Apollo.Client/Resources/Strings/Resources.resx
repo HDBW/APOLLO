@@ -1219,6 +1219,9 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="GlobalError_InvalidZipCode" xml:space="preserve">
     <value>Die Postleitzahl ist ungültig.</value>
   </data>
+  <data name="GlobalError_InvalidUrl" xml:space="preserve">
+    <value>Die URL ist ungültig.</value>
+  </data>
   <data name="GlobalError_PropertyRequired" xml:space="preserve">
     <value>Pflichtfeld.</value>
   </data>
@@ -1227,5 +1230,11 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   </data>
   <data name="Global_Qualification" xml:space="preserve">
     <value>Qualifikation</value>
+  </data>
+  <data name="LicenseView_Title" xml:space="preserve">
+    <value>Lizenz</value>
+  </data>
+  <data name="WebReferenceView_Title" xml:space="preserve">
+    <value>Webreferenz</value>
   </data>
 </root>
