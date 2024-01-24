@@ -74,20 +74,34 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            var user = new User
-            {
-                Name = "John Doe",
-                Email = "johndoe@example.com"
-            };
+            // Create a new user
+            var user = new User { Name = "John Doe", Email = "johndoe@example.com" };
 
-            var userIds = await api.CreateOrUpdateUser(new List<User> { user });
-
-            // Ensure that the user was created or updated and has a valid ID
+            // Insert the new user
+            var userIds = await api.CreateOrUpdateUserAsync(new List<User> { user });
             Assert.IsNotNull(userIds);
-            Assert.IsTrue(userIds.Count > 0);
+            Assert.AreEqual(1, userIds.Count);
 
-            // Clean up: Delete the created or updated user
-            await api.DeleteUsers(userIds.ToArray());
+            // Retrieve and verify the inserted user
+            var insertedUser = await api.GetUserById(userIds.First());
+            Assert.IsNotNull(insertedUser);
+            Assert.AreEqual("John Doe", insertedUser.Name);
+
+            // Update the user's information
+            insertedUser.Name = "Jane Doe";
+
+            // Update the user
+            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { insertedUser });
+            Assert.IsNotNull(updatedUserIds);
+            Assert.AreEqual(1, updatedUserIds.Count);
+
+            // Retrieve and verify the updated user
+            var updatedUser = await api.GetUserById(updatedUserIds.First());
+            Assert.IsNotNull(updatedUser);
+            Assert.AreEqual("Jane Doe", updatedUser.Name);
+
+            // Clean up: Delete the user
+            await api.DeleteUsers(updatedUserIds.ToArray());
         }
 
 
@@ -102,7 +116,7 @@ namespace Apollo.Api.UnitTests
             var api = Helpers.GetApolloApi();
 
             var newUser = new User { Name = "Test", Email = "test@example.com" };
-            var userId = await api.CreateOrUpdateUser(new List<User> { newUser });
+            var userId = await api.CreateOrUpdateUserAsync(new List<User> { newUser });
 
             // Act
             var user = await api.GetUser(userId.FirstOrDefault());

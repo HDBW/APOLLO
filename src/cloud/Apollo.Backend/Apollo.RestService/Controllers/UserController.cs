@@ -110,7 +110,7 @@ namespace Apollo.Service.Controllers
                 // Call the Apollo API to create or update a user based on the request.
                 var users = new List<User> { req.User };
 
-                var result = await _api.CreateOrUpdateUser(users);
+                var result = await _api.CreateOrUpdateUserAsync(users);
 
                 _logger.LogTrace("Leave {method}", nameof(CreateOrUpdateUser));
 

@@ -730,19 +730,39 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            var training = new Training
+            // Create a new training instance with Id and ProviderId
+            var newTraining = new Training
             {
-                TrainingName = "Test Training"
+                Id = "T23", 
+                ProviderId = "provider123", // Sample provider Id
+                TrainingName = "New Test Training",
+                TrainingType = "Type1",
+                Description = "New training description"
             };
 
-            var trainingIds = await api.CreateOrUpdateTrainingAsync(new List<Training> { training });
+            // Insert the new training
+            var insertedTrainingIds = await api.CreateOrUpdateTrainingAsync(new List<Training> { newTraining });
 
-            // Ensure that the training was created or updated and has a valid ID
-            Assert.IsNotNull(trainingIds);
-            Assert.IsTrue(trainingIds.Count > 0);
+            // Ensure that the new training was inserted correctly
+            Assert.IsNotNull(insertedTrainingIds);
+            Assert.AreEqual(1, insertedTrainingIds.Count);
+            Assert.AreEqual(newTraining.Id, insertedTrainingIds[0]);
+
+            // Update the created training with new data
+            newTraining.TrainingName = "Updated Test Training";
+            newTraining.Description = "Updated Description";
+            newTraining.TrainingType = "Type2";
+
+            // Update the training using the same ID
+            var updatedTrainingIds = await api.CreateOrUpdateTrainingAsync(new List<Training> { newTraining });
+
+            // Ensure that the training was updated correctly
+            Assert.IsNotNull(updatedTrainingIds);
+            Assert.AreEqual(1, updatedTrainingIds.Count);
+            Assert.AreEqual(newTraining.Id, updatedTrainingIds[0]); // The ID should remain the same
 
             // Clean up: Delete the created or updated training
-            await api.DeleteTrainings(trainingIds.ToArray());
+            //await api.DeleteTrainings(updatedTrainingIds.ToArray());
         }
 
 
