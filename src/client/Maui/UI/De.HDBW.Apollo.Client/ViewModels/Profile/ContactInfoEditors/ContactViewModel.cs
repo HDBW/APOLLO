@@ -95,12 +95,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             user!.ContactInfos.Remove(entry);
         }
 
-        protected override void RefreshCommands()
-        {
-            base.RefreshCommands();
-            DeleteCommand?.NotifyCanExecuteChanged();
-        }
-
         partial void OnSelectedContactTypeChanged(InteractionEntry? value)
         {
             IsDirty = true;

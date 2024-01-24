@@ -28,6 +28,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             UserService = userService;
         }
 
+        protected string? EntryId
+        {
+            get
+            {
+                return _entryId;
+            }
+        }
+
         private User? User { get; set; }
 
         private IUserRepository UserRepository { get; }
@@ -104,7 +112,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected abstract TU CreateNewEntry(User user);
 
-        protected abstract void DeleteEntry(User user, TU tU);
+        protected abstract void DeleteEntry(User user, TU entry);
 
         protected abstract void ApplyChanges(TU entity);
 

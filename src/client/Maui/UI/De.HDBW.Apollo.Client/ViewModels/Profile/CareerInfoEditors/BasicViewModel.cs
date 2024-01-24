@@ -63,6 +63,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             return entry;
         }
 
+        protected override void DeleteEntry(User user, CareerInfo entry)
+        {
+            user.Profile!.CareerInfos.Add(entry);
+        }
+
         protected override void ApplyChanges(CareerInfo entity)
         {
             entity.Start = Start.ToDTODate();
@@ -93,7 +98,5 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             return !IsBusy && HasEnd;
         }
-
-        protected override void DeleteEntry(User user, CareerInfo tU) => throw new NotImplementedException();
     }
 }
