@@ -40,7 +40,10 @@
 
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_OccupationName" Text="{x:Binding OccupationName, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Description}"/>
+                <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+                    <Label Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
+                    <ImageButton Source="search.png" Command="{x:Binding SearchOccupationCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
+                </FlexLayout>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>

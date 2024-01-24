@@ -3,7 +3,9 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -42,6 +44,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             IUserService userService)
             : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
+        }
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            SearchOccupationCommand?.NotifyCanExecuteChanged();
         }
 
         protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
@@ -91,6 +99,39 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             ServiceTypes = new ObservableCollection<InteractionEntry>(serviceTypes);
             SelectedServiceType = ServiceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == careerInfo?.ServiceType) ?? ServiceTypes.FirstOrDefault();
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
+        private async Task SearchOccupation(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(SearchOccupation)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanSearchOccupation()
+        {
+            return !IsBusy;
         }
     }
 }
