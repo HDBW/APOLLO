@@ -17,7 +17,7 @@ using Moq;
 namespace Apollo.RestService.UnitTests
 {
     [TestClass]
-    public class TrainingControllerTests1
+    public class TrainingControllerIntergrationTests
     {
         private TrainingController _controller;
         private ApolloApi _api;
