@@ -2,24 +2,16 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 {
-    public partial class OtherViewModel : BaseViewModel
+    public partial class OtherViewModel : BasicViewModel
     {
-        [ObservableProperty]
-        private DateTime _start = DateTime.Today;
-
-        [ObservableProperty]
-        private DateTime? _end;
-
-        [ObservableProperty]
-        private string? _description;
-
         [ObservableProperty]
         private string? _nameOfInstitution;
 
@@ -29,46 +21,38 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private string? _country;
 
-        private CareerInfo? _career;
-
         public OtherViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<OtherViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<OtherViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
         }
 
-        public bool HasEnd
+        protected override void ApplyChanges(CareerInfo entity)
         {
-            get
-            {
-                return End.HasValue;
-            }
+            base.ApplyChanges(entity);
+            entity.City = City;
+            entity.Country = Country;
+            entity.NameOfInstitution = NameOfInstitution;
         }
 
-        protected override void RefreshCommands()
+        partial void OnCityChanged(string? value)
         {
-            base.RefreshCommands();
-            ClearEndCommand?.NotifyCanExecuteChanged();
+            this.IsDirty = true;
         }
 
-        partial void OnEndChanged(DateTime? value)
+        partial void OnCountryChanged(string? value)
         {
-            OnPropertyChanged(nameof(HasEnd));
-            RefreshCommands();
+            this.IsDirty = true;
         }
 
-        [RelayCommand(CanExecute = nameof(CanClearEnd))]
-        private void ClearEnd()
+        partial void OnNameOfInstitutionChanged(string? value)
         {
-            End = null;
-        }
-
-        private bool CanClearEnd()
-        {
-            return !IsBusy && HasEnd;
+            this.IsDirty = true;
         }
     }
 }
