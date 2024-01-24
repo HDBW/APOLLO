@@ -7,12 +7,22 @@ namespace De.HDBW.Apollo.Client.Helper
     {
         public static DateTime? ToUIDate(this DateTime? dateTime)
         {
-            return dateTime != null ? new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 0, 0, 0, DateTimeKind.Local) : null;
+            return dateTime != null ? ToUIDate(dateTime.Value) : null;
+        }
+
+        public static DateTime ToUIDate(this DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0, DateTimeKind.Local);
         }
 
         public static DateTime? ToDTODate(this DateTime? dateTime)
         {
-            return dateTime != null ? new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 0, 0, 0, DateTimeKind.Utc) : null;
+            return dateTime != null ? ToDTODate(dateTime.Value) : null;
+        }
+
+        public static DateTime ToDTODate(this DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0, DateTimeKind.Utc);
         }
     }
 }

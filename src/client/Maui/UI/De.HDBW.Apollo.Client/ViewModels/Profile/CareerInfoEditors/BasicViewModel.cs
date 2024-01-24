@@ -4,11 +4,15 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 {
-    public partial class BasicViewModel : BaseViewModel
+    public partial class BasicViewModel : AbstractProfileEditorViewModel<CareerInfo>
     {
         [ObservableProperty]
         private DateTime _start = DateTime.Today;
@@ -23,8 +27,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<BasicViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<BasicViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
         }
 
@@ -36,44 +42,45 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             }
         }
 
-        public override async Task OnNavigatedToAsync()
-        {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
+        protected override async Task<CareerInfo?> LoadDataAsync(string? enityId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var currentData = User?.Profile?.CareerInfos.FirstOrDefault(x => x.Id == enityId);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData), token).ConfigureAwait(false);
+            return currentData;
+        }
+
+        protected override CareerInfo? CreateNewEntry()
+        {
+            var entry = new CareerInfo();
+            User!.Profile!.CareerInfos.Add(entry);
+            return entry;
+        }
+
+        protected override void ApplyChanges(CareerInfo entity)
+        {
+            entity.Start = Start.ToDTODate();
+            entity.End = End.ToDTODate();
+            entity.Description = Description;
+        }
+
         partial void OnEndChanged(DateTime? value)
         {
             OnPropertyChanged(nameof(HasEnd));
             RefreshCommands();
+        }
+
+        private void LoadonUIThread(CareerInfo? careerInfo)
+        {
+            Start = careerInfo?.Start.ToUIDate() ?? Start;
+            End = careerInfo?.End.ToUIDate();
+            Description = careerInfo?.Description;
         }
 
         [RelayCommand(CanExecute = nameof(CanClearEnd))]
@@ -85,10 +92,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private bool CanClearEnd()
         {
             return !IsBusy && HasEnd;
-        }
-
-        private void LoadonUIThread()
-        {
         }
     }
 }

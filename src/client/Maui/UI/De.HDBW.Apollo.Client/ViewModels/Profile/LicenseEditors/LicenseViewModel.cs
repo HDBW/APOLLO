@@ -42,6 +42,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
             IUserService userService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(userService);
             UserRepository = userRepository;
             UserService = userService;
         }
