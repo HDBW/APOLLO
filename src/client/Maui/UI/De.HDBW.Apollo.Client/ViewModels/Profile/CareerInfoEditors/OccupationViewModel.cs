@@ -132,6 +132,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             return !IsBusy && HasEnd;
         }
+
         private void LoadonUIThread(List<InteractionEntry> timeModels)
         {
             WorkTimeModels = new ObservableCollection<InteractionEntry>(timeModels);

@@ -24,7 +24,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private List<string> _occupationNames = new List<string>();
 
         private IEnumerable<InteractionEntry>? _allCultures;
-        private NavigationParameters _parameters;
+
+        private NavigationParameters? _parameters;
 
         public LanguageSearchViewModel(
             IDispatcherService dispatcherService,
@@ -75,11 +76,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        protected override void OnPrepare(NavigationParameters navigationParameters)
-        {
-            _parameters = navigationParameters;
-        }
-
         public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
@@ -112,6 +108,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            _parameters = navigationParameters;
         }
 
         protected override void RefreshCommands()

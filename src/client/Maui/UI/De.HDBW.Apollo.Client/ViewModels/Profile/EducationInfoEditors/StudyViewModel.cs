@@ -58,6 +58,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             : base(dispatcherService, navigationService, dialogService, logger)
         {
         }
+
         public bool HasEnd
         {
             get

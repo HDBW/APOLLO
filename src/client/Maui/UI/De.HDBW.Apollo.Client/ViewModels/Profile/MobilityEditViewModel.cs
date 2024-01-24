@@ -39,6 +39,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            ToggleHasVehicleCommand?.NotifyCanExecuteChanged();
+            foreach (var license in DriverLicenses)
+            {
+                license.ToggleSelectionStateCommand?.NotifyCanExecuteChanged();
+            }
+        }
+
         protected override async Task<Mobility?> LoadDataAsync(User user, string? enityId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
@@ -50,39 +60,38 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             willingsToTravel.Add(InteractionEntry.Import(Resources.Strings.Resources.Willing_Partly, Willing.Partly, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var driverLicenses = new List<SelectInteractionEntry>();
-
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_B, DriversLicense.B, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.B) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_BE, DriversLicense.BE, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.BE) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_Forklift, DriversLicense.Forklift, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.Forklift) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_C1E, DriversLicense.C1E, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.C1E) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_C1, DriversLicense.C1, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.C1) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_L, DriversLicense.L, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.L) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_AM, DriversLicense.AM, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.AM) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_A, DriversLicense.A, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.A) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_CE, DriversLicense.CE, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.CE) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_C, DriversLicense.C, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.C) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_A1, DriversLicense.A1, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.A1) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_B96, DriversLicense.B96, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.B96) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_T, DriversLicense.T, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.T) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_A2, DriversLicense.A2, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.A2) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_Moped, DriversLicense.Moped, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.Moped) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_Drivercard, DriversLicense.Drivercard, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.Drivercard) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_PassengerTransport, DriversLicense.PassengerTransport, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.PassengerTransport) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_D, DriversLicense.D, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.D) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorBE, DriversLicense.InstructorBE, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.InstructorBE) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_ConstructionMachines, DriversLicense.ConstructionMachines, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.ConstructionMachines) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_DE, DriversLicense.DE, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.DE) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_D1, DriversLicense.D1, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.D1) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_D1E, DriversLicense.D1E, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.D1E) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorA, DriversLicense.InstructorA, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.InstructorA) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorCE, DriversLicense.InstructorCE, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.InstructorCE) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_TrailerDriving, DriversLicense.TrailerDriving, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.TrailerDriving) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorDE, DriversLicense.InstructorDE, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.InstructorDE) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_Class1, DriversLicense.Class1, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.Class1) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_Class3, DriversLicense.Class3, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.Class3) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_Class2, DriversLicense.Class2, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.Class2) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorASF, DriversLicense.InstructorASF, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.InstructorASF) == true));
-            driverLicenses.Add(SelectInteractionEntry.Import(Resources.Strings.Resources.DriversLicense_InstructorASP, DriversLicense.InstructorASP, (x) => { return Task.CompletedTask; }, (x) => { return true; }, OnISelectedChanged, mobility?.DriverLicenses?.Contains(DriversLicense.InstructorASP) == true));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.B));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.BE));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Forklift));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.C1E));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.C1));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.L));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.AM));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.A));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.CE));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.C));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.A1));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.B96));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.T));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.A2));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Moped));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Drivercard));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.PassengerTransport));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.D));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorBE));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.ConstructionMachines));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.DE));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.D1));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.D1E));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorA));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorCE));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.TrailerDriving));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorDE));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Class1));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Class3));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Class2));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorASF));
+            driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorASP));
             await ExecuteOnUIThreadAsync(
                 () => LoadonUIThread(mobility, willingsToTravel, driverLicenses), token).ConfigureAwait(false);
             return mobility;
@@ -116,7 +125,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             IsDirty = false;
         }
 
-        private void OnISelectedChanged()
+        private void OnISelectedChanged(SelectInteractionEntry entry)
         {
             IsDirty = true;
         }
@@ -141,6 +150,49 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private bool CanToggleHasVehicle()
         {
             return !IsBusy;
+        }
+
+        private bool CanNavigate(InteractionEntry entry)
+        {
+            return false;
+        }
+
+        private Task OnNavigate(InteractionEntry entry)
+        {
+            return Task.CompletedTask;
+        }
+
+        private bool CanToggleSelection(SelectInteractionEntry entry)
+        {
+            return !IsBusy;
+        }
+
+        private Task OnToggleSelection(SelectInteractionEntry entry)
+        {
+            entry.IsSelected = !entry.IsSelected;
+            return Task.CompletedTask;
+        }
+
+        private bool IsSelected(Mobility? mobility, DriversLicense license)
+        {
+            return mobility?.DriverLicenses.Contains(license) ?? false;
+        }
+
+        private SelectInteractionEntry CreateLicenseEntry(Mobility? mobility, DriversLicense license)
+        {
+            var name = Enum.GetName(license);
+            var textName = $"DriversLicense_{name}";
+            var imageName = $"driverslicense{name!.ToLower()}.png";
+            return SelectInteractionEntry.Import(
+                Resources.Strings.Resources.ResourceManager.GetString(textName),
+                license,
+                IsSelected(mobility, license),
+                OnNavigate,
+                CanNavigate,
+                OnToggleSelection,
+                CanToggleSelection,
+                OnISelectedChanged,
+                imageName);
         }
     }
 }

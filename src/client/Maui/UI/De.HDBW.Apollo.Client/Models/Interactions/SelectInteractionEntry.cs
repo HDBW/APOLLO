@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace De.HDBW.Apollo.Client.Models.Interactions
 {
@@ -10,23 +11,58 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [ObservableProperty]
         private bool _isSelected;
 
-        private Action _onIsSelectedChanged;
-
-        private SelectInteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle, Action onIsSelectedChanged, bool isSelected)
-            : base(text, data, navigateHandler, canNavigateHandle)
+        private SelectInteractionEntry(
+            string? text,
+            object? data,
+            bool isSelected,
+            Func<InteractionEntry, Task> navigateHandler,
+            Func<InteractionEntry, bool> canNavigateHandle,
+            Func<SelectInteractionEntry, Task> selectHandler,
+            Func<SelectInteractionEntry, bool> canSelectHandler,
+            Action<SelectInteractionEntry> selectedChangedHandler,
+            string? imagePath = null)
+            : base(text, data, navigateHandler, canNavigateHandle, imagePath)
         {
-            _onIsSelectedChanged = onIsSelectedChanged;
+            SelectHandler = selectHandler;
+            CanSelectHandler = canSelectHandler;
+            SelectedChangedHandler = selectedChangedHandler;
             _isSelected = isSelected;
         }
 
-        public static SelectInteractionEntry Import<TU>(string text, TU? data, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract, Action onIsSelectedChanged, bool isSelected)
+        private Func<SelectInteractionEntry, Task> SelectHandler { get; }
+
+        private Func<SelectInteractionEntry, bool> CanSelectHandler { get; }
+
+        private Action<SelectInteractionEntry> SelectedChangedHandler { get; }
+
+        public static SelectInteractionEntry Import(
+            string? text,
+            object? data,
+            bool isSelected,
+            Func<InteractionEntry, Task> navigateHandler,
+            Func<InteractionEntry, bool> canNavigateHandle,
+            Func<SelectInteractionEntry, Task> selectHandler,
+            Func<SelectInteractionEntry, bool> canSelectHandler,
+            Action<SelectInteractionEntry> selectedChangedHandler,
+            string? imagePath = null)
         {
-            return new SelectInteractionEntry(text, data, handleInteract, canHandleInteract, onIsSelectedChanged, isSelected);
+            return new SelectInteractionEntry(text, data, isSelected, navigateHandler, canNavigateHandle, selectHandler, canSelectHandler, selectedChangedHandler, imagePath);
         }
 
         partial void OnIsSelectedChanged(bool value)
         {
-            _onIsSelectedChanged.Invoke();
+            SelectedChangedHandler?.Invoke(this);
+        }
+
+        private bool CanToggleSelectionState()
+        {
+            return CanSelectHandler?.Invoke(this) ?? false;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleSelectionState))]
+        private Task ToggleSelectionState(CancellationToken token)
+        {
+            return SelectHandler?.Invoke(this) ?? Task.CompletedTask;
         }
     }
 }
