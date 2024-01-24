@@ -11,7 +11,6 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
