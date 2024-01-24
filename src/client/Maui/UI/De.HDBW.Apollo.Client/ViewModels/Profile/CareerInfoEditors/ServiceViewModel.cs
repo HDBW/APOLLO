@@ -5,26 +5,20 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 {
-    public partial class ServiceViewModel : BaseViewModel
+    public partial class ServiceViewModel : BasicViewModel
     {
         [ObservableProperty]
-        private DateTime _start = DateTime.Today;
-
-        [ObservableProperty]
-        private DateTime? _end;
-
-        [ObservableProperty]
         private string? _occupationName;
-
-        [ObservableProperty]
-        private string? _description;
 
         [ObservableProperty]
         private string? _nameOfInstitution;
@@ -41,49 +35,92 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private InteractionEntry? _selectedServiceType;
 
-        private CareerInfo? _career;
-
         public ServiceViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<ServiceViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<ServiceViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
         }
 
-        public bool HasEnd
+        protected override void RefreshCommands()
         {
-            get
-            {
-                return End.HasValue;
-            }
+            base.RefreshCommands();
+            SearchOccupationCommand?.NotifyCanExecuteChanged();
         }
 
-        public override async Task OnNavigatedToAsync()
+        protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
-            using (var worker = ScheduleWork())
+            token.ThrowIfCancellationRequested();
+
+            var serviceTypes = new List<InteractionEntry>();
+            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_CivilianService, ServiceType.CivilianService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryService, ServiceType.MilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_VoluntaryMilitaryService, ServiceType.VoluntaryMilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryExercise, ServiceType.MilitaryExercise, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, serviceTypes), token).ConfigureAwait(false);
+            return currentData;
+        }
+
+        protected override void ApplyChanges(CareerInfo entity)
+        {
+            base.ApplyChanges(entity);
+            entity.City = City;
+            entity.Country = Country;
+            entity.NameOfInstitution = NameOfInstitution;
+            entity.ServiceType = (SelectedServiceType?.Data as ServiceType?) ?? ServiceType.Unknown;
+        }
+
+        partial void OnCityChanged(string? value)
+        {
+            this.IsDirty = true;
+        }
+
+        partial void OnCountryChanged(string? value)
+        {
+            this.IsDirty = true;
+        }
+
+        partial void OnNameOfInstitutionChanged(string? value)
+        {
+            this.IsDirty = true;
+        }
+
+        partial void OnSelectedServiceTypeChanged(InteractionEntry? value)
+        {
+            this.IsDirty = true;
+        }
+
+        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> serviceTypes)
+        {
+            ServiceTypes = new ObservableCollection<InteractionEntry>(serviceTypes);
+            SelectedServiceType = ServiceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == careerInfo?.ServiceType) ?? ServiceTypes.FirstOrDefault();
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
+        private async Task SearchOccupation(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
             {
                 try
                 {
-                    var serviceTypes = new List<InteractionEntry>();
-                    serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_CivilianService, ServiceType.CivilianService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryService, ServiceType.MilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_VoluntaryMilitaryService, ServiceType.VoluntaryMilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryExercise, ServiceType.MilitaryExercise, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(serviceTypes), worker.Token);
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(SearchOccupation)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -92,33 +129,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             }
         }
 
-        protected override void RefreshCommands()
+        private bool CanSearchOccupation()
         {
-            base.RefreshCommands();
-            ClearEndCommand?.NotifyCanExecuteChanged();
-        }
-
-        partial void OnEndChanged(DateTime? value)
-        {
-            OnPropertyChanged(nameof(HasEnd));
-            RefreshCommands();
-        }
-
-        [RelayCommand(CanExecute = nameof(CanClearEnd))]
-        private void ClearEnd()
-        {
-            End = null;
-        }
-
-        private bool CanClearEnd()
-        {
-            return !IsBusy && HasEnd;
-        }
-
-        private void LoadonUIThread(List<InteractionEntry> serviceTypes)
-        {
-            ServiceTypes = new ObservableCollection<InteractionEntry>(serviceTypes);
-            SelectedServiceType = ServiceTypes.FirstOrDefault();
+            return !IsBusy;
         }
     }
 }
