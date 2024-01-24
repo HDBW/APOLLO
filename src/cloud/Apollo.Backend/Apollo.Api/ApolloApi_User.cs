@@ -35,16 +35,19 @@ namespace Apollo.Api
                     user = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), userId, "ObjectId");
 
                     if (user == null)
+                    {
+                        // User not found, log the error
+                        _logger?.LogError($"User with ID '{userId}' not found.");
 
-                        // User not found, throw ApolloException with specific code and message
+                        // Throw ApolloException with specific code and message
                         throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.");
+                    }
                 }
 
                 return user;
             }
             catch (ApolloApiException)
             {
-
                 throw;
             }
             catch (Exception ex)
@@ -55,6 +58,7 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.UserErrors.GetUserError, "An error occurred while getting the user.", ex);
             }
         }
+
 
 
         /// <summary>

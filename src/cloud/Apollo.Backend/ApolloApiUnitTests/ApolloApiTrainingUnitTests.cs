@@ -805,7 +805,7 @@ namespace Apollo.Api.UnitTests
                 {
                     FieldName = "TrainingName",
                     Operator = Apollo.Common.Entities.QueryOperator.Equals,
-                    Argument = new List<object> { "Training T05" }
+                    Argument = new List<object> { "Training07" }
                 },
                 new Apollo.Common.Entities.FieldExpression
                 {
@@ -829,7 +829,7 @@ namespace Apollo.Api.UnitTests
 
             // Assert for Case 1
             Assert.IsNotNull(trainings);
-            Assert.IsTrue(trainings.Any(t => t.TrainingName == "Training T05"));
+            Assert.IsTrue(trainings.Any(t => t.TrainingName == "Training07"));
 
             // Case 2: Query by IndividualStartDate only
             query.Filter.Fields.RemoveAt(0); // Remove TrainingName filter

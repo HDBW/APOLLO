@@ -61,6 +61,7 @@ namespace Apollo.Api
 
         public static class ProfileErrors
         {
+            //TODO: Change codebase name
             public const int TrainingCodeBase = 300;
             public const int GetProfileError = TrainingCodeBase + 1;
             public const int QueryProfilesError = TrainingCodeBase + 10;
@@ -83,6 +84,18 @@ namespace Apollo.Api
             public static void HandleException(Exception ex)
             {
                 throw new ApolloApiException(TrainingCodeBase, "Profile Error occurred", ex);
+            }
+        }
+
+        public static class QualificationErrors
+        {
+            public const int QualificationCodeBase = 500;
+
+            public const int CreateOrUpdateQualificationError = QualificationCodeBase + 1;
+
+            public static void HandleException(Exception ex)
+            {
+                throw new ApolloApiException(QualificationCodeBase, "Qualification Error occurred", ex);
             }
         }
 
