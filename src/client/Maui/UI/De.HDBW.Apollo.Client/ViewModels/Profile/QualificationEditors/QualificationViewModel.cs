@@ -5,28 +5,20 @@ using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
-using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
-using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
 {
-    public partial class QualificationViewModel : AbstractSaveDataViewModel
+    public partial class QualificationViewModel : AbstractProfileEditorViewModel<Qualification>
     {
-        private DateTime? _start = DateTime.Today;
+        private DateTime? _start;
 
         private DateTime? _end;
 
         private string? _description;
-
-        private Qualification? _qualification;
-
-        private User? _user;
-
-        private string? _qualificationId;
 
         private string? _name;
 
@@ -37,10 +29,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             ILogger<QualificationViewModel> logger,
             IUserRepository userRepository,
             IUserService userService)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
-            UserRepository = userRepository;
-            UserService = userService;
         }
 
         public bool HasEnd
@@ -48,6 +38,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             get
             {
                 return End.HasValue;
+            }
+        }
+
+        public bool HasStart
+        {
+            get
+            {
+                return Start.HasValue;
             }
         }
 
@@ -97,6 +95,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
                 if (SetProperty(ref _start, value))
                 {
                     IsDirty = true;
+                    OnPropertyChanged(nameof(HasStart));
+                    RefreshCommands();
                 }
             }
         }
@@ -119,88 +119,38 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             }
         }
 
-        private IUserRepository UserRepository { get; }
-
-        private IUserService UserService { get; }
-
-        public override async Task OnNavigatedToAsync()
-        {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
-                    var qualification = user?.Profile?.Qualifications?.FirstOrDefault(x => x.Id == _qualificationId);
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, qualification), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        protected override void OnPrepare(NavigationParameters navigationParameters)
-        {
-            _qualificationId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
-        }
-
-        protected override async Task<bool> SaveAsync(CancellationToken token)
-        {
-            if (_user == null || !IsDirty)
-            {
-                return !IsDirty;
-            }
-
-            token.ThrowIfCancellationRequested();
-
-            _user.Profile = _user.Profile ?? new UserProfile();
-            var qualification = _qualification ?? new Qualification();
-            qualification.Name = Name!.Trim();
-            qualification.Description = Description?.Trim();
-            qualification.ExpirationDate = End.ToDTODate();
-            qualification.IssueDate = Start.ToDTODate();
-            if (!_user.Profile.Qualifications.Contains(qualification))
-            {
-                _user.Profile.Qualifications.Add(qualification);
-            }
-
-            var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
-            if (string.IsNullOrWhiteSpace(response))
-            {
-                Logger.LogError($"Unable to save qualification remotely {nameof(SaveAsync)} in {GetType().Name}.");
-                return !IsDirty;
-            }
-
-            var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
-            if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
-            {
-                Logger.LogError($"Unable to save qualification locally {nameof(SaveAsync)} in {GetType().Name}.");
-                return !IsDirty;
-            }
-
-            _user = userResult;
-            IsDirty = false;
-            return !IsDirty;
-        }
-
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            DeleteCommand?.NotifyCanExecuteChanged();
             ClearEndCommand?.NotifyCanExecuteChanged();
+        }
+
+        protected override async Task<Qualification?> LoadDataAsync(User user, string? enityId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var enity = user?.Profile?.Qualifications?.FirstOrDefault(x => x.Id == enityId);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(enity), token).ConfigureAwait(false);
+            return enity;
+        }
+
+        protected override Qualification CreateNewEntry(User user)
+        {
+            var entry = new Qualification();
+            user.Profile!.Qualifications.Add(entry);
+            return entry;
+        }
+
+        protected override void DeleteEntry(User user, Qualification entry)
+        {
+            user.Profile!.Qualifications.Remove(entry!);
+        }
+
+        protected override void ApplyChanges(Qualification entity)
+        {
+            entity.Name = Name!.Trim();
+            entity.Description = Description?.Trim();
+            entity.ExpirationDate = End.ToDTODate();
+            entity.IssueDate = Start.ToDTODate();
         }
 
         [RelayCommand(CanExecute = nameof(CanClearEnd))]
@@ -214,66 +164,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             return !IsBusy && HasEnd;
         }
 
-        private void LoadonUIThread(User? user, Qualification? qualification)
+        private void LoadonUIThread(Qualification? qualification)
         {
-            _qualification = qualification;
-            _user = user;
             Name = qualification?.Name;
             Description = qualification?.Description;
             Start = qualification?.IssueDate.ToUIDate();
             End = qualification?.ExpirationDate.ToUIDate();
             IsDirty = false;
             ValidateCommand?.Execute(null);
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
-        private async Task Delete(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    _user!.Profile!.Qualifications.Remove(_qualification!);
-                    var response = await UserService.SaveAsync(_user, worker.Token).ConfigureAwait(false);
-                    if (string.IsNullOrWhiteSpace(response))
-                    {
-                        Logger.LogError($"Unable to delete qualification remotely {nameof(Delete)} in {GetType().Name}.");
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
-                        return;
-                    }
-
-                    if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
-                    {
-                        Logger.LogError($"Unable to save qualification locally {nameof(Delete)} in {GetType().Name}.");
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
-                        return;
-                    }
-
-                    IsDirty = false;
-                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Delete)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        private bool CanDelete()
-        {
-            return !IsBusy && _qualification != null;
         }
     }
 }

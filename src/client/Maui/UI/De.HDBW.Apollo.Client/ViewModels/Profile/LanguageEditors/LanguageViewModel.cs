@@ -62,6 +62,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
 
         protected async override Task<Language?> LoadDataAsync(User user, string? enityId, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             var language = user?.Profile?.LanguageSkills.FirstOrDefault(x => x.Id == enityId);
             var niveau = language?.Niveau;
             var code = language?.Code;
@@ -97,7 +98,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C1, LanguageNiveau.C1, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C2, LanguageNiveau.C2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var selectedNivau = languageNiveaus.FirstOrDefault(x => (LanguageNiveau?)x.Data == niveau);
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(code, name, languageNiveaus, selectedNivau, isDirty), token);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(code, name, languageNiveaus, selectedNivau, isDirty), token).ConfigureAwait(false);
             return language;
         }
 

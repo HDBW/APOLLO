@@ -61,6 +61,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
 
         protected override async Task<License?> LoadDataAsync(User user, string? enityId, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             var entity = user.Profile?.Licenses?.FirstOrDefault(x => x.Id == enityId);
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(entity), token).ConfigureAwait(false);
             return entity;
@@ -92,8 +93,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
 
         partial void OnNameChanged(string? value)
         {
-            ValidateProperty(value, nameof(Name));
             IsDirty = true;
+            ValidateProperty(value, nameof(Name));
         }
 
         partial void OnStartChanged(DateTime? value)

@@ -63,11 +63,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
         protected override async Task<Contact?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             var contact = user.ContactInfos.FirstOrDefault(x => x.Id == entryId);
             var contactTypes = new List<InteractionEntry>();
             contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Private, ContactType.Private, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Professional, ContactType.Professional, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(contact, contactTypes), token);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(contact, contactTypes), token).ConfigureAwait(false);
             return contact;
         }
 
