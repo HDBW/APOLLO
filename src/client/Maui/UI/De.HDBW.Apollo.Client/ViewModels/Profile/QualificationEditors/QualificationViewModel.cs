@@ -123,6 +123,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         {
             base.RefreshCommands();
             ClearEndCommand?.NotifyCanExecuteChanged();
+            ClearStartCommand?.NotifyCanExecuteChanged();
         }
 
         protected override async Task<Qualification?> LoadDataAsync(User user, string? enityId, CancellationToken token)
@@ -162,6 +163,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         private bool CanClearEnd()
         {
             return !IsBusy && HasEnd;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanClearStart))]
+        private void ClearStart()
+        {
+            Start = null;
+        }
+
+        private bool CanClearStart()
+        {
+            return !IsBusy && HasStart;
         }
 
         private void LoadonUIThread(Qualification? qualification)
