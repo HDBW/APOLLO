@@ -1,4 +1,5 @@
-﻿using De.HDBW.Apollo.Client.Contracts;
+﻿using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -8,7 +9,7 @@ using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
-    public abstract class AbstractProfileEditorViewModel<TU> : AbstractSaveDataViewModel
+    public abstract partial class AbstractProfileEditorViewModel<TU> : AbstractSaveDataViewModel
     {
         private string? _enityId;
 
@@ -27,18 +28,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             UserService = userService;
         }
 
-        protected User? User { get; set; }
+        private User? User { get; set; }
 
-        protected IUserRepository UserRepository { get; }
+        private IUserRepository UserRepository { get; }
 
-        protected TU? Entry { get; set; }
+        private TU? Entry { get; set; }
 
         private IUserService UserService { get; }
-
-        protected override void OnPrepare(NavigationParameters navigationParameters)
-        {
-            _enityId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
-        }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -47,7 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
-                    Entry = await LoadDataAsync(_enityId, worker.Token).ConfigureAwait(false);
+                    Entry = await LoadDataAsync(User!, _enityId, worker.Token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -68,7 +64,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        protected abstract Task<TU?> LoadDataAsync(string? enityId, CancellationToken token);
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            _enityId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
+        }
+
+        protected abstract Task<TU?> LoadDataAsync(User user, string? enityId, CancellationToken token);
 
         protected override async Task<bool> SaveAsync(CancellationToken token)
         {
@@ -79,7 +80,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
 
             User.Profile = User.Profile ?? new UserProfile();
-            TU entity = Entry ?? CreateNewEntry();
+            TU entity = Entry ?? CreateNewEntry(User);
             ApplyChanges(entity);
 
             var response = await UserService.SaveAsync(User, token).ConfigureAwait(false);
@@ -101,7 +102,71 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             return !IsDirty;
         }
 
-        protected abstract TU? CreateNewEntry();
+        protected abstract TU CreateNewEntry(User user);
+
+        protected abstract void DeleteEntry(User user, TU tU);
+
         protected abstract void ApplyChanges(TU entity);
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            DeleteCommand?.NotifyCanExecuteChanged();
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
+        private async Task Delete(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var user = User!;
+                    var entry = Entry!;
+
+                    DeleteEntry(user, entry!);
+                    Entry = default;
+
+                    var response = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
+                    if (string.IsNullOrWhiteSpace(response))
+                    {
+                        Logger.LogError($"Unable to delete contact remotely {nameof(Delete)} in {GetType().Name}.");
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                        return;
+                    }
+
+                    if (!await UserRepository.SaveAsync(user, CancellationToken.None).ConfigureAwait(false))
+                    {
+                        Logger.LogError($"Unable to save contact locally {nameof(Delete)} in {GetType().Name}.");
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                        return;
+                    }
+
+                    IsDirty = false;
+                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Delete)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanDelete()
+        {
+            return !IsBusy && User != null && Entry != null;
+        }
     }
 }

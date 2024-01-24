@@ -4,9 +4,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -17,7 +15,7 @@ using Contact = Invite.Apollo.App.Graph.Common.Models.Contact;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 {
-    public partial class ContactViewModel : AbstractSaveDataViewModel
+    public partial class ContactViewModel : AbstractProfileEditorViewModel<Contact>
     {
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _contactTypes = new ObservableCollection<InteractionEntry>();
@@ -52,12 +50,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
         [Phone(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidPhoneNumber))]
         private string? _phone;
 
-        private Contact? _contact;
-
-        private User? _user;
-
-        private string? _contactId;
-
         public ContactViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -65,96 +57,42 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             ILogger<ContactViewModel> logger,
             IUserService userService,
             IUserRepository userRepository)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
-            ArgumentNullException.ThrowIfNull(userRepository);
-            ArgumentNullException.ThrowIfNull(userService);
-            UserRepository = userRepository;
-            UserService = userService;
         }
 
-        private IUserRepository UserRepository { get; }
-
-        private IUserService UserService { get; }
-
-        public override async Task OnNavigatedToAsync()
+        protected override async Task<Contact?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
-                    var contact = user?.ContactInfos.FirstOrDefault(x => x.Id == _contactId);
-                    var contactTypes = new List<InteractionEntry>();
-                    contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Private, ContactType.Private, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Professional, ContactType.Professional, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(user, contact, contactTypes), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
+            var contact = user.ContactInfos.FirstOrDefault(x => x.Id == entryId);
+            var contactTypes = new List<InteractionEntry>();
+            contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Private, ContactType.Private, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Professional, ContactType.Professional, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(contact, contactTypes), token);
+            return contact;
         }
 
-        protected override void OnPrepare(NavigationParameters navigationParameters)
+        protected override Contact CreateNewEntry(User user)
         {
-            _contactId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
+            var entry = new Contact();
+            user.ContactInfos.Add(entry);
+            return entry;
         }
 
-        protected override async Task<bool> SaveAsync(CancellationToken token)
+        protected override void ApplyChanges(Contact entity)
         {
-            token.ThrowIfCancellationRequested();
-            if (_user == null || !IsDirty)
-            {
-                return !IsDirty;
-            }
+            entity.ContactType = (ContactType)(SelectedContactType?.Data ?? ContactType.Unknown);
+            entity.Address = Address?.Trim() ?? string.Empty;
+            entity.Phone = Phone?.Trim() ?? string.Empty;
+            entity.Mail = Email?.Trim() ?? string.Empty;
+            entity.City = City?.Trim() ?? string.Empty;
+            entity.ZipCode = ZipCode?.Trim() ?? string.Empty;
+            entity.Country = Country?.Trim() ?? string.Empty;
+            entity.Region = Region?.Trim() ?? string.Empty;
+        }
 
-            _contact = _contact ?? new Contact();
-            _contact.ContactType = (ContactType)(SelectedContactType?.Data ?? ContactType.Unknown);
-            _contact.Address = Address?.Trim() ?? string.Empty;
-            _contact.Phone = Phone?.Trim() ?? string.Empty;
-            _contact.Mail = Email?.Trim() ?? string.Empty;
-            _contact.City = City?.Trim() ?? string.Empty;
-            _contact.ZipCode = ZipCode?.Trim() ?? string.Empty;
-            _contact.Country = Country?.Trim() ?? string.Empty;
-            _contact.Region = Region?.Trim() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(_contact.Id))
-            {
-                _user.ContactInfos.Add(_contact);
-            }
-
-            var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
-            if (string.IsNullOrWhiteSpace(response))
-            {
-                Logger.LogError($"Unable to contact user remotely {nameof(SaveAsync)} in {GetType().Name}.");
-                return !IsDirty;
-            }
-
-            _user.Id = response;
-            var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
-            if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
-            {
-                Logger.LogError($"Unable to contact user locally {nameof(SaveAsync)} in {GetType().Name}.");
-                return !IsDirty;
-            }
-
-            _user = userResult;
-            IsDirty = false;
-            return !IsDirty;
+        protected override void DeleteEntry(User user, Contact entry)
+        {
+            user!.ContactInfos.Remove(entry);
         }
 
         protected override void RefreshCommands()
@@ -213,72 +151,20 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             IsDirty = true;
         }
 
-        private void LoadonUIThread(User? user, Contact? contact, List<InteractionEntry> contactTypes)
+        private void LoadonUIThread(Contact? contact, List<InteractionEntry> contactTypes)
         {
-            _user = user;
-            _contact = contact;
-            Address = _contact?.Address;
-            Phone = _contact?.Phone;
-            Email = _contact?.Mail;
-            City = _contact?.City;
-            ZipCode = _contact?.ZipCode;
-            Country = _contact?.Country;
-            Region = _contact?.Region;
+            Address = contact?.Address;
+            Phone = contact?.Phone;
+            Email = contact?.Mail;
+            City = contact?.City;
+            ZipCode = contact?.ZipCode;
+            Country = contact?.Country;
+            Region = contact?.Region;
 
             ContactTypes = new ObservableCollection<InteractionEntry>(contactTypes);
-            SelectedContactType = (_contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => ((ContactType?)x.Data) == _contact.ContactType) : ContactTypes.FirstOrDefault();
+            SelectedContactType = (contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => ((ContactType?)x.Data) == contact.ContactType) : ContactTypes.FirstOrDefault();
             IsDirty = false;
             ValidateCommand?.Execute(null);
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
-        private async Task Delete(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    _user!.ContactInfos.Remove(_contact!);
-                    var response = await UserService.SaveAsync(_user, worker.Token).ConfigureAwait(false);
-                    if (string.IsNullOrWhiteSpace(response))
-                    {
-                        Logger.LogError($"Unable to delete contact remotely {nameof(Delete)} in {GetType().Name}.");
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
-                        return;
-                    }
-
-                    if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
-                    {
-                        Logger.LogError($"Unable to save contact locally {nameof(Delete)} in {GetType().Name}.");
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
-                        return;
-                    }
-
-                    IsDirty = false;
-                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Delete)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        private bool CanDelete()
-        {
-            return !IsBusy && _user != null && _contact != null;
         }
     }
 }

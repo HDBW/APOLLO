@@ -48,18 +48,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
-        protected override async Task<CareerInfo?> LoadDataAsync(string? enityId, CancellationToken token)
+        protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var currentData = User?.Profile?.CareerInfos.FirstOrDefault(x => x.Id == enityId);
+            var currentData = user.Profile?.CareerInfos.FirstOrDefault(x => x.Id == entryId);
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData), token).ConfigureAwait(false);
             return currentData;
         }
 
-        protected override CareerInfo? CreateNewEntry()
+        protected override CareerInfo CreateNewEntry(User user)
         {
             var entry = new CareerInfo();
-            User!.Profile!.CareerInfos.Add(entry);
+            user.Profile!.CareerInfos.Add(entry);
             return entry;
         }
 
@@ -93,5 +93,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             return !IsBusy && HasEnd;
         }
+
+        protected override void DeleteEntry(User user, CareerInfo tU) => throw new NotImplementedException();
     }
 }
