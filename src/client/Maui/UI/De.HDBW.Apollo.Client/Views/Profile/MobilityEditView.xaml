@@ -3,16 +3,16 @@
              x:Class="De.HDBW.Apollo.Client.Views.Profile.MobilityEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
-             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              x:DataType="viewModels:MobilityEditViewModel"
              Title="{x:Static strings:Resources.MobilityEditView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <DataTemplate x:Key="DriverLicenseTemplate"  x:DataType="models:InstructionEntry">
+        <DataTemplate x:Key="DriverLicenseTemplate"  x:DataType="models:SelectInteractionEntry">
             <VerticalStackLayout>
                 <HorizontalStackLayout Margin="24,0">
-                    <CheckBox />
+                    <CheckBox IsChecked="{x:Binding IsSelected, Mode=TwoWay}"/>
                     <Image Source="edit.png" WidthRequest="24" HeightRequest="24" Margin="8,0"/>
                     <Label Text="{x:Binding Text}" Style="{StaticResource Noto14}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
                 </HorizontalStackLayout>
@@ -27,11 +27,17 @@
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedWillingToTravel, Mode=TwoWay}"/>
         </Border>
-        <Label Grid.Row="2" Text="{x:Static strings:Resources.MobilityEditView_Vehicle}" Style="{StaticResource Noto14SemiBold}" Margin="24,20,0,0"/>
-        <CheckBox Grid.Row="3" HorizontalOptions="Start" Margin="24,0" />
+        <HorizontalStackLayout Grid.Row="2" Margin="0,20,0,0">
+    <HorizontalStackLayout.GestureRecognizers>
+        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleHasVehicleCommand}" />
+    </HorizontalStackLayout.GestureRecognizers>
+    <CheckBox InputTransparent="True" IsChecked="{x:Binding HasVehicle, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" />
+    <Label Text="{x:Static strings:Resources.MobilityEditView_Vehicle}" Style="{StaticResource Noto14SemiBold}" VerticalOptions="Center"/>
+</HorizontalStackLayout>
 
-        <Label Grid.Row="4" Text="{x:Static strings:Resources.MobilityEditView_DriverLicenses}" Style="{StaticResource Noto14SemiBold}" Margin="24,20,0,0"/>
-        <CollectionView Grid.Row="5" ItemsSource="{x:Binding DriverLicenses}"
+
+        <Label Grid.Row="3" Text="{x:Static strings:Resources.MobilityEditView_DriverLicenses}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+        <CollectionView Grid.Row="4" ItemsSource="{x:Binding DriverLicenses}"
                         ItemTemplate="{StaticResource DriverLicenseTemplate}"
                         ItemsLayout="VerticalList">
         </CollectionView>
