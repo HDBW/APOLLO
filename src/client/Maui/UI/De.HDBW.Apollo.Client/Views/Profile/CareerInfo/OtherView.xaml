@@ -1,12 +1,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfo.OtherView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:OtherViewModel"
-             Title="OtherView"
+             Title="{x:Static strings:Resources.OtherView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
@@ -39,22 +40,22 @@
 
             <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+                <Entry x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding City, Mode=TwoWay}" />
+                <Entry  x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" />
             </Border>
         </VerticalStackLayout>
     </ScrollView>

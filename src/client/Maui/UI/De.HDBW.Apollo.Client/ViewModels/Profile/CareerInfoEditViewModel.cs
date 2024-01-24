@@ -76,8 +76,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
                         var route = string.Empty;
-                        NavigationParameters? editorParameters = null;
-                        switch (result?.GetValue<CareerType?>(NavigationParameter.Data))
+                        NavigationParameters? editorParameters = new NavigationParameters();
+                        var careerType = result.GetValue<CareerType>(NavigationParameter.Data);
+                        editorParameters.Add(NavigationParameter.Type, careerType);
+
+                        switch (careerType)
                         {
                             case CareerType.Other:
                                 route = Routes.CareerInfoOtherView;

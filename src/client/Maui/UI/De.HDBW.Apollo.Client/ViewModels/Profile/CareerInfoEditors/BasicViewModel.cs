@@ -5,9 +5,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
@@ -22,6 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         [ObservableProperty]
         private string? _description;
+        private CareerType? _type;
 
         public BasicViewModel(
             IDispatcherService dispatcherService,
@@ -59,6 +62,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         protected override CareerInfo CreateNewEntry(User user)
         {
             var entry = new CareerInfo();
+            entry.CareerType = _type ?? CareerType.Unknown;
             user.Profile!.CareerInfos.Add(entry);
             return entry;
         }
@@ -66,6 +70,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         protected override void DeleteEntry(User user, CareerInfo entry)
         {
             user.Profile!.CareerInfos.Add(entry);
+        }
+
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            base.OnPrepare(navigationParameters);
+            _type = navigationParameters.GetValue<CareerType?>(NavigationParameter.Type);
         }
 
         protected override void ApplyChanges(CareerInfo entity)
