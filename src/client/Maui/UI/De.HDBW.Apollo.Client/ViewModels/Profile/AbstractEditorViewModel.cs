@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
     public abstract partial class AbstractProfileEditorViewModel<TU> : AbstractSaveDataViewModel
     {
-        private string? _enityId;
+        private string? _entryId;
 
         protected AbstractProfileEditorViewModel(
             IDispatcherService dispatcherService,
@@ -43,7 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
-                    Entry = await LoadDataAsync(User!, _enityId, worker.Token).ConfigureAwait(false);
+                    Entry = await LoadDataAsync(User!, _entryId, worker.Token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -66,7 +66,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
-            _enityId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
+            _entryId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
         }
 
         protected abstract Task<TU?> LoadDataAsync(User user, string? enityId, CancellationToken token);
