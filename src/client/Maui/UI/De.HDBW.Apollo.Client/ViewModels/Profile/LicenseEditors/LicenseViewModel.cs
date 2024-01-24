@@ -16,7 +16,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
     public partial class LicenseViewModel : AbstractProfileEditorViewModel<License>
     {
         [ObservableProperty]
-        private DateTime? _start = DateTime.Today;
+        private DateTime? _start;
 
         [ObservableProperty]
         private DateTime? _end;
@@ -44,10 +44,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
             }
         }
 
+        public bool HasStart
+        {
+            get
+            {
+                return Start.HasValue;
+            }
+        }
+
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
             ClearEndCommand?.NotifyCanExecuteChanged();
+            ClearStartCommand?.NotifyCanExecuteChanged();
         }
 
         protected override async Task<License?> LoadDataAsync(User user, string? enityId, CancellationToken token)
@@ -90,11 +99,26 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
         partial void OnStartChanged(DateTime? value)
         {
             IsDirty = true;
+            OnPropertyChanged(nameof(HasStart));
+            RefreshCommands();
         }
 
         partial void OnEndChanged(DateTime? value)
         {
             IsDirty = true;
+            OnPropertyChanged(nameof(HasEnd));
+            RefreshCommands();
+        }
+
+        [RelayCommand(CanExecute = nameof(CanClearStart))]
+        private void ClearStart()
+        {
+            Start = null;
+        }
+
+        private bool CanClearStart()
+        {
+            return !IsBusy && HasStart;
         }
 
         [RelayCommand(CanExecute = nameof(CanClearEnd))]
