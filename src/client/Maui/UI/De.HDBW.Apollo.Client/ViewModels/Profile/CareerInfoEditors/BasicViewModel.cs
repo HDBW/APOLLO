@@ -24,6 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         [ObservableProperty]
         private string? _description;
+
         private CareerType? _type;
 
         public BasicViewModel(
@@ -87,8 +88,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         partial void OnEndChanged(DateTime? value)
         {
+            IsDirty = true;
             OnPropertyChanged(nameof(HasEnd));
             RefreshCommands();
+        }
+
+        partial void OnStartChanged(DateTime value)
+        {
+            IsDirty = true;
+        }
+
+        partial void OnDescriptionChanged(string? value)
+        {
+            IsDirty = true;
         }
 
         private void LoadonUIThread(CareerInfo? careerInfo)

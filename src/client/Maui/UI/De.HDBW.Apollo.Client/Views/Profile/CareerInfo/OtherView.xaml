@@ -21,7 +21,7 @@
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
                                 IsClearButtonVisible="False"
                                 VerticalOptions="Center"
-                                Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                                NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <Image Source="calendar.png" Grid.Column="1"/>
                 </Grid>
             </Border>

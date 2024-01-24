@@ -9,19 +9,24 @@
              x:DataType="viewModels:BasicViewModel"
              Title="BasicView"
              IsBusy="{x:Binding IsBusy}"
-            Style="{StaticResource DefaultPageStyle}">
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Margin="24,0">
-            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
+            <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+            </Border>
+            
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
                                 IsClearButtonVisible="False"
                                 VerticalOptions="Center"
-                                Date="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                                NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <Image Source="calendar.png" Grid.Column="1"/>
                 </Grid>
             </Border>
@@ -38,10 +43,6 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
-            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
