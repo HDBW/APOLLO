@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -23,6 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private DateTime? _end;
 
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_NameIsRequired))]
         private string? _description;
 
         private CareerType? _type;
@@ -101,6 +103,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         partial void OnDescriptionChanged(string? value)
         {
             IsDirty = true;
+            ValidateProperty(value, nameof(Description));
         }
 
         private void LoadonUIThread(CareerInfo? careerInfo)
@@ -108,6 +111,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             Start = careerInfo?.Start.ToUIDate() ?? Start;
             End = careerInfo?.End.ToUIDate();
             Description = careerInfo?.Description;
+            IsDirty = false;
+            ValidateCommand.Execute(null);
         }
 
         [RelayCommand(CanExecute = nameof(CanClearEnd))]

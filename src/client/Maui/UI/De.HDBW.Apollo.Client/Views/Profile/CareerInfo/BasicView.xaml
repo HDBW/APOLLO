@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfo.BasicView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
@@ -11,16 +12,21 @@
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="delete" />
+        <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Margin="24,0">
             <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+                <Entry Text="{x:Binding Description, Mode=TwoWay}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+                    </Entry.Behaviors>
+                </Entry>
             </Border>
-            
-            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
+
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
