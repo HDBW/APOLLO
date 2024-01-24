@@ -15,7 +15,7 @@ namespace Apollo.Api
     public partial class ApolloApi
     {
         private readonly IMongoCollection<Training> _trainingCollection;
-
+     
         /// <summary>
         /// Gets the specific instance of the training.
         /// </summary>
