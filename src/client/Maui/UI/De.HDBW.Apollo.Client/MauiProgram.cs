@@ -460,22 +460,38 @@ namespace De.HDBW.Apollo.Client
 #if ANDROID
                 // remove underline from entry;
                 handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#elif IOS
+                // remove outline from entry;
+                handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+                handler.PlatformView.Layer.BorderWidth = 0;
+                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
             });
 
             Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping(nameof(DatePicker), (handler, view) =>
             {
 #if ANDROID
-                // remove underline from entry;
+                // remove underline from datepicker;
                 handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#elif IOS
+
+                // remove outline from datepicker;
+                handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+                handler.PlatformView.Layer.BorderWidth = 0;
+                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
             });
 
             Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(nameof(Picker), (handler, view) =>
             {
 #if ANDROID
-                // remove underline from entry;
+                // remove underline from datepicker;
                 handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#elif IOS
+                // remove outline from datepicker;
+                handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+                handler.PlatformView.Layer.BorderWidth = 0;
+                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
             });
 

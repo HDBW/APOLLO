@@ -3,18 +3,15 @@
 
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
-using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
 {
-    public partial class WebReferenceViewModel : AbstractSaveDataViewModel
+    public partial class WebReferenceViewModel : AbstractProfileEditorViewModel<WebReference>
     {
         [ObservableProperty]
         [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
@@ -25,12 +22,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
         [Url(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidUrl))]
         private string? _url;
 
-        private WebReference? _webReference;
-
-        private User? _user;
-
-        private string? _webReferenceId;
-
         public WebReferenceViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -38,92 +29,34 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
             ILogger<WebReferenceViewModel> logger,
             IUserRepository userRepository,
             IUserService userServic)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userServic)
         {
-            UserRepository = userRepository;
-            UserService = userServic;
         }
 
-        private IUserRepository UserRepository { get; }
-
-        private IUserService UserService { get; }
-
-        public override async Task OnNavigatedToAsync()
+        protected override async Task<WebReference?> LoadDataAsync(User user, string? enityId, CancellationToken token)
         {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
-                    var webReference = user?.Profile?.WebReferences?.FirstOrDefault(x => x.Id == _webReferenceId);
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user, webReference), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        protected override void OnPrepare(NavigationParameters navigationParameters)
-        {
-            _webReferenceId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
-        }
-
-        protected override async Task<bool> SaveAsync(CancellationToken token)
-        {
-            if (_user == null || !IsDirty)
-            {
-                return !IsDirty;
-            }
-
             token.ThrowIfCancellationRequested();
-
-            _user.Profile = _user.Profile ?? new UserProfile();
-            var webReference = _webReference ?? new WebReference();
-            webReference.Url = new Uri(Url?.Trim() ?? "about:blank");
-            webReference.Title = Description?.Trim() ?? string.Empty;
-
-            if (!_user.Profile.WebReferences.Contains(webReference))
-            {
-                _user.Profile.WebReferences.Add(webReference);
-            }
-
-            var response = await UserService.SaveAsync(_user, token).ConfigureAwait(false);
-            if (string.IsNullOrWhiteSpace(response))
-            {
-                Logger.LogError($"Unable to save webReference remotely {nameof(SaveAsync)} in {GetType().Name}.");
-                return !IsDirty;
-            }
-
-            _user.Id = response;
-            var userResult = await UserService.GetUserAsync(_user.Id, token).ConfigureAwait(false);
-            if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
-            {
-                Logger.LogError($"Unable to save webReference locally {nameof(SaveAsync)} in {GetType().Name}.");
-                return !IsDirty;
-            }
-
-            IsDirty = false;
-            return !IsDirty;
+            var webReference = user?.Profile?.WebReferences?.FirstOrDefault(x => x.Id == enityId);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(webReference), token).ConfigureAwait(false);
+            return webReference;
         }
 
-        protected override void RefreshCommands()
+        protected override WebReference CreateNewEntry(User user)
         {
-            base.RefreshCommands();
-            DeleteCommand?.NotifyCanExecuteChanged();
+            var entry = new WebReference();
+            user.Profile!.WebReferences.Add(entry);
+            return entry;
+        }
+
+        protected override void DeleteEntry(User user, WebReference entry)
+        {
+            user.Profile!.WebReferences.Remove(entry);
+        }
+
+        protected override void ApplyChanges(WebReference entity)
+        {
+            entity.Url = new Uri(Url?.Trim() ?? "about:blank");
+            entity.Title = Description?.Trim() ?? string.Empty;
         }
 
         partial void OnUrlChanging(string? value)
@@ -147,64 +80,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
             IsDirty = true;
         }
 
-        private void LoadonUIThread(User? user, WebReference? webReference)
+        private void LoadonUIThread(WebReference? webReference)
         {
-            _webReference = webReference;
-            _user = user;
             Url = webReference?.Url?.AbsoluteUri;
             Description = webReference?.Title;
             IsDirty = false;
             ValidateCommand?.Execute(null);
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
-        private async Task Delete(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    _user!.Profile!.WebReferences.Remove(_webReference!);
-                    var response = await UserService.SaveAsync(_user, worker.Token).ConfigureAwait(false);
-                    if (string.IsNullOrWhiteSpace(response))
-                    {
-                        Logger.LogError($"Unable to delete webReference remotely {nameof(Delete)} in {GetType().Name}.");
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
-                        return;
-                    }
-
-                    if (!await UserRepository.SaveAsync(_user, CancellationToken.None).ConfigureAwait(false))
-                    {
-                        Logger.LogError($"Unable to save webReference locally {nameof(Delete)} in {GetType().Name}.");
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
-                        return;
-                    }
-
-                    IsDirty = false;
-                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(Delete)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(Delete)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        private bool CanDelete()
-        {
-            return !IsBusy && _webReference != null;
         }
     }
 }
