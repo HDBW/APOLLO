@@ -1,12 +1,10 @@
 ﻿using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Data.Repositories;
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using User = Invite.Apollo.App.Graph.Common.Models.UserProfile.User;
-using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.UserProfile;
+using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
