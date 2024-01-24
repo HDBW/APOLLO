@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfo.BasicView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:BasicViewModel"
-             Title="BasicView"
+             Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
