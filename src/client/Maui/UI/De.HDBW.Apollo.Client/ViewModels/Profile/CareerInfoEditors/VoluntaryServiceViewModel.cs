@@ -3,37 +3,20 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 {
-    public partial class VoluntaryServiceViewModel : BaseViewModel
+    public partial class VoluntaryServiceViewModel : OtherViewModel
     {
         [ObservableProperty]
-        private DateTime _start = DateTime.Today;
-
-        [ObservableProperty]
-        private DateTime? _end;
-
-        [ObservableProperty]
         private string? _occupationName;
-
-        [ObservableProperty]
-        private string? _description;
-
-        [ObservableProperty]
-        private string? _nameOfInstitution;
-
-        [ObservableProperty]
-        private string? _city;
-
-        [ObservableProperty]
-        private string? _country;
 
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _voluntaryServiceTypes = new ObservableCollection<InteractionEntry>();
@@ -41,59 +24,39 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private InteractionEntry? _selectedVoluntaryServiceType;
 
-        private CareerInfo? _career;
-
         public VoluntaryServiceViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<VoluntaryServiceViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<VoluntaryServiceViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
         }
 
-        public bool HasEnd
+        protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
-            get
-            {
-                return End.HasValue;
-            }
+            token.ThrowIfCancellationRequested();
+            var voluntaryServiceTypes = new List<InteractionEntry>();
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_Other, VoluntaryServiceType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialYear, VoluntaryServiceType.VoluntarySocialYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_FederalVolunteerService, VoluntaryServiceType.FederalVolunteerService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryEcologicalYear, VoluntaryServiceType.VoluntaryEcologicalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialTrainingYear, VoluntaryServiceType.VoluntarySocialTrainingYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryCulturalYear, VoluntaryServiceType.VoluntaryCulturalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialYearInSport, VoluntaryServiceType.VoluntarySocialYearInSport, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryYearInMonumentConservation, VoluntaryServiceType.VoluntaryYearInMonumentConservation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+
+            var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, voluntaryServiceTypes), token).ConfigureAwait(false);
+            return currentData;
         }
 
-        public override async Task OnNavigatedToAsync()
+        protected override void ApplyChanges(CareerInfo entity)
         {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    var voluntaryServiceTypes = new List<InteractionEntry>();
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_Other, VoluntaryServiceType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialYear, VoluntaryServiceType.VoluntarySocialYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_FederalVolunteerService, VoluntaryServiceType.FederalVolunteerService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryEcologicalYear, VoluntaryServiceType.VoluntaryEcologicalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialTrainingYear, VoluntaryServiceType.VoluntarySocialTrainingYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryCulturalYear, VoluntaryServiceType.VoluntaryCulturalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialYearInSport, VoluntaryServiceType.VoluntarySocialYearInSport, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryYearInMonumentConservation, VoluntaryServiceType.VoluntaryYearInMonumentConservation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(voluntaryServiceTypes), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
+            base.ApplyChanges(entity);
+            entity.VoluntaryServiceType = (SelectedVoluntaryServiceType?.Data as VoluntaryServiceType?) ?? VoluntaryServiceType.Unknown;
         }
 
         protected override void RefreshCommands()
@@ -102,27 +65,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
-        partial void OnEndChanged(DateTime? value)
-        {
-            OnPropertyChanged(nameof(HasEnd));
-            RefreshCommands();
-        }
-
-        [RelayCommand(CanExecute = nameof(CanClearEnd))]
-        private void ClearEnd()
-        {
-            End = null;
-        }
-
-        private bool CanClearEnd()
-        {
-            return !IsBusy && HasEnd;
-        }
-
-        private void LoadonUIThread(List<InteractionEntry> voluntaryServiceTypes)
+        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> voluntaryServiceTypes)
         {
             VoluntaryServiceTypes = new ObservableCollection<InteractionEntry>(voluntaryServiceTypes);
-            SelectedVoluntaryServiceType = VoluntaryServiceTypes.FirstOrDefault();
+            SelectedVoluntaryServiceType = VoluntaryServiceTypes.FirstOrDefault(x => (x.Data as VoluntaryServiceType?) == careerInfo?.VoluntaryServiceType) ?? VoluntaryServiceTypes.FirstOrDefault();
+        }
+
+        partial void OnSelectedVoluntaryServiceTypeChanged(InteractionEntry? value)
+        {
+            this.IsDirty = true;
         }
     }
 }
