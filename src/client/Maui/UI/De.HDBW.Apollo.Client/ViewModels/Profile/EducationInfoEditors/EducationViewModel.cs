@@ -97,5 +97,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             SchoolGraduations = new ObservableCollection<InteractionEntry>(schoolGraduations);
             SelectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == educationInfo?.Graduation) ?? null;
         }
+
+        partial void OnSelectedSchoolGraduationChanged(InteractionEntry? value)
+        {
+            IsDirty = true;
+        }
+
+        partial void OnSelectedTypeOfSchoolChanged(InteractionEntry? value)
+        {
+            IsDirty = true;
+        }
     }
 }

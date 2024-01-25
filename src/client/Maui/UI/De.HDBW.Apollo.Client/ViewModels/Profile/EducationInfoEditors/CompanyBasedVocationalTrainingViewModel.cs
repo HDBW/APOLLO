@@ -119,5 +119,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             return !IsBusy;
         }
+
+        partial void OnSchoolGraduationsChanged(ObservableCollection<InteractionEntry> value)
+        {
+            IsDirty = true;
+        }
     }
 }
