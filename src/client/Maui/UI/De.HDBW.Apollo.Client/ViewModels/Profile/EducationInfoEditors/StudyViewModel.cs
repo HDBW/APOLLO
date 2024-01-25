@@ -79,6 +79,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> univerityDegrees)
         {
             UniverityDegrees = new ObservableCollection<InteractionEntry>(univerityDegrees);
+            SelectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == educationInfo?.UniversityDegree) ?? null;
             Description = educationInfo?.Description ?? string.Empty;
         }
 
