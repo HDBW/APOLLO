@@ -10,6 +10,7 @@ using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
@@ -35,9 +36,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         [ObservableProperty]
         private InteractionEntry? _selectedServiceType;
-        private string? _savedState;
-        private string? _selectionResult;
-
+      
         public ServiceViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -58,13 +57,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var editState = _savedState.Deserialize<CareerInfo?>();
             var serviceTypes = new List<InteractionEntry>();
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_CivilianService, ServiceType.CivilianService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryService, ServiceType.MilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_VoluntaryMilitaryService, ServiceType.VoluntaryMilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryExercise, ServiceType.MilitaryExercise, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
+            var selection = SelectionResult.Deserialize<Occupation>();
+            if (currentData != null)
+            {
+                currentData.Job = selection;
+            }
+
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, serviceTypes), token).ConfigureAwait(false);
             return currentData;
         }
@@ -98,17 +102,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             this.IsDirty = true;
         }
 
-        protected override void OnPrepare(NavigationParameters navigationParameters)
-        {
-            base.OnPrepare(navigationParameters);
-            _savedState = navigationParameters.GetValue<string>(NavigationParameter.Data);
-            _selectionResult = navigationParameters.GetValue<string>(NavigationParameter.Result);
-        }
-
-        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> serviceTypes)
+        protected void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> serviceTypes)
         {
             ServiceTypes = new ObservableCollection<InteractionEntry>(serviceTypes);
             SelectedServiceType = ServiceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == careerInfo?.ServiceType) ?? ServiceTypes.FirstOrDefault();
+            OccupationName = careerInfo?.Job?.PreferedTerm?.FirstOrDefault();
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]

@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -28,6 +29,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private string? _description;
 
         private CareerType? _type;
+
+        private string? _savedState;
+
+        private string? _selectionResult;
 
         public BasicViewModel(
             IDispatcherService dispatcherService,
@@ -84,6 +89,23 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             }
         }
 
+        protected string? SelectionResult
+        {
+            get
+            {
+                return _selectionResult;
+            }
+        }
+
+        private void LoadonUIThread(CareerInfo? careerInfo)
+        {
+            Start = careerInfo?.Start.ToUIDate() ?? Start;
+            End = careerInfo?.End.ToUIDate();
+            Description = careerInfo?.Description;
+            IsDirty = false;
+            ValidateCommand.Execute(null);
+        }
+
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
@@ -94,6 +116,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var currentData = user.Profile?.CareerInfos.FirstOrDefault(x => x.Id == entryId);
+            var editState = _savedState.Deserialize<CareerInfo?>();
+            if (editState != null)
+            {
+                currentData = editState;
+            }
+
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData), token).ConfigureAwait(false);
             return currentData;
         }
@@ -115,6 +143,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             base.OnPrepare(navigationParameters);
             _type = navigationParameters.GetValue<CareerType?>(NavigationParameter.Type);
+            _savedState = navigationParameters.ContainsKey(NavigationParameter.Data) ? navigationParameters.GetValue<string>(NavigationParameter.Data) : null;
+            _selectionResult = navigationParameters.ContainsKey(NavigationParameter.Result) ? navigationParameters.GetValue<string>(NavigationParameter.Result) : null;
         }
 
         protected override void ApplyChanges(CareerInfo entity)
@@ -140,15 +170,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             ValidateProperty(value, nameof(Description));
             IsDirty = true;
-        }
-
-        private void LoadonUIThread(CareerInfo? careerInfo)
-        {
-            Start = careerInfo?.Start.ToUIDate() ?? Start;
-            End = careerInfo?.End.ToUIDate();
-            Description = careerInfo?.Description;
-            IsDirty = false;
-            ValidateCommand.Execute(null);
         }
 
         [RelayCommand(CanExecute = nameof(CanClearEnd))]

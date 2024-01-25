@@ -119,8 +119,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected string? GetCurrentState()
         {
-            ApplyChanges(Entry ?? Activator.CreateInstance<TU>());
-            return Entry.Serialize();
+            var model = Entry ?? Activator.CreateInstance<TU>();
+            ApplyChanges(model);
+            return model.Serialize();
         }
 
         protected override void RefreshCommands()
