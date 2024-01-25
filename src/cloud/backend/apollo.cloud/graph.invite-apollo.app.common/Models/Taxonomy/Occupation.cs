@@ -9,6 +9,8 @@ using System.Text.Json.Serialization;
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
     [DataContract]
+    [KnownType(typeof(KldbOccupation))]
+    [KnownType(typeof(UnknownOccupation))]
     [JsonDerivedType(typeof(KldbOccupation), "KldbOccupation")]
     [JsonDerivedType(typeof(UnknownOccupation), "UnknownOccupation")]
     public abstract class Occupation
