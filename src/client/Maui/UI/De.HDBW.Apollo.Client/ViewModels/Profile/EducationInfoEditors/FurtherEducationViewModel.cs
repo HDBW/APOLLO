@@ -1,122 +1,55 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
 {
-    public partial class FurtherEducationViewModel : BaseViewModel
+    public partial class FurtherEducationViewModel : BasicEducationInfoViewModel
     {
         [ObservableProperty]
-        private DateTime _start = DateTime.Today;
-
-        [ObservableProperty]
-        private DateTime? _end;
-
-        [ObservableProperty]
-        private string? _nameOfInstitution;
-
-        [ObservableProperty]
-        private string? _city;
-
-        [ObservableProperty]
-        private string? _country;
-
-        [ObservableProperty]
         private string? _description;
-
-        [ObservableProperty]
-        private ObservableCollection<InteractionEntry> _completionStates = new ObservableCollection<InteractionEntry>();
-
-        [ObservableProperty]
-        private InteractionEntry? _selectedCompletionState;
-
-        private EducationInfo? _education;
 
         public FurtherEducationViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<FurtherEducationViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<FurtherEducationViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
         }
 
-        public bool HasEnd
+        protected override async Task<EducationInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
-            get
-            {
-                return End.HasValue;
-            }
+            token.ThrowIfCancellationRequested();
+            var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
+
+            await ExecuteOnUIThreadAsync(
+                () => LoadonUIThread(currentData), token);
+            return currentData;
         }
 
-        public override async Task OnNavigatedToAsync()
+        protected override void ApplyChanges(EducationInfo entity)
         {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    var completionStates = new List<InteractionEntry>();
-                    completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Completed, CompletionState.Completed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Failed, CompletionState.Failed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Ongoning, CompletionState.Ongoning, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-
-                    await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(completionStates), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
+            base.ApplyChanges(entity);
+            entity.Description = Description;
         }
 
-        protected override void RefreshCommands()
+        private void LoadonUIThread(EducationInfo? educationInfo)
         {
-            base.RefreshCommands();
-            ClearEndCommand?.NotifyCanExecuteChanged();
+            Description = educationInfo?.Description ?? string.Empty;
         }
 
-        partial void OnEndChanged(DateTime? value)
+        partial void OnDescriptionChanged(string? value)
         {
-            OnPropertyChanged(nameof(HasEnd));
-            RefreshCommands();
-        }
-
-        [RelayCommand(CanExecute = nameof(CanClearEnd))]
-        private void ClearEnd()
-        {
-            End = null;
-        }
-
-        private bool CanClearEnd()
-        {
-            return !IsBusy && HasEnd;
-        }
-
-        private void LoadonUIThread(List<InteractionEntry> completionStates)
-        {
-            CompletionStates = new ObservableCollection<InteractionEntry>(completionStates);
-            SelectedCompletionState = CompletionStates.FirstOrDefault();
+            IsDirty = true;
         }
     }
 }
