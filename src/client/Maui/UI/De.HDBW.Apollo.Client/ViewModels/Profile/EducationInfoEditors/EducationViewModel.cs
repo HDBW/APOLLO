@@ -83,12 +83,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             return currentData;
         }
 
-        protected override void RefreshCommands()
-        {
-            base.RefreshCommands();
-            ClearEndCommand?.NotifyCanExecuteChanged();
-        }
-
         protected override void ApplyChanges(EducationInfo entity)
         {
             base.ApplyChanges(entity);
