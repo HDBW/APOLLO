@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:OtherViewModel"
-             Title="{x:Static strings:Resources.OtherView_Title}"
+             Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
@@ -40,8 +40,13 @@
 
             <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}"/>
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
+                    </Entry.Behaviors>
+                </Entry>
             </Border>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
 
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
