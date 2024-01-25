@@ -46,7 +46,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
                         var route = string.Empty;
-                        switch (result?.GetValue<EducationType?>(NavigationParameter.Data))
+                        var educationType = result?.GetValue<EducationType?>(NavigationParameter.Data);
+                        parameters = new NavigationParameters();
+                        parameters.Add(NavigationParameter.Type, educationType ?? EducationType.Unkown);
+                        switch (educationType)
                         {
                             case EducationType.Education:
                                 route = Routes.EducationInfoEducationView;
@@ -67,7 +70,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                                 break;
                         }
 
-                        await NavigationService.NavigateAsync(route, worker.Token);
+                        await NavigationService.NavigateAsync(route, worker.Token, parameters);
                     }
                 }
                 catch (OperationCanceledException)
