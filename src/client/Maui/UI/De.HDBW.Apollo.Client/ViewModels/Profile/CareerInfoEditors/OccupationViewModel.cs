@@ -7,34 +7,18 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 {
-    public partial class OccupationViewModel : BaseViewModel
+    public partial class OccupationViewModel : OtherViewModel
     {
         [ObservableProperty]
-        private DateTime _start = DateTime.Today;
-
-        [ObservableProperty]
-        private DateTime? _end;
-
-        [ObservableProperty]
         private string? _occupationName;
-
-        [ObservableProperty]
-        private string? _description;
-
-        [ObservableProperty]
-        private string? _nameOfInstitution;
-
-        [ObservableProperty]
-        private string? _city;
-
-        [ObservableProperty]
-        private string? _country;
 
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _workTimeModels = new ObservableCollection<InteractionEntry>();
@@ -50,8 +34,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<OccupationViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<OccupationViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
         }
 
@@ -60,47 +46,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             get { return _workTime != WorkingTimeModel.MINIJOB; }
         }
 
-        public bool HasEnd
+        protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
-            get
-            {
-                return End.HasValue;
-            }
-        }
+            token.ThrowIfCancellationRequested();
+            var timeModels = new List<InteractionEntry>();
+            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_FullTime, WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_PartTime, WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_ShiftNightWorkWeekend, WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_Minijob, WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
-        public override async Task OnNavigatedToAsync()
-        {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    var timeModels = new List<InteractionEntry>();
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_FullTime, WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_PartTime, WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_ShiftNightWorkWeekend, WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_Minijob, WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-
-                    await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(timeModels), worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
+            var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, timeModels), token).ConfigureAwait(false);
+            return currentData;
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
@@ -116,28 +74,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
-        partial void OnEndChanged(DateTime? value)
-        {
-            OnPropertyChanged(nameof(HasEnd));
-            RefreshCommands();
-        }
-
-        [RelayCommand(CanExecute = nameof(CanClearEnd))]
-        private void ClearEnd()
-        {
-            End = null;
-        }
-
-        private bool CanClearEnd()
-        {
-            return !IsBusy && HasEnd;
-        }
-
-        private void LoadonUIThread(List<InteractionEntry> timeModels)
+        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> timeModels)
         {
             WorkTimeModels = new ObservableCollection<InteractionEntry>(timeModels);
-            SelectedWorkTimeModel = _workTime != null ? WorkTimeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : WorkTimeModels.FirstOrDefault();
+            SelectedWorkTimeModel = _workTime != null ? WorkTimeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : (WorkTimeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == careerInfo?.WorkingTimeModel) ?? WorkTimeModels.FirstOrDefault());
             OnPropertyChanged(nameof(ShowWorkTimeModelsSelection));
+            IsDirty = false;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
@@ -171,6 +113,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private bool CanSearchOccupation()
         {
             return !IsBusy;
+        }
+
+        partial void OnSelectedWorkTimeModelChanged(InteractionEntry? value)
+        {
+            IsDirty = true;
         }
     }
 }
