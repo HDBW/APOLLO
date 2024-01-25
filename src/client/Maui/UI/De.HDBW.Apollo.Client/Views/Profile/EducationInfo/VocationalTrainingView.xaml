@@ -1,20 +1,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.EducationInfo.VocationalTrainingView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:VocationalTrainingViewModel"
-             Title="VocationalTrainingView"
+             Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <VerticalStackLayout Margin="24,0">
+        <VerticalStackLayout Margin="24,10">
             <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
@@ -40,17 +41,17 @@
 
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding NameOfInstitution, Mode=TwoWay}" />
+                <Entry  x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding City, Mode=TwoWay}" />
+                <Entry  x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}"  ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Country, Mode=TwoWay}" />
+                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Description}"/>
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
@@ -63,7 +64,7 @@
             
             <Label Text="{x:Static strings:Resources.Global_Graduation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Description, Mode=TwoWay}" />
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" />
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_SchoolGraduation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
