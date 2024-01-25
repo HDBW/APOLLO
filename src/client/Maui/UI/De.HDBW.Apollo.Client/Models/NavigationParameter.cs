@@ -14,5 +14,7 @@ namespace De.HDBW.Apollo.Client.Models
         Data,
 
         Type,
+
+        SavedState,
     }
 }

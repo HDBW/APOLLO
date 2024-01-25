@@ -69,11 +69,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             SearchOccupationCommand?.NotifyCanExecuteChanged();
         }
 
-        protected override void ApplyChanges(EducationInfo entity)
+        protected override void ApplyChanges(EducationInfo entry)
         {
-            base.ApplyChanges(entity);
-            entity.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? UniversityDegree.Unknown;
-            entity.Description = Description;
+            base.ApplyChanges(entry);
+            entry.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? UniversityDegree.Unknown;
+            entry.Description = Description;
         }
 
         private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> univerityDegrees)
@@ -90,7 +90,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
+                    var parameter = new NavigationParameters();
+                    parameter.AddValue(NavigationParameter.SavedState, GetCurrentState());
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
                 }
                 catch (OperationCanceledException)
                 {

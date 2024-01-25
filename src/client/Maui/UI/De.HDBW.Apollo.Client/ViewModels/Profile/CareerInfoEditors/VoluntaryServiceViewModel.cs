@@ -5,8 +5,10 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
@@ -49,14 +51,64 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryYearInMonumentConservation, VoluntaryServiceType.VoluntaryYearInMonumentConservation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, voluntaryServiceTypes), token).ConfigureAwait(false);
+            var isDirty = IsDirty;
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, voluntaryServiceTypes, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
-        protected override void ApplyChanges(CareerInfo entity)
+        protected override void ApplyChanges(CareerInfo entry)
         {
-            base.ApplyChanges(entity);
-            entity.VoluntaryServiceType = (SelectedVoluntaryServiceType?.Data as VoluntaryServiceType?) ?? VoluntaryServiceType.Unknown;
+            base.ApplyChanges(entry);
+            entry.VoluntaryServiceType = (SelectedVoluntaryServiceType?.Data as VoluntaryServiceType?) ?? VoluntaryServiceType.Unknown;
+            entry.VoluntaryServiceType = (VoluntaryServiceType?)SelectedVoluntaryServiceType?.Data;
+
+            var hasOccupation = !string.IsNullOrWhiteSpace(OccupationName);
+
+            // delete job if no occupation entered
+            if (!hasOccupation && entry.Job != null)
+            {
+                entry.Job = null;
+                return;
+            }
+
+            // if there was no job an no text entered. return.
+            if (!hasOccupation)
+            {
+                return;
+            }
+
+            var occupation = new UnknownOccupation() { PreferedTerm = new List<string>() { OccupationName! } };
+
+            // if there was no job. apply
+            if (entry.Job == null)
+            {
+                entry.Job = occupation;
+                return;
+            }
+
+            var currentName = entry.Job.PreferedTerm?.FirstOrDefault();
+
+            // if name of job did not change. return
+            if (currentName == OccupationName)
+            {
+                return;
+            }
+
+            // if current job has an id, apply new occupation.
+            if (entry.Job.Id != null)
+            {
+                entry.Job = occupation;
+                return;
+            }
+
+            if (currentName == null)
+            {
+                entry.Job.PreferedTerm = new List<string>() { OccupationName! };
+            }
+            else
+            {
+                entry.Job.PreferedTerm![0] = OccupationName!;
+            }
         }
 
         protected override void RefreshCommands()
@@ -65,10 +117,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
-        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> voluntaryServiceTypes)
+        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> voluntaryServiceTypes, bool isDirty)
         {
             VoluntaryServiceTypes = new ObservableCollection<InteractionEntry>(voluntaryServiceTypes);
             SelectedVoluntaryServiceType = VoluntaryServiceTypes.FirstOrDefault(x => (x.Data as VoluntaryServiceType?) == careerInfo?.VoluntaryServiceType) ?? VoluntaryServiceTypes.FirstOrDefault();
+            OccupationName = careerInfo?.Job?.PreferedTerm?.FirstOrDefault();
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
 
         partial void OnSelectedVoluntaryServiceTypeChanged(InteractionEntry? value)

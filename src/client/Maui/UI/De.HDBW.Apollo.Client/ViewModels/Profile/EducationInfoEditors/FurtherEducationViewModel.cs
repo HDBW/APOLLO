@@ -36,10 +36,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             return currentData;
         }
 
-        protected override void ApplyChanges(EducationInfo entity)
+        protected override void ApplyChanges(EducationInfo entry)
         {
-            base.ApplyChanges(entity);
-            entity.Description = Description;
+            base.ApplyChanges(entry);
+            entry.Description = Description;
         }
 
         private void LoadonUIThread(EducationInfo? educationInfo)

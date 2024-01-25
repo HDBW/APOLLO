@@ -11,7 +11,7 @@
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="delete" />
+        <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Margin="24,0">

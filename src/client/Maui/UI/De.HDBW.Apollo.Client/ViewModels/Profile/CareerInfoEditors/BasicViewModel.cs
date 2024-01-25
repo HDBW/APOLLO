@@ -97,12 +97,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             }
         }
 
-        private void LoadonUIThread(CareerInfo? careerInfo)
+        private void LoadonUIThread(CareerInfo? careerInfo, bool isDirty)
         {
             Start = careerInfo?.Start.ToUIDate() ?? Start;
             End = careerInfo?.End.ToUIDate();
             Description = careerInfo?.Description;
-            IsDirty = false;
+            IsDirty = isDirty;
             ValidateCommand.Execute(null);
         }
 
@@ -116,13 +116,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var currentData = user.Profile?.CareerInfos.FirstOrDefault(x => x.Id == entryId);
+            var currentState = currentData.Serialize<CareerInfo?>();
             var editState = _savedState.Deserialize<CareerInfo?>();
+            var isDirty = currentState != _savedState;
             if (editState != null)
             {
                 currentData = editState;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
@@ -143,15 +145,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             base.OnPrepare(navigationParameters);
             _type = navigationParameters.GetValue<CareerType?>(NavigationParameter.Type);
-            _savedState = navigationParameters.ContainsKey(NavigationParameter.Data) ? navigationParameters.GetValue<string>(NavigationParameter.Data) : null;
+            _savedState = navigationParameters.ContainsKey(NavigationParameter.SavedState) ? navigationParameters.GetValue<string>(NavigationParameter.SavedState) : null;
             _selectionResult = navigationParameters.ContainsKey(NavigationParameter.Result) ? navigationParameters.GetValue<string>(NavigationParameter.Result) : null;
         }
 
-        protected override void ApplyChanges(CareerInfo entity)
+        protected override void ApplyChanges(CareerInfo entry)
         {
-            entity.Start = Start.ToDTODate();
-            entity.End = End.ToDTODate();
-            entity.Description = Description;
+            entry.Start = Start.ToDTODate();
+            entry.End = End.ToDTODate();
+            entry.Description = Description;
         }
 
         partial void OnEndChanged(DateTime? value)

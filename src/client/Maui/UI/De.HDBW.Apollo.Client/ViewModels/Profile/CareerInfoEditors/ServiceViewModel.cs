@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         [ObservableProperty]
         private InteractionEntry? _selectedServiceType;
-      
+
         public ServiceViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -64,22 +64,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryExercise, ServiceType.MilitaryExercise, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var selection = SelectionResult.Deserialize<Occupation>();
+            var isDirty = IsDirty;
             if (currentData != null)
             {
                 currentData.Job = selection;
+                isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, serviceTypes), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, serviceTypes, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
-        protected override void ApplyChanges(CareerInfo entity)
+        protected override void ApplyChanges(CareerInfo entry)
         {
-            base.ApplyChanges(entity);
-            entity.City = City;
-            entity.Country = Country;
-            entity.NameOfInstitution = NameOfInstitution;
-            entity.ServiceType = (SelectedServiceType?.Data as ServiceType?) ?? ServiceType.Unknown;
+            base.ApplyChanges(entry);
+            entry.City = City;
+            entry.Country = Country;
+            entry.NameOfInstitution = NameOfInstitution;
+            entry.ServiceType = (SelectedServiceType?.Data as ServiceType?) ?? ServiceType.Unknown;
         }
 
         partial void OnCityChanged(string? value)
@@ -102,11 +104,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             this.IsDirty = true;
         }
 
-        protected void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> serviceTypes)
+        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> serviceTypes, bool isDirty)
         {
             ServiceTypes = new ObservableCollection<InteractionEntry>(serviceTypes);
             SelectedServiceType = ServiceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == careerInfo?.ServiceType) ?? ServiceTypes.FirstOrDefault();
             OccupationName = careerInfo?.Job?.PreferedTerm?.FirstOrDefault();
+            NameOfInstitution = careerInfo?.NameOfInstitution;
+            City = careerInfo?.City;
+            Country = careerInfo?.Country;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
@@ -117,7 +124,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 try
                 {
                     var parameter = new NavigationParameters();
-                    parameter.AddValue(NavigationParameter.Data, GetCurrentState());
+                    parameter.AddValue(NavigationParameter.SavedState, GetCurrentState());
                     await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
                 }
                 catch (OperationCanceledException)

@@ -12,7 +12,7 @@
         <Grid.Resources>
             <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">
                 <VerticalStackLayout Background="{StaticResource Neutral0Brush}" >
-                    <Label Text="{x:Binding Text}" Margin="24,8" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+                    <Label Text="{x:Binding Text}" Margin="24,12" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
                     <BoxView HeightRequest="1" Color="{StaticResource Neutral500}" />
                 </VerticalStackLayout>
             </DataTemplate>

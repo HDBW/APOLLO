@@ -99,13 +99,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             SearchOccupationCommand?.NotifyCanExecuteChanged();
         }
 
-        protected override void ApplyChanges(EducationInfo entity)
+        protected override void ApplyChanges(EducationInfo entry)
         {
-            base.ApplyChanges(entity);
-            entity.Description = Description;
-            entity.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
-            entity.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
-            entity.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? UniversityDegree.Unknown;
+            base.ApplyChanges(entry);
+            entry.Description = Description;
+            entry.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
+            entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
+            entry.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? UniversityDegree.Unknown;
         }
 
         private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees)
@@ -130,7 +130,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
+                    var parameter = new NavigationParameters();
+                    parameter.AddValue(NavigationParameter.SavedState, GetCurrentState());
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
                 }
                 catch (OperationCanceledException)
                 {

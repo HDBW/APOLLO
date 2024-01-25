@@ -1096,7 +1096,7 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
     <value>Du hast noch kein Berufserfahrungen hinterlegt</value>
   </data>
   <data name="CareerInfoEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine ersten Berufserfahrungen hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt deine erste Berufserfahrungen hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="ContactInfoEditView_ButtonTxt" xml:space="preserve">
     <value>Kontakt hinzufügen</value>

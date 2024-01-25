@@ -1,29 +1,28 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Models.Profile;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
-    public partial class CareerInfoEditViewModel : BaseViewModel
+    public partial class CareerInfoEditViewModel : AbstractListViewModel<CareerInfoEntry, CareerInfo>
     {
-        [ObservableProperty]
-        private ObservableCollection<CareerInfo> _careers = new ObservableCollection<CareerInfo>();
-
         public CareerInfoEditViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<CareerInfoEditViewModel> logger)
-            : base(dispatcherService, navigationService, dialogService, logger)
+            ILogger<CareerInfoEditViewModel> logger,
+            IUserRepository userRepository,
+            IUserService userService)
+            : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService, Routes.EmptyView)
         {
         }
 
@@ -33,10 +32,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                    var careeres = new List<CareerInfo>();
-                    careeres.Add(new CareerInfo());
+                    User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
+                    var items = new List<CareerInfo>();
+                    items.AddRange(User?.Profile?.CareerInfos ?? new List<CareerInfo>());
+                    items = items.OrderBy(x => x.Start.Ticks).ToList();
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(careeres), worker.Token);
+                        () => LoadonUIThread(items.Select(x => CareerInfoEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete))), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -57,14 +58,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        protected override void RefreshCommands()
+        protected override string? GetIdFromItem(AbstractProfileEntry<CareerInfo> entry)
         {
-            AddCommand?.NotifyCanExecuteChanged();
-            base.RefreshCommands();
+            return entry.Export().Id;
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanAdd))]
-        private async Task Add(CancellationToken token)
+        protected override void RemoveItemFromUser(User user, AbstractProfileEntry<CareerInfo> entry)
+        {
+            user.Profile!.CareerInfos.Remove(entry.Export());
+        }
+
+        protected override async Task Add(CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
@@ -146,14 +150,86 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        private bool CanAdd()
+        protected override async Task EditAsync(AbstractProfileEntry<CareerInfo> entry)
         {
-            return !IsBusy;
-        }
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var id = GetIdFromItem(entry);
+                    if (string.IsNullOrWhiteSpace(id))
+                    {
+                        return;
+                    }
 
-        private void LoadonUIThread(List<CareerInfo> careeres)
-        {
-            Careers = new ObservableCollection<CareerInfo>(careeres);
+                    var careerType = entry.Export().CareerType;
+                    NavigationParameters? editorParameters = new NavigationParameters();
+                    editorParameters.AddValue<string>(NavigationParameter.Id, id);
+                    editorParameters.Add(NavigationParameter.Type, careerType);
+                    var route = string.Empty;
+                    switch (careerType)
+                    {
+                        case CareerType.Other:
+                            route = Routes.CareerInfoOtherView;
+                            break;
+                        case CareerType.WorkExperience:
+                            route = Routes.CareerInfoOccupationView;
+                            break;
+                        case CareerType.PartTimeWorkExperience:
+                            editorParameters = new NavigationParameters();
+                            editorParameters.Add(NavigationParameter.Data, WorkingTimeModel.MINIJOB);
+                            route = Routes.CareerInfoOccupationView;
+                            break;
+                        case CareerType.Internship:
+                            route = Routes.CareerInfoOtherView;
+                            break;
+                        case CareerType.SelfEmployment:
+                            route = Routes.CareerInfoOccupationView;
+                            break;
+                        case CareerType.Service:
+                            route = Routes.CareerInfoServiceView;
+                            break;
+                        case CareerType.CommunityService:
+                            route = Routes.CareerInfoOtherView;
+                            break;
+                        case CareerType.VoluntaryService:
+                            route = Routes.CareerInfoVoluntaryServiceView;
+                            break;
+                        case CareerType.ParentalLeave:
+                            route = Routes.CareerInfoBasicView;
+                            break;
+                        case CareerType.Homemaker:
+                            route = Routes.CareerInfoBasicView;
+                            break;
+                        case CareerType.ExtraOccupationalExperience:
+                            route = Routes.CareerInfoBasicView;
+                            break;
+                        case CareerType.PersonCare:
+                            route = Routes.CareerInfoBasicView;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    await NavigationService.NavigateAsync(route, worker.Token, editorParameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Add)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Add)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Add)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
     }
 }

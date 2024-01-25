@@ -58,7 +58,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanAdd))]
-        protected async Task Add(CancellationToken token)
+        protected virtual async Task Add(CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
@@ -153,7 +153,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             return !IsBusy && User != null && entry != null;
         }
 
-        protected async Task EditAsync(AbstractProfileEntry<TV> entry)
+        protected virtual async Task EditAsync(AbstractProfileEntry<TV> entry)
         {
             using (var worker = ScheduleWork())
             {

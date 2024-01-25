@@ -109,11 +109,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             CreateNewEntry(user);
         }
 
-        protected override void ApplyChanges(Mobility entity)
+        protected override void ApplyChanges(Mobility entry)
         {
-            entity.DriverLicenses = DriverLicenses.Where(x => x.IsSelected && x.Data is DriversLicense).Select(x => x.Data).OfType<DriversLicense>().ToList();
-            entity.HasVehicle = HasVehicle;
-            entity.WillingToTravel = SelectedWillingToTravel?.Data as Willing?;
+            entry.DriverLicenses = DriverLicenses.Where(x => x.IsSelected && x.Data is DriversLicense).Select(x => x.Data).OfType<DriversLicense>().ToList();
+            entry.HasVehicle = HasVehicle;
+            entry.WillingToTravel = SelectedWillingToTravel?.Data as Willing?;
         }
 
         private void LoadonUIThread(Mobility? mobility, List<InteractionEntry> willingsToTravel, List<SelectInteractionEntry> driverLicenses)

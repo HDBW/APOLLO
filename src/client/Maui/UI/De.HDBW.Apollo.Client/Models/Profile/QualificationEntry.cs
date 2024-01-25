@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.Client.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
@@ -27,8 +28,8 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             var items = new List<string?>();
             items.Add(data.Name);
             items.Add(data.Description);
-            items.Add(data.IssueDate?.ToShortDateString());
-            items.Add(data.ExpirationDate?.ToShortDateString());
+            items.Add(data.IssueDate?.ToUIDate().ToShortDateString());
+            items.Add(data.ExpirationDate?.ToUIDate().ToShortDateString());
             return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x) && x != FirstLine).OfType<string>());
         }
 
@@ -37,8 +38,8 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             var items = new List<string?>();
             items.Add(data.Name);
             items.Add(data.Description);
-            items.Add(data.IssueDate?.ToShortDateString());
-            items.Add(data.ExpirationDate?.ToShortDateString());
+            items.Add(data.IssueDate?.ToUIDate().ToShortDateString());
+            items.Add(data.ExpirationDate?.ToUIDate().ToShortDateString());
             return items.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
         }
     }

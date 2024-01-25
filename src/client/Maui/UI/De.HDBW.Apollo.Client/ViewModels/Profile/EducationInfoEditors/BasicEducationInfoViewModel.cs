@@ -121,15 +121,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             _type = navigationParameters.GetValue<EducationType?>(NavigationParameter.Type);
         }
 
-        protected override void ApplyChanges(EducationInfo entity)
+        protected override void ApplyChanges(EducationInfo entry)
         {
-            entity.Start = Start.ToDTODate();
-            entity.End = End.ToDTODate();
-            entity.NameOfInstitution = NameOfInstitution;
-            entity.City = City;
-            entity.Country = Country;
-            entity.EducationType = _type ?? EducationType.Unkown;
-            entity.CompletionState = (SelectedCompletionState?.Data as CompletionState?) ?? CompletionState.Failed;
+            entry.Start = Start.ToDTODate();
+            entry.End = End.ToDTODate();
+            entry.NameOfInstitution = NameOfInstitution;
+            entry.City = City;
+            entry.Country = Country;
+            entry.EducationType = _type ?? EducationType.Unkown;
+            entry.CompletionState = (SelectedCompletionState?.Data as CompletionState?) ?? CompletionState.Failed;
         }
 
         partial void OnEndChanged(DateTime? value)

@@ -76,10 +76,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             SearchOccupationCommand?.NotifyCanExecuteChanged();
         }
 
-        protected override void ApplyChanges(EducationInfo entity)
+        protected override void ApplyChanges(EducationInfo entry)
         {
-            base.ApplyChanges(entity);
-            entity.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
+            base.ApplyChanges(entry);
+            entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
         }
 
         private void LoadonUIThread(List<InteractionEntry> schoolGraduations)
@@ -94,7 +94,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
+                    var parameter = new NavigationParameters();
+                    parameter.AddValue(NavigationParameter.SavedState, GetCurrentState());
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
                 }
                 catch (OperationCanceledException)
                 {

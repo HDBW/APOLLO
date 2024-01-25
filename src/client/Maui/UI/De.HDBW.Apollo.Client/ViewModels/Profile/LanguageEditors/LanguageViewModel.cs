@@ -32,7 +32,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private InteractionEntry? _selectedLanguageNiveau;
 
-        private string? _editState;
+        private string? _savedState;
 
         private string? _selectionResult;
 
@@ -52,9 +52,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             base.OnPrepare(navigationParameters);
-            if (navigationParameters.ContainsKey(NavigationParameter.Data))
+            if (navigationParameters.ContainsKey(NavigationParameter.SavedState))
             {
-                _editState = navigationParameters.GetValue<string?>(NavigationParameter.Data);
+                _savedState = navigationParameters.GetValue<string?>(NavigationParameter.SavedState);
             }
 
             _selectionResult = navigationParameters.ContainsKey(NavigationParameter.Result) ? navigationParameters.GetValue<string?>(NavigationParameter.Result) : null;
@@ -70,9 +70,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             var isDirty = false;
 
             // Restore edit state
-            if (!string.IsNullOrWhiteSpace(_editState))
+            if (!string.IsNullOrWhiteSpace(_savedState))
             {
-                var currentState = _editState.Deserialize<Language>();
+                var currentState = _savedState.Deserialize<Language>();
                 if (currentState != null)
                 {
                     niveau = currentState.Niveau;
@@ -164,9 +164,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
                     var data = language.Serialize();
 
                     // store state
-                    _editState = data;
+                    _savedState = data;
                     var parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Data, data);
+                    parameters.AddValue(NavigationParameter.SavedState, data);
                     await NavigationService.NavigateAsync(Routes.LanguageSearchView, token, parameters);
                 }
                 catch (OperationCanceledException)

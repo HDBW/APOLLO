@@ -53,10 +53,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
             user.Profile!.WebReferences.Remove(entry);
         }
 
-        protected override void ApplyChanges(WebReference entity)
+        protected override void ApplyChanges(WebReference entry)
         {
-            entity.Url = new Uri(Url?.Trim() ?? "about:blank");
-            entity.Title = Description?.Trim() ?? string.Empty;
+            entry.Url = new Uri(Url?.Trim() ?? "about:blank");
+            entry.Title = Description?.Trim() ?? string.Empty;
         }
 
         partial void OnUrlChanging(string? value)

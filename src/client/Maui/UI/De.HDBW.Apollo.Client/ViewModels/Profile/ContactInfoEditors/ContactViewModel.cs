@@ -79,16 +79,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             return entry;
         }
 
-        protected override void ApplyChanges(Contact entity)
+        protected override void ApplyChanges(Contact entry)
         {
-            entity.ContactType = (ContactType)(SelectedContactType?.Data ?? ContactType.Unknown);
-            entity.Address = Address?.Trim() ?? string.Empty;
-            entity.Phone = Phone?.Trim() ?? string.Empty;
-            entity.Mail = Email?.Trim() ?? string.Empty;
-            entity.City = City?.Trim() ?? string.Empty;
-            entity.ZipCode = ZipCode?.Trim() ?? string.Empty;
-            entity.Country = Country?.Trim() ?? string.Empty;
-            entity.Region = Region?.Trim() ?? string.Empty;
+            entry.ContactType = (ContactType)(SelectedContactType?.Data ?? ContactType.Unknown);
+            entry.Address = Address?.Trim() ?? string.Empty;
+            entry.Phone = Phone?.Trim() ?? string.Empty;
+            entry.Mail = Email?.Trim() ?? string.Empty;
+            entry.City = City?.Trim() ?? string.Empty;
+            entry.ZipCode = ZipCode?.Trim() ?? string.Empty;
+            entry.Country = Country?.Trim() ?? string.Empty;
+            entry.Region = Region?.Trim() ?? string.Empty;
         }
 
         protected override void DeleteEntry(User user, Contact entry)

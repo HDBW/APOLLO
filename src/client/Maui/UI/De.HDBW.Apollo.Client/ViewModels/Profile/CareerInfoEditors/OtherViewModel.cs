@@ -32,12 +32,21 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
         }
 
-        protected override void ApplyChanges(CareerInfo entity)
+        protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
-            base.ApplyChanges(entity);
-            entity.City = City;
-            entity.Country = Country;
-            entity.NameOfInstitution = NameOfInstitution;
+            token.ThrowIfCancellationRequested();
+            var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
+            var isDirty = IsDirty;
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, isDirty), token).ConfigureAwait(false);
+            return currentData;
+        }
+
+        protected override void ApplyChanges(CareerInfo entry)
+        {
+            base.ApplyChanges(entry);
+            entry.City = City;
+            entry.Country = Country;
+            entry.NameOfInstitution = NameOfInstitution;
         }
 
         partial void OnCityChanged(string? value)
@@ -53,6 +62,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         partial void OnNameOfInstitutionChanged(string? value)
         {
             this.IsDirty = true;
+        }
+
+        private void LoadonUIThread(CareerInfo? currentData, bool isDirty)
+        {
+            NameOfInstitution = currentData?.NameOfInstitution;
+            City = currentData?.City;
+            Country = currentData?.Country;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
     }
 }

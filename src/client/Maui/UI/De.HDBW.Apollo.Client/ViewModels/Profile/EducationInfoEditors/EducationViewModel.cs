@@ -83,11 +83,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             return currentData;
         }
 
-        protected override void ApplyChanges(EducationInfo entity)
+        protected override void ApplyChanges(EducationInfo entry)
         {
-            base.ApplyChanges(entity);
-            entity.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
-            entity.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
+            base.ApplyChanges(entry);
+            entry.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
+            entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
         }
 
         private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations)

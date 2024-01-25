@@ -89,8 +89,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
 
             User.Profile = User.Profile ?? new UserProfile();
-            TU entity = Entry ?? CreateNewEntry(User);
-            ApplyChanges(entity);
+            TU entry = Entry ?? CreateNewEntry(User);
+            ApplyChanges(entry);
 
             var response = await UserService.SaveAsync(User, token).ConfigureAwait(false);
             if (string.IsNullOrWhiteSpace(response))
@@ -115,7 +115,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected abstract void DeleteEntry(User user, TU entry);
 
-        protected abstract void ApplyChanges(TU entity);
+        protected abstract void ApplyChanges(TU entry);
 
         protected string? GetCurrentState()
         {

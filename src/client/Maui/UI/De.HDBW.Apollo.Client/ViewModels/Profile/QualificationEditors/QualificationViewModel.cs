@@ -146,12 +146,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
             user.Profile!.Qualifications.Remove(entry!);
         }
 
-        protected override void ApplyChanges(Qualification entity)
+        protected override void ApplyChanges(Qualification entry)
         {
-            entity.Name = Name!.Trim();
-            entity.Description = Description?.Trim();
-            entity.ExpirationDate = End.ToDTODate();
-            entity.IssueDate = Start.ToDTODate();
+            entry.Name = Name!.Trim();
+            entry.Description = Description?.Trim();
+            entry.ExpirationDate = End.ToDTODate();
+            entry.IssueDate = Start.ToDTODate();
         }
 
         [RelayCommand(CanExecute = nameof(CanClearEnd))]

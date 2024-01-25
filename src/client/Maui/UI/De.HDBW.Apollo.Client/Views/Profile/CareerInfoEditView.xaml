@@ -4,48 +4,48 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
-             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Profile"
              xmlns:system="clr-namespace:System;assembly=netstandard"
              Title="{x:Static strings:Resources.CareerInfoEditView_Title}"
              x:DataType="viewModels:CareerInfoEditViewModel"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <DataTemplate x:Key="EmptyTemplate">
-            <SwipeView Threshold="100" >
-                <SwipeView.RightItems>
-                    <SwipeItems Mode="Execute">
-                        <SwipeItem Text="Delete"
-                           IconImageSource="delete.png"
-                           BackgroundColor="Red"
-                           Command="{x:Binding DeleteCommand}" />
-                    </SwipeItems>
-                </SwipeView.RightItems>
-                <VerticalStackLayout Padding="24,0"  Background="{StaticResource Background}" >
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Seit 01.08.2023" FontAttributes="Bold" />
-                                <Span Text=" " />
-                                <Span Text="laufend" />
-                                <Span Text="{x:Static system:Environment.NewLine}"/>
-                                <Span Text="Kaufmännische Fachkraft (Nebenbeschäftigung)" FontAttributes="Bold" />
-                                <Span Text="{x:Static system:Environment.NewLine}"/>
-                                <Span Text="Aachen" />
-                                <Span Text="{x:Static system:Environment.NewLine}"/>
-                                <Span Text="Deutschland" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </VerticalStackLayout>
-            </SwipeView>
+        <DataTemplate x:Key="DefaultContactTemplate" x:DataType="models:CareerInfoEntry">
+            <ContentView MinimumHeightRequest="70" BackgroundColor="{StaticResource Neutral500}">
+                <SwipeView Threshold="100" Margin="0,0,0,2">
+                    <SwipeView.RightItems>
+                        <SwipeItems Mode="Execute">
+                            <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image WidthRequest="32" HeightRequest="32" Source="deletelight.png" />
+                                    <Label Text="{x:Static strings:Resources.Global_Delete}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource White}"/>
+                                </VerticalStackLayout>
+                            </SwipeItemView>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Grid Background="{StaticResource Background}" RowDefinitions="auto, auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{x:Binding FirstLine, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AdditionalLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="system:String">
+                                    <Label Text="{x:Binding ., Mode=OneTime}" Style="{StaticResource Noto14}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Grid>
+                </SwipeView>
+            </ContentView>
         </DataTemplate>
-        
+
         <selector:CareerInfoTemplateSelector x:Key="CareerInfoTemplateSelector"
-                                             DefaultTemplate="{StaticResource EmptyTemplate}"/>
+                                             DefaultTemplate="{StaticResource DefaultContactTemplate}"/>
     </ContentPage.Resources>
     <Grid RowDefinitions="*, auto">
-        <CollectionView ItemsSource="{x:Binding Careers}"
+        <CollectionView ItemsSource="{x:Binding Items}"
                         SelectionMode="Single"
                         ItemsLayout="VerticalList"
                         ItemTemplate="{StaticResource CareerInfoTemplateSelector}">

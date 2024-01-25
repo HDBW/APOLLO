@@ -268,7 +268,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Füge jetzt deine ersten Berufserfahrungen hinzu und verbessere deine Kursvorschläge..
+        ///   Looks up a localized string similar to Füge jetzt deine erste Berufserfahrungen hinzu und verbessere deine Kursvorschläge..
         /// </summary>
         public static string CareerInfoEditView_Subline {
             get {

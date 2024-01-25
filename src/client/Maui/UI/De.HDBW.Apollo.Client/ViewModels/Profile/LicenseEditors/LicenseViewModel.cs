@@ -62,9 +62,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
         protected override async Task<License?> LoadDataAsync(User user, string? enityId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var entity = user.Profile?.Licenses?.FirstOrDefault(x => x.Id == enityId);
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(entity), token).ConfigureAwait(false);
-            return entity;
+            var entry = user.Profile?.Licenses?.FirstOrDefault(x => x.Id == enityId);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(entry), token).ConfigureAwait(false);
+            return entry;
         }
 
         protected override License CreateNewEntry(User user)

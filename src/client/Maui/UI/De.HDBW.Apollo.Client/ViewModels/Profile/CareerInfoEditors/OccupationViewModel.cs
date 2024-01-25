@@ -7,8 +7,10 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
@@ -25,8 +27,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         [ObservableProperty]
         private InteractionEntry? _selectedWorkTimeModel;
-
-        private CareerInfo? _career;
 
         private WorkingTimeModel? _workTime;
 
@@ -57,7 +57,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, timeModels), token).ConfigureAwait(false);
+            var selection = SelectionResult.Deserialize<Occupation>();
+            var isDirty = IsDirty;
+            if (currentData != null)
+            {
+                currentData.Job = selection;
+                isDirty = true;
+            }
+
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, timeModels, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
@@ -74,12 +82,23 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
-        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> timeModels)
+        protected override void ApplyChanges(CareerInfo entry)
         {
+            base.ApplyChanges(entry);
+            if (ShowWorkTimeModelsSelection)
+            {
+                entry.WorkingTimeModel = (WorkingTimeModel?)SelectedWorkTimeModel?.Data;
+            }
+        }
+
+        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> timeModels, bool isDirty)
+        {
+            OccupationName = careerInfo?.Job?.PreferedTerm?.FirstOrDefault();
             WorkTimeModels = new ObservableCollection<InteractionEntry>(timeModels);
             SelectedWorkTimeModel = _workTime != null ? WorkTimeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : (WorkTimeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == careerInfo?.WorkingTimeModel) ?? WorkTimeModels.FirstOrDefault());
             OnPropertyChanged(nameof(ShowWorkTimeModelsSelection));
-            IsDirty = false;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
@@ -89,7 +108,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
+                    var parameter = new NavigationParameters();
+                    parameter.AddValue(NavigationParameter.SavedState, GetCurrentState());
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
                 }
                 catch (OperationCanceledException)
                 {
