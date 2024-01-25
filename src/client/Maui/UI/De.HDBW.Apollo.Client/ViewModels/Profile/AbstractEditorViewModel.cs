@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
@@ -115,6 +116,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         protected abstract void DeleteEntry(User user, TU entry);
 
         protected abstract void ApplyChanges(TU entity);
+
+        protected string? GetCurrentState()
+        {
+            ApplyChanges(Entry ?? Activator.CreateInstance<TU>());
+            return Entry.Serialize();
+        }
 
         protected override void RefreshCommands()
         {

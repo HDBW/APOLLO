@@ -14,8 +14,28 @@
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <VerticalStackLayout Margin="24,10">
-            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
+        <VerticalStackLayout Margin="24,0">
+            <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
+
+            <Label Text="{x:Static strings:Resources.Global_ServiceType}" Style="{StaticResource Noto14SemiBold}"  Margin="0,2,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto" >
+                    <Picker ItemsSource="{x:Binding VoluntaryServiceTypes}"
+                            ItemDisplayBinding="{x:Binding Text}"
+                            SelectedItem="{x:Binding SelectedVoluntaryServiceType, Mode=TwoWay}"/>
+                    <Image Grid.Column="1" Source="shortlist.png" />
+                </Grid>
+            </Border>
+
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
@@ -40,19 +60,9 @@
 
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding OccupationName, Mode=TwoWay}" />
+                <Entry x:Name="PART_OccupationName" Text="{x:Binding OccupationName, Mode=TwoWay}" />
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}">
-                    <Entry.Behaviors>
-                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
-                    </Entry.Behaviors>
-                </Entry>
-            </Border>
-            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
-            
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
@@ -67,13 +77,7 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" />
             </Border>
-                
-            <Label Text="{x:Static strings:Resources.Global_ServiceType}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Picker ItemsSource="{x:Binding VoluntaryServiceTypes}"
-                        ItemDisplayBinding="{x:Binding Text}"
-                        SelectedItem="{x:Binding SelectedVoluntaryServiceType, Mode=TwoWay}"/>
-            </Border>
+             
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

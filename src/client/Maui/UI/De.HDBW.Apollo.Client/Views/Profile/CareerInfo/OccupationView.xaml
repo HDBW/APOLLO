@@ -15,8 +15,28 @@
         <ToolbarItem IconImageSource="delete" />
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <VerticalStackLayout Margin="24,10">
-            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
+        <VerticalStackLayout Margin="24,0">
+            <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}" />
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
+
+            <Label Text="{x:Static strings:Resources.Global_WorkTimeModel}" IsVisible="{x:Binding ShowWorkTimeModelsSelection}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}" IsVisible="{x:Binding ShowWorkTimeModelsSelection}" >
+                <Grid ColumnDefinitions="*, auto" >
+                    <Picker ItemsSource="{x:Binding WorkTimeModels}"
+                            ItemDisplayBinding="{x:Binding Text}"
+                            SelectedItem="{x:Binding SelectedWorkTimeModel, Mode=TwoWay}"/>
+                    <Image Grid.Column="1" Source="shortlist.png" />
+                </Grid>
+            </Border>
+
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
@@ -43,19 +63,9 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
                     <Label Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
-                    <ImageButton Source="search.png" Command="{x:Binding SearchOccupationCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
+                    <ImageButton Source="longlist.png" Command="{x:Binding SearchOccupationCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
                 </FlexLayout>
             </Border>
-
-            <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}">
-                    <Entry.Behaviors>
-                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
-                    </Entry.Behaviors>
-                </Entry>
-            </Border>
-            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
 
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
@@ -72,12 +82,6 @@
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" />
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_WorkTimeModel}" IsVisible="{x:Binding ShowWorkTimeModelsSelection}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}" IsVisible="{x:Binding ShowWorkTimeModelsSelection}" >
-                <Picker ItemsSource="{x:Binding WorkTimeModels}"
-                ItemDisplayBinding="{x:Binding Text}"
-                SelectedItem="{x:Binding SelectedWorkTimeModel, Mode=TwoWay}"/>
-            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

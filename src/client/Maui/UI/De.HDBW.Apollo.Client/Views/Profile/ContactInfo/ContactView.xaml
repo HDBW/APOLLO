@@ -18,9 +18,12 @@
         <VerticalStackLayout Margin="24,0">
             <Label Text="{x:Static strings:Resources.Global_ContactType}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Picker ItemsSource="{x:Binding ContactTypes}"
+                <Grid ColumnDefinitions="*, auto" >
+                    <Picker ItemsSource="{x:Binding ContactTypes}"
                         ItemDisplayBinding="{x:Binding Text}"
                         SelectedItem="{x:Binding SelectedContactType, Mode=TwoWay}"/>
+                    <Image Grid.Column="1" Source="shortlist.png" />
+                </Grid>
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_Address}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>

@@ -95,6 +95,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 #endif
                     user.Name = Name!;
                     user.ObjectId = SessionService.AccountId!.ObjectId;
+                    user.Upn = SessionService.AccountId!.Identifier;
+                    //user.xxx = SessionService.AccountId!.TenantId;
                     var result = await UserService.SaveAsync(user, token).ConfigureAwait(false);
 
                     if (string.IsNullOrWhiteSpace(result))

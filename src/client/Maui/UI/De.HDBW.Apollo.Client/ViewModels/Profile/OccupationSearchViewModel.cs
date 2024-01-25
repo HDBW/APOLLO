@@ -5,7 +5,9 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
@@ -19,7 +21,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _items = new ObservableCollection<InteractionEntry>();
 
-        private List<string> _occupationNames = new List<string>();
+        private List<Occupation> _occupations = new List<Occupation>();
+        private NavigationParameters _parameters;
 
         public OccupationSearchViewModel(
             IDispatcherService dispatcherService,
@@ -76,7 +79,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     {
                         using (var reader = new StreamReader(stream))
                         {
-                            _occupationNames = ReadLines(reader).Order().ToList();
+                            var occupationNames = ReadLines(reader).Order().ToList();
+                            _occupations = occupationNames.Select(x => new KldbOccupation() { Id = Guid.NewGuid().ToString("N"), PreferedTerm = new List<string>() { x } }).OfType<Occupation>().ToList();
                         }
                     }
 
@@ -101,6 +105,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            base.OnPrepare(navigationParameters);
+            _parameters = navigationParameters;
+        }
+
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
@@ -118,10 +128,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                    var items = _occupationNames.Where(x => x.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase)).Select(x => InteractionEntry.Import(x, x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
+                    var items = _occupations.Where(x => x.PreferedTerm?.FirstOrDefault()?.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase) ?? false).Select(x => InteractionEntry.Import(x.PreferedTerm?.FirstOrDefault(), x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
                     if (!items.Any())
                     {
-                        items.Add(InteractionEntry.Import(searchtext, searchtext, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                        items.Add(InteractionEntry.Import(searchtext, new KldbOccupation() { PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     }
 
                     Items = new ObservableCollection<InteractionEntry>(items);
@@ -167,7 +177,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
-                    await NavigationService.PopAsync(worker.Token);
+                    _parameters = _parameters ?? new NavigationParameters();
+                    _parameters.AddValue(NavigationParameter.Result, SelectedItem?.Data?.ToString());
+                    await NavigationService.PopAsync(worker.Token, _parameters);
                 }
                 catch (OperationCanceledException)
                 {

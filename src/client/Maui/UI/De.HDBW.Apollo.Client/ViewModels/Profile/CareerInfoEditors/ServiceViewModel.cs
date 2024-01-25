@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -34,6 +35,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         [ObservableProperty]
         private InteractionEntry? _selectedServiceType;
+        private string? _savedState;
+        private string? _selectionResult;
 
         public ServiceViewModel(
             IDispatcherService dispatcherService,
@@ -55,7 +58,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-
+            var editState = _savedState.Deserialize<CareerInfo?>();
             var serviceTypes = new List<InteractionEntry>();
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_CivilianService, ServiceType.CivilianService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryService, ServiceType.MilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
@@ -95,6 +98,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             this.IsDirty = true;
         }
 
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            base.OnPrepare(navigationParameters);
+            _savedState = navigationParameters.GetValue<string>(NavigationParameter.Data);
+            _selectionResult = navigationParameters.GetValue<string>(NavigationParameter.Result);
+        }
+
         private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> serviceTypes)
         {
             ServiceTypes = new ObservableCollection<InteractionEntry>(serviceTypes);
@@ -108,7 +118,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token);
+                    var parameter = new NavigationParameters();
+                    parameter.AddValue(NavigationParameter.Data, GetCurrentState());
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
                 }
                 catch (OperationCanceledException)
                 {
