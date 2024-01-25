@@ -24,7 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private DateTime? _end;
 
         [ObservableProperty]
-        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_NameIsRequired))]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private string? _description;
 
         private CareerType? _type;
@@ -108,7 +108,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         protected override void DeleteEntry(User user, CareerInfo entry)
         {
-            user.Profile!.CareerInfos.Add(entry);
+            user.Profile!.CareerInfos.Remove(entry);
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
@@ -138,8 +138,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
         partial void OnDescriptionChanged(string? value)
         {
-            IsDirty = true;
             ValidateProperty(value, nameof(Description));
+            IsDirty = true;
         }
 
         private void LoadonUIThread(CareerInfo? careerInfo)
