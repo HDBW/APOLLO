@@ -15,6 +15,11 @@ namespace De.HDBW.Apollo.Data.Converter
 
         public override Occupation? ReadJson(JsonReader reader, Type objectType, Occupation? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
+            if (!hasExistingValue)
+            {
+                return null;
+            }
+
             JObject jo = JObject.Load(reader);
             if (jo.ContainsKey("TaxonomyInfo"))
             {
