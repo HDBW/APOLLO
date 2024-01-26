@@ -37,7 +37,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             token.ThrowIfCancellationRequested();
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, isDirty), token).ConfigureAwait(false);
+            var nameOfInstitution = currentData?.NameOfInstitution;
+            var city = currentData?.City;
+            var country = currentData?.Country;
+            if (EditState != null)
+            {
+                nameOfInstitution = EditState?.NameOfInstitution;
+                city = EditState?.City;
+                country = EditState?.Country;
+            }
+
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(nameOfInstitution, city, country, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
@@ -64,11 +74,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             this.IsDirty = true;
         }
 
-        private void LoadonUIThread(CareerInfo? currentData, bool isDirty)
+        private void LoadonUIThread(string? nameOfInstitution, string? city, string? country, bool isDirty)
         {
-            NameOfInstitution = currentData?.NameOfInstitution;
-            City = currentData?.City;
-            Country = currentData?.Country;
+            NameOfInstitution = nameOfInstitution;
+            City = city;
+            Country = country;
             IsDirty = isDirty;
             ValidateCommand.Execute(null);
         }

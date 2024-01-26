@@ -97,14 +97,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             }
         }
 
-        private void LoadonUIThread(CareerInfo? careerInfo, bool isDirty)
-        {
-            Start = careerInfo?.Start.ToUIDate() ?? Start;
-            End = careerInfo?.End.ToUIDate();
-            Description = careerInfo?.Description;
-            IsDirty = isDirty;
-            ValidateCommand.Execute(null);
-        }
+        protected CareerInfo? EditState { get; private set; }
 
         protected override void RefreshCommands()
         {
@@ -116,15 +109,23 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var currentData = user.Profile?.CareerInfos.FirstOrDefault(x => x.Id == entryId);
+            EditState = _savedState.Deserialize<CareerInfo?>();
+
             var currentState = currentData.Serialize<CareerInfo?>();
-            var editState = _savedState.Deserialize<CareerInfo?>();
-            var isDirty = currentState != _savedState;
-            if (editState != null)
+            var isDirty = !string.Equals(currentState, _savedState);
+
+            var start = currentData?.Start;
+            var end = currentData?.End;
+            var description = currentData?.Description;
+
+            if (EditState != null)
             {
-                currentData = editState;
+                start = EditState.Start;
+                end = EditState.End;
+                description = EditState.Description;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(start, end, description, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
@@ -183,6 +184,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private bool CanClearEnd()
         {
             return !IsBusy && HasEnd;
+        }
+
+        private void LoadonUIThread(DateTime? start, DateTime? end, string? description, bool isDirty)
+        {
+            Start = start.ToUIDate() ?? Start;
+            End = end.ToUIDate();
+            Description = description;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
     }
 }

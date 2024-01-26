@@ -59,13 +59,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var selection = SelectionResult.Deserialize<Occupation>();
             var isDirty = IsDirty;
-            if (currentData != null)
+            if (EditState != null)
             {
-                currentData.Job = selection;
+                EditState.Job = selection;
                 isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, timeModels, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(EditState ?? currentData, timeModels, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 

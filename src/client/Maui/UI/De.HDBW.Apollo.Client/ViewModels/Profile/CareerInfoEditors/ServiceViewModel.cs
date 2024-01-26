@@ -37,6 +37,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [ObservableProperty]
         private InteractionEntry? _selectedServiceType;
 
+        private Occupation? _job;
+
         public ServiceViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -63,15 +65,29 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_VoluntaryMilitaryService, ServiceType.VoluntaryMilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryExercise, ServiceType.MilitaryExercise, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            var selection = SelectionResult.Deserialize<Occupation>();
             var isDirty = IsDirty;
-            if (currentData != null)
+            var occupation = currentData?.Job;
+            var nameOfInstitution = currentData?.NameOfInstitution;
+            var city = currentData?.City;
+            var country = currentData?.Country;
+            var selectedServiceType = serviceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == currentData?.ServiceType) ?? ServiceTypes.FirstOrDefault();
+
+            if (EditState != null)
             {
-                currentData.Job = selection;
+                occupation = EditState?.Job;
+                nameOfInstitution = EditState?.NameOfInstitution;
+                city = EditState?.City;
+                country = EditState?.Country;
+                selectedServiceType = serviceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == EditState?.ServiceType) ?? ServiceTypes.FirstOrDefault();
+            }
+
+            if (!string.IsNullOrWhiteSpace(SelectionResult))
+            {
+                occupation = SelectionResult.Deserialize<Occupation>();
                 isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, serviceTypes, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(occupation, nameOfInstitution, city, country, serviceTypes, selectedServiceType, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
@@ -104,14 +120,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             this.IsDirty = true;
         }
 
-        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> serviceTypes, bool isDirty)
+        private void LoadonUIThread(Occupation? occupation, string? nameOfInstitution, string? city, string? country, List<InteractionEntry> serviceTypes, InteractionEntry? selectedServiceType, bool isDirty)
         {
+            _job = occupation;
             ServiceTypes = new ObservableCollection<InteractionEntry>(serviceTypes);
-            SelectedServiceType = ServiceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == careerInfo?.ServiceType) ?? ServiceTypes.FirstOrDefault();
-            OccupationName = careerInfo?.Job?.PreferedTerm?.FirstOrDefault();
-            NameOfInstitution = careerInfo?.NameOfInstitution;
-            City = careerInfo?.City;
-            Country = careerInfo?.Country;
+            SelectedServiceType = selectedServiceType;
+            OccupationName = _job?.PreferedTerm?.FirstOrDefault();
+            NameOfInstitution = nameOfInstitution;
+            City = city;
+            Country = country;
             IsDirty = isDirty;
             ValidateCommand.Execute(null);
         }
