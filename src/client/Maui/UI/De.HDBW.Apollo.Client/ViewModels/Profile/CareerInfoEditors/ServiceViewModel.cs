@@ -70,7 +70,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             var nameOfInstitution = currentData?.NameOfInstitution;
             var city = currentData?.City;
             var country = currentData?.Country;
-            var selectedServiceType = serviceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == currentData?.ServiceType) ?? ServiceTypes.FirstOrDefault();
+            var selectedServiceType = serviceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == currentData?.ServiceType) ?? serviceTypes.FirstOrDefault();
 
             if (EditState != null)
             {
@@ -78,7 +78,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 nameOfInstitution = EditState?.NameOfInstitution;
                 city = EditState?.City;
                 country = EditState?.Country;
-                selectedServiceType = serviceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == EditState?.ServiceType) ?? ServiceTypes.FirstOrDefault();
+                selectedServiceType = serviceTypes.FirstOrDefault(x => (x.Data as ServiceType?) == EditState?.ServiceType) ?? serviceTypes.FirstOrDefault();
             }
 
             if (!string.IsNullOrWhiteSpace(SelectionResult))
