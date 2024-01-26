@@ -401,18 +401,21 @@ namespace Apollo.Api
 
             if (dict.ContainsKey("Items"))
             {
-                var expLst = dict["Items"] as IList<ExpandoObject>;
+                var itemsObject = dict["Items"];
 
-                if (expLst != null)
+                if (itemsObject is IEnumerable<object> itemsEnumerable)
                 {
+                    var expLst = itemsEnumerable.OfType<ExpandoObject>();
+
                     foreach (var item in expLst)
                     {
                         ListItem listItem = new ListItem();
 
                         IDictionary<string, object> expItem = item as IDictionary<string, object>;
 
-                        listItem.Name = dict.ContainsKey(nameof(ListItem.Name)) ? (string)dict[nameof(ListItem.Name)] : "";
-                        listItem.Name = dict.ContainsKey(nameof(ListItem.Description)) ? (string)dict[nameof(ListItem.Description)] : "";
+                        listItem.Name = expItem.ContainsKey(nameof(ListItem.Name)) ? (string)expItem[nameof(ListItem.Name)] : "";
+                        listItem.Description = expItem.ContainsKey(nameof(ListItem.Description)) ? (string)expItem[nameof(ListItem.Description)] : "";
+                        listItem.Lng = expItem.ContainsKey(nameof(ListItem.Lng)) ? (string)expItem[nameof(ListItem.Lng)] : "";
 
                         list.Items.Add(listItem);
                     }
