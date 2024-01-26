@@ -27,11 +27,11 @@ namespace Apollo.Api
         /// <param name="name">The name of the list items.</param>
         /// <param name="query">The filter that specifies profiles to be retrieved.</param>
         /// <returns>List of item.</returns>
-        public virtual async Task<IList<List>> QueryItemsListAsync(string lng,   Query query)
+        public virtual async Task<IList<List>> QueryQualificationsListAsync(string lng,   Query query)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(QueryItemsListAsync)}");
+                _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
 
                 IsQueryValid(query, throwIfInvalid: true);
 
@@ -58,13 +58,13 @@ namespace Apollo.Api
 
                 var list = Convertor.ToEntityList<List>(res, Convertor.ToList);
 
-                _logger?.LogTrace($"Completed {nameof(QueryItemsListAsync)}");
+                _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
 
                 return list;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(QueryItemsListAsync)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(QueryQualificationsListAsync)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.ListErrors.QueryListError, "Error while querying the list", ex);
             }
         }

@@ -128,14 +128,15 @@ namespace Apollo.Api.UnitTests
             };
 
             /// Perform the query
-            var results = await api.QueryItemsListAsync(language, filter);
+            var results = await api.QueryQualificationsListAsync(language, filter);
 
             /// Assert
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Count > 0);
-            /// Check that all items have names that match the specified names
-            var matchingNames = results.SelectMany(result => result.Items.Select(item => item.Name)).ToList();
-            CollectionAssert.AreEquivalent(namesToFilter, matchingNames);
+            /// Check Name filter working properly
+            /// Check that all items have names that match the specified names in the filter
+             var matchingNames = results.SelectMany(result => result.Items.Select(item => item.Name)).ToList();
+             CollectionAssert.AreEquivalent(namesToFilter, matchingNames);
 
             /// Extract qualification IDs from the results
             var qualificationIdsToDelete = results.Select(result => result.Id).ToArray();
