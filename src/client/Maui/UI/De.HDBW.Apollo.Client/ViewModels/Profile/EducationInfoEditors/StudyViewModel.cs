@@ -3,9 +3,7 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -25,9 +23,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
 
         [ObservableProperty]
         private InteractionEntry? _selectedUniverityDegree;
-
-        [ObservableProperty]
-        private string _occupationName;
 
         public StudyViewModel(
             IDispatcherService dispatcherService,
@@ -63,12 +58,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             return currentData;
         }
 
-        protected override void RefreshCommands()
-        {
-            base.RefreshCommands();
-            SearchOccupationCommand?.NotifyCanExecuteChanged();
-        }
-
         protected override void ApplyChanges(EducationInfo entry)
         {
             base.ApplyChanges(entry);
@@ -81,41 +70,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             UniverityDegrees = new ObservableCollection<InteractionEntry>(univerityDegrees);
             SelectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == educationInfo?.UniversityDegree) ?? null;
             Description = educationInfo?.Description ?? string.Empty;
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
-        private async Task SearchOccupation(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    var parameter = new NavigationParameters();
-                    parameter.AddValue(NavigationParameter.SavedState, GetCurrentState());
-                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(SearchOccupation)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(SearchOccupation)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        private bool CanSearchOccupation()
-        {
-            return !IsBusy;
+            IsDirty = false;
+            ValidateCommand.Execute(null);
         }
 
         partial void OnDescriptionChanged(string? value)

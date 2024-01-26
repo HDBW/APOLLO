@@ -8,6 +8,7 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -40,6 +41,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         private InteractionEntry? _selectedCompletionState;
 
         private EducationType? _type;
+
+        private string? _savedState;
+
+        private string? _selectionResult;
 
         public BasicEducationInfoViewModel(
             IDispatcherService dispatcherService,
@@ -82,6 +87,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             }
         }
 
+        protected string? SelectionResult
+        {
+            get
+            {
+                return _selectionResult;
+            }
+        }
+
+        protected EducationInfo? EditState { get; private set; }
+
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
@@ -92,13 +107,33 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var currentData = user.Profile?.EducationInfos.FirstOrDefault(x => x.Id == entryId);
+            EditState = _savedState.Deserialize<EducationInfo?>();
+            var currentState = currentData.Serialize<EducationInfo?>();
+            var isDirty = !string.Equals(currentState, _savedState);
+
+            var start = currentData?.Start;
+            var end = currentData?.End;
+            var nameOfInstitution = currentData?.NameOfInstitution;
+            var city = currentData?.City;
+            var country = currentData?.Country;
+            var completionState = currentData?.CompletionState;
+
+            if (EditState != null)
+            {
+                start = EditState.Start;
+                end = EditState.End;
+                nameOfInstitution = EditState.NameOfInstitution;
+                city = EditState.City;
+                country = EditState.Country;
+                completionState = EditState.CompletionState;
+            }
 
             var completionStates = new List<InteractionEntry>();
             completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Completed, CompletionState.Completed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Failed, CompletionState.Failed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Ongoning, CompletionState.Ongoning, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, completionStates), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(start, end, nameOfInstitution, city, country, completionState, completionStates, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
@@ -119,6 +154,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             base.OnPrepare(navigationParameters);
             _type = navigationParameters.GetValue<EducationType?>(NavigationParameter.Type);
+            _savedState = navigationParameters.ContainsKey(NavigationParameter.SavedState) ? navigationParameters.GetValue<string>(NavigationParameter.SavedState) : null;
+            _selectionResult = navigationParameters.ContainsKey(NavigationParameter.Result) ? navigationParameters.GetValue<string>(NavigationParameter.Result) : null;
         }
 
         protected override void ApplyChanges(EducationInfo entry)
@@ -164,16 +201,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             IsDirty = true;
         }
 
-        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> completionStates)
+        private void LoadonUIThread(DateTime? start, DateTime? end, string? nameOfInstitution, string? city, string? country, CompletionState? completionState, List<InteractionEntry> completionStates, bool isDirty)
         {
-            Start = educationInfo?.Start.ToUIDate() ?? Start;
-            End = educationInfo?.End.ToUIDate();
-            NameOfInstitution = educationInfo?.NameOfInstitution ?? string.Empty;
-            City = educationInfo?.City ?? string.Empty;
-            Country = educationInfo?.Country ?? string.Empty;
+            Start = start.ToUIDate() ?? Start;
+            End = end.ToUIDate();
+            NameOfInstitution = nameOfInstitution;
+            City = city;
+            Country = country;
             CompletionStates = new ObservableCollection<InteractionEntry>(completionStates);
-            SelectedCompletionState = CompletionStates.FirstOrDefault(x => (x.Data as CompletionState?) == educationInfo?.CompletionState) ?? CompletionStates.FirstOrDefault();
-            IsDirty = false;
+            SelectedCompletionState = CompletionStates.FirstOrDefault(x => (x.Data as CompletionState?) == completionState) ?? CompletionStates.FirstOrDefault();
+            IsDirty = isDirty;
             ValidateCommand.Execute(null);
         }
 

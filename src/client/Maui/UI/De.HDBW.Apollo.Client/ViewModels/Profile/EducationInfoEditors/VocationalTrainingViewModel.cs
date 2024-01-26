@@ -7,8 +7,10 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
@@ -40,6 +42,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
 
         [ObservableProperty]
         private string? _occupationName;
+
+        private Occupation? _professionalTitle;
 
         public VocationalTrainingViewModel(
             IDispatcherService dispatcherService,
@@ -89,7 +93,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_SubjectRelatedEntranceQualification, SchoolGraduation.SubjectRelatedEntranceQualification, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate, SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, typeOfSchools, schoolGraduations, univerityDegrees), token);
+            var selection = SelectionResult.Deserialize<Occupation>();
+            var isDirty = IsDirty;
+            if (EditState != null)
+            {
+                EditState.ProfessionalTitle = selection;
+                isDirty = true;
+            }
+
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(EditState ?? currentData, typeOfSchools, schoolGraduations, univerityDegrees, isDirty), token);
             return currentData;
         }
 
@@ -106,10 +118,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             entry.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
             entry.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? null;
             entry.Graduation = entry.UniversityDegree == null ? SchoolGraduation.AdvancedTechnicalCollegeCertificate : null;
+            entry.ProfessionalTitle = _professionalTitle;
         }
 
-        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees)
+        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees, bool isDirty)
         {
+            _professionalTitle = educationInfo?.ProfessionalTitle;
+            OccupationName = _professionalTitle?.PreferedTerm?.FirstOrDefault();
             TypeOfSchools = new ObservableCollection<InteractionEntry>(typeOfSchools);
             SelectedTypeOfSchool = TypeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == educationInfo?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
 
@@ -120,7 +135,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             SelectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == educationInfo?.UniversityDegree) ?? null;
 
             Description = educationInfo?.Description ?? string.Empty;
-            IsDirty = false;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]

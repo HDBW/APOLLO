@@ -7,8 +7,10 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
@@ -65,8 +67,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate, SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
+            var selection = SelectionResult.Deserialize<Occupation>();
+            var isDirty = IsDirty;
+            if (EditState != null)
+            {
+                EditState.ProfessionalTitle = selection;
+                isDirty = true;
+            }
+
             await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(schoolGraduations), token);
+                () => LoadonUIThread(EditState ?? currentData, schoolGraduations, isDirty), token);
             return currentData;
         }
 
@@ -82,9 +92,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
         }
 
-        private void LoadonUIThread(List<InteractionEntry> schoolGraduations)
+        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> schoolGraduations, bool isDirty)
         {
+            OccupationName = educationInfo?.ProfessionalTitle?.PreferedTerm?.FirstOrDefault();
             SchoolGraduations = new ObservableCollection<InteractionEntry>(schoolGraduations);
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
