@@ -98,6 +98,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             entry.Country = Country;
             entry.NameOfInstitution = NameOfInstitution;
             entry.ServiceType = (SelectedServiceType?.Data as ServiceType?) ?? ServiceType.Unknown;
+            entry.Job = _job;
         }
 
         partial void OnCityChanged(string? value)
