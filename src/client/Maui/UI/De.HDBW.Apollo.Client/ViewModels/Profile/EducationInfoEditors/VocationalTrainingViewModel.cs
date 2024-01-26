@@ -104,8 +104,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             base.ApplyChanges(entry);
             entry.Description = Description;
             entry.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
-            entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
-            entry.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? UniversityDegree.Unknown;
+            entry.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? null;
+            entry.Graduation = entry.UniversityDegree == null ? SchoolGraduation.AdvancedTechnicalCollegeCertificate : null;
         }
 
         private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees)

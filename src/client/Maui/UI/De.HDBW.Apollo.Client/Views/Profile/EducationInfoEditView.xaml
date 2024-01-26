@@ -4,20 +4,50 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
-             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Profile"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              Title="{x:Static strings:Resources.EducationInfoEditView_Title}"
              x:DataType="viewModels:EducationInfoEditViewModel"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <DataTemplate x:Key="EmptyTemplate">
+
+        <DataTemplate x:Key="DefaultEducationTemplate" x:DataType="models:EducationInfoEntry">
+            <ContentView MinimumHeightRequest="70" BackgroundColor="{StaticResource Neutral500}">
+                <SwipeView Threshold="100" Margin="0,0,0,2">
+                    <SwipeView.RightItems>
+                        <SwipeItems Mode="Execute">
+                            <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image WidthRequest="32" HeightRequest="32" Source="deletelight.png" />
+                                    <Label Text="{x:Static strings:Resources.Global_Delete}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource White}"/>
+                                </VerticalStackLayout>
+                            </SwipeItemView>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Grid Background="{StaticResource Background}" RowDefinitions="auto, auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{x:Binding FirstLine, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AdditionalLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="system:String">
+                                    <Label Text="{x:Binding ., Mode=OneTime}" Style="{StaticResource Noto14}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Grid>
+                </SwipeView>
+            </ContentView>
         </DataTemplate>
 
+        
         <selector:EducationInfoTemplateSelector x:Key="EducationInfoTemplateSelector"
-                                         DefaultTemplate="{StaticResource EmptyTemplate}"/>
+                                         DefaultTemplate="{StaticResource DefaultEducationTemplate}"/>
     </ContentPage.Resources>
     <Grid RowDefinitions="*, auto">
-        <CollectionView ItemsSource="{x:Binding Educations}"
+        <CollectionView ItemsSource="{x:Binding Items}"
                     ItemsLayout="VerticalList"
                     ItemTemplate="{StaticResource EducationInfoTemplateSelector}">
             <CollectionView.EmptyView>

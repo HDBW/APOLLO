@@ -66,12 +66,12 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" />
             </Border>
-            
-            <Label Text="{x:Static strings:Resources.Global_SchoolGraduation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+
+            <Label Text="{x:Static strings:Resources.Global_TypeOfSchool}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Picker ItemsSource="{x:Binding SchoolGraduations}"
+                <Picker ItemsSource="{x:Binding TypeOfSchools}"
                         ItemDisplayBinding="{x:Binding Text}"
-                        SelectedItem="{x:Binding SelectedSchoolGraduation, Mode=TwoWay}"/>
+                        SelectedItem="{x:Binding SelectedTypeOfSchool, Mode=TwoWay}"/>
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_UniverityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
