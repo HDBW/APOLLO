@@ -24,18 +24,20 @@ namespace Apollo.Api
         /// Queries for a set of list items that match specified criteria and qqualification itemtype.
         /// </summary>
         /// <param name="lng">The language of the list items.</param>
+        /// <param name="name">The name of the list items.</param>
         /// <param name="query">The filter that specifies profiles to be retrieved.</param>
         /// <returns>List of item.</returns>
-        public virtual async Task<IList<List>> QueryQualificationsListAsync(string lng, Query query)
+        public virtual async Task<IList<List>> QueryItemsListAsync(string lng,   Query query)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
+                _logger?.LogTrace($"Entered {nameof(QueryItemsListAsync)}");
 
                 IsQueryValid(query, throwIfInvalid: true);
 
-                //
-                // We filter requested language.
+
+                /// We filter requested language.
+                
                 query.Filter.Fields.Add(new FieldExpression()
                 {
                     Operator = QueryOperator.Equals,
@@ -43,65 +45,67 @@ namespace Apollo.Api
                     FieldName = "Items.Lng"
                 });
 
-                query.Filter.Fields.Add(new FieldExpression()
-                {
-                    Operator = QueryOperator.Equals,
-                    Argument = new List<object>() { nameof(List.ItemType) },
-                    FieldName = nameof(List.ItemType),
-                });
+
+                /// We dont need that cause requested Query object has already this filter map
+                //query.Filter.Fields.Add(new FieldExpression()
+                //{
+                //    Operator = QueryOperator.Equals,
+                //    Argument = new List<object>() { nameof(List.ItemType) },
+                //    FieldName = nameof(List.ItemType),
+                //});
 
                 var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<List>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
                 var list = Convertor.ToEntityList<List>(res, Convertor.ToList);
 
-                _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
+                _logger?.LogTrace($"Completed {nameof(QueryItemsListAsync)}");
 
                 return list;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(QueryQualificationsListAsync)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(QueryItemsListAsync)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.ListErrors.QueryListError, "Error while querying the list", ex);
             }
         }
 
 
         /// <summary>
-        /// Creates or Updates the new Profile instance.
+        /// Creates or Updates the new Qualification instance.
         /// </summary>
         /// <param name="list">If the Id is specified, the update will be performed.</param>
         /// <returns></returns>
-        public virtual async Task<List<string>> CreateOrUpdateQualificationAsync(List<Qualification> qualifications)
+        public virtual async Task<List<string>> CreateOrUpdateQualificationAsync(List<List> qualificationsList)
         {
             try
             {
                 List<string> ids = new List<string>();
 
                 // TODO Validate if qualifications is null or empty
-                if (qualifications == null || !qualifications.Any())
+                if (qualificationsList == null || !qualificationsList.Any())
                 {
                     // Handle the case where the input list is empty or null
-                    throw new ArgumentNullException(nameof(qualifications), "Qualifications list cannot be null or empty.");
+                    throw new ArgumentNullException(nameof(qualificationsList), "Qualifications list cannot be null or empty.");
                 }
 
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateQualificationAsync)}");
 
-                foreach (var qualification in qualifications)
+                foreach (var qualification in qualificationsList)
                 {
                     if (String.IsNullOrEmpty(qualification.Id))
                     {
                         qualification.Id = CreateQualificationId();
-                        await _dal.InsertAsync(ApolloApi.GetCollectionName<Qualification>(), Convertor.Convert(qualification));
+                        await _dal.InsertAsync(ApolloApi.GetCollectionName<List>(), Convertor.Convert(qualification));
                         ids.Add(qualification.Id);
                     }
                     else
                     {
-                        var existingQualification = await _dal.GetByIdAsync<Qualification>(ApolloApi.GetCollectionName<Qualification>(), qualification.Id);
+                        var existingQualification = await _dal.GetByIdAsync<List>(ApolloApi.GetCollectionName<List>(), qualification.Id);
 
                         if (existingQualification != null)
                         {
                             qualification.Id = existingQualification.Id;
-                            await _dal.UpsertAsync(GetCollectionName<Qualification>(), new List<ExpandoObject> { Convertor.Convert(qualification) });
+                            await _dal.UpsertAsync(GetCollectionName<List>(), new List<ExpandoObject> { Convertor.Convert(qualification) });
                             ids.Add(qualification.Id);
                         }
                         else
