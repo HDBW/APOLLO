@@ -762,7 +762,7 @@ namespace Apollo.Api.UnitTests
             Assert.AreEqual(newTraining.Id, updatedTrainingIds[0]); // The ID should remain the same
 
             // Clean up: Delete the created or updated training
-            //await api.DeleteTrainings(updatedTrainingIds.ToArray());
+            await api.DeleteTrainings(updatedTrainingIds.ToArray());
         }
 
 
