@@ -68,11 +68,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             return entry.Export().Id;
         }
 
-        protected override string? GetEditRouteFromItem(AbstractProfileEntry<EducationInfo> entry)
-        {
-            return GetRoute(entry.Export().EducationType);
-        }
-
         protected override void RemoveItemFromUser(User user, AbstractProfileEntry<EducationInfo> entry)
         {
             user.Profile!.EducationInfos.Remove(entry.Export());
@@ -94,6 +89,43 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         parameters.Add(NavigationParameter.Type, educationType ?? EducationType.Unkown);
                         await NavigationService.NavigateAsync(GetRoute(educationType), worker.Token, parameters);
                     }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Add)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Add)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Add)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        protected override async Task EditAsync(AbstractProfileEntry<EducationInfo> entry)
+        {
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var id = GetIdFromItem(entry);
+                    if (string.IsNullOrWhiteSpace(id))
+                    {
+                        return;
+                    }
+
+                    var careerType = entry.Export().EducationType;
+                    NavigationParameters? editorParameters = new NavigationParameters();
+                    editorParameters.AddValue<string>(NavigationParameter.Id, id);
+                    editorParameters.Add(NavigationParameter.Type, careerType);
+                    await NavigationService.NavigateAsync(GetRoute(careerType), worker.Token, editorParameters);
                 }
                 catch (OperationCanceledException)
                 {

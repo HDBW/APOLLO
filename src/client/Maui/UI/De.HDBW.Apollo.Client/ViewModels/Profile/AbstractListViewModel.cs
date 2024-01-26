@@ -148,11 +148,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected abstract string? GetIdFromItem(AbstractProfileEntry<TV> entry);
 
-        protected virtual string? GetEditRouteFromItem(AbstractProfileEntry<TV> entry)
-        {
-            return EditRoute;
-        }
-
         protected bool CanEdit(AbstractProfileEntry<TV> entry)
         {
             return !IsBusy && User != null && entry != null;
@@ -165,15 +160,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     var id = GetIdFromItem(entry);
-                    var route = GetEditRouteFromItem(entry);
-                    if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(route))
+                    if (string.IsNullOrWhiteSpace(id))
                     {
                         return;
                     }
 
                     var parameter = new NavigationParameters();
                     parameter.AddValue<string>(NavigationParameter.Id, id);
-                    await NavigationService.NavigateAsync(route, worker.Token, parameter);
+                    await NavigationService.NavigateAsync(EditRoute, worker.Token, parameter);
                 }
                 catch (OperationCanceledException)
                 {
