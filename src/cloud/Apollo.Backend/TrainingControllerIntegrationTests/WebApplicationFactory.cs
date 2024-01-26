@@ -13,14 +13,14 @@ namespace TrainingControllerIntegrationTests
         // Override the ConfigureWebHost method to configure the test host
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            // Configure the test host environment (e.g., to use appsettings.Test.json)
+            // Configure the test host environment 
             builder.ConfigureAppConfiguration((context, config) =>
             {
-                config.AddJsonFile("appsettings.json"); // Add your test configuration file
+                config.AddJsonFile("appsettings.json"); 
             });
 
             // Configure test services or dependencies (if needed)
-            // For example, you can replace or mock services here
+            
         }
     }
 }
