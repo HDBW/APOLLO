@@ -293,9 +293,6 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         using (var jsonTextReader = new JsonTextReader(streamReader))
                         {
-                            //var settings = new JsonSerializerSettings();
-                            //settings.Converters.Add();
-                            //responseStream.Seek(0, SeekOrigin.Begin);   
                             var serializer = JsonSerializer.Create();
                             serializer.Converters.Add(new OccupationJsonConverter());
                             result = serializer.Deserialize<TU>(jsonTextReader);

@@ -36,11 +36,11 @@ namespace De.HDBW.Apollo.Data.Converter
                 switch (jo["TaxonomyInfo"].ToObject(typeof(Taxonomy)))
                 {
                     case Taxonomy.KldB2010:
-                        // TODO:
+                        var z = new KldbOccupation();
+                        JsonConvert.PopulateObject(data, z);
                         var x = System.Text.Json.JsonSerializer.Deserialize<KldbOccupation>(data);
                         return x;
                     default:
-                        // TODO:
                         return System.Text.Json.JsonSerializer.Deserialize<UnknownOccupation>(data);
                 }
             }
