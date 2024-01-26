@@ -29,6 +29,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private InteractionEntry? _selectedWorkTimeModel;
 
         private WorkingTimeModel? _workTime;
+        private Occupation? _job;
 
         public OccupationViewModel(
             IDispatcherService dispatcherService,
@@ -57,15 +58,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            var selection = SelectionResult.Deserialize<Occupation>();
             var isDirty = IsDirty;
+            var occupation = currentData?.Job;
+            var selectedTimeModel = _workTime != null ? timeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : (timeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == currentData?.WorkingTimeModel) ?? timeModels.FirstOrDefault());
+
             if (EditState != null)
             {
-                EditState.Job = selection;
+                occupation = EditState?.Job;
+                selectedTimeModel = timeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == EditState?.WorkingTimeModel);
+            }
+
+            var selection = SelectionResult.Deserialize<Occupation>();
+            if (!string.IsNullOrWhiteSpace(SelectionResult))
+            {
+                occupation = SelectionResult.Deserialize<Occupation>();
                 isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(EditState ?? currentData, timeModels, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(occupation, timeModels, selectedTimeModel, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 
@@ -89,13 +99,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             {
                 entry.WorkingTimeModel = (WorkingTimeModel?)SelectedWorkTimeModel?.Data;
             }
+
+            entry.Job = _job;
         }
 
-        private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> timeModels, bool isDirty)
+        private void LoadonUIThread(Occupation? occupation, List<InteractionEntry> timeModels, InteractionEntry? selectedWorkTimeModel, bool isDirty)
         {
-            OccupationName = careerInfo?.Job?.PreferedTerm?.FirstOrDefault();
+            _job = occupation;
+            OccupationName = occupation?.PreferedTerm?.FirstOrDefault();
             WorkTimeModels = new ObservableCollection<InteractionEntry>(timeModels);
-            SelectedWorkTimeModel = _workTime != null ? WorkTimeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : (WorkTimeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == careerInfo?.WorkingTimeModel) ?? WorkTimeModels.FirstOrDefault());
+            SelectedWorkTimeModel = selectedWorkTimeModel;
             OnPropertyChanged(nameof(ShowWorkTimeModelsSelection));
             IsDirty = isDirty;
             ValidateCommand.Execute(null);

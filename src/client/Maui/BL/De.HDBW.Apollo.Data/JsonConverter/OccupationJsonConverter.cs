@@ -10,12 +10,16 @@ using Newtonsoft.Json.Linq;
 
 namespace De.HDBW.Apollo.Data.Converter
 {
-    internal class OccupationJsonConverter : Newtonsoft.Json.JsonConverter<Occupation>
+    public class OccupationJsonConverter : JsonConverter<Occupation>
     {
-
         public override Occupation? ReadJson(JsonReader reader, Type objectType, Occupation? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            if (!hasExistingValue)
+            if (hasExistingValue)
+            {
+                return existingValue;
+            }
+
+            if (reader.TokenType == JsonToken.Null)
             {
                 return null;
             }
@@ -23,12 +27,21 @@ namespace De.HDBW.Apollo.Data.Converter
             JObject jo = JObject.Load(reader);
             if (jo.ContainsKey("TaxonomyInfo"))
             {
+                if (jo.ContainsKey("$type"))
+                {
+                    jo.Remove("$type");
+                }
+
+                var data = jo.ToString();
                 switch (jo["TaxonomyInfo"].ToObject(typeof(Taxonomy)))
                 {
                     case Taxonomy.KldB2010:
-                        return JsonConvert.DeserializeObject<KldbOccupation>(jo.ToString());
+                        // TODO:
+                        var x = System.Text.Json.JsonSerializer.Deserialize<KldbOccupation>(data);
+                        return x;
                     default:
-                        return JsonConvert.DeserializeObject<UnknownOccupation>(jo.ToString());
+                        // TODO:
+                        return System.Text.Json.JsonSerializer.Deserialize<UnknownOccupation>(data);
                 }
             }
 

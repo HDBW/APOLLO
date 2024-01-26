@@ -93,6 +93,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error in {nameof(CanceledNavigation)} in {GetType().Name}.");
+                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                 }
                 finally
                 {

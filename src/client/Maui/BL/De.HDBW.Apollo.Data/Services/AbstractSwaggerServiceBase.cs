@@ -1,11 +1,13 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Drawing;
 using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using De.HDBW.Apollo.Data.Converter;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -291,12 +293,11 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         using (var jsonTextReader = new JsonTextReader(streamReader))
                         {
-                            var settings = JsonConvert.DefaultSettings?.Invoke() ?? new JsonSerializerSettings();
-                            settings.Converters.Add(new OccupationJsonConverter());
+                            //var settings = new JsonSerializerSettings();
+                            //settings.Converters.Add();
                             //responseStream.Seek(0, SeekOrigin.Begin);   
-                            var serializer = JsonSerializer.Create(settings);
-                            serializer.TypeNameHandling = TypeNameHandling.Auto;
-                            serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
+                            var serializer = JsonSerializer.Create();
+                            serializer.Converters.Add(new OccupationJsonConverter());
                             result = serializer.Deserialize<TU>(jsonTextReader);
                         }
                     }

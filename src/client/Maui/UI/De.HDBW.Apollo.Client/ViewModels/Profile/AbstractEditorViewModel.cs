@@ -172,6 +172,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error in {nameof(Delete)} in {GetType().Name}.");
+                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                 }
                 finally
                 {
