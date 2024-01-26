@@ -4,6 +4,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
+using De.HDBW.Apollo.Data.Converter;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -290,7 +291,12 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         using (var jsonTextReader = new JsonTextReader(streamReader))
                         {
-                            var serializer = new JsonSerializer();
+                            var settings = JsonConvert.DefaultSettings?.Invoke() ?? new JsonSerializerSettings();
+                            settings.Converters.Add(new OccupationJsonConverter());
+                            //responseStream.Seek(0, SeekOrigin.Begin);   
+                            var serializer = JsonSerializer.Create(settings);
+                            serializer.TypeNameHandling = TypeNameHandling.Auto;
+                            serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
                             result = serializer.Deserialize<TU>(jsonTextReader);
                         }
                     }
