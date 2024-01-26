@@ -33,8 +33,8 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding TypeOfSchools}"
-                 ItemDisplayBinding="{x:Binding Text}"
-                 SelectedItem="{x:Binding SelectedTypeOfSchool, Mode=TwoWay}"/>
+                            ItemDisplayBinding="{x:Binding Text}"
+                            SelectedItem="{x:Binding SelectedTypeOfSchool, Mode=TwoWay}"/>
                     <Image Grid.Column="1" Source="shortlist.png" />
                 </Grid>
             </Border>
@@ -43,8 +43,8 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding UniverityDegrees}"
-                 ItemDisplayBinding="{x:Binding Text}"
-                 SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>
+                            ItemDisplayBinding="{x:Binding Text}"
+                            SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>
                     <Image Grid.Column="1" Source="shortlist.png" />
                 </Grid>
             </Border>
@@ -53,8 +53,8 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding CompletionStates}"
-                 ItemDisplayBinding="{x:Binding Text}"
-                 SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
+                            ItemDisplayBinding="{x:Binding Text}"
+                            SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
                     <Image Grid.Column="1" Source="shortlist.png" />
                 </Grid>
             </Border>
