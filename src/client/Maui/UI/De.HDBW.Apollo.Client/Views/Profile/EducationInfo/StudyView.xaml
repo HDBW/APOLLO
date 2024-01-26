@@ -15,8 +15,43 @@
         <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <VerticalStackLayout Margin="24,10">
-            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}"/>
+        <VerticalStackLayout Margin="24.0">
+            <Label Text="{x:Static strings:Resources.Global_Graduation}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
+
+            <Label Text="{x:Static strings:Resources.Global_UniverityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto" >
+                    <Picker ItemsSource="{x:Binding UniverityDegrees}"
+                            ItemDisplayBinding="{x:Binding Text}"
+                            SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}">
+                        <Picker.Behaviors>
+                            <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="SelectedIndexChanged" CommandParameter="SelectedUniverityDegree" />
+                        </Picker.Behaviors>
+                    </Picker>
+                    <Image Grid.Column="1" Source="shortlist.png" />
+                </Grid>
+            </Border>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
+
+            <Label Text="{x:Static strings:Resources.Global_CompletionState}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto" >
+                    <Picker ItemsSource="{x:Binding CompletionStates}"
+                            ItemDisplayBinding="{x:Binding Text}"
+                            SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
+                    <Image Grid.Column="1" Source="shortlist.png" />
+                </Grid>
+            </Border>
+            
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
@@ -41,36 +76,17 @@
 
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry  x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
+                <Entry x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry  x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}"  ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
+                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Description}"/>
-            </Border>
-
-            <Label Text="{x:Static strings:Resources.Global_Graduation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" />
-            </Border>
-
-            <Label Text="{x:Static strings:Resources.Global_UniverityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Picker ItemsSource="{x:Binding UniverityDegrees}"
-                        ItemDisplayBinding="{x:Binding Text}"
-                        SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>
-            </Border>
-
-            <Label Text="{x:Static strings:Resources.Global_CompletionState}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Picker ItemsSource="{x:Binding CompletionStates}"
-                        ItemDisplayBinding="{x:Binding Text}"
-                        SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
             </Border>
         </VerticalStackLayout>
     </ScrollView>

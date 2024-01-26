@@ -41,7 +41,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 if (SetProperty(ref _selectedOption, value))
                 {
                     RefreshCommands();
-                    ContinueCommand?.Execute(null);
+                    if (value != null)
+                    {
+                        ContinueCommand.Execute(null);
+                    }
                 }
             }
         }

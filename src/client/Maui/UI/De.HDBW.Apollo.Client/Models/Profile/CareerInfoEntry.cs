@@ -26,6 +26,10 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<string> GetAdditionalLines(CareerInfo data)
         {
             var items = new List<string?>();
+            items.Add(data.CareerType.ToString());
+            items.Add(data.ServiceType.ToString());
+            items.Add(data.VoluntaryServiceType.ToString());
+            items.Add(data.WorkingTimeModel.ToString());
             items.Add(data.Description);
             items.Add(data.Job?.PreferedTerm?.FirstOrDefault());
             items.Add(data.Start.ToUIDate().ToShortDateString());
@@ -39,6 +43,10 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override string GetFristLine(CareerInfo data)
         {
             var items = new List<string?>();
+            items.Add(data.CareerType.ToString());
+            items.Add(data.ServiceType.ToString());
+            items.Add(data.VoluntaryServiceType.ToString());
+            items.Add(data.WorkingTimeModel.ToString());
             items.Add(data.Description);
             items.Add(data.Job?.PreferedTerm?.FirstOrDefault());
             items.Add(data.Start.ToUIDate().ToShortDateString());

@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -22,10 +23,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _schoolGraduations = new ObservableCollection<InteractionEntry>();
 
+        [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private InteractionEntry? _selectedSchoolGraduation;
 
         [ObservableProperty]
         private string? _occupationName;
+
+        private Occupation? _job;
 
         public CompanyBasedVocationalTrainingViewModel(
             IDispatcherService dispatcherService,
@@ -36,19 +41,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             IUserService userService)
             : base(dispatcherService, navigationService, dialogService, logger, userRepository, userService)
         {
-        }
-
-        public InteractionEntry? SelectedSchoolGraduation
-        {
-            get
-            {
-                return _selectedSchoolGraduation;
-            }
-
-            set
-            {
-                SetProperty(ref _selectedSchoolGraduation, value);
-            }
         }
 
         protected override async Task<EducationInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
@@ -67,16 +59,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate, SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            var selection = SelectionResult.Deserialize<Occupation>();
             var isDirty = IsDirty;
+            var selectedSchoolGraduations = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation);
+            var occupation = currentData?.ProfessionalTitle;
+            var selection = SelectionResult.Deserialize<Occupation>();
             if (EditState != null)
             {
-                EditState.ProfessionalTitle = selection;
+                selectedSchoolGraduations = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == EditState?.Graduation);
+                occupation = EditState?.ProfessionalTitle;
+            }
+
+            if (!string.IsNullOrWhiteSpace(SelectionResult))
+            {
+                occupation = SelectionResult.Deserialize<Occupation>();
                 isDirty = true;
             }
 
             await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(EditState ?? currentData, schoolGraduations, isDirty), token);
+                () => LoadonUIThread(occupation, schoolGraduations, selectedSchoolGraduations, isDirty), token);
             return currentData;
         }
 
@@ -92,10 +92,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
         }
 
-        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> schoolGraduations, bool isDirty)
+        partial void OnSelectedSchoolGraduationChanged(InteractionEntry? value)
         {
-            OccupationName = educationInfo?.ProfessionalTitle?.PreferedTerm?.FirstOrDefault();
+            ValidateProperty(value);
+            IsDirty = true;
+        }
+
+        private void LoadonUIThread(Occupation? occupation, List<InteractionEntry> schoolGraduations, InteractionEntry? selectedSchoolGraduations, bool isDirty)
+        {
+            _job = occupation;
+            OccupationName = occupation?.PreferedTerm?.FirstOrDefault();
             SchoolGraduations = new ObservableCollection<InteractionEntry>(schoolGraduations);
+            SelectedSchoolGraduation = selectedSchoolGraduations;
             IsDirty = isDirty;
             ValidateCommand.Execute(null);
         }
@@ -133,11 +141,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         private bool CanSearchOccupation()
         {
             return !IsBusy;
-        }
-
-        partial void OnSchoolGraduationsChanged(ObservableCollection<InteractionEntry> value)
-        {
-            IsDirty = true;
         }
     }
 }

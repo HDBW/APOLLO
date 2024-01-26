@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models.Interactions;
@@ -16,12 +17,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
     public partial class StudyViewModel : BasicEducationInfoViewModel
     {
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private string? _description;
 
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _univerityDegrees = new ObservableCollection<InteractionEntry>();
 
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private InteractionEntry? _selectedUniverityDegree;
 
         public StudyViewModel(
@@ -52,36 +55,41 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Other, UniversityDegree.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-
+            var isDirty = IsDirty;
+            var description = currentData?.Description;
+            var selectedUniverityDegrees = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == currentData?.UniversityDegree);
             await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(currentData, univerityDegrees), token);
+                () => LoadonUIThread(description, univerityDegrees, selectedUniverityDegrees, isDirty), token);
             return currentData;
         }
 
         protected override void ApplyChanges(EducationInfo entry)
         {
             base.ApplyChanges(entry);
-            entry.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? UniversityDegree.Unknown;
+            entry.UniversityDegree = SelectedUniverityDegree?.Data as UniversityDegree?;
             entry.Description = Description;
-        }
-
-        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> univerityDegrees)
-        {
-            UniverityDegrees = new ObservableCollection<InteractionEntry>(univerityDegrees);
-            SelectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == educationInfo?.UniversityDegree) ?? null;
-            Description = educationInfo?.Description ?? string.Empty;
-            IsDirty = false;
-            ValidateCommand.Execute(null);
         }
 
         partial void OnDescriptionChanged(string? value)
         {
             IsDirty = true;
+            ValidateProperty(value, nameof(Description));
         }
 
         partial void OnSelectedUniverityDegreeChanged(InteractionEntry? value)
         {
             IsDirty = true;
+            ValidateProperty(value, nameof(SelectedUniverityDegree));
         }
+
+        private void LoadonUIThread(string? description, List<InteractionEntry> univerityDegrees, InteractionEntry? selectedUniverityDegree, bool isDirty)
+        {
+            UniverityDegrees = new ObservableCollection<InteractionEntry>(univerityDegrees);
+            SelectedUniverityDegree = selectedUniverityDegree;
+            Description = description;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
+        }
+
     }
 }

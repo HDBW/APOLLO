@@ -32,26 +32,38 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<string> GetAdditionalLines(EducationInfo data)
         {
             var items = new List<string?>();
-            items.Add(data.NameOfInstitution);
+            items.Add(data.EducationType.ToString());
+            items.Add(data.TypeOfSchool?.ToString());
+            items.Add(data.Graduation?.ToString());
+            items.Add(data.UniversityDegree?.ToString());
+            items.Add(data.CompletionState.ToString());
             items.Add(data.Description);
             items.Add(data.ProfessionalTitle?.PreferedTerm?.FirstOrDefault());
             items.Add(data.Start.ToUIDate().ToShortDateString());
             items.Add(data.End.ToUIDate()?.ToShortDateString());
+            items.Add(data.NameOfInstitution);
             items.Add(data.City);
             items.Add(data.Country);
+            items.Add(data.Recognition?.ToString());
             return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x) && x != FirstLine).OfType<string>());
         }
 
         protected override string GetFristLine(EducationInfo data)
         {
             var items = new List<string?>();
-            items.Add(data.NameOfInstitution);
+            items.Add(data.EducationType.ToString());
+            items.Add(data.TypeOfSchool?.ToString());
+            items.Add(data.Graduation?.ToString());
+            items.Add(data.UniversityDegree?.ToString());
+            items.Add(data.CompletionState.ToString());
             items.Add(data.Description);
             items.Add(data.ProfessionalTitle?.PreferedTerm?.FirstOrDefault());
             items.Add(data.Start.ToUIDate().ToShortDateString());
             items.Add(data.End.ToUIDate()?.ToShortDateString());
+            items.Add(data.NameOfInstitution);
             items.Add(data.City);
             items.Add(data.Country);
+            items.Add(data.Recognition?.ToString());
             return items.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
         }
     }

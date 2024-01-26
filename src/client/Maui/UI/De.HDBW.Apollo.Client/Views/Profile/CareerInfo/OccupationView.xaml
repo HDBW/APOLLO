@@ -26,7 +26,15 @@
             </Border>
             <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
 
-            <Label Text="{x:Static strings:Resources.Global_WorkTimeModel}" IsVisible="{x:Binding ShowWorkTimeModelsSelection}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+                    <Label Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
+                    <ImageButton Source="longlist.png" Command="{x:Binding SearchOccupationCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
+                </FlexLayout>
+            </Border>
+
+            <Label Text="{x:Static strings:Resources.Global_WorkTimeModel}" IsVisible="{x:Binding ShowWorkTimeModelsSelection}" Style="{StaticResource Noto14SemiBold}" Padding="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}" IsVisible="{x:Binding ShowWorkTimeModelsSelection}" >
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding WorkTimeModels}"
@@ -59,22 +67,14 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
-                <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-                    <Label Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
-                    <ImageButton Source="longlist.png" Command="{x:Binding SearchOccupationCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
-                </FlexLayout>
-            </Border>
-
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry  x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
+                <Entry x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry  x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}"  ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
+                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>

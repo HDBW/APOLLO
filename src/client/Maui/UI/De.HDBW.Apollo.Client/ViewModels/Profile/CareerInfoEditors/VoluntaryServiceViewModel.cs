@@ -117,6 +117,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ClearEndCommand?.NotifyCanExecuteChanged();
         }
 
+        partial void OnSelectedVoluntaryServiceTypeChanged(InteractionEntry? value)
+        {
+            this.IsDirty = true;
+        }
+
+        partial void OnOccupationNameChanged(string? value)
+        {
+            this.IsDirty = true;
+        }
+
         private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> voluntaryServiceTypes, bool isDirty)
         {
             VoluntaryServiceTypes = new ObservableCollection<InteractionEntry>(voluntaryServiceTypes);
@@ -126,9 +136,5 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             ValidateCommand.Execute(null);
         }
 
-        partial void OnSelectedVoluntaryServiceTypeChanged(InteractionEntry? value)
-        {
-            this.IsDirty = true;
-        }
     }
 }

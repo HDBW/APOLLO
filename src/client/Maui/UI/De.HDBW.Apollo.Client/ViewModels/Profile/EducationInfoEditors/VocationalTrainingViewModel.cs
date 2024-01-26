@@ -93,15 +93,29 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_SubjectRelatedEntranceQualification, SchoolGraduation.SubjectRelatedEntranceQualification, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             //schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate, SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            var selection = SelectionResult.Deserialize<Occupation>();
             var isDirty = IsDirty;
+
+            var description = currentData?.Description;
+            var selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == currentData?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
+            var selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation);
+            var selectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == currentData?.UniversityDegree);
+            var occupation = currentData?.ProfessionalTitle;
             if (EditState != null)
             {
-                EditState.ProfessionalTitle = selection;
+                description = EditState.Description;
+                selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == EditState.TypeOfSchool);
+                selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == EditState.Graduation);
+                selectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == EditState.UniversityDegree);
+                occupation = EditState.ProfessionalTitle;
+            }
+
+            if (!string.IsNullOrWhiteSpace(SelectionResult))
+            {
+                occupation = SelectionResult.Deserialize<Occupation>();
                 isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(EditState ?? currentData, typeOfSchools, schoolGraduations, univerityDegrees, isDirty), token);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(description, occupation, typeOfSchools, selectedTypeOfSchool, schoolGraduations, selectedSchoolGraduation, univerityDegrees, selectedUniverityDegree, isDirty), token);
             return currentData;
         }
 
@@ -115,28 +129,48 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             base.ApplyChanges(entry);
             entry.Description = Description;
-            entry.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
-            entry.UniversityDegree = (SelectedUniverityDegree?.Data as UniversityDegree?) ?? null;
+            entry.TypeOfSchool = SelectedTypeOfSchool?.Data as TypeOfSchool?;
+            entry.UniversityDegree = SelectedUniverityDegree?.Data as UniversityDegree?;
             entry.Graduation = entry.UniversityDegree == null ? SchoolGraduation.AdvancedTechnicalCollegeCertificate : null;
             entry.ProfessionalTitle = _professionalTitle;
         }
 
-        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations, List<InteractionEntry> univerityDegrees, bool isDirty)
+        private void LoadonUIThread(string? description, Occupation? occupation, List<InteractionEntry> typeOfSchools, InteractionEntry? selectedTypeOfSchool, List<InteractionEntry> schoolGraduations, InteractionEntry? selectedSchoolGraduation, List<InteractionEntry> univerityDegrees, InteractionEntry? selectedUniverityDegree, bool isDirty)
         {
-            _professionalTitle = educationInfo?.ProfessionalTitle;
+            _professionalTitle = occupation;
             OccupationName = _professionalTitle?.PreferedTerm?.FirstOrDefault();
             TypeOfSchools = new ObservableCollection<InteractionEntry>(typeOfSchools);
-            SelectedTypeOfSchool = TypeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == educationInfo?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
+            SelectedTypeOfSchool = selectedTypeOfSchool;
 
             SchoolGraduations = new ObservableCollection<InteractionEntry>(schoolGraduations);
-            SelectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == educationInfo?.Graduation) ?? null;
+            SelectedSchoolGraduation = selectedSchoolGraduation;
 
             UniverityDegrees = new ObservableCollection<InteractionEntry>(univerityDegrees);
-            SelectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == educationInfo?.UniversityDegree) ?? null;
+            SelectedUniverityDegree = selectedUniverityDegree;
 
-            Description = educationInfo?.Description ?? string.Empty;
+            Description = description;
             IsDirty = isDirty;
             ValidateCommand.Execute(null);
+        }
+
+        partial void OnDescriptionChanged(string? value)
+        {
+            IsDirty = true;
+        }
+
+        partial void OnSelectedTypeOfSchoolChanged(InteractionEntry? value)
+        {
+            IsDirty = true;
+        }
+
+        partial void OnSelectedUniverityDegreeChanged(InteractionEntry? value)
+        {
+            IsDirty = true;
+        }
+
+        partial void OnSelectedSchoolGraduationChanged(InteractionEntry? value)
+        {
+            IsDirty = true;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
@@ -172,26 +206,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         private bool CanSearchOccupation()
         {
             return !IsBusy;
-        }
-
-        partial void OnDescriptionChanged(string? value)
-        {
-            IsDirty = true;
-        }
-
-        partial void OnSelectedTypeOfSchoolChanged(InteractionEntry? value)
-        {
-            IsDirty = true;
-        }
-
-        partial void OnSelectedUniverityDegreeChanged(InteractionEntry? value)
-        {
-            IsDirty = true;
-        }
-
-        partial void OnSelectedSchoolGraduationChanged(InteractionEntry? value)
-        {
-            IsDirty = true;
         }
     }
 }

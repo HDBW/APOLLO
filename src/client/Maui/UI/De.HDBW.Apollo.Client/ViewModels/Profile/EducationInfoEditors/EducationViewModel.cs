@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models.Interactions;
@@ -25,6 +26,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         private ObservableCollection<InteractionEntry> _schoolGraduations = new ObservableCollection<InteractionEntry>();
 
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private InteractionEntry? _selectedSchoolGraduation;
 
         public EducationViewModel(
@@ -79,7 +81,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             schoolGraduations.Add(InteractionEntry.Import(Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate, SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, typeOfSchools, schoolGraduations), token);
+            var isDirty = IsDirty;
+            var selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == currentData?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
+            var selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation) ?? null;
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(typeOfSchools, selectedTypeOfSchool, schoolGraduations, selectedSchoolGraduation, isDirty), token);
             return currentData;
         }
 
@@ -90,16 +95,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
         }
 
-        private void LoadonUIThread(EducationInfo? educationInfo, List<InteractionEntry> typeOfSchools, List<InteractionEntry> schoolGraduations)
+        private void LoadonUIThread(List<InteractionEntry> typeOfSchools, InteractionEntry? selectedTypeOfSchool, List<InteractionEntry> schoolGraduations, InteractionEntry? selectedSchoolGraduation, bool isDirty)
         {
             TypeOfSchools = new ObservableCollection<InteractionEntry>(typeOfSchools);
-            SelectedTypeOfSchool = TypeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == educationInfo?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
+            SelectedTypeOfSchool = selectedTypeOfSchool;
             SchoolGraduations = new ObservableCollection<InteractionEntry>(schoolGraduations);
-            SelectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == educationInfo?.Graduation) ?? null;
+            SelectedSchoolGraduation = selectedSchoolGraduation;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
 
         partial void OnSelectedSchoolGraduationChanged(InteractionEntry? value)
         {
+            ValidateProperty(value, nameof(SelectedSchoolGraduation));
             IsDirty = true;
         }
 

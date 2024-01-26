@@ -93,7 +93,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                                 route = Routes.CareerInfoOccupationView;
                                 break;
                             case CareerType.PartTimeWorkExperience:
-                                editorParameters = new NavigationParameters();
                                 editorParameters.Add(NavigationParameter.Data, WorkingTimeModel.MINIJOB);
                                 route = Routes.CareerInfoOccupationView;
                                 break;
@@ -176,7 +175,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                             route = Routes.CareerInfoOccupationView;
                             break;
                         case CareerType.PartTimeWorkExperience:
-                            editorParameters = new NavigationParameters();
                             editorParameters.Add(NavigationParameter.Data, WorkingTimeModel.MINIJOB);
                             route = Routes.CareerInfoOccupationView;
                             break;

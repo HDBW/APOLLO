@@ -29,6 +29,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private InteractionEntry? _selectedWorkTimeModel;
 
         private WorkingTimeModel? _workTime;
+
         private Occupation? _job;
 
         public OccupationViewModel(
@@ -99,8 +100,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             {
                 entry.WorkingTimeModel = (WorkingTimeModel?)SelectedWorkTimeModel?.Data;
             }
+            else
+            {
+                entry.WorkingTimeModel = _workTime;
+            }
 
             entry.Job = _job;
+        }
+
+        partial void OnSelectedWorkTimeModelChanged(InteractionEntry? value)
+        {
+            IsDirty = true;
         }
 
         private void LoadonUIThread(Occupation? occupation, List<InteractionEntry> timeModels, InteractionEntry? selectedWorkTimeModel, bool isDirty)
@@ -147,11 +157,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private bool CanSearchOccupation()
         {
             return !IsBusy;
-        }
-
-        partial void OnSelectedWorkTimeModelChanged(InteractionEntry? value)
-        {
-            IsDirty = true;
         }
     }
 }
