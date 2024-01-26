@@ -20,9 +20,12 @@ namespace TrainingControllerIntegrationTests
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var mongoDBConnectionString = Configuration.GetConnectionString("MongoConnStr");
-            var mongoDatabaseName = Configuration["MongoDatabase"];
+            var mongoDBConnectionString = Configuration.GetConnectionString("MongoDalConfig:MongoConnStr");
+            var mongoDatabaseName = Configuration["MongoDalConfig:MongoDatabase"];
 
+            // Debugging output (remove this later)
+            Console.WriteLine($"MongoDB Connection String: {mongoDBConnectionString}");
+            Console.WriteLine($"MongoDB Database Name: {mongoDatabaseName}");
 
             services.Configure<MongoDBOptions>(options =>
             {
