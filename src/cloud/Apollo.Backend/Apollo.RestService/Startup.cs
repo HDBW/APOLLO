@@ -1,6 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
+
 namespace TrainingControllerIntegrationTests
 {
     public class Startup
@@ -10,18 +14,39 @@ namespace TrainingControllerIntegrationTests
             Configuration = configuration;
         }
 
-        // TODO: Implemnt swagger correctly
+        
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add your services, database context, authentication, etc. here
-            // Example:
-            // services.AddDbContext<ApplicationDbContext>(options =>
-            // {
-            //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            // });
 
+            var mongoDBConnectionString = Configuration.GetConnectionString("MongoDalConfig:MongoConnStr");
+            var mongoDatabaseName = Configuration["MongoDalConfig:MongoDatabase"];
+
+            // Debugging output (remove this later)
+            Console.WriteLine($"MongoDB Connection String: {mongoDBConnectionString}");
+            Console.WriteLine($"MongoDB Database Name: {mongoDatabaseName}");
+
+            services.Configure<MongoDBOptions>(options =>
+            {
+                options.ConnectionString = mongoDBConnectionString;
+                options.DatabaseName = mongoDatabaseName; 
+            });
+
+            services.AddSingleton<IMongoDatabase>(sp =>
+            {
+                var options = sp.GetRequiredService<IOptions<MongoDBOptions>>().Value;
+                var client = new MongoClient(options.ConnectionString);
+                return client.GetDatabase(options.DatabaseName);
+            });
+
+
+            services.Configure<MongoDBOptions>(options =>
+            {
+                options.ConnectionString = mongoDBConnectionString;
+            });
+
+           
             services.AddControllers();
 
             // Configure other services here
@@ -29,7 +54,7 @@ namespace TrainingControllerIntegrationTests
             // Add Swagger/OpenAPI configuration
             services.AddSwaggerGen(c =>
             {
-                // Configure Swagger options
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "REST SERVICE INTERGRATION TESTS", Version = "v1" });
             });
         }
 
@@ -41,7 +66,8 @@ namespace TrainingControllerIntegrationTests
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API Name");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApolloApi");
+                    c.RoutePrefix = "test/swagger"; // Different route prefix for testing
                 });
             }
             else
@@ -63,6 +89,12 @@ namespace TrainingControllerIntegrationTests
                 endpoints.MapControllers();
                 // Add other endpoints here if needed
             });
+        }
+
+        public class MongoDBOptions
+        {
+            public string ConnectionString { get; set; }
+            public string DatabaseName { get; set; }
         }
     }
 }
