@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -13,6 +14,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
     public partial class FurtherEducationViewModel : BasicEducationInfoViewModel
     {
         [ObservableProperty]
+        [Required(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_PropertyRequired))]
         private string? _description;
 
         public FurtherEducationViewModel(
@@ -30,9 +32,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
-
-            await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(currentData), token);
+            var isDirty = IsDirty;
+            var description = currentData?.Description;
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(description, isDirty), token);
             return currentData;
         }
 
@@ -42,14 +44,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             entry.Description = Description;
         }
 
-        private void LoadonUIThread(EducationInfo? educationInfo)
+        private void LoadonUIThread(string? description, bool isDirty)
         {
-            Description = educationInfo?.Description ?? string.Empty;
+            Description = description;
+            IsDirty = isDirty;
+            ValidateCommand.Execute(null);
         }
 
         partial void OnDescriptionChanged(string? value)
         {
             IsDirty = true;
+            ValidateProperty(value, nameof(Description));
         }
     }
 }
