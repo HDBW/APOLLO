@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.Client.Models.Generic;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
@@ -22,20 +23,12 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             return new WebReferenceEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
         }
 
-        protected override ObservableCollection<string> GetAdditionalLines(WebReference data)
+        protected override ObservableCollection<StringValue> GetAllLines(WebReference data)
         {
-            var items = new List<string?>();
-            items.Add(data.Title);
-            items.Add(data.Url.OriginalString);
-            return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x) && x != FirstLine).OfType<string>());
-        }
-
-        protected override string GetFristLine(WebReference data)
-        {
-            var items = new List<string?>();
-            items.Add(data.Title);
-            items.Add(data.Url.OriginalString);
-            return items.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
+            var items = new List<StringValue>();
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Title, data.Title));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_URL, data.Url.OriginalString));
+            return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
     }
 }

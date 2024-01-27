@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using De.HDBW.Apollo.Client.Models.Generic;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
@@ -23,20 +24,12 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             return new LanguageEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
         }
 
-        protected override ObservableCollection<string> GetAdditionalLines(Language data)
+        protected override ObservableCollection<StringValue> GetAllLines(Language data)
         {
-            var items = new List<string?>();
-            items.Add(data.Code?.DisplayName);
-            items.Add(data.Niveau?.ToString());
-            return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x) && x != FirstLine).OfType<string>());
-        }
-
-        protected override string GetFristLine(Language data)
-        {
-            var items = new List<string?>();
-            items.Add(data.Code?.DisplayName);
-            items.Add(data.Niveau?.ToString());
-            return items.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
+            var items = new List<StringValue>();
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code?.DisplayName));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_LanguageNiveau, data.Niveau?.ToString()));
+            return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
     }
 }

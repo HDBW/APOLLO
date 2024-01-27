@@ -64,15 +64,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                 switch (_type)
                 {
                     case EducationType.CompanyBasedVocationalTraining:
-                        return Resources.Strings.Resources.SelectOptionsDialog_EducationType_CompanyBasedVocationalTraining;
+                        return Resources.Strings.Resources.EducationType_CompanyBasedVocationalTraining;
                     case EducationType.Education:
-                        return Resources.Strings.Resources.SelectOptionsDialog_EducationType_Education;
+                        return Resources.Strings.Resources.EducationType_Education;
                     case EducationType.FurtherEducation:
-                        return Resources.Strings.Resources.SelectOptionsDialog_EducationType_FurtherEducation;
+                        return Resources.Strings.Resources.EducationType_FurtherEducation;
                     case EducationType.Study:
-                        return Resources.Strings.Resources.SelectOptionsDialog_EducationType_Study;
+                        return Resources.Strings.Resources.EducationType_Study;
                     case EducationType.VocationalTraining:
-                        return Resources.Strings.Resources.SelectOptionsDialog_EducationType_VocationalTraining;
+                        return Resources.Strings.Resources.EducationType_VocationalTraining;
                     default:
                         return string.Empty;
                 }

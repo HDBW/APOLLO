@@ -2,7 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Models.Generic;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
 {
@@ -23,38 +25,24 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             return new CareerInfoEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
         }
 
-        protected override ObservableCollection<string> GetAdditionalLines(CareerInfo data)
+        protected override ObservableCollection<StringValue> GetAllLines(CareerInfo data)
         {
-            var items = new List<string?>();
-            items.Add(data.CareerType.ToString());
-            items.Add(data.ServiceType.ToString());
-            items.Add(data.VoluntaryServiceType.ToString());
-            items.Add(data.WorkingTimeModel.ToString());
-            items.Add(data.Description);
-            items.Add(data.Job?.PreferedTerm?.FirstOrDefault());
-            items.Add(data.Start.ToUIDate().ToShortDateString());
-            items.Add(data.End.ToUIDate()?.ToShortDateString());
-            items.Add(data.NameOfInstitution);
-            items.Add(data.City);
-            items.Add(data.Country);
-            return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x) && x != FirstLine).OfType<string>());
+            var items = new List<StringValue>();
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.CareerType.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.ServiceType.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.VoluntaryServiceType.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.WorkingTimeModel.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Description));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Job?.PreferedTerm?.FirstOrDefault()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Start.ToUIDate().ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.End.ToUIDate()?.ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.NameOfInstitution));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.City));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Country));
+            return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
 
-        protected override string GetFristLine(CareerInfo data)
-        {
-            var items = new List<string?>();
-            items.Add(data.CareerType.ToString());
-            items.Add(data.ServiceType.ToString());
-            items.Add(data.VoluntaryServiceType.ToString());
-            items.Add(data.WorkingTimeModel.ToString());
-            items.Add(data.Description);
-            items.Add(data.Job?.PreferedTerm?.FirstOrDefault());
-            items.Add(data.Start.ToUIDate().ToShortDateString());
-            items.Add(data.End.ToUIDate()?.ToShortDateString());
-            items.Add(data.NameOfInstitution);
-            items.Add(data.City);
-            items.Add(data.Country);
-            return items.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
-        }
+        private string? GetLocalizedString(string? v) => throw new NotImplementedException();
+        private string? GetLocalizedString(CareerType careerType) => throw new NotImplementedException();
     }
 }

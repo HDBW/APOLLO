@@ -29,8 +29,11 @@
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-                    <Label Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
-                    <ImageButton Source="longlist.png" Command="{x:Binding SearchOccupationCommand}" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
+                    <FlexLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchOccupationCommand}"  />
+                    </FlexLayout.GestureRecognizers>
+                    <Label  Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
+                    <Image Source="longlist.png" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
                 </FlexLayout>
             </Border>
 

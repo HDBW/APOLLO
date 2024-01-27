@@ -49,35 +49,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             get
             {
-                switch (_type)
-                {
-                    case CareerType.Other:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_Other;
-                    case CareerType.WorkExperience:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_WorkExperience;
-                    case CareerType.PartTimeWorkExperience:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_PartTimeWorkExperience;
-                    case CareerType.Internship:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_Internship;
-                    case CareerType.SelfEmployment:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_SelfEmployment;
-                    case CareerType.Service:
-                        return Resources.Strings.Resources.ServiceType_MilitaryService;
-                    case CareerType.CommunityService:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_CommunityService;
-                    case CareerType.VoluntaryService:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_VoluntaryService;
-                    case CareerType.ParentalLeave:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_ParentalLeave;
-                    case CareerType.Homemaker:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_Homemaker;
-                    case CareerType.ExtraOccupationalExperience:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_ExtraOccupationalExperience;
-                    case CareerType.PersonCare:
-                        return Resources.Strings.Resources.SelectOptionsDialog_CareerType_PersonCare;
-                    default:
-                        return string.Empty;
-                }
+                return _type.GetLocalizedString();
             }
         }
 

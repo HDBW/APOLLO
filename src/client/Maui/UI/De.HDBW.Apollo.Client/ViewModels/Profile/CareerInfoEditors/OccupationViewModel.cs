@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Data.Helper;
@@ -52,11 +53,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var timeModels = new List<InteractionEntry>();
-            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_FullTime, WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_PartTime, WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_ShiftNightWorkWeekend, WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_Minijob, WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            timeModels.Add(InteractionEntry.Import(Resources.Strings.Resources.WorkingTimeModel_HomeTeleWork, WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(WorkingTimeModel.FULLTIME.GetLocalizedString(), WorkingTimeModel.FULLTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(WorkingTimeModel.PARTTIME.GetLocalizedString(), WorkingTimeModel.PARTTIME, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND.GetLocalizedString(), WorkingTimeModel.SHIFT_NIGHT_WORK_WEEKEND, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(WorkingTimeModel.MINIJOB.GetLocalizedString(), WorkingTimeModel.MINIJOB, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            timeModels.Add(InteractionEntry.Import(WorkingTimeModel.HOME_TELEWORK.GetLocalizedString(), WorkingTimeModel.HOME_TELEWORK, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;

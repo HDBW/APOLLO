@@ -286,6 +286,114 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gemeinnützige Arbeit.
+        /// </summary>
+        public static string CareerType_CommunityService {
+            get {
+                return ResourceManager.GetString("CareerType_CommunityService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Außerberufliche Erfahrungen.
+        /// </summary>
+        public static string CareerType_ExtraOccupationalExperience {
+            get {
+                return ResourceManager.GetString("CareerType_ExtraOccupationalExperience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hausfrau/mann.
+        /// </summary>
+        public static string CareerType_Homemaker {
+            get {
+                return ResourceManager.GetString("CareerType_Homemaker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Praktikum.
+        /// </summary>
+        public static string CareerType_Internship {
+            get {
+                return ResourceManager.GetString("CareerType_Internship", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wehrdienst/-übung/Zivildienst.
+        /// </summary>
+        public static string CareerType_MilitaryService {
+            get {
+                return ResourceManager.GetString("CareerType_MilitaryService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sonstiges.
+        /// </summary>
+        public static string CareerType_Other {
+            get {
+                return ResourceManager.GetString("CareerType_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mutterschutz / Elternzeit.
+        /// </summary>
+        public static string CareerType_ParentalLeave {
+            get {
+                return ResourceManager.GetString("CareerType_ParentalLeave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufspraxis (Nebenbeschäftigung).
+        /// </summary>
+        public static string CareerType_PartTimeWorkExperience {
+            get {
+                return ResourceManager.GetString("CareerType_PartTimeWorkExperience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Betr. pflegebed. Person.
+        /// </summary>
+        public static string CareerType_PersonCare {
+            get {
+                return ResourceManager.GetString("CareerType_PersonCare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selbständigkeit.
+        /// </summary>
+        public static string CareerType_SelfEmployment {
+            get {
+                return ResourceManager.GetString("CareerType_SelfEmployment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiwilligendienst.
+        /// </summary>
+        public static string CareerType_VoluntaryService {
+            get {
+                return ResourceManager.GetString("CareerType_VoluntaryService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufspraxis.
+        /// </summary>
+        public static string CareerType_WorkExperience {
+            get {
+                return ResourceManager.GetString("CareerType_WorkExperience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ja.
         /// </summary>
         public static string CompletionState_Completed {
@@ -923,6 +1031,51 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string EducationInfoEditView_Title {
             get {
                 return ResourceManager.GetString("EducationInfoEditView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufsausbildung (betr./außerbetr.).
+        /// </summary>
+        public static string EducationType_CompanyBasedVocationalTraining {
+            get {
+                return ResourceManager.GetString("EducationType_CompanyBasedVocationalTraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schulbildung.
+        /// </summary>
+        public static string EducationType_Education {
+            get {
+                return ResourceManager.GetString("EducationType_Education", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiterbildung.
+        /// </summary>
+        public static string EducationType_FurtherEducation {
+            get {
+                return ResourceManager.GetString("EducationType_FurtherEducation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Studium.
+        /// </summary>
+        public static string EducationType_Study {
+            get {
+                return ResourceManager.GetString("EducationType_Study", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufsausbildung (schulisch).
+        /// </summary>
+        public static string EducationType_VocationalTraining {
+            get {
+                return ResourceManager.GetString("EducationType_VocationalTraining", resourceCulture);
             }
         }
         
@@ -2191,159 +2344,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string SelectOptionDialog_Title {
             get {
                 return ResourceManager.GetString("SelectOptionDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gemeinnützige Arbeit.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_CommunityService {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_CommunityService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Außerberufliche Erfahrungen.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_ExtraOccupationalExperience {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_ExtraOccupationalExperience", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hausfrau/mann.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_Homemaker {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_Homemaker", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Praktikum.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_Internship {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_Internship", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wehrdienst/-übung/Zivildienst.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_MilitaryService {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_MilitaryService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sonstiges.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_Other {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_Other", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mutterschutz / Elternzeit.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_ParentalLeave {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_ParentalLeave", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Berufspraxis (Nebenbeschäftigung).
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_PartTimeWorkExperience {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_PartTimeWorkExperience", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Betr. pflegebed. Person.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_PersonCare {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_PersonCare", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Selbständigkeit.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_SelfEmployment {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_SelfEmployment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Freiwilligendienst.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_VoluntaryService {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_VoluntaryService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Berufspraxis.
-        /// </summary>
-        public static string SelectOptionsDialog_CareerType_WorkExperience {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_CareerType_WorkExperience", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Berufsausbildung (betr./außerbetr.).
-        /// </summary>
-        public static string SelectOptionsDialog_EducationType_CompanyBasedVocationalTraining {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_EducationType_CompanyBasedVocationalTraining", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Schulbildung.
-        /// </summary>
-        public static string SelectOptionsDialog_EducationType_Education {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_EducationType_Education", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Weiterbildung.
-        /// </summary>
-        public static string SelectOptionsDialog_EducationType_FurtherEducation {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_EducationType_FurtherEducation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Studium.
-        /// </summary>
-        public static string SelectOptionsDialog_EducationType_Study {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_EducationType_Study", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Berufsausbildung (schulisch).
-        /// </summary>
-        public static string SelectOptionsDialog_EducationType_VocationalTraining {
-            get {
-                return ResourceManager.GetString("SelectOptionsDialog_EducationType_VocationalTraining", resourceCulture);
             }
         }
         

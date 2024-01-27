@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Data.Helper;
@@ -60,10 +61,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var serviceTypes = new List<InteractionEntry>();
-            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_CivilianService, ServiceType.CivilianService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryService, ServiceType.MilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_VoluntaryMilitaryService, ServiceType.VoluntaryMilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            serviceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ServiceType_MilitaryExercise, ServiceType.MilitaryExercise, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            serviceTypes.Add(InteractionEntry.Import(ServiceType.CivilianService.GetLocalizedString(), ServiceType.CivilianService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            serviceTypes.Add(InteractionEntry.Import(ServiceType.MilitaryService.GetLocalizedString(), ServiceType.MilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            serviceTypes.Add(InteractionEntry.Import(ServiceType.VoluntaryMilitaryService.GetLocalizedString(), ServiceType.VoluntaryMilitaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            serviceTypes.Add(InteractionEntry.Import(ServiceType.MilitaryExercise.GetLocalizedString(), ServiceType.MilitaryExercise, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
             var occupation = currentData?.Job;

@@ -4,8 +4,8 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
-using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
@@ -41,14 +41,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             token.ThrowIfCancellationRequested();
             var voluntaryServiceTypes = new List<InteractionEntry>();
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_Other, VoluntaryServiceType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialYear, VoluntaryServiceType.VoluntarySocialYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_FederalVolunteerService, VoluntaryServiceType.FederalVolunteerService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryEcologicalYear, VoluntaryServiceType.VoluntaryEcologicalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialTrainingYear, VoluntaryServiceType.VoluntarySocialTrainingYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryCulturalYear, VoluntaryServiceType.VoluntaryCulturalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntarySocialYearInSport, VoluntaryServiceType.VoluntarySocialYearInSport, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            voluntaryServiceTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.VoluntaryServiceType_VoluntaryYearInMonumentConservation, VoluntaryServiceType.VoluntaryYearInMonumentConservation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.Other.GetLocalizedString(), VoluntaryServiceType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.VoluntarySocialYear.GetLocalizedString(), VoluntaryServiceType.VoluntarySocialYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.FederalVolunteerService.GetLocalizedString(), VoluntaryServiceType.FederalVolunteerService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.VoluntaryEcologicalYear.GetLocalizedString(), VoluntaryServiceType.VoluntaryEcologicalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.VoluntarySocialTrainingYear.GetLocalizedString(), VoluntaryServiceType.VoluntarySocialTrainingYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.VoluntaryCulturalYear.GetLocalizedString(), VoluntaryServiceType.VoluntaryCulturalYear, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.VoluntarySocialYearInSport.GetLocalizedString(), VoluntaryServiceType.VoluntarySocialYearInSport, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            voluntaryServiceTypes.Add(InteractionEntry.Import(VoluntaryServiceType.VoluntaryYearInMonumentConservation.GetLocalizedString(), VoluntaryServiceType.VoluntaryYearInMonumentConservation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;

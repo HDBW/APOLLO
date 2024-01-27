@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Models.Generic;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
 {
@@ -12,10 +13,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         private readonly TU _data;
 
         [ObservableProperty]
-        private string _firstLine;
-
-        [ObservableProperty]
-        private ObservableCollection<string> _additionalLines = new ObservableCollection<string>();
+        private ObservableCollection<StringValue> _allLines = new ObservableCollection<StringValue>();
 
         public AbstractProfileEntry(TU data, Func<AbstractProfileEntry<TU>, Task> editHandle, Func<AbstractProfileEntry<TU>, bool> canEditHandle, Func<AbstractProfileEntry<TU>, Task> deleteHandle, Func<AbstractProfileEntry<TU>, bool> canDeleteHandle)
         {
@@ -25,8 +23,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             ArgumentNullException.ThrowIfNull(deleteHandle);
             ArgumentNullException.ThrowIfNull(canDeleteHandle);
             _data = data;
-            FirstLine = GetFristLine(_data);
-            AdditionalLines = GetAdditionalLines(_data);
+            AllLines = GetAllLines(_data);
             CanEditHandle = canEditHandle;
             EditHandle = editHandle;
             CanDeleteHandle = canDeleteHandle;
@@ -46,9 +43,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             return _data;
         }
 
-        protected abstract ObservableCollection<string> GetAdditionalLines(TU data);
-
-        protected abstract string GetFristLine(TU data);
+        protected abstract ObservableCollection<StringValue> GetAllLines(TU data);
 
         private bool CanDelete()
         {

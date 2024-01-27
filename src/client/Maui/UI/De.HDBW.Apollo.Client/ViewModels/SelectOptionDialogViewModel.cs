@@ -4,10 +4,12 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Graphics.Text;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -57,25 +59,25 @@ namespace De.HDBW.Apollo.Client.ViewModels
             switch (_selectionType)
             {
                 case CareerType _:
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_Other, CareerType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_WorkExperience, CareerType.WorkExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_PartTimeWorkExperience, CareerType.PartTimeWorkExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_Internship, CareerType.Internship, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_SelfEmployment, CareerType.SelfEmployment, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_MilitaryService, CareerType.Service, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_CommunityService, CareerType.CommunityService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_VoluntaryService, CareerType.VoluntaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_ParentalLeave, CareerType.ParentalLeave, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_Homemaker, CareerType.Homemaker, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_ExtraOccupationalExperience, CareerType.ExtraOccupationalExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_CareerType_PersonCare, CareerType.PersonCare, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.Other.GetLocalizedString(), CareerType.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.WorkExperience.GetLocalizedString(), CareerType.WorkExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.PartTimeWorkExperience.GetLocalizedString(), CareerType.PartTimeWorkExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.Internship.GetLocalizedString(), CareerType.Internship, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.SelfEmployment.GetLocalizedString(), CareerType.SelfEmployment, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.Service.GetLocalizedString(), CareerType.Service, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.CommunityService.GetLocalizedString(), CareerType.CommunityService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.VoluntaryService.GetLocalizedString(), CareerType.VoluntaryService, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.ParentalLeave.GetLocalizedString(), CareerType.ParentalLeave, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.Homemaker.GetLocalizedString(), CareerType.Homemaker, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.ExtraOccupationalExperience.GetLocalizedString(), CareerType.ExtraOccupationalExperience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(CareerType.PersonCare.GetLocalizedString(), CareerType.PersonCare, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     break;
                 case EducationType _:
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_EducationType_Education, EducationType.Education, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_EducationType_CompanyBasedVocationalTraining, EducationType.CompanyBasedVocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_EducationType_Study, EducationType.Study, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_EducationType_VocationalTraining, EducationType.VocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.SelectOptionsDialog_EducationType_FurtherEducation, EducationType.FurtherEducation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_Education, EducationType.Education, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_CompanyBasedVocationalTraining, EducationType.CompanyBasedVocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_Study, EducationType.Study, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_VocationalTraining, EducationType.VocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_FurtherEducation, EducationType.FurtherEducation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     break;
             }
 

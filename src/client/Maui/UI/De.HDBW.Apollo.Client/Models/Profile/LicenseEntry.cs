@@ -3,6 +3,7 @@
 
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Models.Generic;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
@@ -24,22 +25,13 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             return new LicenseEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
         }
 
-        protected override ObservableCollection<string> GetAdditionalLines(License data)
+        protected override ObservableCollection<StringValue> GetAllLines(License data)
         {
-            var items = new List<string?>();
-            items.Add(data.Name);
-            items.Add(data.Granted?.ToUIDate().ToShortDateString());
-            items.Add(data.Expires?.ToUIDate().ToShortDateString());
-            return new ObservableCollection<string>(items.Where(x => !string.IsNullOrWhiteSpace(x) && x != FirstLine).OfType<string>());
-        }
-
-        protected override string GetFristLine(License data)
-        {
-            var items = new List<string?>();
-            items.Add(data.Name);
-            items.Add(data.Granted?.ToUIDate().ToShortDateString());
-            items.Add(data.Expires?.ToUIDate().ToShortDateString());
-            return items.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
+            var items = new List<StringValue>();
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Designation, data.Name));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_IssueDate, data.Granted?.ToUIDate().ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ExpireDate, data.Expires?.ToUIDate().ToShortDateString()));
+            return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
     }
 }

@@ -614,55 +614,55 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
   <data name="SelectOptionDialog_Continue" xml:space="preserve">
     <value>Weiter</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_CommunityService" xml:space="preserve">
+  <data name="CareerType_CommunityService" xml:space="preserve">
     <value>Gemeinnützige Arbeit</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_ExtraOccupationalExperience" xml:space="preserve">
+  <data name="CareerType_ExtraOccupationalExperience" xml:space="preserve">
     <value>Außerberufliche Erfahrungen</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_Homemaker" xml:space="preserve">
+  <data name="CareerType_Homemaker" xml:space="preserve">
     <value>Hausfrau/mann</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_Internship" xml:space="preserve">
+  <data name="CareerType_Internship" xml:space="preserve">
     <value>Praktikum</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_MilitaryService" xml:space="preserve">
+  <data name="CareerType_MilitaryService" xml:space="preserve">
     <value>Wehrdienst/-übung/Zivildienst</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_Other" xml:space="preserve">
+  <data name="CareerType_Other" xml:space="preserve">
     <value>Sonstiges</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_ParentalLeave" xml:space="preserve">
+  <data name="CareerType_ParentalLeave" xml:space="preserve">
     <value>Mutterschutz / Elternzeit</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_PartTimeWorkExperience" xml:space="preserve">
+  <data name="CareerType_PartTimeWorkExperience" xml:space="preserve">
     <value>Berufspraxis (Nebenbeschäftigung)</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_PersonCare" xml:space="preserve">
+  <data name="CareerType_PersonCare" xml:space="preserve">
     <value>Betr. pflegebed. Person</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_SelfEmployment" xml:space="preserve">
+  <data name="CareerType_SelfEmployment" xml:space="preserve">
     <value>Selbständigkeit</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_VoluntaryService" xml:space="preserve">
+  <data name="CareerType_VoluntaryService" xml:space="preserve">
     <value>Freiwilligendienst</value>
   </data>
-  <data name="SelectOptionsDialog_CareerType_WorkExperience" xml:space="preserve">
+  <data name="CareerType_WorkExperience" xml:space="preserve">
     <value>Berufspraxis</value>
   </data>
-  <data name="SelectOptionsDialog_EducationType_CompanyBasedVocationalTraining" xml:space="preserve">
+  <data name="EducationType_CompanyBasedVocationalTraining" xml:space="preserve">
     <value>Berufsausbildung (betr./außerbetr.)</value>
   </data>
-  <data name="SelectOptionsDialog_EducationType_Education" xml:space="preserve">
+  <data name="EducationType_Education" xml:space="preserve">
     <value>Schulbildung</value>
   </data>
-  <data name="SelectOptionsDialog_EducationType_FurtherEducation" xml:space="preserve">
+  <data name="EducationType_FurtherEducation" xml:space="preserve">
     <value>Weiterbildung</value>
   </data>
-  <data name="SelectOptionsDialog_EducationType_Study" xml:space="preserve">
+  <data name="EducationType_Study" xml:space="preserve">
     <value>Studium</value>
   </data>
-  <data name="SelectOptionsDialog_EducationType_VocationalTraining" xml:space="preserve">
+  <data name="EducationType_VocationalTraining" xml:space="preserve">
     <value>Berufsausbildung (schulisch)</value>
   </data>
   <data name="Global_Description" xml:space="preserve">
