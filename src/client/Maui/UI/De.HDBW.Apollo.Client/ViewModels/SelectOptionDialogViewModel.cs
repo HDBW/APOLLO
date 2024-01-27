@@ -9,7 +9,6 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Graphics.Text;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {

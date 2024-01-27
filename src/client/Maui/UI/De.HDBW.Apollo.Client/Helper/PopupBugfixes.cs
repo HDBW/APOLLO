@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.Platform;
 
 namespace De.HDBW.Apollo.Client.Helper
 {
