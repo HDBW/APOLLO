@@ -9,14 +9,14 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
     {
         // Knowledge_Advanced_filtered.txt
         // Freitext
-        public List<string> Advanced { get; set; }
+        public List<string> Advanced { get; set; } = new List<string>();
 
         // Knowledge_Basic_filtered.txt
         // Freitext
-        public List<string> Basic { get; set; }
+        public List<string> Basic { get; set; } = new List<string>();
 
         // Knowledge_Expert_filtered.txt
         // Freitext
-        public List<string> Expert { get; set; }
+        public List<string> Expert { get; set; } = new List<string>();
     }
 }
