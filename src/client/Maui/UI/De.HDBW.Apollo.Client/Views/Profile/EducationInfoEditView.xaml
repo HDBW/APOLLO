@@ -26,11 +26,11 @@
                             </SwipeItemView>
                         </SwipeItems>
                     </SwipeView.RightItems>
-                    <Border Background="{StaticResource Background}">
+                    <Border Background="{StaticResource Background}" StrokeThickness="0">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="24,6,24,6" MinimumHeightRequest="70">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="generic:StringValue">
                                     <Grid ColumnDefinitions="auto, *">

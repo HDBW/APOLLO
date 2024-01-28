@@ -27,6 +27,9 @@
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\UI\De.HDBW.Apollo.Client\Helper\ProfileExtensions.cs" Link="Client\ProfileExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
     <!-- Splash Screen -->
@@ -46,5 +49,10 @@
     <ProjectReference Include="..\..\BL\De.HDBW.Apollo.Data\De.HDBW.Apollo.Data.csproj" />
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Client\" />
+  </ItemGroup>
   <Import Project="..\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.projitems" Label="Shared" />
+  <Import Project="..\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.projitems" Label="Shared" />
+  <Import Project="..\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests.projitems" Label="Shared" />
 </Project>

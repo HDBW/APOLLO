@@ -310,6 +310,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactInfoEditView_Title, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute, ContactInfoIcon));
             var moreThanThree = (user.ContactInfos?.Count ?? 0) > 3;
             var contactInfos = user.ContactInfos.AsSortedList().Take(3);
+            var i = 0;
             foreach (var contactInfo in contactInfos)
             {
                 var entry = ContactEntry.Import(contactInfo, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
@@ -317,6 +318,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     informations.Add(line);
                 }
+
+                if (!moreThanThree || i < 2)
+                {
+                    informations.Add(SeperatorValue.Import());
+                }
+
+                i++;
             }
 
             if (moreThanThree)
@@ -333,6 +341,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute, QualificationInfoIcon));
             var moreThanThree = (profile.Qualifications?.Count ?? 0) > 3;
             var qualifications = profile.Qualifications.AsSortedList().Take(3);
+            var i = 0;
             foreach (var qualification in qualifications)
             {
                 var entry = QualificationEntry.Import(qualification, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
@@ -340,6 +349,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     informations.Add(line);
                 }
+
+                if (!moreThanThree || i < 2)
+                {
+                    informations.Add(SeperatorValue.Import());
+                }
+
+                i++;
             }
 
             if (moreThanThree)
@@ -356,6 +372,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute, EducationInfoIcon));
             var moreThanThree = (profile.EducationInfos?.Count ?? 0) > 3;
             var educationInfos = profile.EducationInfos.AsSortedList().Take(3);
+            var i = 0;
             foreach (var educationInfo in educationInfos)
             {
                 var entry = EducationInfoEntry.Import(educationInfo, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
@@ -363,6 +380,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     informations.Add(line);
                 }
+
+                if (!moreThanThree || i < 2)
+                {
+                    informations.Add(SeperatorValue.Import());
+                }
+
+                i++;
             }
 
             if (moreThanThree)
@@ -379,6 +403,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute, LicensInfoIcon));
             var moreThanThree = (profile.Licenses?.Count ?? 0) > 3;
             var licenses = profile.Licenses.AsSortedList().Take(3);
+            var i = 0;
             foreach (var license in licenses)
             {
                 var entry = LicenseEntry.Import(license, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
@@ -386,6 +411,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     informations.Add(line);
                 }
+
+                if (!moreThanThree || i < 2)
+                {
+                    informations.Add(SeperatorValue.Import());
+                }
+
+                i++;
             }
 
             if (moreThanThree)
@@ -402,6 +434,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute, CareerInfoIcon));
             var moreThanThree = (profile.CareerInfos?.Count ?? 0) > 3;
             var careerInfos = profile.CareerInfos.AsSortedList().Take(3);
+            var i = 0;
             foreach (var careerInfo in careerInfos)
             {
                 var entry = CareerInfoEntry.Import(careerInfo, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
@@ -409,6 +442,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     informations.Add(line);
                 }
+
+                if (!moreThanThree || i < 2)
+                {
+                    informations.Add(SeperatorValue.Import());
+                }
+
+                i++;
             }
 
             if (moreThanThree)
@@ -425,6 +465,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute, LanguageIcon));
             var moreThanThree = (profile.LanguageSkills?.Count ?? 0) > 3;
             var languageSkills = profile.LanguageSkills.AsSortedList().Take(3);
+            var i = 0;
             foreach (var languageSkill in languageSkills)
             {
                 var entry = LanguageEntry.Import(languageSkill, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
@@ -432,6 +473,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     informations.Add(line);
                 }
+
+                if (!moreThanThree || i < 2)
+                {
+                    informations.Add(SeperatorValue.Import());
+                }
+
+                i++;
             }
 
             if (moreThanThree)
@@ -448,6 +496,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute, WebReferenceIcon));
             var moreThanThree = (profile.WebReferences?.Count ?? 0) > 3;
             var webReferences = profile.WebReferences.AsSortedList().Take(3);
+            var i = 0;
             foreach (var webReference in webReferences)
             {
                 var entry = WebReferenceEntry.Import(webReference, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
@@ -455,6 +504,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     informations.Add(line);
                 }
+
+                if (!moreThanThree || i < 2)
+                {
+                    informations.Add(SeperatorValue.Import());
+                }
+
+                i++;
             }
 
             if (moreThanThree)

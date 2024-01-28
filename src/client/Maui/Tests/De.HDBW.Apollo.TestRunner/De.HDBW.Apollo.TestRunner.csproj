@@ -8,6 +8,9 @@
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\UI\De.HDBW.Apollo.Client\Helper\ProfileExtensions.cs" Link="Client\ProfileExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
@@ -30,5 +33,9 @@
     <ProjectReference Include="..\..\BL\De.HDBW.Apollo.Data\De.HDBW.Apollo.Data.csproj" />
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Client\" />
+  </ItemGroup>
   <Import Project="..\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.projitems" Label="Shared" />
+  <Import Project="..\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests.projitems" Label="Shared" />
 </Project>
