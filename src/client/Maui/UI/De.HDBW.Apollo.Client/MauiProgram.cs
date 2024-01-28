@@ -220,7 +220,7 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
 #if DEBUG
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new MockUserHttpClientHandler());
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
 #else
                 var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new HttpClientHandler());
 #endif

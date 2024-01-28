@@ -4,6 +4,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using De.HDBW.Apollo.Data.Helper;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using License = Invite.Apollo.App.Graph.Common.Models.UserProfile.License;
@@ -15,18 +16,30 @@ namespace De.HDBW.Apollo.Data.Services
         private User? _user;
 
         private string _userId = $"User_00000000-0000-0000-0000-000000000000";
+        private IUserRepository? _userRepository;
 
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public MockUserHttpClientHandler(IUserRepository? userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken token)
         {
             switch (request.RequestUri?.AbsolutePath)
             {
                 case "/api/User":
                     if (request.Method == HttpMethod.Put)
                     {
+                        User? existingUser = null;
+                        if (_user == null)
+                        {
+                            existingUser = await (_userRepository?.GetItemAsync(token) ?? Task.FromResult<User?>((User?)null)).ConfigureAwait(false);
+                        }
+
                         var jsonContent = request.Content as JsonContent;
                         var userRequest = jsonContent?.Value as CreateOrUpdateUserRequest;
                         var user = userRequest?.User.Serialize()!.Deserialize<User>();
-                        _user = user!;
+                        _user = existingUser ?? user!;
                         _user.Id = _userId;
                         foreach (var contact in _user.ContactInfos)
                         {
@@ -86,21 +99,21 @@ namespace De.HDBW.Apollo.Data.Services
 
                         var response = new CreateOrUpdateUserResponse();
                         response.Result = _userId;
-                        return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response, options: SerializationHelper.Options) });
+                        return new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response, options: SerializationHelper.Options) };
                     }
 
-                    return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
+                    return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
                 case "/api/User/User_00000000-0000-0000-0000-000000000000":
                     if (_user != null)
                     {
                         var response = new GetUserRespnse();
                         response.User = _user;
-                        return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response, options: SerializationHelper.Options) });
+                        return new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response, options: SerializationHelper.Options) };
                     }
 
-                    return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
+                    return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
                 default:
-                    return Task.FromResult(new HttpResponseMessage());
+                    return new HttpResponseMessage();
             }
         }
     }

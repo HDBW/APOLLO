@@ -287,7 +287,7 @@ namespace De.HDBW.Apollo.Client.Helper
             return GetLocalizedString((CompletionState?)completionState);
         }
 
-        private static string GetLocalizedString(CompletionState? completionState)
+        public static string GetLocalizedString(CompletionState? completionState)
         {
             switch (completionState)
             {
@@ -297,6 +297,26 @@ namespace De.HDBW.Apollo.Client.Helper
                     return Resources.Strings.Resources.CompletionState_Failed;
                 case CompletionState.Ongoning:
                     return Resources.Strings.Resources.CompletionState_Ongoning;
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetLocalizedString(this Willing willing)
+        {
+            return GetLocalizedString((Willing?)willing);
+        }
+
+        public static string GetLocalizedString(Willing? willing)
+        {
+            switch (willing)
+            {
+                case Willing.Yes:
+                    return Resources.Strings.Resources.Willing_Yes;
+                case Willing.No:
+                    return Resources.Strings.Resources.Willing_No;
+                case Willing.Partly:
+                    return Resources.Strings.Resources.Willing_Partly;
                 default:
                     return string.Empty;
             }

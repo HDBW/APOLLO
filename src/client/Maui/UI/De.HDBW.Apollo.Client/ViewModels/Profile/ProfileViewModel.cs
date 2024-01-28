@@ -13,6 +13,7 @@ using De.HDBW.Apollo.Client.Models.Profile;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
@@ -525,7 +526,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             var informations = new List<ObservableObject>();
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
-
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, profile.MobilityInfo.WillingToTravel?.GetLocalizedString()));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, profile.MobilityInfo.HasVehicle ? Resources.Strings.Resources.Global_Yes : Resources.Strings.Resources.Global_No));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", profile.MobilityInfo.DriverLicenses ?? new List<DriversLicense>())));
             return informations;
         }
 
