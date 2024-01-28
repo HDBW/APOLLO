@@ -29,16 +29,16 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         {
             var items = new List<StringValue>();
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.CareerType.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.ServiceType.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.VoluntaryServiceType.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.WorkingTimeModel.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Description));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Job?.PreferedTerm?.FirstOrDefault()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Start.ToUIDate().ToShortDateString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.End.ToUIDate()?.ToShortDateString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.NameOfInstitution));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.City));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.Country));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.ServiceType.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.VoluntaryServiceType.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_WorkTimeModel, data.WorkingTimeModel.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Description, data.Description));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Occupation, data.Job?.PreferedTerm?.FirstOrDefault()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Start, data.Start.ToUIDate().ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_End, data.End.ToUIDate()?.ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_NameOfInstitution, data.NameOfInstitution));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_City, data.City));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Country, data.Country));
             return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
 
