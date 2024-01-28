@@ -1278,6 +1278,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zeitraum.
+        /// </summary>
+        public static string Global_DateRange {
+            get {
+                return ResourceManager.GetString("Global_DateRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Löschen.
         /// </summary>
         public static string Global_Delete {
@@ -1512,6 +1521,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to seit.
+        /// </summary>
+        public static string Global_Since {
+            get {
+                return ResourceManager.GetString("Global_Since", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Überspringen.
         /// </summary>
         public static string Global_Skip {
@@ -1535,6 +1553,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_StartNow {
             get {
                 return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bis.
+        /// </summary>
+        public static string Global_Till {
+            get {
+                return ResourceManager.GetString("Global_Till", resourceCulture);
             }
         }
         
@@ -1580,6 +1607,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_URL {
             get {
                 return ResourceManager.GetString("Global_URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gültigkeit.
+        /// </summary>
+        public static string Global_Validity {
+            get {
+                return ResourceManager.GetString("Global_Validity", resourceCulture);
             }
         }
         

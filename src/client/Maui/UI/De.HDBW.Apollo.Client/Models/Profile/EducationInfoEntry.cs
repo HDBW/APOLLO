@@ -35,8 +35,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_CompletionState, data.CompletionState.GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Graduation, data.Description));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Occupation, data.ProfessionalTitle?.PreferedTerm?.FirstOrDefault()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Start, data.Start.ToUIDate().ToShortDateString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_End, data.End.ToUIDate()?.ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_DateRange, GetDateRangeText(data.Start, data.End)));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_NameOfInstitution, data.NameOfInstitution));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_City, data.City));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Country, data.Country));

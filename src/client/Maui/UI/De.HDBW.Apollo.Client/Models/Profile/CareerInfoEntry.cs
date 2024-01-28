@@ -34,15 +34,11 @@ namespace De.HDBW.Apollo.Client.Models.Profile
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_WorkTimeModel, data.WorkingTimeModel.GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Description, data.Description));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Occupation, data.Job?.PreferedTerm?.FirstOrDefault()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Start, data.Start.ToUIDate().ToShortDateString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_End, data.End.ToUIDate()?.ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_DateRange, GetDateRangeText(data.Start, data.End)));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_NameOfInstitution, data.NameOfInstitution));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_City, data.City));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Country, data.Country));
             return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
-
-        private string? GetLocalizedString(string? v) => throw new NotImplementedException();
-        private string? GetLocalizedString(CareerType careerType) => throw new NotImplementedException();
     }
 }

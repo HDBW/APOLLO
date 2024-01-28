@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Generic;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
@@ -44,6 +45,26 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         }
 
         protected abstract ObservableCollection<StringValue> GetAllLines(TU data);
+
+        protected string? GetDateRangeText(DateTime? start, DateTime? end)
+        {
+            if (start.HasValue && end.HasValue)
+            {
+                return $"{start.ToUIDate()?.ToShortDateString()}-{end.ToUIDate()?.ToShortDateString()}";
+            }
+
+            if (start.HasValue && !end.HasValue)
+            {
+                return $"{Resources.Strings.Resources.Global_Since} {start.ToUIDate()?.ToShortDateString()}";
+            }
+
+            if (end.HasValue)
+            {
+                return $"{Resources.Strings.Resources.Global_Till} {end.ToUIDate()?.ToShortDateString()}";
+            }
+
+            return null;
+        }
 
         private bool CanDelete()
         {

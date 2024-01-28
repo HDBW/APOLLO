@@ -29,8 +29,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         {
             var items = new List<StringValue>();
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Designation, data.Name));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_IssueDate, data.Granted?.ToUIDate().ToShortDateString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ExpireDate, data.Expires?.ToUIDate().ToShortDateString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Validity, GetDateRangeText(data.Granted, data.Expires)));
             return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
     }
