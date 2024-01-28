@@ -14,9 +14,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         public string UniqueIdentifier { get; set; }
         public string ConceptUri { get; set; }
         public string PreferedLabel { get; set; }
-        public List<string> AlternativeLabels { get; set; }
-        public List<Concept> BroaderConcepts { get; set; }
-        public List<Concept> NarrowerConcepts { get; set; }
+        public List<string> AlternativeLabels { get; set; } = new List<string>();
+        public List<Concept> BroaderConcepts { get; set; } = new List<Concept>();
+        public List<Concept> NarrowerConcepts { get; set; } = new List<Concept>();
 
         public string Description { get; set; }
         public string Definition { get; set; }

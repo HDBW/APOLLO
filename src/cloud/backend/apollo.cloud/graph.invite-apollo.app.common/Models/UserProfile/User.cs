@@ -11,13 +11,18 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <summary>
         /// This is the Unique Identifier set by Apollo for the User.
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// This is the Unique Identifier of the User from the Identity Provider.
         /// Object ID
         /// </summary>
         public string ObjectId { get; set; }
+
+        /// <summary>
+        /// The name of the identity provider.
+        /// </summary>
+        public string IdentityProvicer { get; set; }
 
         /// <summary>
         /// This is the User principal name given by AADB2C.
@@ -27,7 +32,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <summary>
         /// This is the email address given by the AADB2C claim.
         /// Register user Email Claim - That is the only way for the user to persist the Account if Phone Provider changes.
-        /// 
+        ///
         /// </summary>
         public string? Email { get; set; }
 
@@ -57,6 +62,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// </summary>
         public bool? Disabilities { get; set; }
 
+        /// <summary>
+        /// The user profile is the Profile of the User.
+        /// </summary>
         public Profile? Profile { get; set; }
     }
 }

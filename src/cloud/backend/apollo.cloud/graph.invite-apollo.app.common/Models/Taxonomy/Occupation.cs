@@ -4,10 +4,15 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
     [DataContract]
+    [KnownType(typeof(KldbOccupation))]
+    [KnownType(typeof(UnknownOccupation))]
+    [JsonDerivedType(typeof(KldbOccupation), "KldbOccupation")]
+    [JsonDerivedType(typeof(UnknownOccupation), "UnknownOccupation")]
     public abstract class Occupation
     {
         /// <summary>
@@ -57,13 +62,13 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// <summary>
         /// The prefered term is the term that is used in the Taxonomie. For example the prefered term for the occupation "baker" is "Bäcker/in".
         /// </summary>
-        public List<string> PreferedTerm { get; set; }
+        public List<string> PreferedTerm { get; set; } = new List<string>();
 
         /// <summary>
         /// This is a list of terms that are commonly used in a region or language but are not the prefered term.
         /// For example "Bäckergeselle" is a common term for a "baker" in Germany but not the prefered term.
         /// </summary>
-        public List<string> NonePreferedTerm { get; set; }
+        public List<string> NonePreferedTerm { get; set; } = new List<string>();
 
         /// <summary>
         /// Related Taxonomy

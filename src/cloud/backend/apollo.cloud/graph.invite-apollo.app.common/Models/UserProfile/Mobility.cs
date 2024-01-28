@@ -14,7 +14,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         // Mobility_DriverLicenses_filtered.txt
         // Mehrfachselection
-        public List<DriversLicense> DriverLicenses { get; set; }
+        public List<DriversLicense> DriverLicenses { get; set; } = new List<DriversLicense>();
 
         public bool HasVehicle { get; set; }
     }
