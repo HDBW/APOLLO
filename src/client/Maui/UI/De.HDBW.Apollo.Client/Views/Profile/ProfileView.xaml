@@ -17,9 +17,12 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="ProfileInteractionTemplate" x:DataType="interactionModels:InteractionEntry">
             <Grid ColumnDefinitions="Auto,*,Auto" Padding="24,0,24,8">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
+                </Grid.GestureRecognizers>
                 <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,0,8,0"/>
                 <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
-                <ImageButton Command="{x:Binding NavigateCommand}" Grid.Column="2" Source="edit.png"/>
+                <Image Grid.Column="2" Source="edit.png"/>
             </Grid>
         </DataTemplate>
 
