@@ -95,7 +95,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
 
         partial void OnSelectedSchoolGraduationChanged(InteractionEntry? value)
         {
-            ValidateProperty(value);
+            ValidateProperty(value, nameof(SelectedSchoolGraduation));
             IsDirty = true;
         }
 

@@ -105,7 +105,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
                     if (!missingRoutes.Contains(Routes.LicenseEditView))
                     {
-                        sections.AddRange(CreateLanguageInformations(user.Profile!));
+                        sections.AddRange(CreateLicenseInformations(user.Profile!));
                     }
 
                     if (!missingRoutes.Contains(Routes.CareerInfoEditView))

@@ -175,7 +175,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         private bool IsSelected(Mobility? mobility, DriversLicense license)
         {
-            return mobility?.DriverLicenses.Contains(license) ?? false;
+            return mobility?.DriverLicenses?.Contains(license) ?? false;
         }
 
         private SelectInteractionEntry CreateLicenseEntry(Mobility? mobility, DriversLicense license)
