@@ -6,6 +6,7 @@
              xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Profile"
+             xmlns:generic="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
              x:DataType="viewModels:QualificationEditViewModel"
              Title="{x:Static strings:Resources.QualificationEditView_Title}"
              IsBusy="{x:Binding IsBusy}"
@@ -24,19 +25,21 @@
                             </SwipeItemView>
                         </SwipeItems>
                     </SwipeView.RightItems>
-                    <Grid Background="{StaticResource Background}" RowDefinitions="auto, auto">
-                        <Grid.GestureRecognizers>
+                    <Border Background="{StaticResource Background}">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
-                        </Grid.GestureRecognizers>
-                        <Label Text="{x:Binding FirstLine, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" TextColor="{StaticResource Primary}"/>
-                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AdditionalLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="system:String">
-                                    <Label Text="{x:Binding ., Mode=OneTime}" Style="{StaticResource Noto14}" />
+                                <DataTemplate x:DataType="generic:StringValue">
+                                    <Grid ColumnDefinitions="auto, *">
+                                        <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" />
+                                        <Label Margin="8,0,0,0" Grid.Column="1" Text="{x:Binding Data, Mode=OneWay}" HorizontalTextAlignment="End" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
+                                    </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                    </Grid>
+                    </Border>
                 </SwipeView>
             </ContentView>
         </DataTemplate>

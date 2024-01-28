@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -43,16 +44,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             token.ThrowIfCancellationRequested();
 
             var univerityDegrees = new List<InteractionEntry>();
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Master, UniversityDegree.Master, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Bachelor, UniversityDegree.Bachelor, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Pending, UniversityDegree.Pending, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Doctorate, UniversityDegree.Doctorate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_StateExam, UniversityDegree.StateExam, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_UnregulatedUnrecognized, UniversityDegree.UnregulatedUnrecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_RegulatedUnrecognized, UniversityDegree.RegulatedUnrecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_PartialRecognized, UniversityDegree.PartialRecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_EcclesiasticalExam, UniversityDegree.EcclesiasticalExam, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            univerityDegrees.Add(InteractionEntry.Import(Resources.Strings.Resources.UniversityDegree_Other, UniversityDegree.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.Master.GetLocalizedString(), UniversityDegree.Master, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.Bachelor.GetLocalizedString(), UniversityDegree.Bachelor, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.Pending.GetLocalizedString(), UniversityDegree.Pending, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.Doctorate.GetLocalizedString(), UniversityDegree.Doctorate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.StateExam.GetLocalizedString(), UniversityDegree.StateExam, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.UnregulatedUnrecognized.GetLocalizedString(), UniversityDegree.UnregulatedUnrecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.RegulatedUnrecognized.GetLocalizedString(), UniversityDegree.RegulatedUnrecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.PartialRecognized.GetLocalizedString(), UniversityDegree.PartialRecognized, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.EcclesiasticalExam.GetLocalizedString(), UniversityDegree.EcclesiasticalExam, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.Other.GetLocalizedString(), UniversityDegree.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;

@@ -42,7 +42,7 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_UniverityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_UniversityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding UniverityDegrees}"

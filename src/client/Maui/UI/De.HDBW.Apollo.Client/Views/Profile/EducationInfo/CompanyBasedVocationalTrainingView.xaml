@@ -90,8 +90,8 @@
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" />
             </Border>
 
-            
-            <!--<Label Text="{x:Static strings:Resources.Global_UniverityDegree}"/>
+
+            <!--<Label Text="{x:Static strings:Resources.Global_UniversityDegree}"/>
         <Picker ItemsSource="{x:Binding UniverityDegrees}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>-->

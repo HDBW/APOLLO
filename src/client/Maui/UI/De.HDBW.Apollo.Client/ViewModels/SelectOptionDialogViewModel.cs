@@ -72,14 +72,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     selections.Add(InteractionEntry.Import(CareerType.PersonCare.GetLocalizedString(), CareerType.PersonCare, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     break;
                 case EducationType _:
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_Education, EducationType.Education, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_CompanyBasedVocationalTraining, EducationType.CompanyBasedVocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_Study, EducationType.Study, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_VocationalTraining, EducationType.VocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-                    selections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationType_FurtherEducation, EducationType.FurtherEducation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(EducationType.Education.GetLocalizedString(), EducationType.Education, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(EducationType.CompanyBasedVocationalTraining.GetLocalizedString(), EducationType.CompanyBasedVocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(EducationType.Study.GetLocalizedString(), EducationType.Study, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(EducationType.VocationalTraining.GetLocalizedString(), EducationType.VocationalTraining, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    selections.Add(InteractionEntry.Import(EducationType.FurtherEducation.GetLocalizedString(), EducationType.FurtherEducation, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     break;
             }
 
+            selections = selections.OrderBy(x => x.Text).ToList();
             LoadonUIThread(selections);
         }
 

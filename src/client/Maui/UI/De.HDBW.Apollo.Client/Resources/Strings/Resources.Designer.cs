@@ -1323,6 +1323,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bildungsart.
+        /// </summary>
+        public static string Global_EducationType {
+            get {
+                return ResourceManager.GetString("Global_EducationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-Mail.
         /// </summary>
         public static string Global_Email {
@@ -1458,6 +1467,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anerkennunnung.
+        /// </summary>
+        public static string Global_RecognitionType {
+            get {
+                return ResourceManager.GetString("Global_RecognitionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region.
         /// </summary>
         public static string Global_Region {
@@ -1541,9 +1559,9 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Hochschulabschluss.
         /// </summary>
-        public static string Global_UniverityDegree {
+        public static string Global_UniversityDegree {
             get {
-                return ResourceManager.GetString("Global_UniverityDegree", resourceCulture);
+                return ResourceManager.GetString("Global_UniversityDegree", resourceCulture);
             }
         }
         

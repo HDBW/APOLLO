@@ -135,5 +135,171 @@ namespace De.HDBW.Apollo.Client.Helper
                     return string.Empty;
             }
         }
+
+        public static string GetLocalizedString(this EducationType educationType)
+        {
+            return GetLocalizedString((EducationType?)educationType);
+        }
+
+        public static string GetLocalizedString(this EducationType? educationType)
+        {
+            switch (educationType)
+            {
+                case EducationType.CompanyBasedVocationalTraining:
+                    return Resources.Strings.Resources.EducationType_CompanyBasedVocationalTraining;
+                case EducationType.Education:
+                    return Resources.Strings.Resources.EducationType_Education;
+                case EducationType.FurtherEducation:
+                    return Resources.Strings.Resources.EducationType_FurtherEducation;
+                case EducationType.Study:
+                    return Resources.Strings.Resources.EducationType_Study;
+                case EducationType.VocationalTraining:
+                    return Resources.Strings.Resources.EducationType_VocationalTraining;
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetLocalizedString(this TypeOfSchool typeOfSchool)
+        {
+            return GetLocalizedString((TypeOfSchool?)typeOfSchool);
+        }
+
+        public static string GetLocalizedString(this TypeOfSchool? typeOfSchool)
+        {
+            switch (typeOfSchool)
+            {
+                case TypeOfSchool.Other:
+                    return Resources.Strings.Resources.TypeOfSchool_Other;
+                case TypeOfSchool.HighSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_HighSchool;
+                case TypeOfSchool.SecondarySchool:
+                    return Resources.Strings.Resources.TypeOfSchool_SecondarySchool;
+                case TypeOfSchool.VocationalCollege:
+                    return Resources.Strings.Resources.TypeOfSchool_VocationalCollege;
+                case TypeOfSchool.MainSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_MainSchool;
+                case TypeOfSchool.VocationalHighSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_VocationalHighSchool;
+                case TypeOfSchool.VocationalSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_VocationalSchool;
+                case TypeOfSchool.SpecialSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_SpecialSchool;
+                case TypeOfSchool.IntegratedComprehensiveSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_IntegratedComprehensiveSchool;
+                case TypeOfSchool.SchoolWithMultipleCourses:
+                    return Resources.Strings.Resources.TypeOfSchool_SchoolWithMultipleCourses;
+                case TypeOfSchool.TechnicalCollege:
+                    return Resources.Strings.Resources.TypeOfSchool_TechnicalCollege;
+                case TypeOfSchool.TechnicalHighSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_TechnicalHighSchool;
+                case TypeOfSchool.TechnicalSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_TechnicalSchool;
+                case TypeOfSchool.Colleague:
+                    return Resources.Strings.Resources.TypeOfSchool_Colleague;
+                case TypeOfSchool.EveningHighSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_EveningHighSchool;
+                case TypeOfSchool.VocationalTrainingSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_VocationalTrainingSchool;
+                case TypeOfSchool.NightSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_NightSchool;
+                case TypeOfSchool.EveningSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_EveningSchool;
+                case TypeOfSchool.WaldorfSchool:
+                    return Resources.Strings.Resources.TypeOfSchool_WaldorfSchool;
+                case TypeOfSchool.TechnicalAcademy:
+                    return Resources.Strings.Resources.TypeOfSchool_TechnicalAcademy;
+                case TypeOfSchool.UniversityOfAppliedScience:
+                    return Resources.Strings.Resources.TypeOfSchool_UniversityOfAppliedScience;
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetLocalizedString(this SchoolGraduation schoolGraduation)
+        {
+            return GetLocalizedString((SchoolGraduation?)schoolGraduation);
+        }
+
+        public static string GetLocalizedString(SchoolGraduation? schoolGraduation)
+        {
+            switch (schoolGraduation)
+            {
+                case SchoolGraduation.SecondarySchoolCertificate:
+                    return Resources.Strings.Resources.SchoolGraduation_SecondarySchoolCertificate;
+                case SchoolGraduation.AdvancedTechnicalCollegeCertificate:
+                    return Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeCertificate;
+                case SchoolGraduation.HigherEducationEntranceQualificationALevel:
+                    return Resources.Strings.Resources.SchoolGraduation_HigherEducationEntranceQualificationALevel;
+                case SchoolGraduation.IntermediateSchoolCertificate:
+                    return Resources.Strings.Resources.SchoolGraduation_IntermediateSchoolCertificate;
+                case SchoolGraduation.ExtendedSecondarySchoolLeavingCertificate:
+                    return Resources.Strings.Resources.SchoolGraduation_ExtendedSecondarySchoolLeavingCertificate;
+                case SchoolGraduation.NoSchoolLeavingCertificate:
+                    return Resources.Strings.Resources.SchoolGraduation_NoSchoolLeavingCertificate;
+                case SchoolGraduation.SpecialSchoolLeavingCertificate:
+                    return Resources.Strings.Resources.SchoolGraduation_SpecialSchoolLeavingCertificate;
+                case SchoolGraduation.SubjectRelatedEntranceQualification:
+                    return Resources.Strings.Resources.SchoolGraduation_SubjectRelatedEntranceQualification;
+                case SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate:
+                    return Resources.Strings.Resources.SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate;
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetLocalizedString(this UniversityDegree universityDegree)
+        {
+            return GetLocalizedString((UniversityDegree?)universityDegree);
+        }
+
+        public static string GetLocalizedString(UniversityDegree? universityDegree)
+        {
+            switch (universityDegree)
+            {
+                case UniversityDegree.Master:
+                    return Resources.Strings.Resources.UniversityDegree_Master;
+                case UniversityDegree.Bachelor:
+                    return Resources.Strings.Resources.UniversityDegree_Bachelor;
+                case UniversityDegree.Pending:
+                    return Resources.Strings.Resources.UniversityDegree_Pending;
+                case UniversityDegree.Doctorate:
+                    return Resources.Strings.Resources.UniversityDegree_Doctorate;
+                case UniversityDegree.StateExam:
+                    return Resources.Strings.Resources.UniversityDegree_StateExam;
+                case UniversityDegree.UnregulatedUnrecognized:
+                    return Resources.Strings.Resources.UniversityDegree_UnregulatedUnrecognized;
+                case UniversityDegree.RegulatedUnrecognized:
+                    return Resources.Strings.Resources.UniversityDegree_RegulatedUnrecognized;
+                case UniversityDegree.PartialRecognized:
+                    return Resources.Strings.Resources.UniversityDegree_PartialRecognized;
+                case UniversityDegree.EcclesiasticalExam:
+                    return Resources.Strings.Resources.UniversityDegree_EcclesiasticalExam;
+                case UniversityDegree.Other:
+                    return Resources.Strings.Resources.UniversityDegree_Other;
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetLocalizedString(this CompletionState completionState)
+        {
+            return GetLocalizedString((CompletionState?)completionState);
+        }
+
+        private static string GetLocalizedString(CompletionState? completionState)
+        {
+            switch (completionState)
+            {
+                case CompletionState.Completed:
+                    return Resources.Strings.Resources.CompletionState_Completed;
+                case CompletionState.Failed:
+                    return Resources.Strings.Resources.CompletionState_Failed;
+                case CompletionState.Ongoning:
+                    return Resources.Strings.Resources.CompletionState_Ongoning;
+                default:
+                    return string.Empty;
+            }
+        }
     }
 }

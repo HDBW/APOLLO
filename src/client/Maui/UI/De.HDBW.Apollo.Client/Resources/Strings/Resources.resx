@@ -884,7 +884,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
   <data name="UniversityDegree_UnregulatedUnrecognized" xml:space="preserve">
     <value>Nicht reglementierter, nicht anerkannter Abschluss</value>
   </data>
-  <data name="Global_UniverityDegree" xml:space="preserve">
+  <data name="Global_UniversityDegree" xml:space="preserve">
     <value>Hochschulabschluss</value>
   </data>
   <data name="Global_IsCompleted" xml:space="preserve">
@@ -1251,5 +1251,11 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   </data>
   <data name="Global_Title" xml:space="preserve">
     <value>Titel</value>
+  </data>
+  <data name="Global_EducationType" xml:space="preserve">
+    <value>Bildungsart</value>
+  </data>
+  <data name="Global_RecognitionType" xml:space="preserve">
+    <value>Anerkennunnung</value>
   </data>
 </root>

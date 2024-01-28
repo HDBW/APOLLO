@@ -61,21 +61,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             get
             {
-                switch (_type)
-                {
-                    case EducationType.CompanyBasedVocationalTraining:
-                        return Resources.Strings.Resources.EducationType_CompanyBasedVocationalTraining;
-                    case EducationType.Education:
-                        return Resources.Strings.Resources.EducationType_Education;
-                    case EducationType.FurtherEducation:
-                        return Resources.Strings.Resources.EducationType_FurtherEducation;
-                    case EducationType.Study:
-                        return Resources.Strings.Resources.EducationType_Study;
-                    case EducationType.VocationalTraining:
-                        return Resources.Strings.Resources.EducationType_VocationalTraining;
-                    default:
-                        return string.Empty;
-                }
+                return _type.GetLocalizedString();
             }
         }
 
@@ -108,9 +94,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             token.ThrowIfCancellationRequested();
 
             var completionStates = new List<InteractionEntry>();
-            completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Completed, CompletionState.Completed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Failed, CompletionState.Failed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            completionStates.Add(InteractionEntry.Import(Resources.Strings.Resources.CompletionState_Ongoning, CompletionState.Ongoning, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            completionStates.Add(InteractionEntry.Import(CompletionState.Completed.GetLocalizedString(), CompletionState.Completed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            completionStates.Add(InteractionEntry.Import(CompletionState.Ongoning.GetLocalizedString(), CompletionState.Ongoning, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            completionStates.Add(InteractionEntry.Import(CompletionState.Failed.GetLocalizedString(), CompletionState.Failed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = user.Profile?.EducationInfos.FirstOrDefault(x => x.Id == entryId);
             EditState = _savedState.Deserialize<EducationInfo?>();
