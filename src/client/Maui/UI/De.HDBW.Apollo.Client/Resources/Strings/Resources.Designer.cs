@@ -2051,6 +2051,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Berufsauswahl.
+        /// </summary>
+        public static string OccupationSearchView_Title {
+            get {
+                return ResourceManager.GetString("OccupationSearchView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vollzeit.
         /// </summary>
         public static string OccurrenceType_FullTime {

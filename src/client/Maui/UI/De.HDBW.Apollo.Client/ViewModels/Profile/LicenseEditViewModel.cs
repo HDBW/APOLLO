@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Profile;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -33,7 +34,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     var items = new List<License>();
                     items.AddRange(User?.Profile?.Licenses ?? new List<License>());
-                    items = items.OrderBy(x => x.Granted).ToList();
+                    items = items.AsSortedList();
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(items.Select(x => LicenseEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete))), worker.Token);
                 }

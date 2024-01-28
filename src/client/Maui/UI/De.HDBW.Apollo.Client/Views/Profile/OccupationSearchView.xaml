@@ -5,7 +5,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              x:DataType="viewModels:OccupationSearchViewModel"
-             Title="OccupationSearchViewModel"
+             Title="{x:Static strings:Resources.OccupationSearchView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>

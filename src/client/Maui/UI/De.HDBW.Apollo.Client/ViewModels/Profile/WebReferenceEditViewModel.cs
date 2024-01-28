@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Profile;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -33,7 +34,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     var items = new List<WebReference>();
                     items.AddRange(User?.Profile?.WebReferences ?? new List<WebReference>());
-                    items = items.OrderBy(x => x.Title).ToList();
+                    items = items.AsSortedList();
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(items.Select(x => WebReferenceEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete))), worker.Token);
                 }

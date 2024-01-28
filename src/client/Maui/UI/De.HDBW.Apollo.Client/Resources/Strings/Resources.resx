@@ -1258,4 +1258,7 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   <data name="Global_RecognitionType" xml:space="preserve">
     <value>Anerkennunnung</value>
   </data>
+  <data name="OccupationSearchView_Title" xml:space="preserve">
+    <value>Berufsauswahl</value>
+  </data>
 </root>

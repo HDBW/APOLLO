@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Profile;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -40,7 +41,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     User = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
                     var items = new List<EducationInfo>();
                     items.AddRange(User?.Profile?.EducationInfos ?? new List<EducationInfo>());
-                    items = items.OrderBy(x => x.Start.Ticks).ToList();
+                    items = items.AsSortedList();
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(items.Select(x => EducationInfoEntry.Import(x, EditAsync, CanEdit, DeleteAsync, CanDelete))), worker.Token);
                 }
