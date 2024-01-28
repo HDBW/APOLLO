@@ -5,13 +5,16 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Generic;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Client.Models.Profile;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
+using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
@@ -90,46 +93,46 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         sections.AddRange(CreatePersonalInformations(user));
                     }
 
-                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    //sections.Add(StringValue.Import("LinkedIn", "https://www.linkedin.com/"));
-                    //sections.Add(StringValue.Import("Xing", "https://www.xing.com/"));
-                    //sections.Add(StringValue.Import("Facebook", "https://www.Facebook.com/"));
-                    //sections.Add(StringValue.Import("Youtube", "https://www.Youtube.com/"));
-                    //sections.Add(SeperatorValue.Import());
-                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    //sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, "nicht vorhanden"));
-                    //sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, "ja"));
-                    //sections.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, "A1, C1E, B96, Gabelstaplerschein"));
-                    //sections.Add(SeperatorValue.Import());
-                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    //sections.Add(StringValue.Import("Deutsch", "C2"));
-                    //sections.Add(StringValue.Import("English", "B2"));
-                    //sections.Add(StringValue.Import("Französich", "A1"));
-                    //sections.Add(SeperatorValue.Import());
-                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    //sections.Add(StringValue.Import("Seit 01.08.2023", "Laufend"));
-                    //sections.Add(StringValue.Import("Kaufmännische Fachkraft (Nebenbeschäftigung)", string.Empty));
-                    //sections.Add(StringValue.Import(string.Empty, "Aachen"));
-                    //sections.Add(StringValue.Import(string.Empty, "Deutschland"));
-                    //sections.Add(StringValue.Import("01.11.2017 - 30.06.2023", string.Empty));
-                    //sections.Add(StringValue.Import("Kaufmännische Fachkraft", string.Empty));
-                    //sections.Add(StringValue.Import(string.Empty, "vorbereitende Buchhaltung, Rechnungserstellung, Personalwesen + Funker"));
-                    //sections.Add(StringValue.Import("01.12.2001 - 30.10.2017", string.Empty));
-                    //sections.Add(StringValue.Import("Funker/in", string.Empty));
-                    //sections.Add(StringValue.Import(string.Empty, "Funker, Telefonist"));
-                    //sections.Add(SeperatorValue.Import());
-                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    //sections.Add(StringValue.Import("01.08.2000 - 30.10.2000", "Ohne Abschluss"));
-                    //sections.Add(StringValue.Import("Kaufmann/-frau - Kurier-, Express- u. Postdienstleistungen", string.Empty));
-                    //sections.Add(StringValue.Import("01.09.1987 - 31.08.1997", string.Empty));
-                    //sections.Add(StringValue.Import("Mittlere Reife / Mittlerer Bildungsabschluss", string.Empty));
-                    //sections.Add(StringValue.Import(string.Empty, "Integrierte Gesamtschule"));
-                    //sections.Add(SeperatorValue.Import());
-                    //sections.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute));
-                    //sections.Add(StringValue.Import("WIG - Rohrschweißer - Prüfung", string.Empty));
-                    //sections.Add(StringValue.Import(string.Empty, "Erworben: 15.08.2012 Gültig bis: 14.08.2014"));
-                    //sections.Add(StringValue.Import("SCC-Zertifikat (Sicherheits-Certifikat-Contractoren)", string.Empty));
-                    //sections.Add(StringValue.Import(string.Empty, "Erworben: 01.09.2007"));
+                    if (!missingRoutes.Contains(Routes.ContactInfoEditView))
+                    {
+                        sections.AddRange(CreateContactInformations(user));
+                    }
+
+                    if (!missingRoutes.Contains(Routes.QualificationEditView))
+                    {
+                        sections.AddRange(CreateQualificationInformations(user.Profile!));
+                    }
+
+                    if (!missingRoutes.Contains(Routes.LicenseEditView))
+                    {
+                        sections.AddRange(CreateLanguageInformations(user.Profile!));
+                    }
+
+                    if (!missingRoutes.Contains(Routes.CareerInfoEditView))
+                    {
+                        sections.AddRange(CreateCareerInformations(user.Profile!));
+                    }
+
+                    if (!missingRoutes.Contains(Routes.EducationInfoEditView))
+                    {
+                        sections.AddRange(CreateEducationInformations(user.Profile!));
+                    }
+
+                    if (!missingRoutes.Contains(Routes.LanguageEditView))
+                    {
+                        sections.AddRange(CreateLanguageInformations(user.Profile!));
+                    }
+
+                    if (!missingRoutes.Contains(Routes.WebReferenceEditView))
+                    {
+                        sections.AddRange(CreateWebReferenceInformations(user.Profile!));
+                    }
+
+                    if (!missingRoutes.Contains(Routes.MobilityEditView))
+                    {
+                        sections.AddRange(CreateMobilityInformations(user.Profile!));
+                    }
+
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(sections, SessionService.HasRegisteredUser), worker.Token);
                 }
@@ -301,6 +304,175 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             return informations;
         }
 
+        private IEnumerable<ObservableObject> CreateContactInformations(User user)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactInfoEditView_Title, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute, ContactInfoIcon));
+            var moreThanThree = (user.ContactInfos?.Count ?? 0) > 3;
+            var contactInfos = user.ContactInfos.AsSortedList().Take(3);
+            foreach (var contactInfo in contactInfos)
+            {
+                var entry = ContactEntry.Import(contactInfo, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
+                foreach (var line in entry.AllLines)
+                {
+                    informations.Add(line);
+                }
+            }
+
+            if (moreThanThree)
+            {
+                informations.Add(StringValue.Import("...", null));
+            }
+
+            return informations;
+        }
+
+        private IEnumerable<ObservableObject> CreateQualificationInformations(UserProfile profile)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute, QualificationInfoIcon));
+            var moreThanThree = (profile.Qualifications?.Count ?? 0) > 3;
+            var qualifications = profile.Qualifications.AsSortedList().Take(3);
+            foreach (var qualification in qualifications)
+            {
+                var entry = QualificationEntry.Import(qualification, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
+                foreach (var line in entry.AllLines)
+                {
+                    informations.Add(line);
+                }
+            }
+
+            if (moreThanThree)
+            {
+                informations.Add(StringValue.Import("...", null));
+            }
+
+            return informations;
+        }
+
+        private IEnumerable<ObservableObject> CreateEducationInformations(UserProfile profile)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute, EducationInfoIcon));
+            var moreThanThree = (profile.EducationInfos?.Count ?? 0) > 3;
+            var educationInfos = profile.EducationInfos.AsSortedList().Take(3);
+            foreach (var educationInfo in educationInfos)
+            {
+                var entry = EducationInfoEntry.Import(educationInfo, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
+                foreach (var line in entry.AllLines)
+                {
+                    informations.Add(line);
+                }
+            }
+
+            if (moreThanThree)
+            {
+                informations.Add(StringValue.Import("...", null));
+            }
+
+            return informations;
+        }
+
+        private IEnumerable<ObservableObject> CreateLicenseInformations(UserProfile profile)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute, LicensInfoIcon));
+            var moreThanThree = (profile.Licenses?.Count ?? 0) > 3;
+            var licenses = profile.Licenses.AsSortedList().Take(3);
+            foreach (var license in licenses)
+            {
+                var entry = LicenseEntry.Import(license, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
+                foreach (var line in entry.AllLines)
+                {
+                    informations.Add(line);
+                }
+            }
+
+            if (moreThanThree)
+            {
+                informations.Add(StringValue.Import("...", null));
+            }
+
+            return informations;
+        }
+
+        private IEnumerable<ObservableObject> CreateCareerInformations(UserProfile profile)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute, CareerInfoIcon));
+            var moreThanThree = (profile.CareerInfos?.Count ?? 0) > 3;
+            var careerInfos = profile.CareerInfos.AsSortedList().Take(3);
+            foreach (var careerInfo in careerInfos)
+            {
+                var entry = CareerInfoEntry.Import(careerInfo, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
+                foreach (var line in entry.AllLines)
+                {
+                    informations.Add(line);
+                }
+            }
+
+            if (moreThanThree)
+            {
+                informations.Add(StringValue.Import("...", null));
+            }
+
+            return informations;
+        }
+
+        private IEnumerable<ObservableObject> CreateLanguageInformations(UserProfile profile)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute, LanguageIcon));
+            var moreThanThree = (profile.LanguageSkills?.Count ?? 0) > 3;
+            var languageSkills = profile.LanguageSkills.AsSortedList().Take(3);
+            foreach (var languageSkill in languageSkills)
+            {
+                var entry = LanguageEntry.Import(languageSkill, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
+                foreach (var line in entry.AllLines)
+                {
+                    informations.Add(line);
+                }
+            }
+
+            if (moreThanThree)
+            {
+                informations.Add(StringValue.Import("...", null));
+            }
+
+            return informations;
+        }
+
+        private IEnumerable<ObservableObject> CreateWebReferenceInformations(UserProfile profile)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute, WebReferenceIcon));
+            var moreThanThree = (profile.WebReferences?.Count ?? 0) > 3;
+            var webReferences = profile.WebReferences.AsSortedList().Take(3);
+            foreach (var webReference in webReferences)
+            {
+                var entry = WebReferenceEntry.Import(webReference, (x) => { return Task.CompletedTask; }, (x) => { return false; }, (x) => { return Task.CompletedTask; }, (x) => { return false; });
+                foreach (var line in entry.AllLines)
+                {
+                    informations.Add(line);
+                }
+            }
+
+            if (moreThanThree)
+            {
+                informations.Add(StringValue.Import("...", null));
+            }
+
+            return informations;
+        }
+
+        private IEnumerable<ObservableObject> CreateMobilityInformations(UserProfile profile)
+        {
+            var informations = new List<ObservableObject>();
+            informations.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
+
+            return informations;
+        }
+
         private RecommendationValue? CreateRecommendationValue(User user)
         {
             var weights = new Dictionary<string, double>();
@@ -355,7 +527,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute, WebReferenceIcon));
             }
 
-            if ((user.Profile?.MobilityInfo?.WillingToTravel == null))
+            if (user.Profile?.MobilityInfo?.WillingToTravel == null)
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
             }

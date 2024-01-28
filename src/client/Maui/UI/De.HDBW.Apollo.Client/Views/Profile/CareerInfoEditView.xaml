@@ -32,12 +32,10 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="24,0,24,12" >
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="generic:StringValue">
-                                    <DataTemplate x:DataType="generic:StringValue">
-                                        <Grid ColumnDefinitions="auto, *">
-                                            <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" />
-                                            <Label Margin="8,0,0,0" Grid.Column="1" Text="{x:Binding Data, Mode=OneWay}" HorizontalTextAlignment="End" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
-                                        </Grid>
-                                    </DataTemplate>
+                                    <Grid ColumnDefinitions="auto, *">
+                                        <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" />
+                                        <Label Margin="8,0,0,0" Grid.Column="1" Text="{x:Binding Data, Mode=OneWay}" HorizontalTextAlignment="End" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
+                                    </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
