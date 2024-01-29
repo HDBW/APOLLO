@@ -4,6 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:OtherViewModel"
@@ -31,8 +32,13 @@
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
                                 IsClearButtonVisible="False"
                                 VerticalOptions="Center"
+                                x:Name="PART_Start"
                                 NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <Image Source="calendar.png" Grid.Column="1"/>
+                    <ImageButton Source="calendar.png" Grid.Column="1">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </Grid>
             </Border>
 
@@ -42,9 +48,14 @@
                     <cdp:NullableDatePicker HorizontalOptions="Fill"
                                             IsClearButtonVisible="False"
                                             VerticalOptions="Center"
+                                            x:Name="PART_End"
                                             NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" />
-                    <Image Source="calendar.png" Grid.Column="2"/>
+                    <ImageButton Source="calendar.png" Grid.Column="2">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </Grid>
             </Border>
 
