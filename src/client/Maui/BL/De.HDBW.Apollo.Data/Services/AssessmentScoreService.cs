@@ -63,7 +63,7 @@ namespace De.HDBW.Apollo.Data.Services
             // TODO: Iterate over answerItems and create Category result
             var questions = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentId, token).ConfigureAwait(false);
             IEnumerable<QuestionItem> questionItems = questions.ToList();
-            Dictionary<long, int> maxScoreDictionary = new();
+            Dictionary<long, int> maxScoreDictionary = new ();
 
             // set the score data now that we have some information
             score.AssessmentId = assessmentId;

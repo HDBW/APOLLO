@@ -84,16 +84,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             univerityDegrees.Add(InteractionEntry.Import(UniversityDegree.Other.GetLocalizedString(), UniversityDegree.Other, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var schoolGraduations = new List<InteractionEntry>();
-            //schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.SecondarySchoolCertificate.GetLocalizedString(), SchoolGraduation.SecondarySchoolCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.AdvancedTechnicalCollegeCertificate.GetLocalizedString(), SchoolGraduation.AdvancedTechnicalCollegeCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            //schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.HigherEducationEntranceQualificationALevel.GetLocalizedString(), SchoolGraduation.HigherEducationEntranceQualificationALevel, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            //schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.IntermediateSchoolCertificate.GetLocalizedString(), SchoolGraduation.IntermediateSchoolCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            //schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.ExtendedSecondarySchoolLeavingCertificate.GetLocalizedString(), SchoolGraduation.ExtendedSecondarySchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            //schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.NoSchoolLeavingCertificate.GetLocalizedString(), SchoolGraduation.NoSchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            //schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.SpecialSchoolLeavingCertificate.GetLocalizedString(), SchoolGraduation.SpecialSchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.SubjectRelatedEntranceQualification.GetLocalizedString(), SchoolGraduation.SubjectRelatedEntranceQualification, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            //schoolGraduations.Add(InteractionEntry.ImportSchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate.GetLocalizedString(), SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
+            // schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.SecondarySchoolCertificate.GetLocalizedString(), SchoolGraduation.SecondarySchoolCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.AdvancedTechnicalCollegeCertificate.GetLocalizedString(), SchoolGraduation.AdvancedTechnicalCollegeCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+
+            // schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.HigherEducationEntranceQualificationALevel.GetLocalizedString(), SchoolGraduation.HigherEducationEntranceQualificationALevel, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            // schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.IntermediateSchoolCertificate.GetLocalizedString(), SchoolGraduation.IntermediateSchoolCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            // schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.ExtendedSecondarySchoolLeavingCertificate.GetLocalizedString(), SchoolGraduation.ExtendedSecondarySchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            // schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.NoSchoolLeavingCertificate.GetLocalizedString(), SchoolGraduation.NoSchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            // schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.SpecialSchoolLeavingCertificate.GetLocalizedString(), SchoolGraduation.SpecialSchoolLeavingCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.SubjectRelatedEntranceQualification.GetLocalizedString(), SchoolGraduation.SubjectRelatedEntranceQualification, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+
+            // schoolGraduations.Add(InteractionEntry.ImportSchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate.GetLocalizedString(), SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
 

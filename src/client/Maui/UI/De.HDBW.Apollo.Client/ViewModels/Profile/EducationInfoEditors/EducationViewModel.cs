@@ -69,7 +69,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
 
             // typeOfSchools.Add(InteractionEntry.Import(TypeOfSchool.TechnicalAcademy.GetLocalizedString(), TypeOfSchool.TechnicalAcademy, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             // typeOfSchools.Add(InteractionEntry.Import(TypeOfSchool.UniversityOfAppliedScience.GetLocalizedString(), TypeOfSchool.UniversityOfAppliedScience, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-
             var schoolGraduations = new List<InteractionEntry>();
             schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.SecondarySchoolCertificate.GetLocalizedString(), SchoolGraduation.SecondarySchoolCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.AdvancedTechnicalCollegeCertificate.GetLocalizedString(), SchoolGraduation.AdvancedTechnicalCollegeCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
