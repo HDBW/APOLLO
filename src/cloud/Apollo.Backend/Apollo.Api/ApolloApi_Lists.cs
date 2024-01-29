@@ -24,9 +24,10 @@ namespace Apollo.Api
         /// Queries for a set of list items that match specified criteria and qqualification itemtype.
         /// </summary>
         /// <param name="lng">The language of the list items.</param>
+        /// <param name="name">The name of the list items.</param>
         /// <param name="query">The filter that specifies profiles to be retrieved.</param>
         /// <returns>List of item.</returns>
-        public virtual async Task<IList<List>> QueryQualificationsListAsync(string lng, Query query)
+        public virtual async Task<IList<List>> QueryQualificationsListAsync(string lng,   Query query)
         {
             try
             {
@@ -34,8 +35,9 @@ namespace Apollo.Api
 
                 IsQueryValid(query, throwIfInvalid: true);
 
-                //
-                // We filter requested language.
+
+                /// We filter requested language.
+                
                 query.Filter.Fields.Add(new FieldExpression()
                 {
                     Operator = QueryOperator.Equals,
@@ -43,12 +45,14 @@ namespace Apollo.Api
                     FieldName = "Items.Lng"
                 });
 
-                query.Filter.Fields.Add(new FieldExpression()
-                {
-                    Operator = QueryOperator.Equals,
-                    Argument = new List<object>() { nameof(List.ItemType) },
-                    FieldName = nameof(List.ItemType),
-                });
+
+                /// We dont need that cause requested Query object has already this filter map
+                //query.Filter.Fields.Add(new FieldExpression()
+                //{
+                //    Operator = QueryOperator.Equals,
+                //    Argument = new List<object>() { nameof(List.ItemType) },
+                //    FieldName = nameof(List.ItemType),
+                //});
 
                 var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<List>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
@@ -67,48 +71,57 @@ namespace Apollo.Api
 
 
         /// <summary>
-        /// Creates or Updates the new Profile instance.
+        /// Creates or Updates the new Qualification instance.
         /// </summary>
         /// <param name="list">If the Id is specified, the update will be performed.</param>
         /// <returns></returns>
-        public virtual async Task<List<string>> CreateOrUpdateQualificationAsync(List list)
+        public virtual async Task<List<string>> CreateOrUpdateQualificationAsync(List<List> qualificationsList)
         {
             try
             {
                 List<string> ids = new List<string>();
 
-                // TODO Validate if list is null
+                // TODO Validate if qualifications is null or empty
+                if (qualificationsList == null || !qualificationsList.Any())
+                {
+                    // Handle the case where the input list is empty or null
+                    throw new ArgumentNullException(nameof(qualificationsList), "Qualifications list cannot be null or empty.");
+                }
 
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateQualificationAsync)}");
 
-                if (String.IsNullOrEmpty(list.Id))
+                foreach (var qualification in qualificationsList)
                 {
-                    list.Id = CreateListId(nameof(Qualification));
-                    await _dal.InsertAsync(ApolloApi.GetCollectionName<List>(), Convertor.Convert(list));
-                }
-                else
-                {
-                    var existingList = await _dal.GetByIdAsync<List>(ApolloApi.GetCollectionName<List>(), list.Id);
-
-                    if (existingList != null)
+                    if (String.IsNullOrEmpty(qualification.Id))
                     {
-                        list.Id = existingList.Id;
-                        await _dal.UpsertAsync(GetCollectionName<List>(), new List<ExpandoObject> { Convertor.Convert(list) });
+                        qualification.Id = CreateQualificationId();
+                        await _dal.InsertAsync(ApolloApi.GetCollectionName<List>(), Convertor.Convert(qualification));
+                        ids.Add(qualification.Id);
                     }
                     else
                     {
-                        throw new ApolloApiException(ListErrors.CreateOrUpdateListError, $"The list with the specified Id = {list.Id} does not exist.");
-                    }
-                }            
+                        var existingQualification = await _dal.GetByIdAsync<List>(ApolloApi.GetCollectionName<List>(), qualification.Id);
 
-           
+                        if (existingQualification != null)
+                        {
+                            qualification.Id = existingQualification.Id;
+                            await _dal.UpsertAsync(GetCollectionName<List>(), new List<ExpandoObject> { Convertor.Convert(qualification) });
+                            ids.Add(qualification.Id);
+                        }
+                        else
+                        {
+                            throw new ApolloApiException(QualificationErrors.CreateOrUpdateQualificationError, $"The qualification with the specified Id = {qualification.Id} does not exist.");
+                        }
+                    }
+                }
+
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateQualificationAsync)}");
 
                 return ids;
             }
             catch (ApolloApiException)
             {
-                //todo. Logging not implemented
+                // TODO: Logging not implemented
                 throw;
             }
             catch (Exception ex)
@@ -116,9 +129,16 @@ namespace Apollo.Api
                 _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}");
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.ListErrors.CreateOrUpdateListError, "An error occurred while creating or updating profiles.", ex);
+                throw new ApolloApiException(ErrorCodes.QualificationErrors.CreateOrUpdateQualificationError, "An error occurred while creating or updating qualifications.", ex);
             }
         }
+
+        public string CreateQualificationId()
+        {
+           
+            return Guid.NewGuid().ToString();
+        }
+
 
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Dynamic;
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -14,7 +15,7 @@ namespace Apollo.Api
     public partial class ApolloApi
     {
         private readonly IMongoCollection<Training> _trainingCollection;
-
+     
         /// <summary>
         /// Gets the specific instance of the training.
         /// </summary>
@@ -381,7 +382,6 @@ namespace Apollo.Api
 
                 if (trainings == null || !trainings.Any())
                 {
-                    // No training data provided, throw a specific exception
                     throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.");
                 }
 
@@ -389,15 +389,19 @@ namespace Apollo.Api
                 {
                     if (string.IsNullOrEmpty(training.Id))
                     {
-                        // Generate a new ID for the training
-                        var id = CreateTrainingId();                        
-                        training.Id = id;
+                        // Generate a new ID for new training
+                        training.Id = CreateTrainingId();
                     }
 
+                    // Add the ID to the list regardless of whether it's new or existing
                     ids.Add(training.Id);
-                }
 
-                await _dal.InsertManyAsync(ApolloApi.GetCollectionName<Training>(), trainings.Select(t => Convertor.Convert(t)).ToArray());
+                    // Convert the training object to ExpandoObject
+                    var expandoTraining = Convertor.Convert(training);
+
+                    // Upsert the training
+                    await _dal.UpsertAsync(GetCollectionName<Training>(), new List<ExpandoObject> { expandoTraining });
+                }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(CreateOrUpdateTrainingAsync)}");
 
@@ -405,14 +409,11 @@ namespace Apollo.Api
             }
             catch (ApolloApiException)
             {
-               
                 throw;
             }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(CreateOrUpdateTrainingAsync)}: {ex.Message}");
-
-                // Throw a more generic exception for unexpected errors
                 throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
             }
         }

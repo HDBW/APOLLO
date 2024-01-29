@@ -35,16 +35,19 @@ namespace Apollo.Api
                     user = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), userId, "ObjectId");
 
                     if (user == null)
+                    {
+                        // User not found, log the error
+                        _logger?.LogError($"User with ID '{userId}' not found.");
 
-                        // User not found, throw ApolloException with specific code and message
+                        // Throw ApolloException with specific code and message
                         throw new ApolloApiException(ErrorCodes.UserErrors.UserNotFound, $"User with ID '{userId}' not found.");
+                    }
                 }
 
                 return user;
             }
             catch (ApolloApiException)
             {
-
                 throw;
             }
             catch (Exception ex)
@@ -55,6 +58,7 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.UserErrors.GetUserError, "An error occurred while getting the user.", ex);
             }
         }
+
 
 
         /// <summary>
@@ -134,54 +138,80 @@ namespace Apollo.Api
         /// If the Id or ObjectId is specified, the update will be performed.</param>
         /// <remarks>Please note the update operation with specified Id is is faster and produces lower costs than update operation with ObjectId.</remarks>
         /// <returns>The Id of the user.</returns>
-        public virtual async Task<List<string>> CreateOrUpdateUser(ICollection<User> users)
+        public virtual async Task<IList<string>> CreateOrUpdateUserAsync(ICollection<User> users)
         {
             try
             {
                 List<string> ids = new List<string>();
 
-                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateUser)}");
+                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateUserAsync)}");
+
+                if (users == null || !users.Any())
+                {
+                    throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "No user data provided.");
+                }
 
                 foreach (var user in users)
                 {
-                    if (String.IsNullOrEmpty(user.Id) && String.IsNullOrEmpty(user.ObjectId))
+                    if (string.IsNullOrEmpty(user.Id))
                     {
+                        // Generate a new ID for new user
                         user.Id = CreateUserId();
-                        await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), Convertor.Convert(user));
+                        // Convert the user object to ExpandoObject
+                        var expandoUser = Convertor.Convert(user);
+                        // Insert the new user
+                        await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), expandoUser);
                     }
                     else
                     {
-                        if (String.IsNullOrEmpty(user.Id) && !String.IsNullOrEmpty(user.ObjectId))
-                        {
-                            var existingUser = await _dal.GetByIdAsync<User>(ApolloApi.GetCollectionName<User>(), user.ObjectId, nameof(user.ObjectId));
-                            if (existingUser != null)
-                            {
-                                user.Id = existingUser.Id;
-                                await _dal.UpsertAsync(GetCollectionName<User>(), new List<ExpandoObject> { Convertor.Convert(user) });
-                            }
-                            else
-                            {
-                                throw new ApolloApiException(UserErrors.CreateOrUpdateUserError, $"The user with the specified ObjectId = {user.ObjectId} does not exist.");
-                             }
-                        }
+                        // Update existing user
+                        // Convert the user object to ExpandoObject
+                        var expandoUser = Convertor.Convert(user);
+                        // Upsert the user
+                        await _dal.UpsertAsync(GetCollectionName<User>(), new List<ExpandoObject> { expandoUser });
                     }
+
+                    // Add the user ID to the list
+                    ids.Add(user.Id);
                 }
 
-                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUser)}");
+                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateUserAsync)}");
 
                 return ids;
             }
             catch (ApolloApiException)
             {
-                // TODO Logging is missing
                 throw;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateUser)}: {ex.Message}");
-
-                // For other exceptions, throw an ApolloApiException with a general error code and message
+                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateUserAsync)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "An error occurred while creating or updating users.", ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Retrieves a user by their ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user to retrieve.</param>
+        /// <returns>The user with the specified ID or null if not found.</returns>
+        public async Task<User> GetUserById(string userId)
+        {
+            try
+            {
+                _logger?.LogTrace($"Entered {nameof(GetUserById)} with userId: {userId}");
+
+                var user = await _dal.GetByIdAsync<User>(GetCollectionName<User>(), userId);
+
+                _logger?.LogTrace($"Completed {nameof(GetUserById)}");
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Failed execution of {nameof(GetUserById)}: {ex.Message}");
+                throw new ApolloApiException(ErrorCodes.UserErrors.GetUserError, "An error occurred while retrieving the user.", ex);
             }
         }
 

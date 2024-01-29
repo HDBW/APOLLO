@@ -107,9 +107,9 @@ namespace Apollo.Common.Entities
         public TrainingMode? TrainingMode { get; set; }
 
 
-        // It should be bool but what do I know about education ofc it is not bool
+        // This is a String !!! not a DateTime !!!
         //[BsonElement("IndividualStartDate")]
-        public DateTime? IndividualStartDate { get; set; }
+        public string IndividualStartDate { get; set; }
 
         //TODO: Review
         /// <summary>

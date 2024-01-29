@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.SmartLib", "Apollo.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{85C53BB8-54B5-4811-AAC8-CA78CADD6569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.RestService.IntergrationTests", "TrainingControllerIntegrationTests\Apollo.RestService.IntergrationTests.csproj", "{2D0E6575-49CE-4701-A9A7-21850D48BB22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{E90299F6-7343-452C-ADED-6DADB01068A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E90299F6-7343-452C-ADED-6DADB01068A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E90299F6-7343-452C-ADED-6DADB01068A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D0E6575-49CE-4701-A9A7-21850D48BB22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D0E6575-49CE-4701-A9A7-21850D48BB22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D0E6575-49CE-4701-A9A7-21850D48BB22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D0E6575-49CE-4701-A9A7-21850D48BB22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{3968DECD-3B2F-449A-AF4F-C19135BB4853} = {85C53BB8-54B5-4811-AAC8-CA78CADD6569}
 		{24635A55-69C4-4517-AC44-5386BAD84F8A} = {6A511DB5-E0DC-4B44-B1AE-B2A8989B0A9C}
 		{E90299F6-7343-452C-ADED-6DADB01068A0} = {C9658B4D-A2C3-4FAF-9720-EE1019A140E0}
+		{2D0E6575-49CE-4701-A9A7-21850D48BB22} = {6A511DB5-E0DC-4B44-B1AE-B2A8989B0A9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {04203D95-B548-4FCD-9BA6-5E2AAB48F565}

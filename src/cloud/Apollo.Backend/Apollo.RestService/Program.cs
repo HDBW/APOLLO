@@ -11,6 +11,8 @@ using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Apollo.RestService;
+using TrainingControllerIntegrationTests;
 
 namespace Apollo.Service
 {
@@ -132,7 +134,16 @@ namespace Apollo.Service
             app.Run();
         }
 
-
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+           .ConfigureWebHostDefaults(webBuilder =>
+           {
+               webBuilder.UseStartup<Startup>()
+                   .ConfigureAppConfiguration((hostingContext, config) =>
+                   {
+                       config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                   });
+           });
 
         private static void RegisterDal(WebApplicationBuilder builder)
         {

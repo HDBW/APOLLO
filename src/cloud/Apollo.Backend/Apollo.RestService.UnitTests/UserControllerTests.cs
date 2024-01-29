@@ -92,7 +92,7 @@ namespace Apollo.RestService.UnitTests
 
 
         /// <summary>
-        /// Tests the CreateOrUpdateUser method in UserController to ensure it creates or updates User objects successfully.
+        /// Tests the CreateOrUpdateUserAsync method in UserController to ensure it creates or updates User objects successfully.
         /// </summary>
         [TestMethod]
         public async Task CreateOrUpdateUser_CreatesUsersSuccessfully()
@@ -101,8 +101,8 @@ namespace Apollo.RestService.UnitTests
             var newUser = new User { Name = "NewUser" };
             var request = new CreateOrUpdateUserRequest(newUser);
 
-            // Mock the behavior of the CreateOrUpdateUser method of ApolloApi
-            _mockApi.Setup(api => api.CreateOrUpdateUser(It.IsAny<ICollection<User>>()))
+            // Mock the behavior of the CreateOrUpdateUserAsync method of ApolloApi
+            _mockApi.Setup(api => api.CreateOrUpdateUserAsync(It.IsAny<ICollection<User>>()))
                     .ReturnsAsync(new List<string> { "newUserId" }); // Return a list with a single ID
 
             // Act

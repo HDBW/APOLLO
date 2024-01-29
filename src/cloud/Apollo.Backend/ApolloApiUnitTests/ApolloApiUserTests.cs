@@ -74,20 +74,156 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            var user = new User
-            {
-                Name = "John Doe",
-                Email = "johndoe@example.com"
-            };
+            // Create a new user
+            var user = new User { Name = "John Doe", Email = "johndoe@example.com" };
 
-            var userIds = await api.CreateOrUpdateUser(new List<User> { user });
-
-            // Ensure that the user was created or updated and has a valid ID
+            // Insert the new user
+            var userIds = await api.CreateOrUpdateUserAsync(new List<User> { user });
             Assert.IsNotNull(userIds);
-            Assert.IsTrue(userIds.Count > 0);
+            Assert.AreEqual(1, userIds.Count);
 
-            // Clean up: Delete the created or updated user
-            await api.DeleteUsers(userIds.ToArray());
+            // Retrieve and verify the inserted user
+            var insertedUser = await api.GetUserById(userIds.First());
+            Assert.IsNotNull(insertedUser);
+            Assert.AreEqual("John Doe", insertedUser.Name);
+
+            // Update the user's information
+            insertedUser.Name = "Jane Doe";
+
+            // Update the user
+            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { insertedUser });
+            Assert.IsNotNull(updatedUserIds);
+            Assert.AreEqual(1, updatedUserIds.Count);
+
+            // Retrieve and verify the updated user
+            var updatedUser = await api.GetUserById(updatedUserIds.First());
+            Assert.IsNotNull(updatedUser);
+            Assert.AreEqual("Jane Doe", updatedUser.Name);
+
+            // Clean up: Delete the user
+            await api.DeleteUsers(updatedUserIds.ToArray());
+        }
+
+
+        //Case 1: Single User with ID
+        /// <summary>
+        /// Tests the CreateOrUpdateUser method by creating and then updating a user with a specific ID.
+        /// Verifies that the user is successfully created, updated, and matches the provided ID.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task CreateOrUpdateUser_SingleWithIDTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            // Create and insert a new user to generate an ID
+            var newUser = new User { Name = "Test User", Email = "tstuser@example.com" };
+            var userId = await api.CreateOrUpdateUserAsync(new List<User> { newUser });
+
+            // Modify the user's information
+            newUser.Id = userId.First();
+            newUser.Name = "Updated User";
+
+            // Update the user with predefined ID
+            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { newUser });
+
+            Assert.IsNotNull(updatedUserIds);
+            Assert.AreEqual(1, updatedUserIds.Count);
+            Assert.AreEqual(userId.First(), updatedUserIds.First());
+
+            // Clean up: Delete the user
+            await api.DeleteUsers(updatedUserIds.ToArray());
+        }
+
+
+        //Case 2: Single User with ObjectId
+        /// <summary>
+        /// Tests the CreateOrUpdateUser method by creating and then updating a user with a specific ObjectId.
+        /// Verifies that the user is successfully inserted with an ObjectId, updated, and the changes are persisted.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task CreateOrUpdateUser_SingleWithObjectIdTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            // Create a user with ObjectId but no ID
+            var userWithObjectId = new User { ObjectId = "someObjectId", Name = "User with ObjectId", Email = "objectiduser@example.com" };
+
+            // Insert the user with ObjectId
+            var userIds = await api.CreateOrUpdateUserAsync(new List<User> { userWithObjectId });
+            Assert.IsNotNull(userIds);
+            Assert.AreEqual(1, userIds.Count);
+
+            // Retrieve the inserted user
+            var insertedUser = await api.GetUserById(userIds.First());
+            Assert.IsNotNull(insertedUser);
+
+            // Update some information of the user
+            insertedUser.Name = "Updated User with ObjectId";
+
+            // Update the user with ObjectId
+            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { insertedUser });
+            Assert.IsNotNull(updatedUserIds);
+            Assert.AreEqual(1, updatedUserIds.Count);
+
+            // Verify that the user was updated
+            var updatedUser = await api.GetUserById(updatedUserIds.First());
+            Assert.IsNotNull(updatedUser);
+            Assert.AreEqual("Updated User with ObjectId", updatedUser.Name);
+
+            // Clean up: Delete the user
+            await api.DeleteUsers(updatedUserIds.ToArray());
+        }
+
+
+        /// <summary>
+        /// Test method for creating or updating multiple users with mixed IDs.
+        /// </summary>
+        /// <remarks>
+        /// This test case covers the scenario where multiple users are created or updated,
+        /// some with predefined IDs, some with ObjectId, and some with no Id or ObjectId.
+        /// </remarks>
+       
+        //TODO: FIX error for updating the second and third user
+        //Case 3: Multiple Users with Mixed IDs
+        [TestMethod]
+        
+        public async Task CreateOrUpdateUser_MultipleMixedIDsTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            // Creating multiple users, some with predefined IDs, some with ObjectId
+            var user1 = new User { Id = "User1", Name = "User One", Email = "user1@example.com" };
+            var user2 = new User { ObjectId = "ObjectID2", Name = "User Two", Email = "user2@example.com" };
+            var user3 = new User { Name = "User Three", Email = "user3@example.com" }; // No Id or ObjectId
+
+            // Insert the users
+            var userIds = await api.CreateOrUpdateUserAsync(new List<User> { user1, user2, user3 });
+            Assert.IsNotNull(userIds);
+            Assert.AreEqual(3, userIds.Count);
+
+            // Update user1
+            user1.Name = "Updated User One";
+
+            // Update user2
+            var existingUserIdForUser2 = "ExistingUserIdMappedFromObjectID2";
+            user2.Id = existingUserIdForUser2;
+            user2.Name = "Updated User Two";
+
+            // Update the users
+            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { user1, user2 });
+            Assert.IsNotNull(updatedUserIds);
+            Assert.AreEqual(2, updatedUserIds.Count); // Expecting updates for user1 and user2
+
+            // Verify that the users were updated
+            var updatedUser1 = await api.GetUserById(user1.Id);
+            var updatedUser2 = await api.GetUserById(existingUserIdForUser2);
+            Assert.AreEqual("Updated User One", updatedUser1.Name);
+            Assert.AreEqual("Updated User Two", updatedUser2.Name);
+
+            // Clean up: Delete all users
+            //await api.DeleteUsers(userIds.ToArray());
         }
 
 
@@ -102,7 +238,7 @@ namespace Apollo.Api.UnitTests
             var api = Helpers.GetApolloApi();
 
             var newUser = new User { Name = "Test", Email = "test@example.com" };
-            var userId = await api.CreateOrUpdateUser(new List<User> { newUser });
+            var userId = await api.CreateOrUpdateUserAsync(new List<User> { newUser });
 
             // Act
             var user = await api.GetUser(userId.FirstOrDefault());
