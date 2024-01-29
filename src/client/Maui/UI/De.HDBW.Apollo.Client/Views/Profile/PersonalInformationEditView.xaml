@@ -29,8 +29,8 @@
                                         VerticalOptions="Center"
                                         IsClearButtonVisible="False"
                                         NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                <ImageButton Source="delete.png" Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" />
-                <Image Source="calendar.png" Grid.Column="2"/>
+                <ImageButton Source="delete.png" Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" VerticalOptions="Center"/>
+                <Image Source="calendar.png" Grid.Column="2" VerticalOptions="Center"/>
             </Grid>
         </Border>
         <HorizontalStackLayout Margin="0,20,0,0">

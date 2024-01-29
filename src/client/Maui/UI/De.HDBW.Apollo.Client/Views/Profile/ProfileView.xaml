@@ -34,32 +34,37 @@
         </DataTemplate>
 
         <DataTemplate x:Key="RecommendationValueTemplate" x:DataType="genericModels:RecommendationValue">
-            <VerticalStackLayout Padding="12" BackgroundColor="{StaticResource Neutral400}" Margin="12,0,12,12">
-                <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}"/>
-                <Grid ColumnDefinitions="Auto, *">
-                    <Label Text="{x:Binding ProgressDisplayText}" Style="{StaticResource Noto12}" VerticalOptions="Center" Margin="0,0,8,0"/>
-                    <ProgressBar Grid.Column="1" Progress="{x:Binding Progress}" VerticalOptions="Center"/>
-                </Grid>
-                <Label Text="{x:Binding Subline}" Style="{StaticResource Noto14}" />
-                <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Recommendations}" Padding="0,8" Spacing="8">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="interactionModels:InteractionEntry">
-                            <HorizontalStackLayout>
-                                <HorizontalStackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
-                                </HorizontalStackLayout.GestureRecognizers>
-                                <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,0,8,0"/>
-                                <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
-                            </HorizontalStackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+            <Border BackgroundColor="{StaticResource Neutral400}" Padding="12,12,12,12" Margin="12,0,12,12" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <VerticalStackLayout>
+                    <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}"/>
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Text="{x:Binding ProgressDisplayText}" Style="{StaticResource Noto12Bold}" VerticalOptions="Center" Margin="0,0,8,0" TextColor="{StaticResource Primary}"/>
+                        <ProgressBar Grid.Column="1" Progress="{x:Binding Progress}" VerticalOptions="Center"/>
+                    </Grid>
+                    <Label Text="{x:Binding Subline}" Style="{StaticResource Noto14}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Recommendations}" Padding="0,8" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="interactionModels:InteractionEntry">
+                                <HorizontalStackLayout>
+                                    <HorizontalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
+                                    </HorizontalStackLayout.GestureRecognizers>
+                                    <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,4,8,4"/>
+                                    <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
-            </VerticalStackLayout>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="SeperatorValueTemplate" x:DataType="genericModels:SeperatorValue">
             <Border StrokeThickness="0" HeightRequest="24">
-                <Border StrokeThickness="1" HeightRequest="2" VerticalOptions="Center" BackgroundColor="{StaticResource Neutral500}" Stroke="{StaticResource Neutral500}"/>
+                <Border StrokeThickness="1.5" HeightRequest="1.5" VerticalOptions="Center" BackgroundColor="{StaticResource Neutral500}" Stroke="{StaticResource Neutral500}"/>
             </Border>
         </DataTemplate>
         
