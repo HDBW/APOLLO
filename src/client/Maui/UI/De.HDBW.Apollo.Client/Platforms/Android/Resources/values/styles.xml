@@ -12,8 +12,28 @@
     <item name="checkboxStyle">@style/MauiCheckBox</item>
     <item name="android:textAllCaps">false</item>
     <item name="alertDialogTheme">@style/MauiAlertDialogTheme</item>
+    <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialog</item>
   </style>
+  
+  
+  <style name="CustomDatePickerDialog" parent="ThemeOverlay.AppCompat.Dialog">
+    <!--background-->
+    <item name="android:windowBackground">#FEFCF7</item>
+    <!--selected day-->
+    <item name="android:colorControlActivated">@color/colorPrimary</item>
+    <!--selected day textcolor-->
+    <item name="android:textColorPrimaryInverse">#ffffff</item>
+    <!--days of the month-->
+    <item name="android:textColorPrimary">#141414</item>
+    <!--days of the week-->
+    <item name="android:textColorSecondary">@color/colorPrimary</item>
+    <!--cancel&ok-->
+    <item name="android:textColor">@color/colorPrimary</item>
 
+    <!--header background doesnt work-->
+    <item name="colorAccent">#32FF00</item>
+  </style>
+  
   <!-- Remark: Change colorPrimary for Actionbar to avoid animation with primary color. -->
   <style name="ThemeOverlay.AppCompat.Dark.ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" >
     <item name="colorPrimary">@color/defaultBackground</item>

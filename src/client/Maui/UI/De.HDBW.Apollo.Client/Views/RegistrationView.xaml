@@ -36,10 +36,6 @@
         </CarouselView>
         <IndicatorView Grid.Row="3"
                x:Name="indicatorView"
-               IndicatorSize="12"
-               IndicatorColor="{StaticResource Primary050}"
-               SelectedIndicatorColor="{StaticResource Primary}"
-               HorizontalOptions="Center"
                Margin="24,16,24,10"/>
         <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
             <VerticalStackLayout Margin="24,16">
