@@ -5,9 +5,10 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public partial class RetryDialog
+    public partial class RetryDialog : Dialog
     {
         public RetryDialog(ConfirmCancelDialogViewModel model)
+            : base()
         {
             InitializeComponent();
             BindingContext = model;

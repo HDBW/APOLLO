@@ -5,9 +5,10 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public partial class MessageDialog
+    public partial class MessageDialog : Dialog
     {
         public MessageDialog(MessageDialogViewModel model)
+            : base()
         {
             InitializeComponent();
             var view = FindByName("Part_Root") as View;

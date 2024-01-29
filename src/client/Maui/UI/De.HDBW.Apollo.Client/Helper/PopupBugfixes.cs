@@ -17,8 +17,8 @@ namespace De.HDBW.Apollo.Client.Helper
                 return;
             }
 
-            button.HeightRequest = button.Height;
-            button.WidthRequest = button.Width;
+            button.HeightRequest = button.DesiredSize.Height;
+            button.WidthRequest = button.DesiredSize.Width;
             var text = button.Text;
             button.Text = null;
             button.Text = text;
