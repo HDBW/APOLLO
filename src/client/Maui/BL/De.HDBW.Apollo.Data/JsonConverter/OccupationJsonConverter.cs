@@ -1,9 +1,5 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
-
-// (c) Licensed to the HDBW under one or more agreements.
-// The HDBW licenses this file to you under the MIT license.
-
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -33,7 +29,7 @@ namespace De.HDBW.Apollo.Data.Converter
                 }
 
                 var data = jo.ToString();
-                switch (jo["TaxonomyInfo"].ToObject(typeof(Taxonomy)))
+                switch (jo["TaxonomyInfo"]?.ToObject(typeof(Taxonomy)))
                 {
                     case Taxonomy.KldB2010:
                         var z = new KldbOccupation();
