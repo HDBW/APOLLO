@@ -27,7 +27,11 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<StringValue> GetAllLines(Language data)
         {
             var items = new List<StringValue>();
+#if ANDROID
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code?.DisplayName));
+#elif IOS
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code?.NativeName));
+#endif
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_LanguageNiveau, data.Niveau?.ToString()));
             return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }

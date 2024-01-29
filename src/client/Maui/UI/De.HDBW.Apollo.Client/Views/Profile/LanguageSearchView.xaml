@@ -1,9 +1,10 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.LanguageSearchView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:LanguageSearchViewModel"
              Title="{x:Static strings:Resources.LanguageSearchView_Title}"
              IsBusy="{x:Binding IsBusy}"
@@ -36,6 +37,7 @@
         <Border Grid.Row="0" Margin="24,0" Style="{StaticResource SearchInputBorderStyle}" >
             <SearchBar Text="{x:Binding SearchText, Mode=TwoWay}"
                    SearchCommand="{x:Binding SearchCommand}"
+                   ios:SearchBar.SearchBarStyle="Minimal"
                    SearchCommandParameter="{x:Binding Text, Source={x:Reference PART_SearchBar}}"
                    x:Name="PART_SearchBar"/>
         </Border>

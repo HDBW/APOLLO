@@ -84,9 +84,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     var allCultures = new List<InteractionEntry>();
-                    foreach (var cultuer in CultureInfo.GetCultures(CultureTypes.AllCultures))
+                    foreach (var cultur in CultureInfo.GetCultures(CultureTypes.AllCultures))
                     {
-                        allCultures.Add(InteractionEntry.Import(cultuer.DisplayName, cultuer.Name, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                        if (cultur == CultureInfo.InvariantCulture)
+                        {
+                            continue;
+                        }
+#if ANDROID
+                        allCultures.Add(InteractionEntry.Import(cultur.DisplayName, cultur.Name, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+#elif IOS
+                        allCultures.Add(InteractionEntry.Import(cultur.NativeName, cultur.Name, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+#endif
                     }
 
                     allCultures = allCultures.AsSortedList();

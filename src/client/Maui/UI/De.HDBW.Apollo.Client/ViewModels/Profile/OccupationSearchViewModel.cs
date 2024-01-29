@@ -10,6 +10,7 @@ using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
@@ -25,6 +26,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private List<Occupation> _occupations = new List<Occupation>();
 
         private NavigationParameters? _parameters;
+        private CancellationTokenSource? _cts;
 
         public OccupationSearchViewModel(
             IDispatcherService dispatcherService,
@@ -47,10 +49,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 if (SetProperty(ref _searchText, value))
                 {
                     RefreshCommands();
-                    if (SearchCommand.CanExecute(value))
-                    {
-                        SearchCommand.Execute(value);
-                    }
+                    Task.Run(() => DoSearchAsync(value));
                 }
             }
         }
@@ -127,19 +126,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch))]
-        private Task Search(string searchtext, CancellationToken token)
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch), IncludeCancelCommand =true)]
+        private async Task Search(string searchtext, CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
-                    var items = _occupations.Where(x => x.PreferedTerm?.FirstOrDefault()?.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase) ?? false).Select(x => InteractionEntry.Import(x.PreferedTerm?.FirstOrDefault(), x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
-                    if (!items.Any())
+                    _cts?.Cancel();
+                    worker.Token.ThrowIfCancellationRequested();
+                    var items = string.IsNullOrWhiteSpace(searchtext)
+                         ? new List<InteractionEntry>()
+                         : await Task.Run(() => { return _occupations.Where(x => x.PreferedTerm?.FirstOrDefault()?.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase) ?? false).Select(x => InteractionEntry.Import(x.PreferedTerm?.FirstOrDefault(), x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList(); }, token);
+                    if (!items.Any() && !string.IsNullOrWhiteSpace(searchtext))
                     {
                         items.Add(InteractionEntry.Import(searchtext, new UnknownOccupation() { PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     }
 
+                    worker.Token.ThrowIfCancellationRequested();
                     Items = new ObservableCollection<InteractionEntry>(items);
                 }
                 catch (OperationCanceledException)
@@ -158,8 +162,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     UnscheduleWork(worker);
                 }
-
-                return Task.CompletedTask;
             }
         }
 
@@ -203,6 +205,49 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 finally
                 {
                     UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private async Task DoSearchAsync(string? searchtext)
+        {
+            CancellationToken? token = null;
+            try
+            {
+                _cts?.Dispose();
+                _cts = new CancellationTokenSource();
+                await Task.Delay(500);
+                token = _cts.Token;
+                var items = string.IsNullOrWhiteSpace(searchtext)
+                    ? new List<InteractionEntry>()
+                    : _occupations.Where(x => x.PreferedTerm?.FirstOrDefault()?.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase) ?? false).Select(x => InteractionEntry.Import(x.PreferedTerm?.FirstOrDefault(), x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
+
+                if (!items.Any() && !string.IsNullOrWhiteSpace(searchtext))
+                {
+                    items.Add(InteractionEntry.Import(searchtext, new UnknownOccupation() { PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                }
+
+                token.Value.ThrowIfCancellationRequested();
+                Items = new ObservableCollection<InteractionEntry>(items);
+            }
+            catch (OperationCanceledException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(DoSearchAsync)} in {GetType().Name}.");
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(DoSearchAsync)} in {GetType().Name}.");
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(DoSearchAsync)} in {GetType().Name}.");
+            }
+            finally
+            {
+                if (!(token?.IsCancellationRequested ?? false))
+                {
+                    _cts?.Dispose();
+                    _cts = null;
                 }
             }
         }

@@ -67,7 +67,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             var language = user?.Profile?.LanguageSkills.FirstOrDefault(x => x.Id == enityId);
             var niveau = language?.Niveau;
             var code = language?.Code;
+#if ANDROID
             var name = code?.DisplayName;
+#elif IOS
+            var name = code?.NativeName;
+#endif
             var isDirty = false;
 
             // Restore edit state
@@ -86,7 +90,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             if (!string.IsNullOrWhiteSpace(_selectionResult))
             {
                 code = CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.Name == _selectionResult);
+#if ANDROID
                 name = code?.DisplayName;
+#elif IOS
+                name = code?.NativeName;
+#endif
             }
 
             isDirty = name != language?.Name || niveau != language?.Niveau;
@@ -119,6 +127,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         {
             entity.Code = _code!;
             entity.Name = entity.Code.Name;
+#if ANDROID
+            entity.Name = entity.Code.Name;
+#elif IOS
+            entity.Name = entity.Code.NativeName;
+#endif
             entity.Niveau = (LanguageNiveau)SelectedLanguageNiveau!.Data!;
         }
 

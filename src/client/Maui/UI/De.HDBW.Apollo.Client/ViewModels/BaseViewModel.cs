@@ -111,6 +111,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 scope.Dispose();
             }
 
+            if (token?.IsCancellationRequested ?? false)
+            {
+            }
+
             if (token == null)
             {
                 scope = new CancellationTokenSource();
@@ -122,6 +126,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             Workers.Add(workerName, scope);
             DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
+            if (token?.IsCancellationRequested ?? false)
+            {
+                scope.Cancel();
+            }
+
             return scope;
         }
 
