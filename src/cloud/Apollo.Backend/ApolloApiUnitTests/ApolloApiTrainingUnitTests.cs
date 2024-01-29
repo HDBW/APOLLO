@@ -23,7 +23,7 @@ namespace Apollo.Api.UnitTests
         Training[] _testTrainings = new Training[]
           {
                 new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
-                    IndividualStartDate = DateTime.Now, Price = 42.0, PriceDescription = "EUR",
+                    PublishingDate = DateTime.Now, Price = 42.0, PriceDescription = "EUR",
                 Loans = new List<Loans>(
                     new Loans[]
                     {
@@ -33,10 +33,10 @@ namespace Apollo.Api.UnitTests
                     )},
 
                 new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI",
-                    IndividualStartDate = DateTime.Now.AddDays(1),Price = 7.1, PriceDescription = "EUR",},
+                    PublishingDate = DateTime.Now.AddDays(1),Price = 7.1, PriceDescription = "EUR",},
 
                 new Training(){  Id = "UT03" , ProviderId = "unittest",
-                    IndividualStartDate = DateTime.Now.AddDays(3),Price = 1192.0, PriceDescription = "EUR" ,   Loans = new List<Loans>(
+                    PublishingDate = DateTime.Now.AddDays(3),Price = 1192.0, PriceDescription = "EUR" ,   Loans = new List<Loans>(
                     new Loans[]
                     {
                         new Loans() { Id = "L01", Name = "Loan 1" },
@@ -815,7 +815,7 @@ namespace Apollo.Api.UnitTests
             // Case 1: Query by TrainingName and IndividualStartDate
             var query = new Apollo.Common.Entities.Query
             {
-                Fields = new List<string> { "TrainingName", "IndividualStartDate" },
+                Fields = new List<string> { "TrainingName", "PublishingDate" },
                 Filter = new Apollo.Common.Entities.Filter
                 {
                     IsOrOperator = false,
@@ -829,7 +829,7 @@ namespace Apollo.Api.UnitTests
                 },
                 new Apollo.Common.Entities.FieldExpression
                 {
-                    FieldName = "IndividualStartDate",
+                    FieldName = "PublishingDate",
                     Operator = Apollo.Common.Entities.QueryOperator.GreaterThanEqualTo,
                     Argument = new List<object> { DateTime.Now.AddMonths(-1) }
                 }
@@ -840,7 +840,7 @@ namespace Apollo.Api.UnitTests
                 Skip = 0,
                 SortExpression = new Apollo.Common.Entities.SortExpression
                 {
-                    FieldName = "IndividualStartDate",
+                    FieldName = "PublishingDate",
                     Order = Apollo.Common.Entities.SortOrder.Ascending
                 }
             };
