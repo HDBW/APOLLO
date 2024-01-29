@@ -804,7 +804,7 @@ namespace Apollo.Api.UnitTests
         /// <summary>
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         [TestMethod]
-        [TestCategory("Prod")]
+        [TestCategory("Notprod")]
         public async Task QueryTrainingsByDateTimeTest()
         {
             var api = Helpers.GetApolloApi();
