@@ -14,17 +14,21 @@ namespace Apollo.Common.Entities
     /// </summary>
     public class List
     {
+        /// <summary>
+        /// List identifier. Example: <see cref="ApolloApi.CreateListId"/>"/>
+        /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// Specifies the typy of the item like Qualification, Skill, etc.
+        /// Specifies the type  of the item like Qualification, Skill, etc.
+        /// Also used as a partition key
         /// </summary>
-        public string ItemType { get; set; }
+        public required string ItemType { get; set; }
 
         /// <summary>
         /// List of items in all languages.
         /// </summary>
-        public List<ListItem> Items{ get; set; }
+        public required List<ListItem> Items{ get; set; }
     }
 
 
@@ -37,16 +41,16 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The ISO language code.
         /// </summary>
-        public string Lng { get; set; }
+        public required string Lng { get; set; }
 
         /// <summary>
         /// The name of the item.
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         /// <summary>
         /// Description of the item.
         /// </summary>
-        public string Description { get; set; }
+        public required string Description { get; set; }
     }
 }

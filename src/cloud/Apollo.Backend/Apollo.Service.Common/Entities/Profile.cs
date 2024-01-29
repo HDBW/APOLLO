@@ -20,6 +20,7 @@ namespace Apollo.Common.Entities
     {
         /// <summary>
         /// This is the Unique Identifier set by Apollo for the User.
+        /// Also used as a partition key.
         /// </summary>
         public string? Id { get; set; }
 
