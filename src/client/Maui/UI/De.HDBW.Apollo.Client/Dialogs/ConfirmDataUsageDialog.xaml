@@ -1,22 +1,21 @@
-﻿<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<local:Dialog xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="De.HDBW.Apollo.Client.Dialogs.ConfirmDataUsageDialog"
+             xmlns:local="clr-namespace:De.HDBW.Apollo.Client.Dialogs"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             Style="{StaticResource PopupStyle}"
              x:DataType="viewModels:ConfirmDataUsageDialogViewModel">
-    <toolkit:Popup.Color>
-        <OnPlatform x:TypeArguments="Color" Default="{StaticResource Neutral0}">
-            <On Platform="Android" Value="Transparent" />
-        </OnPlatform>
-    </toolkit:Popup.Color>
-    <Border StrokeThickness="0" x:Name="Part_Root" >
-        <Grid RowDefinitions="20, auto, auto, 32, auto" Margin="{OnPlatform '0', Android='16'}" Padding="{OnPlatform '0,0,0,20', Android='20,0,20,20'}" Background="{StaticResource Neutral0Brush}">
-            <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Title}" Style="{StaticResource Noto20Bold}" Margin="0,0,0,16"/>
-            <ScrollView Grid.Row="2" MaximumHeightRequest="180" HorizontalScrollBarVisibility="Never" >
-                <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Message}" Style="{StaticResource Noto16}" Margin="{OnPlatform '0,0,0,40', Android='0'}"/>
-            </ScrollView>
-            <Button Grid.Row="4" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Continue}" Command="{x:Binding ContinueCommand}" SizeChanged="OnSizeChanged"/>
-        </Grid>
-    </Border>
-</toolkit:Popup>
+    <toolkit:Popup.Content>
+        <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
+            <Grid RowDefinitions="20, auto, auto, 32, auto, 20" SizeChanged="HandleRootSizeChanged" Style="{StaticResource PopupContent}">
+                <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Title}" Style="{StaticResource Noto20Bold}" Margin="0,0,0,16"/>
+                <ScrollView Grid.Row="2" MaximumHeightRequest="180" HorizontalScrollBarVisibility="Never" >
+                    <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Message}" Style="{StaticResource Noto16}" />
+                </ScrollView>
+                <Button Grid.Row="4" Text="{x:Static strings:Resources.ConfirmDataUsageDialog_Continue}" Command="{x:Binding ContinueCommand}" SizeChanged="OnSizeChanged"/>
+            </Grid>
+        </Border>
+    </toolkit:Popup.Content>
+</local:Dialog>

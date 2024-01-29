@@ -38,7 +38,7 @@ namespace De.HDBW.Apollo.Client.Services
             Popup? popup = null;
             try
             {
-                popup = ServiceProvider.GetService<TU>();
+                popup = await DispatcherService.ExecuteOnMainThreadAsync(() => { return Task.FromResult(ServiceProvider.GetService<TU>()); }, token);
 
                 var rootPage = Shell.Current?.CurrentPage ?? Application.Current?.MainPage;
                 if (popup == null || rootPage == null)
@@ -48,7 +48,7 @@ namespace De.HDBW.Apollo.Client.Services
 
                 RegisterDialog(popup);
                 var result = await DispatcherService.ExecuteOnMainThreadAsync(
-                    () =>
+                () =>
                 {
                     var queryAble = popup as IQueryAttributable ?? popup.BindingContext as IQueryAttributable;
                     if (queryAble != null && parameters != null)
@@ -95,19 +95,19 @@ namespace De.HDBW.Apollo.Client.Services
             return ShowPopupAsync<TU, TV, NavigationParameters?>(null, token);
         }
 
-        public Task ShowPopupAsync<TU>(CancellationToken token)
+        public async Task ShowPopupAsync<TU>(CancellationToken token)
             where TU : Popup
         {
             token.ThrowIfCancellationRequested();
             try
             {
-                var popup = ServiceProvider.GetService<TU>();
+                var popup = await DispatcherService.ExecuteOnMainThreadAsync(() => { return Task.FromResult(ServiceProvider.GetService<TU>()); }, token);
                 if (Shell.Current?.CurrentPage == null || popup == null)
                 {
                     throw new NotSupportedException();
                 }
 
-                return DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current.CurrentPage.ShowPopupAsync(popup), token);
+                await DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current.CurrentPage.ShowPopupAsync(popup), token);
             }
             catch (OperationCanceledException)
             {
@@ -123,8 +123,6 @@ namespace De.HDBW.Apollo.Client.Services
             {
                 Logger?.LogError(ex, $"Unknown error while {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType().Name}.");
             }
-
-            return Task.CompletedTask;
         }
 
         public bool ClosePopup<TV>(BaseViewModel viewModel, TV result)

@@ -1,21 +1,22 @@
-﻿<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<local:Dialog xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="De.HDBW.Apollo.Client.Dialogs.CancelAssessmentDialog"
                xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-               Color="{StaticResource Background}"
+               xmlns:local="clr-namespace:De.HDBW.Apollo.Client.Dialogs"
+               Style="{StaticResource PopupStyle}"
                x:DataType="viewModels:CancelAssessmentDialogViewModel">
-    <Grid RowDefinitions="*, auto, 20" x:Name="Part_Root">
-         <Border StrokeThickness="0" Stroke="{StaticResource Background}">
-            <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}" BackgroundColor="{StaticResource Background}">
-                <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.CancelAssessmentDialog_Title}" Margin="0,8,0,8" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary900}"/>
-                <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.CancelAssessmentDialog_Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
-            </VerticalStackLayout>
+    <toolkit:Popup.Content>
+        <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
+            <Grid RowDefinitions="20, auto, auto, 32, auto, 20" SizeChanged="HandleRootSizeChanged" Style="{StaticResource PopupContent}">
+                <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.CancelAssessmentDialog_Title}" Margin="0,0,0,16" Style="{StaticResource Noto20Bold}" />
+                <Label Grid.Row="2" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.CancelAssessmentDialog_Message}" Style="{StaticResource Noto16}"/>
+                <Grid ColumnDefinitions="*,8,*" Grid.Row="4">
+                    <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Continue}" Style="{StaticResource BorderButton}"  Command="{x:Binding ContinueCommand}" SizeChanged="OnSizeChanged"/>
+                    <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Cancel}" Command="{x:Binding CancelCommand}" Grid.Column="2" SizeChanged="OnSizeChanged"/>
+                </Grid>
+            </Grid>
         </Border>
-        <Grid ColumnDefinitions="*,8,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Continue}" Style="{StaticResource BorderButton}"  Command="{x:Binding ContinueCommand}" />
-            <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Cancel}" Command="{x:Binding CancelCommand}" Grid.Column="2"/>
-        </Grid>
-    </Grid>
-</toolkit:Popup>
+    </toolkit:Popup.Content>
+</local:Dialog>

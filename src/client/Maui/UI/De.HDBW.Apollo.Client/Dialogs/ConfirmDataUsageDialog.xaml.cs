@@ -21,11 +21,5 @@ namespace De.HDBW.Apollo.Client.Dialogs
                 return BindingContext as ConfirmDataUsageDialogViewModel;
             }
         }
-
-        private void OnSizeChanged(object sender, EventArgs e)
-        {
-            var button = sender as Button;
-            this.FixButtonTextLayout(button);
-        }
     }
 }

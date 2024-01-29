@@ -5,9 +5,10 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public partial class CancelAssessmentDialog
+    public partial class CancelAssessmentDialog : Dialog
     {
         public CancelAssessmentDialog(CancelAssessmentDialogViewModel model)
+            : base()
         {
             InitializeComponent();
             var view = FindByName("Part_Root") as View;

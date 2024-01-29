@@ -45,9 +45,11 @@ namespace De.HDBW.Apollo.Client.Behaviors
             {
                 return;
             }
-
+#if ANDROID
             handler.PlatformView.PerformClick();
-
+#elif IOS
+            handler.PlatformView.BecomeFirstResponder();
+#endif
             datePicker.Focus();
         }
     }

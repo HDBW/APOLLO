@@ -5,19 +5,12 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public partial class FirstTimeDialog
+    public partial class FirstTimeDialog : Dialog
     {
         public FirstTimeDialog(FirstTimeDialogViewModel model)
+            : base()
         {
             InitializeComponent();
-            var view = FindByName("Part_Root") as View;
-            if (view != null && Shell.Current != null)
-            {
-                view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
-                view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
-                Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
-            }
-
             BindingContext = model;
         }
 
