@@ -15,6 +15,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
+using static Java.Util.Jar.Attributes;
 using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
@@ -528,7 +529,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
             informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, profile.MobilityInfo.WillingToTravel?.GetLocalizedString()));
             informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, profile.MobilityInfo.HasVehicle ? Resources.Strings.Resources.Global_Yes : Resources.Strings.Resources.Global_No));
-            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", profile.MobilityInfo.DriverLicenses ?? new List<DriversLicense>())));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", profile.MobilityInfo.DriverLicenses.Select(x => Resources.Strings.Resources.ResourceManager.GetString($"DriversLicense_{Enum.GetName(x)}")) ?? new List<string>())));
             return informations;
         }
 
