@@ -94,7 +94,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorDE));
             driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Drivercard));
             await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(mobility, willingsToTravel.AsSortedList(), driverLicenses.AsSortedList()), token).ConfigureAwait(false);
+                () => LoadonUIThread(mobility, willingsToTravel.AsSortedList(), driverLicenses), token).ConfigureAwait(false);
             return mobility;
         }
 
