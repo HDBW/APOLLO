@@ -117,7 +117,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                 isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(description, occupation, typeOfSchools, selectedTypeOfSchool, schoolGraduations, selectedSchoolGraduation, univerityDegrees, selectedUniverityDegree, isDirty), token);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(description, occupation, typeOfSchools.AsSortedList(), selectedTypeOfSchool, schoolGraduations.AsSortedList(), selectedSchoolGraduation, univerityDegrees.AsSortedList(), selectedUniverityDegree, isDirty), token);
             return currentData;
         }
 

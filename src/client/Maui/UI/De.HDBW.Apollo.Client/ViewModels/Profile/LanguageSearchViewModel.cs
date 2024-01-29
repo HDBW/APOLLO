@@ -6,6 +6,7 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using Microsoft.Extensions.Logging;
@@ -88,7 +89,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         allCultures.Add(InteractionEntry.Import(cultuer.DisplayName, cultuer.Name, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     }
 
-                    allCultures = allCultures.OrderBy(x => x.Text).ToList();
+                    allCultures = allCultures.AsSortedList();
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(allCultures), worker.Token);
                 }
                 catch (OperationCanceledException)

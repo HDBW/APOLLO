@@ -88,7 +88,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(occupation, nameOfInstitution, city, country, serviceTypes, selectedServiceType, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(occupation, nameOfInstitution, city, country, serviceTypes.AsSortedList(), selectedServiceType, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 

@@ -8,6 +8,7 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Data.Helper;
@@ -98,7 +99,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C1, LanguageNiveau.C1, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C2, LanguageNiveau.C2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var selectedNivau = languageNiveaus.FirstOrDefault(x => (LanguageNiveau?)x.Data == niveau);
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(code, name, languageNiveaus, selectedNivau, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(code, name, languageNiveaus.AsSortedList(), selectedNivau, isDirty), token).ConfigureAwait(false);
             return language;
         }
 

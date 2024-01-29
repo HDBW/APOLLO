@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -93,7 +94,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.InstructorDE));
             driverLicenses.Add(CreateLicenseEntry(mobility, DriversLicense.Drivercard));
             await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(mobility, willingsToTravel, driverLicenses), token).ConfigureAwait(false);
+                () => LoadonUIThread(mobility, willingsToTravel.AsSortedList(), driverLicenses.AsSortedList()), token).ConfigureAwait(false);
             return mobility;
         }
 

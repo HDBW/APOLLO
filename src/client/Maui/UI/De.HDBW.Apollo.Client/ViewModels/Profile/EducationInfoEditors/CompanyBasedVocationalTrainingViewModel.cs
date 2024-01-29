@@ -77,7 +77,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             }
 
             await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(occupation, schoolGraduations, selectedSchoolGraduations, isDirty), token);
+                () => LoadonUIThread(occupation, schoolGraduations.AsSortedList(), selectedSchoolGraduations, isDirty), token);
             return currentData;
         }
 

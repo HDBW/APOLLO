@@ -120,7 +120,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                 selectedCompletionState = completionStates.FirstOrDefault(x => (x.Data as CompletionState?) == EditState.CompletionState);
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(start, end, nameOfInstitution, city, country, selectedCompletionState, completionStates, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(start, end, nameOfInstitution, city, country, selectedCompletionState, completionStates.AsSortedList(), isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 

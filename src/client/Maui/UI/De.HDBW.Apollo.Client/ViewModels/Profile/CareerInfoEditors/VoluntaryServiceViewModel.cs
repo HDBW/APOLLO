@@ -52,7 +52,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, voluntaryServiceTypes, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(currentData, voluntaryServiceTypes.AsSortedList(), isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 

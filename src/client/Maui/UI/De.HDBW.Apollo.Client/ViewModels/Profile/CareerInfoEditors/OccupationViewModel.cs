@@ -77,7 +77,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 isDirty = true;
             }
 
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(occupation, timeModels, selectedTimeModel, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(occupation, timeModels.AsSortedList(), selectedTimeModel, isDirty), token).ConfigureAwait(false);
             return currentData;
         }
 

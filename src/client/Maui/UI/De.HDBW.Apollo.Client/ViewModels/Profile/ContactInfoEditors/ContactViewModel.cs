@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -68,7 +69,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             var contactTypes = new List<InteractionEntry>();
             contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Private, ContactType.Private, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             contactTypes.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactType_Professional, ContactType.Professional, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(contact, contactTypes), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(contact, contactTypes.AsSortedList()), token).ConfigureAwait(false);
             return contact;
         }
 

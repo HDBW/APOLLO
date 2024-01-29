@@ -85,7 +85,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             var isDirty = IsDirty;
             var selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == currentData?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
             var selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation) ?? null;
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(typeOfSchools, selectedTypeOfSchool, schoolGraduations, selectedSchoolGraduation, isDirty), token);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(typeOfSchools.AsSortedList(), selectedTypeOfSchool, schoolGraduations.AsSortedList(), selectedSchoolGraduation, isDirty), token);
             return currentData;
         }
 
