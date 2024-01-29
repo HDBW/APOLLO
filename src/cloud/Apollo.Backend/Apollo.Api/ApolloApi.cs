@@ -239,7 +239,7 @@ namespace Apollo.Api
         /// <returns></returns>
         private static string CreateListId(string itemType)
         {
-            return CreateId($"{itemType}-{nameof(List)}");
+            return CreateId($"{itemType}-{nameof(ApolloList)}");
         }
 
 

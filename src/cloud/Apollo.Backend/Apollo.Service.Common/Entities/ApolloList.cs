@@ -12,7 +12,7 @@ namespace Apollo.Common.Entities
     /// <summary>
     /// Used as a general entity to store a list of items of some type.
     /// </summary>
-    public class List
+    public class ApolloList
     {
         /// <summary>
         /// List identifier. Example: <see cref="ApolloApi.CreateListId"/>"/>

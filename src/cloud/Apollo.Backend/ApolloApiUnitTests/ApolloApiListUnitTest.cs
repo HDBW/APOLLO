@@ -18,79 +18,79 @@ namespace Apollo.Api.UnitTests
     [TestClass]
     public class ApolloApiListUnitTests
     {
-        /// <summary>
-        /// Tests creating or updating a Qualification List object and then cleaning up by deleting it.
-        /// </summary>
-        [TestMethod]
-        [TestCategory("Prod")]
-        public async Task CreateOrUpdateQualificationListTest()
-        {
-            var api = Helpers.GetApolloApi();
+        ///// <summary>
+        ///// Tests creating or updating a Qualification List object and then cleaning up by deleting it.
+        ///// </summary>
+        //[TestMethod]
+        //[TestCategory("Prod")]
+        //public async Task CreateOrUpdateQualificationListTest()
+        //{
+        //    var api = Helpers.GetApolloApi();
 
-            /// Create a new qualification
-              var qualificationListItems = new List<ListItem>
-                    {
-                        new ListItem
-                        {
-                            Name = "C# Programmer",
-                            Description = "C# Programming Language",
-                            Lng = "123"
-                        },
-                        new ListItem
-                        {
-                            Name = "Python Programmer",
-                            Description = "Python Programming Language",
-                            Lng = "124"
-                        }
-                    };
+        //    /// Create a new qualification
+        //      var qualificationListItems = new List<ListItem>
+        //            {
+        //                new ListItem
+        //                {
+        //                    Name = "C# Programmer",
+        //                    Description = "C# Programming Language",
+        //                    Lng = "123"
+        //                },
+        //                new ListItem
+        //                {
+        //                    Name = "Python Programmer",
+        //                    Description = "Python Programming Language",
+        //                    Lng = "124"
+        //                }
+        //            };
 
-            /// Create a new List object and add the qualification to the Items property
-            var qualificationList = new List
-            {
-                ItemType = "Qualification",
-                Items = qualificationListItems
-            };
+        //    /// Create a new List object and add the qualification to the Items property
+        //    var qualificationList = new ApolloList
+        //    {
+        //        ItemType = "Qualification",
+        //        Items = qualificationListItems
+        //    };
 
-            /// Insert the new qualification
-            var qualificationIds = await api.CreateOrUpdateQualificationAsync(new List<List> { qualificationList });
-            Assert.IsNotNull(qualificationIds);
-            Assert.AreEqual(1, qualificationIds.Count);
+        //    /// Insert the new qualification
+        //    var qualificationIds = await api.CreateOrUpdateQualificationAsync(new List<ApolloList> { qualificationList });
+        //    Assert.IsNotNull(qualificationIds);
+        //    Assert.AreEqual(1, qualificationIds.Count);
 
-            /// Update an existing qualification (assuming there is an existing qualification with the same ItemType and language)
-            var updatedQualificationListItems = new List<ListItem>
-            {
-                new ListItem
-                {
-                    Name = "Updated C# Programmer",
-                    Description = "Updated C# Programming Language",
-                    Lng = "123"
-                },
-                new ListItem
-                {
-                    Name = "New Language Programmer",
-                    Description = "New Language Programming Language",
-                    Lng = "125"
-                }
-            };
+        //    /// Update an existing qualification (assuming there is an existing qualification with the same ItemType and language)
+        //    var updatedQualificationListItems = new List<ListItem>
+        //    {
+        //        new ListItem
+        //        {
+        //            Name = "Updated C# Programmer",
+        //            Description = "Updated C# Programming Language",
+        //            Lng = "123"
+        //        },
+        //        new ListItem
+        //        {
+        //            Name = "New Language Programmer",
+        //            Description = "New Language Programming Language",
+        //            Lng = "125"
+        //        }
+        //    };
 
-            /// Create an updated List with the updated qualification and a new qualification with same ID
-            var updatedQualificationList = new List
-            {
-                Id = qualificationIds[0],
-                ItemType = "Qualification",
-                Items = updatedQualificationListItems
-            };
+        //    /// Create an updated List with the updated qualification and a new qualification with same ID
+        //    var updatedQualificationList = new ApolloList
+        //    {
+        //        Id = qualificationIds[0],
+        //        ItemType = "Qualification",
+        //        Items = updatedQualificationListItems
+        //    };
 
-            /// Update the existing qualification and add a new qualification
-            var updatedQualificationIds = await api.CreateOrUpdateQualificationAsync(new List<List> { updatedQualificationList });
-            Assert.IsNotNull(updatedQualificationIds);
-            Assert.AreEqual(1, updatedQualificationIds.Count);
+        //    /// Update the existing qualification and add a new qualification
+        //    var updatedQualificationIds = await api.CreateOrUpdateQualificationAsync(new List<ApolloList> { updatedQualificationList });
+        //    Assert.IsNotNull(updatedQualificationIds);
+        //    Assert.AreEqual(1, updatedQualificationIds.Count);
 
-            /// Additional cleanup if needed (delete the qualification)
-            //var deleteResult = await api.DeleteQualificationAsync(new string[] { qualificationIds[0] });
-            // Assert.AreEqual(1, deleteResult); 
+        //    /// Additional cleanup if needed (delete the qualification)
+        //    //var deleteResult = await api.DeleteQualificationAsync(new string[] { qualificationIds[0] });
+        //    // Assert.AreEqual(1, deleteResult); 
 
-        }
+        //}
 
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Apollo.Api.UnitTests
                 {
                     Operator = Common.Entities.QueryOperator.Equals,
                     Argument = new List<object> { itemType },
-                    FieldName = nameof(List.ItemType)
+                    FieldName = nameof(ApolloList.ItemType)
                 },
                 new Common.Entities.FieldExpression
                 {

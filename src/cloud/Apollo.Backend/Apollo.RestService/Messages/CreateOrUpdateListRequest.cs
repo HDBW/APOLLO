@@ -10,6 +10,6 @@ namespace Apollo.RestService.Messages
     /// </summary>
     public class CreateOrUpdateListRequest
     {
-        public List? List { get; set; }
+        public ApolloList? List { get; set; }
     }
 }

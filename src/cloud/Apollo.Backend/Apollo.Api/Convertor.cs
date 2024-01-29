@@ -388,39 +388,39 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="expando">The expando object to be converted.</param>
         /// <returns>A list object converted from the expando object.</returns>
-        public static List ToList(ExpandoObject expando)
+        public static ApolloList ToList(ExpandoObject expando)
         {
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
-            List list = new List
+            ApolloList list = new ApolloList()
             {
                 Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
-
+                ItemType = dict.ContainsKey("ItemType") ? (string)dict["ItemType"] : "",
                 Items = new List<ListItem>(),
             };
 
-            if (dict.ContainsKey("Items"))
-            {
-                var itemsObject = dict["Items"];
+            //if (dict.ContainsKey("Items"))
+            //{
+            //    var itemsObject = dict["Items"];
 
-                if (itemsObject is IEnumerable<object> itemsEnumerable)
-                {
-                    var expLst = itemsEnumerable.OfType<ExpandoObject>();
+            //    if (itemsObject is IEnumerable<object> itemsEnumerable)
+            //    {
+            //        var expLst = itemsEnumerable.OfType<ExpandoObject>();
 
-                    foreach (var item in expLst)
-                    {
-                        ListItem listItem = new ListItem();
+            //        foreach (var item in expLst)
+            //        {
+            //            ListItem listItem = new ListItem();
 
-                        IDictionary<string, object> expItem = item as IDictionary<string, object>;
+            //            IDictionary<string, object> expItem = item as IDictionary<string, object>;
 
-                        listItem.Name = expItem.ContainsKey(nameof(ListItem.Name)) ? (string)expItem[nameof(ListItem.Name)] : "";
-                        listItem.Description = expItem.ContainsKey(nameof(ListItem.Description)) ? (string)expItem[nameof(ListItem.Description)] : "";
-                        listItem.Lng = expItem.ContainsKey(nameof(ListItem.Lng)) ? (string)expItem[nameof(ListItem.Lng)] : "";
+            //            listItem.Name = expItem.ContainsKey(nameof(ListItem.Name)) ? (string)expItem[nameof(ListItem.Name)] : "";
+            //            listItem.Description = expItem.ContainsKey(nameof(ListItem.Description)) ? (string)expItem[nameof(ListItem.Description)] : "";
+            //            listItem.Lng = expItem.ContainsKey(nameof(ListItem.Lng)) ? (string)expItem[nameof(ListItem.Lng)] : "";
 
-                        list.Items.Add(listItem);
-                    }
-                }
-            }
+            //            list.Items.Add(listItem);
+            //        }
+            //    }
+            //}
 
             return list;
         }

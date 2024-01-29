@@ -109,7 +109,7 @@ namespace Apollo.Common.Entities
 
         // This is a String !!! not a DateTime !!!
         //[BsonElement("IndividualStartDate")]
-        public string IndividualStartDate { get; set; }
+        public DateTime IndividualStartDate { get; set; }
 
         //TODO: Review
         /// <summary>

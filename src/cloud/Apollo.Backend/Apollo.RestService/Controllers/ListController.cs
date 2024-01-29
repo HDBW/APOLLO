@@ -42,30 +42,30 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the updated or created List.</returns>
         /// <response code="200">Returns the updated training.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut]
-        [SwaggerResponse(StatusCodes.Status200OK, "Returns the updated List items.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<CreateOrUpdateListResponse> CreateOrUpdateQualificationAsync([FromBody] CreateOrUpdateListRequest req)
-        {
-            try
-            {
-                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
+        //[HttpPut]
+        //[SwaggerResponse(StatusCodes.Status200OK, "Returns the updated List items.")]
+        //[SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        //public async Task<CreateOrUpdateListResponse> CreateOrUpdateQualificationAsync([FromBody] CreateOrUpdateListRequest req)
+        //{
+        //    try
+        //    {
+        //        _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
 
-                // Assuming req contains the Training object to create or update.
-                var result = await _api.CreateOrUpdateQualificationAsync(new List<List> { req.List });
+        //        // Assuming req contains the Training object to create or update.
+        //        var result = await _api.CreateOrUpdateQualificationAsync(Anew List<ApolloList> { req.List });
 
-                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
+        //        _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
 
-                // Return the result of the create/update operation as a response.
-                return new CreateOrUpdateListResponse { List = req.List };
-            }
-            catch (Exception ex)
-            {
-                // Log and re-throw any exceptions encountered.
-                _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
-                throw;
-            }
-        }
+        //        // Return the result of the create/update operation as a response.
+        //        return new CreateOrUpdateListResponse { List = req.List };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log and re-throw any exceptions encountered.
+        //        _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
+        //        throw;
+        //    }
+        //}
 
 
 
