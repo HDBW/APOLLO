@@ -42,8 +42,7 @@ namespace Apollo.Service.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the requested training.", typeof(GetTrainingResponse))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Training not found.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<GetTrainingResponse> GetTrainingAsync(
-         [FromRoute, ValidInputString(ErrorMessage = "Invalid training Id.")]
+        public async Task<GetTrainingResponse> GetTrainingAsync([FromRoute]
          string id)
         {
             try
@@ -200,8 +199,7 @@ namespace Apollo.Service.Controllers
         [SwaggerResponse(StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Training deleted successfully.")]
-        public async Task DeleteAsync([FromRoute, ValidInputString(ErrorMessage = "Invalid training Id.")]
-         string id)
+        public async Task DeleteAsync([FromRoute] string id)
         {
             try
             {
