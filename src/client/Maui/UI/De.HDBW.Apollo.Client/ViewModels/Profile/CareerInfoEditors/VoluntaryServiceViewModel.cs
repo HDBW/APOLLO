@@ -135,6 +135,5 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             IsDirty = isDirty;
             ValidateCommand.Execute(null);
         }
-
     }
 }

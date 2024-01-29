@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.Client.Dialogs
 #if IOS
             Size = new Size(Application.Current!.MainPage!.Width - 40, Application.Current!.MainPage!.Height - 40);
 #elif ANDROID
-            //Size = new Size(Application.Current!.MainPage!.Width - 40, 0);
+            // Size = new Size(Application.Current!.MainPage!.Width - 40, 0);
 #endif
         }
 

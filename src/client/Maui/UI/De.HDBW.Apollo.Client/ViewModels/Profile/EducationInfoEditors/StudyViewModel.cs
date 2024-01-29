@@ -60,7 +60,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             var description = currentData?.Description;
             var selectedUniverityDegrees = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == currentData?.UniversityDegree);
             await ExecuteOnUIThreadAsync(
-                () => LoadonUIThread(description, univerityDegrees.AsSortedList(), selectedUniverityDegrees, isDirty), token);
+                () => LoadonUIThread(description, univerityDegrees, selectedUniverityDegrees, isDirty), token);
             return currentData;
         }
 
@@ -91,6 +91,5 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             IsDirty = isDirty;
             ValidateCommand.Execute(null);
         }
-
     }
 }

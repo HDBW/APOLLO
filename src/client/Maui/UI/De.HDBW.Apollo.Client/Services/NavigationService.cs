@@ -312,7 +312,6 @@ namespace De.HDBW.Apollo.Client.Services
                 Shell.Current.FlyoutIsPresented = false;
                 if (parameters != null)
                 {
-
                     await Shell.Current.GoToAsync("..", parameters.ToQueryDictionary());
                 }
                 else
