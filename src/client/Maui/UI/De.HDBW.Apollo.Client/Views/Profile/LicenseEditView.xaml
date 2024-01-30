@@ -14,7 +14,7 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="DefaultContactTemplate" x:DataType="models:LicenseEntry">
             <ContentView Style="{StaticResource ContentViewListContent}">
-                <SwipeView Threshold="100" Margin="0,0,0,2">
+                <SwipeView Threshold="100" Margin="0,0,0,0.5">
                     <SwipeView.RightItems>
                         <SwipeItems Mode="Execute">
                             <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
@@ -30,7 +30,7 @@
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
                         </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="*, auto">
-                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="0,0,8,0" MinimumHeightRequest="70">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="0,0,8,0">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="generic:StringValue">
                                     <Grid ColumnDefinitions="auto, *">
@@ -53,7 +53,7 @@
                     SelectionMode="None"
                     ItemTemplate="{StaticResource DefaultContactTemplate}">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                <LinearItemsLayout Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="Fill">

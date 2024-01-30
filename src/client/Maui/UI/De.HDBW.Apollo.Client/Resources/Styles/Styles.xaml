@@ -600,7 +600,7 @@
     <Style x:Key="FooterStyle" TargetType="Border">
         <Setter Property="Shadow">
             <Setter.Value>
-                <Shadow Brush="{StaticResource Black}" Offset="{OnPlatform '0,-4', Android='0,-16'}" Radius="{OnPlatform '4', Android='16'}" Opacity="0.2"/>
+                <Shadow Brush="{StaticResource Black}" Offset="{OnPlatform '0,-4', Android='0,0'}" Radius="{OnPlatform '4', Android='0'}" Opacity="0.2"/>
             </Setter.Value>
         </Setter>
         <Setter Property="StrokeShape">
@@ -678,7 +678,6 @@
     </Style>
 
     <Style x:Key="ContentViewListContent" TargetType="ContentView">
-        <Setter Property="MinimumHeightRequest" Value="70" />
         <Setter Property="BackgroundColor" Value="{StaticResource Neutral500}" />
     </Style>
 
