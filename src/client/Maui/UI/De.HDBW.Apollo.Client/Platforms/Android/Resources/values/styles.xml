@@ -18,7 +18,7 @@
   
   <style name="CustomDatePickerDialog" parent="ThemeOverlay.AppCompat.Dialog">
     <!--background-->
-    <item name="android:windowBackground">#FEFCF7</item>
+    <item name="android:windowBackground">@color/neutral0</item>
     <!--selected day-->
     <item name="android:colorControlActivated">@color/colorPrimary</item>
     <!--selected day textcolor-->
