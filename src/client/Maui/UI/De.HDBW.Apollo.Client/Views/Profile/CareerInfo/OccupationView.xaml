@@ -43,8 +43,13 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding WorkTimeModels}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_WorkTimeModel"
                             SelectedItem="{x:Binding SelectedWorkTimeModel, Mode=TwoWay}"/>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_WorkTimeModel}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </Grid>
             </Border>
 

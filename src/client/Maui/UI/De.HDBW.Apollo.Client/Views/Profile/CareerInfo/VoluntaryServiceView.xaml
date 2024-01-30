@@ -36,8 +36,15 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding VoluntaryServiceTypes}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_VoluntaryServiceType"
                             SelectedItem="{x:Binding SelectedVoluntaryServiceType, Mode=TwoWay}"/>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_VoluntaryServiceType}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    
                 </Grid>
             </Border>
 
