@@ -16,18 +16,18 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="ProfileInteractionTemplate" x:DataType="interactionModels:InteractionEntry">
-            <Grid ColumnDefinitions="Auto,*,Auto" Padding="24,0,24,8">
+            <Grid ColumnDefinitions="Auto,*,Auto" Style="{StaticResource ProfileInteraction}">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
                 </Grid.GestureRecognizers>
-                <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,0,8,0"/>
+                <Image Source="{x:Binding ImagePath}" WidthRequest="24" HeightRequest="24" Margin="0,0,8,0"/>
                 <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
                 <Image Grid.Column="2" Source="edit.png"/>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="StringValueTemplate" x:DataType="genericModels:StringValue">
-            <Grid RowDefinitions="Auto,Auto" Padding="24,0,24,8">
+            <Grid RowDefinitions="Auto,Auto" Style="{StaticResource StringValue}" >
                 <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" />
                 <Label Text="{x:Binding Data}" Grid.Row="1" Style="{StaticResource Noto14}"/>
             </Grid>

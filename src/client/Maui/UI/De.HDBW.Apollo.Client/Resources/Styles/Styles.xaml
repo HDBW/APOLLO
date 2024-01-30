@@ -449,7 +449,7 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray900}}" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray900}}" />
         <Setter Property="CancelButtonColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray900}}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource Background}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Neutral0}, Dark={StaticResource Neutral0}}" />
         <Setter Property="FontFamily" Value="NotoSansRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -602,7 +602,7 @@
     <Style x:Key="FooterStyle" TargetType="Border">
         <Setter Property="Shadow">
             <Setter.Value>
-                <Shadow Brush="{StaticResource Black}" Offset="0,0" Radius="16" Opacity="0.2"/>
+                <Shadow Brush="{StaticResource Black}" Offset="0,-16" Radius="16" Opacity="0.2"/>
             </Setter.Value>
         </Setter>
         <Setter Property="StrokeShape">
@@ -631,8 +631,9 @@
 
     <Style x:Key="SearchInputBorderStyle" TargetType="Border">
         <Setter Property="Padding" Value="0,0" />
+        <Setter Property="Margin" Value="24,16" />
         <Setter Property="MinimumHeightRequest" Value="46" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Neutral0}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Neutral0}"/>
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="StrokeShape">
             <Setter.Value>
@@ -671,6 +672,33 @@
     <Style x:Key="LonglistPickerLabel" TargetType="Label" BasedOn="{StaticResource Noto14}">
         <Setter Property="TextColor" Value="{StaticResource Primary}" />
     </Style>
-   
-    
+
+    <Style x:Key="BorderListContent" TargetType="Border">
+        <Setter Property="Padding" Value="24,16,20,16" />
+        <Setter Property="Background" Value="{StaticResource Background}" />
+        <Setter Property="StrokeThickness" Value="0" />
+    </Style>
+
+    <Style x:Key="ContentViewListContent" TargetType="ContentView">
+        <Setter Property="MinimumHeightRequest" Value="70" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Neutral500}" />
+    </Style>
+
+    <Style x:Key="FormContent" TargetType="VerticalStackLayout">
+        <Setter Property="Padding" Value="24,16"/>
+    </Style>
+
+    <Style x:Key="GridContentView" TargetType="Grid">
+        <Setter Property="Padding" Value="24,16"/>
+    </Style>
+
+    <Style x:Key="ProfileInteraction" TargetType="Grid">
+        <Setter Property="Padding" Value="24,8"/>
+    </Style>
+
+    <Style x:Key="StringValue" TargetType="Grid">
+        <Setter Property="Padding" Value="24,0"/>
+    </Style>
+
+
 </ResourceDictionary>

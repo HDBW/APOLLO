@@ -16,7 +16,7 @@
         <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <VerticalStackLayout Margin="24">
+        <VerticalStackLayout Style="{StaticResource FormContent}">
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">

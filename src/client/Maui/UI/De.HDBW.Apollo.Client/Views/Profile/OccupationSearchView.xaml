@@ -34,7 +34,7 @@
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="auto,*">
-        <Border Grid.Row="0" Margin="24,0" Style="{StaticResource SearchInputBorderStyle}" >
+        <Border Grid.Row="0" Style="{StaticResource SearchInputBorderStyle}" >
             <SearchBar Text="{x:Binding SearchText, Mode=TwoWay}"
                        SearchCommand="{x:Binding SearchCommand}"
                        SearchCommandParameter="{x:Binding Text, Source={x:Reference PART_SearchBar}}"

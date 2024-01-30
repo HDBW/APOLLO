@@ -9,17 +9,19 @@
              Title="{x:Static strings:Resources.PickUserNameView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <Grid RowDefinitions="Auto, Auto, Auto,*, Auto">
-        <Label Grid.Row="0" Text="{x:Static strings:Resources.Global_Benutzername}" Margin="24,24,24,4" Style="{StaticResource Noto14SemiBold}"/>
-        <Border Grid.Row="1" Margin="24,0" Style="{StaticResource InputBorderStyle}">
-            <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}">
-                <Entry.Behaviors>
-                    <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
-                </Entry.Behaviors>
-            </Entry>
-        </Border>
-        <Label Grid.Row="2" Text="{x:Binding [Name]}" Margin="24,0" Style="{StaticResource ValidationErrorLabel}" />
-        <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" />
-        <Button Grid.Row="4" Text="Weiter" Command="{x:Binding CreateAccountCommand}" Margin="24,16"/>
+    <Grid RowDefinitions="*, Auto">
+        <VerticalStackLayout Style="{StaticResource FormContent}" VerticalOptions="Start">
+            <Label Text="{x:Static strings:Resources.Global_Benutzername}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
+        </VerticalStackLayout>
+        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" />
+        <Button Grid.Row="1" Text="Weiter" Command="{x:Binding CreateAccountCommand}" Margin="24,16"/>
     </Grid>
 </ContentPage>
