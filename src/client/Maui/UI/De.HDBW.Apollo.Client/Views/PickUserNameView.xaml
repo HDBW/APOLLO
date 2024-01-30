@@ -9,8 +9,8 @@
              Title="{x:Static strings:Resources.PickUserNameView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <Grid RowDefinitions="Auto, Auto, Auto,*, Auto">
-        <Label Grid.Row="0" Text="{x:Static strings:Resources.Global_Benutzername}" Margin="24,24,24,4" Style="{StaticResource Noto14SemiBold}"/>
+    <Grid RowDefinitions="Auto, Auto, Auto,*, Auto" Style="{StaticResource GridContentView}">
+        <Label Grid.Row="0" Text="{x:Static strings:Resources.Global_Benutzername}" Style="{StaticResource Noto14SemiBold}"/>
         <Border Grid.Row="1" Margin="24,0" Style="{StaticResource InputBorderStyle}">
             <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}">
                 <Entry.Behaviors>
