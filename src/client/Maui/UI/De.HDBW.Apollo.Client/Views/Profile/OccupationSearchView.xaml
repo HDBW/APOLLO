@@ -36,7 +36,6 @@
     <Grid RowDefinitions="auto,*">
         <Border Grid.Row="0" Margin="24,0" Style="{StaticResource SearchInputBorderStyle}" >
             <SearchBar Text="{x:Binding SearchText, Mode=TwoWay}"
-                       ios:SearchBar.SearchBarStyle="Minimal"
                        SearchCommand="{x:Binding SearchCommand}"
                        SearchCommandParameter="{x:Binding Text, Source={x:Reference PART_SearchBar}}"
                        x:Name="PART_SearchBar"/>

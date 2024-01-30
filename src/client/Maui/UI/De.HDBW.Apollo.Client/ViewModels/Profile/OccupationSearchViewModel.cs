@@ -217,7 +217,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 _cts?.Dispose();
                 _cts = new CancellationTokenSource();
                 await Task.Delay(500);
-                token = _cts.Token;
+                token = _cts?.Token;
+                if (!token.HasValue)
+                {
+                    return;
+                }
+
                 var items = string.IsNullOrWhiteSpace(searchtext)
                     ? new List<InteractionEntry>()
                     : _occupations.Where(x => x.PreferedTerm?.FirstOrDefault()?.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase) ?? false).Select(x => InteractionEntry.Import(x.PreferedTerm?.FirstOrDefault(), x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
@@ -228,7 +233,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 }
 
                 token.Value.ThrowIfCancellationRequested();
-                Items = new ObservableCollection<InteractionEntry>(items);
+                await ExecuteOnUIThreadAsync(
+                    () =>
+                    {
+                        Items = new ObservableCollection<InteractionEntry>(items);
+                    }, token.Value).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {

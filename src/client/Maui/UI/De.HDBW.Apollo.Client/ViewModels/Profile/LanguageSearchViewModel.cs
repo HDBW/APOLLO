@@ -9,6 +9,7 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
@@ -27,6 +28,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private IEnumerable<InteractionEntry>? _allCultures;
 
         private NavigationParameters? _parameters;
+
+        private CancellationTokenSource? _cts;
 
         public LanguageSearchViewModel(
             IDispatcherService dispatcherService,
@@ -49,10 +52,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 if (SetProperty(ref _searchText, value))
                 {
                     RefreshCommands();
-                    if (SearchCommand.CanExecute(SearchText))
-                    {
-                        SearchCommand.Execute(SearchText);
-                    }
+                    RefreshCommands();
+                    Task.Run(() => DoSearchAsync(value));
                 }
             }
         }
@@ -145,7 +146,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     if (string.IsNullOrWhiteSpace(searchtext))
                     {
-                        Items = new ObservableCollection<InteractionEntry>(_allCultures ?? Array.Empty<InteractionEntry>());
+                        Items = new ObservableCollection<InteractionEntry>(Array.Empty<InteractionEntry>());
                     }
                     else
                     {
@@ -170,6 +171,53 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 }
 
                 return Task.CompletedTask;
+            }
+        }
+
+        private async Task DoSearchAsync(string? searchtext)
+        {
+            CancellationToken? token = null;
+            try
+            {
+                _cts?.Dispose();
+                _cts = new CancellationTokenSource();
+                token = _cts?.Token;
+                if (!token.HasValue)
+                {
+                    return;
+                }
+
+                await Task.Delay(500, token.Value);
+                IEnumerable<InteractionEntry> items = string.IsNullOrWhiteSpace(searchtext)
+                    ? Array.Empty<InteractionEntry>()
+                    : (_allCultures?.Where(x => x.Text?.Contains(searchtext, StringComparison.CurrentCultureIgnoreCase) ?? false) ?? Array.Empty<InteractionEntry>());
+
+                token.Value.ThrowIfCancellationRequested();
+                await ExecuteOnUIThreadAsync(
+                    () =>
+                    {
+                        Items = new ObservableCollection<InteractionEntry>(items);
+                    }, token.Value).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(DoSearchAsync)} in {GetType().Name}.");
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(DoSearchAsync)} in {GetType().Name}.");
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(DoSearchAsync)} in {GetType().Name}.");
+            }
+            finally
+            {
+                if (!(token?.IsCancellationRequested ?? false))
+                {
+                    _cts?.Dispose();
+                    _cts = null;
+                }
             }
         }
 
