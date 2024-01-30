@@ -32,8 +32,13 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding CompletionStates}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_CompletionState"
                             SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </Grid>
             </Border>
 

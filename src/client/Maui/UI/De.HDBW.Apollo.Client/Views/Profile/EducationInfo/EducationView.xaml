@@ -22,8 +22,15 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding TypeOfSchools}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_TypeOfSchool"
                             SelectedItem="{x:Binding SelectedTypeOfSchool, Mode=TwoWay}"/>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_TypeOfSchool}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    
                 </Grid>
             </Border>
 
@@ -32,12 +39,17 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding SchoolGraduations}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_SchoolGraduation"
                             SelectedItem="{x:Binding SelectedSchoolGraduation, Mode=TwoWay}">
                         <Picker.Behaviors>
                             <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="SelectedIndexChanged" CommandParameter="SelectedSchoolGraduation" />
                         </Picker.Behaviors>
                     </Picker>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_SchoolGraduation}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </Grid>
             </Border>
             <Label Text="{x:Binding [SelectedSchoolGraduation]}" Style="{StaticResource ValidationErrorLabel}" />
@@ -47,8 +59,13 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding CompletionStates}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_CompletionState"
                             SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </Grid>
             </Border>
             

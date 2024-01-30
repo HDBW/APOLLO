@@ -4,6 +4,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
              x:DataType="viewModels:MobilityEditViewModel"
              Title="{x:Static strings:Resources.MobilityEditView_Title}"
              IsBusy="{x:Binding IsBusy}"
@@ -29,8 +30,13 @@
             <Grid ColumnDefinitions="*, auto" >
                 <Picker ItemsSource="{x:Binding WillingsToTravel}"
                         ItemDisplayBinding="{x:Binding Text}"
+                        x:Name="PART_WillingToTravel"
                         SelectedItem="{x:Binding SelectedWillingToTravel, Mode=TwoWay}"/>
-                <Image Grid.Column="1" Source="shortlist.png" />
+                <ImageButton Grid.Column="1" Source="shortlist.png">
+                    <ImageButton.Behaviors>
+                        <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_WillingToTravel}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
             </Grid>
         </Border>
         

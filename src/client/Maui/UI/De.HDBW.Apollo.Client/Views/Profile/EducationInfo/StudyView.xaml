@@ -32,12 +32,17 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding UniverityDegrees}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_UniverityDegree"
                             SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}">
                         <Picker.Behaviors>
                             <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="SelectedIndexChanged" CommandParameter="SelectedUniverityDegree" />
                         </Picker.Behaviors>
                     </Picker>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_UniverityDegree}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </Grid>
             </Border>
             <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
@@ -47,8 +52,15 @@
                 <Grid ColumnDefinitions="*, auto" >
                     <Picker ItemsSource="{x:Binding CompletionStates}"
                             ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_CompletionState"
                             SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
-                    <Image Grid.Column="1" Source="shortlist.png" />
+                    
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    
                 </Grid>
             </Border>
             
