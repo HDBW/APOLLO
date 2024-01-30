@@ -12,10 +12,10 @@
              x:DataType="viewModels:PersonalInformationEditViewModel"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <VerticalStackLayout Padding="24,0">
+    <VerticalStackLayout Style="{StaticResource FormContent}">
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" Style="{StaticResource Noto14SemiBold}"/>
         <Border Style="{StaticResource InputBorderStyle}">
-            <Entry  Text="{x:Binding Name, Mode=TwoWay}">
+            <Entry Text="{x:Binding Name, Mode=TwoWay}">
                 <Entry.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
                 </Entry.Behaviors>
@@ -44,7 +44,7 @@
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleDisabilitiesCommand}" />
             </HorizontalStackLayout.GestureRecognizers>
             <CheckBox InputTransparent="True" IsChecked="{x:Binding Disabilities, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" />
-            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" VerticalOptions="Center" Margin="8,0,0,0"/>
+            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="8,0,0,0"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

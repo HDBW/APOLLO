@@ -30,8 +30,8 @@
     <!--cancel&ok-->
     <item name="android:textColor">@color/colorPrimary</item>
 
-    <!--header background doesnt work-->
-    <item name="colorAccent">#32FF00</item>
+    <!--header background doesnt work in darktheme-->
+    <item name="colorAccent">@color/colorPrimary</item>
   </style>
   
   <!-- Remark: Change colorPrimary for Actionbar to avoid animation with primary color. -->

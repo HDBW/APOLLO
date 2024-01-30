@@ -1075,7 +1075,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
 
 Möchtest du es erneut versuchen?
 
-Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
+Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="GlobalError_UnableToSaveData" xml:space="preserve">
     <value>Beim Speichern der Daten ist ein Fehler aufgetreten.</value>
@@ -1208,7 +1208,7 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
 
 Möchtest du weiter deine Daten eingeben?
 
-Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
+Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="GlobalError_InvalidEmail" xml:space="preserve">
     <value>Die E-Mail ist ungültig.</value>
@@ -1272,5 +1272,14 @@ Hinweis: Nicht gespeicherte Daten gehen verlohren.</value>
   </data>
   <data name="Global_Validity" xml:space="preserve">
     <value>Gültigkeit</value>
+  </data>
+  <data name="ProfileView_Empty_Headline" xml:space="preserve">
+    <value>Du hast noch keine Informationen in diesem Bereich hinterlegt.</value>
+  </data>
+  <data name="ProfileView_Empty_Subline" xml:space="preserve">
+    <value>Füge jetzt Deine ersten persönlichen Informationen hinzu. So verbessern sich Deine Angebote und Möglichkeiten.</value>
+  </data>
+  <data name="ProfileView_Empty_Button" xml:space="preserve">
+    <value>Los geht's!</value>
   </data>
 </root>

@@ -18,7 +18,7 @@
             <VerticalStackLayout>
                 <HorizontalStackLayout Margin="24,16,24,16">
                     <CheckBox x:Name="PART_DSGVO" VerticalOptions="Center" IsChecked="{x:Binding ConfirmedDSGVO, Mode=TwoWay}"/>
-                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" VerticalOptions="Center" >
+                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" >
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{x:Static strings:Resources.ExtendedSplashScreenView_DSGVO}" TextDecorations="Underline" FontAttributes="Bold">
@@ -35,7 +35,7 @@
 
                 <HorizontalStackLayout Margin="24,0,24,16" IsVisible="{x:Binding IsChecked, Source={x:Reference PART_DSGVO}}">
                     <CheckBox x:Name="PART_AllowContact" VerticalOptions="Center"  IsChecked="{x:Binding ConfirmedDataUsage, Mode=TwoWay}"/>
-                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" VerticalOptions="Center" LineBreakMode="WordWrap">
+                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" LineBreakMode="WordWrap">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{x:Static strings:Resources.ExtendedSplashScreenView_AGB}" TextDecorations="Underline" FontAttributes="Bold">

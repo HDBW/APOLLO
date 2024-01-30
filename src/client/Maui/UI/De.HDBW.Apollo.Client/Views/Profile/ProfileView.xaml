@@ -34,31 +34,33 @@
         </DataTemplate>
 
         <DataTemplate x:Key="RecommendationValueTemplate" x:DataType="genericModels:RecommendationValue">
-            <Border BackgroundColor="{StaticResource Neutral400}" Padding="12,12,12,12" Margin="12,0,12,12" StrokeThickness="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
-                <VerticalStackLayout>
-                    <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}"/>
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Label Text="{x:Binding ProgressDisplayText}" Style="{StaticResource Noto12Bold}" VerticalOptions="Center" Margin="0,0,8,0" TextColor="{StaticResource Primary}"/>
-                        <ProgressBar Grid.Column="1" Progress="{x:Binding Progress}" VerticalOptions="Center"/>
-                    </Grid>
-                    <Label Text="{x:Binding Subline}" Style="{StaticResource Noto14}" />
-                    <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Recommendations}" Padding="0,8" Spacing="8">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="interactionModels:InteractionEntry">
-                                <HorizontalStackLayout>
-                                    <HorizontalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
-                                    </HorizontalStackLayout.GestureRecognizers>
-                                    <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,4,8,4"/>
-                                    <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+            <Border StrokeThickness="0">
+                <Border BackgroundColor="{StaticResource Neutral400}" Padding="12,12,12,12" Margin="12,12,12,12" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+                        <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}"/>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="{x:Binding ProgressDisplayText}" Style="{StaticResource Noto12Bold}" VerticalOptions="Center" Margin="0,0,8,0" TextColor="{StaticResource Primary}"/>
+                            <ProgressBar Grid.Column="1" Progress="{x:Binding Progress}" VerticalOptions="Center"/>
+                        </Grid>
+                        <Label Text="{x:Binding Subline}" Style="{StaticResource Noto14}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Recommendations}" Padding="0,8" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="interactionModels:InteractionEntry">
+                                    <HorizontalStackLayout>
+                                        <HorizontalStackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
+                                        </HorizontalStackLayout.GestureRecognizers>
+                                        <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,4,8,4"/>
+                                        <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
-                </VerticalStackLayout>
+                </Border>
             </Border>
         </DataTemplate>
 
@@ -75,11 +77,12 @@
                                           InteractionEntryTemplate="{StaticResource ProfileInteractionTemplate}"/>
 
         <DataTemplate x:Key="RegisteredUserTemplate" x:DataType="viewModels:ProfileViewModel">
-            <VerticalStackLayout VerticalOptions="CenterAndExpand" Padding="24,0" BindingContext="{x:Binding BindingContext, Source={x:Reference PART_Root}}">
-                <Label Text="Ganz schönn leer hier." />
-                <Label Text="Tipp: Füll jetzt Dein Profil aus. Und wir schicken Dir noch passendere Vorschläge."/>
-                <Button Text="Los gehts" Margin="0,8" Command="{x:Binding BindingContext.EditPersonalInformationsCommand, Source={x:Reference PART_Root}}"/>
-            </VerticalStackLayout>
+            <Grid Style="{StaticResource GridContentView}" RowDefinitions="auto, auto, *, auto">
+                <Label Grid.Row="0" Text="{x:Static strings:Resources.ProfileView_Empty_Headline}" Margin="0,0,0,16" Style="{StaticResource Noto16SemiBold}"/>
+                <Label Grid.Row="1" Text="{x:Static strings:Resources.ProfileView_Empty_Subline}" Margin="0,0,0,24" Style="{StaticResource Noto16}"/>
+                <Image Grid.Row="2" Source="emptyscreenimage.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                <Button Grid.Row="3" Text="{x:Static strings:Resources.ProfileView_Empty_Button}" Margin="0,8" Command="{x:Binding BindingContext.EditPersonalInformationsCommand, Source={x:Reference PART_Root}}"/>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="UnregisteredUserTemplate" x:DataType="viewModels:ProfileViewModel">
