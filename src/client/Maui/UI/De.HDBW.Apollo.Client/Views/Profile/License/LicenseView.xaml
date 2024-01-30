@@ -16,8 +16,7 @@
         <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <VerticalStackLayout Margin="24,0">
-
+        <VerticalStackLayout Style="{StaticResource FormContent}">
             <Label Text="{x:Static strings:Resources.Global_Designation}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Name" Text="{x:Binding Name, Mode=TwoWay}" >

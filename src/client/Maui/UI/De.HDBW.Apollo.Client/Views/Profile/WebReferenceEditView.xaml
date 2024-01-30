@@ -13,7 +13,7 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="DefaultContactTemplate" x:DataType="models:WebReferenceEntry">
-            <ContentView MinimumHeightRequest="70" BackgroundColor="{StaticResource Neutral500}">
+            <ContentView Style="{StaticResource ContentViewListContent}">
                 <SwipeView Threshold="100" Margin="0,0,0,2">
                     <SwipeView.RightItems>
                         <SwipeItems Mode="Execute">
@@ -25,20 +25,23 @@
                             </SwipeItemView>
                         </SwipeItems>
                     </SwipeView.RightItems>
-                    <Border Background="{StaticResource Background}" StrokeThickness="0">
+                    <Border Style="{StaticResource BorderListContent}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="24,6,24,6" MinimumHeightRequest="70">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="generic:StringValue">
-                                    <Grid ColumnDefinitions="auto, *">
-                                        <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" />
-                                        <Label Margin="8,0,0,0" Grid.Column="1" Text="{x:Binding Data, Mode=OneWay}" HorizontalTextAlignment="End" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="*, auto">
+                            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="0,0,8,0" MinimumHeightRequest="70">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="generic:StringValue">
+                                        <Grid ColumnDefinitions="auto, *">
+                                            <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" />
+                                            <Label Margin="8,0,0,0" Grid.Column="1" Text="{x:Binding Data, Mode=OneWay}" HorizontalTextAlignment="End" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                            <Image Grid.Column="1" WidthRequest="16" HeightRequest="16" Source="arrow_16x16_right.png"/>
+                        </Grid>
                     </Border>
                 </SwipeView>
             </ContentView>
@@ -54,7 +57,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="Fill">
-                    <Grid Padding="24" RowDefinitions="auto, auto, *">
+                    <Grid Style="{StaticResource GridEmptyView}" RowDefinitions="auto, auto, *">
                         <Label Grid.Row="0" Text="{x:Static strings:Resources.WebReferenceEditView_Headline}" Margin="0,0,0,16" Style="{StaticResource Noto16SemiBold}"/>
                         <Label Grid.Row="1" Text="{x:Static strings:Resources.WebReferenceEditView_Subline}" Margin="0,0,0,24" Style="{StaticResource Noto16}"/>
                         <Image Grid.Row="2" Source="emptyscreenimage.png" Aspect="AspectFit" VerticalOptions="Fill"/>
