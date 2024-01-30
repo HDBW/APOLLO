@@ -6,6 +6,7 @@
              x:Class="De.HDBW.Apollo.Client.Views.Profile.PersonalInformationEditView"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.PersonalInformationEditView_Title}"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:PersonalInformationEditViewModel"
@@ -28,9 +29,14 @@
                 <cdp:NullableDatePicker HorizontalOptions="Fill"
                                         VerticalOptions="Center"
                                         IsClearButtonVisible="False"
+                                        x:Name="PART_BirthDate"
                                         NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                 <ImageButton Source="delete.png" Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" VerticalOptions="Center"/>
-                <Image Source="calendar.png" Grid.Column="2" VerticalOptions="Center"/>
+                <ImageButton Source="calendar.png" Grid.Column="2" VerticalOptions="Center">
+                    <ImageButton.Behaviors>
+                        <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_BirthDate}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
             </Grid>
         </Border>
         <HorizontalStackLayout Margin="0,20,0,0">
