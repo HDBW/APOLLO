@@ -19,7 +19,7 @@
         <VerticalStackLayout Style="{StaticResource FormContent}">
             <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Text="{x:Binding Description, Mode=TwoWay}">
+                <Entry Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" behaviours:SetFocusOnDatePickerCompletedBehavior.NextElement="{x:Reference PART_Start}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
                     </Entry.Behaviors>
