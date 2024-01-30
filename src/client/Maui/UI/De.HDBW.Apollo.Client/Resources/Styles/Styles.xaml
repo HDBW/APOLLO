@@ -664,7 +664,7 @@
 
     <Style x:Key="PopupContent" TargetType="Grid">
         <Setter Property="VerticalOptions" Value="Start" />
-        <Setter Property="Margin" Value="{OnPlatform '0', Android='20,0'}" />
+        <Setter Property="Margin" Value="0" />
     </Style>
     
     <Style x:Key="Noto14Primary" TargetType="Label" BasedOn="{StaticResource Noto14}">

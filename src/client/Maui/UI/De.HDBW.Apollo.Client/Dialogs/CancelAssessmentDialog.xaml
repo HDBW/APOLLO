@@ -13,8 +13,8 @@
                 <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.CancelAssessmentDialog_Title}" Margin="0,0,0,16" Style="{StaticResource Noto20Bold}" />
                 <Label Grid.Row="2" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.CancelAssessmentDialog_Message}" Style="{StaticResource Noto16}"/>
                 <Grid ColumnDefinitions="*,8,*" Grid.Row="4">
-                    <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Continue}" Style="{StaticResource BorderButton}"  Command="{x:Binding ContinueCommand}" SizeChanged="OnSizeChanged"/>
-                    <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Cancel}" Command="{x:Binding CancelCommand}" Grid.Column="2" SizeChanged="OnSizeChanged"/>
+                    <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Continue}" Style="{StaticResource BorderButton}"  Command="{x:Binding ContinueCommand}" MeasureInvalidated="OnSizeChanged"/>
+                    <Button Text="{x:Static strings:Resources.CancelAssessmentDialog_Cancel}" Command="{x:Binding CancelCommand}" Grid.Column="2" MeasureInvalidated="OnSizeChanged"/>
                 </Grid>
             </Grid>
         </Border>

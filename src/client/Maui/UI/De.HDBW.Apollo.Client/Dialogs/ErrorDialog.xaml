@@ -15,7 +15,7 @@
                 <ScrollView Grid.Row="2" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never" VerticalOptions="Center">
                     <Label HorizontalTextAlignment="Center" Text="{x:Binding Message}" Style="{StaticResource Noto16}"/>
                 </ScrollView>
-                <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}" Grid.Row="4" SizeChanged="OnSizeChanged"/>
+                <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}" Grid.Row="4" MeasureInvalidated="OnSizeChanged"/>
             </Grid>
         </Border>
     </toolkit:Popup.Content>

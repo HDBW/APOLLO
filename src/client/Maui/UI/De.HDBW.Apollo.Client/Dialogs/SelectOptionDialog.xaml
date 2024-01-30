@@ -27,7 +27,7 @@
                                     SelectedItem="{x:Binding SelectedOption, Mode=TwoWay}"
                                     ItemsLayout="VerticalList"/>   
                 <Grid Grid.Row="4">
-                    <Button Text="{x:Static strings:Resources.SelectOptionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}"  SizeChanged="OnSizeChanged"/>
+                    <Button Text="{x:Static strings:Resources.SelectOptionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}" MeasureInvalidated="OnSizeChanged"/>
                 </Grid>
             </Grid>
         </Border>

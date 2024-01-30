@@ -16,7 +16,7 @@
                     </VerticalStackLayout>
                  </ScrollView>
                 <Grid Grid.Row="3">
-                    <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}" SizeChanged="OnSizeChanged" />
+                    <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}" MeasureInvalidated="OnSizeChanged"/>
                 </Grid>
             </Grid>
         </Border>

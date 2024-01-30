@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.Client.Helper
         {
 #if ANDROID
             var view = popup.Content as IView;
-            if (button == null || view == null)
+            if (button == null || view == null || button.DesiredSize == Size.Zero)
             {
                 return;
             }

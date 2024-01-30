@@ -11,16 +11,16 @@
     <toolkit:Popup.Content>
         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
             <Grid RowDefinitions="20, auto,32, auto, 20" SizeChanged="HandleRootSizeChanged" Style="{StaticResource PopupContent}">
-                <ScrollView Grid.Row="1" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never" >
+                <ScrollView Grid.Row="1" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never">
                     <VerticalStackLayout>
                         <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ErrorDialog_Title}" Margin="0,0,0,16" Style="{StaticResource Noto20Bold}"/>
                         <Label HorizontalTextAlignment="Center" Text="{x:Binding Message}" Style="{StaticResource Noto16}"/>
                     </VerticalStackLayout>
                 </ScrollView>
-        
+
                 <Grid ColumnDefinitions="*,8,*" Grid.Row="3" >
-                    <Button Text="{x:Static strings:Resources.Global_No}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}" SizeChanged="OnSizeChanged" HorizontalOptions="Fill"/>
-                    <Button Text="{x:Static strings:Resources.Global_Yes}" Command="{x:Binding ConfirmCommand}" Grid.Column="2" SizeChanged="OnSizeChanged" HorizontalOptions="Fill"/>
+                    <Button Text="{x:Static strings:Resources.Global_No}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}" MeasureInvalidated="OnSizeChanged" HorizontalOptions="Fill"/>
+                    <Button Text="{x:Static strings:Resources.Global_Yes}" Command="{x:Binding ConfirmCommand}" Grid.Column="2" MeasureInvalidated="OnSizeChanged" HorizontalOptions="Fill"/>
                 </Grid>
             </Grid>
         </Border>
