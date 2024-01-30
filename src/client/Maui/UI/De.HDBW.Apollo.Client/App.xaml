@@ -14,6 +14,8 @@
             <converter:SingleItemListConverter x:Key="SingleItemListConverter" />
             <Style x:Key="DefaultPageStyle" TargetType="ContentPage">
                 <Setter Property="Padding" Value="0" />
+                <!-- In order to get Icons in TitleBar on ios in Primary color -->
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.FlyoutBehavior" Value="Disabled" />
                 <Setter Property="Shell.TabBarIsVisible" Value="False" />
                 <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
