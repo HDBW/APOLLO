@@ -28,8 +28,8 @@
 
         <DataTemplate x:Key="StringValueTemplate" x:DataType="genericModels:StringValue">
             <Grid RowDefinitions="Auto,Auto" Style="{StaticResource StringValue}" >
-                <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" />
-                <Label Text="{x:Binding Data}" Grid.Row="1" Style="{StaticResource Noto14}"/>
+                <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}"/>
+                <Label Text="{x:Binding Data}" Grid.Row="1" Style="{StaticResource Noto14}" MaxLines="3" LineBreakMode="TailTruncation"/>
             </Grid>
         </DataTemplate>
 
