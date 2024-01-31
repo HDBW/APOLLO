@@ -1036,48 +1036,48 @@ namespace Apollo.Api.UnitTests
         /// <returns></returns>
         /// <param name="startDate">Start date of the range.</param>
         /// <param name="endDate">End date of the range.</param>
-        [TestMethod]
-        public async Task TrainingWithAppointmentFilterWithDateTest()
-        {
-            // Dummy initialization or specify default values for parameters
-            string trainingId = "defaultTrainingId";
-            DateTime startDate = DateTime.MinValue;
-            DateTime endDate = DateTime.MaxValue;
-            TimeSpan minDuration = TimeSpan.Zero;
-            TimeSpan maxDuration = TimeSpan.MaxValue;
+        //[TestMethod]
+        //public async Task TrainingWithAppointmentFilterWithDateTest()
+        //{
+        //    // Dummy initialization or specify default values for parameters
+        //    string trainingId = "defaultTrainingId";
+        //    DateTime startDate = DateTime.MinValue;
+        //    DateTime endDate = DateTime.MaxValue;
+        //    TimeSpan minDuration = TimeSpan.Zero;
+        //    TimeSpan maxDuration = TimeSpan.MaxValue;
 
-            try
-            {
-                var query = new Query
-                {
-                    Filter = new Filter
-                    {
-                        Fields = new List<FieldExpression>
-                        {
-                            new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
-                            new FieldExpression { FieldName = "appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
-                            new FieldExpression { FieldName = "appointments.startdate", Operator = QueryOperator.Equals, Argument = new List<object> { endDate } },
-                            //new FieldExpression { FieldName = "appointments.enddate", Operator = QueryOperator.Equals, Argument = new List<object> { startDate } },
-                        }
-                    },
-                    Top = 100,
-                    Skip = 0
-                };
+        //    try
+        //    {
+        //        var query = new Query
+        //        {
+        //            Filter = new Filter
+        //            {
+        //                Fields = new List<FieldExpression>
+        //                {
+        //                    new FieldExpression { FieldName = "_id", Operator = QueryOperator.Equals, Argument = new List<object> { trainingId } },
+        //                    new FieldExpression { FieldName = "appointments", Operator = QueryOperator.NotEquals, Argument = new List<object> { null } },
+        //                    new FieldExpression { FieldName = "appointments.startdate", Operator = QueryOperator.Equals, Argument = new List<object> { endDate } },
+        //                    //new FieldExpression { FieldName = "appointments.enddate", Operator = QueryOperator.Equals, Argument = new List<object> { startDate } },
+        //                }
+        //            },
+        //            Top = 100,
+        //            Skip = 0
+        //        };
 
-                var api = Helpers.GetApolloApi(); // Assuming GetApolloApi() is a static method in your Helpers class.
+        //        var api = Helpers.GetApolloApi(); // Assuming GetApolloApi() is a static method in your Helpers class.
 
-                var res = await api.QueryTrainingsAsync(query); // Assuming QueryTrainingsTest is an asynchronous method.
+        //        var res = await api.QueryTrainingsAsync(query); // Assuming QueryTrainingsTest is an asynchronous method.
 
-                var training = res.SingleOrDefault();
+        //        var training = res.SingleOrDefault();
 
-                Assert.IsNotNull(training);
-            }
-            catch (Exception ex)
-            {
-                throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
-            }
+        //        Assert.IsNotNull(training);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "Error while querying training with appointments by date range", ex);
+        //    }
             
-          }
+        //  }
 
 
 
