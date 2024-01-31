@@ -27,7 +27,7 @@ namespace Apollo.Api
         /// <param name="itemType"></param>
         /// all values of the given language are returned.</param>
         /// <returns>NUll if not record found.</returns>
-        internal async Task<ApolloList> GetListInternalAsync(string? lng, string itemType)
+        public async Task<ApolloList> GetListInternalAsync(string? lng, string itemType)
         {
             Query query = new Query
             {
@@ -64,12 +64,13 @@ namespace Apollo.Api
                 return new ApolloList() {  Items= new List<ApolloListItem>(), ItemType = itemType};
         }
 
+
         /// <summary>
         /// Deletes the ApolloLista with a given identifiers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        internal async Task<long> DeleteListInternalAsync(string[] ids)
+        public async Task<long> DeleteListInternalAsync(string[] ids)
         {   
             var cnt = await _dal.DeleteManyAsync(ApolloApi.GetCollectionName<ApolloList>(), ids);
             
@@ -85,7 +86,7 @@ namespace Apollo.Api
         /// <param name="returnValuesOnly">By default set on true. It returns the value of the item only.
         /// If FALSE, it returns teh description of the item.</param>
         /// <returns></returns>
-        internal async Task<List<string>> QueryListInternalAsync(string lng, string itemType, string? contains)
+        public async Task<List<string>> QueryListInternalAsync(string lng, string itemType, string? contains)
         {   
             Query query = new Query
             {
@@ -131,7 +132,7 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="list">If the Id is specified, the update will be performed.</param>
         /// <returns></returns>
-        internal  async Task<List<string>> CreateOrUpdateListAsync(ApolloList list)
+        public async Task<List<string>> CreateOrUpdateListAsync(ApolloList list)
         {
             try
             {

@@ -31,7 +31,7 @@ namespace Apollo.Common.Entities
         public string DurationDescription { get; set; }
 
         //Maybe autocalculated by Occurences?
-        public TimeSpan Duration { get; set; }
+        public int DurationInMin { get; set; }
 
         //Maybe better as a List?
         public List<Occurence> Occurences { get; set; }
@@ -48,7 +48,7 @@ namespace Apollo.Common.Entities
         /// 1ZS = 60 Minutes
         /// </summary>
         //[BsonElement("TimeInvestAttendee")]
-        public TimeSpan TimeInvestAttendee { get; set; }
+        public int TimeInvestAttendeeInMin { get; set; }
 
 
         //[BsonElement("TimeModel")]

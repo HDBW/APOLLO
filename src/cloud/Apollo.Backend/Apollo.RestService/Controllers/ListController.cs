@@ -32,33 +32,33 @@ namespace Apollo.Service.Controllers
         }
 
         /// <summary>
-        /// Create item like Qualification if there is no ID on request or Updates an existing Qualifications List if there is ID.
+        /// Returns the set of ApolloList items that matches specified filter.
         /// </summary>
-        /// <param name="req">The request containing the data for creation or update list.</param>
-        /// <returns>A response containing the updated or created List.</returns>
-        /// <response code="200">Returns the updated training.</response>
+        /// <param name="req">The request that filters items..</param>
+        /// <returns>A response containing the list of items..</returns>
+        /// <response code="200">List of ApolloList items is returned.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPut]
-        [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of List items that matches specified filter.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of ApolloList items that matches specified filter.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<QueryListResponse> GetListAsync([FromBody] QueryListRequest req)
+        public async Task<GetListResponse> GetListAsync([FromBody] GetListRequest req)
         {
             try
             {
-                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
+                _logger?.LogTrace($"{nameof(GetListAsync)} entered.");
 
                 // Assuming req contains the Training object to create or update.
-                var result = await _api.QueryQualificationsListAsync(req.Language, req.Contains);
+                var result = await _api.GetListInternalAsync(req.Lng, req.ItemType);
 
-                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
+                _logger?.LogTrace($"{nameof(GetListAsync)} completed.");
 
                 // Return the result of the create/update operation as a response.
-                return new QueryListResponse { Result = result };
+                return new GetListResponse { Result = result };
             }
             catch (Exception ex)
             {
                 // Log and re-throw any exceptions encountered.
-                _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
+                _logger?.LogError($"{nameof(GetListAsync)} failed: {ex.Message}");
                 throw;
             }
         }
