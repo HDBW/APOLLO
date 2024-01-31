@@ -21,39 +21,54 @@ namespace Apollo.Api
 
         #region Internal Helpers
         /// <summary>
-        /// Returns the list of values of the given item type.
+        /// Returns the ApolloList list with all values of the given item type.
         /// </summary>
-        /// <param name="lng"></param>
-        /// <param name="itemType"></param>
-        /// all values of the given language are returned.</param>
-        /// <returns>NUll if not record found.</returns>
-        public async Task<ApolloList> GetListInternalAsync(string? lng, string itemType)
+        /// <param name="lng">It must be specified if the <see cref="id"/> argument is not specified.</param>
+        /// <param name="itemType">It must be specified if the <see cref="id"/> argument is not specified.</param>
+        /// <param name="id">If specified arguments <see cref="lng"/> and <see cref="itemType"/> are ignored.</param>
+        /// <returns>The instance of the <see cref="ApolloList"/> that was requested.
+        /// Null if the list cannot be found.</returns>
+        public async Task<ApolloList> GetListInternalAsync(string? lng = null, string? itemType = null, string? id = null)
         {
+            // TODO validate if all args correctlly set
+
             Query query = new Query
             {
                 Filter = new Filter(),
             };
 
-            //
-            // We filter by requested language.
-            if (!String.IsNullOrEmpty(lng))
-            {               
+            if (!String.IsNullOrEmpty(id))
+            {
                 query.Filter.Fields.Add(new FieldExpression()
                 {
                     Operator = QueryOperator.Equals,
-                    Argument = new List<object>() { lng },
-                    FieldName = "Items.Lng"
+                    Argument = new List<object>() { id },
+                    FieldName = "_id"
                 });
             }
-
-            //
-            // We filter requested language.
-            query.Filter.Fields.Add(new FieldExpression()
+            else
             {
-                Operator = QueryOperator.Equals,
-                Argument = new List<object>() { itemType },
-                FieldName = nameof(ApolloList.ItemType)
-            });
+                //
+                // We filter by requested language.
+                if (!String.IsNullOrEmpty(lng))
+                {
+                    query.Filter.Fields.Add(new FieldExpression()
+                    {
+                        Operator = QueryOperator.Equals,
+                        Argument = new List<object>() { lng },
+                        FieldName = "Items.Lng"
+                    });
+                }
+
+                //
+                // We filter requested language.
+                query.Filter.Fields.Add(new FieldExpression()
+                {
+                    Operator = QueryOperator.Equals,
+                    Argument = new List<object>() { itemType! },
+                    FieldName = nameof(ApolloList.ItemType)
+                });
+            }
 
             // this must return the single item.
             var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<ApolloList>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
@@ -61,7 +76,7 @@ namespace Apollo.Api
             if (res.FirstOrDefault() != null)
                 return Convertor.ToApolloList(res.FirstOrDefault()!);
             else
-                return new ApolloList() {  Items= new List<ApolloListItem>(), ItemType = itemType};
+                return new ApolloList() {  Items= new List<ApolloListItem>(), ItemType = itemType == null?  null! : itemType!};
         }
 
 
