@@ -24,7 +24,7 @@ namespace Apollo.Api.UnitTests
         /// <summary>
         /// The list of ApolloList objects used for testing.
         /// </summary>
-        private List<ApolloList> _tesList = new List<ApolloList>()
+        private List<ApolloList> _testList = new List<ApolloList>()
         {
              new ApolloList()
              {
@@ -34,17 +34,19 @@ namespace Apollo.Api.UnitTests
                  {
                      new ApolloListItem()
                      {
+                         ListItemId = 1,
                          Lng = "DE",
                          Value = "C# Entwickler"
                      },
                      new ApolloListItem()
                      {
+                         ListItemId = 2,
                          Lng = "EN",
                          Value = "C# Developer"
                      }
                  }
              },
-              new ApolloList()
+             new ApolloList()
              {
                  Id = "UT02",
                  ItemType = _cTestListType1,
@@ -52,17 +54,19 @@ namespace Apollo.Api.UnitTests
                  {
                      new ApolloListItem()
                      {
+                         ListItemId = 1,
                          Lng = "DE",
                          Value = "Python Entwickler"
                      },
                      new ApolloListItem()
                      {
+                         ListItemId = 2,
                          Lng = "EN",
                          Value = "Python Developer"
                      }
                  }
              },
-                 new ApolloList()
+             new ApolloList()
              {
                  Id = "UT03",
                  ItemType = _cTestListType2,
@@ -70,11 +74,13 @@ namespace Apollo.Api.UnitTests
                  {
                      new ApolloListItem()
                      {
+                         ListItemId = 1,
                          Lng = "DE",
                          Value = "C++ Entwickler"
                      },
                      new ApolloListItem()
                      {
+                         ListItemId= 2,
                          Lng = "EN",
                          Value = "C++ Developer"
                      }
@@ -87,18 +93,147 @@ namespace Apollo.Api.UnitTests
                  Items = new List<ApolloListItem>()
                  {
                      new ApolloListItem()
-                     {
+                     {   ListItemId = 1,
                          Lng = "DE",
                          Value = "JAVA Entwickler"
                      },
                      new ApolloListItem()
-                     {
+                     {   ListItemId= 2,
                          Lng = "EN",
                          Value = "C++ Developer"
                      }
                  }
              },
         };
+
+      
+
+        /// <summary>
+        /// Creates the test lists in the database.
+        /// </summary>
+        [TestMethod]
+        public async Task InsertTestLists()
+        {
+ 
+            var api = Helpers.GetApolloApi();
+
+            // Create a list to store qualification IDs for all inserted lists
+            List<string> allIdsInApolloList = new List<string>();
+
+            // Insert each test list and accumulate qualification IDs
+            foreach (var apolloList in _testList)
+            {
+                var qualificationIds = await api.CreateOrUpdateListAsync(apolloList);
+                Assert.IsNotNull(qualificationIds);
+                allIdsInApolloList.AddRange(qualificationIds);
+            }
+
+            // Check if the total count of qualificationIds matches the expected count
+            Assert.AreEqual(_testList.SelectMany(list => list.Items).Count(), allIdsInApolloList.Count);
+
+
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task GetListInternalAsyncTest()
+        {
+            var api = Helpers.GetApolloApi();
+            ;
+            var result = await api.GetListInternalAsync("DE", "_cTestListType1");
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("_cTestListType1", result.ItemType);
+            Assert.AreEqual(1, result.Items.Count);
+            Assert.AreEqual("DE", result.Items[0].Lng);
+            Assert.AreEqual("C# Entwickler", result.Items[0].Value);
+        }
+
+
+        /// <summary>
+        /// Tests creating or updating a Qualification List object and then cleaning up by deleting it.
+        /// </summary>
+        [TestMethod]
+        public async Task CreateOrUpdateListsTest()
+        {
+
+            var api = Helpers.GetApolloApi();
+
+            // Update an existing Apollo list
+            var existingApolloList = _testList.FirstOrDefault();
+            Assert.IsNotNull(existingApolloList, "Empty item _testList.");
+
+            // Update the existing Apollo list
+            existingApolloList.Items[1].Lng = "EN Updated";
+            existingApolloList.Items[1].Value = "C# Developer Updated";
+
+            var existingApolloListId = await api.CreateOrUpdateListAsync(existingApolloList);
+            Assert.IsNotNull(existingApolloListId);
+
+            // Retrieve the updated list
+            var updatedList = await api.GetListInternalAsync("DE", _cTestListType1); 
+
+            // Assert that the existing list is updated
+            Assert.IsNotNull(updatedList);
+            Assert.AreEqual("EN Updated", updatedList.Items[1].Lng);
+            Assert.AreEqual("C# Developer Updated", updatedList.Items[1].Value);
+
+            // Add a new Item to the existing List
+            var newQualificationList = new ApolloList
+            {
+                Id = "UT01",
+                ItemType = _cTestListType1,
+                Items = new List<ApolloListItem>
+                {
+                    new ApolloListItem
+                    {
+                        ListItemId = 3,
+                        Lng = "DE",
+                        Value = "New Value Item"
+                    }
+                }
+            };
+
+            var newQualificationIds = await api.CreateOrUpdateQualificationAsync(newQualificationList);
+            Assert.IsNotNull(newQualificationIds);
+
+            // Retrieve the list after adding the new item
+            var newListWithNewItem = await api.GetListInternalAsync("DE", _cTestListType1);
+
+            // Assert that the new item is present in the list
+            Assert.IsNotNull(newListWithNewItem);
+            Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == 3 ));
+       }
+
+    
+
+
+     
+
+
+        /// <summary>
+        /// Tests querying Qualification List objects that match with the language.
+        /// </summary>
+        [TestMethod]
+        public async Task QueryListAsyncTest()
+        {
+            var api = Helpers.GetApolloApi();
+            var language = "DE";
+        
+            // Perform the query
+            var results = await api.QueryListInternalAsync(language, "TestListType1", null);
+
+            // Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Count > 0);
+
+        }
+
 
         /// <summary>
         /// Makes sure that all test records are deleted after each test execution.
@@ -109,112 +244,15 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            var deleteResult = await api.DeleteListInternalAsync(_tesList.Select(l=>l.Id).ToArray());
-            Assert.AreEqual(_tesList.Count, deleteResult);
+            var deleteResult = await api.DeleteListInternalAsync(_testList.Select(l => l.Id).ToArray());
+            Assert.AreEqual(_testList.Count, deleteResult);
         }
 
-        /// <summary>
-        /// Creates the test lists in the database.
-        /// </summary>
-        /// <returns></returns>
-        private async Task InsertTestLists()
-        {
-            var api = Helpers.GetApolloApi();
-            
-        }
-
-        ///// <summary>
-        ///// Tests creating or updating a Qualification List object and then cleaning up by deleting it.
-        ///// </summary>
-        //[TestMethod]
-        //[TestCategory("Prod")]
-        //public async Task CreateOrUpdateQualificationListTest()
-        //{
-        //    var api = Helpers.GetApolloApi();
-
-        //    /// Create a new qualification
-        //      var qualificationListItems = new List<ListItem>
-        //            {
-        //                new ListItem
-        //                {
-        //                    Name = "C# Programmer",
-        //                    Description = "C# Programming Language",
-        //                    Lng = "123"
-        //                },
-        //                new ListItem
-        //                {
-        //                    Name = "Python Programmer",
-        //                    Description = "Python Programming Language",
-        //                    Lng = "124"
-        //                }
-        //            };
-
-        //    /// Create a new List object and add the qualification to the Items property
-        //    var qualificationList = new ApolloList
-        //    {
-        //        ItemType = "Qualification",
-        //        Items = qualificationListItems
-        //    };
-
-        //    /// Insert the new qualification
-        //    var qualificationIds = await api.CreateOrUpdateQualificationAsync(new List<ApolloList> { qualificationList });
-        //    Assert.IsNotNull(qualificationIds);
-        //    Assert.AreEqual(1, qualificationIds.Count);
-
-        //    /// Update an existing qualification (assuming there is an existing qualification with the same ItemType and language)
-        //    var updatedQualificationListItems = new List<ListItem>
-        //    {
-        //        new ListItem
-        //        {
-        //            Name = "Updated C# Programmer",
-        //            Description = "Updated C# Programming Language",
-        //            Lng = "123"
-        //        },
-        //        new ListItem
-        //        {
-        //            Name = "New Language Programmer",
-        //            Description = "New Language Programming Language",
-        //            Lng = "125"
-        //        }
-        //    };
-
-        //    /// Create an updated List with the updated qualification and a new qualification with same ID
-        //    var updatedQualificationList = new ApolloList
-        //    {
-        //        Id = qualificationIds[0],
-        //        ItemType = "Qualification",
-        //        Items = updatedQualificationListItems
-        //    };
-
-        //    /// Update the existing qualification and add a new qualification
-        //    var updatedQualificationIds = await api.CreateOrUpdateQualificationAsync(new List<ApolloList> { updatedQualificationList });
-        //    Assert.IsNotNull(updatedQualificationIds);
-        //    Assert.AreEqual(1, updatedQualificationIds.Count);
-
-        //    /// Additional cleanup if needed (delete the qualification)
-        //    //var deleteResult = await api.DeleteQualificationAsync(new string[] { qualificationIds[0] });
-        //    // Assert.AreEqual(1, deleteResult); 
-
-        //}
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [TestMethod]
-        public Task GetListInternalAsyncTest()
-        {
-            throw new NotImplementedException();
-            //TODO.
-            // Create Test ApolloListItem. Make it as a field.
-        }
 
         /// <summary>
         /// Tests querying Qualification List objects that match with the language.
         /// </summary>
         [TestMethod]
-        [TestCategory("It would be nice to be Prod")]
         public async Task QueryQualificationListTest()
         {
             var api = Helpers.GetApolloApi();
@@ -247,3 +285,4 @@ namespace Apollo.Api.UnitTests
 
     }
 }
+
