@@ -839,5 +839,51 @@ private async Task<UpdateResult> UpdateAsync(string collectionName, FilterDefini
 }
 
 
+        /// <summary>
+        /// Finds a user in the 'users' collection by their ObjectId.
+        /// </summary>
+        /// <param name="objectId">The ObjectId of the user to be found.</param>
+        /// <returns>A task representing the asynchronous operation, which upon completion returns the User if found, or null if not found.</returns>
+        public async Task<Apollo.Common.Entities.User> FindUserByObjectIdAsync(string objectId)
+        {
+            var coll = GetCollection("users");
+
+            var filter = Builders<BsonDocument>.Filter.Eq("ObjectId", objectId);
+
+            var document = await coll.Find(filter).FirstOrDefaultAsync();
+
+            if (document == null)
+            {
+                // User not found with given ObjectId, return null or handle as needed.
+                return null;
+            }
+
+            // Deserialize the BsonDocument to User type.
+            return BsonSerializer.Deserialize<Apollo.Common.Entities.User>(document);
+        }
+
+
+        /// <summary>
+        /// Finds a user in the 'users' collection by their email address.
+        /// </summary>
+        /// <param name="email">The email address of the user to be found.</param>
+        /// <returns>A task representing the asynchronous operation, which upon completion returns the User if found, or null if not found.</returns>
+        public async Task<Apollo.Common.Entities.User> FindUserByEmailAsync(string email)
+        {
+            var coll = GetCollection("users"); 
+
+            var filter = Builders<BsonDocument>.Filter.Eq("Email", email);
+
+            var document = await coll.Find(filter).FirstOrDefaultAsync();
+
+            if (document == null)
+            {
+                // User not found with given email, return null or handle as needed.
+                return null;
+            }
+
+            // Deserialize the BsonDocument to User type.
+            return BsonSerializer.Deserialize<Apollo.Common.Entities.User>(document);
+        }
     }
 }
