@@ -803,8 +803,11 @@ namespace Apollo.Api.UnitTests
 
         /// <summary>
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
+        /// Multiple cases are tested, including querying by TrainingName and PublishingDate, and by IndividualStartDate.
+        /// Asserts ensure the correct trainings are returned based on the query criteria.
+        /// </summary>
         [TestMethod]
-        [TestCategory("Notprod")]
+        [TestCategory("Prod")]
         public async Task QueryTrainingsByDateTimeTest()
         {
             var api = Helpers.GetApolloApi();
@@ -812,7 +815,11 @@ namespace Apollo.Api.UnitTests
             // Ensure that _testTrainings includes "Training T05" with a valid IndividualStartDate
             await api.InsertTrainings(_testTrainings);
 
-            // Case 1: Query by TrainingName and IndividualStartDate
+            // Specifying the filter date in the desired format
+            long filterDateTimestamp = -62135596800000; // Negative Unix timestamp
+            DateTime filterDate = DateTimeOffset.FromUnixTimeMilliseconds(filterDateTimestamp).UtcDateTime;
+
+            // Case 1: Query by TrainingName and PublishingDate
             var query = new Apollo.Common.Entities.Query
             {
                 Fields = new List<string> { "TrainingName", "PublishingDate" },
@@ -831,7 +838,7 @@ namespace Apollo.Api.UnitTests
                 {
                     FieldName = "PublishingDate",
                     Operator = Apollo.Common.Entities.QueryOperator.GreaterThanEqualTo,
-                    Argument = new List<object> { DateTime.Now.AddMonths(-1) }
+                    Argument = new List<object> { filterDate }
                 }
             }
                 },
@@ -846,6 +853,13 @@ namespace Apollo.Api.UnitTests
             };
 
             var trainings = await api.QueryTrainingsAsync(query);
+
+            // Debugging: Log the results
+            Console.WriteLine($"Case 1 - Trainings Count: {trainings.Count}");
+            foreach (var training in trainings)
+            {
+                Console.WriteLine($"Training Name: {training.TrainingName}, PublishingDate: {training.PublishingDate}");
+            }
 
             // Assert for Case 1
             Assert.IsNotNull(trainings);
@@ -889,6 +903,11 @@ namespace Apollo.Api.UnitTests
         }
 
 
+        /// <summary>
+        /// Tests the insertion of complex Training objects.
+        /// A JSON string representing an array of Training objects is deserialized and inserted.
+        /// Asserts confirm the successful insertion and subsequent cleanup of the Training data.
+        /// </summary>
         [TestMethod]
         [TestCategory("Prod")]
         public async Task InsertComplexTrainingTest()
@@ -907,6 +926,7 @@ namespace Apollo.Api.UnitTests
             await api.DeleteTrainings(t.Select(x=>x.Id).ToArray());
             
         }
+
 
         /// <summary>
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
