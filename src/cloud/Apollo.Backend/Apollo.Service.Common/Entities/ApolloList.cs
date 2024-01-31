@@ -26,9 +26,14 @@ namespace Apollo.Common.Entities
         public required string ItemType { get; set; }
 
         /// <summary>
+        /// Description of the item, optional.
+        /// </summary>
+        public string? Description { get; set; }
+
+        /// <summary>
         /// List of items in all languages.
         /// </summary>
-        public required List<ListItem> Items{ get; set; }
+        public required List<ApolloListItem> Items{ get; set; }
     }
 
 
@@ -36,8 +41,13 @@ namespace Apollo.Common.Entities
     ///  The item stored in the DB.
     ///  Describes the item in the list in the specific language.
     /// </summary>
-    public class ListItem
+    public class ApolloListItem
     {
+        /// <summary>
+        /// Identifier of the item in the list.
+        /// </summary>
+        public int ListItemId { get; set; }
+
         /// <summary>
         /// The ISO language code.
         /// </summary>
@@ -46,11 +56,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The name of the item.
         /// </summary>
-        public required string Name { get; set; }
-
-        /// <summary>
-        /// Description of the item.
-        /// </summary>
-        public required string Description { get; set; }
+        public required string Value { get; set; }
+   
     }
 }

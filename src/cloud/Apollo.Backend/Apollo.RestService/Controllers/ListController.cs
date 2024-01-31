@@ -31,8 +31,71 @@ namespace Apollo.Service.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Create item like Qualification if there is no ID on request or Updates an existing Qualifications List if there is ID.
+        /// </summary>
+        /// <param name="req">The request containing the data for creation or update list.</param>
+        /// <returns>A response containing the updated or created List.</returns>
+        /// <response code="200">Returns the updated training.</response>
+        /// <response code="500">Internal server error.</response>
+        [HttpPut]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of List items that matches specified filter.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        public async Task<QueryListResponse> GetListAsync([FromBody] QueryListRequest req)
+        {
+            try
+            {
+                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
 
-       
+                // Assuming req contains the Training object to create or update.
+                var result = await _api.QueryQualificationsListAsync(req.Language, req.Contains);
+
+                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
+
+                // Return the result of the create/update operation as a response.
+                return new QueryListResponse { Result = result };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create item like Qualification if there is no ID on request or Updates an existing Qualifications List if there is ID.
+        /// </summary>
+        /// <param name="req">The request containing the data for creation or update list.</param>
+        /// <returns>A response containing the updated or created List.</returns>
+        /// <response code="200">Returns the updated training.</response>
+        /// <response code="500">Internal server error.</response>
+        [HttpPut]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of List items that matches specified filter.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        public async Task<QueryListResponse> QueryListAsync([FromBody] QueryListRequest req)
+        {
+            try
+            {
+                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
+
+                // Assuming req contains the Training object to create or update.
+                var result = await _api.QueryQualificationsListAsync(req.Language, req.Contains);
+
+                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
+
+                // Return the result of the create/update operation as a response.
+                return new QueryListResponse { Result = result };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
+                throw;
+            }
+        }
+
+
 
 
         /// <summary>
@@ -42,30 +105,32 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the updated or created List.</returns>
         /// <response code="200">Returns the updated training.</response>
         /// <response code="500">Internal server error.</response>
-        //[HttpPut]
-        //[SwaggerResponse(StatusCodes.Status200OK, "Returns the updated List items.")]
-        //[SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        //public async Task<CreateOrUpdateListResponse> CreateOrUpdateQualificationAsync([FromBody] CreateOrUpdateListRequest req)
-        //{
-        //    try
-        //    {
-        //        _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
+        [HttpPut]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the updated List items.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        public async Task<CreateOrUpdateListResponse> CreateOrUpdateQualificationAsync([FromBody] CreateOrUpdateListRequest req)
+        {
+            throw new NotImplementedException();
 
-        //        // Assuming req contains the Training object to create or update.
-        //        var result = await _api.CreateOrUpdateQualificationAsync(Anew List<ApolloList> { req.List });
+            //try
+            //{
+            //    _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
 
-        //        _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
+            //    // Assuming req contains the Training object to create or update.
+            //    var result = await _api.CreateOrUpdateQualificationAsync(new List<ApolloList> { req.List });
 
-        //        // Return the result of the create/update operation as a response.
-        //        return new CreateOrUpdateListResponse { List = req.List };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log and re-throw any exceptions encountered.
-        //        _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
-        //        throw;
-        //    }
-        //}
+            //    _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
+
+            //    // Return the result of the create/update operation as a response.
+            //    return new CreateOrUpdateListResponse { Result = req.List };
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Log and re-throw any exceptions encountered.
+            //    _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
+            //    throw;
+            //}
+        }
 
 
 

@@ -6,13 +6,12 @@ namespace Apollo.Common.Entities
     /// <summary>
     /// This is part of the original BA Dataset for Machine Learning.
     /// </summary>
-    public class Qualification
+    public class Qualification : ApolloListBase
     {
+        /// <summary>
+        /// Identifier of the item in the list.
+        /// </summary>
         public string Id { get; set; }
-
-        // Qualification_Name_filtered.txt
-        // FreiText
-        public string Name { get; set; }
 
         // Qualification_Description_filtered.txt
         // FreiText

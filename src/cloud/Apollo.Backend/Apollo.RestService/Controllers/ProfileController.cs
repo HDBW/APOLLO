@@ -95,6 +95,7 @@ namespace Apollo.Service.Controllers
         /// </summary>
         /// <param name="req">Request object containing profile information for create or update.</param>
         /// <returns>Response containing the result of the create/update operation.</returns>
+        /// <remarks></remarks>
         [HttpPut]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the result of the create/update operation.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]

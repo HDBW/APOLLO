@@ -384,43 +384,53 @@ namespace Apollo.Api
 
 
         /// <summary>
-        /// Converts an expando object to a List object.
+        /// Converts an expando object to a List of strings.
         /// </summary>
         /// <param name="expando">The expando object to be converted.</param>
         /// <returns>A list object converted from the expando object.</returns>
-        public static ApolloList ToList(ExpandoObject expando)
+        public static string ToListValue(ExpandoObject expando)
         {
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
-            ApolloList list = new ApolloList()
+            string val = dict["Value"] != null ? (string)dict["Value"] : string.Empty;
+
+            return val;
+        }
+
+        /// <summary>
+        /// Converts an expando object to a ApolloList.
+        /// </summary>
+        /// <param name="expando">The expando object to be converted.</param>
+        /// <returns>A list object converted from the expando object.</returns>
+        public static ApolloList ToApolloList(ExpandoObject expando)
+        {
+            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+            ApolloList lst = new ApolloList
             {
                 Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
                 ItemType = dict.ContainsKey("ItemType") ? (string)dict["ItemType"] : "",
-                Items = new List<ListItem>(),
+                Description = dict.ContainsKey("Description") ? (string)dict["Description"] : "",
+                Items = dict.ContainsKey("Items") ? ToApolloListItem((List<ExpandoObject>)(dict["Items"]!)) : new List<ApolloListItem>()
             };
 
-            //if (dict.ContainsKey("Items"))
-            //{
-            //    var itemsObject = dict["Items"];
+            return lst;
+        }
 
-            //    if (itemsObject is IEnumerable<object> itemsEnumerable)
-            //    {
-            //        var expLst = itemsEnumerable.OfType<ExpandoObject>();
+        private static List<ApolloListItem> ToApolloListItem(List<ExpandoObject> items)
+        {
+            List<ApolloListItem> list = new List<ApolloListItem>();
 
-            //        foreach (var item in expLst)
-            //        {
-            //            ListItem listItem = new ListItem();
+            foreach (var expando in items)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
-            //            IDictionary<string, object> expItem = item as IDictionary<string, object>;
-
-            //            listItem.Name = expItem.ContainsKey(nameof(ListItem.Name)) ? (string)expItem[nameof(ListItem.Name)] : "";
-            //            listItem.Description = expItem.ContainsKey(nameof(ListItem.Description)) ? (string)expItem[nameof(ListItem.Description)] : "";
-            //            listItem.Lng = expItem.ContainsKey(nameof(ListItem.Lng)) ? (string)expItem[nameof(ListItem.Lng)] : "";
-
-            //            list.Items.Add(listItem);
-            //        }
-            //    }
-            //}
+                list.Add(new ApolloListItem
+                {
+                     Lng = dict.ContainsKey("Lng") ? (string)dict["Lng"] : "",
+                     Value = dict.ContainsKey("Value") ? (string)dict["Value"] : ""
+                });
+            }
 
             return list;
         }
@@ -436,15 +446,15 @@ namespace Apollo.Api
 
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
-            Qualification quali = new Qualification
-            {
-                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
-                //to do mapp all properties in profile entity ... #Mukit
+            //Qualification quali = new Qualification
+            //{
+            //    Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
+            //    //to do mapp all properties in profile entity ... #Mukit
 
 
-            };
+            //};
 
-            return quali;
+            throw new NotImplementedException();
         }
 
 
@@ -483,7 +493,7 @@ namespace Apollo.Api
             return res;
         }
 
-        public static Daenet.MongoDal.Entitties.SortExpression ToDaenetSortExpression(Common.Entities.SortExpression sortExpression)
+        public static Daenet.MongoDal.Entitties.SortExpression? ToDaenetSortExpression(Common.Entities.SortExpression? sortExpression)
         {
             if (sortExpression == null)
                 return null;

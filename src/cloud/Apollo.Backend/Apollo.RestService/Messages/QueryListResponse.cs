@@ -2,17 +2,18 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Apollo.Common.Entities;
+using Apollo.Service.Controllers;
 
 namespace Apollo.RestService.Messages
 {
     /// <summary>
-    /// Defines the response message of the CreateOrUpdateTraining operation.
+    /// Defines the response message of the <see cref="nameof(ListController.QueryListItems)"/> operation.
     /// </summary>
-    public class CreateOrUpdateListResponse
+    public class QueryListResponse
     {
         /// <summary>
         /// The set of list items.
         /// </summary>
-        public ApolloList? Result{ get; set; }
+        public List<string> Result { get; set; }
     }
 }

@@ -18,12 +18,8 @@ namespace Apollo.Common.Entities
     ///     MoreThan499,
     /// }
     /// </summary>
-    public class StaffResponsibility
+    public class StaffResponsibility : ApolloListBase
     {
-        public string Id { get; set; }
-
-        public string Name { get; set; }
-
-        //public CultureInfo CultureInfo { get; set; }
+    
     }
 }

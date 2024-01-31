@@ -7,9 +7,9 @@ using Apollo.Service.Controllers;
 namespace Apollo.RestService.Messages
 {
     /// <summary>
-    /// Defines the request message of the <see cref="nameof(ListController.CreateOrUpdateQualificationAsync)"/> operation.
+    /// Defines the request message of the <see cref="nameof(ListController.QueryListAsync)"/> operation.
     /// </summary>
-    public class CreateOrUpdateListRequest
+    public class QueryListRequest
     {
         /// <summary>
         /// Lookups only list items tha contains the specified string.
@@ -20,5 +20,10 @@ namespace Apollo.RestService.Messages
         /// Lookups only items of the given type.
         /// </summary>
         public string ItemType { get; set; }
+
+        /// <summary>
+        /// The ISO code of the language.
+        /// </summary>
+        public string   Language { get; set; }
     }
 }

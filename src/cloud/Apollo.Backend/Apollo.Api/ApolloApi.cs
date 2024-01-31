@@ -3,6 +3,7 @@
 
 using System;
 using System.Dynamic;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using Amazon.Runtime.Internal.Util;
 using Apollo.Common.Entities;
@@ -10,6 +11,8 @@ using Daenet.MongoDal;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
+
+[assembly: InternalsVisibleTo("Apollo.Api.UnitTests")]
 
 namespace Apollo.Api
 {

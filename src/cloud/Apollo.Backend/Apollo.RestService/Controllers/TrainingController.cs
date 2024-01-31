@@ -42,8 +42,7 @@ namespace Apollo.Service.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the requested training.", typeof(GetTrainingResponse))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Training not found.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<GetTrainingResponse> GetTrainingAsync([FromRoute]
-         string id)
+        public async Task<GetTrainingResponse> GetTrainingAsync([FromRoute]  string id)
         {
             try
             {
