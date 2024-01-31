@@ -106,37 +106,24 @@ namespace Apollo.Api.UnitTests
              },
         };
 
-      
+
 
         /// <summary>
-        /// Creates the test lists in the database.
+        /// Makes sure that all test records are deleted after each test execution.
         /// </summary>
-        [TestMethod]
-        public async Task InsertTestLists()
+        /// <returns></returns>
+        [TestCleanup]
+        private async Task Cleanup()
         {
- 
             var api = Helpers.GetApolloApi();
 
-            // Create a list to store qualification IDs for all inserted lists
-            List<string> allIdsInApolloList = new List<string>();
-
-            // Insert each test list and accumulate qualification IDs
-            foreach (var apolloList in _testList)
-            {
-                var qualificationIds = await api.CreateOrUpdateListAsync(apolloList);
-                Assert.IsNotNull(qualificationIds);
-                allIdsInApolloList.AddRange(qualificationIds);
-            }
-
-            // Check if the total count of qualificationIds matches the expected count
-            Assert.AreEqual(_testList.SelectMany(list => list.Items).Count(), allIdsInApolloList.Count);
-
-
+            var deleteResult = await api.DeleteListInternalAsync(_testList.Select(l => l.Id).ToArray());
+            Assert.AreEqual(_testList.Count, deleteResult);
         }
 
 
         /// <summary>
-        /// 
+        /// todo
         /// </summary>
         /// <returns></returns>
         [TestMethod]
@@ -144,7 +131,7 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
             ;
-            var result = await api.GetListInternalAsync("DE", "_cTestListType1");
+            var result = await api.GetListInternalAsync(_testList.First().Items.First().Lng, "_cTestListType1");
 
             // Assert
             Assert.IsNotNull(result);
@@ -152,6 +139,71 @@ namespace Apollo.Api.UnitTests
             Assert.AreEqual(1, result.Items.Count);
             Assert.AreEqual("DE", result.Items[0].Lng);
             Assert.AreEqual("C# Entwickler", result.Items[0].Value);
+        }
+
+
+
+        /// <summary>
+        /// Tests querying Qualification List objects that match with the language.
+        /// </summary>
+        [TestMethod]
+        public async Task QueryListAsyncTest()
+        {
+            var api = Helpers.GetApolloApi();
+            var language = "DE";
+
+            // Perform the query
+            var results = await api.QueryListInternalAsync(language, "TestListType1", null);
+
+            // Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Count > 0);
+        }
+
+
+        private static void AssertTrainingId(string id)
+        {
+            Assert.IsNotNull(id);
+            Assert.IsTrue(id.StartsWith(nameof(Training)));
+        }
+
+
+        /// <summary>
+        /// Creates the test lists in the database.
+        /// </summary>
+        [TestMethod]
+        public async Task InsertListsWithPredefinedIdTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            // Insert each test list and accumulate qualification IDs
+            foreach (var apolloList in _testList)
+            {
+                var id = await api.CreateOrUpdateListAsync(apolloList);
+
+                Assert.IsNotNull(id);
+                Assert.IsTrue(id == apolloList.Id);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [TestMethod]
+        public async Task InsertListsWithAutogenIdTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            // Insert each test list and accumulate qualification IDs
+            foreach (var apolloList in _testList)
+            {
+                apolloList.Id = null;
+
+                var id = await api.CreateOrUpdateListAsync(apolloList);
+
+                AssertTrainingId(id);
+            }            
         }
 
 
@@ -176,7 +228,7 @@ namespace Apollo.Api.UnitTests
             Assert.IsNotNull(existingApolloListId);
 
             // Retrieve the updated list
-            var updatedList = await api.GetListInternalAsync("DE", _cTestListType1); 
+            var updatedList = await api.GetListInternalAsync("DE", _cTestListType1);
 
             // Assert that the existing list is updated
             Assert.IsNotNull(updatedList);
@@ -207,45 +259,7 @@ namespace Apollo.Api.UnitTests
 
             // Assert that the new item is present in the list
             Assert.IsNotNull(newListWithNewItem);
-            Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == 3 ));
-       }
-
-    
-
-
-     
-
-
-        /// <summary>
-        /// Tests querying Qualification List objects that match with the language.
-        /// </summary>
-        [TestMethod]
-        public async Task QueryListAsyncTest()
-        {
-            var api = Helpers.GetApolloApi();
-            var language = "DE";
-        
-            // Perform the query
-            var results = await api.QueryListInternalAsync(language, "TestListType1", null);
-
-            // Assert
-            Assert.IsNotNull(results);
-            Assert.IsTrue(results.Count > 0);
-
-        }
-
-
-        /// <summary>
-        /// Makes sure that all test records are deleted after each test execution.
-        /// </summary>
-        /// <returns></returns>
-        [TestCleanup]
-        private async Task Cleanup()
-        {
-            var api = Helpers.GetApolloApi();
-
-            var deleteResult = await api.DeleteListInternalAsync(_testList.Select(l => l.Id).ToArray());
-            Assert.AreEqual(_testList.Count, deleteResult);
+            Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == 3));
         }
 
 

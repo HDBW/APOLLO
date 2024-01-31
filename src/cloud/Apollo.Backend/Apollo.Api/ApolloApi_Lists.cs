@@ -23,7 +23,8 @@ namespace Apollo.Api
         /// <summary>
         /// Returns the ApolloList list with all values of the given item type.
         /// </summary>
-        /// <param name="lng">It must be specified if the <see cref="id"/> argument is not specified.</param>
+        /// <param name="lng">It must be specified if the <see cref="id"/> argument is not specified. Returns all items of the given <see cref="itemType"/> if set, that match the given language.
+        /// I not set, then it returns all entries</param>
         /// <param name="itemType">It must be specified if the <see cref="id"/> argument is not specified.</param>
         /// <param name="id">If specified arguments <see cref="lng"/> and <see cref="itemType"/> are ignored.</param>
         /// <returns>The instance of the <see cref="ApolloList"/> that was requested.
@@ -147,16 +148,16 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="list">If the Id is specified, the update will be performed.</param>
         /// <returns></returns>
-        public async Task<List<string>> CreateOrUpdateListAsync(ApolloList list)
+        public async Task<string> CreateOrUpdateListAsync(ApolloList list)
         {
             try
             {
-                List<string> ids = new List<string>();
+                string id;
 
                 
                 if (String.IsNullOrEmpty(list.Id))
                 {
-                    list.Id = CreateListId(nameof(Qualification));
+                    id = CreateListId(nameof(Qualification));
                     await _dal.InsertAsync(ApolloApi.GetCollectionName<ApolloList>(), Convertor.Convert(list));
                 }
                 else
@@ -165,7 +166,7 @@ namespace Apollo.Api
 
                     if (existingList != null)
                     {
-                        list.Id = existingList.Id;
+                        id = existingList.Id;
                         await _dal.UpsertAsync(GetCollectionName<ApolloList>(), new List<ExpandoObject> { Convertor.Convert(list) });
                     }
                     else
@@ -174,7 +175,7 @@ namespace Apollo.Api
                     }
                 }
 
-                return ids;
+                return id;
             }
             catch (ApolloApiException)
             {
