@@ -186,6 +186,7 @@ namespace Apollo.Api.UnitTests
         /// some with predefined IDs, some with ObjectId, and some with no Id or ObjectId.
         /// </remarks>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task CreateOrUpdateUser_MultipleMixedIDsTest()
         {
             var api = Helpers.GetApolloApi();
