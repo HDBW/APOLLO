@@ -161,7 +161,7 @@ namespace Apollo.Service.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid input data.")]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of inserted trainings.", typeof(List<Training>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 400. Error while inserting the trainings.<br/>ErrorCode: 406. Error while inserting the trainings")]
-        public async Task<IList<Training>> InsertTrainingsAsync([FromBody] ICollection<Training> trainings)
+        public async Task<IList<string>> InsertTrainingsAsync([FromBody] ICollection<Training> trainings)
         {
             try
             {
@@ -170,22 +170,22 @@ namespace Apollo.Service.Controllers
                 if (trainings == null || trainings.Count == 0)
                 {
                     // Return an empty list if no valid trainings provided.
-                    return new List<Training>();
+                    return new List<string>();
                 }
 
                 // Call the Apollo API to insert the provided trainings.
-                await _api.CreateOrUpdateTrainingAsync(new List<Training>(trainings));
+                var ids =  await _api.CreateOrUpdateTrainingAsync(new List<Training>(trainings));
 
                 _logger.LogTrace($"{nameof(InsertTrainingsAsync)} completed.");
 
                 // Return the list of inserted trainings.
-                return trainings.ToList();
+                return ids;
             }
             catch (Exception ex)
             {
                 // Log and return an empty list in case of an error.
                 _logger.LogError($"{nameof(InsertTrainingsAsync)} failed: {ex.Message}");
-                return new List<Training>();
+                return new List<string>();
             }
         }
 
