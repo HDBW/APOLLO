@@ -177,6 +177,7 @@ namespace Apollo.Api.UnitTests
         }
 
 
+        //Case 3: Multiple Users with Mixed IDs
         /// <summary>
         /// Test method for creating or updating multiple users with mixed IDs.
         /// </summary>
@@ -184,14 +185,11 @@ namespace Apollo.Api.UnitTests
         /// This test case covers the scenario where multiple users are created or updated,
         /// some with predefined IDs, some with ObjectId, and some with no Id or ObjectId.
         /// </remarks>
-       
-        //TODO: FIX error for updating the second and third user
-        //Case 3: Multiple Users with Mixed IDs
         [TestMethod]
-        
         public async Task CreateOrUpdateUser_MultipleMixedIDsTest()
         {
             var api = Helpers.GetApolloApi();
+           
 
             // Creating multiple users, some with predefined IDs, some with ObjectId
             var user1 = new User { Id = "User1", Name = "User One", Email = "user1@example.com" };
@@ -203,27 +201,34 @@ namespace Apollo.Api.UnitTests
             Assert.IsNotNull(userIds);
             Assert.AreEqual(3, userIds.Count);
 
-            // Update user1
+            // Retrieve user2 by ObjectId and update
+            var existingUser2 = await api.FindUserByObjectIdAsync(user2.ObjectId);
+            Assert.IsNotNull(existingUser2);
+            existingUser2.Name = "Updated User Two";
+
+            // Retrieve user3 by Email and update
+            var existingUser3 = await api.FindUserByEmailAsync(user3.Email);
+            Assert.IsNotNull(existingUser3);
+            existingUser3.Name = "Updated User Three";
+
+            // Update user1 directly
             user1.Name = "Updated User One";
 
-            // Update user2
-            var existingUserIdForUser2 = "ExistingUserIdMappedFromObjectID2";
-            user2.Id = existingUserIdForUser2;
-            user2.Name = "Updated User Two";
-
             // Update the users
-            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { user1, user2 });
+            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { user1, existingUser2, existingUser3 });
             Assert.IsNotNull(updatedUserIds);
-            Assert.AreEqual(2, updatedUserIds.Count); // Expecting updates for user1 and user2
+            Assert.AreEqual(3, updatedUserIds.Count); // Expecting updates for all three users
 
             // Verify that the users were updated
             var updatedUser1 = await api.GetUserById(user1.Id);
-            var updatedUser2 = await api.GetUserById(existingUserIdForUser2);
+            var updatedUser2 = await api.GetUserById(existingUser2.Id);
+            var updatedUser3 = await api.GetUserById(existingUser3.Id);
             Assert.AreEqual("Updated User One", updatedUser1.Name);
             Assert.AreEqual("Updated User Two", updatedUser2.Name);
+            Assert.AreEqual("Updated User Three", updatedUser3.Name);
 
             // Clean up: Delete all users
-            //await api.DeleteUsers(userIds.ToArray());
+            await api.DeleteUsers(updatedUserIds.ToArray());
         }
 
 

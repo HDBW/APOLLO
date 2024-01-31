@@ -153,25 +153,28 @@ namespace Apollo.Api
 
                 foreach (var user in users)
                 {
-                    if (string.IsNullOrEmpty(user.Id))
+                    User existingUser = null;
+
+                    if (!string.IsNullOrEmpty(user.ObjectId))
                     {
-                        // Generate a new ID for new user
-                        user.Id = CreateUserId();
-                        // Convert the user object to ExpandoObject
-                        var expandoUser = Convertor.Convert(user);
-                        // Insert the new user
-                        await _dal.InsertAsync(ApolloApi.GetCollectionName<User>(), expandoUser);
+                        existingUser = await _dal.FindUserByObjectIdAsync(user.ObjectId);
                     }
-                    else
+                    else if (!string.IsNullOrEmpty(user.Email))
                     {
-                        // Update existing user
-                        // Convert the user object to ExpandoObject
-                        var expandoUser = Convertor.Convert(user);
-                        // Upsert the user
-                        await _dal.UpsertAsync(GetCollectionName<User>(), new List<ExpandoObject> { expandoUser });
+                        existingUser = await _dal.FindUserByEmailAsync(user.Email);
                     }
 
-                    // Add the user ID to the list
+                    if (existingUser != null)
+                    {
+                        user.Id = existingUser.Id;
+                    }
+                    else if (string.IsNullOrEmpty(user.Id))
+                    {
+                        user.Id = CreateUserId();
+                    }
+
+                    var expandoUser = Convertor.Convert(user);
+                    await _dal.UpsertAsync(GetCollectionName<User>(), new List<ExpandoObject> { expandoUser });
                     ids.Add(user.Id);
                 }
 
@@ -188,6 +191,28 @@ namespace Apollo.Api
                 _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateUserAsync)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.UserErrors.CreateOrUpdateUserError, "An error occurred while creating or updating users.", ex);
             }
+        }
+
+
+        /// <summary>
+        /// Finds a user by their ObjectId asynchronously. Used so UnitTests can access dal
+        /// </summary>
+        /// <param name="objectId">The ObjectId of the user to find.</param>
+        /// <returns>The User object if found, otherwise null.</returns>
+        public async Task<User> FindUserByObjectIdAsync(string objectId)
+        {
+            return await _dal.FindUserByObjectIdAsync(objectId);
+        }
+
+
+        /// <summary>
+        /// Finds a user by their email address asynchronously. Used so UnitTests can access dal
+        /// </summary>
+        /// <param name="email">The email address of the user to find.</param>
+        /// <returns>The User object if found, otherwise null.</returns>
+        public async Task<User> FindUserByEmailAsync(string email)
+        {
+            return await _dal.FindUserByEmailAsync(email);
         }
 
 
