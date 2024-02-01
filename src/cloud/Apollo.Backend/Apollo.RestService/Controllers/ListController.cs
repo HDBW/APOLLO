@@ -38,12 +38,12 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the list of items..</returns>
         /// <response code="200">List of ApolloList items is returned.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut]
+        [HttpPut("lists")]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of ApolloList items that matches specified filter.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<GetListResponse> GetListAsync([FromBody] GetListRequest req)
         {
-            try
+            try 
             {
                 _logger?.LogTrace($"{nameof(GetListAsync)} entered.");
 
@@ -70,7 +70,7 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the updated or created List.</returns>
         /// <response code="200">Returns the updated training.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut]
+        [HttpGet("lists/query")]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of List items that matches specified filter.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<QueryListResponse> QueryListAsync([FromBody] QueryListRequest req)
