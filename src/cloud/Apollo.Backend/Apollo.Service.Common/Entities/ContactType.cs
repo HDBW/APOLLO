@@ -5,13 +5,8 @@ using System.Globalization;
 
 namespace Apollo.Common.Entities
 {
-    public class ContactType
+    public class ContactType : ApolloListItem 
     {
-        /// <summary>
-        /// Unique Identifier of the Contact Type
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// Contact Type Name - Client uses enum
         /// Unknown,
@@ -22,16 +17,17 @@ namespace Apollo.Common.Entities
         /// So maybe we add the contact type:
         /// TrainingContact,
         /// </summary>
-        public string Name { get; set; }
+       // public string Name { get; set; }
 
         /// <summary>
         /// Defines the Value of Enum ContactType
+        /// See ListItemId property.
         /// </summary>
-        public int Value { get; set; }
+        //public int Value { get; set; }
 
-        ///// <summary>
-        ///// Defines the Culture of the Contact Type
-        ///// </summary>
-        public CultureInfo CultureInfo { get; set; }
+        /// <summary>
+        /// Defines the Culture of the Contact Type
+        /// </summary>
+        //public CultureInfo CultureInfo { get; set; }
     }
 }

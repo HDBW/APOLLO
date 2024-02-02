@@ -6,7 +6,7 @@ namespace Apollo.Common.Entities
     /// <summary>
     /// This is part of the original BA Dataset for Machine Learning.
     /// </summary>
-    public class Qualification : ApolloListBase
+    public class Qualification : ApolloListItem
     {
         /// <summary>
         /// Identifier of the item in the list.

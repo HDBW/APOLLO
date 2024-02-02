@@ -11,7 +11,6 @@ using Moq;
 
 namespace Apollo.Api.UnitTests
 {
-
     /// <summary>
     /// Unit tests for the ApolloApi class.
     /// </summary>
@@ -107,19 +106,19 @@ namespace Apollo.Api.UnitTests
         };
 
 
-
         /// <summary>
         /// Makes sure that all test records are deleted after each test execution.
         /// </summary>
         /// <returns></returns>
-        [TestCleanup]
-        private async Task Cleanup()
+        //[TestCleanup]
+        public async Task Cleanup()
         {
             var api = Helpers.GetApolloApi();
 
-            var deleteResult = await api.DeleteListInternalAsync(_testList.Select(l => l.Id).ToArray());
+            var deleteResult = await api.DeleteListAsync(_testList.Select(l => l.Id).ToArray());
             Assert.AreEqual(_testList.Count, deleteResult);
         }
+
 
 
         /// <summary>
@@ -130,8 +129,8 @@ namespace Apollo.Api.UnitTests
         public async Task GetListInternalAsyncTest()
         {
             var api = Helpers.GetApolloApi();
-            ;
-            var result = await api.GetListInternalAsync(_testList.First().Items.First().Lng, "_cTestListType1");
+
+            var result = await api.GetListAsync(_testList.First().Items.First().Lng, "_cTestListType1");
 
             // Assert
             Assert.IsNotNull(result);
@@ -140,7 +139,6 @@ namespace Apollo.Api.UnitTests
             Assert.AreEqual("DE", result.Items[0].Lng);
             Assert.AreEqual("C# Entwickler", result.Items[0].Value);
         }
-
 
 
         /// <summary>
@@ -153,7 +151,7 @@ namespace Apollo.Api.UnitTests
             var language = "DE";
 
             // Perform the query
-            var results = await api.QueryListInternalAsync(language, "TestListType1", null);
+            var results = await api.QueryListAsync(language, "TestListType1", null);
 
             // Assert
             Assert.IsNotNull(results);
@@ -203,7 +201,7 @@ namespace Apollo.Api.UnitTests
                 var id = await api.CreateOrUpdateListAsync(apolloList);
 
                 AssertTrainingId(id);
-            }            
+            }
         }
 
 
@@ -213,7 +211,6 @@ namespace Apollo.Api.UnitTests
         [TestMethod]
         public async Task CreateOrUpdateListsTest()
         {
-
             var api = Helpers.GetApolloApi();
 
             // Update an existing Apollo list
@@ -228,7 +225,7 @@ namespace Apollo.Api.UnitTests
             Assert.IsNotNull(existingApolloListId);
 
             // Retrieve the updated list
-            var updatedList = await api.GetListInternalAsync("DE", _cTestListType1);
+            var updatedList = await api.GetListAsync("DE", _cTestListType1);
 
             // Assert that the existing list is updated
             Assert.IsNotNull(updatedList);
@@ -255,12 +252,107 @@ namespace Apollo.Api.UnitTests
             Assert.IsNotNull(newQualificationIds);
 
             // Retrieve the list after adding the new item
-            var newListWithNewItem = await api.GetListInternalAsync("DE", _cTestListType1);
+            var newListWithNewItem = await api.GetListAsync("DE", _cTestListType1);
 
             // Assert that the new item is present in the list
             Assert.IsNotNull(newListWithNewItem);
             Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == 3));
         }
+
+
+        /// <summary>
+        /// Creates the test lists in the database.
+        /// </summary>
+        [TestMethod]
+        public async Task PopulateListsTest()
+        {
+            await PopulateContactType();
+
+            await PopulateCareerType();
+            // . . .
+
+        }
+
+        private async Task PopulateContactType()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "This Enum represents the Type of the Contact.It indicates if the Contact is a Professional or Private Contact",
+                ItemType = nameof(ContactType),
+                Items = new List<ApolloListItem>()
+                 {
+                     new ApolloListItem()
+                     {
+                         ListItemId = 0,
+                         Value = "Unknown"
+                     },
+                     new ApolloListItem()
+                     {
+                         ListItemId = 1,
+                         Value = "Professional"
+                     },
+                     new ApolloListItem()
+                     {
+                         ListItemId = 2,
+                         Value = "Private"
+                     }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id:id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(ContactType));
+            Assert.IsTrue(dbItem.Items.Count == 3);
+        }
+
+        private async Task PopulateCarreerType()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "This Enum represents the Type of the Contact.It indicates if the Contact is a Professional or Private Contact",
+                ItemType = nameof(CareerType),
+                Items = new List<ApolloListItem>()
+                 {
+                     new ApolloListItem()
+                     {
+                         ListItemId = 0,
+                         Value = "Unknown"
+                     },
+                     new ApolloListItem()
+                     {
+                         ListItemId = 1,
+                         Value = "Professional"
+                     },
+                     new ApolloListItem()
+                     {
+                         ListItemId = 2,
+                         Value = "Private"
+                     }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(ContactType));
+            Assert.IsTrue(dbItem.Items.Count == 3);
+        }
+
+
+
+
+
+
+
 
 
         /// <summary>
@@ -280,11 +372,13 @@ namespace Apollo.Api.UnitTests
             /// Assert
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Count > 0);
-            /// Check Name filter working properly
-            /// Check that all items contains the filter text.
+
+            //
+            // Check Name filter working properly
+            // Check that all items contains the filter text.
             foreach (var item in results)
             {
-                Assert.IsTrue(item.Contains(containsFilter));
+                Assert.IsTrue(item.Value.Contains(containsFilter));
             }
 
             /// Extract qualification IDs from the results

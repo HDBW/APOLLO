@@ -29,7 +29,8 @@ namespace Apollo.Api
         /// <param name="id">If specified arguments <see cref="lng"/> and <see cref="itemType"/> are ignored.</param>
         /// <returns>The instance of the <see cref="ApolloList"/> that was requested.
         /// Null if the list cannot be found.</returns>
-        public async Task<ApolloList> GetListInternalAsync(string? lng = null, string? itemType = null, string? id = null)
+        /// <exception cref="ApolloApiException">If the list cannot be found and the <see cref="throwIfNotFound"/> is set to true.</exception>"
+        public async Task<ApolloList?> GetListAsync(string? lng = null, string? itemType = null, string? id = null, bool throwIfNotFound = false)
         {
             // TODO validate if all args correctlly set
 
@@ -77,39 +78,32 @@ namespace Apollo.Api
             if (res.FirstOrDefault() != null)
                 return Convertor.ToApolloList(res.FirstOrDefault()!);
             else
-                return new ApolloList() {  Items= new List<ApolloListItem>(), ItemType = itemType == null?  null! : itemType!};
+            {
+                if (throwIfNotFound)
+                    throw new ApolloApiException(1, "");//todo.
+                else
+                    return null;
+            }
         }
 
 
         /// <summary>
-        /// Deletes the ApolloLista with a given identifiers
-        /// </summary>
-        /// <param name="ids"></param>
-        /// <returns></returns>
-        public async Task<long> DeleteListInternalAsync(string[] ids)
-        {   
-            var cnt = await _dal.DeleteManyAsync(ApolloApi.GetCollectionName<ApolloList>(), ids);
-            
-            return cnt;
-        }
-
-        /// <summary>
-        ///  Used by all typeed query methods that query for list items.
+        /// Looks up list items by specified criteria.
         /// </summary>
         /// <param name="lng"></param>
         /// <param name="itemType"></param>
         /// <param name="contains"></param>
         /// <param name="returnValuesOnly">By default set on true. It returns the value of the item only.
         /// If FALSE, it returns teh description of the item.</param>
-        /// <returns></returns>
-        public async Task<List<string>> QueryListInternalAsync(string lng, string itemType, string? contains)
-        {   
+        /// <returns>List of matching items or empty list.</returns>
+        public async Task<List<ApolloListItem>> QueryListAsync(string lng, string itemType, string? contains)
+        {
             Query query = new Query
             {
                 Fields = new List<string>() { "Value" },
                 Filter = new Filter(),
             };
-                       
+
             //
             // We filter requested language.
             query.Filter.Fields.Add(new FieldExpression()
@@ -122,7 +116,7 @@ namespace Apollo.Api
             query.Filter.Fields.Add(new FieldExpression()
             {
                 Operator = QueryOperator.Contains,
-                Argument = new List<object>() { nameof(ApolloList.ItemType) },
+                Argument = new List<object>() { contains },
                 FieldName = nameof(ApolloList.ItemType),
             });
 
@@ -137,11 +131,21 @@ namespace Apollo.Api
 
             var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<ApolloList>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-            var list = Convertor.ToEntityList<string>(res, Convertor.ToListValue);
-
-            return list;
+            if (res.Count == 1)
+            {
+                var apList = Convertor.ToApolloList(res.FirstOrDefault()!);
+                return apList.Items;
+            }
+            else if (res.Count > 0)
+            {
+                throw new ApolloApiException();//todo.
+            }
+            else
+                return new List<ApolloListItem>();            
         }
 
+
+        private const string _cDefaultLanguageValue = "Invariant";
 
         /// <summary>
         /// Creates or Updates the new List of items.
@@ -154,10 +158,12 @@ namespace Apollo.Api
             {
                 string id;
 
-                
                 if (String.IsNullOrEmpty(list.Id))
                 {
                     id = CreateListId(nameof(Qualification));
+
+                    EnsureLangueSet(list);
+
                     await _dal.InsertAsync(ApolloApi.GetCollectionName<ApolloList>(), Convertor.Convert(list));
                 }
                 else
@@ -167,6 +173,7 @@ namespace Apollo.Api
                     if (existingList != null)
                     {
                         id = existingList.Id;
+                        EnsureLangueSet(list);
                         await _dal.UpsertAsync(GetCollectionName<ApolloList>(), new List<ExpandoObject> { Convertor.Convert(list) });
                     }
                     else
@@ -190,6 +197,36 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.ListErrors.CreateOrUpdateListError, "An error occurred while creating or updating profiles.", ex);
             }
         }
+
+
+        /// <summary>
+        /// Makes sure that the labguage is set. If not we set it on invariant.
+        /// </summary>
+        /// <param name="list"></param>
+        private static void EnsureLangueSet(ApolloList list)
+        {
+            foreach (var lstItem in list.Items)
+            {
+                if (String.IsNullOrEmpty(lstItem.Lng))
+                {
+                    lstItem.Lng = _cDefaultLanguageValue;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Deletes the ApolloLista with a given identifiers
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public async Task<long> DeleteListAsync(string[] ids)
+        {
+            var cnt = await _dal.DeleteManyAsync(ApolloApi.GetCollectionName<ApolloList>(), ids);
+
+            return cnt;
+        }
+
         #endregion
 
         #region Qualification
@@ -206,7 +243,7 @@ namespace Apollo.Api
             {
                 _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
 
-                var list = await GetListInternalAsync(lng, nameof(Qualification));
+                var list = await GetListAsync(lng, nameof(Qualification));
 
                 _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
 
@@ -219,20 +256,22 @@ namespace Apollo.Api
             }
         }
 
+
+
         /// <summary>
         /// Queries for a list of qualifications.
         /// </summary>
         /// <param name="lng">The language of the list items.</param>
         /// <param name="contains">The filter that specifies profiles to be retrieved.</param>
         /// <returns>List of items.</returns>
-        public async Task<List<string>> QueryQualificationsListAsync(string lng, string? contains)
+        public async Task<List<ApolloListItem>> QueryQualificationsListAsync(string lng, string? contains)
         {
             try
             {
                 _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
 
-                 var list = await  QueryListInternalAsync(lng, nameof(Qualification), contains);
-                  
+                var list = await QueryListAsync(lng, nameof(Qualification), contains);
+
                 _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
 
                 return list;
@@ -328,7 +367,7 @@ namespace Apollo.Api
 
 
         #region StaffResponsibility
-      
+
         #endregion
     }
 }

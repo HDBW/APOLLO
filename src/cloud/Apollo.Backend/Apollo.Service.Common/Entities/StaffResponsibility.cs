@@ -18,7 +18,7 @@ namespace Apollo.Common.Entities
     ///     MoreThan499,
     /// }
     /// </summary>
-    public class StaffResponsibility : ApolloListBase
+    public class StaffResponsibility : ApolloListItem
     {
     
     }

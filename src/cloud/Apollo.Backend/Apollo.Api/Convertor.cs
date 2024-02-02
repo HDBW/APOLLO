@@ -217,7 +217,7 @@ namespace Apollo.Api
             appointment.Occurences = ToEntityList<Occurence>(dict["Occurences"] as List<ExpandoObject>, ToOccurence);
             appointment.IsGuaranteed = (bool)dict["IsGuaranteed"];
             //appointment.TrainingMode = ToEntityList<TrainingMode>(dict["TrainingMode"] as List<ExpandoObject>, ToTrainingType);
-           // appointment.TrainingType = (TrainingType)dict["TrainingType"];
+            // appointment.TrainingType = (TrainingType)dict["TrainingType"];
             appointment.TimeInvestAttendeeInMin = (int)dict["TimeInvestAttendeeInMin"];
             appointment.TimeModel = (TrainingTimeModel)dict["TimeModel"];
             // Add other property mappings as needed
@@ -376,7 +376,7 @@ namespace Apollo.Api
                 Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
                 //to do mapp all properties in profile entity ... #Mukit
 
-                
+
             };
 
             return profile;
@@ -388,14 +388,14 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="expando">The expando object to be converted.</param>
         /// <returns>A list object converted from the expando object.</returns>
-        public static string ToListValue(ExpandoObject expando)
-        {
-            IDictionary<string, object> dict = expando as IDictionary<string, object>;
+        //public static string ToListValue(ExpandoObject expando)
+        //{
+        //    IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
-            string val = dict["Value"] != null ? (string)dict["Value"] : string.Empty;
+        //    string val = dict["Value"] != null ? (string)dict["Value"] : string.Empty;
 
-            return val;
-        }
+        //    return val;
+        //}
 
         /// <summary>
         /// Converts an expando object to a ApolloList.
@@ -404,6 +404,9 @@ namespace Apollo.Api
         /// <returns>A list object converted from the expando object.</returns>
         public static ApolloList ToApolloList(ExpandoObject expando)
         {
+            if (expando == null)
+                throw new ArgumentException($"The argument {nameof(expando)} cannot be null!");
+
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
             ApolloList lst = new ApolloList
@@ -427,8 +430,9 @@ namespace Apollo.Api
 
                 list.Add(new ApolloListItem
                 {
-                     Lng = dict.ContainsKey("Lng") ? (string)dict["Lng"] : "",
-                     Value = dict.ContainsKey("Value") ? (string)dict["Value"] : ""
+                    ListItemId= dict.ContainsKey("ListItemId") ? (int)dict["ListItemId"] : throw new ApolloApiException(-1, $"The ListItem in the ApolloList has no {nameof(ApolloListItem.ListItemId)} identifier."),
+                    Lng = dict.ContainsKey("Lng") ? (string)dict["Lng"] : "",
+                    Value = dict.ContainsKey("Value") ? (string)dict["Value"] : ""
                 });
             }
 
@@ -461,23 +465,27 @@ namespace Apollo.Api
         /// <summary>
         /// Converts an Apollo API query filter to a Daenet query.
         /// </summary>
-        /// <param name="apiQuery">The Apollo API query filter to be converted.</param>
+        /// <param name="filter">The Apollo API query filter to be converted.</param>
         /// <returns>A Daenet query object converted from the Apollo API query filter.</returns>
-        public static Daenet.MongoDal.Entitties.Query ToDaenetQuery(Apollo.Common.Entities.Filter apiQuery)
+        public static Daenet.MongoDal.Entitties.Query ToDaenetQuery(Apollo.Common.Entities.Filter filter)
         {
             Daenet.MongoDal.Entitties.Query daenetQuery = new();
-            daenetQuery.IsOrOperator = apiQuery.IsOrOperator;
-            daenetQuery.Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>();
-            foreach (var item in apiQuery.Fields)
+            if (filter != null)
             {
-                daenetQuery.Fields.Add(new Daenet.MongoDal.Entitties.FieldExpression
+                daenetQuery.IsOrOperator = filter.IsOrOperator;
+                daenetQuery.Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>();
+                foreach (var item in filter.Fields)
                 {
-                    FieldName = item.FieldName,
-                    Operator = ToOperator(item.Operator),
-                    Argument = item.Argument,
-                    Distinct = item.Distinct
-                });
+                    daenetQuery.Fields.Add(new Daenet.MongoDal.Entitties.FieldExpression
+                    {
+                        FieldName = item.FieldName,
+                        Operator = ToOperator(item.Operator),
+                        Argument = item.Argument!,
+                        Distinct = item.Distinct
+                    });
+                }
             }
+
             return daenetQuery;
         }
 

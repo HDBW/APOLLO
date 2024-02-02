@@ -36,11 +36,11 @@ namespace Apollo.Common.Entities
     /// // Betr. pflegebed. Person
     /// PersonCare = 12,
     /// </remarks>
-    public class CareerType
+    public class CareerType : ApolloListItem
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
-        public CultureInfo CultureInfo { get; set; }
+        //public string Id { get; set; }
+        //public string Name { get; set; }
+        //public string Value { get; set; }
+        //public CultureInfo CultureInfo { get; set; }
     }
 }

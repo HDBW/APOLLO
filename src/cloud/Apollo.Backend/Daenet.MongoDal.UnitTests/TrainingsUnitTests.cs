@@ -181,6 +181,37 @@ namespace Daenet.MongoDal.UnitTests
 
 
         /// <summary>
+        /// Tests querying for Training instances without any projection field and any filter criteria.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task QueryTrainingsBasicTest()
+        {
+            var dal = Helpers.GetDal();
+
+            await dal.InsertManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => Convertor.Convert(t)).ToArray());
+
+            var insertedTrainings = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), new List<string> { "TrainingName" }, null, 100, 0);
+
+            Console.WriteLine($"Inserted Trainings: {JsonConvert.SerializeObject(insertedTrainings)}");
+
+            var res = await dal.ExecuteQuery(Helpers.GetCollectionName<Training>(), null, new Entitties.Query()
+            {
+                IsOrOperator = false,
+
+                // Not equal to anything (means all documents) AND (because IsOrOperator = false) starts with T01 OR T02 Or T03
+                Fields = new List<Daenet.MongoDal.Entitties.FieldExpression>()
+                 {
+                    
+                 }
+
+            }, 100, 0);
+
+            Assert.IsTrue(res?.Count > 0, $"Expected bigger than 0, but got {res?.Count}");
+        }
+
+
+        /// <summary>
         /// Tests querying for Training instances based on specific criteria.
         /// </summary>
         [TestMethod]

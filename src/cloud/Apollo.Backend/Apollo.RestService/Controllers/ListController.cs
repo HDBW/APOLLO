@@ -48,7 +48,7 @@ namespace Apollo.Service.Controllers
                 _logger?.LogTrace($"{nameof(GetListAsync)} entered.");
 
                 // Assuming req contains the Training object to create or update.
-                var result = await _api.GetListInternalAsync(req.Lng, req.ItemType);
+                var result = await _api.GetListAsync(req.Lng, req.ItemType);
 
                 _logger?.LogTrace($"{nameof(GetListAsync)} completed.");
 
@@ -73,7 +73,7 @@ namespace Apollo.Service.Controllers
         [HttpGet("lists/query")]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of List items that matches specified filter.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<QueryListResponse> QueryListAsync([FromBody] QueryListRequest req)
+        public async Task<QueryListResponse> QueryListItemsAsync([FromBody] QueryListRequest req)
         {
             try
             {

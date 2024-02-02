@@ -46,12 +46,17 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Identifier of the item in the list.
         /// </summary>
-        public int ListItemId { get; set; }
+        public required int ListItemId { get; set; }
 
         /// <summary>
         /// The ISO language code.
         /// </summary>
-        public required string Lng { get; set; }
+        public string? Lng { get; set; }
+
+        /// <summary>
+        /// Optionl description of the values.
+        /// </summary>
+        public string? Description { get; set; }
 
         /// <summary>
         /// The name of the item.

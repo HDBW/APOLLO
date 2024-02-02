@@ -802,6 +802,32 @@ namespace Apollo.Api.UnitTests
 
 
         /// <summary>
+        /// Query without projection fields and expressions.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task QueryTrainingsTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            // Ensure that _testTrainings includes "Training T05" with a valid IndividualStartDate
+            await api.InsertTrainings(_testTrainings);
+
+            // Case 1: Query by TrainingName and PublishingDate
+            var query = new Apollo.Common.Entities.Query
+            {
+               
+            };
+
+            var trainings = await api.QueryTrainingsAsync(query);
+                       
+            // Assert for Case 1
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count>0);          
+        }
+
+
+        /// <summary>
         /// Tests querying Training objects based on specific criteria such as TrainingName and StartDate.
         /// Multiple cases are tested, including querying by TrainingName and PublishingDate, and by IndividualStartDate.
         /// Asserts ensure the correct trainings are returned based on the query criteria.

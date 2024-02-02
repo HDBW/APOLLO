@@ -7,13 +7,13 @@ using Apollo.Service.Controllers;
 namespace Apollo.RestService.Messages
 {
     /// <summary>
-    /// Defines the response message of the <see cref="nameof(ListController.QueryListItems)"/> operation.
+    /// Defines the response message of the <see cref="ListController.QueryListItemsAsync"/> operation.
     /// </summary>
     public class QueryListResponse
     {
         /// <summary>
         /// The set of list items.
         /// </summary>
-        public List<string> Result { get; set; }
+        public required List<ApolloListItem> Result { get; set; }
     }
 }

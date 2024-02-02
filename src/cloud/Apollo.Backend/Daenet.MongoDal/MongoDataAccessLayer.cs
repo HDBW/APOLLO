@@ -353,8 +353,16 @@ namespace Daenet.MongoDal
 
 
         /// <summary>
-        /// Looks up the set of documents.  
+        ///  Looks up the set of documents.  
         /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="fields"></param>
+        /// <param name="query"></param>
+        /// <param name="top"></param>
+        /// <param name="skip"></param>
+        /// <param name="sortExpression"></param>
+        /// <param name="dateTime"></param>
+        /// <returns>TODO..</returns>
         public async Task<IList<ExpandoObject>> ExecuteQuery(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression? sortExpression = null, DateTime? dateTime = null)
         {
             var documents = await ExecuteQueryInternal(collectionName, fields, query, top, skip, sortExpression, dateTime);
