@@ -19,6 +19,7 @@ namespace Apollo.Api.UnitTests
     {
         private const string _cTestListType1 = "TestListType1";
         private const string _cTestListType2 = "TestListType2";
+        private const string _cTestListType3 = "TestListType3";
 
         /// <summary>
         /// The list of ApolloList objects used for testing.
@@ -48,7 +49,7 @@ namespace Apollo.Api.UnitTests
              new ApolloList()
              {
                  Id = "UT02",
-                 ItemType = _cTestListType1,
+                 ItemType = _cTestListType2,
                  Items = new List<ApolloListItem>()
                  {
                      new ApolloListItem()
@@ -68,7 +69,7 @@ namespace Apollo.Api.UnitTests
              new ApolloList()
              {
                  Id = "UT03",
-                 ItemType = _cTestListType2,
+                 ItemType = _cTestListType3,
                  Items = new List<ApolloListItem>()
                  {
                      new ApolloListItem()
@@ -267,9 +268,21 @@ namespace Apollo.Api.UnitTests
         public async Task PopulateListsTest()
         {
             await PopulateContactType();
-
             await PopulateCarreerType();
-            // . . .
+            await PopulateCompletionState();
+            await PopulateDriversLicense();
+            await PopulateEducationType();
+            await PopulateLanguageNiveau();
+            await PopulateRecognitionType();
+            await PopulateSchoolGraduation();
+            await PopulateServiceType();
+            await PopulateStaffResponsibility();
+            await PopulateUniversityDegree();
+            await PopulateTypeOfSchool();
+            await PopulateVoluntaryServiceType();
+            await PopulateWilling();
+            await PopulateYearRange();
+            await PopulateWorkingTimeModel();
 
         }
 
@@ -320,7 +333,7 @@ namespace Apollo.Api.UnitTests
                 ItemType = nameof(CareerType),
                 Items = new List<ApolloListItem>()
                  {
-                    
+
                     new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
                     new ApolloListItem() { ListItemId = 1, Value = "Other" },
                     new ApolloListItem() { ListItemId = 2, Value = "WorkExperience" },
@@ -333,8 +346,8 @@ namespace Apollo.Api.UnitTests
                     new ApolloListItem() { ListItemId = 9, Value = "ParentalLeave" },
                     new ApolloListItem() { ListItemId = 10, Value = "Homemaker" },
                     new ApolloListItem() { ListItemId = 11, Value = "ExtraOccupationalExperience" },
-                    new ApolloListItem() { ListItemId = 12, Value = "PersonCare" }
-                 }
+
+                }
             };
 
             var id = await api.CreateOrUpdateListAsync(apolloList);
@@ -749,7 +762,7 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(WorkingTimeModel));
-            Assert.IsTrue(dbItem.Items.Count == 5);
+            Assert.IsTrue(dbItem.Items.Count == 6);
         }
 
         /// <summary>
