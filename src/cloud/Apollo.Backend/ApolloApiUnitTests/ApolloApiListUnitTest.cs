@@ -269,21 +269,9 @@ namespace Apollo.Api.UnitTests
         {
             await PopulateContactType();
             await PopulateCarreerType();
-            await PopulateCompletionState();
-            await PopulateDriversLicense();
-            await PopulateEducationType();
-            await PopulateLanguageNiveau();
-            await PopulateRecognitionType();
-            await PopulateSchoolGraduation();
-            await PopulateServiceType();
-            await PopulateStaffResponsibility();
-            await PopulateUniversityDegree();
-            await PopulateTypeOfSchool();
-            await PopulateVoluntaryServiceType();
-            await PopulateWilling();
-            await PopulateYearRange();
-            await PopulateWorkingTimeModel();
+            // . . .
 
+            await PopulateDriversLicense();
         }
 
         private async Task PopulateContactType()
