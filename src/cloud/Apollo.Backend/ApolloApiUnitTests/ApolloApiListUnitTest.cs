@@ -268,7 +268,7 @@ namespace Apollo.Api.UnitTests
         {
             await PopulateContactType();
 
-            await PopulateCareerType();
+            await PopulateCarreerType();
             // . . .
 
         }
