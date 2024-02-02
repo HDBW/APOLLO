@@ -9,6 +9,17 @@ using System.Threading.Tasks;
 
 namespace Apollo.Common.Entities
 {
+
+    /// <summary>
+    /// Used as a name for dealing with Apollo Lists.
+    /// The type we use here is called <see cref="ApolloList"/>. However we do not use this type as th ename of
+    /// the cllection inside MongoDb. This is why we introduced this type.
+    /// </summary>
+    public class List
+    {
+
+    }
+
     /// <summary>
     /// Used as a general entity to store a list of items of some type.
     /// </summary>

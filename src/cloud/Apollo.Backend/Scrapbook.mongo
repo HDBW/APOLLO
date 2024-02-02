@@ -1,8 +1,20 @@
 
+// TRAININGS
 db.trainings.count()
 db.trainings.find()
 
-db.trainings.deleteOne({"_id" : "SER01"})
+db.trainings.find({"_id" : "SER02"})
+
+db.trainings.deleteOne({"_id" : "T07"})
+
+
+// LISTS
+
+db.lists.count()
+
+db.lists.find()
+
+db.lists.deleteOne({"ItemType": "ContactType"})
 
 
 db.accommodations.find({'Loans.4': {$exists: true}})

@@ -414,8 +414,24 @@ namespace Apollo.Api
                 Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
                 ItemType = dict.ContainsKey("ItemType") ? (string)dict["ItemType"] : "",
                 Description = dict.ContainsKey("Description") ? (string)dict["Description"] : "",
-                Items = dict.ContainsKey("Items") ? ToApolloListItem((List<ExpandoObject>)(dict["Items"]!)) : new List<ApolloListItem>()
+                Items = new List<ApolloListItem>(),
             };
+
+            List<Object> expandoList = (List<Object>)dict["Items"];
+
+            foreach (var expandoItem in expandoList)
+            {
+                IDictionary<string, object> dictList = expandoItem as IDictionary<string, object>;
+
+                lst.Items.Add(new ApolloListItem
+                {
+                    ListItemId = (int)dictList![nameof(ApolloListItem.ListItemId)],
+                    Value = (string)dictList![nameof(ApolloListItem.Value)],
+                    Description = (string)dictList![nameof(ApolloListItem.Description)],
+                    Lng = (string)dictList![nameof(ApolloListItem.Lng)]
+                });
+
+            }
 
             return lst;
         }
@@ -430,7 +446,7 @@ namespace Apollo.Api
 
                 list.Add(new ApolloListItem
                 {
-                    ListItemId= dict.ContainsKey("ListItemId") ? (int)dict["ListItemId"] : throw new ApolloApiException(-1, $"The ListItem in the ApolloList has no {nameof(ApolloListItem.ListItemId)} identifier."),
+                    ListItemId = dict.ContainsKey("ListItemId") ? (int)dict["ListItemId"] : throw new ApolloApiException(-1, $"The ListItem in the ApolloList has no {nameof(ApolloListItem.ListItemId)} identifier."),
                     Lng = dict.ContainsKey("Lng") ? (string)dict["Lng"] : "",
                     Value = dict.ContainsKey("Value") ? (string)dict["Value"] : ""
                 });

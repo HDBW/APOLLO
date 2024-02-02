@@ -73,7 +73,7 @@ namespace Apollo.Api
             }
 
             // this must return the single item.
-            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<ApolloList>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<List>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
             if (res.FirstOrDefault() != null)
                 return Convertor.ToApolloList(res.FirstOrDefault()!);
@@ -129,7 +129,7 @@ namespace Apollo.Api
                 FieldName = "ItemType"
             });
 
-            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<ApolloList>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+            var res = await _dal.ExecuteQuery(ApolloApi.GetCollectionName<List>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
             if (res.Count == 1)
             {
@@ -141,7 +141,7 @@ namespace Apollo.Api
                 throw new ApolloApiException();//todo.
             }
             else
-                return new List<ApolloListItem>();            
+                return new List<ApolloListItem>();
         }
 
 
@@ -158,28 +158,23 @@ namespace Apollo.Api
             {
                 string id;
 
-                if (String.IsNullOrEmpty(list.Id))
+                var existingList = await GetListAsync(itemType: list.ItemType);
+
+                if (existingList == null)
                 {
-                    id = CreateListId(nameof(Qualification));
+                    EnsureLangueAndId(list);
 
-                    EnsureLangueSet(list);
+                    id = list.Id;
 
-                    await _dal.InsertAsync(ApolloApi.GetCollectionName<ApolloList>(), Convertor.Convert(list));
+                    await _dal.InsertAsync(ApolloApi.GetCollectionName<List>(), Convertor.Convert(list));
                 }
                 else
                 {
-                    var existingList = await _dal.GetByIdAsync<ApolloList>(ApolloApi.GetCollectionName<ApolloList>(), list.Id);
+                    EnsureLangueAndId(list);
 
-                    if (existingList != null)
-                    {
-                        id = existingList.Id;
-                        EnsureLangueSet(list);
-                        await _dal.UpsertAsync(GetCollectionName<ApolloList>(), new List<ExpandoObject> { Convertor.Convert(list) });
-                    }
-                    else
-                    {
-                        throw new ApolloApiException(ListErrors.CreateOrUpdateListError, $"The list with the specified Id = {list.Id} does not exist.");
-                    }
+                    id = existingList.Id;
+
+                    await _dal.UpsertAsync(GetCollectionName<ApolloList>(), new List<ExpandoObject> { Convertor.Convert(list) });
                 }
 
                 return id;
@@ -203,10 +198,16 @@ namespace Apollo.Api
         /// Makes sure that the labguage is set. If not we set it on invariant.
         /// </summary>
         /// <param name="list"></param>
-        private static void EnsureLangueSet(ApolloList list)
+        private static void EnsureLangueAndId(ApolloList list)
         {
+            if (String.IsNullOrEmpty(list.Id))
+            {
+                list.Id = CreateListId($"{nameof(List)}-{list.ItemType}");
+            }
+
             foreach (var lstItem in list.Items)
             {
+
                 if (String.IsNullOrEmpty(lstItem.Lng))
                 {
                     lstItem.Lng = _cDefaultLanguageValue;
@@ -222,7 +223,7 @@ namespace Apollo.Api
         /// <returns></returns>
         public async Task<long> DeleteListAsync(string[] ids)
         {
-            var cnt = await _dal.DeleteManyAsync(ApolloApi.GetCollectionName<ApolloList>(), ids);
+            var cnt = await _dal.DeleteManyAsync(ApolloApi.GetCollectionName<List>(), ids);
 
             return cnt;
         }
@@ -302,11 +303,11 @@ namespace Apollo.Api
                 if (String.IsNullOrEmpty(list.Id))
                 {
                     list.Id = CreateListId(nameof(Qualification));
-                    await _dal.InsertAsync(ApolloApi.GetCollectionName<ApolloList>(), Convertor.Convert(list));
+                    await _dal.InsertAsync(ApolloApi.GetCollectionName<List>(), Convertor.Convert(list));
                 }
                 else
                 {
-                    var existingList = await _dal.GetByIdAsync<ApolloList>(ApolloApi.GetCollectionName<ApolloList>(), list.Id);
+                    var existingList = await _dal.GetByIdAsync<ApolloList>(ApolloApi.GetCollectionName<List>(), list.Id);
 
                     if (existingList != null)
                     {
