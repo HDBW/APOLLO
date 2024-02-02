@@ -14,6 +14,10 @@ using MongoDB.Driver;
 
 namespace TrainingControllerIntegrationTests
 {
+
+    /// <summary>
+    /// Integration tests for the TrainingController class.
+    /// </summary>
     [TestClass]
     public class TrainingControllerIntegrationTests 
     {
@@ -27,8 +31,8 @@ namespace TrainingControllerIntegrationTests
          {
                 new Training(){
                     Id = "UT01",
-                    ProviderId = "unittest",
-                    TrainingName = "Open AI",
+                    ProviderId = "IntergrationTest",
+                    TrainingName = "C",
                     Loans = new List<Loans>(
                         new Loans[]
                         {
@@ -93,12 +97,12 @@ namespace TrainingControllerIntegrationTests
         /// </summary>
         private string _complexTrainingJson = @"[
   {
-    ""id"": ""SER04"",
-    ""providerId"": ""hdbw-F626FEDE-1A30-4DE0-B17B-9DCB04A654C2"",
-    ""trainingName"": ""Training05"",
-    ""description"": ""Description of Training 05"",
-    ""shortDescription"": ""Short Description of T05"",
-    ""trainingType"": ""Type of Training for Training 05"",
+    ""id"": ""IT01"",
+    ""providerId"": ""intergrationtest"",
+    ""trainingName"": ""Training01"",
+    ""description"": ""Description of Training 01"",
+    ""shortDescription"": ""Short Description of 01"",
+    ""trainingType"": ""Type of Training for Training 01"",
     ""content"": [
       ""<string>"",
       ""<string>""
@@ -632,9 +636,13 @@ namespace TrainingControllerIntegrationTests
 
         public TrainingControllerIntegrationTests()
         {
-        
+            _httpClient = Helpers.GetHttpClient();
         }
 
+
+        /// <summary>
+        /// Cleanup method to delete test data after each test.
+        /// </summary>
         [TestCleanup]
         public async Task CleanUp()
         {
@@ -646,7 +654,18 @@ namespace TrainingControllerIntegrationTests
             }            
         }
 
+
+        /// <summary>
+        /// Initialization method to insert test data before each test.
+        /// </summary>
         [TestInitialize]
+        public async Task InitTest()
+        {
+            await CleanUp();
+            await InsertTestTrainings();
+        }
+
+
         private async Task InsertTestTrainings()
         {
             await CleanUp();
@@ -661,7 +680,12 @@ namespace TrainingControllerIntegrationTests
 
             Assert.IsTrue(res.IsSuccessStatusCode);
 
-            var resjson = await res.Content.ReadAsStringAsync();            
+            var resjson = await res.Content.ReadAsStringAsync();
+            var insertedIds = JsonSerializer.Deserialize<List<string>>(resjson);
+            Assert.IsNotNull(insertedIds, "The response should include IDs of inserted trainings.");
+            Assert.AreEqual(_testTrainings.Length, insertedIds.Count, "The number of inserted trainings should match the input.");
+
+            await CleanUp();
         }
 
 
@@ -672,16 +696,113 @@ namespace TrainingControllerIntegrationTests
         [TestMethod]
         public async Task GetTrainingTest()
         {
-            var httpClient = Helpers.GetHttpClient();
 
             foreach (var testTraining in _testTrainings)
             {
-                var res = await httpClient.GetAsync($"{_cTrainingController}/{testTraining.Id}");
+                // GET the training by ID and verify the response is successful
+                var response = await _httpClient.GetAsync($"{_cTrainingController}/{testTraining.Id}");
+                Assert.IsTrue(response.IsSuccessStatusCode);
 
-                Assert.IsTrue(res.IsSuccessStatusCode);
+                // Deserialize the response content to a Training object
+                var trainingJson = await response.Content.ReadAsStringAsync();
+                var training = JsonSerializer.Deserialize<Training>(trainingJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                // Perform necessary assertions on the retrieved training object
+                Assert.IsNotNull(training);
+                Assert.AreEqual(testTraining.Id, training.Id);
+                // Add more assertions as necessary to verify the training details
             }
 
             // Assert content as needed
+        }
+
+
+        /// <summary>
+        /// Queries the trainings based on specified criteria and asserts the results.
+        /// </summary>
+        [TestMethod]
+        public async Task QueryTrainingsTest()
+        {
+            
+
+            // Construct the query
+            var query = new Apollo.Common.Entities.Query
+            {
+                Fields = new List<string> { "TrainingName" },
+                Filter = new Apollo.Common.Entities.Filter
+                {
+                    IsOrOperator = false,
+                    Fields = new List<Apollo.Common.Entities.FieldExpression>
+                {
+                    new Apollo.Common.Entities.FieldExpression
+                    {
+                        FieldName = "TrainingName",
+                        Operator = Apollo.Common.Entities.QueryOperator.Equals,
+                        Argument = new List<object> { "Business English A2/B1" } // The name we are querying for
+                    }
+                }
+                },
+                RequestCount = true,
+                Top = 200,
+                Skip = 0,
+            };
+
+            var jsonQuery = JsonSerializer.Serialize(query);
+            var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
+
+            // Execute the query against Api
+            var queryResponse = await _httpClient.PostAsync($"{_cTrainingController}", queryContent);
+            Assert.IsTrue(queryResponse.IsSuccessStatusCode);
+
+            // Deserialize the response
+            var responseJson = await queryResponse.Content.ReadAsStringAsync();
+            var trainingsResponse = JsonSerializer.Deserialize<Apollo.RestService.Messages.QueryTrainingsResponse>(responseJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            // Perform assertions 
+            Assert.IsNotNull(trainingsResponse);
+            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "Business English A2/B1"));
+        }
+
+
+        /// <summary>
+        /// Creates or updates training instances based on the provided test data and verifies the responses.
+        /// </summary>
+        [TestMethod]
+        public async Task CreateOrUpdateTrainingTest()
+        {
+            
+
+            foreach (var testTraining in _testTrainings)
+            {
+                // Serialize the individual training object to JSON
+                var trainingJson = JsonSerializer.Serialize(testTraining);
+                HttpContent content = new StringContent(trainingJson, Encoding.UTF8, "application/json");
+
+                // Send the create or update request
+                HttpResponseMessage response;
+
+                // Check if the training already has an ID to determine if it should be an update or insert
+                if (string.IsNullOrEmpty(testTraining.Id))
+                {
+                    // No ID means it's a new training, so use the POST endpoint
+                    response = await _httpClient.PostAsync($"{_cTrainingController}", content);
+                }
+                else
+                {
+                    // An ID is present, use the PUT endpoint to update
+                    response = await _httpClient.PutAsync($"{_cTrainingController}", content);
+                }
+
+                // Assert that the response is successful
+                Assert.IsTrue(response.IsSuccessStatusCode, "The response should be successful.");
+
+                // Deserialize the response content to get the ID of the created or updated training
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var createdOrUpdatedId = JsonSerializer.Deserialize<string>(responseContent);
+                Assert.IsNotNull(createdOrUpdatedId, "The response should contain the ID of the created or updated training.");
+
+                // Additional assertions to check the response content can be added here
+            }
         }
     }
 }
