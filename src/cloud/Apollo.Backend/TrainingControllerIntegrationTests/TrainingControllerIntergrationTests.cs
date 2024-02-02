@@ -684,6 +684,8 @@ namespace TrainingControllerIntegrationTests
             var insertedIds = JsonSerializer.Deserialize<List<string>>(resjson);
             Assert.IsNotNull(insertedIds, "The response should include IDs of inserted trainings.");
             Assert.AreEqual(_testTrainings.Length, insertedIds.Count, "The number of inserted trainings should match the input.");
+
+            await CleanUp();
         }
 
 
@@ -758,7 +760,7 @@ namespace TrainingControllerIntegrationTests
 
             // Perform assertions 
             Assert.IsNotNull(trainingsResponse);
-            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "C"));
+            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "Business English A2/B1"));
         }
 
 
