@@ -269,8 +269,10 @@ namespace Apollo.Api.UnitTests
             await PopulateContactType();
 
             await PopulateCarreerType();
-            // . . .
 
+            await PopulateCompletionState();
+
+            await PopulateDriversLicense();
         }
 
         private async Task PopulateContactType()
