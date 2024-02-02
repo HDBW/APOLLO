@@ -51,10 +51,8 @@ namespace Apollo.RestService.IntergrationTests
                         EAppointmentUrl = new Uri("http://appointments.companyone.com"),
                         ContactType = new ContactType
                         {
-                            Id = "1",
-                            Name = "Professional",
-                            Value = 1,
-                            CultureInfo = CultureInfo.CurrentCulture
+                               ListItemId = 1,
+                               Value="TestValue"   
                         }
                     }
                 },
@@ -84,10 +82,8 @@ namespace Apollo.RestService.IntergrationTests
                         EAppointmentUrl = new Uri("http://appointments.companytwo.com"),
                         ContactType = new ContactType
                         {
-                            Id = "2",
-                            Name = "Private",
-                            Value = 2,
-                            CultureInfo = CultureInfo.CurrentCulture
+                            ListItemId = 1,
+                            Value="TestValue"
                         }
                     }
                 },
