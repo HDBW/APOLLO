@@ -316,25 +316,24 @@ namespace Apollo.Api.UnitTests
 
             ApolloList apolloList = new ApolloList()
             {
-                Description = "This Enum represents the Type of the Contact.It indicates if the Contact is a Professional or Private Contact",
+                Description = "Could be specific for countries",
                 ItemType = nameof(CareerType),
                 Items = new List<ApolloListItem>()
                  {
-                     new ApolloListItem()
-                     {
-                         ListItemId = 0,
-                         Value = "Unknown"
-                     },
-                     new ApolloListItem()
-                     {
-                         ListItemId = 1,
-                         Value = "Professional"
-                     },
-                     new ApolloListItem()
-                     {
-                         ListItemId = 2,
-                         Value = "Private"
-                     }
+                    
+                    new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                    new ApolloListItem() { ListItemId = 1, Value = "Other" },
+                    new ApolloListItem() { ListItemId = 2, Value = "WorkExperience" },
+                    new ApolloListItem() { ListItemId = 3, Value = "PartTimeWorkExperience" },
+                    new ApolloListItem() { ListItemId = 4, Value = "Internship" },
+                    new ApolloListItem() { ListItemId = 5, Value = "SelfEmployment" },
+                    new ApolloListItem() { ListItemId = 6, Value = "Service" },
+                    new ApolloListItem() { ListItemId = 7, Value = "CommunityService" },
+                    new ApolloListItem() { ListItemId = 8, Value = "VoluntaryService" },
+                    new ApolloListItem() { ListItemId = 9, Value = "ParentalLeave" },
+                    new ApolloListItem() { ListItemId = 10, Value = "Homemaker" },
+                    new ApolloListItem() { ListItemId = 11, Value = "ExtraOccupationalExperience" },
+                    new ApolloListItem() { ListItemId = 12, Value = "PersonCare" }
                  }
             };
 
@@ -343,17 +342,415 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
 
             Assert.IsNotNull(dbItem);
-            Assert.IsTrue(dbItem.ItemType == nameof(ContactType));
-            Assert.IsTrue(dbItem.Items.Count == 3);
+            Assert.IsTrue(dbItem.ItemType == nameof(CareerType));
+            Assert.IsTrue(dbItem.Items.Count == 13);
+        }
+
+        private async Task PopulateCompletionState()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "CompletionState Description",
+                ItemType = nameof(CompletionState),
+                Items = new List<ApolloListItem>()
+                 {
+                    new ApolloListItem() { ListItemId = 0, Value = "None" },
+                    new ApolloListItem() { ListItemId = 1, Value = "Completed" },
+                    new ApolloListItem() { ListItemId = 2, Value = "Failed" },
+                    new ApolloListItem() { ListItemId = 3, Value = "Ongoing" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(CompletionState));
+            Assert.IsTrue(dbItem.Items.Count == 4);
+        }
+
+
+        private async Task PopulateDriversLicense()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "Is Culture specific and prop a List sync",
+                ItemType = nameof(DriversLicense),
+                Items = new List<ApolloListItem>()
+                 {
+                    new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                    new ApolloListItem() { ListItemId = 1, Value = "B" },
+                    new ApolloListItem() { ListItemId = 2, Value = "BE" },
+                    new ApolloListItem() { ListItemId = 3, Value = "Forklift" },
+                    new ApolloListItem() { ListItemId = 4, Value = "C1E" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(DriversLicense));
+            Assert.IsTrue(dbItem.Items.Count == 5);
+        }
+
+
+        private async Task PopulateEducationType()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "Populate Education Type",
+                ItemType = nameof(EducationType),
+                Items = new List<ApolloListItem>()
+                 {
+                    new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                    new ApolloListItem() { ListItemId = 1, Value = "Education" },
+                    new ApolloListItem() { ListItemId = 2, Value = "CompanyBasedVocationalTraining" },
+                    new ApolloListItem() { ListItemId = 3, Value = "Study" },
+                    new ApolloListItem() { ListItemId = 4, Value = "VocationalTraining" },
+                    new ApolloListItem() { ListItemId = 5, Value = "FurtherEducation" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(EducationType));
+            Assert.IsTrue(dbItem.Items.Count == 6);
+        }
+
+        private async Task PopulateLanguageNiveau()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "International Standard",
+                ItemType = nameof(LanguageNiveau),
+                Items = new List<ApolloListItem>()
+                 {
+                    new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                    new ApolloListItem() { ListItemId = 1, Value = "A1" },
+                    new ApolloListItem() { ListItemId = 2, Value = "A2" },
+                    new ApolloListItem() { ListItemId = 3, Value = "B1" },
+                    new ApolloListItem() { ListItemId = 4, Value = "B2" },
+                    new ApolloListItem() { ListItemId = 5, Value = "C1" },
+                    new ApolloListItem() { ListItemId = 6, Value = "C2" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(LanguageNiveau));
+            Assert.IsTrue(dbItem.Items.Count == 7);
+        }
+
+
+        private async Task PopulateRecognitionType()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "German Specific",
+                ItemType = nameof(RecognitionType),
+                Items = new List<ApolloListItem>()
+                 {
+                   new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                   new ApolloListItem() { ListItemId = 1, Value = "UnregulatedNotRecognized" },
+                   new ApolloListItem() { ListItemId = 2, Value = "RegulatedNotRecognized" },
+                   new ApolloListItem() { ListItemId = 3, Value = "Recognized" },
+                   new ApolloListItem() { ListItemId = 4, Value = "Pending" },
+                   new ApolloListItem() { ListItemId = 5, Value = "PartialRecognized" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(RecognitionType));
+            Assert.IsTrue(dbItem.Items.Count == 6);
+        }
+
+
+        private async Task PopulateSchoolGraduation()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "German Specific",
+                ItemType = nameof(SchoolGraduation),
+                Items = new List<ApolloListItem>()
+                 {
+                   new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                   new ApolloListItem() { ListItemId = 1, Value = "SecondarySchoolCertificate" },
+                   new ApolloListItem() { ListItemId = 2, Value = "AdvancedTechnicalCollegeCertificate" },
+                   new ApolloListItem() { ListItemId = 3, Value = "HigherEducationEntranceQualificationALevel" },
+                   new ApolloListItem() { ListItemId = 4, Value = "IntermediateSchoolCertificate" },
+                   new ApolloListItem() { ListItemId = 5, Value = "ExtendedSecondarySchoolLeavingCertificate" },
+                   new ApolloListItem() { ListItemId = 6, Value = "NoSchoolLeavingCertificate" },
+                   new ApolloListItem() { ListItemId = 7, Value = "SpecialSchoolLeavingCertificate" },
+                   new ApolloListItem() { ListItemId = 8, Value = "SubjectRelatedEntranceQualification" },
+                   new ApolloListItem() { ListItemId = 9, Value = "AdvancedTechnicalCollegeWithoutCertificate" }
+
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(SchoolGraduation));
+            Assert.IsTrue(dbItem.Items.Count == 10);
+        }
+
+
+        private async Task PopulateServiceType()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "German Specific",
+                ItemType = nameof(ServiceType),
+                Items = new List<ApolloListItem>()
+                 {
+                  new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                  new ApolloListItem() { ListItemId = 1, Value = "CivilianService" },
+                  new ApolloListItem() { ListItemId = 2, Value = "MilitaryService" },
+                  new ApolloListItem() { ListItemId = 3, Value = "VoluntaryMilitaryService" },
+                  new ApolloListItem() { ListItemId = 4, Value = "MilitaryExercise" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(ServiceType));
+            Assert.IsTrue(dbItem.Items.Count == 5);
+        }
+
+
+        private async Task PopulateStaffResponsibility()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "German Specific",
+                ItemType = nameof(StaffResponsibility),
+                Items = new List<ApolloListItem>()
+                 {
+                     new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                     new ApolloListItem() { ListItemId = 1, Value = "LessThan10" },
+                     new ApolloListItem() { ListItemId = 2, Value = "Between10And49" },
+                     new ApolloListItem() { ListItemId = 3, Value = "Between50And499" },
+                     new ApolloListItem() { ListItemId = 4, Value = "MoreThan499" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(StaffResponsibility));
+            Assert.IsTrue(dbItem.Items.Count == 5);
+        }
+
+
+        private async Task PopulateTypeOfSchool()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "German Specific enum",
+                ItemType = nameof(TypeOfSchool),
+                Items = new List<ApolloListItem>()
+                 {
+                     new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                     new ApolloListItem() { ListItemId = 1, Value = "Other" },
+                     new ApolloListItem() { ListItemId = 2, Value = "HighSchool" },
+                     new ApolloListItem() { ListItemId = 3, Value = "SecondarySchool" },
+                     new ApolloListItem() { ListItemId = 4, Value = "VocationalCollege" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(TypeOfSchool));
+            Assert.IsTrue(dbItem.Items.Count == 5);
+        }
+
+
+        private async Task PopulateUniversityDegree()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "International",
+                ItemType = nameof(UniversityDegree),
+                Items = new List<ApolloListItem>()
+                 {
+                    new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                    new ApolloListItem() { ListItemId = 1, Value = "Master" },
+                    new ApolloListItem() { ListItemId = 2, Value = "Bachelor" },
+                    new ApolloListItem() { ListItemId = 3, Value = "Pending" },
+                    new ApolloListItem() { ListItemId = 4, Value = "Doctorate" },
+                    new ApolloListItem() { ListItemId = 5, Value = "StateExam" },
+                    new ApolloListItem() { ListItemId = 6, Value = "UnregulatedUnrecognized" },
+                    new ApolloListItem() { ListItemId = 7, Value = "RegulatedUnrecognized" },
+                    new ApolloListItem() { ListItemId = 8, Value = "PartialRecognized" },
+                    new ApolloListItem() { ListItemId = 9, Value = "EcclesiasticalExam" },
+                    new ApolloListItem() { ListItemId = 10, Value = "Other" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(UniversityDegree));
+            Assert.IsTrue(dbItem.Items.Count == 11);
+        }
+
+
+        private async Task PopulateVoluntaryServiceType()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "VoluntaryServiceType in German",
+                ItemType = nameof(VoluntaryServiceType),
+                Items = new List<ApolloListItem>()
+                 {
+                    new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                    new ApolloListItem() { ListItemId = 1, Value = "Other" },
+                    new ApolloListItem() { ListItemId = 2, Value = "VoluntarySocialYear" },
+                    new ApolloListItem() { ListItemId = 3, Value = "FederalVolunteerService" },
+                    new ApolloListItem() { ListItemId = 4, Value = "VoluntaryEcologicalYear" },
+                    new ApolloListItem() { ListItemId = 5, Value = "VoluntarySocialTrainingYear" },
+                    new ApolloListItem() { ListItemId = 6, Value = "VoluntaryCulturalYear" },
+                    new ApolloListItem() { ListItemId = 7, Value = "VoluntarySocialYearInSport" },
+                    new ApolloListItem() { ListItemId = 8, Value = "VoluntaryYearInMonumentConservation" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(VoluntaryServiceType));
+            Assert.IsTrue(dbItem.Items.Count == 9);
+        }
+
+        private async Task PopulateWilling()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "Willing German / BA",
+                ItemType = nameof(Willing),
+                Items = new List<ApolloListItem>()
+                 {
+                    new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                    new ApolloListItem() { ListItemId = 1, Value = "Yes" },
+                    new ApolloListItem() { ListItemId = 2, Value = "No" },
+                    new ApolloListItem() { ListItemId = 3, Value = "Partly" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(Willing));
+            Assert.IsTrue(dbItem.Items.Count == 4);
         }
 
 
 
+        private async Task PopulateYearRange()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "YearRange BA/German",
+                ItemType = nameof(YearRange),
+                Items = new List<ApolloListItem>()
+                 {
+                   new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                   new ApolloListItem() { ListItemId = 1, Value = "LessThan2" },
+                   new ApolloListItem() { ListItemId = 2, Value = "Between2And5" },
+                   new ApolloListItem() { ListItemId = 3, Value = "MoreThan5" }
+                 }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(YearRange));
+            Assert.IsTrue(dbItem.Items.Count == 4);
+        }
 
 
 
+        private async Task PopulateWorkingTimeModel()
+        {
+            var api = Helpers.GetApolloApi();
 
+            ApolloList apolloList = new ApolloList()
+            {
+                Description = "WorkingTimeModel BA German specific",
+                ItemType = nameof(WorkingTimeModel),
+                Items = new List<ApolloListItem>()
+                 {
+                       new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
+                       new ApolloListItem() { ListItemId = 1, Value = "FULLTIME" },
+                       new ApolloListItem() { ListItemId = 2, Value = "PARTTIME" },
+                       new ApolloListItem() { ListItemId = 3, Value = "SHIFT_NIGHT_WORK_WEEKEND" },
+                       new ApolloListItem() { ListItemId = 4, Value = "MINIJOB" },
+                       new ApolloListItem() { ListItemId = 5, Value = "HOME_TELEWORK" }
+                 }
+            };
 
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(WorkingTimeModel));
+            Assert.IsTrue(dbItem.Items.Count == 5);
+        }
 
         /// <summary>
         /// Tests querying Qualification List objects that match with the language.
