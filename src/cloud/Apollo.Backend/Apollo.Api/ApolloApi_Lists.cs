@@ -170,11 +170,11 @@ namespace Apollo.Api
                 }
                 else
                 {
+                    id = list.Id = existingList.Id;
+
                     EnsureLangueAndId(list);
 
-                    id = existingList.Id;
-
-                    await _dal.UpsertAsync(GetCollectionName<ApolloList>(), new List<ExpandoObject> { Convertor.Convert(list) });
+                    await _dal.UpsertAsync(GetCollectionName<List>(), new List<ExpandoObject> { Convertor.Convert(list) });
                 }
 
                 return id;
