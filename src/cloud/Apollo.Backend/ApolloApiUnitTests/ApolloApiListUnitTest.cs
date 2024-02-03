@@ -262,7 +262,7 @@ namespace Apollo.Api.UnitTests
             Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == 3));
         }
 
-
+        #region List Population
         /// <summary>
         /// Creates the test lists in the database.
         /// </summary>
@@ -286,7 +286,7 @@ namespace Apollo.Api.UnitTests
             await PopulateYearRange();
             await PopulateWorkingTimeModel();
             await PopulateCompletionState();
-            await PopulateDriversLicense();
+       
         }
 
         private async Task PopulateContactType()
@@ -767,6 +767,7 @@ namespace Apollo.Api.UnitTests
             Assert.IsTrue(dbItem.ItemType == nameof(WorkingTimeModel));
             Assert.IsTrue(dbItem.Items.Count == 6);
         }
+        #endregion
 
     }
 }

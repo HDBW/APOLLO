@@ -417,11 +417,11 @@ namespace Apollo.Api
                 Items = new List<ApolloListItem>(),
             };
 
-            List<Object> expandoList = (List<Object>)dict["Items"];
+            List<Object> expandoList = dict.ContainsKey(nameof(ApolloList.Items)) ? (List<Object>)dict[nameof(ApolloList.Items)] : new List<Object>();
 
             foreach (var expandoItem in expandoList)
             {
-                IDictionary<string, object> dictList = expandoItem as IDictionary<string, object>;
+                IDictionary<string, object> dictList = (IDictionary<string, object>)expandoItem;
 
                 lst.Items.Add(new ApolloListItem
                 {
