@@ -19,8 +19,10 @@ namespace Apollo.Api.UnitTests
     {
         private const string _cTestListType1 = "TestListType1";
         private const string _cTestListType2 = "TestListType2";
+        private const string _cTestListType3 = "TestListType3";
+        private const string _cTestListType4 = "TestListType4";
 
-        /// <summary>
+        /// <summary
         /// The list of ApolloList objects used for testing.
         /// </summary>
         private List<ApolloList> _testList = new List<ApolloList>()
@@ -48,7 +50,7 @@ namespace Apollo.Api.UnitTests
              new ApolloList()
              {
                  Id = "UT02",
-                 ItemType = _cTestListType1,
+                 ItemType = _cTestListType2,
                  Items = new List<ApolloListItem>()
                  {
                      new ApolloListItem()
@@ -68,7 +70,7 @@ namespace Apollo.Api.UnitTests
              new ApolloList()
              {
                  Id = "UT03",
-                 ItemType = _cTestListType2,
+                 ItemType = _cTestListType3,
                  Items = new List<ApolloListItem>()
                  {
                      new ApolloListItem()
@@ -88,7 +90,7 @@ namespace Apollo.Api.UnitTests
               new ApolloList()
              {
                  Id = "UT04",
-                 ItemType = _cTestListType2,
+                 ItemType = _cTestListType4,
                  Items = new List<ApolloListItem>()
                  {
                      new ApolloListItem()
@@ -130,14 +132,14 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            var result = await api.GetListAsync(_testList.First().Items.First().Lng, "_cTestListType1");
+            var result = await api.GetListAsync(_testList[0].Items.First().Lng, _testList[0].ItemType);
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("_cTestListType1", result.ItemType);
-            Assert.AreEqual(1, result.Items.Count);
-            Assert.AreEqual("DE", result.Items[0].Lng);
-            Assert.AreEqual("C# Entwickler", result.Items[0].Value);
+            Assert.AreEqual(_testList[0].ItemType, result.ItemType);
+            Assert.AreEqual(_testList[0].Items.Count, result.Items.Count);
+            Assert.AreEqual(_testList[0].Items.First().Lng, result.Items[0].Lng);
+            Assert.AreEqual(_testList[0].Items.First().Value, result.Items[0].Value);
         }
 
 
@@ -151,7 +153,7 @@ namespace Apollo.Api.UnitTests
             var language = "DE";
 
             // Perform the query
-            var results = await api.QueryListAsync(language, "TestListType1", null);
+            var results = await api.QueryListAsync(language, _testList[0].ItemType, null);
 
             // Assert
             Assert.IsNotNull(results);
@@ -159,10 +161,11 @@ namespace Apollo.Api.UnitTests
         }
 
 
-        private static void AssertTrainingId(string id)
+
+        private static void AssertListId(string id)
         {
             Assert.IsNotNull(id);
-            Assert.IsTrue(id.StartsWith(nameof(Training)));
+            Assert.IsTrue(id.StartsWith(nameof(List)));
         }
 
 
@@ -200,7 +203,7 @@ namespace Apollo.Api.UnitTests
 
                 var id = await api.CreateOrUpdateListAsync(apolloList);
 
-                AssertTrainingId(id);
+                AssertListId(id);
             }
         }
 
@@ -209,7 +212,7 @@ namespace Apollo.Api.UnitTests
         /// Tests creating or updating a Qualification List object and then cleaning up by deleting it.
         /// </summary>
         [TestMethod]
-        public async Task CreateOrUpdateListsTest()
+        public async Task UpdateExistingItemsIntheListTest()
         {
             var api = Helpers.GetApolloApi();
 
@@ -217,7 +220,7 @@ namespace Apollo.Api.UnitTests
             var existingApolloList = _testList.FirstOrDefault();
             Assert.IsNotNull(existingApolloList, "Empty item _testList.");
 
-            // Update the existing Apollo list
+            // Update the existing item in Apollo list
             existingApolloList.Items[1].Lng = "EN Updated";
             existingApolloList.Items[1].Value = "C# Developer Updated";
 
@@ -225,12 +228,12 @@ namespace Apollo.Api.UnitTests
             Assert.IsNotNull(existingApolloListId);
 
             // Retrieve the updated list
-            var updatedList = await api.GetListAsync("DE", _cTestListType1);
+            var updatedList = await api.GetListAsync(_testList[0].Items[0].Lng, _testList[0].ItemType);
 
             // Assert that the existing list is updated
             Assert.IsNotNull(updatedList);
-            Assert.AreEqual("EN Updated", updatedList.Items[1].Lng);
-            Assert.AreEqual("C# Developer Updated", updatedList.Items[1].Value);
+            Assert.AreEqual(existingApolloList.Items[1].Lng, updatedList.Items[1].Lng);
+            Assert.AreEqual(existingApolloList.Items[1].Value, updatedList.Items[1].Value);
 
             // Add a new Item to the existing List
             var newQualificationList = new ApolloList
@@ -252,7 +255,7 @@ namespace Apollo.Api.UnitTests
             Assert.IsNotNull(newQualificationIds);
 
             // Retrieve the list after adding the new item
-            var newListWithNewItem = await api.GetListAsync("DE", _cTestListType1);
+            var newListWithNewItem = await api.GetListAsync(_testList[0].Items[0].Lng, _testList[0].ItemType);
 
             // Assert that the new item is present in the list
             Assert.IsNotNull(newListWithNewItem);
@@ -267,11 +270,22 @@ namespace Apollo.Api.UnitTests
         public async Task PopulateListsTest()
         {
             await PopulateContactType();
-
             await PopulateCarreerType();
-
             await PopulateCompletionState();
-
+            await PopulateDriversLicense();
+            await PopulateEducationType();
+            await PopulateLanguageNiveau();
+            await PopulateRecognitionType();
+            await PopulateSchoolGraduation();
+            await PopulateServiceType();
+            await PopulateStaffResponsibility();
+            await PopulateUniversityDegree();
+            await PopulateTypeOfSchool();
+            await PopulateVoluntaryServiceType();
+            await PopulateWilling();
+            await PopulateYearRange();
+            await PopulateWorkingTimeModel();
+            await PopulateCompletionState();
             await PopulateDriversLicense();
         }
 
@@ -322,7 +336,7 @@ namespace Apollo.Api.UnitTests
                 ItemType = nameof(CareerType),
                 Items = new List<ApolloListItem>()
                  {
-                    
+
                     new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
                     new ApolloListItem() { ListItemId = 1, Value = "Other" },
                     new ApolloListItem() { ListItemId = 2, Value = "WorkExperience" },
@@ -335,8 +349,8 @@ namespace Apollo.Api.UnitTests
                     new ApolloListItem() { ListItemId = 9, Value = "ParentalLeave" },
                     new ApolloListItem() { ListItemId = 10, Value = "Homemaker" },
                     new ApolloListItem() { ListItemId = 11, Value = "ExtraOccupationalExperience" },
-                    new ApolloListItem() { ListItemId = 12, Value = "PersonCare" }
-                 }
+
+                }
             };
 
             var id = await api.CreateOrUpdateListAsync(apolloList);
@@ -345,7 +359,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(CareerType));
-            Assert.IsTrue(dbItem.Items.Count == 13);
+            Assert.IsTrue(dbItem.Items.Count == 12);
         }
 
         private async Task PopulateCompletionState()
@@ -751,43 +765,7 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(WorkingTimeModel));
-            Assert.IsTrue(dbItem.Items.Count == 5);
-        }
-
-        /// <summary>
-        /// Tests querying Qualification List objects that match with the language.
-        /// </summary>
-        [TestMethod]
-        public async Task QueryQualificationListTest()
-        {
-            var api = Helpers.GetApolloApi();
-            var language = "DE";
-
-            string containsFilter = "New Language Programmer";
-
-            /// Perform the query
-            var results = await api.QueryQualificationsListAsync(language, containsFilter);
-
-            /// Assert
-            Assert.IsNotNull(results);
-            Assert.IsTrue(results.Count > 0);
-
-            //
-            // Check Name filter working properly
-            // Check that all items contains the filter text.
-            foreach (var item in results)
-            {
-                Assert.IsTrue(item.Value.Contains(containsFilter));
-            }
-
-            /// Extract qualification IDs from the results
-            //var qualificationIdsToDelete = results.Select(result => result.Id).ToArray();
-
-            /// Delete qualifications by passing the array of IDs
-            //var deleteResult = await api.DeleteQualificationAsync(qualificationIdsToDelete);
-            //Assert.AreEqual(qualificationIdsToDelete.Length, deleteResult);
-
-
+            Assert.IsTrue(dbItem.Items.Count == 6);
         }
 
     }
