@@ -78,7 +78,7 @@ namespace De.HDBW.Apollo.Client.Services
 
                     var cts = new TaskCompletionSource<TV>(token);
                     _completionLookup.Add(cts, viewModel);
-                    await (Navigation?.PushModalAsync(popup, true) ?? Task.CompletedTask);
+                    await (Navigation?.PushModalAsync(popup, false) ?? Task.CompletedTask);
                     var result = await cts.Task;
                     return result;
                 }, token);
