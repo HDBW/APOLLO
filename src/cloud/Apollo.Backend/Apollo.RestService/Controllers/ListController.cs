@@ -31,6 +31,7 @@ namespace Apollo.Service.Controllers
             _logger = logger;
         }
 
+
         /// <summary>
         /// Returns the set of ApolloList items that matches specified filter.
         /// </summary>
@@ -77,12 +78,12 @@ namespace Apollo.Service.Controllers
         {
             try
             {
-                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
+                _logger?.LogTrace($"{nameof(CreateOrUpdateListAsync)} entered.");
 
                 // Assuming req contains the Training object to create or update.
                 var result = await _api.QueryQualificationsListAsync(req.Language, req.Contains);
 
-                _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
+                _logger?.LogTrace($"{nameof(CreateOrUpdateListAsync)} completed.");
 
                 // Return the result of the create/update operation as a response.
                 return new QueryListResponse { Result = result };
@@ -90,12 +91,10 @@ namespace Apollo.Service.Controllers
             catch (Exception ex)
             {
                 // Log and re-throw any exceptions encountered.
-                _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
+                _logger?.LogError($"{nameof(CreateOrUpdateListAsync)} failed: {ex.Message}");
                 throw;
             }
         }
-
-
 
 
         /// <summary>
@@ -108,28 +107,26 @@ namespace Apollo.Service.Controllers
         [HttpPut]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the updated List items.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task<CreateOrUpdateListResponse> CreateOrUpdateQualificationAsync([FromBody] CreateOrUpdateListRequest req)
-        {
-            throw new NotImplementedException();
+        public async Task<CreateOrUpdateListResponse> CreateOrUpdateListAsync([FromBody] CreateOrUpdateListRequest req)
+        {         
+            try
+            {
+                _logger?.LogTrace($"{nameof(CreateOrUpdateListAsync)} entered.");
 
-            //try
-            //{
-            //    _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} entered.");
+                // Assuming req contains the Training object to create or update.
+                var result = await _api.CreateOrUpdateListAsync(req.List);
 
-            //    // Assuming req contains the Training object to create or update.
-            //    var result = await _api.CreateOrUpdateQualificationAsync(new List<ApolloList> { req.List });
+                _logger?.LogTrace($"{nameof(CreateOrUpdateListAsync)} completed.");
 
-            //    _logger?.LogTrace($"{nameof(CreateOrUpdateQualificationAsync)} completed.");
-
-            //    // Return the result of the create/update operation as a response.
-            //    return new CreateOrUpdateListResponse { Result = req.List };
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Log and re-throw any exceptions encountered.
-            //    _logger?.LogError($"{nameof(CreateOrUpdateQualificationAsync)} failed: {ex.Message}");
-            //    throw;
-            //}
+                // Return the result of the create/update operation as a response.
+                return new CreateOrUpdateListResponse { Result = req.List };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger?.LogError($"{nameof(CreateOrUpdateListAsync)} failed: {ex.Message}");
+                throw;
+            }
         }
 
 

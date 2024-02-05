@@ -96,7 +96,7 @@ namespace Apollo.Api
         /// <param name="returnValuesOnly">By default set on true. It returns the value of the item only.
         /// If FALSE, it returns teh description of the item.</param>
         /// <returns>List of matching items or empty list.</returns>
-        public async Task<List<ApolloListItem>> QueryListAsync(string lng, string itemType, string? contains)
+        public async Task<List<ApolloListItem>> QueryListItemsAsync(string lng, string itemType, string? contains)
         {
             Query query = new Query
             {
@@ -105,7 +105,7 @@ namespace Apollo.Api
             };
 
             //
-            // We filter requested language.
+            // Filters the requested language.
             query.Filter.Fields.Add(new FieldExpression()
             {
                 Operator = QueryOperator.Equals,
@@ -113,6 +113,8 @@ namespace Apollo.Api
                 FieldName = "Items.Lng"
             });
 
+            //
+            // Filters the value.
             query.Filter.Fields.Add(new FieldExpression()
             {
                 Operator = QueryOperator.Contains,
@@ -121,7 +123,7 @@ namespace Apollo.Api
             });
 
             //
-            // We filter requested language.
+            // Filter the ItemType.
             query.Filter.Fields.Add(new FieldExpression()
             {
                 Operator = QueryOperator.Equals,
@@ -150,7 +152,7 @@ namespace Apollo.Api
         /// <summary>
         /// Creates or Updates the new List of items.
         /// </summary>
-        /// <param name="list">If the Id is specified, the update will be performed.</param>
+        /// <param name="list">If the <see cref="ApolloList.ItemType"/> or <see cref="ApolloList.Id"/>  is specified and exists in the DB, the update will be performed.</param>
         /// <returns></returns>
         public async Task<string> CreateOrUpdateListAsync(ApolloList list)
         {
@@ -158,7 +160,7 @@ namespace Apollo.Api
             {
                 string id;
 
-                var existingList = await GetListAsync(itemType: list.ItemType);
+                var existingList = await GetListAsync(itemType: list.ItemType, id: list.Id);
 
                 if (existingList == null)
                 {
@@ -271,7 +273,7 @@ namespace Apollo.Api
             {
                 _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
 
-                var list = await QueryListAsync(lng, nameof(Qualification), contains);
+                var list = await QueryListItemsAsync(lng, nameof(Qualification), contains);
 
                 _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
 

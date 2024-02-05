@@ -112,34 +112,43 @@ namespace Apollo.Api.UnitTests
         /// Makes sure that all test records are deleted after each test execution.
         /// </summary>
         /// <returns></returns>
-        //[TestCleanup]
+        [TestCleanup]
         public async Task Cleanup()
         {
             var api = Helpers.GetApolloApi();
 
             var deleteResult = await api.DeleteListAsync(_testList.Select(l => l.Id).ToArray());
+
             Assert.AreEqual(_testList.Count, deleteResult);
         }
 
 
-
         /// <summary>
-        /// todo
+        /// Inserts test lists and then gets every of them.
         /// </summary>
         /// <returns></returns>
         [TestMethod]
+        [TestCategory("Prod")]
         public async Task GetListInternalAsyncTest()
         {
             var api = Helpers.GetApolloApi();
 
-            var result = await api.GetListAsync(_testList[0].Items.First().Lng, _testList[0].ItemType);
+            foreach (var item in _testList)
+            {
+                await api.CreateOrUpdateListAsync(item);
+            }
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(_testList[0].ItemType, result.ItemType);
-            Assert.AreEqual(_testList[0].Items.Count, result.Items.Count);
-            Assert.AreEqual(_testList[0].Items.First().Lng, result.Items[0].Lng);
-            Assert.AreEqual(_testList[0].Items.First().Value, result.Items[0].Value);
+            foreach (var item in _testList)
+            {
+                var result = await api.GetListAsync(item.Items.First().Lng, item.ItemType);
+
+                // Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(item.ItemType, result.ItemType);
+                Assert.AreEqual(item.Items.Count, result.Items.Count);
+                Assert.AreEqual(item.Items.First().Lng, result.Items[0].Lng);
+                Assert.AreEqual(item.Items.First().Value, result.Items[0].Value);
+            }        
         }
 
 
@@ -153,7 +162,7 @@ namespace Apollo.Api.UnitTests
             var language = "DE";
 
             // Perform the query
-            var results = await api.QueryListAsync(language, _testList[0].ItemType, null);
+            var results = await api.QueryListItemsAsync(language, _testList[0].ItemType, null);
 
             // Assert
             Assert.IsNotNull(results);
