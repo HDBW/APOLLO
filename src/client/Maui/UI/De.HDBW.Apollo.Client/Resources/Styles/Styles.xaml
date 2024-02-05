@@ -658,6 +658,11 @@
 
     <Style x:Key="PopupRoot" TargetType="Border">
         <Setter Property="BackgroundColor" Value="{StaticResource Neutral0}" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Padding" Value="20,0" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="VerticalOptions" Value="Center" />

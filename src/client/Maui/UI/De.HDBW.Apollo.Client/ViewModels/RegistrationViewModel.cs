@@ -83,34 +83,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    /*
-                    var message = "message fsdfsd sdf sdfs dsd sdf sdf sdf d df sdfsdf sdfd d sd fsd fsd  dsds sd sd fs dfds df sdf  sf sdf sdf sddf sd fsdf sd ssdf sd ";
-                    var parameters = new NavigationParameters();
-                    var result = await DialogService.ShowPopupAsync<CancelAssessmentDialog, NavigationParameters>(worker.Token);
-
-                    await DialogService.ShowPopupAsync<ConfirmDataUsageDialog, NavigationParameters>(worker.Token);
-
-                    parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Data, message);
-                    await DialogService.ShowPopupAsync<ErrorDialog, NavigationParameters, NavigationParameters>(parameters, token).ConfigureAwait(false);
-
-                    result = await DialogService.ShowPopupAsync<SkipQuestionDialog, NavigationParameters>(worker.Token);
-
-                    parameters = new NavigationParameters();
-                    parameters.Add(NavigationParameter.Data, CareerType.WorkExperience);
-                    result = await DialogService.ShowPopupAsync<SelectOptionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
-
-                    parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Data, message);
-                    await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
-
-                    parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_InvalidData);
-                    result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
-
-                    return;
-                    */
-
                     SessionService.UpdateRegisteredUser(null);
                     await NavigationService.PushToRootAsync(Routes.Shell, worker.Token);
                 }
