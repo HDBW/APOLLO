@@ -83,6 +83,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    /*
                     var message = "message fsdfsd sdf sdfs dsd sdf sdf sdf d df sdfsdf sdfd d sd fsd fsd  dsds sd sd fs dfds df sdf  sf sdf sdf sddf sd fsdf sd ssdf sd ";
                     var parameters = new NavigationParameters();
                     var result = await DialogService.ShowPopupAsync<CancelAssessmentDialog, NavigationParameters>(worker.Token);
@@ -108,6 +109,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
 
                     return;
+                    */
+
                     SessionService.UpdateRegisteredUser(null);
                     await NavigationService.PushToRootAsync(Routes.Shell, worker.Token);
                 }
