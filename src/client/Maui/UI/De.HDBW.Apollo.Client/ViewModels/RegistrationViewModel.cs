@@ -95,7 +95,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     result = await DialogService.ShowPopupAsync<SkipQuestionDialog, NavigationParameters>(worker.Token);
 
-
                     parameters = new NavigationParameters();
                     parameters.Add(NavigationParameter.Data, CareerType.WorkExperience);
                     result = await DialogService.ShowPopupAsync<SelectOptionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);

@@ -1,50 +1,101 @@
-﻿using CommunityToolkit.Maui.Views;
-using De.HDBW.Apollo.Client.Helper;
-
-namespace De.HDBW.Apollo.Client.Dialogs
+﻿namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public partial class Dialog : Popup
+    public partial class Dialog : ContentPage
     {
         public Dialog()
             : base()
         {
-#if IOS
-            Size = new Size(Application.Current!.MainPage!.Width - 40, Application.Current!.MainPage!.Height - 40);
-#elif ANDROID
-            Size = new Size(Application.Current!.MainPage!.Width, Application.Current!.MainPage!.Height - 40);
-#endif
+            Loaded += OnPageLoaded;
         }
 
-        public void HandleRootSizeChanged(object sender, System.EventArgs e)
+        public async Task CloseAsync()
         {
-            var view = sender as View;
-            if (view != null)
-            {
-#if IOS
-                Size = new Size(Application.Current!.MainPage!.Width - 40, view.DesiredSize.Height);
-#elif ANDROID
-                if (Content != null)
+            // Wait for the animation to complete
+            await PoppingOutAsync();
+
+            // Navigate away without the default animation
+            await Navigation.PopModalAsync(animated: false);
+        }
+
+        private void PoppingIn()
+        {
+            // Measure the actual content size
+            var contentSize = Content.Measure(Window.Width, Window.Height, MeasureFlags.IncludeMargins);
+            var contentHeight = contentSize.Request.Height;
+
+            // Start by translating the content below / off screen
+            var distance = ((Window?.Height ?? 0) / 2d) + (contentHeight / 2d);
+            Content.TranslationY = distance;
+
+            // Animate the translucent background, fading into view
+            this.Animate(
+                nameof(BackgroundColor),
+                callback: v => BackgroundColor = Colors.Black.WithAlpha((float)v),
+                start: 0d,
+                end: 0.7d,
+                rate: 32,
+                length: 350,
+                easing: Easing.CubicOut,
+                finished: (v, k) =>
+                    BackgroundColor = Colors.Black.WithAlpha(0.7f));
+
+            // Also animate the content sliding up from below the screen
+            this.Animate(
+                nameof(Content),
+                callback: v => Content.TranslationY = (int)(distance - v),
+                start: 0,
+                end: distance,
+                length: 500,
+                easing: Easing.CubicInOut,
+                finished: (v, k) => Content.TranslationY = 0);
+        }
+
+        private Task PoppingOutAsync()
+        {
+            var done = new TaskCompletionSource();
+
+            // Measure the content size so we know how much to translate
+            var contentSize = Content.DesiredSize;
+            var distance = ((Window?.Height ?? 0) / 2d) + (contentSize.Height / 2d);
+
+            // Start fading out the background
+            this.Animate(
+                nameof(BackgroundColor),
+                callback: v => BackgroundColor = Colors.Black.WithAlpha((float)v),
+                start: 0.7d,
+                end: 0d,
+                rate: 32,
+                length: 350,
+                easing: Easing.CubicIn,
+                finished: (v, k) => BackgroundColor = Colors.Black.WithAlpha(0.0f));
+
+            // Start sliding the content down below the bottom of the screen
+            this.Animate(
+                nameof(Content),
+                callback: v => Content.TranslationY = (int)(distance - v),
+                start: distance,
+                end: 0,
+                length: 500,
+                easing: Easing.CubicInOut,
+                finished: (v, k) =>
                 {
-                    if (Content.DesiredSize.IsZero)
-                    {
-                        view.InvalidateMeasureNonVirtual(Microsoft.Maui.Controls.Internals.InvalidationTrigger.MeasureChanged);
-                    }
+                    Content.TranslationY = distance;
 
-                    //var size = Content.Measure(Application.Current!.MainPage!.Width - 40, Application.Current!.MainPage!.Height - 40, MeasureFlags.IncludeMargins);
-                    Size = new Size(Application.Current!.MainPage!.Width, view.DesiredSize.Height);
-                }
-#endif
-            }
+                    // Important: Set our completion source to done!
+                    done.TrySetResult();
+                });
+
+            // We return the task so we can wait for the animation to finish
+            return done.Task;
         }
 
-        public void OnSizeChanged(object sender, System.EventArgs e)
+        private void OnPageLoaded(object? sender, EventArgs e)
         {
-#if iOS
-            return;   
-#elif ANDROID
-            var button = sender as Button;
-            this.FixButtonTextLayout(button);
-#endif
+            // We only need this to fire once, so clean things up!
+            Loaded -= OnPageLoaded;
+
+            // Call the animation
+            PoppingIn();
         }
     }
 }

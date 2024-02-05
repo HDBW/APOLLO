@@ -8,9 +8,12 @@
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
                Style="{StaticResource PopupStyle}"
                x:DataType="viewModels:SelectOptionDialogViewModel">
-    <toolkit:Popup.Content>
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{x:Binding CancelCommand}" />
+        </Grid.GestureRecognizers>
         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
-            <Grid RowDefinitions="20, auto, auto, 32, auto, 20" SizeChanged="HandleRootSizeChanged" Style="{StaticResource PopupContent}">
+            <Grid RowDefinitions="20, auto, auto, 32, auto, 20" Style="{StaticResource PopupContent}">
                 <Grid.Resources>
                     <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">
                         <VerticalStackLayout Background="{StaticResource Neutral0Brush}" >
@@ -27,9 +30,9 @@
                                     SelectedItem="{x:Binding SelectedOption, Mode=TwoWay}"
                                     ItemsLayout="VerticalList"/>   
                 <Grid Grid.Row="4">
-                    <Button Text="{x:Static strings:Resources.SelectOptionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}" MeasureInvalidated="OnSizeChanged"/>
+                    <Button Text="{x:Static strings:Resources.SelectOptionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}"/>
                 </Grid>
             </Grid>
         </Border>
-    </toolkit:Popup.Content>
+    </Grid>
 </local:Dialog>

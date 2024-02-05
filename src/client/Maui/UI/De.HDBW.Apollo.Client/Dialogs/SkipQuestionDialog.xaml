@@ -7,16 +7,19 @@
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
                Style="{StaticResource PopupStyle}"
                x:DataType="viewModels:SkipQuestionDialogViewModel">
-    <toolkit:Popup.Content>
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{x:Binding CancelCommand}" />
+        </Grid.GestureRecognizers>
         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
-            <Grid RowDefinitions="20, auto, auto, 32 ,auto, 20" SizeChanged="HandleRootSizeChanged" Style="{StaticResource PopupContent}">
+            <Grid RowDefinitions="20, auto, auto, 32 ,auto, 20" Style="{StaticResource PopupContent}">
                 <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.SkipQuestionDialog_Title}" Margin="0,0,0,16" Style="{StaticResource Noto20Bold}"/>
                 <Label Grid.Row="2" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.SkipQuestionDialog_Message}" Style="{StaticResource Noto16}"/>
                 <Grid ColumnDefinitions="*,8,*" Grid.Row="4" >
-                    <Button Text="{x:Static strings:Resources.SkipQuestionDialog_Continue}" Style="{StaticResource BorderButton}" Command="{x:Binding ContinueCommand}" MeasureInvalidated="OnSizeChanged"/>
-                    <Button Text="{x:Static strings:Resources.SkipQuestionDialog_Cancel}"  Command="{x:Binding CancelCommand}" Grid.Column="2" MeasureInvalidated="OnSizeChanged"/>
+                    <Button Text="{x:Static strings:Resources.SkipQuestionDialog_Continue}" Style="{StaticResource BorderButton}" Command="{x:Binding ContinueCommand}"/>
+                    <Button Text="{x:Static strings:Resources.SkipQuestionDialog_Cancel}"  Command="{x:Binding CancelCommand}" Grid.Column="2"/>
                 </Grid>
             </Grid>
         </Border>
-    </toolkit:Popup.Content>
+    </Grid>
 </local:Dialog>

@@ -7,9 +7,9 @@
                xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
                Style="{StaticResource PopupStyle}"
                x:DataType="viewModels:FirstTimeDialogViewModel">
-    <toolkit:Popup.Content>
-         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
-            <Grid RowDefinitions="20, auto, 32, auto, 20" x:Name="Part_Root" SizeChanged="HandleRootSizeChanged" Style="{StaticResource PopupContent}">
+    <Grid>
+        <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
+            <Grid RowDefinitions="20, auto, 32, auto, 20" x:Name="Part_Root" Style="{StaticResource PopupContent}">
                  <ScrollView Grid.Row="1" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never">
                     <VerticalStackLayout>
                         <Label HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.FirstTimeDialog_Title}" Margin="0,8,0,16" Style="{StaticResource Noto20Bold}" />
@@ -17,10 +17,10 @@
                     </VerticalStackLayout>
                  </ScrollView>
                 <Grid ColumnDefinitions="*,8,*" Grid.Row="3" >
-                    <Button Text="{x:Static strings:Resources.FirstTimeDialog_OpenTutorial}" Style="{StaticResource BorderButton}" Command="{x:Binding OpenTutorialCommand}" MeasureInvalidated="OnSizeChanged"/>
-                    <Button Text="{x:Static strings:Resources.FirstTimeDialog_Continue}"  Command="{x:Binding ContinueCommand}" Grid.Column="2" MeasureInvalidated="OnSizeChanged"/>
+                    <Button Text="{x:Static strings:Resources.FirstTimeDialog_OpenTutorial}" Style="{StaticResource BorderButton}" Command="{x:Binding OpenTutorialCommand}"/>
+                    <Button Text="{x:Static strings:Resources.FirstTimeDialog_Continue}"  Command="{x:Binding ContinueCommand}" Grid.Column="2"/>
                 </Grid>
             </Grid>
          </Border>
-    </toolkit:Popup.Content>
+    </Grid>
 </local:Dialog>
