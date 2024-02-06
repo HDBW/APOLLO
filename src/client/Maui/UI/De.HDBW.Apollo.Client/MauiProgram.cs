@@ -34,8 +34,10 @@ using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using FedericoNembrini.Maui.CustomDatePicker;
+using GrpcClient.Service;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
@@ -209,6 +211,12 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IMessenger, WeakReferenceMessenger>();
             services.AddSingleton<INetworkService, NetworkService>();
             services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
+
+            var occupationSearchUrl = userSecretsService["OccupationSearchAPIURL"] ?? string.Empty;
+            services.AddSingleton<IOccupationSearchService>((serviceProvider) =>
+            {
+                return new OccupationSearchService(occupationSearchUrl, serviceProvider.GetService<ILogger<OccupationSearchService>>()!);
+            });
 
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;

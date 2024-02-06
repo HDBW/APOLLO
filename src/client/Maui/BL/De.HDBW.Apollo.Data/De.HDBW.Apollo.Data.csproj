@@ -23,6 +23,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Grpc.Net.Client" Version="2.60.0" />
     <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.6" />
     <PackageReference Include="Google.Protobuf" Version="3.24.3" />
     <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.41" />
