@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public partial class SelectOptionDialogViewModel : BaseViewModel
+    public partial class SelectOptionDialogViewModel : BaseViewModel, IModalQueryAttributable
     {
         [ObservableProperty]
         private ObservableCollection<InteractionEntry> _options = new ObservableCollection<InteractionEntry>();
@@ -50,9 +50,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        protected override void OnPrepare(NavigationParameters navigationParameters)
+        public virtual void ApplyModalQueryAttributes(IDictionary<string, object> query)
         {
-            base.OnPrepare(navigationParameters);
+            OnPrepareModal(NavigationParameters.FromQueryDictionary(query));
+        }
+
+        protected virtual void OnPrepareModal(NavigationParameters navigationParameters)
+        {
             _selectionType = navigationParameters.GetValue<object?>(NavigationParameter.Data);
             var selections = new List<InteractionEntry>();
             switch (_selectionType)

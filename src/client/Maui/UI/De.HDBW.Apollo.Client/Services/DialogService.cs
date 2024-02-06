@@ -70,10 +70,10 @@ namespace De.HDBW.Apollo.Client.Services
                 result = await DispatcherService.ExecuteOnMainThreadAsync(
                 async () =>
                 {
-                    var queryAble = popup as IQueryAttributable ?? viewModel as IQueryAttributable;
+                    var queryAble = popup as IModalQueryAttributable ?? viewModel as IModalQueryAttributable;
                     if (queryAble != null && parameters != null)
                     {
-                        queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
+                        queryAble.ApplyModalQueryAttributes(parameters.ToQueryDictionary());
                     }
 
                     var cts = new TaskCompletionSource<TV>(token);

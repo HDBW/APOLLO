@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public partial class ConfirmCancelDialogViewModel : BaseViewModel
+    public partial class ConfirmCancelDialogViewModel : BaseViewModel, IModalQueryAttributable
     {
         [ObservableProperty]
         private string? _message;
@@ -22,9 +22,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
         }
 
-        protected override void OnPrepare(NavigationParameters navigationParameters)
+        public virtual void ApplyModalQueryAttributes(IDictionary<string, object> query)
         {
-            base.OnPrepare(navigationParameters);
+            OnPrepareModal(NavigationParameters.FromQueryDictionary(query));
+        }
+
+        protected virtual void OnPrepareModal(NavigationParameters navigationParameters)
+        {
             Message = navigationParameters.GetValue<string>(NavigationParameter.Data);
         }
 
