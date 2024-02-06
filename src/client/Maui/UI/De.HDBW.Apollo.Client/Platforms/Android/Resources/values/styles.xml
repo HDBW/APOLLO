@@ -115,6 +115,18 @@
     <item name="android:textColorSecondary">@color/colorPrimary</item>
     <!--cancel&ok-->
     <item name="android:textColor">@color/colorPrimary</item>
+    
+    <item name="android:datePickerStyle">@style/CustomDatePickerStyle</item>
+
+  </style>
+
+  <style name="CustomDatePickerStyle" parent="@android:style/Widget.DeviceDefault.DatePicker">
+    <item name="android:headerBackground">@color/colorPrimary</item>
+    <item name="android:headerMonthTextAppearance">@style/DatePickerHeaderTextAppearance</item>
+  </style>
+
+  <style name="DatePickerHeaderTextAppearance" parent="@android:style/TextAppearance.Medium">
+    <item name="android:textColor">@color/white</item>
   </style>
 
 </resources>
