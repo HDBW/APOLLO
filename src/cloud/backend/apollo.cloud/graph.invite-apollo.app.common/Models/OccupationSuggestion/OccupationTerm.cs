@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using ProtoBuf;
 
 namespace OccupationGrpcService.Protos
@@ -17,7 +18,7 @@ namespace OccupationGrpcService.Protos
         [ProtoMember(3)]
         public string? OccupationId { get; set; }
 
-        [ProtoMember(4)] public Invite.Apollo.App.Graph.Common.Models.UserProfile.Taxonomy TaxonomyType { get; set; }
+        [ProtoMember(4)] public Taxonomy TaxonomyType { get; set; }
 
         [ProtoMember(5)] public string? CultureName { get; set; }
     }
