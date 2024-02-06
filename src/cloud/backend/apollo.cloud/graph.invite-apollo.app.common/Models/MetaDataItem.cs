@@ -1,6 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
-using ProtoBuf;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models

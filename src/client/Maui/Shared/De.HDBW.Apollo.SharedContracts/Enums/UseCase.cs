@@ -9,5 +9,6 @@ namespace De.HDBW.Apollo.SharedContracts.Enums
         A,
         B,
         C,
+        D,
     }
 }

@@ -1,14 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     /// <summary>
     /// Defines the query operation on the specified field.

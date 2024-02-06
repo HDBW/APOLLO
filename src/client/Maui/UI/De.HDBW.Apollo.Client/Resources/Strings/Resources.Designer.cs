@@ -1206,6 +1206,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finde passende Kurse für deine Interessen.
+        /// </summary>
+        public static string UseCase_D_Description {
+            get {
+                return ResourceManager.GetString("UseCase_D_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suche.
+        /// </summary>
+        public static string UseCase_D_Name {
+            get {
+                return ResourceManager.GetString("UseCase_D_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alter: {0}.
         /// </summary>
         public static string UseCaseDescriptionView_AgeFormat {
@@ -1411,7 +1429,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wähle dein Szenario.
+        ///   Looks up a localized string similar to Wähle Deinen Testbereich.
         /// </summary>
         public static string UseCaseSelectionView_Choose {
             get {
@@ -1420,7 +1438,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Die Inhalte der Beta passen sich an dein gewähltes Ziel an..
+        ///   Looks up a localized string similar to APOLLO befindet sich noch in der Testphase. Deine Teilnahme hilft uns die App weiterzuentwickeln..
         /// </summary>
         public static string UseCaseSelectionView_ChooseDescription {
             get {

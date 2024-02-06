@@ -1,12 +1,13 @@
-﻿using System;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
-using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Course
 {

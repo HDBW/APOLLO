@@ -1,5 +1,7 @@
-﻿using System;
-using ProtoBuf;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models

@@ -21,7 +21,7 @@ namespace De.HDBW.Apollo.Data.Tests.Model
 
         public string Path { get; }
 
-        public SQLiteAsyncConnection? Connection { get; private set; }
+        public SQLiteAsyncConnection Connection { get; private set; }
 
         public void Dispose()
         {

@@ -36,7 +36,7 @@ public class UseCaseBuilderTests
             var eduProviderItemRepository = new EduProviderItemRepository(connectionProvider, this.SetupLogger<EduProviderItemRepository>());
             var categoryRecomendationItemRepository = new CategoryRecomendationItemRepository(connectionProvider, this.SetupLogger<CategoryRecomendationItemRepository>());
 
-            UseCaseBuilder? useCaseBuilder = null;
+            UseCaseBuilder useCaseBuilder = null;
             var ctor = typeof(UseCaseBuilder).GetConstructors().FirstOrDefault();
             var parameters = ctor.GetParameters();
             var ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
@@ -130,7 +130,7 @@ public class UseCaseBuilderTests
             using (var cts = new CancellationTokenSource())
             {
                 cts.Cancel();
-                await Assert.ThrowsAsync<OperationCanceledException>(async () => { await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.Unknown, cts.Token).ConfigureAwait(false); });
+                await Assert.ThrowsAsync<OperationCanceledException>(async () => { await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.Unknown, cts.Token); });
             }
         }
     }
@@ -164,7 +164,7 @@ public class UseCaseBuilderTests
             using (var cts = new CancellationTokenSource())
             {
                 cts.Dispose();
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.Unknown, cts.Token).ConfigureAwait(false); });
+                await Assert.ThrowsAsync<ObjectDisposedException>(async () => { await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.Unknown, cts.Token); });
             }
         }
     }
@@ -196,7 +196,7 @@ public class UseCaseBuilderTests
             var categoryRecomendationItemRepository = new CategoryRecomendationItemRepository(connectionProvider, this.SetupLogger<CategoryRecomendationItemRepository>());
             var useCaseBuilder = new UseCaseBuilder(logger, assessmentItemRepository, assessmentCategoryRepository, assessmentCategoryResultRepository, assessmentScoreRepository, questionItemRepository, answerItemRepository, answerItemResultRepository, metaDataMetaDataRelationRepository, answerMetaDataRelationRepository, questionMetaDataRelationRepository, metadataRepository, courseItemRepository, courseContactRepository, courseAppointmentRepository, courseContactRelationRepository, userProfileItemRepository, eduProviderItemRepository, categoryRecomendationItemRepository);
             var token = default(CancellationToken);
-            var result = await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.Unknown, token).ConfigureAwait(false);
+            var result = await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.Unknown, token);
             Assert.False(result);
         }
     }
@@ -228,21 +228,21 @@ public class UseCaseBuilderTests
             var categoryRecomendationItemRepository = new CategoryRecomendationItemRepository(connectionProvider, this.SetupLogger<CategoryRecomendationItemRepository>());
             var useCaseBuilder = new UseCaseBuilder(logger, assessmentItemRepository, assessmentCategoryRepository, assessmentCategoryResultRepository, assessmentScoreRepository, questionItemRepository, answerItemRepository, answerItemResultRepository, metaDataMetaDataRelationRepository, answerMetaDataRelationRepository, questionMetaDataRelationRepository, metadataRepository, courseItemRepository, courseContactRepository, courseAppointmentRepository, courseContactRelationRepository, userProfileItemRepository, eduProviderItemRepository, categoryRecomendationItemRepository);
             var token = default(CancellationToken);
-            var result = await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.A, token).ConfigureAwait(false);
+            var result = await useCaseBuilder.BuildAsync(SharedContracts.Enums.UseCase.A, token);
             Assert.True(result);
-            var assessments = await assessmentItemRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var assessmentCategories = await assessmentCategoryRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var questions = await questionItemRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var answerItems = await answerItemRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var answerItemsResults = await answerItemResultRepository.GetItemsAsync(token).ConfigureAwait(false);
+            var assessments = await assessmentItemRepository.GetItemsAsync(token);
+            var assessmentCategories = await assessmentCategoryRepository.GetItemsAsync(token);
+            var questions = await questionItemRepository.GetItemsAsync(token);
+            var answerItems = await answerItemRepository.GetItemsAsync(token);
+            var answerItemsResults = await answerItemResultRepository.GetItemsAsync(token);
             var metaDataMetaDataRelations = await metaDataMetaDataRelationRepository.GetItemsAsync(token);
-            var answerMetaDatas = await answerMetaDataRelationRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var questionMetas = await questionMetaDataRelationRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var metadatas = await metadataRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var courseItems = await courseItemRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var courseContacts = await courseContactRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var userProfileItems = await userProfileItemRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var eduProviderItems = await eduProviderItemRepository.GetItemsAsync(token).ConfigureAwait(false);
+            var answerMetaDatas = await answerMetaDataRelationRepository.GetItemsAsync(token);
+            var questionMetas = await questionMetaDataRelationRepository.GetItemsAsync(token);
+            var metadatas = await metadataRepository.GetItemsAsync(token);
+            var courseItems = await courseItemRepository.GetItemsAsync(token);
+            var courseContacts = await courseContactRepository.GetItemsAsync(token);
+            var userProfileItems = await userProfileItemRepository.GetItemsAsync(token);
+            var eduProviderItems = await eduProviderItemRepository.GetItemsAsync(token);
             Assert.True(assessments.Any(), "Assessments are empty.");
             Assert.True(assessmentCategories.Any(), "AssessmentCategories are empty.");
             Assert.True(questions.Any(), "Questions are empty.");
