@@ -9,7 +9,7 @@ using OccupationGrpcService.Protos;
 
 namespace OccupationGrpcService.Services
 {
-    [ServiceContract(Name = "OccupationTerm.Service")]
+    [ServiceContract(Name = "Occupation.Service")]
     public interface IOccupationService
     {
 
