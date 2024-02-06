@@ -4,6 +4,7 @@
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Grpc.Core;
 using OccupationGrpcService.Protos;
 
 namespace OccupationGrpcService.Services
