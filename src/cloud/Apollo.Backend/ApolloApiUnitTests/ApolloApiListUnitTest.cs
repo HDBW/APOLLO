@@ -98,6 +98,26 @@ namespace Apollo.Api.UnitTests
                          Lng = "DE",
                          Value = "JAVA Entwickler"
                      },
+                       new ApolloListItem()
+                     {   ListItemId = 1,
+                         Lng = "DE",
+                         Value = "C# Entwickler"
+                     },
+                         new ApolloListItem()
+                     {   ListItemId = 1,
+                         Lng = "DE",
+                         Value = "Python Hobbydeveloper"
+                     },
+                           new ApolloListItem()
+                     {   ListItemId = 1,
+                         Lng = "DE",
+                         Value = "JAVA Script angelernter Programmierer"
+                     },
+                             new ApolloListItem()
+                     {   ListItemId = 1,
+                         Lng = "DE",
+                         Value = "Indischer alleskönner Entwickler"
+                     },
                      new ApolloListItem()
                      {   ListItemId= 2,
                          Lng = "EN",
@@ -123,6 +143,15 @@ namespace Apollo.Api.UnitTests
         }
 
 
+        private async Task InsertTestItems(ApolloApi api)
+        {
+            foreach (var item in _testList)
+            {
+                await api.CreateOrUpdateListAsync(item);
+            }
+        }
+
+
         /// <summary>
         /// Inserts test lists and then gets every of them.
         /// </summary>
@@ -133,10 +162,7 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            foreach (var item in _testList)
-            {
-                await api.CreateOrUpdateListAsync(item);
-            }
+            await InsertTestItems(api);
 
             foreach (var item in _testList)
             {
@@ -148,8 +174,9 @@ namespace Apollo.Api.UnitTests
                 Assert.AreEqual(item.Items.Count, result.Items.Count);
                 Assert.AreEqual(item.Items.First().Lng, result.Items[0].Lng);
                 Assert.AreEqual(item.Items.First().Value, result.Items[0].Value);
-            }        
+            }
         }
+
 
 
         /// <summary>
@@ -159,16 +186,21 @@ namespace Apollo.Api.UnitTests
         public async Task QueryListAsyncTest()
         {
             var api = Helpers.GetApolloApi();
-            var language = "DE";
 
-            // Perform the query
-            var results = await api.QueryListItemsAsync(language, _testList[0].ItemType, null);
+            await InsertTestItems(api);      
+
+            // Get ll items of the given ItemType and language.
+            var results = await api.QueryListItemsAsync(_testList?.First()?.Items?.First().Lng!, _testList?.First()?.ItemType!, null);
 
             // Assert
             Assert.IsNotNull(results);
-            Assert.IsTrue(results.Count > 0);
-        }
+            Assert.IsTrue(results.Count == 1); // Single DE item is returned.
 
+            results = await api.QueryListItemsAsync(_testList?.First()?.Items?.First().Lng!, _testList?.First()?.ItemType!, _testList?.First().Items.First().Value.Substring(1,3));
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Count == 1); // all items are returned.
+            Assert.IsTrue(results[0].Value.Contains("C# Entwickler"));
+        }
 
 
         private static void AssertListId(string id)
@@ -260,15 +292,17 @@ namespace Apollo.Api.UnitTests
                 }
             };
 
-            var newQualificationIds = await api.CreateOrUpdateQualificationAsync(newQualificationList);
-            Assert.IsNotNull(newQualificationIds);
+            throw new NotImplementedException();
 
-            // Retrieve the list after adding the new item
-            var newListWithNewItem = await api.GetListAsync(_testList[0].Items[0].Lng, _testList[0].ItemType);
+            //var newQualificationIds = await api.CreateOrUpdateQualificationAsync(newQualificationList);
+            //Assert.IsNotNull(newQualificationIds);
 
-            // Assert that the new item is present in the list
-            Assert.IsNotNull(newListWithNewItem);
-            Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == 3));
+            //// Retrieve the list after adding the new item
+            //var newListWithNewItem = await api.GetListAsync(_testList[0].Items[0].Lng, _testList[0].ItemType);
+
+            //// Assert that the new item is present in the list
+            //Assert.IsNotNull(newListWithNewItem);
+            //Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == 3));
         }
 
         #region List Population

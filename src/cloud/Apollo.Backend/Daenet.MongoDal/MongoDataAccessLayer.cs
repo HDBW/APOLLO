@@ -297,7 +297,7 @@ namespace Daenet.MongoDal
 
             IAsyncCursor<BsonDocument> documents;
 
-            if (fields != null)
+            if (fields != null && fields.Count > 0)
             {
                 projection.Add(new BsonElement("_id", 1));
 
@@ -493,8 +493,8 @@ namespace Daenet.MongoDal
         {
             foreach (var nestedQuery in nestedQueries)
             {
-                if (nestedQuery.Count() == 1)
-                    continue;
+                //if (nestedQuery.Count() == 1)
+                //    continue;
 
                 FilterDefinition<BsonDocument> andFilter = FilterDefinition<BsonDocument>.Empty;
                 foreach (var nestedExpr in nestedQuery)

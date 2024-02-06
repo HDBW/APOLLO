@@ -59,7 +59,9 @@ Useful properties engaged in the embedding calculation
     "targetDescription": "F\u00fchrungskr\u00e4fte, Projektleiter, Fachkr\u00e4fte, Assistenz, Nachwuchsf\u00fchrungskr\u00e4fte, Trainer",
     "MetaDescription": "<p>Im Kurs Business English A2\/B1 erwerben Sie die Englischkenntnisse, die Sie ben&ouml;tigen, um im Gesch&auml;ftsleben sicher und professionell zu kommunizieren.&nbsp;<\/p>",
 },
-~~~ 
+~~~
+
+
 ### Profile
 
 ~~~JSON
@@ -84,6 +86,61 @@ Useful properties engaged in the embedding calculation
     "Grundkenntnisse" : [ "Tabellenkalkulation Excel (MS Office)", "Auftragsannahme, -bearbeitung", "Telefondienst", "Besucherberatung, -betreuung (Veranstaltungen)", "Terminplanung, -überwachung", "Daten-, Texterfassung", "Garten-, Grünflächenpflege", "Büromaschinen bedienen", "Kurierdienst" ]
   },
   ~~~
+
+  ### Lists
+
+  Supported entities:
+
+  - ContactType
+  - CompletionState
+  - DriversLicense
+  - EducationType
+  - LanguageNiveau
+  - RecognitionType
+  - SchoolGraduation
+  - ServiceType
+  - StaffResponsibility
+  - UniversityDegree
+  - TypeOfSchool
+  - VoluntaryServiceType
+  - Willing
+  - YearRange
+  - WorkingTimeModel
+  - CareerType
+
+  ## Examples
+
+  Search for all elements of education type in invariant language:
+
+     ~~~
+      {
+        "Language": "Invariant",
+        "Contains": null,
+        "ItemType": "EducationType"
+        }
+     ~~~
+
+   Search for all elements of education type in invariant language. Notice that the language can be omitted:
+
+     ~~~
+      {
+        "Language": null,
+        "Contains": null,
+        "ItemType": "EducationType"
+        }
+     ~~~
+
+   Search for all elements of education type in German language:
+
+     ~~~
+      {
+        "Language": "DE",
+        "Contains": null,
+        "ItemType": "EducationType"
+        }
+     ~~~
+
+    
 
   ### Prompt Draft for qualification
   User's qualification is described by the following pseudo object list in JSON. Your task is to 

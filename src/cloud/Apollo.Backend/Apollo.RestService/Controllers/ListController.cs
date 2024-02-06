@@ -39,7 +39,7 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the list of items..</returns>
         /// <response code="200">List of ApolloList items is returned.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut("lists")]
+        [HttpPost()]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of ApolloList items that matches specified filter.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<GetListResponse> GetListAsync([FromBody] GetListRequest req)
@@ -64,6 +64,7 @@ namespace Apollo.Service.Controllers
             }
         }
 
+
         /// <summary>
         /// Create item like Qualification if there is no ID on request or Updates an existing Qualifications List if there is ID.
         /// </summary>
@@ -71,19 +72,19 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the updated or created List.</returns>
         /// <response code="200">Returns the updated training.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpGet("lists/query")]
+        [HttpPost("query")]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the set of List items that matches specified filter.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<QueryListResponse> QueryListItemsAsync([FromBody] QueryListRequest req)
         {
             try
             {
-                _logger?.LogTrace($"{nameof(CreateOrUpdateListAsync)} entered.");
+                _logger?.LogTrace($"{nameof(QueryListItemsAsync)} entered.");
 
                 // Assuming req contains the Training object to create or update.
-                var result = await _api.QueryQualificationsListAsync(req.Language, req.Contains);
+                var result = await _api.QueryListItemsAsync(req.Language, req.ItemType, req.Contains);
 
-                _logger?.LogTrace($"{nameof(CreateOrUpdateListAsync)} completed.");
+                _logger?.LogTrace($"{nameof(QueryListItemsAsync)} completed.");
 
                 // Return the result of the create/update operation as a response.
                 return new QueryListResponse { Result = result };
@@ -91,7 +92,7 @@ namespace Apollo.Service.Controllers
             catch (Exception ex)
             {
                 // Log and re-throw any exceptions encountered.
-                _logger?.LogError($"{nameof(CreateOrUpdateListAsync)} failed: {ex.Message}");
+                _logger?.LogError($"{nameof(QueryListItemsAsync)} failed: {ex.Message}");
                 throw;
             }
         }
@@ -104,7 +105,7 @@ namespace Apollo.Service.Controllers
         /// <returns>A response containing the updated or created List.</returns>
         /// <response code="200">Returns the updated training.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut]
+        [HttpPut()]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the updated List items.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
         public async Task<CreateOrUpdateListResponse> CreateOrUpdateListAsync([FromBody] CreateOrUpdateListRequest req)

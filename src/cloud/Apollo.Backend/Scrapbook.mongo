@@ -5,7 +5,7 @@ db.trainings.find()
 
 db.trainings.find({"_id" : "SER02"})
 
-db.trainings.deleteOne({"_id" : "T07"})
+db.trainings.deleteOne({"_id" : "UY01"})
 
 
 // LISTS
@@ -13,6 +13,23 @@ db.trainings.deleteOne({"_id" : "T07"})
 db.lists.count()
 
 db.lists.find()
+
+db.lists.find({"ItemType": "TestListType1"})
+
+db.lists.find({"ItemType": "TestListType1", "Items.Lng": "ENw"})
+
+db.lists.aggregate([
+  {
+    $match: {
+      "Items.Lng": "DE"
+      }
+    },
+     {
+    $match: {
+      "ItemType": "TestListType1"
+      }
+    }
+]).pretty()
 
 db.lists.deleteOne({"ItemType": "ContactType"})
 

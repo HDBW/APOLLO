@@ -17,7 +17,7 @@ namespace Apollo.Api
     /// </summary>
     public partial class ApolloApi
     {
-        private string _defaultLng = "eng";
+        private string _defaultLng = "Invariant";
 
         #region Internal Helpers
         /// <summary>
@@ -39,9 +39,11 @@ namespace Apollo.Api
                 Filter = new Filter(),
             };
 
+           // query?.Fields?.Add(nameof(ApolloListItem.ListItemId));
+
             if (!String.IsNullOrEmpty(id))
             {
-                query.Filter.Fields.Add(new FieldExpression()
+                query?.Filter.Fields.Add(new FieldExpression()
                 {
                     Operator = QueryOperator.Equals,
                     Argument = new List<object>() { id },
@@ -54,7 +56,7 @@ namespace Apollo.Api
                 // We filter by requested language.
                 if (!String.IsNullOrEmpty(lng))
                 {
-                    query.Filter.Fields.Add(new FieldExpression()
+                    query?.Filter.Fields.Add(new FieldExpression()
                     {
                         Operator = QueryOperator.Equals,
                         Argument = new List<object>() { lng },
@@ -64,7 +66,7 @@ namespace Apollo.Api
 
                 //
                 // We filter requested language.
-                query.Filter.Fields.Add(new FieldExpression()
+                query?.Filter.Fields.Add(new FieldExpression()
                 {
                     Operator = QueryOperator.Equals,
                     Argument = new List<object>() { itemType! },
@@ -96,31 +98,28 @@ namespace Apollo.Api
         /// <param name="returnValuesOnly">By default set on true. It returns the value of the item only.
         /// If FALSE, it returns teh description of the item.</param>
         /// <returns>List of matching items or empty list.</returns>
-        public async Task<List<ApolloListItem>> QueryListItemsAsync(string lng, string itemType, string? contains)
+        public async Task<List<ApolloListItem>> QueryListItemsAsync(string? lng, string itemType, string? contains)
         {
+            if (String.IsNullOrEmpty(lng))
+                lng = _defaultLng;
+            
             Query query = new Query
             {
-                Fields = new List<string>() { "Value" },
+                Fields = new List<string>(),
                 Filter = new Filter(),
             };
 
             //
-            // Filters the requested language.
-            query.Filter.Fields.Add(new FieldExpression()
-            {
-                Operator = QueryOperator.Equals,
-                Argument = new List<object>() { lng },
-                FieldName = "Items.Lng"
-            });
-
-            //
             // Filters the value.
-            query.Filter.Fields.Add(new FieldExpression()
+            if (!string.IsNullOrEmpty(contains))
             {
-                Operator = QueryOperator.Contains,
-                Argument = new List<object>() { contains },
-                FieldName = nameof(ApolloList.ItemType),
-            });
+                query.Filter.Fields.Add(new FieldExpression()
+                {
+                    Operator = QueryOperator.Contains,
+                    Argument = new List<object>() { contains! },
+                    FieldName = "Items.Value",
+                });
+            }
 
             //
             // Filter the ItemType.
@@ -136,11 +135,15 @@ namespace Apollo.Api
             if (res.Count == 1)
             {
                 var apList = Convertor.ToApolloList(res.FirstOrDefault()!);
-                return apList.Items;
+
+                List< ApolloListItem> items = apList.Items.Where(i=>
+                (lng != null ? i.Lng == lng : true) && (contains != null ? i.Value.ToLower().Contains(contains.ToLower()) : true)).ToList();
+
+                return items;
             }
             else if (res.Count > 0)
             {
-                throw new ApolloApiException();//todo.
+                throw new ApolloApiException();//Lucija todo.
             }
             else
                 return new List<ApolloListItem>();
@@ -233,139 +236,139 @@ namespace Apollo.Api
         #endregion
 
         #region Qualification
-        /// <summary>
-        /// Gets the list qualifications.
-        /// </summary>
-        /// <param name="lng">The language of the list items. Optional</param>
-        /// <param name="values">The list of values that will be retrieved. If null, the language must be specified. In that case
-        /// all values of the given language are returned.</param>
-        /// <returns>List of items.</returns>
-        public async Task<ApolloList> GetQualificationsListAsync(string? lng)
-        {
-            try
-            {
-                _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
+        ///// <summary>
+        ///// Gets the list qualifications.
+        ///// </summary>
+        ///// <param name="lng">The language of the list items. Optional</param>
+        ///// <param name="values">The list of values that will be retrieved. If null, the language must be specified. In that case
+        ///// all values of the given language are returned.</param>
+        ///// <returns>List of items.</returns>
+        //public async Task<ApolloList> GetQualificationsListAsync(string? lng)
+        //{
+        //    try
+        //    {
+        //        _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
 
-                var list = await GetListAsync(lng, nameof(Qualification));
+        //        var list = await GetListAsync(lng, nameof(Qualification));
 
-                _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
+        //        _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
 
-                return list;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex, $"Failed execution of {nameof(QueryQualificationsListAsync)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.ListErrors.QueryListError, "Error while querying the list", ex);
-            }
-        }
-
-
-
-        /// <summary>
-        /// Queries for a list of qualifications.
-        /// </summary>
-        /// <param name="lng">The language of the list items.</param>
-        /// <param name="contains">The filter that specifies profiles to be retrieved.</param>
-        /// <returns>List of items.</returns>
-        public async Task<List<ApolloListItem>> QueryQualificationsListAsync(string lng, string? contains)
-        {
-            try
-            {
-                _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
-
-                var list = await QueryListItemsAsync(lng, nameof(Qualification), contains);
-
-                _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
-
-                return list;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex, $"Failed execution of {nameof(QueryQualificationsListAsync)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.ListErrors.QueryListError, "Error while querying the list", ex);
-            }
-        }
+        //        return list;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger?.LogError(ex, $"Failed execution of {nameof(QueryQualificationsListAsync)}: {ex.Message}");
+        //        throw new ApolloApiException(ErrorCodes.ListErrors.QueryListError, "Error while querying the list", ex);
+        //    }
+        //}
 
 
-        /// <summary>
-        /// Creates or Updates the new List of items.
-        /// </summary>
-        /// <param name="list">If the Id is specified, the update will be performed.</param>
-        /// <returns></returns>
-        public virtual async Task<List<string>> CreateOrUpdateQualificationAsync(ApolloList list)
-        {
-            try
-            {
-                List<string> ids = new List<string>();
 
-                // TODO Validate if list is null
+        ///// <summary>
+        ///// Queries for a list of qualifications.
+        ///// </summary>
+        ///// <param name="lng">The language of the list items.</param>
+        ///// <param name="contains">The filter that specifies profiles to be retrieved.</param>
+        ///// <returns>List of items.</returns>
+        //public async Task<List<ApolloListItem>> QueryQualificationsListAsync(string lng, string? contains)
+        //{
+        //    try
+        //    {
+        //        _logger?.LogTrace($"Entered {nameof(QueryQualificationsListAsync)}");
 
-                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateQualificationAsync)}");
+        //        var list = await QueryListItemsAsync(lng, nameof(Qualification), contains);
 
-                if (String.IsNullOrEmpty(list.Id))
-                {
-                    list.Id = CreateListId(nameof(Qualification));
-                    await _dal.InsertAsync(ApolloApi.GetCollectionName<List>(), Convertor.Convert(list));
-                }
-                else
-                {
-                    var existingList = await _dal.GetByIdAsync<ApolloList>(ApolloApi.GetCollectionName<List>(), list.Id);
+        //        _logger?.LogTrace($"Completed {nameof(QueryQualificationsListAsync)}");
 
-                    if (existingList != null)
-                    {
-                        list.Id = existingList.Id;
-                        await _dal.UpsertAsync(GetCollectionName<ApolloList>(), new List<ExpandoObject> { Convertor.Convert(list) });
-                    }
-                    else
-                    {
-                        throw new ApolloApiException(ListErrors.CreateOrUpdateListError, $"The list with the specified Id = {list.Id} does not exist.");
-                    }
-                }
+        //        return list;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger?.LogError(ex, $"Failed execution of {nameof(QueryQualificationsListAsync)}: {ex.Message}");
+        //        throw new ApolloApiException(ErrorCodes.ListErrors.QueryListError, "Error while querying the list", ex);
+        //    }
+        //}
 
 
-                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateQualificationAsync)}");
+        ///// <summary>
+        ///// Creates or Updates the new List of items.
+        ///// </summary>
+        ///// <param name="list">If the Id is specified, the update will be performed.</param>
+        ///// <returns></returns>
+        //public virtual async Task<List<string>> CreateOrUpdateQualificationAsync(ApolloList list)
+        //{
+        //    try
+        //    {
+        //        List<string> ids = new List<string>();
 
-                return ids;
-            }
-            catch (ApolloApiException)
-            {
-                //todo. Logging not implemented
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}");
+        //        // TODO Validate if list is null
 
-                // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.ListErrors.CreateOrUpdateListError, "An error occurred while creating or updating profiles.", ex);
-            }
-        }
+        //        _logger?.LogTrace($"Entered {nameof(CreateOrUpdateQualificationAsync)}");
+
+        //        if (String.IsNullOrEmpty(list.Id))
+        //        {
+        //            list.Id = CreateListId(nameof(Qualification));
+        //            await _dal.InsertAsync(ApolloApi.GetCollectionName<List>(), Convertor.Convert(list));
+        //        }
+        //        else
+        //        {
+        //            var existingList = await _dal.GetByIdAsync<ApolloList>(ApolloApi.GetCollectionName<List>(), list.Id);
+
+        //            if (existingList != null)
+        //            {
+        //                list.Id = existingList.Id;
+        //                await _dal.UpsertAsync(GetCollectionName<ApolloList>(), new List<ExpandoObject> { Convertor.Convert(list) });
+        //            }
+        //            else
+        //            {
+        //                throw new ApolloApiException(ListErrors.CreateOrUpdateListError, $"The list with the specified Id = {list.Id} does not exist.");
+        //            }
+        //        }
 
 
-        /// <summary>
-        /// Delete Profiles with specified Ids.
-        /// </summary>
-        /// <param name="deletingIds">The list of profile identifiers.</param>
-        /// <returns>The number of deleted Profiles</returns>
-        public virtual async Task<long> DeleteQualificationListAsync(string[] deletingIds)
-        {
-            try
-            {
-                _logger?.LogTrace($"Entered {nameof(DeleteSkillsAsync)}");
+        //        _logger?.LogTrace($"Completed {nameof(CreateOrUpdateQualificationAsync)}");
 
-                // Call the DAL method to delete the profile by their IDs
-                var res = await _dal.DeleteManyAsync(GetCollectionName<ApolloList>(), deletingIds, throwIfNotDeleted: false);
+        //        return ids;
+        //    }
+        //    catch (ApolloApiException)
+        //    {
+        //        //todo. Logging not implemented
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}");
 
-                _logger?.LogTrace($"Completed {nameof(DeleteSkillsAsync)}");
+        //        // For other exceptions, throw an ApolloApiException with a general error code and message
+        //        throw new ApolloApiException(ErrorCodes.ListErrors.CreateOrUpdateListError, "An error occurred while creating or updating profiles.", ex);
+        //    }
+        //}
 
-                return res;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteQualificationListAsync)}: {ex.Message}");
-                throw new ApolloApiException(ErrorCodes.ListErrors.DeleteListError, $"Error while deleting the list", ex);
-            }
-        }
+
+        ///// <summary>
+        ///// Delete Profiles with specified Ids.
+        ///// </summary>
+        ///// <param name="deletingIds">The list of profile identifiers.</param>
+        ///// <returns>The number of deleted Profiles</returns>
+        //public virtual async Task<long> DeleteQualificationListAsync(string[] deletingIds)
+        //{
+        //    try
+        //    {
+        //        _logger?.LogTrace($"Entered {nameof(DeleteSkillsAsync)}");
+
+        //        // Call the DAL method to delete the profile by their IDs
+        //        var res = await _dal.DeleteManyAsync(GetCollectionName<ApolloList>(), deletingIds, throwIfNotDeleted: false);
+
+        //        _logger?.LogTrace($"Completed {nameof(DeleteSkillsAsync)}");
+
+        //        return res;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger?.LogError(ex, $"Failed execution of {nameof(DeleteQualificationListAsync)}: {ex.Message}");
+        //        throw new ApolloApiException(ErrorCodes.ListErrors.DeleteListError, $"Error while deleting the list", ex);
+        //    }
+        //}
         #endregion
 
 

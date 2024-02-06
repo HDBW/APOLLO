@@ -24,6 +24,6 @@ namespace Apollo.RestService.Messages
         /// <summary>
         /// The ISO code of the language.
         /// </summary>
-        public string   Language { get; set; }
+        public string?   Language { get; set; }
     }
 }
