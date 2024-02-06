@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.SharedContracts.Mock;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
@@ -22,7 +23,7 @@ namespace GrpcClient.Service
 
         private ILogger? Logger { get; }
 
-        public async Task<OccupationSuggestionResponse?> SearchAsync(string searchstring, CancellationToken token)
+        public async Task<IEnumerable<OccupationTerm?>> SearchAsync(string searchstring, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             using (var channel = GrpcChannel.ForAddress(Address))
@@ -31,7 +32,8 @@ namespace GrpcClient.Service
                 try
                 {
                     var request = new OccupationSuggestionRequest { Input = searchstring, CorrelationId = CreateCorrelationId() };
-                    return await occupationSuggestionClient.GetOccupationSuggestions(request, token).ConfigureAwait(false);
+                    var result = await occupationSuggestionClient.GetOccupationSuggestions(request, token).ConfigureAwait(false);
+                    return (result?.OccupationSuggestions ?? new List<OccupationTerm?>()).Where(x => x != null).ToList();
                 }
                 catch (Exception e)
                 {
@@ -49,5 +51,10 @@ namespace GrpcClient.Service
         {
             return Guid.NewGuid().ToString("N").ToUpper();
         }
+    }
+
+    public interface IOccupationSuggestionService
+    {
+        Task<OccupationSuggestionResponse?> GetOccupationSuggestions(OccupationSuggestionRequest request, CancellationToken token);
     }
 }

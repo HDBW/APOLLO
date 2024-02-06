@@ -37,7 +37,6 @@ using FedericoNembrini.Maui.CustomDatePicker;
 using GrpcClient.Service;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;

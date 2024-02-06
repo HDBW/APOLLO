@@ -127,7 +127,6 @@
     <None Remove="Resources\Images\user2.svg" />
     <None Remove="Resources\Images\user3.svg" />
     <None Remove="Resources\Images\watch.svg" />
-    <None Remove="Resources\Raw\CareerInfo_JobTtitle_filtered.txt" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />

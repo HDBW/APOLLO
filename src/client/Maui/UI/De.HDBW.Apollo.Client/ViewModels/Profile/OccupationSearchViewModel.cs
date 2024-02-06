@@ -8,9 +8,9 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Data.Helper;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
@@ -32,9 +32,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<OccupationSearchViewModel> logger)
+            ILogger<OccupationSearchViewModel> logger,
+            IOccupationSearchService occupationSearchService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(occupationSearchService);
+            OccupationSearchService = occupationSearchService;
         }
 
         public string? SearchText
@@ -74,22 +77,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        public override async Task OnNavigatedToAsync()
+        private IOccupationSearchService OccupationSearchService { get; }
+
+        public override Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
             {
                 try
                 {
-                    using (var stream = await FileSystem.OpenAppPackageFileAsync("CareerInfo_JobTtitle_filtered.txt"))
-                    {
-                        using (var reader = new StreamReader(stream))
-                        {
-                            var occupationNames = ReadLines(reader).Order().ToList();
-                            _occupations = occupationNames.Select(x => new KldbOccupation() { Id = Guid.NewGuid().ToString("N"), PreferedTerm = new List<string>() { x } }).OfType<Occupation>().ToList();
-                        }
-                    }
-
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -108,6 +103,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     UnscheduleWork(worker);
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
@@ -135,9 +132,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 {
                     _cts?.Cancel();
                     worker.Token.ThrowIfCancellationRequested();
-                    var items = string.IsNullOrWhiteSpace(searchtext)
+                    var result = string.IsNullOrWhiteSpace(searchtext)
+                        ? null
+                        : await OccupationSearchService.SearchAsync(searchtext, token).ConfigureAwait(false);
+
+                    var items = result == null
                          ? new List<InteractionEntry>()
-                         : await Task.Run(() => { return _occupations.Where(x => x.PreferedTerm?.FirstOrDefault()?.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase) ?? false).Select(x => InteractionEntry.Import(x.PreferedTerm?.FirstOrDefault(), x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList(); }, token);
+                         : await Task.Run(() => { return result.Select(x => InteractionEntry.Import(x.Title, x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList(); }, token);
                     if (!items.Any() && !string.IsNullOrWhiteSpace(searchtext))
                     {
                         items.Add(InteractionEntry.Import(searchtext, new UnknownOccupation() { PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
@@ -168,15 +169,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private bool CanSearch(string searchtext)
         {
             return !IsBusy;
-        }
-
-        private IEnumerable<string> ReadLines(StreamReader reader)
-        {
-            string line;
-            while ((line = reader?.ReadLine()) != null)
-            {
-                yield return line;
-            }
         }
 
         private async void ApplyAndClose()
@@ -223,9 +215,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     return;
                 }
 
-                var items = string.IsNullOrWhiteSpace(searchtext)
+                var result = string.IsNullOrWhiteSpace(searchtext)
+                    ? null
+                    : await OccupationSearchService.SearchAsync(searchtext, token.Value).ConfigureAwait(false);
+
+                var items = result == null
                     ? new List<InteractionEntry>()
-                    : _occupations.Where(x => x.PreferedTerm?.FirstOrDefault()?.Contains(searchtext, StringComparison.InvariantCultureIgnoreCase) ?? false).Select(x => InteractionEntry.Import(x.PreferedTerm?.FirstOrDefault(), x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
+                    : result.Select(x => InteractionEntry.Import(x.Title, x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
 
                 if (!items.Any() && !string.IsNullOrWhiteSpace(searchtext))
                 {
