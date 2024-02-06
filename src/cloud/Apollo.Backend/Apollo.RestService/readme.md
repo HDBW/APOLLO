@@ -108,7 +108,15 @@ Useful properties engaged in the embedding calculation
   - WorkingTimeModel
   - CareerType
 
-  ## Examples
+
+POST Query contains following properties
+
+"Language": null (Invariant), DE, EN etc.
+"Contains": Anz case insensitive string
+"ItemType": Definse the list txpe name.
+
+
+## Examples
 
   Search for all elements of education type in invariant language:
 
