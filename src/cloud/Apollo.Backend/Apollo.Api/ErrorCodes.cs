@@ -110,6 +110,8 @@ namespace Apollo.Api
             public const int CreateOrUpdateListError = ListCodeBase + 10;
 
             public const int DeleteListError = ListCodeBase + 15;
+
+            public static int ListNotFoundError = ListCodeBase + 16;
         }
 
             public static class GeneralErrors

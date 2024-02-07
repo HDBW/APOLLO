@@ -24,7 +24,7 @@ namespace Apollo.Api
         /// Returns the ApolloList list with all values of the given item type.
         /// </summary>
         /// <param name="lng">It must be specified if the <see cref="id"/> argument is not specified. Returns all items of the given <see cref="itemType"/> if set, that match the given language.
-        /// I not set, then it returns all entries</param>
+        /// If not set, then it returns all entries</param>
         /// <param name="itemType">It must be specified if the <see cref="id"/> argument is not specified.</param>
         /// <param name="id">If specified arguments <see cref="lng"/> and <see cref="itemType"/> are ignored.</param>
         /// <returns>The instance of the <see cref="ApolloList"/> that was requested.
@@ -65,7 +65,7 @@ namespace Apollo.Api
                 }
 
                 //
-                // We filter requested language.
+                // We filter requested ItemType
                 query?.Filter.Fields.Add(new FieldExpression()
                 {
                     Operator = QueryOperator.Equals,
@@ -82,7 +82,7 @@ namespace Apollo.Api
             else
             {
                 if (throwIfNotFound)
-                    throw new ApolloApiException(1, "");//todo.
+                    throw new ApolloApiException(ErrorCodes.ListErrors.ListNotFoundError, "Requested Items Not Found");//todo.
                 else
                     return null;
             }
