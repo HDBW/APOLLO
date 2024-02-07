@@ -53,7 +53,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 if (SetProperty(ref _searchText, value))
                 {
                     RefreshCommands();
-                    Task.Run(() => DoSearchAsync(value));
+                    Task.Run(() => DoSearchAsync(_searchText));
                 }
             }
         }
@@ -223,14 +223,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             CancellationToken? token = null;
             try
             {
+                _cts?.Cancel();
                 _cts?.Dispose();
                 _cts = new CancellationTokenSource();
-                await Task.Delay(500);
                 token = _cts?.Token;
                 if (!token.HasValue)
                 {
                     return;
                 }
+
+                await Task.Delay(500, token.Value);
+                token.Value.ThrowIfCancellationRequested();
 
                 var result = string.IsNullOrWhiteSpace(searchtext)
                     ? null
@@ -266,10 +269,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
             finally
             {
-                if (!(token?.IsCancellationRequested ?? false))
+                var current = _cts;
+                _cts = null;
+                if (!(token?.IsCancellationRequested ?? false) && current?.Token == token)
                 {
-                    _cts?.Dispose();
-                    _cts = null;
+                    current?.Dispose();
+                    current = null;
                 }
             }
         }

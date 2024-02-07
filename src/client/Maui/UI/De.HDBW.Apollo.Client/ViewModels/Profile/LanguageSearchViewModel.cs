@@ -179,6 +179,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             CancellationToken? token = null;
             try
             {
+                _cts?.Cancel();
                 _cts?.Dispose();
                 _cts = new CancellationTokenSource();
                 token = _cts?.Token;
@@ -213,11 +214,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
             finally
             {
-                if (!(token?.IsCancellationRequested ?? false))
+                var current = _cts;
+                _cts = null;
+                if (!(token?.IsCancellationRequested ?? false) && current?.Token == token)
                 {
-                    _cts?.Dispose();
-                    _cts = null;
+                    current?.Dispose();
+                    current = null;
                 }
+
             }
         }
 

@@ -22,6 +22,18 @@ namespace De.HDBW.Apollo.Client.Platforms.iOS
 
         private void HandleClearButtonClicked(object? sender, EventArgs e)
         {
+            var searchBar = sender as MauiSearchBar;
+            if (searchBar == null)
+            {
+                return;
+            }
+
+            if (searchBar.IsFirstResponder || searchBar.Focused)
+            {
+                return;
+            }
+
+            searchBar.Focus(new FocusRequest());
         }
     }
 }
