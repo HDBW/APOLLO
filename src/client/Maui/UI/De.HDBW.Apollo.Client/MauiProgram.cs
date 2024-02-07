@@ -212,9 +212,9 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
 
             var occupationSearchUrl = userSecretsService["OccupationSearchAPIURL"] ?? string.Empty;
-            services.AddSingleton<IOccupationSearchService>((serviceProvider) =>
+            services.AddSingleton<IOccupationService>((serviceProvider) =>
             {
-                return new OccupationSearchService(occupationSearchUrl, serviceProvider.GetService<ILogger<OccupationSearchService>>()!);
+                return new OccupationService(occupationSearchUrl, serviceProvider.GetService<ILogger<OccupationService>>()!);
             });
 
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
