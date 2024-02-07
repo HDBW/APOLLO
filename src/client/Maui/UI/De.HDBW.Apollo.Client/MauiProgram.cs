@@ -509,11 +509,19 @@ namespace De.HDBW.Apollo.Client
 #elif ANDROID
 #endif
             });
+
+            Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchBar), (handler, view) =>
+            {
+#if ANDROID
+#elif IOS
+#endif
+            });
         }
 
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
 #if IOS
+            handlers.AddHandler(typeof(SearchBar), typeof(De.HDBW.Apollo.Client.Platforms.iOS.CustomSearchbarHandler));
 #elif ANDROID
 #endif
         }
