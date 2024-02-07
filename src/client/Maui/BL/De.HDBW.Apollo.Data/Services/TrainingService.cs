@@ -15,63 +15,45 @@ namespace De.HDBW.Apollo.Data.Services
         public TrainingService(ILogger<TrainingService> logger, string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
                : base(logger, new Uri(new Uri($"{baseUrl.TrimEnd('/')}/"), $"{nameof(Training)}"), authKey, httpClientHandler)
         {
-            Mappings.Add(typeof(Training), typeof(Training).GetJSONMapping());
         }
 
-        private Dictionary<Type, Dictionary<string, string>> Mappings { get; } = new Dictionary<Type, Dictionary<string, string>>();
-
-        public async Task<IEnumerable<string>> SearchSuggesionsAsync(Filter? filter, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, CancellationToken token)
         {
-           var results = await SearchTrainingsAsync(filter, token);
-           return results?.Select(x => x.Title).ToArray() ?? Array.Empty<string>();
+           var results = await SearchTrainingsAsync(filter, null, token);
+           return results ?? Array.Empty<Training>();
         }
 
-        public async Task<IEnumerable<CourseItem>> SearchTrainingsAsync(Filter? filter, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string>? visibleFields, CancellationToken token)
         {
             filter = filter ?? new Filter() { Fields = new List<FieldExpression>() };
-            SortExpression sortExpression = new SortExpression() { FieldName = nameof(Training.TrainingName), Order = SortOrder.Descending };
-            List<string> visibleFields = typeof(Training).GetProperties(BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public).Select(p => p.Name).ToList();
-            visibleFields = new List<string>();
-            sortExpression = null;
+            var sortExpression = new SortExpression() { FieldName = nameof(Training.TrainingName), Order = SortOrder.Descending };
+            visibleFields = visibleFields ?? new List<string>() { nameof(Training.Id), nameof(Training.TrainingName) };
             var response = await GetTrainingsInternalAsync(filter, sortExpression, visibleFields, token).ConfigureAwait(false);
-            return response?.Select(x => x.ConvertToCourseItem()).ToList() as IEnumerable<CourseItem> ?? Array.Empty<CourseItem>();
+            return response ?? Array.Empty<Training>();
         }
 
-        public async Task<CourseItem?> GetTrainingAsync(long id, CancellationToken token)
+        public async Task<Training?> GetTrainingAsync(long id, CancellationToken token)
         {
             var response = await GetTrainingInternalAsync(id, token).ConfigureAwait(false);
-            return response?.ConvertToCourseItem();
+            return response;
         }
 
         private async Task<IEnumerable<Training>?> GetTrainingsInternalAsync(Filter filter, SortExpression sortExpression, List<string> visibleFields, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var mapping = Mappings[typeof(Training)];
 
             filter.Fields = (filter.Fields != null)
                 ? filter.Fields
                 : new List<FieldExpression>();
 
-            foreach (var field in filter.Fields)
-            {
-                field.FieldName = mapping.ContainsKey(field.FieldName) ? mapping[field.FieldName] : field.FieldName;
-            }
-
-            visibleFields = (visibleFields != null)
-                ? visibleFields.Select(f => mapping.ContainsKey(f) ? mapping[f] : f).ToList()
+            visibleFields = visibleFields != null
+                ? visibleFields
                 : new List<string>();
-
-            if (sortExpression != null)
-            {
-                sortExpression.FieldName = (sortExpression != null)
-                ? mapping.ContainsKey(sortExpression.FieldName) ? mapping[sortExpression.FieldName] : sortExpression.FieldName
-                : string.Empty;
-            }
 
             var query = new Query();
             query.Filter = filter;
             query.SortExpression = sortExpression;
-            query.Fields = visibleFields.Select(f => mapping.ContainsKey(f) ? mapping[f] : f).ToList();
+            query.Fields = visibleFields;
             var response = await DoPostAsync<QueryResponse>(query, token).ConfigureAwait(false);
             return response?.Trainings ?? Array.Empty<Training>();
         }

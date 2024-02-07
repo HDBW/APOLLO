@@ -203,13 +203,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     query = query ?? string.Empty;
                     var converter = new CourseTagTypeToStringConverter();
                     UpdateFilter(query);
-                    var courseItems = await TrainingService.SearchTrainingsAsync(Filter, worker.Token);
+                    var courseItems = await TrainingService.SearchTrainingsAsync(Filter, null,worker.Token);
                     var eduProviderItems = await EduProviderItemRepository.GetItemsAsync(worker.Token);
-                    courseItems = courseItems ?? Array.Empty<CourseItem>();
+                    courseItems = courseItems ?? Array.Empty<Training>();
                     eduProviderItems = eduProviderItems ?? Array.Empty<EduProviderItem>();
                     var interactions = new List<StartViewInteractionEntry>();
-
-                    foreach (var course in courseItems)
+                    var courseItems1 = Array.Empty<CourseItem>();
+                    foreach (var course in courseItems1)
                     {
                         var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
                         var courseData = new NavigationParameters();
@@ -319,7 +319,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             token.ThrowIfCancellationRequested();
             UpdateFilter(inputValue);
-            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, token).ConfigureAwait(false) : Array.Empty<string>();
+            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, token).ConfigureAwait(false) : Array.Empty<Training>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
             {
@@ -327,8 +327,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             recents = recents ?? Array.Empty<SearchHistory>();
-            suggestions = suggestions.Take(_maxSugestionItemsCount) ?? Array.Empty<string>();
-            var courses = suggestions.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => SearchSuggestionEntry.Import(x)).ToList();
+            suggestions = suggestions.Take(_maxSugestionItemsCount) ?? Array.Empty<Training>();
+            var courses = suggestions.Where(x => !string.IsNullOrWhiteSpace(x.TrainingName)).Select(x => SearchSuggestionEntry.Import(x.TrainingName)).ToList();
             var history = recents.Take(Math.Max(_maxHistoryItemsCount - courses.Count, 0)).Select(x => HistoricalSuggestionEntry.Import(x)).ToList();
             await ExecuteOnUIThreadAsync(
                 () =>

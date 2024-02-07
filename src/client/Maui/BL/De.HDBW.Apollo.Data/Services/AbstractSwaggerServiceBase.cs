@@ -191,6 +191,15 @@ namespace De.HDBW.Apollo.Data.Services
             try
             {
                 var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+
+                /*content = content.Replace("Seminare", "Offline");
+                content = content.Replace("seminare", "Offline");
+
+                if (content.Contains("Seminare"))
+                {
+
+                }*/
+
                 return JsonConvert.DeserializeObject<TU>(content);
             }
             catch (JsonException exception)
