@@ -558,7 +558,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>Dein Profil</value>
   </data>
   <data name="PersonalInformationEditView_Birthdate" xml:space="preserve">
-    <value>Geburtstag</value>
+    <value>Geburtsdatum</value>
   </data>
   <data name="PersonalInformationEditView_Handicaps" xml:space="preserve">
     <value>Einschränkungen</value>
@@ -1065,7 +1065,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>Je besser Dein Profil gefüllt ist, desto bessere Vorschläge liefern wir Dir.</value>
   </data>
   <data name="ProfileView_RecommendationSection_Title" xml:space="preserve">
-    <value>Profilstatus</value>
+    <value>Dein Fortschritt</value>
   </data>
   <data name="ErrorDialog_Title" xml:space="preserve">
     <value>Fehler</value>
@@ -1090,7 +1090,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Datum eingeben</value>
   </data>
   <data name="CareerInfoEditView_ButtonTxt" xml:space="preserve">
-    <value>Berufserfahrung hinzufügen</value>
+    <value>Berufserfahrungen hinzufügen</value>
   </data>
   <data name="CareerInfoEditView_Headline" xml:space="preserve">
     <value>Du hast noch kein Berufserfahrungen hinterlegt</value>
@@ -1105,43 +1105,43 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Du hast noch keine Kontaktdaten hinterlegt</value>
   </data>
   <data name="ContactInfoEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deinen ersten Kontakt hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt Deine Kontaktdaten hinzu und verbessere Deine Kursvorschläge.</value>
   </data>
   <data name="EducationInfoEditView_ButtonTxt" xml:space="preserve">
-    <value>Bildungsweg hinzufügen</value>
+    <value>Stationen hinzufügen</value>
   </data>
   <data name="EducationInfoEditView_Headline" xml:space="preserve">
     <value>Du hast noch keinen Bildungsweg hinterlegt</value>
   </data>
   <data name="EducationInfoEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deinen Bildungsweg hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt Stationen deines Bildungswegs hinzu und verbessere deine Kursvorschläge.</value>
   </data>
   <data name="LanguageEditView_ButtonTxt" xml:space="preserve">
-    <value>Sprachkenntnis hinzufügen</value>
+    <value>Sprachkenntnisse hinzufügen</value>
   </data>
   <data name="LanguageEditView_Headline" xml:space="preserve">
     <value>Du hast noch keine Sprachkenntnisse hinterlegt</value>
   </data>
   <data name="LanguageEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine erste Sprachkenntnis hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt erste Sprachkenntnisse hinzu und verbessere Deine Kursvorschläge.</value>
   </data>
   <data name="LicenseEditView_ButtonTxt" xml:space="preserve">
-    <value>Lizenz hinzufügen</value>
+    <value>Lizenzen hinzufügen</value>
   </data>
   <data name="LicenseEditView_Headline" xml:space="preserve">
     <value>Du hast noch kein Lizenzen hinterlegt</value>
   </data>
   <data name="LicenseEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine erste Lizenz hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt erste Lizenzen hinzu und verbessere Deine Kursvorschläge.</value>
   </data>
   <data name="QualificationEditView_ButtonTxt" xml:space="preserve">
-    <value>Qualifikation hinzufügen</value>
+    <value>Qualifikationen hinzufügen</value>
   </data>
   <data name="QualificationEditView_Headline" xml:space="preserve">
     <value>Du hast noch kein Qualifikationen hinterlegt</value>
   </data>
   <data name="QualificationEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt deine erste Qualifikation hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt erste Qualifikationen hinzu und verbessere Deine Kursvorschläge.</value>
   </data>
   <data name="WebReferenceEditView_ButtonTxt" xml:space="preserve">
     <value>Webprofil hinzufügen</value>
@@ -1150,7 +1150,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Du hast noch keine Webprofile hinterlegt</value>
   </data>
   <data name="WebReferenceEditView_Subline" xml:space="preserve">
-    <value>Füge jetzt dein erstes Webprofil hinzu und verbessere deine Kursvorschläge.</value>
+    <value>Füge jetzt Deine Webprofile hinzu und verbessere Deine Kursvorschläge.</value>
   </data>
   <data name="PickUserNameView_Title" xml:space="preserve">
     <value>Benutzer anlegen</value>
