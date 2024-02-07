@@ -19,7 +19,7 @@ namespace Apollo.Api
     {
         private string _defaultLng = "Invariant";
 
-        #region Internal Helpers
+        #region List Methods
         /// <summary>
         /// Returns the ApolloList list with all values of the given item type.
         /// </summary>
