@@ -11,6 +11,7 @@ using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Microsoft.Extensions.Logging;
+using OccupationGrpcService.Protos;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
@@ -33,11 +34,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<OccupationSearchViewModel> logger,
-            IOccupationSearchService occupationSearchService)
+            IOccupationService occupationService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            ArgumentNullException.ThrowIfNull(occupationSearchService);
-            OccupationSearchService = occupationSearchService;
+            ArgumentNullException.ThrowIfNull(occupationService);
+            OccupationService = occupationService;
         }
 
         public string? SearchText
@@ -77,7 +78,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
         }
 
-        private IOccupationSearchService OccupationSearchService { get; }
+        private IOccupationService OccupationService { get; }
 
         public override Task OnNavigatedToAsync()
         {
@@ -134,7 +135,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     worker.Token.ThrowIfCancellationRequested();
                     var result = string.IsNullOrWhiteSpace(searchtext)
                         ? null
-                        : await OccupationSearchService.SearchAsync(searchtext, token).ConfigureAwait(false);
+                        : await OccupationService.SearchAsync(searchtext, token).ConfigureAwait(false);
 
                     var items = result == null
                          ? new List<InteractionEntry>()
@@ -178,7 +179,23 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     _parameters = _parameters ?? new NavigationParameters();
-                    var occupation = SelectedItem?.Data as Occupation;
+                    Occupation? occupation = null;
+                    switch (SelectedItem?.Data)
+                    {
+                        case Occupation unknowOccupation:
+                            occupation = await OccupationService.CreateAsync(unknowOccupation.PreferedTerm.First(), worker.Token).ConfigureAwait(false);
+                            break;
+                        case OccupationTerm term:
+                            ArgumentNullException.ThrowIfNull(term.OccupationId);
+                            occupation = await OccupationService.GetItemByIdAsync(term.OccupationId, worker.Token).ConfigureAwait(false);
+                            break;
+                    }
+
+                    if (occupation == null)
+                    {
+                        throw new NotSupportedException("Unable to get or create new occupation.");
+                    }
+
                     _parameters.AddValue(NavigationParameter.Result, occupation.Serialize());
                     await NavigationService.PopAsync(worker.Token, _parameters);
                 }
@@ -217,7 +234,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
                 var result = string.IsNullOrWhiteSpace(searchtext)
                     ? null
-                    : await OccupationSearchService.SearchAsync(searchtext, token.Value).ConfigureAwait(false);
+                    : await OccupationService.SearchAsync(searchtext, token.Value).ConfigureAwait(false);
 
                 var items = result == null
                     ? new List<InteractionEntry>()
