@@ -24,10 +24,10 @@ namespace GrpcClient.Service
 
         private ILogger? Logger { get; }
 
-        public async Task<IEnumerable<OccupationTerm?>> SearchAsync(string searchstring, CancellationToken token)
+        public async Task<IEnumerable<OccupationTerm>> SearchAsync(string searchstring, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            IEnumerable<OccupationTerm?> response = new List<OccupationTerm?>();
+            IEnumerable<OccupationTerm> response = new List<OccupationTerm>();
             using (var channel = GrpcChannel.ForAddress(Address))
             {
                 var occupationSuggestionClient = channel.CreateGrpcService<IOccupationSuggestionService>();
@@ -35,12 +35,19 @@ namespace GrpcClient.Service
                 {
                     var request = new OccupationSuggestionRequest { Input = searchstring, CorrelationId = CreateCorrelationId() };
                     var result = await occupationSuggestionClient.GetOccupationSuggestions(request, token).ConfigureAwait(false);
-                    response = (result?.OccupationSuggestions ?? new List<OccupationTerm?>()).Where(x => x != null).ToList();
+                    response = result?.OccupationSuggestions.OfType<OccupationTerm>().Where(x => x != null).ToList<OccupationTerm>() ?? new List<OccupationTerm>();
                 }
-                catch (Exception e)
+                catch (OperationCanceledException)
                 {
-                    Console.WriteLine(e);
                     throw;
+                }
+                catch (ObjectDisposedException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(SearchAsync)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -64,13 +71,22 @@ namespace GrpcClient.Service
                     occupation.TaxonomyInfo = Taxonomy.Unknown;
                     occupation.PreferedTerm = new List<string> { searchstring };
                     var request = new OccupationCreationRequest { Occupation = occupation, CorrelationId = CreateCorrelationId() };
+
+                    // TODO: Wait till new Service is running.
                     var result = await occupationClient.CreateOrUpdate(request, null, token).ConfigureAwait(false);
                     response = result?.Occupation;
                 }
-                catch (Exception e)
+                catch (OperationCanceledException)
                 {
-                    Console.WriteLine(e);
                     throw;
+                }
+                catch (ObjectDisposedException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(CreateAsync)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -91,13 +107,21 @@ namespace GrpcClient.Service
                 try
                 {
                     var request = new OccupationRequest { Id = id, CorrelationId = CreateCorrelationId() };
+                    // TODO: Wait till new Service is running.
                     var result = await occupationClient.GetOccupation(request, null).ConfigureAwait(false);
                     response = result?.Occupation;
                 }
-                catch (Exception e)
+                catch (OperationCanceledException)
                 {
-                    Console.WriteLine(e);
                     throw;
+                }
+                catch (ObjectDisposedException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(GetItemByIdAsync)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -112,6 +136,5 @@ namespace GrpcClient.Service
         {
             return Guid.NewGuid().ToString("N").ToUpper();
         }
-
     }
 }
