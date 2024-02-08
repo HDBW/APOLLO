@@ -98,7 +98,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             completionStates.Add(InteractionEntry.Import(CompletionState.Ongoning.GetLocalizedString(), CompletionState.Ongoning, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             completionStates.Add(InteractionEntry.Import(CompletionState.Failed.GetLocalizedString(), CompletionState.Failed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
-            var currentData = user.Profile?.EducationInfos.FirstOrDefault(x => x.Id == entryId);
+            var currentData = user.Profile?.EducationInfos?.FirstOrDefault(x => x.Id == entryId);
             EditState = _savedState.Deserialize<EducationInfo?>();
             var currentState = currentData.Serialize<EducationInfo?>();
             var isDirty = !string.Equals(currentState, _savedState);
@@ -128,13 +128,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             var entry = new EducationInfo();
             entry.EducationType = _type ?? EducationType.Unkown;
+            user.Profile!.EducationInfos = user.Profile!.EducationInfos ?? new List<EducationInfo>();
             user.Profile!.EducationInfos.Add(entry);
             return entry;
         }
 
         protected override void DeleteEntry(User user, EducationInfo entry)
         {
-            user.Profile!.EducationInfos.Remove(entry);
+            user.Profile!.EducationInfos!.Remove(entry);
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)

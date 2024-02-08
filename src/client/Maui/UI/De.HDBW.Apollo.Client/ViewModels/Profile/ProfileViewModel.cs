@@ -130,7 +130,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
                     if (!missingRoutes.Contains(Routes.MobilityEditView))
                     {
-                        sections.AddRange(CreateMobilityInformations(user.Profile!));
+                        sections.AddRange(CreateMobilityInformations(user.Profile!.MobilityInfo!));
                     }
 
                     await ExecuteOnUIThreadAsync(
@@ -521,13 +521,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             return informations;
         }
 
-        private IEnumerable<ObservableObject> CreateMobilityInformations(UserProfile profile)
+        private IEnumerable<ObservableObject> CreateMobilityInformations(Mobility mobility)
         {
             var informations = new List<ObservableObject>();
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
-            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, profile.MobilityInfo.WillingToTravel?.GetLocalizedString()));
-            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, profile.MobilityInfo.HasVehicle ? Resources.Strings.Resources.Global_Yes : Resources.Strings.Resources.Global_No));
-            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", profile.MobilityInfo.DriverLicenses.Select(x => Resources.Strings.Resources.ResourceManager.GetString($"DriversLicense_{Enum.GetName(x)}")) ?? new List<string>())));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, mobility.WillingToTravel?.GetLocalizedString()));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, mobility.HasVehicle ? Resources.Strings.Resources.Global_Yes : Resources.Strings.Resources.Global_No));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", mobility.DriverLicenses.Select(x => Resources.Strings.Resources.ResourceManager.GetString($"DriversLicense_{Enum.GetName(x)}")) ?? new List<string>())));
             return informations;
         }
 
@@ -555,32 +555,32 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.ContactInfoEditView_Title, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute, ContactInfoIcon));
             }
 
-            if (!(user.Profile?.Qualifications.Any() ?? false))
+            if (!(user.Profile?.Qualifications?.Any() ?? false))
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.QualificationEditView_Title, new NavigationData(Routes.QualificationEditView, null), NavigateToRoute, CanNavigateToRoute, QualificationInfoIcon));
             }
 
-            if (!(user.Profile?.Licenses.Any() ?? false))
+            if (!(user.Profile?.Licenses?.Any() ?? false))
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LicenseEditView_Title, new NavigationData(Routes.LicenseEditView, null), NavigateToRoute, CanNavigateToRoute, LicensInfoIcon));
             }
 
-            if (!(user.Profile?.CareerInfos.Any() ?? false))
+            if (!(user.Profile?.CareerInfos?.Any() ?? false))
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.CareerInfoEditView_Title, new NavigationData(Routes.CareerInfoEditView, null), NavigateToRoute, CanNavigateToRoute, CareerInfoIcon));
             }
 
-            if (!(user.Profile?.EducationInfos.Any() ?? false))
+            if (!(user.Profile?.EducationInfos?.Any() ?? false))
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.EducationInfoEditView_Title, new NavigationData(Routes.EducationInfoEditView, null), NavigateToRoute, CanNavigateToRoute, EducationInfoIcon));
             }
 
-            if (!(user.Profile?.LanguageSkills.Any() ?? false))
+            if (!(user.Profile?.LanguageSkills?.Any() ?? false))
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageEditView_Title, new NavigationData(Routes.LanguageEditView, null), NavigateToRoute, CanNavigateToRoute, LanguageIcon));
             }
 
-            if (!(user.Profile?.WebReferences.Any() ?? false))
+            if (!(user.Profile?.WebReferences?.Any() ?? false))
             {
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.WebReferenceEditView_Title, new NavigationData(Routes.WebReferenceEditView, null), NavigateToRoute, CanNavigateToRoute, WebReferenceIcon));
             }

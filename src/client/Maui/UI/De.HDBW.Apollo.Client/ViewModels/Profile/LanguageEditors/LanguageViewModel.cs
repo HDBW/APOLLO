@@ -64,7 +64,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         protected async override Task<Language?> LoadDataAsync(User user, string? enityId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var language = user?.Profile?.LanguageSkills.FirstOrDefault(x => x.Id == enityId);
+            var language = user?.Profile?.LanguageSkills?.FirstOrDefault(x => x.Id == enityId);
             var niveau = language?.Niveau;
             var code = language?.Code;
 #if ANDROID
@@ -114,13 +114,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         protected override Language CreateNewEntry(User user)
         {
             var entry = new Language();
+            user.Profile!.LanguageSkills = user.Profile.LanguageSkills ?? new List<Language>();
             user.Profile!.LanguageSkills.Add(entry);
             return entry;
         }
 
         protected override void DeleteEntry(User user, Language entry)
         {
-            user.Profile!.LanguageSkills.Remove(entry);
+            user.Profile!.LanguageSkills!.Remove(entry);
         }
 
         protected override void ApplyChanges(Language entity)

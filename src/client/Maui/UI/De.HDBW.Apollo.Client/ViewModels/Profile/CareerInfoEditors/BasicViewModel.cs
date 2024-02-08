@@ -80,7 +80,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         protected override async Task<CareerInfo?> LoadDataAsync(User user, string? entryId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var currentData = user.Profile?.CareerInfos.FirstOrDefault(x => x.Id == entryId);
+            var currentData = user.Profile?.CareerInfos?.FirstOrDefault(x => x.Id == entryId);
             EditState = _savedState.Deserialize<CareerInfo?>();
 
             var currentState = currentData.Serialize<CareerInfo?>();
@@ -105,13 +105,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         {
             var entry = new CareerInfo();
             entry.CareerType = _type ?? CareerType.Unknown;
+            user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();
             user.Profile!.CareerInfos.Add(entry);
             return entry;
         }
 
         protected override void DeleteEntry(User user, CareerInfo entry)
         {
-            user.Profile!.CareerInfos.Remove(entry);
+            user.Profile!.CareerInfos!.Remove(entry);
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
