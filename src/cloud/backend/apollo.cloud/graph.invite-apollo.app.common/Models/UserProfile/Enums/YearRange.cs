@@ -11,6 +11,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums
         //2 bis 5 Jahre
         Between2And5 = 2,
         //mehr als 5 Jahre
-        MoreThan5 = 2,
+        MoreThan5 = 3,
     }
 }
