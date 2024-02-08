@@ -1,4 +1,6 @@
-﻿using De.HDBW.Apollo.Data.Services;
+﻿using System.Text.Json;
+using System.Text.RegularExpressions;
+using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Lists;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
@@ -68,16 +70,20 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             var items = await Service.GetAsync(typeof(TU).Name, null, token).ConfigureAwait(false);
             Assert.NotNull(items);
             var names = Enum.GetNames(typeof(TU));
-            if (names.Count() != items!.Count())
+            var returnedNames = items!.Select(x => x.Value).ToList();
+            var additionalNames = returnedNames.Where(x => !names.Contains(x)).ToList();
+            var missingNames = names.Where(x => !returnedNames.Contains(x)).ToList();
+            if (missingNames.Any())
             {
-                var returnedNames = items.Select(x => x.Value).ToList();
-                Logger.LogError($"List of ItemType {typeof(TU)} contained unspecified data.");
-                var missingNames = returnedNames.Where(x => !names.Contains(x)).ToList();
-                var unknownNames = items.Select(x => x.Value).Where(x => !names.Contains(x));
-                if (missingNames.Any())
-                {
-                    Logger.LogError($"The following values are missing {string.Join(",", missingNames)};");
-                }
+                var missingItems = missingNames.Select(x => JsonSerializer.Serialize(new ApolloListItem() { ListItemId = (int)Enum.Parse(typeof(TU), x), Value = x, Lng = "Invariant" }));
+                Logger.LogError($"List of ItemType {typeof(TU)} is missing specified Values.{Environment.NewLine}The following ListItems are missing:{Environment.NewLine}{string.Join(Environment.NewLine, missingItems)}");
+                return null;
+            }
+
+            if (additionalNames.Any())
+            {
+                var additionalItems = items!.Where(x => additionalNames.Contains(x.Value)).Select(x => JsonSerializer.Serialize(x));
+                Logger.LogError($"List of ItemType {typeof(TU)} is unknown specified Values.{Environment.NewLine}The following ListItems unknow to the client:{Environment.NewLine}{string.Join(Environment.NewLine, additionalItems)}");
                 return null;
             }
 
@@ -90,7 +96,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                     continue;
                 }
 
-                var enumValue = (TU)Enum.ToObject(typeof(TU), item.ListItemId);
+                TU enumValue = (TU)Enum.ToObject(typeof(TU), item.ListItemId);
                 if (enumValue.ToString() != item.Value)
                 {
                     Logger.LogError($"List of ItemType {typeof(TU)} contained wrong in ListItemId.");
