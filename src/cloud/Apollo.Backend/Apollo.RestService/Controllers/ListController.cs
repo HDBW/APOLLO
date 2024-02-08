@@ -49,7 +49,7 @@ namespace Apollo.Service.Controllers
                 _logger?.LogTrace($"{nameof(GetListAsync)} entered.");
 
                 // Assuming req contains the Training object to create or update.
-                var result = await _api.GetListAsync(req.Lng, req.ItemType);
+                var result = await _api.GetListAsync(itemType: req.ItemType);
 
                 _logger?.LogTrace($"{nameof(GetListAsync)} completed.");
 
