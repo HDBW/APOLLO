@@ -127,7 +127,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         protected override EducationInfo CreateNewEntry(User user)
         {
             var entry = new EducationInfo();
-            entry.EducationType = _type ?? EducationType.Unkown;
+            entry.EducationType = _type ?? EducationType.Unknown;
             user.Profile!.EducationInfos = user.Profile!.EducationInfos ?? new List<EducationInfo>();
             user.Profile!.EducationInfos.Add(entry);
             return entry;

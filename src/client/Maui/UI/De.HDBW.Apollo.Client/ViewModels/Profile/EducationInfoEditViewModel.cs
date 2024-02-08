@@ -81,13 +81,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 try
                 {
                     var parameters = new NavigationParameters();
-                    parameters.Add(NavigationParameter.Data, EducationType.Unkown);
+                    parameters.Add(NavigationParameter.Data, EducationType.Unknown);
                     var result = await DialogService.ShowPopupAsync<SelectOptionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
                     if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                     {
                         var educationType = result?.GetValue<EducationType?>(NavigationParameter.Data);
                         parameters = new NavigationParameters();
-                        parameters.Add(NavigationParameter.Type, educationType ?? EducationType.Unkown);
+                        parameters.Add(NavigationParameter.Type, educationType ?? EducationType.Unknown);
                         await NavigationService.NavigateAsync(GetRoute(educationType), worker.Token, parameters);
                     }
                 }
