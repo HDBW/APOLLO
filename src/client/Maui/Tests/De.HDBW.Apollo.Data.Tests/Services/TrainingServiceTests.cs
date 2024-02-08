@@ -32,7 +32,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            CourseItem training = null;
+            CourseItem? training = null;
             try
             {
                 training = await Service.GetTrainingAsync("SER01", TokenSource!.Token);
@@ -43,7 +43,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.Equal(ErrorCodes.TrainingErrors.GetTrainingError, ex.ErrorCode);
             }
 
-            Assert.NotNull(training?.Id);
+            Assert.NotNull(training);
             Assert.Equal(1, training!.Id);
 
             // var courseItem = training.ToCourseItem();
@@ -64,7 +64,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            IEnumerable<CourseItem> trainings = null;
+            IEnumerable<CourseItem>? trainings = null;
             try
             {
                 trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token);
@@ -107,7 +107,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 Fields = fields,
             };
-            IEnumerable<CourseItem> trainings = null;
+            IEnumerable<CourseItem>? trainings = null;
             try
             {
                 trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);

@@ -64,7 +64,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override void RemoveItemFromUser(User user, AbstractProfileEntry<Language> entry)
         {
-            user.Profile!.LanguageSkills.Remove(entry.Export());
+            user.Profile!.LanguageSkills!.Remove(entry.Export());
         }
     }
 }

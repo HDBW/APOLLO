@@ -64,7 +64,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override void RemoveItemFromUser(User user, AbstractProfileEntry<Qualification> entry)
         {
-            user.Profile?.Qualifications.Remove(entry.Export());
+            user.Profile?.Qualifications!.Remove(entry.Export());
         }
     }
 }

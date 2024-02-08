@@ -214,22 +214,22 @@ namespace De.HDBW.Apollo.Client
             var occupationSearchUrl = userSecretsService["OccupationSearchAPIURL"] ?? string.Empty;
             services.AddSingleton<IOccupationService>((serviceProvider) =>
             {
-                return new OccupationService(occupationSearchUrl, serviceProvider.GetService<ILogger<OccupationService>>()!);
+                return new OccupationService(occupationSearchUrl, serviceProvider.GetService<ILogger<OccupationService>>());
             });
 
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
             {
-                return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>()!, apiUrl, apiToken, new HttpClientHandler());
+                return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, new HttpClientHandler());
             });
 
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
 #if DEBUG
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
 #else
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>()!, apiUrl, apiToken, new HttpClientHandler());
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, new HttpClientHandler());
 #endif
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
@@ -257,7 +257,7 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<ICategoryRecomendationItemRepository, CategoryRecomendationItemRepository>();
             services.AddSingleton<IUserRepository>((serviceProvider) =>
             {
-                return new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"User_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<UserRepository>>()!);
+                return new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"User_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<UserRepository>>());
             });
         }
 

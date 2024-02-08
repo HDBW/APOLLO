@@ -137,13 +137,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors
         protected override Qualification CreateNewEntry(User user)
         {
             var entry = new Qualification();
+            user.Profile!.Qualifications = user.Profile!.Qualifications ?? new List<Qualification>();
             user.Profile!.Qualifications.Add(entry);
             return entry;
         }
 
         protected override void DeleteEntry(User user, Qualification entry)
         {
-            user.Profile!.Qualifications.Remove(entry!);
+            user.Profile!.Qualifications!.Remove(entry!);
         }
 
         protected override void ApplyChanges(Qualification entry)

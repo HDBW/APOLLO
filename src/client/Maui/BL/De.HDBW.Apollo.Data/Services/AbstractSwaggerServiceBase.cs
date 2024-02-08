@@ -7,7 +7,6 @@ using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using De.HDBW.Apollo.Data.Converter;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -15,10 +14,10 @@ namespace De.HDBW.Apollo.Data.Services
 {
     public abstract class AbstractSwaggerServiceBase
     {
-        protected static HttpClient? _httpClient;
+        private static HttpClient? _httpClient;
 
         public AbstractSwaggerServiceBase(
-            ILogger logger,
+            ILogger? logger,
             string baseUrl,
             string authKey,
             HttpMessageHandler httpClientHandler)

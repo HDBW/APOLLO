@@ -64,7 +64,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override void RemoveItemFromUser(User user, AbstractProfileEntry<WebReference> entry)
         {
-            user.Profile?.WebReferences.Remove(entry.Export());
+            user.Profile?.WebReferences!.Remove(entry.Export());
         }
     }
 }

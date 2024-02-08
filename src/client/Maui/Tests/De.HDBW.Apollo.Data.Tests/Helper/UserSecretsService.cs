@@ -10,15 +10,15 @@ namespace De.HDBW.Apollo.Data.Tests.Helper
     {
         private const string UserSecretsFileName = "secrets.json";
 
-        private IConfigurationRoot _config;
+        private IConfigurationRoot? _config;
 
         public UserSecretsService()
         {
         }
 
-        public ILogger Logger { get; set; }
+        public ILogger? Logger { get; set; }
 
-        public string this[string name]
+        public string? this[string name]
         {
             get
             {

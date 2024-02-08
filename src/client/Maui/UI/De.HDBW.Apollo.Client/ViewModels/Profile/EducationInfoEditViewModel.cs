@@ -71,7 +71,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override void RemoveItemFromUser(User user, AbstractProfileEntry<EducationInfo> entry)
         {
-            user.Profile!.EducationInfos.Remove(entry.Export());
+            user.Profile!.EducationInfos!.Remove(entry.Export());
         }
 
         protected override async Task Add(CancellationToken token)

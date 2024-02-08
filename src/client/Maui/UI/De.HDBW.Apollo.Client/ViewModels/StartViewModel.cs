@@ -185,7 +185,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     continue;
                 }
 
-                if (!filters.Any(f => ((AssessmentType)f.Data) == assesment.AssessmentType))
+                if (!filters.Any(f => ((AssessmentType?)f.Data) == assesment.AssessmentType))
                 {
                     filters.Add(FilterInteractionEntry.Import(filterText, assesment.AssessmentType, HandleFilter, CanHandleFilter));
                 }
@@ -213,7 +213,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
 
-                if (!filters.Any(f => ((CourseTagType)f.Data) == course.CourseTagType))
+                if (!filters.Any(f => ((CourseTagType?)f.Data) == course.CourseTagType))
                 {
                     filters.Add(FilterInteractionEntry.Import(decoratorText, course.CourseTagType, HandleFilter, CanHandleFilter));
                 }

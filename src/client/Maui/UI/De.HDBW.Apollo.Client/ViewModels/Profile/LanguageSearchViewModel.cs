@@ -221,7 +221,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     current?.Dispose();
                     current = null;
                 }
-
             }
         }
 

@@ -7,7 +7,7 @@ namespace De.HDBW.Apollo.Data.Services
     public abstract class AbstractAuthorizedSwaggerServiceBase : AbstractSwaggerServiceBase
     {
         public AbstractAuthorizedSwaggerServiceBase(
-            ILogger logger,
+            ILogger? logger,
             string baseUrl,
             string authKey,
             HttpMessageHandler httpClientHandler)
@@ -19,16 +19,16 @@ namespace De.HDBW.Apollo.Data.Services
         {
             try
             {
-                if (_httpClient?.DefaultRequestHeaders == null)
+                if (HttpClient?.DefaultRequestHeaders == null)
                 {
                     return;
                 }
 
                 var key = "Authorization";
 
-                if (_httpClient.DefaultRequestHeaders.Contains(key))
+                if (HttpClient.DefaultRequestHeaders.Contains(key))
                 {
-                    _httpClient.DefaultRequestHeaders.Remove(key);
+                    HttpClient.DefaultRequestHeaders.Remove(key);
                 }
 
                 if (string.IsNullOrWhiteSpace(authorizationHeader))
@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Data.Services
                     return;
                 }
 
-                _httpClient?.DefaultRequestHeaders.Add(key, authorizationHeader);
+                HttpClient?.DefaultRequestHeaders.Add(key, authorizationHeader);
             }
             catch (Exception ex)
             {

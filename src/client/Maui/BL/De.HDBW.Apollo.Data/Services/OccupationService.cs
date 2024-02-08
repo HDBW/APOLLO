@@ -12,7 +12,7 @@ namespace GrpcClient.Service
 {
     public class OccupationService : De.HDBW.Apollo.SharedContracts.Services.IOccupationService
     {
-        public OccupationService(string address, ILogger<OccupationService> logger)
+        public OccupationService(string address, ILogger<OccupationService>? logger)
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(address);
             ArgumentNullException.ThrowIfNull(logger);
@@ -107,6 +107,7 @@ namespace GrpcClient.Service
                 try
                 {
                     var request = new OccupationRequest { Id = id, CorrelationId = CreateCorrelationId() };
+
                     // TODO: Wait till new Service is running.
                     var result = await occupationClient.GetOccupation(request, null).ConfigureAwait(false);
                     response = result?.Occupation;

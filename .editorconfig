@@ -187,6 +187,8 @@ dotnet_diagnostic.SA1602.severity = silent
 
 # Missing XML comment for publicly visible type.
 dotnet_diagnostic.CS1591.severity = silent
+csharp_style_prefer_primary_constructors = true:suggestion
+dotnet_diagnostic.SA1300.severity = none
 
 # C++ Files
 [*.{cpp,h,in}]

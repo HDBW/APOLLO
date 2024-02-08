@@ -70,13 +70,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
         protected override License CreateNewEntry(User user)
         {
             var entry = new License();
+            user.Profile!.Licenses = user.Profile!.Licenses ?? new List<License>();
             user.Profile!.Licenses.Add(entry);
             return entry;
         }
 
         protected override void DeleteEntry(User user, License entry)
         {
-            user.Profile!.Licenses.Remove(entry);
+            user.Profile!.Licenses!.Remove(entry);
         }
 
         protected override void ApplyChanges(License entity)

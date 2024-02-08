@@ -13,7 +13,7 @@ namespace De.HDBW.Apollo.Data.Repositories
     {
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
-        protected AbstractFileRepository(string basePath, ILogger logger)
+        protected AbstractFileRepository(string basePath, ILogger? logger)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNullOrEmpty(basePath);

@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.Data.Services
     public class UserService : AbstractAuthorizedSwaggerServiceBase, IUserService
     {
         public UserService(
-            ILogger<UserService> logger,
+            ILogger<UserService>? logger,
             string baseUrl,
             string authKey,
             HttpMessageHandler httpClientHandler)

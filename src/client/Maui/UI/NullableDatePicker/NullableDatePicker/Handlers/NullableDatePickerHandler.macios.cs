@@ -28,7 +28,7 @@ namespace FedericoNembrini.Maui.CustomDatePicker.Handlers
 {
     public partial class NullableDatePickerHandler
     {
-        MauiDatePicker mauiDatePicker;
+        MauiDatePicker? mauiDatePicker;
 
         UIDatePicker? UiDatePicker { get => mauiDatePicker?.InputView as UIDatePicker; }
 

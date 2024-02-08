@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Data.Extensions
                 return null;
             }
 
-            result.Benefits = string.Join(',', (IEnumerable<string>)item.BenefitList ?? Array.Empty<string>());
+            result.Benefits = string.Join(',', item.BenefitList ?? new List<string>());
             result.CourseProviderId = item.ProviderId.TryToLong();
             result.Description = item.Description ?? string.Empty;
             result.Id = item.Id.TryToLong();
@@ -41,7 +41,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             result.SuccessorId = item.Successor.TryToLong();
 
             // TODO: CourseItem PreRequisitesDescription, right ??
-            result.PreRequisitesDescription = string.Join(',', (IEnumerable<string>)item.Prerequisites ?? Array.Empty<string>());
+            result.PreRequisitesDescription = string.Join(',', item.Prerequisites ?? new List<string>());
 
             // TODO: CourseItem Skills ??
             // TODO: CourseItem LatestUpdate ??

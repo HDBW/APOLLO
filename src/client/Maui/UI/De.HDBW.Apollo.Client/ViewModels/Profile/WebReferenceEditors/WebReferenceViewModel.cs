@@ -44,13 +44,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors
         protected override WebReference CreateNewEntry(User user)
         {
             var entry = new WebReference();
+            user.Profile!.WebReferences = user.Profile!.WebReferences ?? new List<WebReference>();
             user.Profile!.WebReferences.Add(entry);
             return entry;
         }
 
         protected override void DeleteEntry(User user, WebReference entry)
         {
-            user.Profile!.WebReferences.Remove(entry);
+            user.Profile!.WebReferences!.Remove(entry);
         }
 
         protected override void ApplyChanges(WebReference entry)

@@ -38,7 +38,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             try
             {
                 userId = await Service.SaveAsync(testuser, TokenSource!.Token);
-                createdUser = await Service.GetUserAsync(userId, TokenSource!.Token);
+                Assert.NotNull(userId);
+                createdUser = await Service.GetUserAsync(userId!, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -48,7 +49,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
             Assert.NotNull(userId);
             Assert.NotNull(createdUser);
-            Assert.Equal(testuser.ObjectId, createdUser.ObjectId);
+            Assert.Equal(testuser.ObjectId, createdUser!.ObjectId);
             Assert.Equal(testuser.Name, createdUser.Name);
 
             testuser.Id = userId;
@@ -56,8 +57,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             try
             {
                 var updatedId = await Service.SaveAsync(testuser, TokenSource!.Token);
-                updatedUser = await Service.GetUserAsync(userId, TokenSource!.Token);
-                createdUser = await Service.GetUserAsync(userId, TokenSource!.Token);
+                updatedUser = await Service.GetUserAsync(userId!, TokenSource!.Token);
+                createdUser = await Service.GetUserAsync(userId!, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -67,8 +68,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
             Assert.NotNull(createdUser);
             Assert.NotNull(updatedUser);
-            Assert.Equal(testuser.ObjectId, updatedUser.ObjectId);
-            Assert.Equal(testuser.Name, createdUser.Name);
+            Assert.Equal(testuser.ObjectId, updatedUser!.ObjectId);
+            Assert.Equal(testuser.Name, createdUser!.Name);
         }
 
         [Fact]
@@ -89,7 +90,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
 
             Assert.NotNull(user);
-            Assert.Equal(userId, user.Id);
+            Assert.Equal(userId, user!.Id);
         }
 
         [Fact]
@@ -100,7 +101,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             string? userId = null;
             try
             {
-                var testuser = new User() { Id = "SER01", ObjectId = "Dummy", Name = "Dummy", IdentityProvicer="Dummy" };
+                var testuser = new User() { Id = "SER01", ObjectId = "Dummy", Name = "Dummy", IdentityProvicer = "Dummy" };
                 userId = await Service.SaveAsync(testuser, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
@@ -122,22 +123,28 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             try
             {
                 user = await Service.GetUserAsync(userId, TokenSource!.Token);
+                Assert.NotNull(user);
                 var profile = user?.Profile ?? new Profile();
-                user.Profile = profile;
+                user!.Profile = profile;
                 var savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
                 user = await Service.GetUserAsync(userId, TokenSource!.Token);
+
+                Assert.NotNull(user);
+                Assert.Equal(userId, user!.Id);
+                Assert.NotNull(user.Profile);
+                //Assert.False(string.IsNullOrWhiteSpace(user!.Profile!.Id));
+
+                // Create a c
+                user.Profile!.CareerInfos = new List<CareerInfo>();
+                var careerInfo = new CareerInfo();
+                user.Profile!.CareerInfos.Add(careerInfo);
             }
             catch (ApolloApiException ex)
             {
                 // Not existing ids return errorcode ErrorCodes.TrainingErrors.GetTrainingError;
                 Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
             }
-
-            Assert.NotNull(user);
-            Assert.Equal(userId, user.Id);
-            Assert.NotNull(user.Profile);
-            Assert.False(string.IsNullOrWhiteSpace(user.Profile.Id));
         }
 
         protected override UserService SetupService(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)

@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.Data.Repositories
     {
         public UserRepository(
             string basePath,
-            ILogger<UserRepository> logger)
+            ILogger<UserRepository>? logger)
             : base(basePath, logger)
         {
         }
