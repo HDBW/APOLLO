@@ -749,7 +749,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
   <data name="CompletionState_Failed" xml:space="preserve">
     <value>Nein</value>
   </data>
-  <data name="CompletionState_Ongoning" xml:space="preserve">
+  <data name="CompletionState_Ongoing" xml:space="preserve">
     <value>Anerkennung läuft</value>
   </data>
   <data name="Global_CompletionState" xml:space="preserve">

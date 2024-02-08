@@ -295,8 +295,8 @@ namespace De.HDBW.Apollo.Client.Helper
                     return Resources.Strings.Resources.CompletionState_Completed;
                 case CompletionState.Failed:
                     return Resources.Strings.Resources.CompletionState_Failed;
-                case CompletionState.Ongoning:
-                    return Resources.Strings.Resources.CompletionState_Ongoning;
+                case CompletionState.Ongoing:
+                    return Resources.Strings.Resources.CompletionState_Ongoing;
                 default:
                     return string.Empty;
             }

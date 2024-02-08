@@ -95,7 +95,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
 
             var completionStates = new List<InteractionEntry>();
             completionStates.Add(InteractionEntry.Import(CompletionState.Completed.GetLocalizedString(), CompletionState.Completed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            completionStates.Add(InteractionEntry.Import(CompletionState.Ongoning.GetLocalizedString(), CompletionState.Ongoning, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+            completionStates.Add(InteractionEntry.Import(CompletionState.Ongoing.GetLocalizedString(), CompletionState.Ongoing, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             completionStates.Add(InteractionEntry.Import(CompletionState.Failed.GetLocalizedString(), CompletionState.Failed, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 
             var currentData = user.Profile?.EducationInfos?.FirstOrDefault(x => x.Id == entryId);

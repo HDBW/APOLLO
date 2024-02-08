@@ -405,9 +405,9 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Anerkennung läuft.
         /// </summary>
-        public static string CompletionState_Ongoning {
+        public static string CompletionState_Ongoing {
             get {
-                return ResourceManager.GetString("CompletionState_Ongoning", resourceCulture);
+                return ResourceManager.GetString("CompletionState_Ongoing", resourceCulture);
             }
         }
         
