@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using System.Text.RegularExpressions;
 using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Lists;
@@ -90,16 +89,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             var validItems = new List<ApolloListItem>();
             foreach (var item in items)
             {
-                if (!names.Contains(item.Value))
-                {
-                    Logger.LogError($"List of ItemType {typeof(TU)} contained unspecified value.");
-                    continue;
-                }
-
                 TU enumValue = (TU)Enum.ToObject(typeof(TU), item.ListItemId);
                 if (enumValue.ToString() != item.Value)
                 {
-                    Logger.LogError($"List of ItemType {typeof(TU)} contained wrong in ListItemId.");
+                    Logger.LogError($"List of ItemType {typeof(TU)} contained differet ListItemId than specified in type.");
                     continue;
                 }
 
