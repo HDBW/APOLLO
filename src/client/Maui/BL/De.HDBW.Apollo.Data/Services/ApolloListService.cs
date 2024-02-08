@@ -20,14 +20,13 @@ namespace De.HDBW.Apollo.Data.Services
         {
         }
 
-        public async Task<ApolloList?> GetAsync(string type, IEnumerable<string>? ids, CultureInfo? country, CancellationToken token)
+        public async Task<List<ApolloListItem>?> GetAsync(string type, CultureInfo? country, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var request = new GetListRequest();
+            var request = new QueryListRequest();
             request.ItemType = type;
-            request.Ids = ids?.ToArray() ?? Array.Empty<string>();
-            request.Lng = country?.ThreeLetterISOLanguageName;
-            var result = await DoPostAsync<GetListResponse>(request, token);
+            request.Language = country?.ThreeLetterISOLanguageName;
+            var result = await DoPostAsync<QueryListResponse>(request, token);
             return result?.Result;
         }
     }
