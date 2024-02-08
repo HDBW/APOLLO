@@ -153,8 +153,31 @@ namespace Apollo.Api.UnitTests
         }
 
 
+
         /// <summary>
-        /// Inserts test lists and then gets every of them.
+        /// Inserts test lists and then gets every of them
+        /// </summary>
+        /// <returns></returns>
+
+        [TestMethod]
+        public async Task GetAllListsAsyncTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            //
+            // Get all lists
+            var result = await api.GetAllListsAsync();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
+        }
+        
+
+
+
+        /// <summary>
+        /// Inserts test lists and then gets every of them that match with Id.
         /// </summary>
         /// <returns></returns>
         [TestMethod]
@@ -162,7 +185,7 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            //await InsertTestItems(api);
+            await InsertTestItems(api);
 
             foreach (var item in _testList)
             {
@@ -178,69 +201,6 @@ namespace Apollo.Api.UnitTests
           
         }
 
-
-
-        /// <summary>
-        /// Filter test with both ItemType and Language
-        /// Test will Inserts  lists and then gets all item that match with given itemType and Language.
-        /// </summary>
-        /// <returns></returns>
-        [TestMethod]
-        public async Task GetListAsyncTestWithLanguageAndItemTypeSpecified()
-        {
-            var api = Helpers.GetApolloApi();
-
-            await InsertTestItems(api);
-            foreach (var item in _testList)
-            {
-                //
-                // Without Id specified and  filtered with Language and ItemType 
-                var result = await api.GetListAsync(lng: item.Items.First().Lng, itemType: item.ItemType);
-                Assert.IsNotNull(result);
-                Assert.AreEqual(item.ItemType, result.ItemType);
-
-                //
-                //Check count of items with matching language
-                var matchingItemsCount = item.Items.Count(expectedItem => expectedItem.Lng == item.Items.First().Lng);
-                Assert.AreEqual(matchingItemsCount, result.Items.Count);
-
-                //
-                // Check language filter for each item
-                Assert.IsTrue(result.Items.All(expectedItem => expectedItem.Lng == item.Items.First().Lng));
-
-            }
-         
-        }
-
-
-
-        /// <summary>
-        /// Filter test with Language
-        /// Test will Inserts  lists and then gets all item that match with given Language.
-        /// </summary>
-        /// <returns></returns>
-        [TestMethod]
-        public async Task GetListAsyncTestOnlyWithLanguageSpecified()
-        {
-            var api = Helpers.GetApolloApi();
-            await InsertTestItems(api);
-            foreach (var item in _testList)
-            {
-                //
-                // Without Id specified and  filtered with Language only
-                var result = await api.GetListAsync(lng: item.Items.First().Lng);
-                Assert.IsNotNull(result);
-
-                //
-                //Check count of items with matching language
-                var matchingItemsCount = item.Items.Count(expectedItem => expectedItem.Lng == item.Items.First().Lng);
-                Assert.AreEqual(matchingItemsCount, result.Items.Count);
-
-                //
-                // Check language filter for each item
-                Assert.IsTrue(result.Items.All(expectedItem => expectedItem.Value == item.Items.First().Lng));
-            }
-        }
 
 
         /// <summary>
@@ -279,11 +239,11 @@ namespace Apollo.Api.UnitTests
 
             //
             // The following mnagauge does not exist in the DB
-            var nonExistentLng = "NonExistentLanguage";
+            var nonExistentItemType = "NonExistentItemType";
 
             //
             //Check  for having ItemNotFoundException
-            await Assert.ThrowsExceptionAsync<ApolloApiException>(() => api.GetListAsync(lng: nonExistentLng, throwIfNotFound: true));
+            await Assert.ThrowsExceptionAsync<ApolloApiException>(() => api.GetListAsync(itemType: nonExistentItemType, throwIfNotFound: true));
            
         }
 
@@ -377,7 +337,7 @@ namespace Apollo.Api.UnitTests
 
             //
             //Retrieve the updated list
-            var updatedList = await api.GetListAsync(_testList[0].Items[0].Lng, _testList[0].ItemType);
+            var updatedList = await api.GetListAsync(itemType: _testList[0].ItemType);
 
             //
             // Assert that the existing list is updated
@@ -387,52 +347,6 @@ namespace Apollo.Api.UnitTests
             //await Cleanup();
         }
 
-        /// <summary>
-        /// Tests adding new item in the existing list and check list is increased  
-        /// </summary>
-        [TestMethod]
-
-        public async Task AddNewItemIntheExistingList()
-        {
-            var api = Helpers.GetApolloApi();
-            await InsertTestItems(api);
-
-            var existingApolloList = _testList.FirstOrDefault();
-            Assert.IsNotNull(existingApolloList, "Empty item _testList.");
-
-            // Add a new Item to the existing List
-            var newQualificationList = new ApolloList
-            {
-                Id = existingApolloList.Id,
-                ItemType = _cTestListType1,
-                Items = new List<ApolloListItem>
-                {
-                    new ApolloListItem
-                    {
-                        ListItemId = existingApolloList.Items.Count+1,
-                        Lng = existingApolloList.Items.First().Lng,
-                        Value = "New Value Item"
-                    }
-                }
-            };
-
-            //throw new NotImplementedException();
-
-            var newQualificationIds = await api.CreateOrUpdateListAsync((newQualificationList));
-            Assert.IsNotNull(newQualificationIds);
-
-            // Retrieve the list after adding the new item
-            var newListWithNewItem = await api.GetListAsync(_testList[0].ItemType);
-
-            // Assert that the new item is present in the list
-            Assert.IsNotNull(newListWithNewItem);
-            Assert.IsTrue(newListWithNewItem.Items.Any(item => item.ListItemId == existingApolloList.Items.Count + 1));
-
-            //
-            // Assert that  List is increased and old items is not removed 
-            Assert.AreEqual(_testList[0].Items.Count + 1, newListWithNewItem.Items.Count());
-           
-        }
 
 
         #region List Population
