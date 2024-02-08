@@ -259,15 +259,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast noch kein Berufserfahrungen hinterlegt.
-        /// </summary>
-        public static string CareerInfoEditView_Headline {
-            get {
-                return ResourceManager.GetString("CareerInfoEditView_Headline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Füge jetzt deine erste Berufserfahrungen hinzu und verbessere deine Kursvorschläge..
         /// </summary>
         public static string CareerInfoEditView_Subline {
@@ -455,15 +446,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ContactInfoEditView_ButtonTxt {
             get {
                 return ResourceManager.GetString("ContactInfoEditView_ButtonTxt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast noch keine Kontaktdaten hinterlegt.
-        /// </summary>
-        public static string ContactInfoEditView_Headline {
-            get {
-                return ResourceManager.GetString("ContactInfoEditView_Headline", resourceCulture);
             }
         }
         
@@ -1004,15 +986,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string EducationInfoEditView_ButtonTxt {
             get {
                 return ResourceManager.GetString("EducationInfoEditView_ButtonTxt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast noch keinen Bildungsweg hinterlegt.
-        /// </summary>
-        public static string EducationInfoEditView_Headline {
-            get {
-                return ResourceManager.GetString("EducationInfoEditView_Headline", resourceCulture);
             }
         }
         
@@ -1781,15 +1754,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast noch keine Sprachkenntnisse hinterlegt.
-        /// </summary>
-        public static string LanguageEditView_Headline {
-            get {
-                return ResourceManager.GetString("LanguageEditView_Headline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Füge jetzt erste Sprachkenntnisse hinzu und verbessere Deine Kursvorschläge..
         /// </summary>
         public static string LanguageEditView_Subline {
@@ -1885,15 +1849,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string LicenseEditView_ButtonTxt {
             get {
                 return ResourceManager.GetString("LicenseEditView_ButtonTxt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast noch kein Lizenzen hinterlegt.
-        /// </summary>
-        public static string LicenseEditView_Headline {
-            get {
-                return ResourceManager.GetString("LicenseEditView_Headline", resourceCulture);
             }
         }
         
@@ -2195,15 +2150,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast noch keine Informationen in diesem Bereich hinterlegt..
-        /// </summary>
-        public static string ProfileView_Empty_Headline {
-            get {
-                return ResourceManager.GetString("ProfileView_Empty_Headline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Füge jetzt Deine ersten persönlichen Informationen hinzu. So verbessern sich Deine Angebote und Möglichkeiten..
         /// </summary>
         public static string ProfileView_Empty_Subline {
@@ -2245,15 +2191,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string QualificationEditView_ButtonTxt {
             get {
                 return ResourceManager.GetString("QualificationEditView_ButtonTxt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast noch kein Qualifikationen hinterlegt.
-        /// </summary>
-        public static string QualificationEditView_Headline {
-            get {
-                return ResourceManager.GetString("QualificationEditView_Headline", resourceCulture);
             }
         }
         
@@ -2742,15 +2679,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_UseCaseC_RecomondationsHeadline {
             get {
                 return ResourceManager.GetString("StartViewModel_UseCaseC_RecomondationsHeadline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dein Szenario.
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
@@ -3410,15 +3338,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast noch keine Webprofile hinterlegt.
-        /// </summary>
-        public static string WebReferenceEditView_Headline {
-            get {
-                return ResourceManager.GetString("WebReferenceEditView_Headline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Füge jetzt Deine Webprofile hinzu und verbessere Deine Kursvorschläge..
         /// </summary>
         public static string WebReferenceEditView_Subline {
@@ -3437,7 +3356,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Webprofile.
+        ///   Looks up a localized string similar to Webprofil.
         /// </summary>
         public static string WebReferenceView_Title {
             get {

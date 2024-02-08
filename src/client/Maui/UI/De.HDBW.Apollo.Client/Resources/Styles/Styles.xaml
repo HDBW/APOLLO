@@ -20,6 +20,10 @@
         <Setter Property="FontSize" Value="16" />
     </Style>
 
+    <Style x:Key="Noto16Centered" TargetType="Label" BasedOn="{StaticResource Noto16}">
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
     <Style x:Key="Noto16SemiBold" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}" />
         <Setter Property="FontFamily" Value="NotoSansSemiBold" />
