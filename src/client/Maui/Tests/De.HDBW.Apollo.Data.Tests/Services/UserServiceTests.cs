@@ -76,7 +76,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            string userId = "SER01";
+            string userId = "User-5DE545AEF9974FD6826151725A9961F8";
             User? user = null;
             try
             {
@@ -100,7 +100,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             string? userId = null;
             try
             {
-                var testuser = new User() { Id = "SER01", ObjectId = "Dummy", Name = "Dummy" };
+                var testuser = new User() { Id = "SER01", ObjectId = "Dummy", Name = "Dummy", IdentityProvicer="Dummy" };
                 userId = await Service.SaveAsync(testuser, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
@@ -110,6 +110,34 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
 
             Assert.NotNull(userId);
+        }
+
+        [Fact]
+        public async Task SaveProfileAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+            string userId = "User-5DE545AEF9974FD6826151725A9961F8";
+            User? user = null;
+            try
+            {
+                user = await Service.GetUserAsync(userId, TokenSource!.Token);
+                var profile = user?.Profile ?? new Profile();
+                user.Profile = profile;
+                var savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+                user = await Service.GetUserAsync(userId, TokenSource!.Token);
+            }
+            catch (ApolloApiException ex)
+            {
+                // Not existing ids return errorcode ErrorCodes.TrainingErrors.GetTrainingError;
+                Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
+            }
+
+            Assert.NotNull(user);
+            Assert.Equal(userId, user.Id);
+            Assert.NotNull(user.Profile);
+            Assert.False(string.IsNullOrWhiteSpace(user.Profile.Id));
         }
 
         protected override UserService SetupService(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)
