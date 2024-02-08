@@ -57,10 +57,9 @@
             </CollectionView.ItemsLayout>
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="Fill">
-                    <Grid Style="{StaticResource GridContentView}" RowDefinitions="auto, auto, *">
-                        <Label Grid.Row="0" Text="{x:Static strings:Resources.WebReferenceEditView_Headline}" Margin="0,0,0,16" Style="{StaticResource Noto16SemiBold}"/>
-                        <Label Grid.Row="1" Text="{x:Static strings:Resources.WebReferenceEditView_Subline}" Margin="0,0,0,24" Style="{StaticResource Noto16}"/>
-                        <Image Grid.Row="2" Source="emptyscreenimage.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                    <Grid Style="{StaticResource GridContentView}" RowDefinitions="auto, *">
+                        <Label Grid.Row="0" Text="{x:Static strings:Resources.WebReferenceEditView_Subline}" Margin="0,24" Style="{StaticResource Noto16Centered}"/>
+                        <Image Grid.Row="1" Source="emptyscreenimage.png" Aspect="AspectFit" VerticalOptions="Fill"/>
                     </Grid>
                 </ContentView>
             </CollectionView.EmptyView>
