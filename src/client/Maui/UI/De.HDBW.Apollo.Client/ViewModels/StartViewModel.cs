@@ -203,7 +203,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var provider = !string.IsNullOrWhiteSpace(assesment.Publisher) ? assesment.Publisher : Resources.Strings.Resources.StartViewModel_UnknownProvider;
                 var status = (assessmentResults?.Any(r => r.AssessmentItemId == assesment.Id) ?? false) ? Status.Processed : Status.Unknown;
                 var interaction = StartViewInteractionEntry.Import<AssessmentItem>(assesment.Title, provider, Resources.Strings.Resources.AssessmentItem_DecoratorText, durationString, "placeholdertest.png", status, assesment.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
-                ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == assesment.Id && f.Type == typeof(AssessmentItem));
+                ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == assesment.Id.ToString() && f.Type == typeof(AssessmentItem));
                 if (((StartViewInteractionEntry)interaction).IsFavorite)
                 {
                     favorites.Add((StartViewInteractionEntry)interaction);
@@ -240,7 +240,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
 
                 var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, course.Id, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
-                ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == course.Id && f.Type == typeof(CourseItem));
+                ((StartViewInteractionEntry)interaction).IsFavorite = SessionService.GetFavorites().Any(f => f.Id == course.Id.ToString() && f.Type == typeof(CourseItem));
                 if (((StartViewInteractionEntry)interaction).IsFavorite)
                 {
                     favorites.Add((StartViewInteractionEntry)interaction);
@@ -397,7 +397,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private Task HandleMakeFavorite(StartViewInteractionEntry entry)
         {
             entry.IsFavorite = true;
-            SessionService.AddFavorite(entry.EntityId, entry.EntityType);
+            SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
             var favoriteInteraction = InteractionCategories.OfType<FavoriteInteractionCategoryEntry>().FirstOrDefault();
             if (favoriteInteraction == null)
             {
@@ -452,7 +452,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             sourceEntry.IsFavorite = false;
-            SessionService.RemoveFavorite(sourceEntry.EntityId, sourceEntry.EntityType);
+            SessionService.RemoveFavorite(sourceEntry.EntityId.ToString(), sourceEntry.EntityType);
             if (favoriteInteraction.Interactions.Contains(entry))
             {
                 InteractionCategories.Remove(favoriteInteraction);

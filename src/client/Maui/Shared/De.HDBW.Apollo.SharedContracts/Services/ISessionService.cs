@@ -13,15 +13,15 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         bool ChangedUseCase { get; }
 
-        void AddFavorite(long id, Type type);
+        void AddFavorite(string id, Type type);
 
-        void RemoveFavorite(long id, Type type);
+        void RemoveFavorite(string id, Type type);
 
         void ClearFavorites();
 
         void ConfirmedUseCaseChanged();
 
-        IEnumerable<(long Id, Type Type)> GetFavorites();
+        IEnumerable<(string Id, Type Type)> GetFavorites();
 
         void UpdateRegisteredUser(bool hasRegisteredUser);
 

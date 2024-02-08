@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Globalization;
 using Apollo.Common.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,8 +13,6 @@ using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
-using Invite.Apollo.App.Graph.Common.Models.Course;
-using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json;
@@ -34,7 +31,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ObservableCollection<HistoricalSuggestionEntry> _recents = new ObservableCollection<HistoricalSuggestionEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<StartViewInteractionEntry> _searchResults = new ObservableCollection<StartViewInteractionEntry>();
+        private ObservableCollection<BasicViewInteractionEntry> _searchResults = new ObservableCollection<BasicViewInteractionEntry>();
 
         public SearchViewModel(
             IDispatcherService dispatcherService,
@@ -42,8 +39,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             ISessionService sessionService,
             ISheetService sheetService,
-            ICourseItemRepository courseItemRepository,
-            IEduProviderItemRepository eduProviderItemRepository,
             ITrainingService trainingService,
             ISearchHistoryRepository searchHistoryRepository,
             ILogger<RegistrationViewModel> logger)
@@ -51,14 +46,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             ArgumentNullException.ThrowIfNull(sessionService);
             ArgumentNullException.ThrowIfNull(sheetService);
-            ArgumentNullException.ThrowIfNull(courseItemRepository);
-            ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
             ArgumentNullException.ThrowIfNull(trainingService);
             ArgumentNullException.ThrowIfNull(searchHistoryRepository);
             SessionService = sessionService;
             SheetService = sheetService;
-            CourseItemRepository = courseItemRepository;
-            EduProviderItemRepository = eduProviderItemRepository;
             TrainingService = trainingService;
             SearchHistoryRepository = searchHistoryRepository;
             Filter = CreateDefaultFilter(string.Empty);
@@ -67,10 +58,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ISessionService SessionService { get; }
 
         private ISheetService SheetService { get; }
-
-        private ICourseItemRepository CourseItemRepository { get; }
-
-        private IEduProviderItemRepository EduProviderItemRepository { get; }
 
         private ITrainingService TrainingService { get; }
 
@@ -203,33 +190,57 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     query = query ?? string.Empty;
                     var converter = new CourseTagTypeToStringConverter();
                     UpdateFilter(query);
-                    var courseItems = await TrainingService.SearchTrainingsAsync(Filter, null,worker.Token);
-                    var eduProviderItems = await EduProviderItemRepository.GetItemsAsync(worker.Token);
-                    courseItems = courseItems ?? Array.Empty<Training>();
-                    eduProviderItems = eduProviderItems ?? Array.Empty<EduProviderItem>();
-                    var interactions = new List<StartViewInteractionEntry>();
-                    var courseItems1 = Array.Empty<CourseItem>();
-                    foreach (var course in courseItems1)
+
+                    var visibleFields = new List<string>()
                     {
-                        var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
+                        nameof(Training.Id),
+                        nameof(Training.ProviderId),
+                        nameof(Training.TrainingName),
+                        nameof(Training.Description),
+                        nameof(Training.ShortDescription),
+                        nameof(Training.TrainingProvider),
+                        nameof(Training.Content),
+                        nameof(Training.BenefitList),
+                        nameof(Training.CourseProvider),
+                        nameof(Training.TargetAudience),
+                        nameof(Training.ProductUrl),
+                        nameof(Training.Price),
+                        nameof(Training.Tags),
+                        nameof(Training.PublishingDate),
+                        nameof(Training.UnpublishingDate),
+                        nameof(Training.Appointment),
+                    };
+
+                    var trainingItems = await TrainingService.SearchTrainingsAsync(Filter, visibleFields, null, null, worker.Token);
+                    trainingItems = trainingItems ?? Array.Empty<Training>();
+                    var interactions = new List<BasicViewInteractionEntry>();
+                    foreach (var trainingItem in trainingItems)
+                    {
+                        var decoratorText = string.Join(", ", trainingItem.Tags ?? new List<string>());
+
                         var courseData = new NavigationParameters();
-                        courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
+                        courseData.AddValue<string?>(NavigationParameter.Id, trainingItem.Id);
                         var data = new NavigationData(Routes.CourseView, courseData);
 
-                        EduProviderItem? eduProvider = eduProviderItems.FirstOrDefault(p => p.Id == course.CourseProviderId);
+                        //ToDo
+                        var duration = trainingItem.Appointment?.FirstOrDefault()?.Duration.ToString() ?? string.Empty;
 
-                        var duration = course.Duration ?? string.Empty;
-                        var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
+                        var provider = !string.IsNullOrWhiteSpace(trainingItem.CourseProvider?.Name) ? trainingItem.CourseProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
                         var image = "placeholdercontinuingeducation.png";
-                        switch (course.CourseTagType)
+
+                        //ToDo
+
+                        /*
+                        switch (course.)
                         {
                             case CourseTagType.InfoEvent:
                                 image = "placeholderinfoevent.png";
                                 break;
                         }
+                        */
 
-                        var interaction = StartViewInteractionEntry.Import<CourseItem>(course.Title, provider, decoratorText, duration, image, Status.Unknown, course.Id, data, null, null, HandleInteract, CanHandleInteract);
-                        interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == course.Id && f.Type == typeof(CourseItem));
+                        var interaction = BasicViewInteractionEntry.Import<Training>(trainingItem?.TrainingName ?? string.Empty, provider, decoratorText, duration, image, Status.Unknown, trainingItem?.Id ?? string.Empty, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                        interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
                         interactions.Add(interaction);
                     }
 
@@ -304,22 +315,42 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        private bool CanHandleToggleIsFavorite(BasicViewInteractionEntry entry)
+        {
+            return entry != null;
+        }
+
+        private Task HandleToggleIsFavorite(BasicViewInteractionEntry entry)
+        {
+            entry.IsFavorite = !entry.IsFavorite;
+            if (entry.IsFavorite)
+            {
+                SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
+            }
+            else
+            {
+                SessionService.RemoveFavorite(entry.EntityId.ToString(), entry.EntityType);
+            }
+
+            return Task.CompletedTask;
+        }
+
         private void LoadonUIThread(HistoricalSuggestionEntry? historyEntry, SearchSuggestionEntry? suggestionEntry, SearchHistory history)
         {
             Recents = new ObservableCollection<HistoricalSuggestionEntry>();
             Suggestions = new ObservableCollection<SearchSuggestionEntry>();
         }
 
-        private void LoadonUIThread(IEnumerable<StartViewInteractionEntry> interactionEntries)
+        private void LoadonUIThread(IEnumerable<BasicViewInteractionEntry> interactionEntries)
         {
-            SearchResults = new ObservableCollection<StartViewInteractionEntry>(interactionEntries);
+            SearchResults = new ObservableCollection<BasicViewInteractionEntry>(interactionEntries);
         }
 
         private async Task LoadSuggestionsAsync(string inputValue, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             UpdateFilter(inputValue);
-            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, token).ConfigureAwait(false) : Array.Empty<Training>();
+            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, 0, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<Training>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
             {

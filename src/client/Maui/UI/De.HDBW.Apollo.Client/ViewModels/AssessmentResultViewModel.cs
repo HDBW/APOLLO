@@ -245,11 +245,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             entry.IsFavorite = !entry.IsFavorite;
             if (entry.IsFavorite)
             {
-                SessionService.AddFavorite(entry.EntityId, entry.EntityType);
+                SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
             }
             else
             {
-                SessionService.RemoveFavorite(entry.EntityId, entry.EntityType);
+                SessionService.RemoveFavorite(entry.EntityId.ToString(), entry.EntityType);
             }
 
             return Task.CompletedTask;

@@ -73,12 +73,12 @@ namespace De.HDBW.Apollo.Data.Services
 
         private IDataBaseConnectionProvider DataBaseConnectionProvider { get; }
 
-        public Task<Training?> GetTrainingAsync(long id, CancellationToken token)
+        public Task<Training?> GetTrainingAsync(string id, CancellationToken token)
         {
             return null;
         }
 
-        public async Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, int? skip, int? top, CancellationToken token)
         {
             var maxItems = 5;
             IEnumerable<string> result = new List<string>();
@@ -122,7 +122,7 @@ namespace De.HDBW.Apollo.Data.Services
             return new List<Training>();
         }
 
-        public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string> visibleItems,CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string> visibleItems, int? skip, int? top, CancellationToken token)
         {
             IEnumerable<Training> result = new List<Training>();
             return result;

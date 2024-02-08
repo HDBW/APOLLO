@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.Data.Services
 {
     public class SessionService : ISessionService
     {
-        private readonly List<(long Id, Type Type)> _favorites = new List<(long Id, Type Type)>();
+        private readonly List<(string Id, Type Type)> _favorites = new List<(string Id, Type Type)>();
 
         public SessionService(bool hasRegisteredUser)
         {
@@ -21,7 +21,7 @@ namespace De.HDBW.Apollo.Data.Services
 
         public bool ChangedUseCase { get; private set; }
 
-        public void AddFavorite(long id, Type type)
+        public void AddFavorite(string id, Type type)
         {
             RemoveFavorite(id, type);
             _favorites.Add(new (id, type));
@@ -37,12 +37,12 @@ namespace De.HDBW.Apollo.Data.Services
             ChangedUseCase = false;
         }
 
-        public IEnumerable<(long Id, Type Type)> GetFavorites()
+        public IEnumerable<(string Id, Type Type)> GetFavorites()
         {
             return _favorites;
         }
 
-        public void RemoveFavorite(long id, Type type)
+        public void RemoveFavorite(string id, Type type)
         {
             var items = _favorites.Where(f => f.Id == id && f.Type == type).ToList();
             foreach (var item in items)
