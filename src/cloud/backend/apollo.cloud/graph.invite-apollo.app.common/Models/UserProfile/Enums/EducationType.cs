@@ -5,7 +5,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums
 {
     public enum EducationType
     {
-        Unkown = 0,
+        Unknown = 0,
         // Schulbildung
         Education = 1,
         // Berufsausbildung (betr./außerbetr.)

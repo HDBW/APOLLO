@@ -15,6 +15,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums
         // Anerkennung des Abschlusses wird geprüft
         Pending = 4,
         // Teilweise anerkannter Abschluss
-        PatialRecognized = 5,
+        PartialRecognized = 5,
     }
 }
