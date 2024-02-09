@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
+using System.Globalization;
 using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
