@@ -32,12 +32,12 @@ namespace Apollo.Common.Entities
     /// // Nicht relevant
     /// Other = 10,
     /// </remarks>
-    public class UniversityDegree
+    public class UniversityDegree:ApolloListItem
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
-        public CultureInfo CultureInfo { get; set; }
+        //public string Id { get; set; }
+        //public string Name { get; set; }
+        //public string Value { get; set; }
+        public string? CultureInfo { get; set; }
 
     }
 }

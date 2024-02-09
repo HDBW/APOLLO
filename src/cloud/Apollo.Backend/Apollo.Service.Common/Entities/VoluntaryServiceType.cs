@@ -31,14 +31,14 @@ namespace Apollo.Common.Entities
     ///     VoluntaryYearInMonumentConservation = 8,
     /// }
     /// </remarks>
-    public class VoluntaryServiceType
+    public class VoluntaryServiceType:ApolloListItem 
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
-        public string Value { get; set; }
+        //public string Value { get; set; }
 
-        public string CultureInfo { get; set; }
+        public string? CultureInfo { get; set; }
     }
 }

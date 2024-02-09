@@ -18,12 +18,12 @@ namespace Apollo.Common.Entities
     ///     MoreThan5 = 2,
     /// }
     /// </summary>
-    public class YearRange
+    public class YearRange:ApolloListItem
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
-        public string CultureInfo { get; set; }
+        public string? CultureInfo { get; set; }
     }
 }

@@ -74,11 +74,11 @@ namespace Apollo.Common.Entities
     /// // Seminarerlaubnis ASP
     /// InstructorASP = 32,
     /// </summary>
-    public class DriversLicense
+    public class DriversLicense: ApolloListItem
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
-        public string Value { get; set; }
+        //public string Value { get; set; }
 
         public string Code { get; set; }
 

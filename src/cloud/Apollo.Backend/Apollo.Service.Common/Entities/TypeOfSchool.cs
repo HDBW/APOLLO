@@ -53,14 +53,14 @@ namespace Apollo.Common.Entities
     /// // Fachakademie
     /// TechnicalAcademy = 20,
     /// </remarks>
-    public class TypeOfSchool
+    public class TypeOfSchool:ApolloListItem
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
-        public string Value { get; set; }
+        //public string Value { get; set; }
 
-        public string CultureInfo { get; set; }
+        public string? CultureInfo { get; set; }
     }
 }
