@@ -80,8 +80,8 @@ namespace Apollo.Common.Entities
 
         //public string Value { get; set; }
 
-        public string Code { get; set; }
+        //public string Code { get; set; }
 
-        public string CultureInfo { get; set; }
+        //public string CultureInfo { get; set; }
     }
 }
