@@ -44,7 +44,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// List of items in all languages.
         /// </summary>
-        public required List<ApolloListItem> Items{ get; set; }
+        public  List<ApolloListItem>? Items{ get; set; }
     }
 
 

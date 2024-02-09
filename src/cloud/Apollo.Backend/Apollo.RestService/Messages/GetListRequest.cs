@@ -24,6 +24,6 @@ namespace Apollo.RestService.Messages
         /// <summary>
         /// If set, it returns only the list items with the given ids. In this case, the <see cref="ItemType"/> and <see cref="Lng"/> are ignored.
         /// </summary>
-        public string[] Ids { get; set; }
+        public string[]? Ids { get; set; }
     }
 }
