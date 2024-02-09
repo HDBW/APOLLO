@@ -14,5 +14,8 @@ namespace OccupationGrpcService.Services
     {
         [OperationContract]
         Task<OccupationSuggestionResponse> GetOccupationSuggestions(OccupationSuggestionRequest request, CancellationToken token);
+
+        [OperationContract]
+        Task<OccupationSuggestionResponse> GetOccupationSuggestions(OccupationSuggestionRequest request);
     }
 }

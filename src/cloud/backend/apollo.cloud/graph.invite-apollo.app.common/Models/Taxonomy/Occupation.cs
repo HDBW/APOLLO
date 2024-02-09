@@ -2,9 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
-using System.Globalization;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
@@ -27,7 +24,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         [ProtoMember(2)]
         public string? UniqueIdentifier { get; set; }
 
-        [ProtoMember(3)] public string? OccupationUri { get; set; }
+        [ProtoMember(3)]
+        public string? OccupationUri { get; set; }
 
         /// <summary>
         /// Can be a KLDB DKZ or a ESCO Code or a ISCO Code.
@@ -88,14 +86,14 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// UI Query related
         /// </summary>
         [ProtoMember(11)]
-        public List<string> PreferedTerm { get; set; }
+        public List<string> PreferedTerm { get; set; } = new List<string>();
 
         /// <summary>
         /// This is a list of terms that are commonly used in a region or language but are not the prefered term.
         /// For example "Bäckergeselle" is a common term for a "baker" in Germany but not the prefered term.
         /// </summary>
         [ProtoMember(12)]
-        public List<string> NonePreferedTerm { get; set; }
+        public List<string> NonePreferedTerm { get; set; } = new List<string>();
 
         /// <summary>
         /// Related Taxonomy
@@ -113,7 +111,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// This is the language of the occupation.
         /// </summary>
         [ProtoMember(15)]
-        public CultureInfo Culture { get; set; }
+        public string Culture { get; set; }
 
         /// <summary>
         /// Describes the Occupation
@@ -121,23 +119,31 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         [ProtoMember(16)]
         public string? Description { get; set; }
 
+        [ProtoMember(17)]
+        public List<string> BroaderConcepts { get; set; } = new List<string>();
 
-        [ProtoMember(17)] public List<string> BroaderConcepts { get; set; }
+        [ProtoMember(18)]
+        public List<string?> NarrowerConcepts { get; set; } = new List<string?>();
 
-        [ProtoMember(18)] public List<string?> NarrowerConcepts { get; set; }
+        [ProtoMember(19)]
+        public List<string?> RelatedConcepts { get; set; } = new List<string?>();
 
-        [ProtoMember(19)] public List<string?> RelatedConcepts { get; set; }
+        [ProtoMember(20)]
+        public List<string> Skills { get; set; } = new List<string>();
 
-        [ProtoMember(20)] public List<string> Skills { get; set; }
+        [ProtoMember(21)]
+        public List<string> EssentialSkills { get; set; } = new List<string>();
 
-        [ProtoMember(21)] public List<string> EssentialSkills { get; set; }
+        [ProtoMember(22)]
+        public List<string> OptionalSkills { get; set; } = new List<string>();
 
-        [ProtoMember(22)] public List<string> OptionalSkills { get; set; }
+        [ProtoMember(23)]
+        public List<string> EssentialKnowledge { get; set; } = new List<string>();
 
-        [ProtoMember(23)] public List<string> EssentialKnowledge { get; set; }
+        [ProtoMember(24)]
+        public List<string> OptionalKnowledge { get; set; } = new List<string>();
 
-        [ProtoMember(24)] public List<string> OptionalKnowledge { get; set; }
-
-        [ProtoMember(25)] public List<string> DocumentIds { get; set; } = new List<string>();
+        [ProtoMember(25)]
+        public List<string> DocumentIds { get; set; } = new List<string>();
     }
 }

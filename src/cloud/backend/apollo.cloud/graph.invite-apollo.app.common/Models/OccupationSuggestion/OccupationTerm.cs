@@ -18,8 +18,10 @@ namespace OccupationGrpcService.Protos
         [ProtoMember(3)]
         public string? OccupationId { get; set; }
 
-        [ProtoMember(4)] public Taxonomy TaxonomyType { get; set; }
+        [ProtoMember(4)]
+        public Taxonomy TaxonomyType { get; set; }
 
-        [ProtoMember(5)] public string? CultureName { get; set; }
+        [ProtoMember(5)]
+        public string? CultureName { get; set; }
     }
 }

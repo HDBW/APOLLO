@@ -12,15 +12,23 @@ namespace OccupationGrpcService.Services
     [ServiceContract(Name = "Occupation.Service")]
     public interface IOccupationService
     {
+        [OperationContract]
+        Task<OccupationResponse> GetOccupation(OccupationRequest request, CancellationToken ctx);
 
         [OperationContract]
-        Task<OccupationResponse> GetOccupation(OccupationRequest request, ServerCallContext context);
+        Task<OccupationCreationResponse> CreateOrUpdate(OccupationCreationRequest request, CancellationToken ctx);
 
         [OperationContract]
-        Task<OccupationCreationResponse> CreateOrUpdate(OccupationCreationRequest request, ServerCallContext context, CancellationToken ctx);
+        Task<OccupationListResponse> GetOccupationsList(OccupationListRequest request, CancellationToken ctx);
 
         [OperationContract]
-        Task<OccupationListResponse> GetOccupationsList(OccupationListRequest request, ServerCallContext context, CancellationToken ctx);
+        Task<OccupationResponse> GetOccupation(OccupationRequest request);
+
+        [OperationContract]
+        Task<OccupationCreationResponse> CreateOrUpdate(OccupationCreationRequest request);
+
+        [OperationContract]
+        Task<OccupationListResponse> GetOccupationsList(OccupationListRequest request);
 
     }
 }
