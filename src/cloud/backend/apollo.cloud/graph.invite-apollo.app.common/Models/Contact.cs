@@ -5,6 +5,7 @@
 //using MongoDB.Bson.Serialization.Attributes;
 
 using System;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace Invite.Apollo.App.Graph.Common.Models
@@ -51,6 +52,6 @@ namespace Invite.Apollo.App.Graph.Common.Models
         //[BsonElement("AppointmentUrl")]
         public Uri EAppointmentUrl { get; set; }
 
-        public ContactType ContactType { get; set; }
+        public ApolloListItem ContactType { get; set; }
     }
 }

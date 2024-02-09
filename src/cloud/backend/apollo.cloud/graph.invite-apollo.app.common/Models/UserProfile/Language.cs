@@ -1,8 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Globalization;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
@@ -12,9 +11,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         public string Name { get; set; }
 
-        public LanguageNiveau? Niveau { get; set; }
+        public ApolloListItem? Niveau { get; set; }
 
         // CultureInfo get Culture ISO639-2 
-        public CultureInfo Code { get; set; }
+        public string Code { get; set; }
     }
 }

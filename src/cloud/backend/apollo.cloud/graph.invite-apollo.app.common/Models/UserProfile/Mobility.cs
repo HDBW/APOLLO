@@ -2,7 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
@@ -10,11 +10,11 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
     {
         // Mobility_WillingToTravel_filtered.txt
         // Auswahlliste
-        public Willing? WillingToTravel { get; set; }
+        public ApolloListItem? WillingToTravel { get; set; }
 
         // Mobility_DriverLicenses_filtered.txt
         // Mehrfachselection
-        public List<DriversLicense> DriverLicenses { get; set; } = new List<DriversLicense>();
+        public List<ApolloListItem> DriverLicenses { get; set; } = new List<ApolloListItem>();
 
         public bool HasVehicle { get; set; }
     }
