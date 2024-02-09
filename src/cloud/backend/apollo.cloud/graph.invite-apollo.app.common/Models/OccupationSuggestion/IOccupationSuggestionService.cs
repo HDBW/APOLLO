@@ -4,7 +4,6 @@
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Grpc.Core;
 using OccupationGrpcService.Protos;
 
 namespace OccupationGrpcService.Services
@@ -14,8 +13,5 @@ namespace OccupationGrpcService.Services
     {
         [OperationContract]
         Task<OccupationSuggestionResponse> GetOccupationSuggestions(OccupationSuggestionRequest request, CancellationToken token);
-
-        [OperationContract]
-        Task<OccupationSuggestionResponse> GetOccupationSuggestions(OccupationSuggestionRequest request);
     }
 }

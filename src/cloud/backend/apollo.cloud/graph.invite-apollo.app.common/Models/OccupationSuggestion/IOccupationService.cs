@@ -20,15 +20,5 @@ namespace OccupationGrpcService.Services
 
         [OperationContract]
         Task<OccupationListResponse> GetOccupationsList(OccupationListRequest request, CancellationToken ctx);
-
-        [OperationContract]
-        Task<OccupationResponse> GetOccupation(OccupationRequest request);
-
-        [OperationContract]
-        Task<OccupationCreationResponse> CreateOrUpdate(OccupationCreationRequest request);
-
-        [OperationContract]
-        Task<OccupationListResponse> GetOccupationsList(OccupationListRequest request);
-
     }
 }
