@@ -6,6 +6,9 @@
 
 namespace Apollo.Common.Entities
 {
+    /// <summary>
+    /// Is a Single Appointment that can be booked by a User.
+    /// </summary>
     public record Appointment
     {
         //[BsonId]
@@ -13,25 +16,25 @@ namespace Apollo.Common.Entities
         public string? Id { get; set; }
 
         //[BsonElement("AppointmentUrl")]
-        public Uri AppointmentUrl { get; set; }
+        public Uri? AppointmentUrl { get; set; }
 
         //TODO: Review if this is needed
         //[BsonElement("AppointmentType")]
         public string AppointmentType { get; set; }
 
         //[BsonElement("AppointmentDescription")]
-        public string AppointmentDescription { get; set; }
+        public string? AppointmentDescription { get; set; }
 
         //[BsonElement("AppointmentLocation")]
-        public Contact AppointmentLocation { get; set; }
+        public Contact? AppointmentLocation { get; set; }
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public string DurationDescription { get; set; }
+        public string? DurationDescription { get; set; }
 
         //Maybe autocalculated by Occurences?
-        public int DurationInMin { get; set; }
+        public int? DurationInMin { get; set; }
 
         //Maybe better as a List?
         public List<Occurence> Occurences { get; set; }
@@ -48,18 +51,18 @@ namespace Apollo.Common.Entities
         /// 1ZS = 60 Minutes
         /// </summary>
         //[BsonElement("TimeInvestAttendee")]
-        public int TimeInvestAttendeeInMin { get; set; }
+        public int? TimeInvestAttendeeInMin { get; set; }
 
 
         //[BsonElement("TimeModel")]
         public TrainingTimeModel TimeModel { get; set; }
 
-        public string OccurenceNoteOnTime { get; set; }
+        public string? OccurenceNoteOnTime { get; set; }
 
         /// <summary>
         /// NOT UI RELEVANT
         /// </summary>
-        public string ExecutionDuration { get; set; }
+        public string? ExecutionDuration { get; set; }
 
         /// <summary>
         /// Explains the Time Model for the Training
@@ -77,7 +80,7 @@ namespace Apollo.Common.Entities
 
         //TODO: Review if this is needed
         //[BsonElement("LessonType")]
-        public string LessonType { get; set; }
+        public string? LessonType { get; set; }
 
 
         //[BsonElement("BookingUrl")]

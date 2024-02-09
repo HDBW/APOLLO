@@ -41,7 +41,7 @@ namespace Apollo.Common.Entities
         public string? Country { get; set; }
 
         //[BsonElement("AppointmentUrl")]
-        public Uri EAppointmentUrl { get; set; }
+        public Uri? EAppointmentUrl { get; set; }
 
         public ContactType? ContactType { get; set; }
     }
