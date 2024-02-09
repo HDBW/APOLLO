@@ -106,7 +106,7 @@ namespace GrpcClient.Service
                 try
                 {
                     var request = new OccupationRequest { Id = id, CorrelationId = CreateCorrelationId() };
-                    var result = await occupationClient.GetOccupation(request).ConfigureAwait(false);
+                    var result = await occupationClient.GetOccupation(request, token).ConfigureAwait(false);
                     response = result?.Occupation;
                 }
                 catch (OperationCanceledException)
