@@ -72,8 +72,7 @@ namespace GrpcClient.Service
                     occupation.PreferedTerm = new List<string> { searchstring };
                     var request = new OccupationCreationRequest { Occupation = occupation, CorrelationId = CreateCorrelationId() };
 
-                    // TODO: Wait till new Service is running.
-                    var result = await occupationClient.CreateOrUpdate(request, null, token).ConfigureAwait(false);
+                    var result = await occupationClient.CreateOrUpdate(request, token).ConfigureAwait(false);
                     response = result?.Occupation;
                 }
                 catch (OperationCanceledException)
@@ -107,9 +106,7 @@ namespace GrpcClient.Service
                 try
                 {
                     var request = new OccupationRequest { Id = id, CorrelationId = CreateCorrelationId() };
-
-                    // TODO: Wait till new Service is running.
-                    var result = await occupationClient.GetOccupation(request, null).ConfigureAwait(false);
+                    var result = await occupationClient.GetOccupation(request).ConfigureAwait(false);
                     response = result?.Occupation;
                 }
                 catch (OperationCanceledException)
