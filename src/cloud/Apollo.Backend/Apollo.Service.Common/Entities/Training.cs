@@ -37,7 +37,7 @@ namespace Apollo.Common.Entities
         /// </summary>
         public Uri? Image { get; set; }
 
-
+        public string? SubTitle { get; set; }
 
         public string Description { get; set; }
 
