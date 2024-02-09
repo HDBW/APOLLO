@@ -43,8 +43,7 @@ namespace Apollo.Api
                     return new ApolloList
                     {
                         Id = minimalInfoList.Id,
-                        ItemType = minimalInfoList.ItemType,
-                        Items = null!
+                        ItemType = minimalInfoList.ItemType
                     };
                 }).ToList();
             }

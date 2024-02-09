@@ -32,6 +32,39 @@ namespace Apollo.Service.Controllers
         }
 
 
+
+        /// <summary>
+        /// Returns the ItemType and Id of  all Appllolists in a List
+        /// </summary>
+        /// <returns>A response containing the list of ItemType and Id of all Appllolists.</returns>
+        /// <response code="200">List  ItemTypes and Id is returned.</response>
+        /// <response code="500">Internal server error.</response>
+        [HttpGet()]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the list ItemType and Id of all ApolloLists.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        public async Task<GetAllListResponse> GetAllListsAsync()
+        {
+            try
+            {
+                _logger?.LogTrace($"{nameof(GetAllListsAsync)} entered.");
+
+                // Assuming req contains the Training object to create or update.
+                var result = await _api.GetAllListsAsync();
+
+                _logger?.LogTrace($"{nameof(GetAllListsAsync)} completed.");
+
+                // Return the result of the create/update operation as a response.
+                return new GetAllListResponse { Result = result };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger?.LogError($"{nameof(GetAllListsAsync)} failed: {ex.Message}");
+                throw;
+            }
+        }
+
+
         /// <summary>
         /// Returns the set of ApolloList items that matches specified filter.
         /// </summary>
