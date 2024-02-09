@@ -8,7 +8,7 @@ using OccupationGrpcService.Protos;
 
 namespace OccupationGrpcService.Services
 {
-    [ServiceContract(Name = "OccupationTerm.SuggestionService")]
+    [ServiceContract(Name = "OccupationTerms.SuggestionService")]
     public interface IOccupationSuggestionService
     {
         [OperationContract]
