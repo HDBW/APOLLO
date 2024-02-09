@@ -38,7 +38,9 @@ namespace De.HDBW.Apollo.Data.Services
 
                         var jsonContent = request.Content as JsonContent;
                         var userRequest = jsonContent?.Value as CreateOrUpdateUserRequest;
+#pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
                         var user = userRequest?.User.Serialize()!.Deserialize<User>();
+#pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
                         _user = existingUser ?? user!;
                         _user.Id = _userId;
                         foreach (var contact in _user.ContactInfos)

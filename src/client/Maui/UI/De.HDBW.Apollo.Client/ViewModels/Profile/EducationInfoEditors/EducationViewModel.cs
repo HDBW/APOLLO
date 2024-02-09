@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -82,8 +83,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
 
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
-            var selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == currentData?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
-            var selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation) ?? null;
+            var selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == currentData?.TypeOfSchool.AsEnum<TypeOfSchool>()) ?? TypeOfSchools.FirstOrDefault();
+            var selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation.AsEnum<SchoolGraduation>()) ?? null;
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(typeOfSchools.AsSortedList(), selectedTypeOfSchool, schoolGraduations.AsSortedList(), selectedSchoolGraduation, isDirty), token);
             return currentData;
         }
@@ -91,8 +92,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         protected override void ApplyChanges(EducationInfo entry)
         {
             base.ApplyChanges(entry);
-            entry.TypeOfSchool = (SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown;
-            entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
+            entry.TypeOfSchool = ((SelectedTypeOfSchool?.Data as TypeOfSchool?) ?? TypeOfSchool.Unknown).ToApolloListItem();
+            entry.Graduation = ((SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown).ToApolloListItem();
         }
 
         private void LoadonUIThread(List<InteractionEntry> typeOfSchools, InteractionEntry? selectedTypeOfSchool, List<InteractionEntry> schoolGraduations, InteractionEntry? selectedSchoolGraduation, bool isDirty)

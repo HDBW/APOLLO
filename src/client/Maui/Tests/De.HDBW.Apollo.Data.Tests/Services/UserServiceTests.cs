@@ -1,6 +1,8 @@
-﻿using De.HDBW.Apollo.Data.Services;
+﻿using De.HDBW.Apollo.Data.Helper;
+using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
@@ -136,9 +138,14 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 //Assert.False(string.IsNullOrWhiteSpace(user!.Profile!.Id));
 
                 // Create a c
-                user.Profile!.CareerInfos = new List<CareerInfo>();
+                user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();
                 var careerInfo = new CareerInfo();
+                careerInfo.CareerType = CareerType.Homemaker.ToApolloListItem()!;
                 user.Profile!.CareerInfos.Add(careerInfo);
+
+                savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+                user = await Service.GetUserAsync(userId, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {

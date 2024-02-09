@@ -108,7 +108,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             var nameOfInstitution = currentData?.NameOfInstitution;
             var city = currentData?.City;
             var country = currentData?.Country;
-            var selectedCompletionState = completionStates.FirstOrDefault(x => (x.Data as CompletionState?) == currentData?.CompletionState) ?? CompletionStates.FirstOrDefault();
+            var selectedCompletionState = completionStates.FirstOrDefault(x => (x.Data as CompletionState?) == currentData?.CompletionState.AsEnum<CompletionState>()) ?? CompletionStates.FirstOrDefault();
 
             if (EditState != null)
             {
@@ -117,7 +117,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                 nameOfInstitution = EditState.NameOfInstitution;
                 city = EditState.City;
                 country = EditState.Country;
-                selectedCompletionState = completionStates.FirstOrDefault(x => (x.Data as CompletionState?) == EditState.CompletionState);
+                selectedCompletionState = completionStates.FirstOrDefault(x => (x.Data as CompletionState?) == EditState.CompletionState.AsEnum<CompletionState>());
             }
 
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(start, end, nameOfInstitution, city, country, selectedCompletionState, completionStates.AsSortedList(), isDirty), token).ConfigureAwait(false);
@@ -127,7 +127,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         protected override EducationInfo CreateNewEntry(User user)
         {
             var entry = new EducationInfo();
-            entry.EducationType = _type ?? EducationType.Unknown;
+#pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
+            entry.EducationType = (_type ?? EducationType.Unknown).ToApolloListItem()!;
+#pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
             user.Profile!.EducationInfos = user.Profile!.EducationInfos ?? new List<EducationInfo>();
             user.Profile!.EducationInfos.Add(entry);
             return entry;
@@ -153,7 +155,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             entry.NameOfInstitution = NameOfInstitution;
             entry.City = City;
             entry.Country = Country;
-            entry.CompletionState = (SelectedCompletionState?.Data as CompletionState?) ?? CompletionState.Failed;
+#pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
+            entry.CompletionState = ((SelectedCompletionState?.Data as CompletionState?) ?? CompletionState.Failed).ToApolloListItem()!;
+#pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
         }
 
         partial void OnEndChanged(DateTime? value)

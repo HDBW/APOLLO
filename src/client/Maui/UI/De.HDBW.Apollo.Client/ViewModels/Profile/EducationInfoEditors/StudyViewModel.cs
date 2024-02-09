@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -58,7 +59,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
             var description = currentData?.Description;
-            var selectedUniverityDegrees = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == currentData?.UniversityDegree);
+            var selectedUniverityDegrees = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == currentData?.UniversityDegree.AsEnum<UniversityDegree>());
             await ExecuteOnUIThreadAsync(
                 () => LoadonUIThread(description, univerityDegrees, selectedUniverityDegrees, isDirty), token);
             return currentData;
@@ -67,7 +68,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         protected override void ApplyChanges(EducationInfo entry)
         {
             base.ApplyChanges(entry);
-            entry.UniversityDegree = SelectedUniverityDegree?.Data as UniversityDegree?;
+            entry.UniversityDegree = SelectedUniverityDegree?.Data != null ? ((UniversityDegree)SelectedUniverityDegree.Data).ToApolloListItem() : null;
             entry.Description = Description;
         }
 

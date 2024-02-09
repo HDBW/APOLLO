@@ -34,7 +34,7 @@ namespace De.HDBW.Apollo.Client.Tests.Helper
                 new Qualification() { Name = "A", Description = "A", IssueDate = DateTime.Today.AddDays(-1), },
                 new Qualification() { Name = "A", Description = "A", },
                 new Qualification() { Name = "B", Description = "A", },
-                new Qualification() { Name = "C", Description = "A", IssueDate = DateTime.Today.AddDays(-1), ExpirationDate = DateTime.Today},
+                new Qualification() { Name = "C", Description = "A", IssueDate = DateTime.Today.AddDays(-1), ExpirationDate = DateTime.Today },
                 new Qualification() { Name = "C", Description = "A", ExpirationDate = DateTime.Today },
                 new Qualification() { Name = "C", Description = "A", IssueDate = DateTime.Today.AddDays(-3), ExpirationDate = DateTime.Today.AddDays(-1) },
             };

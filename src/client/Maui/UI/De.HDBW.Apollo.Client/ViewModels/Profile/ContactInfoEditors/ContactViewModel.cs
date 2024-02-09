@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -82,7 +83,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 
         protected override void ApplyChanges(Contact entry)
         {
-            entry.ContactType = (ContactType)(SelectedContactType?.Data ?? ContactType.Unknown);
+#pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
+            entry.ContactType = ((ContactType)(SelectedContactType?.Data ?? ContactType.Unknown)).ToApolloListItem()!;
+#pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
             entry.Address = Address?.Trim() ?? string.Empty;
             entry.Phone = Phone?.Trim() ?? string.Empty;
             entry.Mail = Email?.Trim() ?? string.Empty;
@@ -158,7 +161,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             Region = contact?.Region;
 
             ContactTypes = new ObservableCollection<InteractionEntry>(contactTypes);
-            SelectedContactType = (contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => ((ContactType?)x.Data) == contact.ContactType) : ContactTypes.FirstOrDefault();
+            SelectedContactType = (contact?.ContactType != null) ? ContactTypes.FirstOrDefault(x => (x.Data as ContactType?) == contact.ContactType.AsEnum<ContactType>()) : ContactTypes.FirstOrDefault();
             IsDirty = false;
             ValidateCommand?.Execute(null);
         }

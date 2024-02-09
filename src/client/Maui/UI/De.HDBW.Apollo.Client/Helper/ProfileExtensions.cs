@@ -35,7 +35,7 @@ namespace De.HDBW.Apollo.Client.Helper
 
         public static List<Language> AsSortedList(this List<Language>? items)
         {
-            return items?.OrderByDescending(x => x.Niveau).ThenByDescending(x => x.Code?.Name).ToList() ?? new List<Language>();
+            return items?.OrderByDescending(x => x.Niveau).ThenByDescending(x => x.Code).ToList() ?? new List<Language>();
         }
 
         public static List<WebReference> AsSortedList(this List<WebReference>? items)

@@ -104,7 +104,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         protected override CareerInfo CreateNewEntry(User user)
         {
             var entry = new CareerInfo();
-            entry.CareerType = _type ?? CareerType.Unknown;
+#pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
+            entry.CareerType = (_type ?? CareerType.Unknown).ToApolloListItem()!;
+#pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
             user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();
             user.Profile!.CareerInfos.Add(entry);
             return entry;

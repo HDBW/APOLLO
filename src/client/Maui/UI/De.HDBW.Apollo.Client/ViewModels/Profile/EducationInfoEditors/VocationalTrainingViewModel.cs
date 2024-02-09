@@ -100,16 +100,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             var isDirty = IsDirty;
 
             var description = currentData?.Description;
-            var selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == currentData?.TypeOfSchool) ?? TypeOfSchools.FirstOrDefault();
-            var selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation);
-            var selectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == currentData?.UniversityDegree);
+            var selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == currentData?.TypeOfSchool.AsEnum<TypeOfSchool>()) ?? TypeOfSchools.FirstOrDefault();
+            var selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation.AsEnum<SchoolGraduation>());
+            var selectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == currentData?.UniversityDegree.AsEnum<UniversityDegree>());
             var occupation = currentData?.ProfessionalTitle;
             if (EditState != null)
             {
                 description = EditState.Description;
-                selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == EditState.TypeOfSchool);
-                selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == EditState.Graduation);
-                selectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == EditState.UniversityDegree);
+                selectedTypeOfSchool = typeOfSchools.FirstOrDefault(x => (x.Data as TypeOfSchool?) == EditState.TypeOfSchool.AsEnum<TypeOfSchool>());
+                selectedSchoolGraduation = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == EditState.Graduation.AsEnum<SchoolGraduation>());
+                selectedUniverityDegree = univerityDegrees.FirstOrDefault(x => (x.Data as UniversityDegree?) == EditState.UniversityDegree.AsEnum<UniversityDegree>());
                 occupation = EditState.ProfessionalTitle;
             }
 
@@ -133,9 +133,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         {
             base.ApplyChanges(entry);
             entry.Description = Description;
-            entry.TypeOfSchool = SelectedTypeOfSchool?.Data as TypeOfSchool?;
-            entry.UniversityDegree = SelectedUniverityDegree?.Data as UniversityDegree?;
-            entry.Graduation = entry.UniversityDegree == null ? SchoolGraduation.AdvancedTechnicalCollegeCertificate : null;
+            entry.TypeOfSchool = SelectedTypeOfSchool?.Data != null ? ((TypeOfSchool)SelectedTypeOfSchool.Data).ToApolloListItem() : null;
+            entry.UniversityDegree = SelectedUniverityDegree?.Data != null ? ((UniversityDegree)SelectedUniverityDegree.Data).ToApolloListItem() : null;
+            entry.Graduation = entry.UniversityDegree == null ? SchoolGraduation.AdvancedTechnicalCollegeCertificate.ToApolloListItem() : null;
             entry.ProfessionalTitle = _professionalTitle;
         }
 

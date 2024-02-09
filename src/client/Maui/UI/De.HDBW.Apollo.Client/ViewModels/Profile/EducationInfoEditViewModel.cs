@@ -8,6 +8,7 @@ using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Profile;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -126,7 +127,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     NavigationParameters? editorParameters = new NavigationParameters();
                     editorParameters.AddValue<string>(NavigationParameter.Id, id);
                     editorParameters.Add(NavigationParameter.Type, careerType);
-                    await NavigationService.NavigateAsync(GetRoute(careerType), worker.Token, editorParameters);
+                    await NavigationService.NavigateAsync(GetRoute(careerType.AsEnum<EducationType>()), worker.Token, editorParameters);
                 }
                 catch (OperationCanceledException)
                 {

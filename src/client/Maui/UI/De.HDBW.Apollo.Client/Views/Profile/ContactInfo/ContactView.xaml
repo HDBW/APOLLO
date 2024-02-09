@@ -33,7 +33,7 @@
             </Border>
             
             <Label Text="{x:Static strings:Resources.Global_Address}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
-            <Border Style="{StaticResource InputBorderStyle}">
+            <Border Style="{StaticResource InputBorderStyle}" >
                 <Entry x:Name="PART_Address" Text="{x:Binding Address, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_ZipCode}" >
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Address" />

@@ -63,12 +63,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
             // schoolGraduations.Add(InteractionEntry.Import(SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate.GetLocalizedString(), SchoolGraduation.AdvancedTechnicalCollegeWithoutCertificate, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
-            var selectedSchoolGraduations = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation);
+            var selectedSchoolGraduations = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == currentData?.Graduation.AsEnum<SchoolGraduation>());
             var occupation = currentData?.ProfessionalTitle;
             var selection = SelectionResult.Deserialize<Occupation>();
             if (EditState != null)
             {
-                selectedSchoolGraduations = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == EditState?.Graduation);
+                selectedSchoolGraduations = schoolGraduations.FirstOrDefault(x => (x.Data as SchoolGraduation?) == EditState?.Graduation.AsEnum<SchoolGraduation>());
                 occupation = EditState?.ProfessionalTitle;
             }
 
@@ -92,7 +92,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         protected override void ApplyChanges(EducationInfo entry)
         {
             base.ApplyChanges(entry);
-            entry.Graduation = (SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown;
+            entry.Graduation = ((SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown).ToApolloListItem();
         }
 
         partial void OnSelectedSchoolGraduationChanged(InteractionEntry? value)

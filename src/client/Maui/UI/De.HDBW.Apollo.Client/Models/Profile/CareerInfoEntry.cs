@@ -3,6 +3,7 @@
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Generic;
+using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
@@ -28,9 +29,9 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<StringValue> GetAllLines(CareerInfo data)
         {
             var items = new List<StringValue>();
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.CareerType.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.ServiceType.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.VoluntaryServiceType.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.CareerType.AsEnum<CareerType>().GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.ServiceType.AsEnum<ServiceType>().GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.VoluntaryServiceType.AsEnum<VoluntaryServiceType>().GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_WorkTimeModel, data.WorkingTimeModel.GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Description, data.Description));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Occupation, data.Job?.PreferedTerm?.FirstOrDefault()));

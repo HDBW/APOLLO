@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -112,15 +113,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override void ApplyChanges(Mobility entry)
         {
-            entry.DriverLicenses = DriverLicenses.Where(x => x.IsSelected && x.Data is DriversLicense).Select(x => x.Data).OfType<DriversLicense>().ToList();
+#pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
+            entry.DriverLicenses = DriverLicenses.Where(x => x.IsSelected && x.Data is DriversLicense).Select(x => x.Data).OfType<DriversLicense>().Select(x => x.ToApolloListItem()!).ToList();
+#pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
             entry.HasVehicle = HasVehicle;
-            entry.WillingToTravel = SelectedWillingToTravel?.Data as Willing?;
+            entry.WillingToTravel = SelectedWillingToTravel?.Data != null ? ((Willing)SelectedWillingToTravel.Data).ToApolloListItem() : null;
         }
 
         private void LoadonUIThread(Mobility? mobility, List<InteractionEntry> willingsToTravel, List<SelectInteractionEntry> driverLicenses)
         {
             WillingsToTravel = new ObservableCollection<InteractionEntry>(willingsToTravel);
-            SelectedWillingToTravel = WillingsToTravel.FirstOrDefault(x => (x.Data as Willing?) == mobility?.WillingToTravel) ?? WillingsToTravel.FirstOrDefault();
+            SelectedWillingToTravel = WillingsToTravel.FirstOrDefault(x => (int?)(x.Data as Willing?) == mobility?.WillingToTravel?.ListItemId) ?? WillingsToTravel.FirstOrDefault();
             DriverLicenses = new ObservableCollection<SelectInteractionEntry>(driverLicenses);
             HasVehicle = mobility?.HasVehicle ?? false;
             IsDirty = false;
@@ -176,7 +179,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         private bool IsSelected(Mobility? mobility, DriversLicense license)
         {
-            return mobility?.DriverLicenses?.Contains(license) ?? false;
+            return mobility?.DriverLicenses?.Any(x => x.ListItemId == (int)license) ?? false;
         }
 
         private SelectInteractionEntry CreateLicenseEntry(Mobility? mobility, DriversLicense license)

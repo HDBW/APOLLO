@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
@@ -59,8 +60,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         protected override void ApplyChanges(CareerInfo entry)
         {
             base.ApplyChanges(entry);
-            entry.VoluntaryServiceType = (SelectedVoluntaryServiceType?.Data as VoluntaryServiceType?) ?? VoluntaryServiceType.Unknown;
-            entry.VoluntaryServiceType = (VoluntaryServiceType?)SelectedVoluntaryServiceType?.Data;
+            entry.VoluntaryServiceType = ((SelectedVoluntaryServiceType?.Data as VoluntaryServiceType?) ?? VoluntaryServiceType.Unknown).ToApolloListItem();
+            entry.VoluntaryServiceType = SelectedVoluntaryServiceType?.Data != null ? ((VoluntaryServiceType)SelectedVoluntaryServiceType.Data).ToApolloListItem() : null;
 
             var hasOccupation = !string.IsNullOrWhiteSpace(OccupationName);
 
@@ -130,7 +131,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         private void LoadonUIThread(CareerInfo? careerInfo, List<InteractionEntry> voluntaryServiceTypes, bool isDirty)
         {
             VoluntaryServiceTypes = new ObservableCollection<InteractionEntry>(voluntaryServiceTypes);
-            SelectedVoluntaryServiceType = VoluntaryServiceTypes.FirstOrDefault(x => (x.Data as VoluntaryServiceType?) == careerInfo?.VoluntaryServiceType) ?? VoluntaryServiceTypes.FirstOrDefault();
+            SelectedVoluntaryServiceType = VoluntaryServiceTypes.FirstOrDefault(x => (x.Data as VoluntaryServiceType?) == careerInfo?.VoluntaryServiceType.AsEnum<VoluntaryServiceType>()) ?? VoluntaryServiceTypes.FirstOrDefault();
             OccupationName = careerInfo?.Job?.PreferedTerm?.FirstOrDefault();
             IsDirty = isDirty;
             ValidateCommand.Execute(null);

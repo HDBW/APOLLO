@@ -14,6 +14,7 @@ using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
@@ -66,7 +67,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             token.ThrowIfCancellationRequested();
             var language = user?.Profile?.LanguageSkills?.FirstOrDefault(x => x.Id == enityId);
             var niveau = language?.Niveau;
-            var code = language?.Code;
+            var code = string.IsNullOrWhiteSpace(language?.Code) ? null : CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.Name == language!.Name);
 #if ANDROID
             var name = code?.DisplayName;
 #elif IOS
@@ -106,7 +107,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_B2, LanguageNiveau.B2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C1, LanguageNiveau.C1, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C2, LanguageNiveau.C2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            var selectedNivau = languageNiveaus.FirstOrDefault(x => (LanguageNiveau?)x.Data == niveau);
+            var selectedNivau = languageNiveaus.FirstOrDefault(x => ((ApolloListItem?)x.Data)?.ListItemId == niveau?.ListItemId);
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(code, name, languageNiveaus.AsSortedList(), selectedNivau, isDirty), token).ConfigureAwait(false);
             return language;
         }
@@ -126,14 +127,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
 
         protected override void ApplyChanges(Language entity)
         {
-            entity.Code = _code!;
-            entity.Name = entity.Code.Name;
+            entity.Code = _code!.Name;
 #if ANDROID
-            entity.Name = entity.Code.Name;
+            entity.Name = _code.Name;
 #elif IOS
-            entity.Name = entity.Code.NativeName;
+            entity.Name = _code.NativeName;
 #endif
-            entity.Niveau = (LanguageNiveau)SelectedLanguageNiveau!.Data!;
+            entity.Niveau = ((LanguageNiveau)SelectedLanguageNiveau!.Data!).ToApolloListItem();
         }
 
         protected override void RefreshCommands()
@@ -173,7 +173,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
                 {
                     var language = new Language();
                     language.Id = EntryId;
-                    language.Niveau = SelectedLanguageNiveau?.Data != null ? (LanguageNiveau)SelectedLanguageNiveau.Data : null;
+                    language.Niveau = SelectedLanguageNiveau?.Data != null ? ((LanguageNiveau)SelectedLanguageNiveau.Data).ToApolloListItem() : null;
                     language.Name = _code?.Name ?? string.Empty;
 
                     var data = language.Serialize();

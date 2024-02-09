@@ -29,7 +29,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         }
 
         [Fact]
-        public async Task GetAsyncAsyncTest()
+        public async Task GetAsyncTest()
         {
             try
             {
@@ -62,6 +62,19 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
         }
 
+        protected override ApolloListService SetupService(string apiKey, string baseUri, ILogger<ApolloListService> logger, HttpMessageHandler httpClientHandler)
+        {
+            return new ApolloListService(logger, baseUri, apiKey, httpClientHandler);
+        }
+
+        protected override void CleanupAdditionalServices()
+        {
+        }
+
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler)
+        {
+        }
+
         private async Task<List<ApolloListItem>?> GetAndValidateEnumListAsync<TU>(CancellationToken token)
             where TU : Enum
         {
@@ -74,7 +87,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             var missingNames = names.Where(x => !returnedNames.Contains(x)).ToList();
             if (missingNames.Any())
             {
-                var missingItems = missingNames.Select(x => JsonSerializer.Serialize(new ApolloListItem() { ListItemId = (int)Enum.Parse(typeof(TU), x), Value = x, Lng = "Invariant" }));
+                var missingItems = missingNames.Select(x => JsonSerializer.Serialize(new ApolloListItem() { ListItemId = (int)Enum.Parse(typeof(TU), x), Value = x, Lng = null }));
                 Logger.LogError($"List of ItemType {typeof(TU)} is missing specified Values.{Environment.NewLine}The following ListItems are missing:{Environment.NewLine}{string.Join(Environment.NewLine, missingItems)}");
                 return null;
             }
@@ -99,20 +112,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 validItems.Add(item);
             }
 
-            return validItems.Count == items.Count ? validItems : null ;
-        }
-
-        protected override ApolloListService SetupService(string apiKey, string baseUri, ILogger<ApolloListService> logger, HttpMessageHandler httpClientHandler)
-        {
-            return new ApolloListService(logger, baseUri, apiKey, httpClientHandler);
-        }
-
-        protected override void CleanupAdditionalServices()
-        {
-        }
-
-        protected override void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler)
-        {
+            return validItems.Count == items.Count ? validItems : null;
         }
     }
 }

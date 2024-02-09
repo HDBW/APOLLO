@@ -10,9 +10,11 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Generic;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Client.Models.Profile;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 using UserProfile = Invite.Apollo.App.Graph.Common.Models.UserProfile.Profile;
 
@@ -525,9 +527,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             var informations = new List<ObservableObject>();
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
-            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, mobility.WillingToTravel?.GetLocalizedString()));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, mobility.WillingToTravel?.AsEnum<Willing>().GetLocalizedString()));
             informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, mobility.HasVehicle ? Resources.Strings.Resources.Global_Yes : Resources.Strings.Resources.Global_No));
-            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", mobility.DriverLicenses.Select(x => Resources.Strings.Resources.ResourceManager.GetString($"DriversLicense_{Enum.GetName(x)}")) ?? new List<string>())));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", mobility.DriverLicenses.Select(x => Resources.Strings.Resources.ResourceManager.GetString($"DriversLicense_{Enum.GetName(x.AsEnum<DriversLicense>())}")) ?? new List<string>())));
             return informations;
         }
 

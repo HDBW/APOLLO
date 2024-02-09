@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
@@ -37,7 +39,7 @@ namespace De.HDBW.Apollo.Client.Selector
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             var info = item as CareerInfo;
-            switch (info?.CareerType)
+            switch (info?.CareerType.AsEnum<CareerType>())
             {
                 case CareerType.Other:
                     return OtherTemplate;

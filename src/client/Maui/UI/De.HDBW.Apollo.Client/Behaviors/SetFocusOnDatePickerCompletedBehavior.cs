@@ -37,7 +37,7 @@ namespace De.HDBW.Apollo.Client.Behaviors
             entry.Completed += CompletedHandler;
             void CompletedHandler(object? sender, EventArgs e)
             {
-                if (weakEntry.TryGetTarget(out Entry target))
+                if (weakEntry.TryGetTarget(out Entry? target) && target != null)
                 {
                     var nextElement = GetNextElement(target);
 

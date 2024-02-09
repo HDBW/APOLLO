@@ -3,6 +3,8 @@
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Generic;
+using De.HDBW.Apollo.Data.Helper;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Contact = Invite.Apollo.App.Graph.Common.Models.Contact;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
@@ -27,7 +29,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<StringValue> GetAllLines(Contact data)
         {
             var items = new List<StringValue>();
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.ContactType.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.ContactType.AsEnum<ContactType>().GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Address, data.Address));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_ZipCode, data.ZipCode));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_City, data.City));

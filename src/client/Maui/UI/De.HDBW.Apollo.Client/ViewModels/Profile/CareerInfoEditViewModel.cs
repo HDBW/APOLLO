@@ -6,6 +6,7 @@ using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Profile;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -167,7 +168,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     editorParameters.AddValue<string>(NavigationParameter.Id, id);
                     editorParameters.Add(NavigationParameter.Type, careerType);
                     var route = string.Empty;
-                    switch (careerType)
+                    switch (careerType.AsEnum<CareerType>())
                     {
                         case CareerType.Other:
                             route = Routes.CareerInfoOtherView;

@@ -4,7 +4,9 @@
 using System.Collections.ObjectModel;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Generic;
+using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
 {
@@ -28,11 +30,11 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<StringValue> GetAllLines(EducationInfo data)
         {
             var items = new List<StringValue>();
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_EducationType, data.EducationType.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_TypeOfSchool, data.TypeOfSchool?.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Graduation, data.Graduation?.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_UniversityDegree, data.UniversityDegree?.GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_CompletionState, data.CompletionState.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_EducationType, data.EducationType.AsEnum<EducationType>().GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_TypeOfSchool, data.TypeOfSchool?.AsEnum<TypeOfSchool>().GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Graduation, data.Graduation?.AsEnum<SchoolGraduation>().GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_UniversityDegree, data.UniversityDegree?.AsEnum<UniversityDegree>().GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_CompletionState, data.CompletionState.AsEnum<CompletionState>().GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Graduation, data.Description));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Occupation, data.ProfessionalTitle?.PreferedTerm?.FirstOrDefault()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_DateRange, GetDateRangeText(data.Start, data.End)));

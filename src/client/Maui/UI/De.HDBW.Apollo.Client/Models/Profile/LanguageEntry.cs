@@ -28,9 +28,9 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         {
             var items = new List<StringValue>();
 #if ANDROID
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code?.DisplayName));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code));
 #elif IOS
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code?.NativeName));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code));
 #endif
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_LanguageNiveau, data.Niveau?.ToString()));
             return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
