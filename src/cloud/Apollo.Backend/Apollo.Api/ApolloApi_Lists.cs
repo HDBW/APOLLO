@@ -63,7 +63,7 @@ namespace Apollo.Api
         /// <returns>The instance of the <see cref="ApolloList"/> that was requested.
         /// Null if the list cannot be found.</returns>
         /// <exception cref="ApolloApiException">If the list cannot be found and the <see cref="throwIfNotFound"/> is set to true.</exception>"
-        public async Task<ApolloList?> GetListAsync( string? itemType = null, string? id = null, bool throwIfNotFound = false)
+        public async Task<ApolloList?> GetListAsync(string? itemType = null, string? id = null, bool throwIfNotFound = false)
         {
             // TODO validate if all args correctlly set
 
@@ -72,7 +72,7 @@ namespace Apollo.Api
                 Filter = new Filter(),
             };
 
-           // query?.Fields?.Add(nameof(ApolloListItem.ListItemId));
+            // query?.Fields?.Add(nameof(ApolloListItem.ListItemId));
 
             if (!String.IsNullOrEmpty(id))
             {
@@ -123,7 +123,7 @@ namespace Apollo.Api
         {
             if (String.IsNullOrEmpty(lng))
                 lng = _defaultLng;
-            
+
             Query query = new Query
             {
                 Fields = new List<string>(),
@@ -157,7 +157,7 @@ namespace Apollo.Api
             {
                 var apList = Convertor.ToApolloList(res.FirstOrDefault()!);
 
-                List< ApolloListItem> items = apList.Items.Where(i=>
+                List<ApolloListItem> items = apList.Items.Where(i =>
                 (lng != null ? i.Lng == lng : true) && (contains != null ? i.Value.ToLower().Contains(contains.ToLower()) : true)).ToList();
 
                 return items;
@@ -171,7 +171,7 @@ namespace Apollo.Api
         }
 
 
-        private const string _cDefaultLanguageValue = null;
+        private const string _cDefaultLanguageValue = "Invariant";
 
         /// <summary>
         /// Creates or Updates the new List of items.
