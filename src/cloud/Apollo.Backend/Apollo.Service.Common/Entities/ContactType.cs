@@ -28,6 +28,6 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Defines the Culture of the Contact Type
         /// </summary>
-        //public CultureInfo CultureInfo { get; set; }
+        //public string CultureInfo { get; set; }
     }
 }

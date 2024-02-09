@@ -24,6 +24,6 @@ namespace Apollo.Common.Entities
 
         public string Name { get; set; }
 
-        public CultureInfo CultureInfo { get; set; }
+        public string CultureInfo { get; set; }
     }
 }

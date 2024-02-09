@@ -33,14 +33,14 @@ namespace Apollo.Common.Entities
     ///     AdvancedTechnicalCollegeWithoutCertificate = 9,
     /// }
     /// </remarks>
-    public class SchoolGraduation
+    public class SchoolGraduation : ApolloListItem
     {
 
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
-        public string Value { get; set; }
-        public string Name { get; set; }
+        //public string Value { get; set; }
+        //public string Name { get; set; }
 
-        public CultureInfo CultureInfo { get; set; }
+        //public string CultureInfo { get; set; }
     }
 }

@@ -187,7 +187,7 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            await InsertTestItems(api);      
+            await InsertTestItems(api);
 
             // Get ll items of the given ItemType and language.
             var results = await api.QueryListItemsAsync(_testList?.First()?.Items?.First().Lng!, _testList?.First()?.ItemType!, null);
@@ -196,7 +196,7 @@ namespace Apollo.Api.UnitTests
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Count == 1); // Single DE item is returned.
 
-            results = await api.QueryListItemsAsync(_testList?.First()?.Items?.First().Lng!, _testList?.First()?.ItemType!, _testList?.First().Items.First().Value.Substring(1,3));
+            results = await api.QueryListItemsAsync(_testList?.First()?.Items?.First().Lng!, _testList?.First()?.ItemType!, _testList?.First().Items.First().Value.Substring(1, 3));
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Count == 1); // all items are returned.
             Assert.IsTrue(results[0].Value.Contains("C# Entwickler"));
@@ -329,7 +329,7 @@ namespace Apollo.Api.UnitTests
             await PopulateYearRange();
             await PopulateWorkingTimeModel();
             await PopulateCompletionState();
-       
+
         }
 
         private async Task PopulateContactType()
@@ -362,7 +362,7 @@ namespace Apollo.Api.UnitTests
 
             var id = await api.CreateOrUpdateListAsync(apolloList);
 
-            var dbItem = await api.GetListAsync(id:id);
+            var dbItem = await api.GetListAsync(id: id);
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(ContactType));
@@ -441,12 +441,40 @@ namespace Apollo.Api.UnitTests
                 Description = "Is Culture specific and prop a List sync",
                 ItemType = nameof(DriversLicense),
                 Items = new List<ApolloListItem>()
-                 {
+                {
                     new ApolloListItem() { ListItemId = 0, Value = "Unknown" },
                     new ApolloListItem() { ListItemId = 1, Value = "B" },
                     new ApolloListItem() { ListItemId = 2, Value = "BE" },
                     new ApolloListItem() { ListItemId = 3, Value = "Forklift" },
-                    new ApolloListItem() { ListItemId = 4, Value = "C1E" }
+                    new ApolloListItem() { ListItemId = 4, Value = "C1E" },
+                    new ApolloListItem() { ListItemId = 5, Value = "C1", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 6, Value = "L", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 7, Value = "AM", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 8, Value = "A", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 9, Value = "CE", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 10, Value = "C", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 11, Value = "A1", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 12, Value = "B96", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 13, Value = "T", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 14, Value = "A2", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 15, Value = "Moped", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 16, Value = "Drivercard", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 17, Value = "PassengerTransport", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 18, Value = "D", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 19, Value = "InstructorBE", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 20, Value = "ConstructionMachines", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 21, Value = "DE", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 22, Value = "D1", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 23, Value = "D1E", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 24, Value = "InstructorA", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 25, Value = "InstructorCE", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 26, Value = "TrailerDriving", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 27, Value = "InstructorDE", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 28, Value = "Class1", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 29, Value = "Class3", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 30, Value = "Class2", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 31, Value = "InstructorASF", Description=null, Lng="Invariant"},
+                    new ApolloListItem() { ListItemId = 32, Value = "InstructorASP", Description=null, Lng="Invariant"},
                  }
             };
 

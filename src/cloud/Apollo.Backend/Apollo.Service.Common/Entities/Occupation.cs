@@ -91,6 +91,6 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// This is the language of the occupation.
         /// </summary>
-        public CultureInfo Culture { get; set; }
+        public string Culture { get; set; }
     }
 }

@@ -16,6 +16,6 @@ namespace Apollo.Common.Entities
         public LanguageNiveau Niveau { get; set; }
 
         // CultureInfo get Culture ISO639-2 
-        public CultureInfo Code { get; set; }
+        public string Code { get; set; }
     }
 }

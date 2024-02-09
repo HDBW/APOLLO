@@ -61,6 +61,6 @@ namespace Apollo.Common.Entities
 
         public string Value { get; set; }
 
-        public CultureInfo CultureInfo { get; set; }
+        public string CultureInfo { get; set; }
     }
 }

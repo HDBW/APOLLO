@@ -28,7 +28,7 @@ namespace Apollo.Common.Entities
 
         public string ScopeNote { get; set; }
 
-        public CultureInfo Language { get; set; }
+        public string Language { get; set; }
 
         public Taxonomy TaxonomyInfo { get; set; }
     }

@@ -150,7 +150,7 @@ namespace Apollo.Api
         }
 
 
-        private const string _cDefaultLanguageValue = "Invariant";
+        private const string _cDefaultLanguageValue = null;
 
         /// <summary>
         /// Creates or Updates the new List of items.
