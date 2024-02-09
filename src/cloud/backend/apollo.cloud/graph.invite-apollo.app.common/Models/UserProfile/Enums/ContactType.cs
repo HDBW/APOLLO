@@ -9,8 +9,11 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums
     /// </summary>
     public enum ContactType
     {
-        Unknown,
-        Professional,
-        Private
+        Unknown = 0,
+        Professional = 1,
+        Private = 2,
+        Trainer = 3,
+        Training = 4,
+        TrainingLocation = 5,
     }
 }
