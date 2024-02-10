@@ -126,6 +126,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.NotNull(Service);
             string userId = "User-5DE545AEF9974FD6826151725A9961F8";
             User? user = null;
+            var errors = 0;
             try
             {
                 user = await Service.GetUserAsync(userId, TokenSource!.Token);
@@ -141,15 +142,24 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.NotNull(user.Profile);
                 //Assert.False(string.IsNullOrWhiteSpace(user!.Profile!.Id));
 
-                // Create a c
-                user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();
-                if (!user.Profile!.CareerInfos.Any())
+                try
                 {
-                    var careerInfo = new CareerInfo();
-                    careerInfo.CareerType = CareerType.Homemaker.ToApolloListItem()!;
-                    user.Profile!.CareerInfos.Add(careerInfo);
-                    savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
-                    Assert.Equal(userId, savedUserId);
+                    user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.Homemaker);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.Other);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.PersonCare);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.Internship);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.PersonCare);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.CommunityService);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.ExtraOccupationalExperience);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.SelfEmployment);
+
+                }
+                catch (Exception ex)
+                {
+                    errors++;
+                    user.Profile!.CareerInfos = null;
+                    ((ILogger)Logger).LogError(ex, "Error while creating CareerInfos");
                 }
 
                 user = await Service.GetUserAsync(userId, TokenSource!.Token);
@@ -169,6 +179,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 }
                 catch (Exception ex)
                 {
+                    errors++;
                     user.Profile!.EducationInfos = null;
                     ((ILogger)Logger).LogError(ex, "Error while creating EductationInfo");
                 }
@@ -182,6 +193,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 }
                 catch (Exception ex)
                 {
+                    errors++;
                     user.Profile!.Licenses = null;
                     ((ILogger)Logger).LogError(ex, "Error while creating Licenses");
                 }
@@ -195,6 +207,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 }
                 catch (Exception ex)
                 {
+                    errors++;
                     user.Profile!.WebReferences = null;
                     ((ILogger)Logger).LogError(ex, "Error while creating WebReferences");
                 }
@@ -208,6 +221,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 }
                 catch (Exception ex)
                 {
+                    errors++;
                     user.Profile!.LanguageSkills = null;
                     ((ILogger)Logger).LogError(ex, "Error while creating LanguageSkills");
                 }
@@ -216,11 +230,29 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     user.Profile!.MobilityInfo = user.Profile!.MobilityInfo ?? new Mobility();
                     user = await CreateAndCheckMobilityInfoAsync(user, userId, false, Willing.No, new List<DriversLicense>() { DriversLicense.D, DriversLicense.BE, DriversLicense.D1});
+                    user = await CreateAndCheckMobilityInfoAsync(user, userId, true, null, new List<DriversLicense>() { });
+                    user = await CreateAndCheckMobilityInfoAsync(user, userId, false, null, new List<DriversLicense>() { DriversLicense.A });
                 }
                 catch (Exception ex)
                 {
-                    user.Profile!.LanguageSkills = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating LanguageSkills");
+                    errors++;
+                    user.Profile!.MobilityInfo = null;
+                    ((ILogger)Logger).LogError(ex, "Error while creating MobilityInfo");
+                }
+
+                try
+                {
+                    user.Profile!.Qualifications = user.Profile!.Qualifications ?? new List<Qualification>();
+                    user = await CreateAndCheckQualificationsAsync(user, userId, 0, "Test", "Test", DateTime.Today, null);
+                    user = await CreateAndCheckQualificationsAsync(user, userId, 1, "Test1", "Test1", null, DateTime.Today);
+                    user = await CreateAndCheckQualificationsAsync(user, userId, 2, "Test", null, null, null);
+
+                }
+                catch (Exception ex)
+                {
+                    errors++;
+                    user.Profile!.Qualifications = null;
+                    ((ILogger)Logger).LogError(ex, "Error while creating Qualifications");
                 }
             }
             catch (ApolloApiException ex)
@@ -228,7 +260,52 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 // Not existing ids return errorcode ErrorCodes.TrainingErrors.GetTrainingError;
                 Assert.Equal(ErrorCodes.UserErrors.CreateOrUpdateUserError, ex.ErrorCode);
             }
+
+            Assert.True(errors == 0);
         }
+
+        private async Task<User> CreateAndCheckCareerInfoAsync(User existingUser, string userId, int v, CareerType extraOccupationalExperience)
+        {
+
+
+            //// Create a c
+            //if (!user.Profile!.CareerInfos.Any())
+            //{
+            //    var careerInfo = new CareerInfo();
+            //    careerInfo.CareerType = CareerType.Homemaker.ToApolloListItem()!;
+            //    user.Profile!.CareerInfos.Add(careerInfo);
+            //    savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
+            //    Assert.Equal(userId, savedUserId);
+            //}
+            return existingUser;
+        }
+
+        private async Task<User> CreateAndCheckQualificationsAsync(User existingUser, string userId, int index, string name, string? description, DateTime? granted, DateTime? expires)
+        {
+            string? savedUserId = null;
+            if (existingUser.Profile!.Qualifications!.Count() == index)
+            {
+                var qualification = new Qualification();
+                qualification.Name = name;
+                qualification.Description = description;
+                qualification.IssueDate = granted;
+                qualification.ExpirationDate = expires;
+                existingUser.Profile!.Qualifications!.Add(qualification);
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
+
+            var savedUser = await Service.GetUserAsync(userId, TokenSource!.Token);
+            Assert.Equal(userId, savedUser!.Id);
+            Assert.NotNull(savedUser.Profile!.Qualifications);
+            Assert.Equal(index + 1, savedUser.Profile!.Qualifications!.Count()!);
+            Assert.Equal(name, savedUser.Profile!.Qualifications![index].Name);
+            Assert.Equal(description, savedUser.Profile!.Qualifications![index].Description);
+            Assert.Equal(granted, savedUser.Profile!.Qualifications![index].IssueDate);
+            Assert.Equal(expires, savedUser.Profile!.Qualifications![index].ExpirationDate);
+            return savedUser;
+        }
+
 
         private async Task<User> CreateAndCheckMobilityInfoAsync(User existingUser, string userId, bool hasVehicle, Willing? willing, List<DriversLicense> driversLicenses)
         {

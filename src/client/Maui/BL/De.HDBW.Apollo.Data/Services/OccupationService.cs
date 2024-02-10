@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Globalization;
 using Grpc.Net.Client;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Microsoft.Extensions.Logging;
@@ -68,6 +69,7 @@ namespace GrpcClient.Service
                 try
                 {
                     var occupation = new Occupation();
+                    occupation.CultureString = CultureInfo.CurrentCulture.Name;
                     occupation.TaxonomyInfo = Taxonomy.Unknown;
                     occupation.PreferedTerm = new List<string> { searchstring };
                     var request = new OccupationCreationRequest { Occupation = occupation, CorrelationId = CreateCorrelationId() };
