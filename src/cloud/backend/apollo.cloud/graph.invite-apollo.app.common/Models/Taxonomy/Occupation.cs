@@ -10,6 +10,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
     [ProtoContract]
     public class Occupation
     {
+        private CultureInfo? _culture;
+
         /// <summary>
         /// This can be used as Unique Identifier for the Occupation within the apollo system.
         /// </summary>
@@ -112,7 +114,27 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// This is the language of the occupation.
         /// </summary>
         [ProtoMember(15)]
-        public string Culture { get; set; }
+        public string? CultureString
+        {
+            get => _culture?.Name;
+            set
+            {
+                var x = new CultureInfo(value);
+                _culture = string.IsNullOrWhiteSpace(value)
+                    ? null
+                    : new System.Globalization.CultureInfo(value);
+            }
+        }
+
+        [ProtoIgnore]
+        public CultureInfo? Culture
+        {
+            get => _culture;
+            set
+            {
+                _culture = value;
+            }
+        }
 
         /// <summary>
         /// Describes the Occupation
