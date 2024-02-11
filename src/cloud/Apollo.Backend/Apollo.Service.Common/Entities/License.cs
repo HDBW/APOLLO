@@ -8,7 +8,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The id of the license in Apollo
         /// </summary>
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         // License_Name_filtered.txt
         // Freitext
@@ -18,6 +18,6 @@ namespace Apollo.Common.Entities
 
         public DateTime? Expires { get; set; }
 
-        public string IssuingAuthority { get; set; }
+        public string? IssuingAuthority { get; set; }
     }
 }
