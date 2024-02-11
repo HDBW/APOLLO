@@ -78,6 +78,7 @@ namespace Apollo.Api
             public const int CreateOrUpdateProfileUserDoesNotExistError = TrainingCodeBase + 111;
             public const int DeleteProfileError = TrainingCodeBase + 120;
             public const int ProfileNotFound = TrainingCodeBase + 130;
+            public const int ProfileIsNullOrEmpty = TrainingCodeBase + 150;
             public const int ProfileAlreadyExists = TrainingCodeBase + 140;
             public const int NoProfilesToDelete = TrainingCodeBase + 150;
 

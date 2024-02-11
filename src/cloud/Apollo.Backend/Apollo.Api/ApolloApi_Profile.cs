@@ -145,15 +145,27 @@ namespace Apollo.Api
 
                 if (profile == null)
                 {
-                    profile.Id = CreateProfileId(userId);
+                    throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileIsNullOrEmpty, $"Object Profile is NULL Or Empty");
                 }
 
-                var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile.Id);
-                if (res == false)
-                    throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
+                // Generate a unique profile ID if it's not provided
+                if (String.IsNullOrEmpty(profile.Id))
+                {
+                    profile.Id = CreateProfileId(userId);
+                }
+                else
+                {
+                    //
+                    //Check User Id is exist
+                    var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile?.Id);
+                    //
+                    //If Not trough Exception
+                    if (res == false)
+                        throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
+                }
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile) });
-              
+
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfile)}");
 
                 return ids;
