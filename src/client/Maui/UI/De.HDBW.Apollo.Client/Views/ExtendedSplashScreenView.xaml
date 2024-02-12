@@ -40,9 +40,7 @@
                         </Label.GestureRecognizers>
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{x:Static strings:Resources.ExtendedSplashScreenView_AGB}" TextDecorations="Underline" FontAttributes="Bold">
-                                    
-                                </Span>
+                                <Span Text="{x:Static strings:Resources.ExtendedSplashScreenView_AGB}" TextDecorations="Underline" FontAttributes="Bold"/>
                                 <Span Text="{x:Static system:Environment.NewLine}"/>
                                 <Span Text="{x:Static strings:Resources.ExtendedSplashScreenView_AGBText}"/>
                             </FormattedString>

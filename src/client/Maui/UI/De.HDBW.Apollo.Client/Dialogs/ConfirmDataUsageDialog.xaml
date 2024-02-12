@@ -9,7 +9,7 @@
              x:DataType="viewModels:ConfirmDataUsageDialogViewModel">
     <Grid>
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer Command="{x:Binding CancelCommand}" />
+            <PointerGestureRecognizer PointerReleased="OnPointerReleased" />
         </Grid.GestureRecognizers>
         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
             <Grid RowDefinitions="20, auto, auto, 32, auto, 20" Style="{StaticResource PopupContent}">

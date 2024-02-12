@@ -21,5 +21,14 @@ namespace De.HDBW.Apollo.Client.Dialogs
                 return BindingContext as SelectOptionDialogViewModel;
             }
         }
+
+        private void OnPointerReleased(object sender, PointerEventArgs e)
+        {
+            var position = e.GetPosition(PART_Root) ?? Point.Zero;
+            if (!PART_Root.Frame.Contains(position))
+            {
+                ViewModel?.CancelCommand?.Execute(null);
+            }
+        }
     }
 }
