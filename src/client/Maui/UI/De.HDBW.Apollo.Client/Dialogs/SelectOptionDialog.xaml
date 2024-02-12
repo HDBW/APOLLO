@@ -10,7 +10,14 @@
                x:DataType="viewModels:SelectOptionDialogViewModel">
     <Grid>
         <Grid.GestureRecognizers>
-            <PointerGestureRecognizer PointerReleased="OnPointerReleased" />
+            <OnPlatform x:TypeArguments="GestureRecognizer">
+                <On Platform="iOS">
+                    <PointerGestureRecognizer PointerReleased="OnPointerReleased" />
+                </On>
+                <On Platform="Android">
+                    <TapGestureRecognizer Command="{x:Binding CancelCommand}" NumberOfTapsRequired="1"/>
+                </On>
+            </OnPlatform>
         </Grid.GestureRecognizers>
         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}" InputTransparent="False">
             <Grid RowDefinitions="20, auto, auto, 32, auto, 20" Style="{StaticResource PopupContent}">

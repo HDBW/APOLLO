@@ -150,7 +150,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                     user = await CreateAndCheckCareerInfoAsync(user, userId, 5, CareerType.CommunityService, DateTime.Today.ToUniversalTime(), null);
                     user = await CreateAndCheckCareerInfoAsync(user, userId, 6, CareerType.ExtraOccupationalExperience, DateTime.Today.ToUniversalTime(), null);
                     user = await CreateAndCheckCareerInfoAsync(user, userId, 7, CareerType.SelfEmployment, DateTime.Today.ToUniversalTime(), null);
-
                 }
                 catch (Exception ex)
                 {
@@ -236,7 +235,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                     user = await CreateAndCheckQualificationsAsync(user, userId, 0, "Test", "Test", DateTime.Today, null);
                     user = await CreateAndCheckQualificationsAsync(user, userId, 1, "Test1", "Test1", null, DateTime.Today);
                     user = await CreateAndCheckQualificationsAsync(user, userId, 2, "Test", null, null, null);
-
                 }
                 catch (Exception ex)
                 {
@@ -254,6 +252,19 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.True(errors == 0);
         }
 
+        protected override UserService SetupService(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)
+        {
+            return new UserService(logger, baseUri, apiKey, httpClientHandler);
+        }
+
+        protected override void CleanupAdditionalServices()
+        {
+        }
+
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler)
+        {
+        }
+
         private async Task<User> CreateAndCheckCareerInfoAsync(User existingUser, string userId, int index, CareerType careerType, DateTime start, DateTime? end)
         {
             string? savedUserId = null;
@@ -269,7 +280,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
             else
             {
-                var careerInfo = existingUser.Profile!.CareerInfos[index];
+                var careerInfo = existingUser.Profile.CareerInfos![index]!;
                 careerInfo.CareerType = careerType.ToApolloListItem()!;
                 careerInfo.Start = start;
                 careerInfo.End = end;
@@ -444,19 +455,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.Equal(educationType, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<EducationType>());
             Assert.Equal(state, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<CompletionState>());
             return savedUser;
-        }
-
-        protected override UserService SetupService(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)
-        {
-            return new UserService(logger, baseUri, apiKey, httpClientHandler);
-        }
-
-        protected override void CleanupAdditionalServices()
-        {
-        }
-
-        protected override void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler)
-        {
         }
     }
 }
