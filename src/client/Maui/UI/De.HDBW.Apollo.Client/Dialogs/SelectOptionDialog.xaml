@@ -9,9 +9,9 @@
                Style="{StaticResource PopupStyle}"
                x:DataType="viewModels:SelectOptionDialogViewModel">
     <Grid>
-        <Grid.GestureRecognizers>
-            <TapGestureRecognizer Command="{x:Binding CancelCommand}" />
-        </Grid.GestureRecognizers>
+       <!-- <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{x:Binding CancelCommand}" NumberOfTapsRequired="1" />
+        </Grid.GestureRecognizers> -->
         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
             <Grid RowDefinitions="20, auto, auto, 32, auto, 20" Style="{StaticResource PopupContent}">
                 <Grid.Resources>
@@ -24,11 +24,11 @@
                 </Grid.Resources>
                 <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.SelectOptionDialog_Title}" Margin="0,0,0,16" Style="{StaticResource Noto20Bold}"/>
                  <CollectionView Grid.Row="2" ItemsSource="{x:Binding Options}"
-                                    SelectionMode="Single"
                                     MaximumHeightRequest="400"
                                     ItemTemplate="{StaticResource DefaultInteractionEntry}"
                                     SelectedItem="{x:Binding SelectedOption, Mode=TwoWay}"
-                                    ItemsLayout="VerticalList"/>   
+                                    ItemsLayout="VerticalList">
+                 </CollectionView>
                 <Grid Grid.Row="4">
                     <Button Text="{x:Static strings:Resources.SelectOptionDialog_Cancel}" Style="{StaticResource BorderButton}" Command="{x:Binding CancelCommand}"/>
                 </Grid>
