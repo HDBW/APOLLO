@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Reflection;
-using System.Xml.Linq;
+﻿using System.Globalization;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
@@ -145,14 +142,14 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 try
                 {
                     user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.Homemaker);
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.Other);
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.PersonCare);
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.Internship);
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.PersonCare);
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.CommunityService);
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.ExtraOccupationalExperience);
-                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.SelfEmployment);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 0, CareerType.Homemaker, DateTime.Today.ToUniversalTime(), null);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 1, CareerType.Other, DateTime.Today.ToUniversalTime(), DateTime.Today.ToUniversalTime());
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 2, CareerType.PersonCare, DateTime.Today.ToUniversalTime(), null);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 3, CareerType.Internship, DateTime.Today.ToUniversalTime(), null);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 4, CareerType.PersonCare, DateTime.Today.ToUniversalTime(), null);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 5, CareerType.CommunityService, DateTime.Today.ToUniversalTime(), null);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 6, CareerType.ExtraOccupationalExperience, DateTime.Today.ToUniversalTime(), null);
+                    user = await CreateAndCheckCareerInfoAsync(user, userId, 7, CareerType.SelfEmployment, DateTime.Today.ToUniversalTime(), null);
 
                 }
                 catch (Exception ex)
@@ -161,13 +158,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                     user.Profile!.CareerInfos = null;
                     ((ILogger)Logger).LogError(ex, "Error while creating CareerInfos");
                 }
-
-                user = await Service.GetUserAsync(userId, TokenSource!.Token);
-                Assert.Equal(userId, user!.Id);
-                Assert.NotNull(user.Profile!.CareerInfos);
-                Assert.Equal(1, user.Profile!.CareerInfos!.Count()!);
-                Assert.Equal(CareerType.Homemaker, user.Profile!.CareerInfos!.First()!.CareerType.AsEnum<CareerType>());
-                //Assert.False(string.IsNullOrWhiteSpace(user.Profile!.CareerInfos!.First()!.Id));
 
                 try
                 {
@@ -187,9 +177,9 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 try
                 {
                     user.Profile!.Licenses = user.Profile!.Licenses ?? new List<License>();
-                    user = await CreateAndCheckLicenseAsync(user, userId, 0, "Test", DateTime.Today, null);
-                    user = await CreateAndCheckLicenseAsync(user, userId, 1, "Test1", null, DateTime.Today);
-                    user = await CreateAndCheckLicenseAsync(user, userId, 2, "Test2", null, null);
+                    user = await CreateAndCheckLicenseAsync(user, userId, 0, "Test", DateTime.Today.ToUniversalTime(), null);
+                    user = await CreateAndCheckLicenseAsync(user, userId, 1, "Test1", null, DateTime.Today.ToUniversalTime());
+                    user = await CreateAndCheckLicenseAsync(user, userId, 2, "Test2", DateTime.Today.ToUniversalTime(), DateTime.Today.ToUniversalTime());
                 }
                 catch (Exception ex)
                 {
@@ -264,20 +254,38 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.True(errors == 0);
         }
 
-        private async Task<User> CreateAndCheckCareerInfoAsync(User existingUser, string userId, int v, CareerType extraOccupationalExperience)
+        private async Task<User> CreateAndCheckCareerInfoAsync(User existingUser, string userId, int index, CareerType careerType, DateTime start, DateTime? end)
         {
+            string? savedUserId = null;
+            if (existingUser.Profile!.CareerInfos!.Count() == index)
+            {
+                var careerInfo = new CareerInfo();
+                careerInfo.CareerType = careerType.ToApolloListItem()!;
+                careerInfo.Start = start;
+                careerInfo.End = end;
+                existingUser!.Profile!.CareerInfos!.Add(careerInfo);
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
+            else
+            {
+                var careerInfo = existingUser.Profile!.CareerInfos[index];
+                careerInfo.CareerType = careerType.ToApolloListItem()!;
+                careerInfo.Start = start;
+                careerInfo.End = end;
+                existingUser!.Profile!.CareerInfos!.Add(careerInfo);
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
 
-
-            //// Create a c
-            //if (!user.Profile!.CareerInfos.Any())
-            //{
-            //    var careerInfo = new CareerInfo();
-            //    careerInfo.CareerType = CareerType.Homemaker.ToApolloListItem()!;
-            //    user.Profile!.CareerInfos.Add(careerInfo);
-            //    savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
-            //    Assert.Equal(userId, savedUserId);
-            //}
-            return existingUser;
+            var savedUser = await Service.GetUserAsync(userId, TokenSource!.Token);
+            Assert.Equal(userId, savedUser!.Id);
+            Assert.NotNull(savedUser.Profile!.CareerInfos);
+            Assert.True(savedUser.Profile!.CareerInfos!.Count()! >= index + 1);
+            Assert.Equal(careerType, savedUser.Profile!.CareerInfos![index].CareerType.AsEnum<CareerType>());
+            Assert.Equal(start, savedUser.Profile!.CareerInfos![index].Start);
+            Assert.Equal(end, savedUser.Profile!.CareerInfos![index].End);
+            return savedUser;
         }
 
         private async Task<User> CreateAndCheckQualificationsAsync(User existingUser, string userId, int index, string name, string? description, DateTime? granted, DateTime? expires)
@@ -305,7 +313,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.Equal(expires, savedUser.Profile!.Qualifications![index].ExpirationDate);
             return savedUser;
         }
-
 
         private async Task<User> CreateAndCheckMobilityInfoAsync(User existingUser, string userId, bool hasVehicle, Willing? willing, List<DriversLicense> driversLicenses)
         {
@@ -336,7 +343,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 language.Niveau = niveau.ToApolloListItem();
                 language.Name = new CultureInfo(code).DisplayName;
                 language.Code = code;
-                existingUser!.Profile!.LanguageSkills.Add(language);
+                existingUser!.Profile!.LanguageSkills!.Add(language);
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
@@ -387,11 +394,21 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
+            else
+            {
+                var license = existingUser.Profile!.Licenses[index]!;
+                license.Name = name;
+                license.Granted = granted;
+                license.Expires = expires;
+                existingUser.Profile!.Licenses!.Add(license);
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
 
             var savedUser = await Service.GetUserAsync(userId, TokenSource!.Token);
             Assert.Equal(userId, savedUser!.Id);
             Assert.NotNull(savedUser.Profile!.Licenses);
-            Assert.Equal(index + 1, savedUser.Profile!.Licenses!.Count()!);
+            Assert.True(savedUser.Profile!.Licenses!.Count()! >= index + 1);
             Assert.Equal(name, savedUser.Profile!.Licenses![index].Name);
             Assert.Equal(granted, savedUser.Profile!.Licenses![index].Granted);
             Assert.Equal(expires, savedUser.Profile!.Licenses![index].Expires);
@@ -410,13 +427,22 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
+            else
+            {
+                var educationInfo = new EducationInfo();
+                educationInfo.EducationType = educationType.ToApolloListItem()!;
+                educationInfo.CompletionState = state.ToApolloListItem()!;
+                existingUser.Profile!.EducationInfos!.Add(educationInfo);
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
 
             var savedUser = await Service.GetUserAsync(userId, TokenSource!.Token);
             Assert.Equal(userId, savedUser!.Id);
             Assert.NotNull(savedUser.Profile!.EducationInfos);
-            Assert.Equal(index + 1, savedUser.Profile!.EducationInfos!.Count()!);
-            Assert.Equal(educationType, savedUser.Profile!.EducationInfos!.First()!.EducationType.AsEnum<EducationType>());
-            Assert.Equal(state, savedUser.Profile!.EducationInfos!.First()!.EducationType.AsEnum<CompletionState>());
+            Assert.True(savedUser.Profile!.EducationInfos!.Count()! >= index + 1);
+            Assert.Equal(educationType, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<EducationType>());
+            Assert.Equal(state, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<CompletionState>());
             return savedUser;
         }
 
