@@ -3,9 +3,8 @@
 
 using System;
 using Newtonsoft.Json;
-using ZstdSharp.Unsafe;
 
-namespace Apollo.Api
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     /// <summary>
     /// Custom Exception with the error code.

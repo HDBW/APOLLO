@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Apollo.Api
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     public static class ErrorCodes
     {

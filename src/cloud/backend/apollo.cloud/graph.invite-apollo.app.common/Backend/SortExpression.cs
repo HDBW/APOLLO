@@ -2,12 +2,8 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     /// <summary>
     /// Define the sorting operation over a certain field, order ascending: 1, descending: -1

@@ -5,8 +5,10 @@
 //using MongoDB.Bson.Serialization.Attributes;
 
 using System;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
-namespace Apollo.Common.Entities
+namespace Invite.Apollo.App.Graph.Common.Models
 {
     public class Contact
     {
@@ -37,7 +39,19 @@ namespace Apollo.Common.Entities
         //[BsonElement("ZipCode")]
         public string ZipCode { get; set; }
 
+        /// <summary>
+        /// This is the Region of the Contact
+        /// </summary>
+        public string? Region { get; set; }
+
+        /// <summary>
+        /// This is the Country of the Contact
+        /// </summary>
+        public string? Country { get; set; }
+
         //[BsonElement("AppointmentUrl")]
         public Uri EAppointmentUrl { get; set; }
+
+        public ApolloListItem ContactType { get; set; }
     }
 }
