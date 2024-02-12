@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
@@ -48,7 +49,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <note>
         /// CareerInfo_CareerType_filtered.txt
         /// </note>
-        public CareerType CareerType { get; set; }
+        public ApolloListItem CareerType { get; set; }
 
         /// <summary>
         /// Description of the Experience
@@ -92,7 +93,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <note>
         /// CareerInfo_ServiceType_filtered.txt
         /// </note>
-        public ServiceType? ServiceType { get; set; }
+        public ApolloListItem? ServiceType { get; set; }
 
         /// <summary>
         /// This is the Voluntary Service Type of the Experience.
@@ -101,7 +102,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <Note>
         /// CareerInfo_VoluntaryServiceType_filtered.txt
         /// </Note>
-        public VoluntaryServiceType? VoluntaryServiceType { get; set; }
+        public ApolloListItem? VoluntaryServiceType { get; set; }
 
         /// <summary>
         /// This is the Working Time Model of the Experience.

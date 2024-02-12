@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
@@ -106,19 +107,19 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         public Occupation? ProfessionalTitle { get; set; }
 
         // Auswahlliste
-        public CompletionState CompletionState { get; set; }
+        public ApolloListItem CompletionState { get; set; }
 
         // EducationInfo_Graduation_filtered.txt
         // Auswahlliste
-        public SchoolGraduation? Graduation { get; set; }
+        public ApolloListItem? Graduation { get; set; }
 
         // EducationInfo_UniversityDegree_filtered.txt
         // Auswahlliste
-        public UniversityDegree? UniversityDegree { get; set; }
+        public ApolloListItem? UniversityDegree { get; set; }
 
         // EducationInfo_TypeOfSchool_filtered.txt
         // Auswahlliste
-        public TypeOfSchool? TypeOfSchool { get; set; }
+        public ApolloListItem? TypeOfSchool { get; set; }
 
         // EducationInfo_NameOfInstitution_filtered.txt
         // Freitext
@@ -126,11 +127,11 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 
         // EducationInfo_EducationType_filtered.txt
         // Auswahlliste
-        public EducationType EducationType { get; set; }
+        public ApolloListItem EducationType { get; set; }
 
         // EducationInfo_Recognition_filtered.txt
         // Auswahlliste
-        public RecognitionType? Recognition { get; set; }
+        public ApolloListItem? Recognition { get; set; }
 
     }
 }
