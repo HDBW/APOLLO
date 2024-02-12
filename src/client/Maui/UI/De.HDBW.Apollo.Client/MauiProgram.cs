@@ -208,21 +208,6 @@ public static class MauiProgram
         });
     }
 
-    private static void SetupFakeServices(IServiceCollection services, IUserSecretsService secretsService, bool result)
-    {
-        services.AddSingleton<ITrainingService>((serviceProvider) =>
-        {
-            return new FakeTrainingService(
-                serviceProvider.GetService<ILogger<FakeTrainingService>>()!,
-                serviceProvider.GetService<ICourseItemRepository>()!,
-                serviceProvider.GetService<ICourseContactRepository>()!,
-                serviceProvider.GetService<ICourseAppointmentRepository>()!,
-                serviceProvider.GetService<ICourseContactRelationRepository>()!,
-                serviceProvider.GetService<IEduProviderItemRepository>()!,
-                serviceProvider.GetService<IDataBaseConnectionProvider>()!);
-        });
-    }
-
     private static void SetupRepositories(IServiceCollection services)
     {
         services.AddSingleton<IUserProfileItemRepository, UserProfileItemRepository>();

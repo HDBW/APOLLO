@@ -2,18 +2,16 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Globalization;
-using Apollo.Common.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Converter;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.PropertyEditor;
 using De.HDBW.Apollo.Client.ViewModels.PropertyEditors;
-using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
