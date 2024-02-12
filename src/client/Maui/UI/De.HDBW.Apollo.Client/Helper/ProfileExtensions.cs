@@ -1,7 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Contact = Invite.Apollo.App.Graph.Common.Models.Contact;
 
 namespace De.HDBW.Apollo.Client.Helper
@@ -10,7 +12,7 @@ namespace De.HDBW.Apollo.Client.Helper
     {
         public static List<Contact> AsSortedList(this List<Contact>? items)
         {
-            return items?.OrderBy(x => x.ContactType).ThenBy(x => x.Address).ToList() ?? new List<Contact>();
+            return items?.OrderBy(x => x.ContactType.AsEnum<ContactType>()).ThenBy(x => x.Address).ToList() ?? new List<Contact>();
         }
 
         public static List<Qualification> AsSortedList(this List<Qualification>? items)
@@ -35,7 +37,7 @@ namespace De.HDBW.Apollo.Client.Helper
 
         public static List<Language> AsSortedList(this List<Language>? items)
         {
-            return items?.OrderByDescending(x => x.Niveau).ThenByDescending(x => x.Code).ToList() ?? new List<Language>();
+            return items?.OrderByDescending(x => x.Niveau.AsEnum<LanguageNiveau>()).ThenByDescending(x => x.Code).ToList() ?? new List<Language>();
         }
 
         public static List<WebReference> AsSortedList(this List<WebReference>? items)

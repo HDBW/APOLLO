@@ -2,8 +2,11 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Globalization;
 using De.HDBW.Apollo.Client.Models.Generic;
+using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace De.HDBW.Apollo.Client.Models.Profile
 {
@@ -26,13 +29,15 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         protected override ObservableCollection<StringValue> GetAllLines(Language data)
         {
+            var culture = CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(x => x.Name == data.Code);
+
             var items = new List<StringValue>();
 #if ANDROID
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, culture?.DisplayName));
 #elif IOS
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, data.Code));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Language, culture?.NativeName));
 #endif
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_LanguageNiveau, data.Niveau?.ToString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_LanguageNiveau, data.Niveau?.AsEnum<LanguageNiveau>().ToString()));
             return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }
     }
