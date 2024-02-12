@@ -4,10 +4,9 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
-using Apollo.Api;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using static SQLite.SQLite3;
 
 namespace De.HDBW.Apollo.Data.Services
 {

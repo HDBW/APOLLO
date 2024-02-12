@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using Apollo.Common.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -13,6 +12,8 @@ using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json;
@@ -240,7 +241,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         */
 
                         var interaction = BasicViewInteractionEntry.Import<Training>(trainingItem?.TrainingName ?? string.Empty, provider, decoratorText, duration, image, Status.Unknown, trainingItem?.Id ?? string.Empty, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
-                        interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
+                        //interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
                         interactions.Add(interaction);
                     }
 
@@ -325,11 +326,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             entry.IsFavorite = !entry.IsFavorite;
             if (entry.IsFavorite)
             {
-                SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
+                //SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
             }
             else
             {
-                SessionService.RemoveFavorite(entry.EntityId.ToString(), entry.EntityType);
+                //SessionService.RemoveFavorite(entry.EntityId.ToString(), entry.EntityType);
             }
 
             return Task.CompletedTask;
@@ -350,7 +351,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             token.ThrowIfCancellationRequested();
             UpdateFilter(inputValue);
-            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, 0, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<Training>();
+            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, null, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<Training>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
             {

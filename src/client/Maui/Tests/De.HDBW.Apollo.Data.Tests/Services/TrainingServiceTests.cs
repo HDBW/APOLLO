@@ -1,7 +1,9 @@
-﻿using Apollo.Api;
-using Apollo.Common.Entities;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
 using De.HDBW.Apollo.Data.Services;
-using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
@@ -344,8 +346,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                     FieldName = nameof(Training.TrainingType),
                     Argument = new List<object>()
                     {
-                        TrainingType.Hybrid,
-                        TrainingType.Online,
+                        "Hybrid",
+                        "TrainingType",
                     },
 
                     Operator = QueryOperator.In,

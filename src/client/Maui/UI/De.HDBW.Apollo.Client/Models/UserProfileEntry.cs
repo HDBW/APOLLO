@@ -3,6 +3,7 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.SharedContracts.Models;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models

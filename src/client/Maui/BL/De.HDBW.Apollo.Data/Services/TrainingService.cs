@@ -1,11 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Reflection;
-using Apollo.Common.Entities;
-using De.HDBW.Apollo.Data.Extensions;
 using De.HDBW.Apollo.SharedContracts.Services;
-using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Services
@@ -50,14 +48,14 @@ namespace De.HDBW.Apollo.Data.Services
                 ? visibleFields
                 : new List<string>();
 
-            var query = new Query();
+            var query = new QueryTrainingsRequest();
             query.Filter = filter;
             query.SortExpression = sortExpression;
             query.Fields = visibleFields;
             query.Skip = skip ?? 0;
             query.Top = top ?? 100;
-            var response = await DoPostAsync<QueryResponse>(query, token).ConfigureAwait(false);
-            return response?.Trainings ?? Array.Empty<Training>();
+            var response = await DoPostAsync<QueryTrainingsResponse>(query, token).ConfigureAwait(false);
+            return response?.Trainings ?? new List<Training>();
         }
 
         private async Task<Training?> GetTrainingInternalAsync(string id, CancellationToken token)
