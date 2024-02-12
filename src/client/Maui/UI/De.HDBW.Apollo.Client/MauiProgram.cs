@@ -58,7 +58,6 @@ public static class MauiProgram
         SetupServices(builder.Services, secretsService, result);
         SetupDataBaseTableProvider(builder);
         SetupRepositories(builder.Services);
-        SetupFakeServices(builder.Services, secretsService, result);
         SetupViewsAndViewModels(builder.Services);
         builder.UseMauiApp<App>()
             .UseMauiCommunityToolkit()
@@ -200,13 +199,13 @@ public static class MauiProgram
         services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
         services.AddSingleton<ITouchService, TouchService>();
 
-        // var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
-        // var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
+        var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
+        var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
 
-        // services.AddSingleton<ITrainingService>((serviceProvider) =>
-        // {
-        //    return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>() !, apiUrl, apiToken, new FakeHttpClientHandler(apiUrl));
-        // });
+        services.AddSingleton<ITrainingService>((serviceProvider) =>
+        {
+            return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>()!, apiUrl, apiToken, new HttpClientHandler());
+        });
     }
 
     private static void SetupFakeServices(IServiceCollection services, IUserSecretsService secretsService, bool result)
@@ -214,13 +213,13 @@ public static class MauiProgram
         services.AddSingleton<ITrainingService>((serviceProvider) =>
         {
             return new FakeTrainingService(
-                serviceProvider.GetService<ILogger<FakeTrainingService>>() !,
-                serviceProvider.GetService<ICourseItemRepository>() !,
-                serviceProvider.GetService<ICourseContactRepository>() !,
-                serviceProvider.GetService<ICourseAppointmentRepository>() !,
-                serviceProvider.GetService<ICourseContactRelationRepository>() !,
-                serviceProvider.GetService<IEduProviderItemRepository>() !,
-                serviceProvider.GetService<IDataBaseConnectionProvider>() !);
+                serviceProvider.GetService<ILogger<FakeTrainingService>>()!,
+                serviceProvider.GetService<ICourseItemRepository>()!,
+                serviceProvider.GetService<ICourseContactRepository>()!,
+                serviceProvider.GetService<ICourseAppointmentRepository>()!,
+                serviceProvider.GetService<ICourseContactRelationRepository>()!,
+                serviceProvider.GetService<IEduProviderItemRepository>()!,
+                serviceProvider.GetService<IDataBaseConnectionProvider>()!);
         });
     }
 

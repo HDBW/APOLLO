@@ -73,12 +73,12 @@ namespace De.HDBW.Apollo.Data.Services
 
         private IDataBaseConnectionProvider DataBaseConnectionProvider { get; }
 
-        public Task<CourseItem?> GetTrainingAsync(long id, CancellationToken token)
+        public Task<Training?> GetTrainingAsync(string id, CancellationToken token)
         {
-            return CourseItemRepository.GetItemByIdAsync(id, token);
+            return null;
         }
 
-        public async Task<IEnumerable<string>> SearchSuggesionsAsync(Filter? filter, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, int? skip, int? top, CancellationToken token)
         {
             var maxItems = 5;
             IEnumerable<string> result = new List<string>();
@@ -86,7 +86,7 @@ namespace De.HDBW.Apollo.Data.Services
             {
                 var queryResult = await CourseItemRepository.GetItemsAsync(token).ConfigureAwait(false);
                 result = queryResult.Take(maxItems).Select(x => x.Title).ToList();
-                return result;
+                return new List<Training>();
             }
 
             var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
@@ -119,68 +119,69 @@ namespace De.HDBW.Apollo.Data.Services
                 result = result.Union(provider.Select(p => p.Name).Distinct());
             }
 
-            return result.Distinct().Take(maxItems);
+            return new List<Training>();
         }
 
-        public async Task<IEnumerable<CourseItem>> SearchTrainingsAsync(Filter? filter, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string> visibleItems, int? skip, int? top, CancellationToken token)
         {
-            IEnumerable<CourseItem> result = new List<CourseItem>();
-            if (filter == null)
-            {
-                result = await CourseItemRepository.GetItemsAsync(token).ConfigureAwait(false);
-                result = result.ToList();
-                return result;
-            }
+            IEnumerable<Training> result = new List<Training>();
+            return result;
+            //if (filter == null)
+            //{
+            //    result = await CourseItemRepository.GetItemsAsync(token).ConfigureAwait(false);
+            //    result = result.ToList();
+            //    return result;
+            //}
 
-            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            //var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
 
-            var expressions = new List<QueryExpression?>();
-            foreach (var field in filter.Fields)
-            {
-                expressions.Add(GetQueryExpressions(typeof(CourseItem), field));
-            }
+            //var expressions = new List<QueryExpression?>();
+            //foreach (var field in filter.Fields)
+            //{
+            //    expressions.Add(GetQueryExpressions(typeof(CourseItem), field));
+            //}
 
-            expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
-            if (expressions.Any())
-            {
-                var query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
-                result = await asyncConnection.QueryAsync<CourseItem>(query, expressions.Select(x => x!.Parameter).ToArray());
-            }
+            //expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
+            //if (expressions.Any())
+            //{
+            //    var query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
+            //    result = await asyncConnection.QueryAsync<CourseItem>(query, expressions.Select(x => x!.Parameter).ToArray());
+            //}
 
-            expressions = new List<QueryExpression?>();
-            foreach (var field in filter.Fields)
-            {
-                expressions.Add(GetQueryExpressions(typeof(EduProvider), field));
-            }
+            //expressions = new List<QueryExpression?>();
+            //foreach (var field in filter.Fields)
+            //{
+            //    expressions.Add(GetQueryExpressions(typeof(EduProvider), field));
+            //}
 
-            expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
-            if (expressions.Any())
-            {
-                var query = $"SELECT * FROM EduProviderItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
-                var provider = await asyncConnection.QueryAsync<EduProviderItem>(query, expressions.Select(x => x!.Parameter).ToArray());
-                var providerIds = provider?.Select(x => x.Id).ToArray() ?? Array.Empty<long>();
-                var subExpressions = new List<QueryExpression>();
-                foreach (var expression in expressions)
-                {
-                    switch (expression!.FieldName)
-                    {
-                        case nameof(Training.CourseProvider):
-                            subExpressions.Add(new QueryExpression(nameof(CourseItem.CourseProviderId), $"{nameof(CourseItem.CourseProviderId)} In (?)", providerIds));
-                            break;
+            //expressions = expressions.Where(x => x != null && !string.IsNullOrWhiteSpace(x.Query)).ToList();
+            //if (expressions.Any())
+            //{
+            //    var query = $"SELECT * FROM EduProviderItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", expressions.Select(e => e!.Query))}";
+            //    var provider = await asyncConnection.QueryAsync<EduProviderItem>(query, expressions.Select(x => x!.Parameter).ToArray());
+            //    var providerIds = provider?.Select(x => x.Id).ToArray() ?? Array.Empty<long>();
+            //    var subExpressions = new List<QueryExpression>();
+            //    foreach (var expression in expressions)
+            //    {
+            //        switch (expression!.FieldName)
+            //        {
+            //            case nameof(Training.CourseProvider):
+            //                subExpressions.Add(new QueryExpression(nameof(CourseItem.CourseProviderId), $"{nameof(CourseItem.CourseProviderId)} In (?)", providerIds));
+            //                break;
 
-                        case nameof(Training.TrainingProvider):
-                            subExpressions.Add(new QueryExpression(nameof(CourseItem.TrainingProviderId), $"{nameof(CourseItem.TrainingProviderId)} In (?)", providerIds));
-                            break;
-                    }
-                }
+            //            case nameof(Training.TrainingProvider):
+            //                subExpressions.Add(new QueryExpression(nameof(CourseItem.TrainingProviderId), $"{nameof(CourseItem.TrainingProviderId)} In (?)", providerIds));
+            //                break;
+            //        }
+            //    }
 
-                query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", subExpressions.Select(e => e.Query))}";
-                query = query.Replace("?", string.Join(",", providerIds));
-                var subResult = await asyncConnection.QueryAsync<CourseItem>(query);
-                result = result.Union(subResult);
-            }
+            //    query = $"SELECT * FROM CourseItem WHERE {string.Join(filter.IsOrOperator ? " OR " : " AND ", subExpressions.Select(e => e.Query))}";
+            //    query = query.Replace("?", string.Join(",", providerIds));
+            //    var subResult = await asyncConnection.QueryAsync<CourseItem>(query);
+            //    result = result.Union(subResult);
+            //}
 
-            return result.DistinctBy(x => x.Id);
+            //return result.DistinctBy(x => x.Id);
         }
 
         record QueryExpression

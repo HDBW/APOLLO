@@ -17,30 +17,28 @@ namespace De.HDBW.Apollo.Data.Services
         {
         }
 
-        public async Task<IEnumerable<string>> SearchSuggesionsAsync(Filter? filter, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, int? skip, int? top, CancellationToken token)
         {
-           var results = await SearchTrainingsAsync(filter, token);
-           return results?.Select(x => x.Title).ToArray() ?? Array.Empty<string>();
+           var results = await SearchTrainingsAsync(filter, null, skip, top, token);
+           return results ?? Array.Empty<Training>();
         }
 
-        public async Task<IEnumerable<CourseItem>> SearchTrainingsAsync(Filter? filter, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string>? visibleFields, int? skip, int? top, CancellationToken token)
         {
             filter = filter ?? new Filter() { Fields = new List<FieldExpression>() };
-            SortExpression sortExpression = new SortExpression() { FieldName = nameof(Training.TrainingName), Order = SortOrder.Descending };
-            List<string> visibleFields = typeof(Training).GetProperties(BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public).Select(p => p.Name).ToList();
-            visibleFields = new List<string>();
-            sortExpression = null;
-            var response = await GetTrainingsInternalAsync(filter, sortExpression, visibleFields, token).ConfigureAwait(false);
-            return response?.Select(x => x.ConvertToCourseItem()).ToList() as IEnumerable<CourseItem> ?? Array.Empty<CourseItem>();
+            var sortExpression = new SortExpression() { FieldName = nameof(Training.TrainingName), Order = SortOrder.Descending };
+            visibleFields = visibleFields ?? new List<string>() { nameof(Training.Id), nameof(Training.TrainingName) };
+            var response = await GetTrainingsInternalAsync(filter, sortExpression, visibleFields, skip, top, token).ConfigureAwait(false);
+            return response ?? Array.Empty<Training>();
         }
 
-        public async Task<CourseItem?> GetTrainingAsync(long id, CancellationToken token)
+        public async Task<Training?> GetTrainingAsync(string id, CancellationToken token)
         {
             var response = await GetTrainingInternalAsync(id, token).ConfigureAwait(false);
-            return response?.ConvertToCourseItem();
+            return response;
         }
 
-        private async Task<IEnumerable<Training>?> GetTrainingsInternalAsync(Filter filter, SortExpression sortExpression, List<string> visibleFields, CancellationToken token)
+        private async Task<IEnumerable<Training>?> GetTrainingsInternalAsync(Filter filter, SortExpression sortExpression, List<string> visibleFields, int? skip, int? top, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
 
@@ -48,26 +46,21 @@ namespace De.HDBW.Apollo.Data.Services
                 ? filter.Fields
                 : new List<FieldExpression>();
 
-            visibleFields = (visibleFields != null)
-                ? visibleFields.Select(f => f).ToList()
+            visibleFields = visibleFields != null
+                ? visibleFields
                 : new List<string>();
-
-            if (sortExpression != null)
-            {
-                sortExpression.FieldName = (sortExpression != null)
-                ? sortExpression.FieldName
-                : string.Empty;
-            }
 
             var query = new Query();
             query.Filter = filter;
             query.SortExpression = sortExpression;
-            query.Fields = visibleFields.Select(f => f).ToList();
+            query.Fields = visibleFields;
+            query.Skip = skip ?? 0;
+            query.Top = top ?? 100;
             var response = await DoPostAsync<QueryResponse>(query, token).ConfigureAwait(false);
             return response?.Trainings ?? Array.Empty<Training>();
         }
 
-        private async Task<Training?> GetTrainingInternalAsync(long id, CancellationToken token)
+        private async Task<Training?> GetTrainingInternalAsync(string id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             return await DoGetAsync<Training>(id, token);
