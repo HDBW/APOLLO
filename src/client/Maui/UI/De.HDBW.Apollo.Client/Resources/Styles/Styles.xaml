@@ -231,6 +231,7 @@
     </Style>
 
     <Style TargetType="DatePicker">
+        <Setter Property="Margin" Value="{OnPlatform '0', Android='0,1,0,-1'}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
@@ -249,6 +250,7 @@
     </Style>
 
     <Style TargetType="cdp:NullableDatePicker">
+        <Setter Property="Margin" Value="{OnPlatform '0', Android='0,1,0,-1'}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
@@ -288,6 +290,7 @@
     </Style>
 
     <Style TargetType="Entry">
+        <Setter Property="Margin" Value="{OnPlatform '0', Android='0,3,0,-3'}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="FontFamily" Value="NotoSansRegular" />
         <Setter Property="Background" Value="{StaticResource Neutral0Brush}" />
@@ -356,6 +359,7 @@
     </Style>
 
     <Style TargetType="Picker">
+        <Setter Property="Margin" Value="{OnPlatform '0', Android='0,3,0,-3'}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
         <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />

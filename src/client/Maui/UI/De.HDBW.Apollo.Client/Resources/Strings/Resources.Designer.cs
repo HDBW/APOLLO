@@ -1593,7 +1593,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arbeitszeitmodel.
+        ///   Looks up a localized string similar to Arbeitszeitmodell.
         /// </summary>
         public static string Global_WorkTimeModel {
             get {
