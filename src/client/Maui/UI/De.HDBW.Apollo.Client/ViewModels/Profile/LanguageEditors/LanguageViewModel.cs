@@ -107,7 +107,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_B2, LanguageNiveau.B2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C1, LanguageNiveau.C1, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C2, LanguageNiveau.C2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
-            var selectedNivau = languageNiveaus.FirstOrDefault(x => ((ApolloListItem?)x.Data)?.ListItemId == niveau?.ListItemId);
+            var selectedNivau = languageNiveaus.FirstOrDefault(x => ((LanguageNiveau?)x.Data) == niveau?.AsEnum<LanguageNiveau>());
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(code, name, languageNiveaus.AsSortedList(), selectedNivau, isDirty), token).ConfigureAwait(false);
             return language;
         }

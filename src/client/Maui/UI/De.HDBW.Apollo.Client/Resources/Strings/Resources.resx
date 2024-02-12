@@ -714,7 +714,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>Berufsbezeichnung</value>
   </data>
   <data name="Global_WorkTimeModel" xml:space="preserve">
-    <value>Arbeitszeitmodel</value>
+    <value>Arbeitszeitmodell</value>
   </data>
   <data name="VoluntaryServiceType_FederalVolunteerService" xml:space="preserve">
     <value>Bundesfreiwilligendienst</value>
