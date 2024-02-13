@@ -8,16 +8,16 @@ namespace De.HDBW.Apollo.Data.Helper
     public static class ApolloListItemExtensions
     {
         public static TU? AsEnum<TU>(this ApolloListItem? item)
-            where TU : Enum
+            where TU : struct, Enum
         {
             if (item == null)
             {
-                return default;
+                return null;
             }
 
             if (!Enum.IsDefined(typeof(TU), item.ListItemId))
             {
-                return default;
+                return null;
             }
 
             return (TU)Enum.ToObject(typeof(TU), item.ListItemId);

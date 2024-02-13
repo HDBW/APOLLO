@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -529,7 +530,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             informations.Add(InteractionEntry.Import(Resources.Strings.Resources.MobilityEditView_Title, new NavigationData(Routes.MobilityEditView, null), NavigateToRoute, CanNavigateToRoute, MobilityInfoIcon));
             informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Willing, mobility.WillingToTravel?.AsEnum<Willing>().GetLocalizedString()));
             informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_Vehicle, mobility.HasVehicle ? Resources.Strings.Resources.Global_Yes : Resources.Strings.Resources.Global_No));
-            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", mobility.DriverLicenses.Select(x => Resources.Strings.Resources.ResourceManager.GetString($"DriversLicense_{Enum.GetName(x.AsEnum<DriversLicense>())}")) ?? new List<string>())));
+            informations.Add(StringValue.Import(Resources.Strings.Resources.MobilityEditView_DriverLicenses, string.Join(", ", mobility.DriverLicenses.Select(x => Resources.Strings.Resources.ResourceManager.GetString($"DriversLicense_{Enum.GetName(x.AsEnum<DriversLicense>()!.Value)}")) ?? new List<string>())));
             return informations;
         }
 

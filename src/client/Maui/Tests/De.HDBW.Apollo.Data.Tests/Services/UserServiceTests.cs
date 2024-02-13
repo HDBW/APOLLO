@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Xml.Linq;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
@@ -130,7 +132,14 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 user = await Service.GetUserAsync(userId, TokenSource!.Token);
                 Assert.NotNull(user);
+                Assert.False(string.IsNullOrWhiteSpace(user.Id));
                 var profile = user?.Profile ?? new Profile();
+                profile.Licenses = null;
+                profile.CareerInfos = null;
+                profile.EducationInfos = null;
+                profile.Qualifications = null;
+                profile.WebReferences = null;
+                profile.MobilityInfo = null;
                 user!.Profile = profile;
                 var savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
@@ -140,7 +149,12 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.Equal(userId, user!.Id);
                 Assert.NotNull(user.Profile);
                 //Assert.False(string.IsNullOrWhiteSpace(user!.Profile!.Id));
-
+                Assert.Null(user.Profile.CareerInfos);
+                Assert.Null(user.Profile.Licenses);
+                Assert.Null(user.Profile.EducationInfos);
+                Assert.Null(user.Profile.Qualifications);
+                Assert.Null(user.Profile.CareerInfos);
+                Assert.Null(user.Profile.WebReferences);
                 try
                 {
                     user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();
@@ -295,6 +309,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.Equal(userId, savedUser!.Id);
             Assert.NotNull(savedUser.Profile!.CareerInfos);
             Assert.True(savedUser.Profile!.CareerInfos!.Count()! >= index + 1);
+            Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.CareerInfos![index].Id));
             Assert.Equal(careerType, savedUser.Profile!.CareerInfos![index].CareerType.AsEnum<CareerType>());
             Assert.Equal(start, savedUser.Profile!.CareerInfos![index].Start);
             Assert.Equal(end, savedUser.Profile!.CareerInfos![index].End);
@@ -331,6 +346,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.Equal(userId, savedUser!.Id);
             Assert.NotNull(savedUser.Profile!.Qualifications);
             Assert.Equal(index + 1, savedUser.Profile!.Qualifications!.Count()!);
+            Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.Qualifications![index].Id));
             Assert.Equal(name, savedUser.Profile!.Qualifications![index].Name);
             Assert.Equal(description, savedUser.Profile!.Qualifications![index].Description);
             Assert.Equal(granted, savedUser.Profile!.Qualifications![index].IssueDate);
@@ -354,7 +370,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.Equal(hasVehicle, savedUser.Profile!.MobilityInfo!.HasVehicle);
             Assert.Equal(willing, savedUser.Profile!.MobilityInfo!.WillingToTravel.AsEnum<Willing>());
             Assert.Equal(driversLicenses.Count, savedUser.Profile!.MobilityInfo!.DriverLicenses.Count());
-            Assert.True(savedUser.Profile!.MobilityInfo!.DriverLicenses.TrueForAll(d => driversLicenses!.Contains(d.AsEnum<DriversLicense>())));
+            Assert.True(savedUser.Profile!.MobilityInfo!.DriverLicenses.TrueForAll(d =>
+            {
+                return driversLicenses!.Contains(d.AsEnum<DriversLicense>()!.Value);
+            }));
             return savedUser;
         }
 
@@ -386,6 +405,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.Equal(userId, savedUser!.Id);
             Assert.NotNull(savedUser.Profile!.LanguageSkills);
             Assert.Equal(index + 1, savedUser.Profile!.LanguageSkills!.Count()!);
+            Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.LanguageSkills![index].Id));
             Assert.Equal(code, savedUser.Profile!.LanguageSkills![index].Code);
             Assert.Equal(niveau, savedUser.Profile!.LanguageSkills![index].Niveau.AsEnum<LanguageNiveau>());
             Assert.Equal(new CultureInfo(code).DisplayName, savedUser.Profile!.LanguageSkills![index].Name); 
@@ -420,7 +440,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.NotNull(savedUser.Profile!.WebReferences);
             Assert.Equal(index + 1, savedUser.Profile!.WebReferences!.Count()!);
             Assert.Equal(title, savedUser.Profile!.WebReferences![index].Title);
-            //Assert.Equal(uri, savedUser.Profile!.WebReferences![index].Url.OriginalString);
+            Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.WebReferences![index].Id));
+            Assert.Equal(uri, savedUser.Profile!.WebReferences![index].Url.OriginalString);
             return savedUser;
         }
 
@@ -453,6 +474,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.NotNull(savedUser.Profile!.Licenses);
             Assert.True(savedUser.Profile!.Licenses!.Count()! >= index + 1);
             Assert.Equal(name, savedUser.Profile!.Licenses![index].Name);
+            Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.Licenses![index].Id));
             Assert.Equal(granted, savedUser.Profile!.Licenses![index].Granted);
             Assert.Equal(expires, savedUser.Profile!.Licenses![index].Expires);
             return savedUser;
@@ -484,6 +506,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.Equal(userId, savedUser!.Id);
             Assert.NotNull(savedUser.Profile!.EducationInfos);
             Assert.True(savedUser.Profile!.EducationInfos!.Count()! >= index + 1);
+            Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.EducationInfos![index].Id));
             Assert.Equal(educationType, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<EducationType>());
             Assert.Equal(state, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<CompletionState>());
             return savedUser;
