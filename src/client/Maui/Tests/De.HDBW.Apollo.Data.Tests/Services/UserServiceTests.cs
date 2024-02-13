@@ -1,10 +1,12 @@
 ﻿using System.Globalization;
+using System.Xml.Linq;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Graphics.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -155,7 +157,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     errors++;
                     user.Profile!.CareerInfos = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating CareerInfos");
+                    Logger.LogError(ex, "Error while creating CareerInfos");
                 }
 
                 try
@@ -170,7 +172,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     errors++;
                     user.Profile!.EducationInfos = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating EductationInfo");
+                    Logger.LogError(ex, "Error while creating EductationInfo");
                 }
 
                 try
@@ -184,7 +186,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     errors++;
                     user.Profile!.Licenses = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating Licenses");
+                    Logger.LogError(ex, "Error while creating Licenses");
                 }
 
                 try
@@ -198,7 +200,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     errors++;
                     user.Profile!.WebReferences = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating WebReferences");
+                    Logger.LogError(ex, "Error while creating WebReferences");
                 }
 
                 try
@@ -212,13 +214,13 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     errors++;
                     user.Profile!.LanguageSkills = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating LanguageSkills");
+                    Logger.LogError(ex, "Error while creating LanguageSkills");
                 }
 
                 try
                 {
                     user.Profile!.MobilityInfo = user.Profile!.MobilityInfo ?? new Mobility();
-                    user = await CreateAndCheckMobilityInfoAsync(user, userId, false, Willing.No, new List<DriversLicense>() { DriversLicense.D, DriversLicense.BE, DriversLicense.D1});
+                    user = await CreateAndCheckMobilityInfoAsync(user, userId, false, Willing.No, new List<DriversLicense>() { DriversLicense.D, DriversLicense.BE, DriversLicense.D1 });
                     user = await CreateAndCheckMobilityInfoAsync(user, userId, true, null, new List<DriversLicense>() { });
                     user = await CreateAndCheckMobilityInfoAsync(user, userId, false, null, new List<DriversLicense>() { DriversLicense.A });
                 }
@@ -226,7 +228,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     errors++;
                     user.Profile!.MobilityInfo = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating MobilityInfo");
+                    Logger.LogError(ex, "Error while creating MobilityInfo");
                 }
 
                 try
@@ -240,7 +242,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 {
                     errors++;
                     user.Profile!.Qualifications = null;
-                    ((ILogger)Logger).LogError(ex, "Error while creating Qualifications");
+                    Logger.LogError(ex, "Error while creating Qualifications");
                 }
             }
             catch (ApolloApiException ex)
@@ -280,11 +282,11 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
             else
             {
-                var careerInfo = existingUser.Profile.CareerInfos![index]!;
+                Assert.NotNull(existingUser.Profile!.CareerInfos);
+                var careerInfo = existingUser.Profile.CareerInfos[index]!;
                 careerInfo.CareerType = careerType.ToApolloListItem()!;
                 careerInfo.Start = start;
                 careerInfo.End = end;
-                existingUser!.Profile!.CareerInfos!.Add(careerInfo);
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
@@ -310,6 +312,17 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 qualification.IssueDate = granted;
                 qualification.ExpirationDate = expires;
                 existingUser.Profile!.Qualifications!.Add(qualification);
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
+            else
+            {
+                Assert.NotNull(existingUser.Profile!.Qualifications);
+                var qualification = existingUser.Profile.Qualifications[index]!;
+                qualification.Name = name;
+                qualification.Description = description;
+                qualification.IssueDate = granted;
+                qualification.ExpirationDate = expires;
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
@@ -358,6 +371,16 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
+            else
+            {
+                Assert.NotNull(existingUser.Profile!.LanguageSkills);
+                var language = existingUser.Profile!.LanguageSkills[index]!;
+                language.Niveau = niveau.ToApolloListItem();
+                language.Name = new CultureInfo(code).DisplayName;
+                language.Code = code;
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
 
             var savedUser = await Service.GetUserAsync(userId, TokenSource!.Token);
             Assert.Equal(userId, savedUser!.Id);
@@ -379,6 +402,15 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 webReferences.Title = title;
                 webReferences.Url = new Uri(uri);
                 existingUser.Profile!.WebReferences!.Add(webReferences);
+                savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
+                Assert.Equal(userId, savedUserId);
+            }
+            else
+            {
+                Assert.NotNull(existingUser.Profile!.WebReferences);
+                var webReferences = existingUser.Profile!.WebReferences[index]!;
+                webReferences.Title = title;
+                webReferences.Url = new Uri(uri);
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
@@ -407,11 +439,11 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
             else
             {
+                Assert.NotNull(existingUser.Profile!.Licenses);
                 var license = existingUser.Profile!.Licenses[index]!;
                 license.Name = name;
                 license.Granted = granted;
                 license.Expires = expires;
-                existingUser.Profile!.Licenses!.Add(license);
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
@@ -440,10 +472,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
             else
             {
-                var educationInfo = new EducationInfo();
+                Assert.NotNull(existingUser.Profile!.EducationInfos);
+                var educationInfo = existingUser.Profile!.EducationInfos[index]!;
                 educationInfo.EducationType = educationType.ToApolloListItem()!;
                 educationInfo.CompletionState = state.ToApolloListItem()!;
-                existingUser.Profile!.EducationInfos!.Add(educationInfo);
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }

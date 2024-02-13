@@ -23,13 +23,13 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
         [InlineData(10, 10, 10, null)]
         [InlineData(50, 10, 10, null)]
         [InlineData(50, 10, 10, "it")]
-        public async Task GetMaxItemsAsync(int itemsToGenerate, int resultLimit, int expectedResultCount, string query)
+        public async Task GetMaxItemsAsync(int itemsToGenerate, int resultLimit, int expectedResultCount, string? query)
         {
             using (var context = new DatabaseTestContext(Path.GetTempFileName(), Logger))
             {
                 var repository = GetRepository(context) as ISearchHistoryRepository;
                 var data = new List<SearchHistory>();
-                await repository.ResetItemsAsync(data, CancellationToken.None);
+                await repository!.ResetItemsAsync(data, CancellationToken.None);
 
                 for (int i = 0; i < itemsToGenerate; i++)
                 {

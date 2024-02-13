@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.Client
                 TouchService = IPlatformApplication.Current?.Services.GetService<ITouchService>();
                 UITapGestureRecognizer tap = new UITapGestureRecognizer(Self, new ObjCRuntime.Selector("gestureRecognizer:shouldReceiveTouch:"));
                 tap.Delegate = (IUIGestureRecognizerDelegate)Self;
-                IPlatformApplication.Current?.Application?.Windows?.Select(x => x.Handler?.PlatformView as UIWindow).Where(x => x != null).FirstOrDefault(x => x.IsKeyWindow)?.AddGestureRecognizer(tap);
+                IPlatformApplication.Current?.Application?.Windows?.Select(x => x.Handler?.PlatformView as UIWindow).FirstOrDefault(x => x != null && x.IsKeyWindow)?.AddGestureRecognizer(tap);
             }
 
             return result;
