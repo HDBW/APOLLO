@@ -373,6 +373,7 @@ namespace Apollo.Api.UnitTests
             await PopulateYearRange();
             await PopulateWorkingTimeModel();
             await PopulateCompletionState();
+            await PopulateKnownLicense();
         }
 
         private async Task PopulateContactType()
@@ -888,8 +889,83 @@ namespace Apollo.Api.UnitTests
             Assert.IsTrue(dbItem.ItemType == nameof(WorkingTimeModel));
             Assert.IsTrue(dbItem.Items.Count == 6);
         }
-        #endregion
 
+
+        private async Task PopulateKnownLicense()
+        {
+            var api = Helpers.GetApolloApi();
+
+            ApolloList apolloList = new ApolloList
+            {
+                Description = "Is Culture specific and prop a List sync",
+                ItemType = nameof(License),
+                Items = new List<ApolloListItem>
+                {
+                   new ApolloListItem { ListItemId = 0, Value = "Verwaltungsfachprüfung", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 1, Value = "Verwaltungsfachprüfung I", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 2, Value = "A-Patent mit Diplom", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 3, Value = "A-Patent ohne Diplom", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 5, Value = "Allg. Sprechfunkzeugnis für den Flugfunkdienst (AZF)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 6, Value = "Allgemeines Betriebszeugnis für Funker (GOC)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 7, Value = "Approbation", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 8, Value = "Arbeitsmedizinische Vorsorgeuntersuchung G 25 (Fahr-, Steuer- und Überwachungstätigkeiten)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 9, Value = "Arbeitsmedizinische Vorsorgeuntersuchung G 26.3 (Tragen von schwerem Atemschutzgerät)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 10, Value = "Arbeitsmedizinische Vorsorgeuntersuchung G 41 (Arbeiten mit Absturzgefahr)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 11, Value = "Arbeitssicherheit an Bahnanlagen (KoRil 406)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 12, Value = "Arbeitszugführung, Prüfung (Eisenbahn, Gleisbau)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 13, Value = "ATPL-A (Airline Transport Pilot Licence - Aircraft)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 15, Value = "Ausbildereignungsprüfung", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 16, Value = "Ausbildung von Luftfahrzeugführern im Instrumentenflug", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 17, Value = "Ausbildung zum Fluglehrer", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 18, Value = "Ausbildung zum Fluglehrer", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 19, Value = "B1-Lehrgang (Feuerwehr)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 20, Value = "Bahnübergangsposten, Prüfung (Eisenbahn, Gleisbau)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 21, Value = "Basic safety training (Seefahrt)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 22, Value = "Bedienerausweis für Hebebühnen/Hubarbeitsbühnen", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 23, Value = "Befähigung für Arbeiten unter Spannung (AuS)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 24, Value = "Befähigung nach §20 SprengG", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 25, Value = "Befähigung nach Berufskraftfahrer-Qualifikations-Gesetz (BKrFQG)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 26, Value = "Berechtigung Motorsäge/Freischneider", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 27, Value = "Beschränkt gültiges Betriebszeugnis für Funker (ROC)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 28, Value = "Beschränkt gültiges Sprechfunkzeugnis für den Flugfunkdienst (BZF I)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 29, Value = "Betriebsmittelprüfung gemäß DGUV", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 30, Value = "BF3-Berechtigung (Begleitfahrzeuge)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 31, Value = "Bodenseeschifferpatent", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 32, Value = "Bootsmannbrief", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 33, Value = "BOSIET - Basic Offshore Safety Induction Emergency Training", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 34, Value = "Brandschutzbeauftragte/r (Lehrgang)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 35, Value = "Bremsprobenberechtigung (Eisenbahn)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 36, Value = "Bridge Team Management", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 37, Value = "Brücken-Wachbefähigung (Wachgänger)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 38, Value = "C-Patent mit Diplom", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 40, Value = "C1-Lehrgang (Feuerwehr)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 41, Value = "C2-Lehrgang (Feuerwehr)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 43, Value = "CPL-A (Commercial Pilot Licence - Airplane)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 44, Value = "CPL-H (Commercial Pilot Licence - Helicopter)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 45, Value = "D-Patent mit Diplom", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 46, Value = "D1-Lehrgang (Feuerwehr)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 47, Value = "D2-Lehrgang (Feuerwehr)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 48, Value = "DGQ-Schein", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 49, Value = "Digitale Lernzertifikate", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 50, Value = "Drohnenführerschein (Kenntnisnachw. g. §§ 21a, 21b LuftVO)", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 51, Value = "Elektro-Blechschweißer-Prüfung", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 52, Value = "Elektro-Schweißen Basisqualifikation", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 53, Value = "Elektronikpass", Lng = "de-de", Description = null },
+                    new ApolloListItem { ListItemId = 54, Value = "Emspatent", Lng = "de-de", Description = null },
+
+                    // TODO : Mukit
+
+                }
+            };
+
+            var id = await api.CreateOrUpdateListAsync(apolloList);
+
+            var dbItem = await api.GetListAsync(id: id);
+            Assert.IsNotNull(dbItem);
+            Assert.IsTrue(dbItem.ItemType == nameof(License));
+          // Assert.IsTrue(dbItem.Items.Count == 6);
+        }
+        #endregion
     }
 }
 
