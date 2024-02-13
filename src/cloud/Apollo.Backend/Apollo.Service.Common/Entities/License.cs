@@ -3,16 +3,19 @@
 
 namespace Apollo.Common.Entities
 {
-    public class License
+    /// <summary>
+    /// Allowed to be extended by user.
+    /// </summary>
+    public class License : ExtendableApolloListItem
     {
         /// <summary>
         /// The id of the license in Apollo
         /// </summary>
-        public string? Id { get; set; }
+        //public string? Id { get; set; }
 
         // License_Name_filtered.txt
         // Freitext
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
         public DateTime? Granted { get; set; }
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Remove="Entities\EntityBase.cs" />
+    <Compile Remove="Entities\LanguageNiveau.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <None Include="Entities\EntityBase.cs" />
+    <None Include="Entities\LanguageNiveau.cs" />
   </ItemGroup>
 
   <ItemGroup>

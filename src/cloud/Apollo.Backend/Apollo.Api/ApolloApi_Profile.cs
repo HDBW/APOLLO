@@ -83,49 +83,49 @@ namespace Apollo.Api
         }
 
 
-        /// <summary>
-        /// Inserts a new profile into the system.
-        /// </summary>
-        /// <param name="userId">The id of the user to whom th eprofile will be associated.</param>
-        /// <param name="profile">The Profile object to be inserted.</param>
-        /// <returns>Task that represents the asynchronous operation, containing the unique identifier of the inserted profile.</returns>
-        public virtual async Task<string> InsertProfileAsync(string userId, Profile profile)
-        {
-            try
-            {
-                _logger?.LogTrace($"Entered {nameof(InsertProfileAsync)}");
+        ///// <summary>
+        ///// Inserts a new profile into the system.
+        ///// </summary>
+        ///// <param name="userId">The id of the user to whom th eprofile will be associated.</param>
+        ///// <param name="profile">The Profile object to be inserted.</param>
+        ///// <returns>Task that represents the asynchronous operation, containing the unique identifier of the inserted profile.</returns>
+        //public virtual async Task<string> InsertProfileAsync(string userId, Profile profile)
+        //{
+        //    try
+        //    {
+        //        _logger?.LogTrace($"Entered {nameof(InsertProfileAsync)}");
 
-                // Generate a unique profile ID if it's not provided
-                if (String.IsNullOrEmpty(profile.Id))
-                    profile.Id = CreateProfileId(userId);
+        //        // Generate a unique profile ID if it's not provided
+        //        if (String.IsNullOrEmpty(profile.Id))
+        //            profile.Id = CreateProfileId(userId);
 
-                // Check if the profile with the same ID already exists before inserting
-                var existingProfile = await _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profile.Id);
-                if (existingProfile != null)
-                {
-                    // Profile with the same ID already exists, throw an ApolloException with a specific code and message
-                    throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileAlreadyExists, $"Profile with ID '{profile.Id}' already exists.");
-                }
+        //        // Check if the profile with the same ID already exists before inserting
+        //        var existingProfile = await _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profile.Id);
+        //        if (existingProfile != null)
+        //        {
+        //            // Profile with the same ID already exists, throw an ApolloException with a specific code and message
+        //            throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileAlreadyExists, $"Profile with ID '{profile.Id}' already exists.");
+        //        }
 
-                await _dal.InsertAsync(ApolloApi.GetCollectionName<Profile>(), Convertor.Convert(profile));
+        //        await _dal.InsertAsync(ApolloApi.GetCollectionName<Profile>(), Convertor.Convert(profile));
 
-                _logger?.LogTrace($"Inserting profile with Id: {profile.Id}");
+        //        _logger?.LogTrace($"Inserting profile with Id: {profile.Id}");
 
-                return profile.Id;
-            }
-            catch (ApolloApiException)
-            {
+        //        return profile.Id;
+        //    }
+        //    catch (ApolloApiException)
+        //    {
 
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $" failed execution of {nameof(InsertProfileAsync)}: {ex.Message}");
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, $" failed execution of {nameof(InsertProfileAsync)}: {ex.Message}");
 
-                // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.ProfileErrors.InsertProfileError, "An error occurred while inserting the profile.", ex);
-            }
-        }
+        //        // For other exceptions, throw an ApolloApiException with a general error code and message
+        //        throw new ApolloApiException(ErrorCodes.ProfileErrors.InsertProfileError, "An error occurred while inserting the profile.", ex);
+        //    }
+        //}
 
 
         /// <summary>
@@ -157,14 +157,14 @@ namespace Apollo.Api
                 {
                     //
                     //Check User Id is exist
-                    var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile?.Id);
+                    var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile?.Id!);
                     //
                     //If Not trough Exception
                     if (res == false)
                         throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
                 }
 
-                await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile) });
+                await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfile)}");
 

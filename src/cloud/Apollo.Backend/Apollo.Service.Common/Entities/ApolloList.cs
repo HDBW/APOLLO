@@ -75,4 +75,13 @@ namespace Apollo.Common.Entities
         public required string Value { get; set; }
    
     }
+
+
+    /// <summary>
+    /// User can enter new values.
+    /// </summary>
+    public class ExtendableApolloListItem : ApolloListItem
+    {
+
+    }
 }
