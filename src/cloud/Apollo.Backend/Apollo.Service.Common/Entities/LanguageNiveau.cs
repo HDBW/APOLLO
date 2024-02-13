@@ -7,14 +7,14 @@ namespace Apollo.Common.Entities
     /// This is defined by the Common European Framework of Reference for Languages (CEFR).
     /// It will most likely not change that frequently.
     /// </summary>
-    public enum LanguageNiveau
+    public class LanguageNiveau : ApolloListItem
     {
-        Unknown = 0,
-        A1 = 1,
-        A2 = 2,
-        B1 = 3,
-        B2 = 4,
-        C1 = 5,
-        C2 = 6,
+        //Unknown = 0,
+        //A1 = 1,
+        //A2 = 2,
+        //B1 = 3,
+        //B2 = 4,
+        //C1 = 5,
+        //C2 = 6,
     }
 }

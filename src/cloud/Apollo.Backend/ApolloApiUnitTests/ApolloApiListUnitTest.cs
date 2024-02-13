@@ -373,7 +373,6 @@ namespace Apollo.Api.UnitTests
             await PopulateYearRange();
             await PopulateWorkingTimeModel();
             await PopulateCompletionState();
-
         }
 
         private async Task PopulateContactType()
