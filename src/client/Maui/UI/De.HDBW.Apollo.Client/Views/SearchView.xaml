@@ -10,7 +10,6 @@
              ios:Page.UseSafeArea="true"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
-           
              Shell.TabBarIsVisible="True"
              Shell.FlyoutBehavior="Flyout"
              Title="{x:Static strings:Resources.SearchView_Title}"
@@ -18,15 +17,17 @@
     <Shell.SearchHandler>
         <local:BindableSearchHandler
             QueryIcon="magnify.png"
+            TextColor="{StaticResource TextColor}"
+            BackgroundColor="{StaticResource White}"
             SearchCommand="{x:Binding SearchCommand}"
             Suggestions="{x:Binding Suggestions}"
             Recent="{x:Binding Recents}"
             ShowsResults="True">
             <local:BindableSearchHandler.ItemTemplate>
                 <DataTemplate x:DataType="models:SearchSuggestionEntry">
-                    <Grid ColumnDefinitions="24,*">
-                        <Image Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" />
-                        <Label Grid.Column="1" Text="{x:Binding Name}" Padding="5,0" VerticalOptions="Center"/>
+                    <Grid ColumnDefinitions="auto,*" BackgroundColor="{StaticResource White}">
+                        <Image Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Margin="8,0"/>
+                        <Label Grid.Column="1" Text="{x:Binding Name}" TextColor="{StaticResource Primary}" Padding="0,0,5,0" VerticalOptions="Center"/>
                     </Grid>
                 </DataTemplate>
             </local:BindableSearchHandler.ItemTemplate>
@@ -42,6 +43,13 @@
                                       CourseItemColor="{StaticResource Tag2}"/>
     </ContentPage.Resources>
     <CollectionView ItemsSource="{x:Binding SearchResults}">
+        <CollectionView.EmptyView>
+            <ContentView VerticalOptions="Fill">
+                <Grid Padding="24">
+                    <Image Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                </Grid>
+            </ContentView>
+        </CollectionView.EmptyView>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="interactionModels:StartViewInteractionEntry">
                 <Border BackgroundColor="White" StrokeThickness="0" HeightRequest="240" >

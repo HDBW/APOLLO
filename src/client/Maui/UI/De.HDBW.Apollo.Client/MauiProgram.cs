@@ -41,6 +41,10 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Microsoft.Maui.Controls.Handlers.Compatibility;
+using Microsoft.Maui.Controls.Platform.Compatibility;
+using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -529,7 +533,7 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
 
-            Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchBar), (handler, view) =>
+            Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchBarHandler), (handler, view) =>
             {
 #if ANDROID
 #elif IOS
@@ -542,6 +546,7 @@ namespace De.HDBW.Apollo.Client
 #if IOS
             handlers.AddHandler(typeof(SearchBar), typeof(De.HDBW.Apollo.Client.Platforms.iOS.CustomSearchbarHandler));
 #elif ANDROID
+            handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
 #endif
         }
     }
