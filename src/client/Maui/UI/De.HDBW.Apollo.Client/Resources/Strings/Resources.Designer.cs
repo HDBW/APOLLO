@@ -1287,6 +1287,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Art der Berufserfahrung.
+        /// </summary>
+        public static string Global_CareerType {
+            get {
+                return ResourceManager.GetString("Global_CareerType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stadt.
         /// </summary>
         public static string Global_City {
@@ -2231,6 +2240,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Berufserfahrungen hinzufügen.
+        /// </summary>
+        public static string ProfileView_CareerEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_CareerEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontakte hinzufügen.
+        /// </summary>
+        public static string ProfileView_ContactInfoEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_ContactInfoEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bildung hinzufügen.
+        /// </summary>
+        public static string ProfileView_EducationEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_EducationEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Los geht&apos;s!.
         /// </summary>
         public static string ProfileView_Empty_Button {
@@ -2249,7 +2285,52 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Je besser Dein Profil gefüllt ist, desto bessere Vorschläge liefern wir Dir..
+        ///   Looks up a localized string similar to Sprachkenntnisse hinzufügen.
+        /// </summary>
+        public static string ProfileView_LanguageEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_LanguageEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lizenzen hinzufügen.
+        /// </summary>
+        public static string ProfileView_LizenzenEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_LizenzenEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angaben zur Mobilität hinzufügen.
+        /// </summary>
+        public static string ProfileView_MobilityEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_MobilityEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persönliche Informationen hinzufügen.
+        /// </summary>
+        public static string ProfileView_PersonalInformationEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_PersonalInformationEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qualifikationen hinzufügen.
+        /// </summary>
+        public static string ProfileView_QualificationEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_QualificationEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Befülle Dein Profil und erhalte passendere Kursvorschläge..
         /// </summary>
         public static string ProfileView_RecommendationSection_SubTitle {
             get {
@@ -2272,6 +2353,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string ProfileView_Title {
             get {
                 return ResourceManager.GetString("ProfileView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webprofile hinzufügen.
+        /// </summary>
+        public static string ProfileView_WebReferenceEmpty {
+            get {
+                return ResourceManager.GetString("ProfileView_WebReferenceEmpty", resourceCulture);
             }
         }
         
@@ -3482,7 +3572,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to zeitweise vorhanden.
+        ///   Looks up a localized string similar to eingeschränkt vorhanden.
         /// </summary>
         public static string Willing_Partly {
             get {

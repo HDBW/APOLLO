@@ -1050,7 +1050,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>nicht vorhanden</value>
   </data>
   <data name="Willing_Partly" xml:space="preserve">
-    <value>zeitweise vorhanden</value>
+    <value>eingeschränkt vorhanden</value>
   </data>
   <data name="Willing_Yes" xml:space="preserve">
     <value>vorhanden</value>
@@ -1059,7 +1059,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung.</value>
   </data>
   <data name="ProfileView_RecommendationSection_SubTitle" xml:space="preserve">
-    <value>Je besser Dein Profil gefüllt ist, desto bessere Vorschläge liefern wir Dir.</value>
+    <value>Befülle Dein Profil und erhalte passendere Kursvorschläge.</value>
   </data>
   <data name="ProfileView_RecommendationSection_Title" xml:space="preserve">
     <value>Dein Fortschritt</value>
@@ -1290,5 +1290,35 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="Filter_Price" xml:space="preserve">
     <value>Preis</value>
+  </data>
+  <data name="Global_CareerType" xml:space="preserve">
+    <value>Art der Berufserfahrung</value>
+  </data>
+  <data name="ProfileView_CareerEmpty" xml:space="preserve">
+    <value>Berufserfahrungen hinzufügen</value>
+  </data>
+  <data name="ProfileView_ContactInfoEmpty" xml:space="preserve">
+    <value>Kontakte hinzufügen</value>
+  </data>
+  <data name="ProfileView_EducationEmpty" xml:space="preserve">
+    <value>Bildung hinzufügen</value>
+  </data>
+  <data name="ProfileView_LanguageEmpty" xml:space="preserve">
+    <value>Sprachkenntnisse hinzufügen</value>
+  </data>
+  <data name="ProfileView_LizenzenEmpty" xml:space="preserve">
+    <value>Lizenzen hinzufügen</value>
+  </data>
+  <data name="ProfileView_MobilityEmpty" xml:space="preserve">
+    <value>Angaben zur Mobilität hinzufügen</value>
+  </data>
+  <data name="ProfileView_PersonalInformationEmpty" xml:space="preserve">
+    <value>Persönliche Informationen hinzufügen</value>
+  </data>
+  <data name="ProfileView_QualificationEmpty" xml:space="preserve">
+    <value>Qualifikationen hinzufügen</value>
+  </data>
+  <data name="ProfileView_WebReferenceEmpty" xml:space="preserve">
+    <value>Webprofile hinzufügen</value>
   </data>
 </root>
