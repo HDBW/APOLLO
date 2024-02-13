@@ -10,8 +10,8 @@ namespace De.HDBW.Apollo.Data.Services
 {
     public class TrainingService : AbstractSwaggerServiceBase, ITrainingService
     {
-        public TrainingService(ILogger<TrainingService> logger, string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
-               : base(logger, new Uri(new Uri($"{baseUrl.TrimEnd('/')}/"), $"{nameof(Training)}"), authKey, httpClientHandler)
+        public TrainingService(ILogger<TrainingService>? logger, string baseUrl, string authKey, HttpMessageHandler httpClientHandler)
+               : base(logger, $"{baseUrl.TrimEnd('/')}/{nameof(Training)}", authKey, httpClientHandler)
         {
         }
 

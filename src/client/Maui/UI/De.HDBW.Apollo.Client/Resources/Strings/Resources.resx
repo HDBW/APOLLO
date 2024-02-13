@@ -147,26 +147,8 @@
   <data name="CourseTagType_Qualification" xml:space="preserve">
     <value>Qualifikation</value>
   </data>
-  <data name="ExtendedSplashScreenView_Instruction1" xml:space="preserve">
-    <value>Wir unterstützen dich beim Erreichen deiner persönlichen Ziele durch passgenaue Lerninhalte</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction1Detail" xml:space="preserve">
-    <value>Entdecke passende Weiterbildungen</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction2" xml:space="preserve">
-    <value>Erkenne Trends in deinem Berufsfeld und sei immer auf dem neuesten Stand</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction2Detail" xml:space="preserve">
-    <value>Halte dein Wissen aktuell</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction3" xml:space="preserve">
-    <value>Teste dein Wissen und analysiere deine Fähigkeiten</value>
-  </data>
-  <data name="ExtendedSplashScreenView_Instruction3Detail" xml:space="preserve">
-    <value>Entfalte dein Potential</value>
-  </data>
   <data name="ExtendedSplashScreenView_Welcome" xml:space="preserve">
-    <value>Willkommen zur Beta von Apollo</value>
+    <value>Willkommen bei APOLLO</value>
   </data>
   <data name="FeedbackUrl" xml:space="preserve">
     <value>https://forms.office.com/e/cmES4qec8q</value>
@@ -234,19 +216,13 @@
   <data name="MainNavigation_ViewTutorial" xml:space="preserve">
     <value>Tutorial anzeigen</value>
   </data>
-  <data name="RegistrationView_Continue" xml:space="preserve">
-    <value>Ohne Anmeldung fortfahren</value>
-  </data>
   <data name="RegistrationView_Description" xml:space="preserve">
-    <value>Während der Testung benötigst Du keine Registrierung/Anmeldung. Wenn Du Dich allerdings für zukünftige Testversionen registrieren möchtest, kannst Du das über "Jetzt anmelden" vornehmen. Solltest Du Deine Meinung ändern, kannst Du über Einstellungen → "Benutzer abmelden" die Registrierung/Anmeldung löschen.</value>
+    <value>Melde Dich an, um Zugriff auf weitere Features zu erhalten.</value>
   </data>
-  <data name="RegistrationView_RegisterNow" xml:space="preserve">
-    <value>Jetzt Anmelden</value>
+  <data name="Global_RegisterUser" xml:space="preserve">
+    <value>Anmelden</value>
   </data>
-  <data name="RegistrationView_RegisterUser" xml:space="preserve">
-    <value>Jetzt anmelden</value>
-  </data>
-  <data name="RegistrationView_UnRegisterUser" xml:space="preserve">
+  <data name="Global_UnRegisterUser" xml:space="preserve">
     <value>Abmelden</value>
   </data>
   <data name="SettingsView_Title" xml:space="preserve">
@@ -264,9 +240,6 @@
   </data>
   <data name="StartView_Goal" xml:space="preserve">
     <value>Mein Ziel</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value>Dein Szenario</value>
   </data>
   <data name="UseCaseDescriptionView_AgeFormat" xml:space="preserve">
     <value>Alter: {0}</value>
@@ -513,9 +486,6 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Global_DurationFormatHours" xml:space="preserve">
     <value>{0} Stunden</value>
   </data>
-  <data name="OccurrenceType_FullTime" xml:space="preserve">
-    <value>Vollzeit</value>
-  </data>
   <data name="OccurrenceType_PartTime" xml:space="preserve">
     <value>Teilzeit</value>
   </data>
@@ -550,19 +520,15 @@ Weiterbildung zur IT Projektleiterin</value>
     <value>Trifft voll zu</value>
   </data>
   <data name="ConfirmDataUsageDialog_Title" xml:space="preserve">
-    <value>Wir benötigen Ihre Zustimmung</value>
+    <value>Nutzungsbedingungen</value>
   </data>
   <data name="ConfirmDataUsageDialog_Message" xml:space="preserve">
-    <value>Mit Ihrer Anmeldung stimmen Sie einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Beta zu. Die Anmeldung kann in den Einstellungen der App jeder Zeit wiederrufen werden.</value>
-  </data>
-  <data name="ConfirmDataUsageDialog_Agree" xml:space="preserve">
-    <value>Ich stimme zu.</value>
+    <value>Mit der Erstellung Deines Profils stimmst Du einer Kontaktaufnahme und Datenspeicherung für die Vorbereitung, Durchführung, Nachbereitung und Dokumentation der Testversionen zu. 
+
+APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur Verbesserung der App. Deine Daten werden nicht an Dritte verkauft oder weitergegeben. Du kannst Dein Profil jederzeit über die App-Einstellungen löschen.</value>
   </data>
   <data name="ConfirmDataUsageDialog_Continue" xml:space="preserve">
-    <value>Weiter</value>
-  </data>
-  <data name="ConfirmDataUsageDialog_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Okay</value>
   </data>
   <data name="AssessmentResultView_Description" xml:space="preserve">
     <value>Im Rahmen der Testversion zeigen wir dir hier dein vorläufiges Ergebnis. Wie du im Vergleich zu anderen abschneidest, erfährst du in der finalen Version der App!</value>
@@ -584,6 +550,707 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="UseCase_D_Name" xml:space="preserve">
     <value>Suche</value>
+  </data>
+  <data name="ProfileView_Title" xml:space="preserve">
+    <value>Dein Profil</value>
+  </data>
+  <data name="PersonalInformationEditView_Birthdate" xml:space="preserve">
+    <value>Geburtsdatum</value>
+  </data>
+  <data name="PersonalInformationEditView_Handicaps" xml:space="preserve">
+    <value>Einschränkungen</value>
+  </data>
+  <data name="PersonalInformationEditView_Title" xml:space="preserve">
+    <value>Persönliche Informationen</value>
+  </data>
+  <data name="PersonalInformationEditView_UserName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PersonalInformationEditView_UserNameHint" xml:space="preserve">
+    <value>Benutzernamen eingeben</value>
+  </data>
+  <data name="MobilityEditView_Title" xml:space="preserve">
+    <value>Mobilität</value>
+  </data>
+  <data name="LanguageEditView_Title" xml:space="preserve">
+    <value>Sprachkenntnisse</value>
+  </data>
+  <data name="MobilityEditView_DriverLicenses" xml:space="preserve">
+    <value>Führerscheine</value>
+  </data>
+  <data name="MobilityEditView_Vehicle" xml:space="preserve">
+    <value>Eigenes Fahrzeug</value>
+  </data>
+  <data name="MobilityEditView_Willing" xml:space="preserve">
+    <value>Reisebereitschaft</value>
+  </data>
+  <data name="WebReferenceEditView_Title" xml:space="preserve">
+    <value>Webprofile</value>
+  </data>
+  <data name="CareerInfoEditView_Title" xml:space="preserve">
+    <value>Berufserfahrung</value>
+  </data>
+  <data name="ContactInfoEditView_Title" xml:space="preserve">
+    <value>Kontaktdaten</value>
+  </data>
+  <data name="EducationInfoEditView_Title" xml:space="preserve">
+    <value>Schul- und Berufsbildung</value>
+  </data>
+  <data name="LicenseEditView_Title" xml:space="preserve">
+    <value>Lizenzen und Berechtigungen</value>
+  </data>
+  <data name="QualificationEditView_Title" xml:space="preserve">
+    <value>Qualifikationen</value>
+  </data>
+  <data name="SelectOptionDialog_Title" xml:space="preserve">
+    <value>Wähle</value>
+  </data>
+  <data name="SelectOptionDialog_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="SelectOptionDialog_Continue" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="CareerType_CommunityService" xml:space="preserve">
+    <value>Gemeinnützige Arbeit</value>
+  </data>
+  <data name="CareerType_ExtraOccupationalExperience" xml:space="preserve">
+    <value>Außerberufliche Erfahrungen</value>
+  </data>
+  <data name="CareerType_Homemaker" xml:space="preserve">
+    <value>Hausfrau/mann</value>
+  </data>
+  <data name="CareerType_Internship" xml:space="preserve">
+    <value>Praktikum</value>
+  </data>
+  <data name="CareerType_MilitaryService" xml:space="preserve">
+    <value>Wehrdienst/-übung/Zivildienst</value>
+  </data>
+  <data name="CareerType_Other" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="CareerType_ParentalLeave" xml:space="preserve">
+    <value>Mutterschutz / Elternzeit</value>
+  </data>
+  <data name="CareerType_PartTimeWorkExperience" xml:space="preserve">
+    <value>Berufspraxis (Nebenbeschäftigung)</value>
+  </data>
+  <data name="CareerType_PersonCare" xml:space="preserve">
+    <value>Betr. pflegebed. Person</value>
+  </data>
+  <data name="CareerType_SelfEmployment" xml:space="preserve">
+    <value>Selbständigkeit</value>
+  </data>
+  <data name="CareerType_VoluntaryService" xml:space="preserve">
+    <value>Freiwilligendienst</value>
+  </data>
+  <data name="CareerType_WorkExperience" xml:space="preserve">
+    <value>Berufspraxis</value>
+  </data>
+  <data name="EducationType_CompanyBasedVocationalTraining" xml:space="preserve">
+    <value>Berufsausbildung (betr./außerbetr.)</value>
+  </data>
+  <data name="EducationType_Education" xml:space="preserve">
+    <value>Schulbildung</value>
+  </data>
+  <data name="EducationType_FurtherEducation" xml:space="preserve">
+    <value>Weiterbildung</value>
+  </data>
+  <data name="EducationType_Study" xml:space="preserve">
+    <value>Studium</value>
+  </data>
+  <data name="EducationType_VocationalTraining" xml:space="preserve">
+    <value>Berufsausbildung (schulisch)</value>
+  </data>
+  <data name="Global_Description" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="Global_End" xml:space="preserve">
+    <value>Ende</value>
+  </data>
+  <data name="Global_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="WorkingTimeModel_FullTime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="WorkingTimeModel_HomeTeleWork" xml:space="preserve">
+    <value>Homeoffice</value>
+  </data>
+  <data name="WorkingTimeModel_Minijob" xml:space="preserve">
+    <value>Minijob</value>
+  </data>
+  <data name="WorkingTimeModel_PartTime" xml:space="preserve">
+    <value>Teilzeit</value>
+  </data>
+  <data name="WorkingTimeModel_ShiftNightWorkWeekend" xml:space="preserve">
+    <value>Schicht-/Nacht-/Wochenendarbeit</value>
+  </data>
+  <data name="Global_City" xml:space="preserve">
+    <value>Stadt</value>
+  </data>
+  <data name="Global_Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="Global_NameOfInstitution" xml:space="preserve">
+    <value>Institution</value>
+  </data>
+  <data name="OccurrenceType_FullTime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="ServiceType_CivilianService" xml:space="preserve">
+    <value>Zivildienst</value>
+  </data>
+  <data name="ServiceType_MilitaryExercise" xml:space="preserve">
+    <value>Wehrübung</value>
+  </data>
+  <data name="ServiceType_MilitaryService" xml:space="preserve">
+    <value>Grundwehrdienst</value>
+  </data>
+  <data name="ServiceType_VoluntaryMilitaryService" xml:space="preserve">
+    <value>Freiwilliger Wehrdienst</value>
+  </data>
+  <data name="Global_Occupation" xml:space="preserve">
+    <value>Berufsbezeichnung</value>
+  </data>
+  <data name="Global_WorkTimeModel" xml:space="preserve">
+    <value>Arbeitszeitmodell</value>
+  </data>
+  <data name="VoluntaryServiceType_FederalVolunteerService" xml:space="preserve">
+    <value>Bundesfreiwilligendienst</value>
+  </data>
+  <data name="VoluntaryServiceType_Other" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntaryCulturalYear" xml:space="preserve">
+    <value>Freiwilliges Kulturelles Jahr (FKJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntaryEcologicalYear" xml:space="preserve">
+    <value>Freiwilliges Ökologisches Jahr (FÖJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntarySocialTrainingYear" xml:space="preserve">
+    <value>Freiwilliges Soziales Trainingsjahr (FSTJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntarySocialYear" xml:space="preserve">
+    <value>Freiwilliges Soziales Jahr (FSJ)</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntarySocialYearInSport" xml:space="preserve">
+    <value>Freiwilliges Soziales Jahr im Sport</value>
+  </data>
+  <data name="VoluntaryServiceType_VoluntaryYearInMonumentConservation" xml:space="preserve">
+    <value>Freiwilliges Jahr in der Denkmalpflege (FJD)</value>
+  </data>
+  <data name="Global_ServiceType" xml:space="preserve">
+    <value>Dienstart</value>
+  </data>
+  <data name="CompletionState_Completed" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="CompletionState_Failed" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="CompletionState_Ongoing" xml:space="preserve">
+    <value>Anerkennung läuft</value>
+  </data>
+  <data name="Global_CompletionState" xml:space="preserve">
+    <value>Anerkannt</value>
+  </data>
+  <data name="Global_SchoolGraduation" xml:space="preserve">
+    <value>Schulabschluss</value>
+  </data>
+  <data name="Global_TypeOfSchool" xml:space="preserve">
+    <value>Schulart</value>
+  </data>
+  <data name="SchoolGraduation_AdvancedTechnicalCollegeCertificate" xml:space="preserve">
+    <value>Fachhochschulreife</value>
+  </data>
+  <data name="SchoolGraduation_AdvancedTechnicalCollegeWithoutCertificate" xml:space="preserve">
+    <value>Abgänger Klasse 11-13 ohne Abschluss</value>
+  </data>
+  <data name="SchoolGraduation_ExtendedSecondarySchoolLeavingCertificate" xml:space="preserve">
+    <value>Qualifizierender / erweiterter Hauptschulabschluss</value>
+  </data>
+  <data name="SchoolGraduation_HigherEducationEntranceQualificationALevel" xml:space="preserve">
+    <value>Allgemeine Hochschulreife</value>
+  </data>
+  <data name="SchoolGraduation_IntermediateSchoolCertificate" xml:space="preserve">
+    <value>Mittlere Reife / Mittlerer Bildungsabschluss</value>
+  </data>
+  <data name="SchoolGraduation_NoSchoolLeavingCertificate" xml:space="preserve">
+    <value>kein Schulabschluss</value>
+  </data>
+  <data name="SchoolGraduation_SecondarySchoolCertificate" xml:space="preserve">
+    <value>Hauptschulabschluss</value>
+  </data>
+  <data name="SchoolGraduation_SpecialSchoolLeavingCertificate" xml:space="preserve">
+    <value>Schulabschluss der Förderschule</value>
+  </data>
+  <data name="SchoolGraduation_SubjectRelatedEntranceQualification" xml:space="preserve">
+    <value>Fachgebundene Hochschulreife</value>
+  </data>
+  <data name="TypeOfSchool_Colleague" xml:space="preserve">
+    <value>Kolleg</value>
+  </data>
+  <data name="TypeOfSchool_EveningHighSchool" xml:space="preserve">
+    <value>Abendgymnasium</value>
+  </data>
+  <data name="TypeOfSchool_EveningSchool" xml:space="preserve">
+    <value>Abendhauptschule</value>
+  </data>
+  <data name="TypeOfSchool_HighSchool" xml:space="preserve">
+    <value>Gymnasium</value>
+  </data>
+  <data name="TypeOfSchool_IntegratedComprehensiveSchool" xml:space="preserve">
+    <value>Integrierte Gesamtschule</value>
+  </data>
+  <data name="TypeOfSchool_MainSchool" xml:space="preserve">
+    <value>Hauptschule</value>
+  </data>
+  <data name="TypeOfSchool_NightSchool" xml:space="preserve">
+    <value>Abendrealschule</value>
+  </data>
+  <data name="TypeOfSchool_Other" xml:space="preserve">
+    <value>Sonstige Schule</value>
+  </data>
+  <data name="TypeOfSchool_SchoolWithMultipleCourses" xml:space="preserve">
+    <value>Schulart mit mehreren Bildungsgängen</value>
+  </data>
+  <data name="TypeOfSchool_SecondarySchool" xml:space="preserve">
+    <value>Realschule</value>
+  </data>
+  <data name="TypeOfSchool_SpecialSchool" xml:space="preserve">
+    <value>Förderschule</value>
+  </data>
+  <data name="TypeOfSchool_TechnicalAcademy" xml:space="preserve">
+    <value>Fachakademie</value>
+  </data>
+  <data name="TypeOfSchool_TechnicalCollege" xml:space="preserve">
+    <value>Fachoberschule</value>
+  </data>
+  <data name="TypeOfSchool_TechnicalHighSchool" xml:space="preserve">
+    <value>Fachgymnasium</value>
+  </data>
+  <data name="TypeOfSchool_TechnicalSchool" xml:space="preserve">
+    <value>Fachschule</value>
+  </data>
+  <data name="TypeOfSchool_UniversityOfAppliedScience" xml:space="preserve">
+    <value>Hochschule</value>
+  </data>
+  <data name="TypeOfSchool_VocationalCollege" xml:space="preserve">
+    <value>Berufsfachschule</value>
+  </data>
+  <data name="TypeOfSchool_VocationalHighSchool" xml:space="preserve">
+    <value>Berufsoberschule/ Technische Oberschule</value>
+  </data>
+  <data name="TypeOfSchool_VocationalSchool" xml:space="preserve">
+    <value>Berufsschule</value>
+  </data>
+  <data name="TypeOfSchool_VocationalTrainingSchool" xml:space="preserve">
+    <value>Berufsaufbauschule</value>
+  </data>
+  <data name="TypeOfSchool_WaldorfSchool" xml:space="preserve">
+    <value>Freie Waldorfschule</value>
+  </data>
+  <data name="UniversityDegree_Bachelor" xml:space="preserve">
+    <value>Bachelor</value>
+  </data>
+  <data name="UniversityDegree_Doctorate" xml:space="preserve">
+    <value>Promotion</value>
+  </data>
+  <data name="UniversityDegree_EcclesiasticalExam" xml:space="preserve">
+    <value>Kirchliches Examen</value>
+  </data>
+  <data name="UniversityDegree_Master" xml:space="preserve">
+    <value>Master / Diplom / Magister</value>
+  </data>
+  <data name="UniversityDegree_Other" xml:space="preserve">
+    <value>Nicht relevant</value>
+  </data>
+  <data name="UniversityDegree_PartialRecognized" xml:space="preserve">
+    <value>Teilweise anerkannter Abschluss</value>
+  </data>
+  <data name="UniversityDegree_Pending" xml:space="preserve">
+    <value>Anerkennung des Abschlusses wird geprüft</value>
+  </data>
+  <data name="UniversityDegree_RegulatedUnrecognized" xml:space="preserve">
+    <value>Reglementierter und nicht anerkannter Abschluss</value>
+  </data>
+  <data name="UniversityDegree_StateExam" xml:space="preserve">
+    <value>Staatsexamen</value>
+  </data>
+  <data name="UniversityDegree_UnregulatedUnrecognized" xml:space="preserve">
+    <value>Nicht reglementierter, nicht anerkannter Abschluss</value>
+  </data>
+  <data name="Global_UniversityDegree" xml:space="preserve">
+    <value>Hochschulabschluss</value>
+  </data>
+  <data name="Global_IsCompleted" xml:space="preserve">
+    <value>Ist abgeschlossen</value>
+  </data>
+  <data name="Global_Graduation" xml:space="preserve">
+    <value>Abschluss</value>
+  </data>
+  <data name="Global_ContactType" xml:space="preserve">
+    <value>Art des Kontakts</value>
+  </data>
+  <data name="Global_Address" xml:space="preserve">
+    <value>Anschrift</value>
+  </data>
+  <data name="Global_ZipCode" xml:space="preserve">
+    <value>Postleitzahl</value>
+  </data>
+  <data name="Global_Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Global_Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Global_Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="ContactType_Private" xml:space="preserve">
+    <value>Privat</value>
+  </data>
+  <data name="ContactType_Professional" xml:space="preserve">
+    <value>Beruflich</value>
+  </data>
+  <data name="Global_Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="Global_LanguageNiveau" xml:space="preserve">
+    <value>Sprachniveau</value>
+  </data>
+  <data name="Global_ExpireDate" xml:space="preserve">
+    <value>Verfallsdatum</value>
+  </data>
+  <data name="Global_Expires" xml:space="preserve">
+    <value>Läuft ab</value>
+  </data>
+  <data name="Global_IssueDate" xml:space="preserve">
+    <value>Ausstellungsdatum</value>
+  </data>
+  <data name="LanguageNiveau_A1" xml:space="preserve">
+    <value>A1</value>
+  </data>
+  <data name="LanguageNiveau_A2" xml:space="preserve">
+    <value>A2</value>
+  </data>
+  <data name="LanguageNiveau_B1" xml:space="preserve">
+    <value>B1</value>
+  </data>
+  <data name="LanguageNiveau_B2" xml:space="preserve">
+    <value>B2</value>
+  </data>
+  <data name="LanguageNiveau_C1" xml:space="preserve">
+    <value>C1</value>
+  </data>
+  <data name="LanguageNiveau_C2" xml:space="preserve">
+    <value>C2</value>
+  </data>
+  <data name="DriversLicense_A" xml:space="preserve">
+    <value>Fahrerlaubnis A</value>
+  </data>
+  <data name="DriversLicense_A1" xml:space="preserve">
+    <value>Fahrerlaubnis A1</value>
+  </data>
+  <data name="DriversLicense_A2" xml:space="preserve">
+    <value>Fahrerlaubnis A2</value>
+  </data>
+  <data name="DriversLicense_AM" xml:space="preserve">
+    <value>Fahrerlaubnis AM</value>
+  </data>
+  <data name="DriversLicense_B" xml:space="preserve">
+    <value>Fahrerlaubnis B</value>
+  </data>
+  <data name="DriversLicense_B96" xml:space="preserve">
+    <value>Fahrerlaubnis B96</value>
+  </data>
+  <data name="DriversLicense_BE" xml:space="preserve">
+    <value>Fahrerlaubnis BE</value>
+  </data>
+  <data name="DriversLicense_C" xml:space="preserve">
+    <value>Fahrerlaubnis C</value>
+  </data>
+  <data name="DriversLicense_C1" xml:space="preserve">
+    <value>Fahrerlaubnis C1</value>
+  </data>
+  <data name="DriversLicense_C1E" xml:space="preserve">
+    <value>Fahrerlaubnis C1E</value>
+  </data>
+  <data name="DriversLicense_CE" xml:space="preserve">
+    <value>Fahrerlaubnis CE</value>
+  </data>
+  <data name="DriversLicense_Class1" xml:space="preserve">
+    <value>Triebfahrzeugführerschein Klasse 1</value>
+  </data>
+  <data name="DriversLicense_Class2" xml:space="preserve">
+    <value>Triebfahrzeugführerschein Klasse 2</value>
+  </data>
+  <data name="DriversLicense_Class3" xml:space="preserve">
+    <value>Triebfahrzeugführerschein Klasse 3</value>
+  </data>
+  <data name="DriversLicense_ConstructionMachines" xml:space="preserve">
+    <value>Führerschein Baumaschinen</value>
+  </data>
+  <data name="DriversLicense_D" xml:space="preserve">
+    <value>Fahrerlaubnis D</value>
+  </data>
+  <data name="DriversLicense_D1" xml:space="preserve">
+    <value>Fahrerlaubnis D1</value>
+  </data>
+  <data name="DriversLicense_D1E" xml:space="preserve">
+    <value>Fahrerlaubnis D1E</value>
+  </data>
+  <data name="DriversLicense_DE" xml:space="preserve">
+    <value>Fahrerlaubnis DE</value>
+  </data>
+  <data name="DriversLicense_Drivercard" xml:space="preserve">
+    <value>Fahrerkarte</value>
+  </data>
+  <data name="DriversLicense_Forklift" xml:space="preserve">
+    <value>Gabelstaplerschein</value>
+  </data>
+  <data name="DriversLicense_InstructorA" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse A</value>
+  </data>
+  <data name="DriversLicense_InstructorASF" xml:space="preserve">
+    <value>Seminarerlaubnis ASF</value>
+  </data>
+  <data name="DriversLicense_InstructorASP" xml:space="preserve">
+    <value>Seminarerlaubnis ASP</value>
+  </data>
+  <data name="DriversLicense_InstructorBE" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse BE</value>
+  </data>
+  <data name="DriversLicense_InstructorCE" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse CE</value>
+  </data>
+  <data name="DriversLicense_InstructorDE" xml:space="preserve">
+    <value>Fahrlehrerlaubnis Klasse DE</value>
+  </data>
+  <data name="DriversLicense_L" xml:space="preserve">
+    <value>Fahrerlaubnis L</value>
+  </data>
+  <data name="DriversLicense_Moped" xml:space="preserve">
+    <value>Fahrerlaubnis Mofa und Krankenfahrstühle</value>
+  </data>
+  <data name="DriversLicense_PassengerTransport" xml:space="preserve">
+    <value>Fahrerlaubnis Fahrgastbeförderung</value>
+  </data>
+  <data name="DriversLicense_T" xml:space="preserve">
+    <value>Fahrerlaubnis T</value>
+  </data>
+  <data name="DriversLicense_TrailerDriving" xml:space="preserve">
+    <value>Gespannführerschein</value>
+  </data>
+  <data name="Global_URL" xml:space="preserve">
+    <value>Internetadresse</value>
+  </data>
+  <data name="Willing_No" xml:space="preserve">
+    <value>nicht vorhanden</value>
+  </data>
+  <data name="Willing_Partly" xml:space="preserve">
+    <value>zeitweise vorhanden</value>
+  </data>
+  <data name="Willing_Yes" xml:space="preserve">
+    <value>vorhanden</value>
+  </data>
+  <data name="GlobalError_NoInternet" xml:space="preserve">
+    <value>Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung.</value>
+  </data>
+  <data name="ProfileView_RecommendationSection_SubTitle" xml:space="preserve">
+    <value>Je besser Dein Profil gefüllt ist, desto bessere Vorschläge liefern wir Dir.</value>
+  </data>
+  <data name="ProfileView_RecommendationSection_Title" xml:space="preserve">
+    <value>Dein Fortschritt</value>
+  </data>
+  <data name="ErrorDialog_Title" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="GlobalError_RetryUnableToSaveData" xml:space="preserve">
+    <value>Beim Speichern der Daten ist ein Fehler aufgetreten.
+
+Möchtest du es erneut versuchen?
+
+Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
+  </data>
+  <data name="GlobalError_UnableToSaveData" xml:space="preserve">
+    <value>Beim Speichern der Daten ist ein Fehler aufgetreten.</value>
+  </data>
+  <data name="Global_No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Global_Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="DatePicker_Watermark" xml:space="preserve">
+    <value>Datum eingeben</value>
+  </data>
+  <data name="CareerInfoEditView_ButtonTxt" xml:space="preserve">
+    <value>Berufserfahrungen hinzufügen</value>
+  </data>
+  <data name="CareerInfoEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt deine erste Berufserfahrungen hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="ContactInfoEditView_ButtonTxt" xml:space="preserve">
+    <value>Kontakt hinzufügen</value>
+  </data>
+  <data name="ContactInfoEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt Deine Kontaktdaten hinzu und verbessere Deine Kursvorschläge.</value>
+  </data>
+  <data name="EducationInfoEditView_ButtonTxt" xml:space="preserve">
+    <value>Stationen hinzufügen</value>
+  </data>
+  <data name="EducationInfoEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt Stationen deines Bildungswegs hinzu und verbessere deine Kursvorschläge.</value>
+  </data>
+  <data name="LanguageEditView_ButtonTxt" xml:space="preserve">
+    <value>Sprachkenntnisse hinzufügen</value>
+  </data>
+  <data name="LanguageEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt erste Sprachkenntnisse hinzu und verbessere Deine Kursvorschläge.</value>
+  </data>
+  <data name="LicenseEditView_ButtonTxt" xml:space="preserve">
+    <value>Lizenzen hinzufügen</value>
+  </data>
+  <data name="LicenseEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt erste Lizenzen hinzu und verbessere Deine Kursvorschläge.</value>
+  </data>
+  <data name="QualificationEditView_ButtonTxt" xml:space="preserve">
+    <value>Qualifikationen hinzufügen</value>
+  </data>
+  <data name="QualificationEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt erste Qualifikationen hinzu und verbessere Deine Kursvorschläge.</value>
+  </data>
+  <data name="WebReferenceEditView_ButtonTxt" xml:space="preserve">
+    <value>Webprofil hinzufügen</value>
+  </data>
+  <data name="WebReferenceEditView_Subline" xml:space="preserve">
+    <value>Füge jetzt Deine Webprofile hinzu und verbessere Deine Kursvorschläge.</value>
+  </data>
+  <data name="PickUserNameView_Title" xml:space="preserve">
+    <value>Benutzer anlegen</value>
+  </data>
+  <data name="Global_Benutzername" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="GlobalError_NameIsRequired" xml:space="preserve">
+    <value>Der Name darf nicht leer sein.</value>
+  </data>
+  <data name="GlobalError_NameMinLength" xml:space="preserve">
+    <value>Der Name muss mindestens 4 Buchstaben lang sein.</value>
+  </data>
+  <data name="ExtendedSplashScreenView_DSGVO" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="ExtendedSplashScreenView_DSGVOText" xml:space="preserve">
+    <value>bestätigen um fortzufahren</value>
+  </data>
+  <data name="ExtendedSplashScreenView_Text" xml:space="preserve">
+    <value>Komm an Bord! Wir unterstützen Dich beim Erreichen deiner persönlichen Lernziele.</value>
+  </data>
+  <data name="Global_ContinueAsGuest" xml:space="preserve">
+    <value>Als Gast fortfahren</value>
+  </data>
+  <data name="RegistrationView_Title" xml:space="preserve">
+    <value>Entdecke neue Funktionen</value>
+  </data>
+  <data name="ExtendedSplashScreenView_AGB" xml:space="preserve">
+    <value>Nutzungsbedingungen</value>
+  </data>
+  <data name="ExtendedSplashScreenView_AGBText" xml:space="preserve">
+    <value>akzeptieren, um fortzufahren</value>
+  </data>
+  <data name="RegistrationView_Instruction1" xml:space="preserve">
+    <value>Passgenaue Vorschläge für Deine Interessen</value>
+  </data>
+  <data name="RegistrationView_Instruction2" xml:space="preserve">
+    <value>Inhalte merken und Erinnerungen erhalten</value>
+  </data>
+  <data name="FavoriteView_Title" xml:space="preserve">
+    <value>Inhalte</value>
+  </data>
+  <data name="Global_Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="ContactView_Title" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="GlobalError_InvalidData" xml:space="preserve">
+    <value>Nicht alle Daten sind richtig ausgefüllt.
+
+Möchtest du weiter deine Daten eingeben?
+
+Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
+  </data>
+  <data name="GlobalError_InvalidEmail" xml:space="preserve">
+    <value>Die E-Mail ist ungültig.</value>
+  </data>
+  <data name="GlobalError_InvalidPhoneNumber" xml:space="preserve">
+    <value>Die Telefonnummer ist ungültig.</value>
+  </data>
+  <data name="GlobalError_InvalidZipCode" xml:space="preserve">
+    <value>Die Postleitzahl ist ungültig.</value>
+  </data>
+  <data name="GlobalError_InvalidUrl" xml:space="preserve">
+    <value>Die URL ist ungültig.</value>
+  </data>
+  <data name="GlobalError_PropertyRequired" xml:space="preserve">
+    <value>Pflichtfeld.</value>
+  </data>
+  <data name="QualificationView_Title" xml:space="preserve">
+    <value>Qualifikation</value>
+  </data>
+  <data name="Global_Qualification" xml:space="preserve">
+    <value>Qualifikation</value>
+  </data>
+  <data name="LicenseView_Title" xml:space="preserve">
+    <value>Lizenz</value>
+  </data>
+  <data name="WebReferenceView_Title" xml:space="preserve">
+    <value>Webprofil</value>
+  </data>
+  <data name="LanguageSearchView_Title" xml:space="preserve">
+    <value>Sprachauswahl</value>
+  </data>
+  <data name="LanguageView_Title" xml:space="preserve">
+    <value>Sprachkenntnis</value>
+  </data>
+  <data name="OtherView_Title" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="Global_Designation" xml:space="preserve">
+    <value>Bezeichnung</value>
+  </data>
+  <data name="Global_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Global_EducationType" xml:space="preserve">
+    <value>Bildungsart</value>
+  </data>
+  <data name="Global_RecognitionType" xml:space="preserve">
+    <value>Anerkennunnung</value>
+  </data>
+  <data name="Global_DateRange" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="Global_Since" xml:space="preserve">
+    <value>seit</value>
+  </data>
+  <data name="OccupationSearchView_Title" xml:space="preserve">
+    <value>Berufsauswahl</value>
+  </data>
+  <data name="Global_Till" xml:space="preserve">
+    <value>bis</value>
+  </data>
+  <data name="Global_Validity" xml:space="preserve">
+    <value>Gültigkeit</value>
+  </data>
+  <data name="ProfileView_Empty_Subline" xml:space="preserve">
+    <value>Füge jetzt Deine ersten persönlichen Informationen hinzu. So verbessern sich Deine Angebote und Möglichkeiten.</value>
+  </data>
+  <data name="ProfileView_Empty_Button" xml:space="preserve">
+    <value>Los geht's!</value>
   </data>
   <data name="SearchView_Title" xml:space="preserve">
     <value>Suche</value>

@@ -3,12 +3,11 @@
              x:Class="De.HDBW.Apollo.Client.Views.SettingsView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-             Shell.FlyoutBehavior="Disabled"
              x:DataType="viewModels:SettingsViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.SettingsView_Title}"
              IsBusy="{x:Binding IsBusy}"
-             Padding="0">
+             Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*, auto, auto" ColumnDefinitions="*, *" Padding="0,0,0,16">
         <ScrollView Padding="24,0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
             <VerticalStackLayout Spacing="8">
@@ -21,7 +20,7 @@
                     <Image WidthRequest="24" HeightRequest="24" Source="mail.png" />
                     <Label Text="{x:Static strings:Resources.SettingsView_QuestionEmail}" LineBreakMode="WordWrap" MaxLines="2" Style="{StaticResource NotoSerif16}"/>
                 </HorizontalStackLayout>
-                <Button Text="{x:Static strings:Resources.RegistrationView_UnRegisterUser}" Command="{x:Binding UnRegisterCommand}" Margin="0,24,0,0"/>
+                <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{x:Binding UnRegisterCommand}" Margin="0,24,0,0"/>
             </VerticalStackLayout>
         </ScrollView>
         <Button Grid.Column="0" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Terms}" Command="{x:Binding OpenTermsCommand}"/>

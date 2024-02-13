@@ -1,19 +1,34 @@
-﻿<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               x:Class="De.HDBW.Apollo.Client.Dialogs.MessageDialog"
-               xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-               xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
-               Color="{StaticResource Background}"
-               x:DataType="viewModels:MessageDialogViewModel">
-    <Grid RowDefinitions="*, auto, 20" x:Name="Part_Root">
-         <Border StrokeThickness="0" Stroke="{StaticResource Background}">
-            <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}" BackgroundColor="{StaticResource Background}">
-                <Label HorizontalTextAlignment="Center" Text="{x:Binding Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
-            </VerticalStackLayout>
+﻿<local:Dialog xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+              xmlns:local="clr-namespace:De.HDBW.Apollo.Client.Dialogs"
+              x:Class="De.HDBW.Apollo.Client.Dialogs.MessageDialog"
+              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+              Style="{StaticResource PopupStyle}"
+              x:DataType="viewModels:MessageDialogViewModel">
+    <Grid>
+        <Grid.GestureRecognizers>
+            <OnPlatform x:TypeArguments="GestureRecognizer">
+                <On Platform="iOS">
+                    <PointerGestureRecognizer PointerReleased="OnPointerReleased" />
+                </On>
+                <On Platform="Android">
+                    <TapGestureRecognizer Command="{x:Binding CancelCommand}" NumberOfTapsRequired="1"/>
+                </On>
+            </OnPlatform>
+        </Grid.GestureRecognizers>
+        <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
+            <Grid RowDefinitions="20, auto, 32, auto, 20" Style="{StaticResource PopupContent}">
+                 <ScrollView Grid.Row="1" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never">
+                    <VerticalStackLayout>
+                        <Label HorizontalTextAlignment="Center" Text="{x:Binding Message}" Style="{StaticResource Noto16}"/>
+                    </VerticalStackLayout>
+                 </ScrollView>
+                <Grid Grid.Row="3">
+                    <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}"/>
+                </Grid>
+            </Grid>
         </Border>
-        <Grid ColumnDefinitions="*,auto,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}" Grid.Column="1"/>
-        </Grid>
     </Grid>
-</toolkit:Popup>
+</local:Dialog>

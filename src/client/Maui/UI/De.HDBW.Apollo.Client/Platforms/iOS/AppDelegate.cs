@@ -4,53 +4,53 @@
 using CoreGraphics;
 using De.HDBW.Apollo.Client.Contracts;
 using Foundation;
-using Google.Protobuf.WellKnownTypes;
 using Microsoft.Identity.Client;
-using ProtoBuf.Meta;
 using UIKit;
 
-namespace De.HDBW.Apollo.Client;
-[Register("AppDelegate")]
-public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelegate
+namespace De.HDBW.Apollo.Client
 {
-    public ITouchService? TouchService { get; set; }
-
-    public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+    [Register("AppDelegate")]
+    public class AppDelegate : MauiUIApplicationDelegate
     {
-        AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
-        return base.OpenUrl(app, url, options);
-    }
+        public ITouchService? TouchService { get; set; }
 
-    public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
-    {
-        var result = base.FinishedLaunching(application, launchOptions);
-        if (result)
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
-            TouchService = IPlatformApplication.Current?.Services.GetService<ITouchService>();
-            UITapGestureRecognizer tap = new UITapGestureRecognizer(Self, new ObjCRuntime.Selector("gestureRecognizer:shouldReceiveTouch:"));
-            tap.Delegate = (IUIGestureRecognizerDelegate)Self;
-            IPlatformApplication.Current?.Application?.Windows?.Select(x => x.Handler?.PlatformView as UIWindow).Where(x => x != null).FirstOrDefault(x => x.IsKeyWindow)?.AddGestureRecognizer(tap);
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
+            return base.OpenUrl(app, url, options);
         }
 
-        return result;
-    }
-
-    [Export("gestureRecognizer:shouldReceiveTouch:")]
-    public bool ShouldReceiveTouch(UIGestureRecognizer gestureRecognizer, UITouch touch)
-    {
-        var point = touch?.LocationInView(touch.Window) ?? CGPoint.Empty;
-        switch (gestureRecognizer?.State)
+        public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            case UIGestureRecognizerState.Began:
-                TouchService?.TouchDownReceived((float)point.X, (float)point.Y);
-                break;
-            case UIGestureRecognizerState.Ended:
-                TouchService?.TouchUpReceived((float)point.X, (float)point.Y);
-                break;
+            var result = base.FinishedLaunching(application, launchOptions);
+            if (result)
+            {
+                TouchService = IPlatformApplication.Current?.Services.GetService<ITouchService>();
+                UITapGestureRecognizer tap = new UITapGestureRecognizer(Self, new ObjCRuntime.Selector("gestureRecognizer:shouldReceiveTouch:"));
+                tap.Delegate = (IUIGestureRecognizerDelegate)Self;
+                IPlatformApplication.Current?.Application?.Windows?.Select(x => x.Handler?.PlatformView as UIWindow).Where(x => x != null).FirstOrDefault(x => x.IsKeyWindow)?.AddGestureRecognizer(tap);
+            }
+
+            return result;
         }
 
-        return false;
-    }
+        [Export("gestureRecognizer:shouldReceiveTouch:")]
+        public bool ShouldReceiveTouch(UIGestureRecognizer gestureRecognizer, UITouch touch)
+        {
+            var point = touch?.LocationInView(touch.Window) ?? CGPoint.Empty;
+            switch (gestureRecognizer?.State)
+            {
+                case UIGestureRecognizerState.Began:
+                    TouchService?.TouchDownReceived((float)point.X, (float)point.Y);
+                    break;
+                case UIGestureRecognizerState.Ended:
+                    TouchService?.TouchUpReceived((float)point.X, (float)point.Y);
+                    break;
+            }
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+            return false;
+        }
+
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    }
 }

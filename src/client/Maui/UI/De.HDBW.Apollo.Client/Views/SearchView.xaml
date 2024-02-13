@@ -10,6 +10,9 @@
              ios:Page.UseSafeArea="true"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
+           
+             Shell.TabBarIsVisible="True"
+             Shell.FlyoutBehavior="Flyout"
              Title="{x:Static strings:Resources.SearchView_Title}"
              IsBusy="{x:Binding IsBusy}">
     <Shell.SearchHandler>

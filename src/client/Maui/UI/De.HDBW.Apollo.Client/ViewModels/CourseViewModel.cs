@@ -527,7 +527,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.Data, LoanOptions);
-                    await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(worker.Token, parameters);
+                    await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {

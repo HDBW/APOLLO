@@ -43,7 +43,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
         }
 
-        public async Task<bool> PushToRootAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
+        public async Task<bool> PushToRootAsync(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
             Logger?.LogDebug($"PushToRoot to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
@@ -55,23 +55,23 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsync)} in {GetType().Name}.");
             }
 
             return result;
         }
 
-        public async Task<bool> PushToRootAsnc(CancellationToken token)
+        public async Task<bool> PushToRootAsync(CancellationToken token)
         {
             Logger?.LogDebug($"PushToRoot.");
             token.ThrowIfCancellationRequested();
@@ -83,23 +83,51 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(PushToRootAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsnc)} in {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(PushToRootAsync)} in {GetType().Name}.");
             }
 
             return result;
         }
 
-        public async Task<bool> NavigateAsnc(string route, CancellationToken token, NavigationParameters? parameters = null)
+        public async Task<bool> PopAsync(CancellationToken token, NavigationParameters? parameters)
+        {
+            Logger?.LogDebug($"PopAsync.");
+            token.ThrowIfCancellationRequested();
+            var result = false;
+            try
+            {
+                await DispatcherService.ExecuteOnMainThreadAsync(() => PopOnUIThreadAsnc(token, parameters), token);
+                result = true;
+            }
+            catch (OperationCanceledException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(PopAsync)} in {GetType().Name}.");
+                throw;
+            }
+            catch (ObjectDisposedException)
+            {
+                Logger?.LogDebug($"Canceled {nameof(PopAsync)} in {GetType().Name}.");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(PopAsync)} in {GetType().Name}.");
+            }
+
+            return result;
+        }
+
+        public async Task<bool> NavigateAsync(string route, CancellationToken token, NavigationParameters? parameters = null)
         {
             Logger?.LogDebug($"Navigate to {route} with parameters: {parameters?.ToString() ?? "null"}.");
             token.ThrowIfCancellationRequested();
@@ -111,17 +139,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (OperationCanceledException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (ObjectDisposedException)
             {
-                Logger?.LogDebug($"Canceled {nameof(NavigateAsnc)} in {GetType().Name}.");
+                Logger?.LogDebug($"Canceled {nameof(NavigateAsync)} in {GetType().Name}.");
                 throw;
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsnc)} in {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown Error while {nameof(NavigateAsync)} in {GetType().Name}.");
             }
 
             return result;
@@ -151,8 +179,10 @@ namespace De.HDBW.Apollo.Client.Services
                     queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
                 }
 
+                page.NavigatedTo -= NavigatedToPage;
                 page.NavigatedTo += NavigatedToPage;
                 await navigationPage.PushAsync(page, false);
+                page.NavigatedFrom -= NavigatedFromPage;
                 page.NavigatedFrom += NavigatedFromPage;
                 return;
             }
@@ -189,8 +219,7 @@ namespace De.HDBW.Apollo.Client.Services
                 queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
             }
 
-            page.NavigatedTo += NavigatedToPage;
-            page.NavigatedFrom += NavigatedFromPage;
+            SubscribePageEvents(page);
 
             var navigationPage = Application.Current.MainPage as NavigationPage;
             if (navigationPage != null && !(page is Shell))
@@ -204,8 +233,7 @@ namespace De.HDBW.Apollo.Client.Services
                         continue;
                     }
 
-                    existingPage.NavigatedTo -= NavigatedToPage;
-                    existingPage.NavigatedFrom -= NavigatedFromPage;
+                    UnsubscribePageEvents(existingPage);
 
                     if (existingPage != navigationPage.CurrentPage)
                     {
@@ -241,8 +269,7 @@ namespace De.HDBW.Apollo.Client.Services
                 var existingPages = navigationPage?.Navigation?.NavigationStack?.ToList() ?? new List<Page>();
                 foreach (var existingPage in existingPages)
                 {
-                    existingPage.NavigatedTo -= NavigatedToPage;
-                    existingPage.NavigatedFrom -= NavigatedFromPage;
+                    UnsubscribePageEvents(existingPage);
                     if (navigationPage?.CurrentPage != existingPage)
                     {
                         navigationPage?.Navigation?.RemovePage(existingPage);
@@ -254,9 +281,42 @@ namespace De.HDBW.Apollo.Client.Services
                 shell = Application.Current.MainPage as Shell;
                 if (shell != null)
                 {
+                    shell.Navigating -= NavigatedFromPageInShell;
+                    shell.Navigated -= NavigatedToPageInShell;
                     shell.Navigating += NavigatedFromPageInShell;
                     shell.Navigated += NavigatedToPageInShell;
                     NavigatedToPageInShell(shell, null);
+                }
+            }
+        }
+
+        private async Task PopOnUIThreadAsnc(CancellationToken token, NavigationParameters? parameters)
+        {
+            Logger?.LogDebug($"PopOnUIThreadAsnc.");
+            token.ThrowIfCancellationRequested();
+            if (Application.Current == null)
+            {
+                return;
+            }
+
+            var navigationPage = Application.Current.MainPage as NavigationPage;
+            if (navigationPage != null)
+            {
+                await navigationPage.Navigation.PopAsync(true);
+                return;
+            }
+
+            var shell = Application.Current.MainPage as Shell;
+            if (shell != null)
+            {
+                Shell.Current.FlyoutIsPresented = false;
+                if (parameters != null)
+                {
+                    await Shell.Current.GoToAsync("..", parameters.ToQueryDictionary());
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync("..");
                 }
             }
         }
@@ -270,12 +330,34 @@ namespace De.HDBW.Apollo.Client.Services
                     continue;
                 }
 
-                page.NavigatedTo -= NavigatedToPage;
-                page.NavigatedFrom -= NavigatedFromPage;
-                await (GetViewModel(page)?.OnNavigatingFromAsync(false) ?? Task.CompletedTask);
+                UnsubscribePageEvents(page);
+                await (GetViewModel(page)?.OnNavigatingFromAsync() ?? Task.CompletedTask);
             }
 
             await Shell.Current.Navigation.PopToRootAsync(false);
+        }
+
+        private void SubscribePageEvents(Page page)
+        {
+            UnsubscribePageEvents(page);
+            if (page == null)
+            {
+                return;
+            }
+
+            page.NavigatedTo += NavigatedToPage;
+            page.NavigatedFrom += NavigatedFromPage;
+        }
+
+        private void UnsubscribePageEvents(Page page)
+        {
+            if (page == null)
+            {
+                return;
+            }
+
+            page.NavigatedTo -= NavigatedToPage;
+            page.NavigatedFrom -= NavigatedFromPage;
         }
 
         private async Task PushToRootOnUIThreadAsnc(CancellationToken token)
@@ -312,6 +394,15 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
+            var interceptor = page as IBackNavigationInterceptor ?? page.BindingContext as IBackNavigationInterceptor;
+            if ((interceptor?.NeedsToCancel ?? false) && (e?.Source == ShellNavigationSource.Pop || e?.Source == ShellNavigationSource.PopToRoot) && (e?.CanCancel ?? false))
+            {
+                // It was a back navigation;
+                e.Cancel();
+                interceptor.CanceledNavigation();
+                return;
+            }
+
             NavigatedFromPage(page, null);
         }
 
@@ -331,16 +422,6 @@ namespace De.HDBW.Apollo.Client.Services
         {
             try
             {
-                bool isForwardNavigation = true;
-                if (Shell.Current?.CurrentPage != null)
-                {
-                    isForwardNavigation = Shell.Current?.CurrentPage == sender || (Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender);
-                }
-                else
-                {
-                    isForwardNavigation = Navigation.NavigationStack.Count > 1 && Navigation.NavigationStack[^2] == sender;
-                }
-
                 var page = sender as Page;
                 if (page == null)
                 {
@@ -348,13 +429,8 @@ namespace De.HDBW.Apollo.Client.Services
                     return;
                 }
 
-                if (!isForwardNavigation)
-                {
-                    page.NavigatedTo -= NavigatedToPage;
-                    page.NavigatedFrom -= NavigatedFromPage;
-                }
-
-                await (GetViewModel(page)?.OnNavigatingFromAsync(isForwardNavigation) ?? Task.CompletedTask);
+                UnsubscribePageEvents(page);
+                await (GetViewModel(page)?.OnNavigatingFromAsync() ?? Task.CompletedTask);
             }
             catch (Exception ex)
             {

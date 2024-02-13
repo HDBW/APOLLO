@@ -374,7 +374,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         var parameters = new NavigationParameters();
                         parameters.AddValue(NavigationParameter.Id, _assessmentItemId.Value);
 
-                        await NavigationService.NavigateAsnc(Routes.AssessmentResultView, worker.Token, parameters);
+                        await NavigationService.NavigateAsync(Routes.AssessmentResultView, worker.Token, parameters);
                         return;
                     }
 
@@ -433,14 +433,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         await SaveAssessmentAsync(worker.Token);
                         if (!_assessmentItemId.HasValue)
                         {
-                            await NavigationService.PushToRootAsnc(worker.Token);
+                            await NavigationService.PushToRootAsync(worker.Token);
                             return;
                         }
 
                         var parameters = new NavigationParameters();
                         parameters.AddValue(NavigationParameter.Id, _assessmentItemId.Value);
 
-                        await NavigationService.NavigateAsnc(Routes.AssessmentResultView, worker.Token, parameters);
+                        await NavigationService.NavigateAsync(Routes.AssessmentResultView, worker.Token, parameters);
                     }
                 }
                 catch (OperationCanceledException)

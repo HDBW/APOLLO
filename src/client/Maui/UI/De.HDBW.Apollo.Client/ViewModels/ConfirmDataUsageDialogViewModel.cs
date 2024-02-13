@@ -9,8 +9,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class ConfirmDataUsageDialogViewModel : BaseViewModel
     {
-        private bool _agree;
-
         public ConfirmDataUsageDialogViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -20,33 +18,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
         }
 
-        public bool Agree
-        {
-            get
-            {
-                return _agree;
-            }
-
-            set
-            {
-                if (SetProperty(ref _agree, value))
-                {
-                    RefreshCommands();
-                }
-            }
-        }
-
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
             CancelCommand?.NotifyCanExecuteChanged();
             ContinueCommand?.NotifyCanExecuteChanged();
-            ToggleAgreeCommand?.NotifyCanExecuteChanged();
         }
 
         private bool CanContinue()
         {
-            return !IsBusy && Agree;
+            return !IsBusy;
         }
 
         [CommunityToolkit.Mvvm.Input.RelayCommand(CanExecute = nameof(CanContinue))]
@@ -68,17 +49,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var result = new NavigationParameters();
             result.AddValue(NavigationParameter.Result, false);
             DialogService.ClosePopup(this, result);
-        }
-
-        private bool CanToggleAgree()
-        {
-            return !IsBusy;
-        }
-
-        [CommunityToolkit.Mvvm.Input.RelayCommand(CanExecute = nameof(CanToggleAgree))]
-        private void ToggleAgree()
-        {
-            Agree = !Agree;
         }
     }
 }

@@ -145,7 +145,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             switch (interaction.Data)
             {
                 case NavigationData navigationData:
-                    await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
+                    await NavigationService.NavigateAsync(navigationData.Route, CancellationToken.None, navigationData.Parameters);
                     break;
                 default:
                     Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType().Name}.");
@@ -300,10 +300,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (ObjectDisposedException)
                 {
                     Logger?.LogDebug($"Canceled {nameof(Search)} in {GetType().Name}.");
-                }
-                catch (MsalException ex)
-                {
-                    Logger?.LogWarning(ex, $"Error while searching course-item in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {

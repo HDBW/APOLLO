@@ -1,11 +1,15 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 
@@ -13,19 +17,37 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class RegistrationViewModel : BaseViewModel
     {
+        private readonly ObservableCollection<InstructionEntry> _instructions = new ObservableCollection<InstructionEntry>();
+
         public RegistrationViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
+            IPreferenceService preferenceService,
+            IUserService userService,
+            IUserRepository userRepository,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(authService);
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(userService);
+            ArgumentNullException.ThrowIfNull(userRepository);
             AuthService = authService;
             SessionService = sessionService;
+            PreferenceService = preferenceService;
+            UserService = userService;
+            UserRepository = userRepository;
+            Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resources.RegistrationView_Instruction1, null));
+            Instructions.Add(InstructionEntry.Import("splashdeco2.png", null, Resources.Strings.Resources.RegistrationView_Instruction2, null));
+        }
+
+        public ObservableCollection<InstructionEntry> Instructions
+        {
+            get { return _instructions; }
         }
 
         public bool HasRegisterdUser
@@ -38,7 +60,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IAuthService AuthService { get; }
 
+        private IUserService UserService { get; }
+
         private ISessionService SessionService { get; }
+
+        private IPreferenceService PreferenceService { get; }
+
+        private IUserRepository UserRepository { get; }
 
         protected override void RefreshCommands()
         {
@@ -55,7 +83,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
+                    SessionService.UpdateRegisteredUser(null);
+                    await NavigationService.PushToRootAsync(Routes.Shell, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -89,8 +118,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
+#if !DEBUG
                     await AuthService.SignInInteractively(worker.Token);
-                    authentication = await AuthService.AcquireTokenSilent(worker.Token);
+#endif
+                    await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
+                    PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
+                    UserService?.UpdateAuthorizationHeader(null);
                 }
                 catch (OperationCanceledException)
                 {
@@ -110,7 +143,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+                    SessionService.UpdateRegisteredUser(authentication?.Account?.HomeAccountId);
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     UnscheduleWork(worker);
                 }
@@ -130,12 +163,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
-                    var result = await DialogService.ShowPopupAsync<ConfirmDataUsageDialog, NavigationParameters>(worker.Token);
-                    if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
-                    {
-                        authentication = await AuthService.SignInInteractively(worker.Token);
-                        await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, worker.Token);
-                    }
+#if !DEBUG
+                    authentication = await AuthService.SignInInteractively(worker.Token);
+#else
+                    authentication = new AuthenticationResult(
+                          accessToken: "Mock",
+                          isExtendedLifeTimeToken: true,
+                          uniqueId: "Mock",
+                          expiresOn: DateTimeOffset.MaxValue,
+                          extendedExpiresOn: DateTimeOffset.MaxValue,
+                          tenantId: "Mock",
+                          account: new DummyAccount(),
+                          idToken: "Mock",
+                          scopes: new List<string>(),
+                          correlationId: Guid.Empty,
+                          tokenType: "Bearer",
+                          authenticationResultMetadata: null,
+                          claimsPrincipal: null,
+                          spaAuthCode: null,
+                          additionalResponseParameters: null);
+#endif
                 }
                 catch (OperationCanceledException)
                 {
@@ -155,7 +202,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+                    UserService?.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    SessionService.UpdateRegisteredUser(authentication?.Account.HomeAccountId);
+                    if (SessionService.HasRegisteredUser)
+                    {
+                        await NavigationService.PushToRootAsync(Routes.PickUserNameView, worker.Token);
+                    }
+
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     UnscheduleWork(worker);
                 }

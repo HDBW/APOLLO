@@ -39,7 +39,7 @@ namespace De.HDBW.Apollo.Client.Helper.Assessment
                 return;
             }
 
-            answer.CurrentValue = input.Value !;
+            answer.CurrentValue = input.Value!;
             Logger.LogDebug($"Set result of answer with id {answer.Id} to {answer.CurrentValue ?? "null"}.");
             Logger.LogDebug($"Correct answer for id {answer.Id} would be {answer.Value}.");
             Logger.LogDebug($"The answer for id {answer.Id} is {(answer.IsCorrect ? "Correct" : "Incorrect")}.");

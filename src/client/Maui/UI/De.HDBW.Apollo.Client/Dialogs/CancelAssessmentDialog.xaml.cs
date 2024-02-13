@@ -3,28 +3,32 @@
 
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client.Dialogs;
-public partial class CancelAssessmentDialog
+namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public CancelAssessmentDialog(CancelAssessmentDialogViewModel model)
+    public partial class CancelAssessmentDialog : Dialog
     {
-        InitializeComponent();
-        var view = FindByName("Part_Root") as View;
-        if (view != null && Shell.Current != null)
+        public CancelAssessmentDialog(CancelAssessmentDialogViewModel model)
+            : base()
         {
-           view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
-           view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
-           Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
+            InitializeComponent();
+            BindingContext = model;
         }
 
-        BindingContext = model;
-    }
-
-    public CancelAssessmentDialogViewModel? ViewModel
-    {
-        get
+        public CancelAssessmentDialogViewModel? ViewModel
         {
-            return BindingContext as CancelAssessmentDialogViewModel;
+            get
+            {
+                return BindingContext as CancelAssessmentDialogViewModel;
+            }
+        }
+
+        private void OnPointerReleased(object sender, PointerEventArgs e)
+        {
+            var position = e.GetPosition(PART_Root) ?? Point.Zero;
+            if (!PART_Root.Frame.Contains(position))
+            {
+                ViewModel?.CancelCommand?.Execute(null);
+            }
         }
     }
 }

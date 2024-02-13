@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:De.HDBW.Apollo.Client"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              x:Class="De.HDBW.Apollo.Client.App">
     <Application.Resources>
@@ -11,6 +12,25 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converter:SingleItemListConverter x:Key="SingleItemListConverter" />
+            <Style x:Key="DefaultPageStyle" TargetType="ContentPage">
+                <Setter Property="Padding" Value="0" />
+                <!-- In order to get Icons in TitleBar on ios in Primary color -->
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.FlyoutBehavior" Value="Disabled" />
+                <Setter Property="Shell.TabBarIsVisible" Value="False" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
+                <Setter Property="ControlTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid RowDefinitions="Auto, *">
+                                <controls:GlobalErrorView />
+                                <ContentPresenter Grid.Row="1" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

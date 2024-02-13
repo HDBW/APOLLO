@@ -35,7 +35,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            Training training = null;
+            Training? training = null;
             try
             {
                 training = await Service.GetTrainingAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", TokenSource!.Token);
@@ -67,7 +67,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            IEnumerable<Training> trainings = null;
+            IEnumerable<Training>? trainings = null;
             try
             {
                 trainings = await Service.SearchTrainingsAsync(null, null, null, null, TokenSource!.Token);
@@ -120,7 +120,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 nameof(Training.Image),
             };
 
-            IEnumerable<Training> trainings = null;
+            IEnumerable<Training>? trainings = null;
             try
             {
                 trainings = await Service.SearchTrainingsAsync(filter, visibleFields, null, null, TokenSource!.Token);
@@ -132,7 +132,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
 
             Assert.NotNull(trainings);
-            foreach (var training in trainings)
+            foreach (var training in trainings!)
             {
                 Assert.False(string.IsNullOrEmpty(training.TrainingName));
                 Assert.False(string.IsNullOrEmpty(training.ShortDescription));
@@ -160,7 +160,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             };
 
             var trainings = await FilterTrainings(fields);
-            Assert.NotEmpty(trainings);
+            Assert.NotNull(trainings);
+            Assert.NotEmpty(trainings!);
         }
 
         [Fact]
@@ -185,7 +186,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             };
 
             var trainings = await FilterTrainings(fields);
-            Assert.Empty(trainings?.Where(x => !x.TrainingName.Equals(trainingName)));
+            Assert.NotNull(trainings);
+            Assert.Empty(trainings!.Where(x => !x.TrainingName.Equals(trainingName)));
         }
 
         [Fact]
@@ -402,7 +404,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
             await FilterTrainings(fields);
         }
-
 
         [Fact]
         public async Task FilterTrainingsByShortDescriptionAsyncTest()
@@ -647,9 +648,22 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             await FilterTrainings(fields);
         }
 
-        private async Task<IEnumerable<Training>> FilterTrainings(List<FieldExpression> fields, bool isOrOperator = false)
+        protected override TrainingService SetupService(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
         {
-            IEnumerable<Training> trainings = null;
+            return new TrainingService(logger, baseUri, apiKey, httpClientHandler);
+        }
+
+        protected override void CleanupAdditionalServices()
+        {
+        }
+
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
+        {
+        }
+
+        private async Task<IEnumerable<Training>?> FilterTrainings(List<FieldExpression> fields, bool isOrOperator = false)
+        {
+            IEnumerable<Training>? trainings = null;
 
             var filter = new Filter()
             {
@@ -671,19 +685,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.NotEmpty(trainings);
 
             return trainings;
-        }
-
-        protected override TrainingService SetupService(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
-        {
-            return new TrainingService(logger, baseUri, apiKey, httpClientHandler);
-        }
-
-        protected override void CleanupAdditionalServices()
-        {
-        }
-
-        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
-        {
         }
     }
 }

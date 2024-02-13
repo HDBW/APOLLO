@@ -12,7 +12,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class DropTagetEntry<TU> : ObservableObject, IAssociateTargetInteractiveEntry
         where TU : class
     {
+#pragma warning disable SA1308 // Variable names should not be prefixed
+#pragma warning disable SA1311 // Static readonly fields should begin with upper-case letter
         private static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
+#pragma warning restore SA1311 // Static readonly fields should begin with upper-case letter
+#pragma warning restore SA1308 // Variable names should not be prefixed
         private InteractionType _interaction;
         private int? _associatedIndex;
 

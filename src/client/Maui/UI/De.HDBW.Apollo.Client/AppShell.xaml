@@ -1,12 +1,13 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
+﻿<Shell
     x:Class="De.HDBW.Apollo.Client.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:De.HDBW.Apollo.Client.Views"
+    xmlns:profileViews="clr-namespace:De.HDBW.Apollo.Client.Views.Profile"
     xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+    xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
     xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
     xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
     x:DataType="viewModels:AppShellViewModel"
@@ -55,7 +56,7 @@
         </ResourceDictionary>
     </Shell.Resources>
     <Shell.FlyoutHeader>
-        <Frame Margin="0" BackgroundColor="Transparent" BorderColor="Transparent" >
+         <Frame Margin="0" BackgroundColor="Transparent" BorderColor="Transparent" >
             <HorizontalStackLayout Padding="8,12,8,0">
                 <Image Source="apollo.png" HeightRequest="24" MaximumWidthRequest="101" Aspect="AspectFit"/>
             </HorizontalStackLayout>
@@ -70,7 +71,27 @@
             </VerticalStackLayout>
         </Frame>
     </Shell.FlyoutFooter>
-    <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resources.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding ChangeUseCaseCommand}"/>
+    <!--<MenuItem IconImageSource="user.png" Text="{x:Static strings:Resources.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding ChangeUseCaseCommand}"/>-->
     <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
-    <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:SearchView}" />
+    <!--<MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SkillsAndBadges}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CertificatesAndDegrees}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_LearningPath}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CoursesFavorites}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CVGenerator}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_ViewTutorial}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
+    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />-->
+    <TabBar x:Name="PART_Tabs">
+        <Tab Title="{x:Static strings:Resources.SearchView_Title}"
+             Icon="search.png">
+            <ShellContent ContentTemplate="{DataTemplate views:SearchView}" />
+        </Tab>
+        <Tab Title="{x:Static strings:Resources.ProfileView_Title}"
+            Icon="profile.png">
+            <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" IsVisible="{x:Binding IsRegistered}"/>
+        </Tab>
+        <Tab Title="{x:Static strings:Resources.FavoriteView_Title}"
+            Icon="favorite.png">
+            <ShellContent ContentTemplate="{DataTemplate views:EmptyView}" />
+        </Tab>
+    </TabBar>
 </Shell>

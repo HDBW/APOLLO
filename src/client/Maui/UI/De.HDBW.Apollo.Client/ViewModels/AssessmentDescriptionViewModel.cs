@@ -134,7 +134,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     var parameters = new NavigationParameters();
                     parameters.AddValue<long?>(NavigationParameter.Id, _assessmentItemId);
-                    await NavigationService.NavigateAsnc(Routes.AssessmentView, worker.Token, parameters);
+                    await NavigationService.NavigateAsync(Routes.AssessmentView, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)
                 {
@@ -143,10 +143,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (ObjectDisposedException)
                 {
                     Logger?.LogDebug($"Canceled {nameof(Start)} in {GetType().Name}.");
-                }
-                catch (MsalException ex)
-                {
-                    Logger?.LogWarning(ex, $"Error while starting assessment in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
