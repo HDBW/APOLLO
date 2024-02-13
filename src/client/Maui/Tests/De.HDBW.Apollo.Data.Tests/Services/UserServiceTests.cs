@@ -261,7 +261,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
         }
 
-        protected override void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler)
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)
         {
         }
 
