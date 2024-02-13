@@ -557,7 +557,7 @@ namespace Apollo.Api.UnitTests
             ApolloList apolloList = new ApolloList()
             {
                 Description = "International Standard",
-                ItemType = nameof(LanguageNiveau),
+                ItemType = nameof(LanguageSkill),
                 Items = new List<ApolloListItem>
                 {
                     new ApolloListItem { ListItemId = 0, Value = "Unknown", Lng = null, Description = null },
@@ -575,7 +575,7 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
 
             Assert.IsNotNull(dbItem);
-            Assert.IsTrue(dbItem.ItemType == nameof(LanguageNiveau));
+            Assert.IsTrue(dbItem.ItemType == nameof(LanguageSkill));
             Assert.IsTrue(dbItem.Items.Count == 7);
         }
 

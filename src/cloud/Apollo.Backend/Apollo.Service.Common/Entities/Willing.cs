@@ -3,14 +3,14 @@
 
 namespace Apollo.Common.Entities
 {
-    public enum Willing
+    public class Willing : ApolloListItem
     {
-        Unknown = 0,
-        // proved
-        Yes = 1,
-        // not present
-        No = 2,
-        // partial
-        Partial = 3,
+        //Unknown = 0,
+        //// proved
+        //Yes = 1,
+        //// not present
+        //No = 2,
+        //// partial
+        //Partial = 3,
     }
 }
