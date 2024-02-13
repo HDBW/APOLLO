@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Generic;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 

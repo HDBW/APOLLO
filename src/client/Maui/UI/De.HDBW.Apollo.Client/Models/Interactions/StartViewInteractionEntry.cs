@@ -4,7 +4,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Enums;
-using De.HDBW.Apollo.Client.Helper;
 
 namespace De.HDBW.Apollo.Client.Models.Interactions
 {
@@ -21,9 +20,6 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         private string? _info;
 
         [ObservableProperty]
-        private string? _imagePath;
-
-        [ObservableProperty]
         private string? _decoratorText;
 
         [ObservableProperty]
@@ -34,7 +30,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         private Status _status;
 
         private StartViewInteractionEntry(string? text, string? subline, string? decoratorText, string? info, string imagePath, Status status, long entityId, Type entityType, object? data, Func<StartViewInteractionEntry, Task> handleToggleIsFavorite, Func<StartViewInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle)
-            : base(text, data, navigateHandler, canNavigateHandle)
+            : base(text, data, navigateHandler, canNavigateHandle, imagePath)
         {
             _handleToggleIsFavorite = handleToggleIsFavorite;
             _canHandleToggleIsFavorite = canHandleToggleIsFavorite;
@@ -44,7 +40,6 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             Status = status;
             EntityId = entityId;
             EntityType = entityType;
-            ImagePath = imagePath?.ToUniformedName();
             DecoratorText = decoratorText;
         }
 
@@ -100,7 +95,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
-        public static StartViewInteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, long entityId, object? data, Func<StartViewInteractionEntry, Task> handleToggleIsFavorite, Func<StartViewInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
+        public static InteractionEntry Import<TU>(string text, string subline, string decoratorText, string info, string imagePath, Status status, long entityId, object? data, Func<StartViewInteractionEntry, Task> handleToggleIsFavorite, Func<StartViewInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
         {
             return new StartViewInteractionEntry(text, subline, decoratorText, info, imagePath, status, entityId, typeof(TU), data, handleToggleIsFavorite, canHandleToggleIsFavorite, handleInteract, canHandleInteract);
         }

@@ -9,7 +9,6 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
