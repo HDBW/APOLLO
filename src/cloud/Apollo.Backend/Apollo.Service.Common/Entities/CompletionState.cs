@@ -3,11 +3,11 @@
 
 namespace Apollo.Common.Entities
 {
-    public enum CompletionState
+    public class CompletionState : ApolloListItem
     {
-        None = 0,
-        Completed = 1,
-        Failed = 2,
-        Ongoning = 3,
+        //None = 0,
+        //Completed = 1,
+        //Failed = 2,
+        //Ongoning = 3,
     }
 }
