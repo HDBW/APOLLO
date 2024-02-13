@@ -23,6 +23,7 @@ namespace De.HDBW.Apollo.Data.Services
             HttpMessageHandler httpClientHandler)
         {
             ArgumentNullException.ThrowIfNull(logger);
+            ArgumentException.ThrowIfNullOrEmpty(baseUrl);
             ArgumentException.ThrowIfNullOrEmpty(authKey);
             ArgumentNullException.ThrowIfNull(httpClientHandler);
             Logger = logger;
