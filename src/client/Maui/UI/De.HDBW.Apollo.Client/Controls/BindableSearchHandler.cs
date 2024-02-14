@@ -65,7 +65,6 @@ namespace De.HDBW.Apollo.Client.Controls
             KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
 
             SearchCommand?.Execute(Query);
-
             // SearchBoxVisibility = SearchBoxVisibility.Hidden;
             // await Task.Delay(200);
             // SearchBoxVisibility = SearchBoxVisibility.Expanded;

@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Android.Content;
-using AndroidX.AppCompat.Widget;
 using AndroidX.CardView.Widget;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using Microsoft.Maui.Platform;
