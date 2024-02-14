@@ -20,7 +20,7 @@ namespace Apollo.Common.Entities
 
         //TODO: Review if this is needed
         //[BsonElement("AppointmentType")]
-        public string AppointmentType { get; set; }
+        public string? AppointmentType { get; set; }
 
         //[BsonElement("AppointmentDescription")]
         public string? AppointmentDescription { get; set; }
@@ -34,7 +34,7 @@ namespace Apollo.Common.Entities
         public string? DurationDescription { get; set; }
 
         //Maybe autocalculated by Occurences?
-        public int? DurationInMin { get; set; }
+        public TimeSpan? Duration { get; set; }
 
         //Maybe better as a List?
         public List<Occurence> Occurences { get; set; }
@@ -43,7 +43,7 @@ namespace Apollo.Common.Entities
         public bool IsGuaranteed { get; set; }
 
         //[BsonElement("TrainingMode")]
-        public TrainingMode TrainingMode { get; set; }
+        public TrainingMode? TrainingMode { get; set; }
 
         /// <summary>
         /// Explains the Time Model for the Training
@@ -51,11 +51,11 @@ namespace Apollo.Common.Entities
         /// 1ZS = 60 Minutes
         /// </summary>
         //[BsonElement("TimeInvestAttendee")]
-        public int? TimeInvestAttendeeInMin { get; set; }
+        public TimeSpan? TimeInvestAttendee { get; set; }
 
 
         //[BsonElement("TimeModel")]
-        public TrainingTimeModel TimeModel { get; set; }
+        public TrainingTimeModel? TimeModel { get; set; }
 
         public string? OccurenceNoteOnTime { get; set; }
 
@@ -71,12 +71,12 @@ namespace Apollo.Common.Entities
         /// Weeks is also Possible (1W)
         /// NOT UI RELEvANT
         /// </summary>
-        public string ExecutionDurationUnit { get; set; }
+        public string? ExecutionDurationUnit { get; set; }
 
         /// <summary>
         /// NOT UI RELEVANT
         /// </summary>
-        public string ExecutionDurationDescription { get; set;}
+        public string? ExecutionDurationDescription { get; set; }
 
         //TODO: Review if this is needed
         //[BsonElement("LessonType")]
@@ -84,6 +84,9 @@ namespace Apollo.Common.Entities
 
 
         //[BsonElement("BookingUrl")]
-        public Uri BookingUrl { get; set; }
+        public Uri? BookingUrl { get; set; }
+
+        public string? DurationUnit { get; set; }
+        public string? Comment { get; set; }
     }
 }
