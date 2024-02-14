@@ -40,13 +40,8 @@ namespace De.HDBW.Apollo.Data.Services
         {
             token.ThrowIfCancellationRequested();
 
-            filter.Fields = (filter.Fields != null)
-                ? filter.Fields
-                : new List<FieldExpression>();
-
-            visibleFields = visibleFields != null
-                ? visibleFields
-                : new List<string>();
+            filter.Fields = filter.Fields ?? new List<FieldExpression>();
+            visibleFields = visibleFields?.Distinct().ToList() ?? new List<string>();
 
             var query = new QueryTrainingsRequest();
             query.Filter = filter;
