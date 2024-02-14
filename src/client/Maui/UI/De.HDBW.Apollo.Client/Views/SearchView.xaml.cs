@@ -12,6 +12,7 @@ public partial class SearchView
     {
         InitializeComponent();
         BindingContext = model;
+        PART_SearchHandler.QueryIcon.Parent = this;
     }
 
     public SearchView()

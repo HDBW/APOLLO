@@ -6,7 +6,6 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
-             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
              Shell.TabBarIsVisible="True"
@@ -17,6 +16,7 @@
     <Shell.SearchHandler>
         <local:BindableSearchHandler
             QueryIcon="magnify.png"
+            x:Name="PART_SearchHandler"
             TextColor="{StaticResource TextColor}"
             BackgroundColor="{StaticResource White}"
             SearchCommand="{x:Binding SearchCommand}"
@@ -49,38 +49,40 @@
         </CollectionView.EmptyView>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="interactionModels:SearchInteractionEntry">
-                <Border BackgroundColor="White" StrokeThickness="0" MaximumHeightRequest="240" Margin="24,0">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
-                    </Border.GestureRecognizers>
-                    <Grid RowDefinitions="44, *, auto, auto, auto" Padding="0" ColumnDefinitions="*, 40">
-                        <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="16,8">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8,0,0,8" />
-                            </Border.StrokeShape>
-                            <HorizontalStackLayout>
-                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
-                                <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
-                            </HorizontalStackLayout>
-                        </Border>
-                        <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8" Command="{x:Binding ToggleIsFavoriteCommand}" Source="makefavorite.png" VerticalOptions="Start">
-                            <ImageButton.Triggers>
-                                <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
-                                    <Setter Property="Source"  Value="isfavorite.png" />
-                                </DataTrigger>
-                            </ImageButton.Triggers>
-                        </ImageButton>
-                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto14Primary}" Padding="16,8" />
-                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
-                        <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
-                            <Image Source="{x:Binding SublineImagePath}" IsVisible="{x:Binding HasSublineImage}" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" />
-                            <Label Grid.Column="1" InputTransparent="True" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24}" />
+                <ContentView>
+                    <Border BackgroundColor="White" StrokeThickness="0" MaximumHeightRequest="240" Margin="24,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
+                        </Border.GestureRecognizers>
+                        <Grid RowDefinitions="44, *, auto, auto, auto" Padding="0" ColumnDefinitions="*, 40">
+                            <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="16,8">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8,0,0,8" />
+                                </Border.StrokeShape>
+                                <HorizontalStackLayout>
+                                    <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                    <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                            <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8" Command="{x:Binding ToggleIsFavoriteCommand}" Source="makefavorite.png" VerticalOptions="Start">
+                                <ImageButton.Triggers>
+                                    <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
+                                        <Setter Property="Source"  Value="isfavorite.png" />
+                                    </DataTrigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                            <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto14Primary}" Padding="16,8" />
+                            <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
+                            <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
+                                <Image Source="{x:Binding SublineImagePath}" IsVisible="{x:Binding HasSublineImage}" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" />
+                                <Label Grid.Column="1" InputTransparent="True" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24}" />
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Border>
+                    </Border>
+                </ContentView>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

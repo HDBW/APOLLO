@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
@@ -103,6 +104,21 @@ namespace De.HDBW.Apollo.Client.Controls
             result = result.Union(control.Recent ?? Array.Empty<object>());
             control.ItemsSource = new ObservableCollection<object>(result);
             control.SearchBoxVisibility = SearchBoxVisibility.Expanded;
+        }
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+#if IOS
+            // see https://github.com/dotnet/maui/issues/14442
+            if (nameof(QueryIcon) == propertyName && QueryIcon != null)
+            {
+                if (QueryIcon.Parent == null)
+                {
+                    QueryIcon.Parent = Application.Current?.MainPage;
+                }
+            }
+#endif
+            base.OnPropertyChanged(propertyName);
         }
     }
 }

@@ -10,7 +10,7 @@ using UIKit;
 namespace De.HDBW.Apollo.Client
 {
     [Register("AppDelegate")]
-    public class AppDelegate : MauiUIApplicationDelegate
+    public class AppDelegate : MauiUIApplicationDelegate, IUIGestureRecognizerDelegate
     {
         public ITouchService? TouchService { get; set; }
 
