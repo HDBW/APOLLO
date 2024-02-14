@@ -15,6 +15,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -31,7 +32,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ObservableCollection<HistoricalSuggestionEntry> _recents = new ObservableCollection<HistoricalSuggestionEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<BasicViewInteractionEntry> _searchResults = new ObservableCollection<BasicViewInteractionEntry>();
+        private ObservableCollection<SearchInteractionEntry> _searchResults = new ObservableCollection<SearchInteractionEntry>();
 
         public SearchViewModel(
             IDispatcherService dispatcherService,
@@ -52,7 +53,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             SheetService = sheetService;
             TrainingService = trainingService;
             SearchHistoryRepository = searchHistoryRepository;
-            Filter = CreateDefaultFilter(string.Empty);
+            Filter = CreateDefaultTrainingsFilter(string.Empty);
         }
 
         private ISessionService SessionService { get; }
@@ -74,11 +75,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     token.ThrowIfCancellationRequested();
                     Suggestions.Clear();
-                    await Task.Run(() => LoadSuggestionsAsync(inputValue, worker.Token), worker.Token);
+                    await Task.Run(() => LoadTrainingsSuggestionsAsync(inputValue, worker.Token), worker.Token);
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error while {nameof(LoadSuggestionsAsync)} in {GetType().Name}.");
+                    Logger?.LogError(ex, $"Unknown error while {nameof(LoadTrainingsSuggestionsAsync)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -188,61 +189,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     token.ThrowIfCancellationRequested();
 
                     query = query ?? string.Empty;
-                    var converter = new CourseTagTypeToStringConverter();
-                    UpdateFilter(query);
-
-                    var visibleFields = new List<string>()
-                    {
-                        nameof(Training.Id),
-                        nameof(Training.ProviderId),
-                        nameof(Training.TrainingName),
-                        nameof(Training.Description),
-                        nameof(Training.ShortDescription),
-                        nameof(Training.TrainingProvider),
-                        nameof(Training.Content),
-                        nameof(Training.BenefitList),
-                        nameof(Training.CourseProvider),
-                        nameof(Training.TargetAudience),
-                        nameof(Training.ProductUrl),
-                        nameof(Training.Price),
-                        nameof(Training.Tags),
-                        nameof(Training.PublishingDate),
-                        nameof(Training.UnpublishingDate),
-                        nameof(Training.Appointment),
-                    };
-
-                    var trainingItems = await TrainingService.SearchTrainingsAsync(Filter, visibleFields, null, null, worker.Token);
-                    trainingItems = trainingItems ?? Array.Empty<Training>();
-                    var interactions = new List<BasicViewInteractionEntry>();
-                    foreach (var trainingItem in trainingItems)
-                    {
-                        var decoratorText = string.Join(", ", trainingItem.Tags ?? new List<string>());
-
-                        var courseData = new NavigationParameters();
-                        courseData.AddValue<string?>(NavigationParameter.Id, trainingItem.Id);
-                        var data = new NavigationData(Routes.CourseView, courseData);
-
-                        //ToDo
-                        var duration = trainingItem.Appointment?.FirstOrDefault()?.Duration.ToString() ?? string.Empty;
-
-                        var provider = !string.IsNullOrWhiteSpace(trainingItem.CourseProvider?.Name) ? trainingItem.CourseProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
-                        var image = "placeholdercontinuingeducation.png";
-
-                        //ToDo
-
-                        /*
-                        switch (course.)
-                        {
-                            case CourseTagType.InfoEvent:
-                                image = "placeholderinfoevent.png";
-                                break;
-                        }
-                        */
-
-                        var interaction = BasicViewInteractionEntry.Import<Training>(trainingItem?.TrainingName ?? string.Empty, provider, decoratorText, duration, image, Status.Unknown, trainingItem?.Id ?? string.Empty, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
-                        //interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
-                        interactions.Add(interaction);
-                    }
+                    UpdateTrainingsFilter(query);
+                    var interactions = await SearchTrainingsAsync(Filter, worker.Token).ConfigureAwait(false);
 
                     if (!interactions.Any() || string.IsNullOrWhiteSpace(query))
                     {
@@ -250,46 +198,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         return;
                     }
 
-                    SearchHistory? history = null;
-                    long time = DateTime.UtcNow.Ticks;
-                    if (historyEntry != null)
-                    {
-                        history = historyEntry.Export();
-                        history.Ticks = time;
-                    }
-                    else if (suggestionEntry != null)
-                    {
-                        history = new SearchHistory()
-                        {
-                            Query = query,
-                            Ticks = time,
-                        };
-                    }
-                    else
-                    {
-                        history = await SearchHistoryRepository.GetItemsByQueryAsync(query, CancellationToken.None).ConfigureAwait(false);
-                        history = history ?? new SearchHistory()
-                        {
-                            Query = query,
-                        };
-
-                        history.Ticks = DateTime.UtcNow.Ticks;
-                    }
-
-                    if (history.Id == 0)
-                    {
-                        await SearchHistoryRepository.AddItemAsync(history, CancellationToken.None).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        await SearchHistoryRepository.UpdateItemAsync(history, CancellationToken.None).ConfigureAwait(false);
-                    }
+                    await SaveSearchHistoryAsync(query, historyEntry, suggestionEntry, worker.Token).ConfigureAwait(false);
 
                     await ExecuteOnUIThreadAsync(
                         () =>
                         {
                             LoadonUIThread(interactions);
-                            LoadonUIThread(historyEntry, suggestionEntry, history);
+                            ClearSuggesionsAndHistory();
                         }, worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -311,41 +226,144 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private bool CanHandleToggleIsFavorite(BasicViewInteractionEntry entry)
+        private async Task SaveSearchHistoryAsync(string query, HistoricalSuggestionEntry? historyEntry, SearchSuggestionEntry? suggestionEntry, CancellationToken token)
+        {
+            SearchHistory? history = null;
+            long time = DateTime.UtcNow.Ticks;
+            if (historyEntry != null)
+            {
+                history = historyEntry.Export();
+                history.Ticks = time;
+            }
+            else if (suggestionEntry != null)
+            {
+                history = new SearchHistory()
+                {
+                    Query = query,
+                    Ticks = time,
+                };
+            }
+            else
+            {
+                history = await SearchHistoryRepository.GetItemsByQueryAsync(query, CancellationToken.None).ConfigureAwait(false);
+                history = history ?? new SearchHistory()
+                {
+                    Query = query,
+                };
+
+                history.Ticks = DateTime.UtcNow.Ticks;
+            }
+
+            if (history.Id == 0)
+            {
+                await SearchHistoryRepository.AddItemAsync(history, CancellationToken.None).ConfigureAwait(false);
+            }
+            else
+            {
+                await SearchHistoryRepository.UpdateItemAsync(history, CancellationToken.None).ConfigureAwait(false);
+            }
+        }
+
+        private async Task<IEnumerable<SearchInteractionEntry>> SearchTrainingsAsync(Filter filter, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var visibleFields = new List<string>()
+                    {
+                        nameof(Training.Id),
+                        nameof(Training.TrainingName),
+                        nameof(Training.TrainingType),
+                        nameof(Training.ShortDescription),
+                        nameof(Training.Price),
+                        $"{nameof(Training.TrainingProvider)}.{nameof(EduProvider.Name)}",
+                        $"{nameof(Training.TrainingProvider)}.{nameof(EduProvider.Image)}",
+                        $"{nameof(Training.CourseProvider)}.{nameof(EduProvider.Name)}",
+                        $"{nameof(Training.CourseProvider)}.{nameof(EduProvider.Image)}",
+                    };
+
+            var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
+            items = items ?? new List<Training>();
+            var result = new List<SearchInteractionEntry>();
+            foreach (var item in items)
+            {
+                var parts = new List<string>();
+                {
+                    parts.Add(item.TrainingName);
+                    parts.Add(item.ShortDescription);
+                }
+
+                var text = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+                parts = new List<string>();
+                {
+                    parts.Add(Resources.Strings.Resources.Global_Training);
+                    parts.Add(item.TrainingType);
+                }
+
+                var decoratorText = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
+                var decoratorImagePath = "training.png";
+
+                EduProvider? eduProvider = null;
+                if (!string.IsNullOrWhiteSpace(item.TrainingProvider?.Name))
+                {
+                    eduProvider = item.TrainingProvider;
+                }
+                else if (!string.IsNullOrWhiteSpace(item.CourseProvider?.Name))
+                {
+                    eduProvider = item.CourseProvider;
+                }
+
+                var subline = eduProvider?.Name ?? Resources.Strings.Resources.StartViewModel_UnknownProvider;
+                var sublineImagePath = eduProvider?.Image?.OriginalString;
+                var info = $"{item.Price:0.##} €";
+
+                var parameters = new NavigationParameters();
+                parameters.AddValue(NavigationParameter.Id, item.Id);
+                var data = new NavigationData(Routes.CourseView, parameters);
+
+                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+
+                // interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
+                result.Add(interaction);
+            }
+
+            return result;
+        }
+
+        private bool CanHandleToggleIsFavorite(SearchInteractionEntry entry)
         {
             return entry != null;
         }
 
-        private Task HandleToggleIsFavorite(BasicViewInteractionEntry entry)
+        private Task HandleToggleIsFavorite(SearchInteractionEntry entry)
         {
             entry.IsFavorite = !entry.IsFavorite;
             if (entry.IsFavorite)
             {
-                //SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
+                // SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
             }
             else
             {
-                //SessionService.RemoveFavorite(entry.EntityId.ToString(), entry.EntityType);
+                // SessionService.RemoveFavorite(entry.EntityId.ToString(), entry.EntityType);
             }
 
             return Task.CompletedTask;
         }
 
-        private void LoadonUIThread(HistoricalSuggestionEntry? historyEntry, SearchSuggestionEntry? suggestionEntry, SearchHistory history)
+        private void ClearSuggesionsAndHistory()
         {
             Recents = new ObservableCollection<HistoricalSuggestionEntry>();
             Suggestions = new ObservableCollection<SearchSuggestionEntry>();
         }
 
-        private void LoadonUIThread(IEnumerable<BasicViewInteractionEntry> interactionEntries)
+        private void LoadonUIThread(IEnumerable<SearchInteractionEntry> interactionEntries)
         {
-            SearchResults = new ObservableCollection<BasicViewInteractionEntry>(interactionEntries);
+            SearchResults = new ObservableCollection<SearchInteractionEntry>(interactionEntries);
         }
 
-        private async Task LoadSuggestionsAsync(string inputValue, CancellationToken token)
+        private async Task LoadTrainingsSuggestionsAsync(string inputValue, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            UpdateFilter(inputValue);
+            UpdateTrainingsFilter(inputValue);
             var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, null, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<Training>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
@@ -370,26 +388,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Recents = new ObservableCollection<HistoricalSuggestionEntry>(recents);
         }
 
-        private Filter CreateDefaultFilter(string query)
+        private Filter CreateDefaultTrainingsFilter(string query)
         {
             var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { query }, QueryOperator.Contains);
             filter.AddExpression(nameof(Training.Description), new List<object>() { query }, QueryOperator.Contains);
             filter.AddExpression(nameof(Training.ShortDescription), new List<object>() { query }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.TrainingProvider), new List<object>() { query }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.CourseProvider), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression($"{nameof(Training.TrainingProvider)}.{nameof(EduProvider.Name)}", new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression($"{nameof(Training.CourseProvider)}.{nameof(EduProvider.Name)}", new List<object>() { query }, QueryOperator.Contains);
             filter.IsOrOperator = true;
             return filter;
         }
 
-        private void UpdateFilter(string query)
+        private void UpdateTrainingsFilter(string query)
         {
             if (Filter == null)
             {
-                Filter = CreateDefaultFilter(query);
+                Filter = CreateDefaultTrainingsFilter(query);
                 return;
             }
 
-            var defaultFilter = CreateDefaultFilter(query);
+            var defaultFilter = CreateDefaultTrainingsFilter(query);
             var defaultFieldNames = defaultFilter.Fields.Select(x => x.FieldName);
             foreach (var fieldExpression in Filter.Fields)
             {

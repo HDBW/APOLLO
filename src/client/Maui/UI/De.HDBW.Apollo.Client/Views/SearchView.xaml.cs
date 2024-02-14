@@ -12,10 +12,6 @@ public partial class SearchView
     {
         InitializeComponent();
         BindingContext = model;
-        if (ViewModel == null)
-        {
-            return;
-        }
     }
 
     public SearchView()

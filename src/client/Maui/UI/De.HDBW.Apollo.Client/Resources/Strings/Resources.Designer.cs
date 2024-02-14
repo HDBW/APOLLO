@@ -1647,6 +1647,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kurs.
+        /// </summary>
+        public static string Global_Training {
+            get {
+                return ResourceManager.GetString("Global_Training", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schulart.
         /// </summary>
         public static string Global_TypeOfSchool {

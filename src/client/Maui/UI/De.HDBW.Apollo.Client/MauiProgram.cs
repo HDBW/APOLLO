@@ -234,7 +234,8 @@ namespace De.HDBW.Apollo.Client
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
             {
-                return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, new HttpClientHandler());
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, handler);
             });
 
             services.AddSingleton<IUserService>((serviceProvider) =>
@@ -242,7 +243,8 @@ namespace De.HDBW.Apollo.Client
 #if DEBUG
                 var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
 #else
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, new HttpClientHandler());
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, handler);
 #endif
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;

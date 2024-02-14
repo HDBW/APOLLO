@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios;</TargetFrameworks>
     <OutputType>Exe</OutputType>
@@ -58,6 +58,7 @@
     <None Remove="Resources\Images\deletelight.svg" />
     <None Remove="Resources\Images\edit.svg" />
     <None Remove="Resources\Images\emptysearchdeco.svg" />
+    <None Remove="Resources\Images\filter.svg" />
     <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />
@@ -67,7 +68,9 @@
     <None Remove="Resources\Images\Icon_ProfileWebReference.svg" />
     <None Remove="Resources\Images\Icon_ProfilLicensInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfilQualificationInfo.svg" />
+    <None Remove="Resources\Images\isfavorite.svg" />
     <None Remove="Resources\Images\longlist.svg" />
+    <None Remove="Resources\Images\makefavorite.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
@@ -80,6 +83,7 @@
     <None Remove="Resources\Images\splashdeco.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\splashdeco2.svg" />
+    <None Remove="Resources\Images\training.svg" />
     <None Remove="Resources\Images\usecase4deco.svg" />
     <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
@@ -134,6 +138,7 @@
     <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.55" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.22.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.59.0" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
