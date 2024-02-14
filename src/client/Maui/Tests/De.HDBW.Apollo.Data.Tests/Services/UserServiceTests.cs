@@ -132,7 +132,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 user = await Service.GetUserAsync(userId, TokenSource!.Token);
                 Assert.NotNull(user);
-                Assert.False(string.IsNullOrWhiteSpace(user.Id));
+                Assert.False(string.IsNullOrWhiteSpace(user!.Id));
                 var profile = user?.Profile ?? new Profile();
                 profile.Licenses = null;
                 profile.CareerInfos = null;
@@ -297,7 +297,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             else
             {
                 Assert.NotNull(existingUser.Profile!.CareerInfos);
-                var careerInfo = existingUser.Profile.CareerInfos[index]!;
+                var careerInfo = existingUser.Profile.CareerInfos![index]!;
                 careerInfo.CareerType = careerType.ToApolloListItem()!;
                 careerInfo.Start = start;
                 careerInfo.End = end;

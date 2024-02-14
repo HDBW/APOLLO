@@ -28,7 +28,7 @@ public class PreferenceServiceTests : AbstractTest, IDisposable
     [Fact]
     public void TestCreation()
     {
-        IPreferences preferences = null;
+        IPreferences? preferences = null;
 
         var service = new PreferenceService(null, preferences);
         Assert.NotNull(service);

@@ -54,7 +54,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             _handleToggleIsFavorite = handleToggleIsFavorite;
             _canHandleToggleIsFavorite = canHandleToggleIsFavorite;
             Subline = subline;
-            SublineImagePath = sublineImagePath;
+            SublineImagePath = sublineImagePath?.ToUniformedName();
             DecoratorText = decoratorText;
             DecoratorImagePath = decoratorImagePath?.ToUniformedName();
             Info = info;

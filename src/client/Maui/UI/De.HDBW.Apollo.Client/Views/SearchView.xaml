@@ -62,7 +62,7 @@
                                 <RoundRectangle CornerRadius="8,0,0,8" />
                             </Border.StrokeShape>
                             <HorizontalStackLayout>
-                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath, Mode=OneTime}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
                                 <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
                             </HorizontalStackLayout>
                         </Border>
@@ -76,7 +76,7 @@
                         <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto14Primary}" Padding="16,8" />
                         <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
                         <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
-                            <Image Source="{x:Binding SublineImagePath, Mode=OneTime}" IsVisible="{x:Binding HasSublineImage}" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" />
+                            <Image Source="{x:Binding SublineImagePath}" IsVisible="{x:Binding HasSublineImage}" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" />
                             <Label Grid.Column="1" InputTransparent="True" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24}" />
                         </Grid>
                     </Grid>

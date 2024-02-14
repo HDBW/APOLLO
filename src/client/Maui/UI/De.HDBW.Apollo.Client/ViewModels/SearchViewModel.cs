@@ -364,7 +364,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             token.ThrowIfCancellationRequested();
             UpdateTrainingsFilter(inputValue);
-            var suggestions = inputValue?.Length > 3 ? await TrainingService.SearchSuggesionsAsync(Filter, null, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<Training>();
+            var suggestions = inputValue?.Length >= 2 ? await TrainingService.SearchSuggesionsAsync(Filter, null, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<Training>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
             {
