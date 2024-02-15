@@ -22,7 +22,7 @@ namespace Apollo.Api.UnitTests
     {
         Training[] _testTrainings = new Training[]
           {
-                new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
+                new Training(){  Id = "UT01", ProviderId = "unittest01", TrainingName = "Open AI",
                     PublishingDate = DateTime.Now, Price = 42.0, PriceDescription = "EUR",
                 Loans = new List<Loans>(
                     new Loans[]
@@ -32,10 +32,10 @@ namespace Apollo.Api.UnitTests
                     }
                     )},
 
-                new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI",
+                new Training(){  Id = "UT02", ProviderId = "unittest02", TrainingName = "Azure AI",
                     PublishingDate = DateTime.Now.AddDays(1),Price = 7.1, PriceDescription = "EUR",},
 
-                new Training(){  Id = "UT03" , ProviderId = "unittest",
+                new Training(){  Id = "UT03" , ProviderId = "unittest03",
                     PublishingDate = DateTime.Now.AddDays(3),Price = 1192.0, PriceDescription = "EUR" ,   Loans = new List<Loans>(
                     new Loans[]
                     {
@@ -813,18 +813,32 @@ namespace Apollo.Api.UnitTests
             // Ensure that _testTrainings includes "Training T05" with a valid IndividualStartDate
             await api.InsertTrainingsAsync(_testTrainings);
 
-            // Case 1: Query by TrainingName and PublishingDate
+            // Case 1: Query by TrainingName
             var query = new Apollo.Common.Entities.Query
             {
-               
+                Filter = new Filter
+                {
+                    Fields = new List<FieldExpression>
+                    {
+                        new FieldExpression
+                        {
+                            FieldName = "id",
+                            Operator = QueryOperator.Equals,
+                            Argument = new string[]{ "SER02" }
+                        }
+                        // Add other FieldExpressions as needed for additional conditions
+                    }
+                }
             };
 
             var trainings = await api.QueryTrainingsAsync(query);
-                       
+
             // Assert for Case 1
             Assert.IsNotNull(trainings);
-            Assert.IsTrue(trainings.Count>0);          
+            Assert.IsTrue(trainings.Count > 0);
+
         }
+
 
 
         /// <summary>
@@ -838,7 +852,6 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            // Ensure that _testTrainings includes "Training T05" with a valid IndividualStartDate
             await api.InsertTrainingsAsync(_testTrainings);
 
             // Specifying the filter date in the desired format
@@ -1227,6 +1240,41 @@ namespace Apollo.Api.UnitTests
         [TestMethod]
         public async Task TrainingAssessibilityTest()
         {
+        }
+
+
+        /// <summary>
+        /// Delete Trainings test by Provider Ids
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task ProviderTrainingsDeleteTest()
+        {
+            var api = Helpers.GetApolloApi();
+            //
+            // test training has three provider id with "unittest01", "unittest02", "unittest03"
+            await api.InsertTrainingsAsync(_testTrainings);
+
+            var query = new Apollo.Common.Entities.Query
+            {
+                Filter = new Filter
+                {
+                    Fields = new List<FieldExpression>
+                    {
+                        new FieldExpression
+                        {
+                            FieldName = "ProviderId",
+                            Operator = QueryOperator.Equals,
+                            Argument = new string[]{ "unittest01", "unittest02", "unittest03" }
+                        }
+                    }
+                }
+            };
+
+            var trainings = await api.DeleteProviderTrainingsAsync(query);
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count == 3);
+
         }
 
 
