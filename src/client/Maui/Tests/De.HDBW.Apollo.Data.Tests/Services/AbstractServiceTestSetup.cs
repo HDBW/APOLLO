@@ -3,7 +3,6 @@
 
 using De.HDBW.Apollo.Data.Tests.Extensions;
 using De.HDBW.Apollo.Data.Tests.Helper;
-using Microsoft.Extensions.Http.Logging;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;

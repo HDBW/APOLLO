@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Messages;
 using Microsoft.Maui.Controls.Platform.Compatibility;
@@ -8,7 +11,7 @@ namespace De.HDBW.Apollo.Client.Platforms
 {
     public class CustomShellPageRendererTracker : ShellPageRendererTracker
     {
-        WeakReference<UISearchController>? _searchController = null;
+        private WeakReference<UISearchController>? _searchController = null;
 
         public CustomShellPageRendererTracker(IShellContext context)
             : base(context)

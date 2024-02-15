@@ -90,6 +90,21 @@ namespace De.HDBW.Apollo.Client.Controls
             SearchCommand?.Execute(entry);
         }
 
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+#if IOS
+            // see https://github.com/dotnet/maui/issues/14442
+            if (SearchHandler.QueryIconNameProperty.PropertyName == propertyName && QueryIcon != null)
+            {
+                if (QueryIcon.Parent == null)
+                {
+                    QueryIcon.Parent = Application.Current?.MainPage;
+                }
+            }
+#endif
+            base.OnPropertyChanged(propertyName);
+        }
+
         private static void HandleSuggestionsChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = bindable as BindableSearchHandler;
@@ -102,23 +117,6 @@ namespace De.HDBW.Apollo.Client.Controls
             result = result.Union(control.Recent ?? Array.Empty<object>());
             control.ItemsSource = new ObservableCollection<object>(result);
             control.SearchBoxVisibility = SearchBoxVisibility.Expanded;
-
         }
-
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-#if IOS
-            // see https://github.com/dotnet/maui/issues/14442
-            if (nameof(QueryIcon) == propertyName && QueryIcon != null)
-            {
-                if (QueryIcon.Parent == null)
-                {
-                    QueryIcon.Parent = Application.Current?.MainPage;
-                }
-            }
-#endif
-            base.OnPropertyChanged(propertyName);
-        }
-
     }
 }

@@ -18,11 +18,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class SearchFilterSheetViewModel : BaseViewModel
     {
-        private Dictionary<Action, IEditor> _mapping = new Dictionary<Action, IEditor>();
         private const string SortingEditor = "Sorting";
         private const string DateRangeEditor = "DateRange";
         private const string IndividualStartDateBoolEditor = "IndividualStartDate";
-
         private readonly Dictionary<string, long> _mappedId = new Dictionary<string, long>()
         {
             { SortingEditor, 1 },
@@ -30,10 +28,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             { IndividualStartDateBoolEditor, 3 },
         };
 
+        private readonly Filter _filter = new Filter();
+        private string? _currentFilter;
+        private Dictionary<Action, IEditor> _mapping = new Dictionary<Action, IEditor>();
+
         [ObservableProperty]
         private ObservableCollection<IPropertyEditor> _editorList = new ObservableCollection<IPropertyEditor>();
-        private string? _currentFilter;
-        private readonly Filter _filter = new Filter();
 
         public SearchFilterSheetViewModel(
            IDispatcherService dispatcherService,

@@ -1,7 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Drawing;
 using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;

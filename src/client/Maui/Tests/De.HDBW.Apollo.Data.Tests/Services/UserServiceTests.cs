@@ -1,14 +1,13 @@
-﻿using System;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
 using System.Globalization;
-using System.Linq;
-using System.Xml.Linq;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Graphics.Text;
 using Xunit;
 using Xunit.Abstractions;
 

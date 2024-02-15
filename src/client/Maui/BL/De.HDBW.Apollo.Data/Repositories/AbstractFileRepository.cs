@@ -1,10 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using De.HDBW.Apollo.Data.Helper;
-using De.HDBW.Apollo.Data.JsonConverter;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Repositories
