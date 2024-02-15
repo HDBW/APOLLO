@@ -21,11 +21,11 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="trainingId"></param>
         /// <returns></returns>
-        public virtual async Task<Training> GetTraining(string trainingId)
+        public virtual async Task<Training> GetTrainingAsync(string trainingId)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(GetTraining)}");
+                _logger?.LogTrace($"Entered {nameof(GetTrainingAsync)}");
 
                 var training = await _dal.GetByIdAsync<Training>(ApolloApi.GetCollectionName<Training>(), trainingId);
 
@@ -35,7 +35,7 @@ namespace Apollo.Api
                     throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Training not found.");
                 }
 
-                _logger?.LogTrace($"Completed {nameof(GetTraining)}");
+                _logger?.LogTrace($"Completed {nameof(GetTrainingAsync)}");
 
                 return training;
             }
@@ -46,7 +46,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"{this.User} failed execution of {nameof(GetTraining)}: {ex.Message}");
+                _logger.LogError(ex, $"{this.User} failed execution of {nameof(GetTrainingAsync)}: {ex.Message}");
 
                 // Throw an ApolloApiException with the specific error code and the caught exception
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.GetTrainingError, "Error while getting training", ex);
@@ -281,18 +281,18 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="training"></param>
         /// <returns></returns>
-        public virtual async Task<string> InsertTraining(Training training)
+        public virtual async Task<string> InsertTrainingAsync(Training training)
         {
             try
             {
-                _logger?.LogTrace($"{this.User} entered {nameof(InsertTraining)}");
+                _logger?.LogTrace($"{this.User} entered {nameof(InsertTrainingAsync)}");
 
                 if (String.IsNullOrEmpty(training.Id))
                     training.Id = CreateTrainingId();
 
                 await _dal.InsertAsync(ApolloApi.GetCollectionName<Training>(), Convertor.Convert(training));
 
-                _logger?.LogTrace($"{this.User} completed {nameof(InsertTraining)}");
+                _logger?.LogTrace($"{this.User} completed {nameof(InsertTrainingAsync)}");
 
                 return training.Id;
             }
@@ -310,7 +310,7 @@ namespace Apollo.Api
             catch (Exception ex)
             {
                 // Log the error
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertTraining)}: {ex.Message}");
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertTrainingAsync)}: {ex.Message}");
 
                 // Throw a more generic exception for unexpected errors
                 throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
@@ -324,13 +324,13 @@ namespace Apollo.Api
         /// <param name="training">The training identifier must be specified if the update operation is performed.
         /// If the identifier not specified </param>
         /// <returns>Returns the </returns>
-        public virtual async Task<IList<string>> InsertTrainings(ICollection<Training> trainings)
+        public virtual async Task<IList<string>> InsertTrainingsAsync(ICollection<Training> trainings)
         {
             try
             {
                 List<string> ids = new List<string>();
 
-                _logger?.LogTrace($"{this.User} entered {nameof(InsertTrainings)}");
+                _logger?.LogTrace($"{this.User} entered {nameof(InsertTrainingsAsync)}");
 
                 if (trainings == null || !trainings.Any())
                 {
@@ -347,7 +347,7 @@ namespace Apollo.Api
 
                 await _dal.InsertManyAsync(ApolloApi.GetCollectionName<Training>(), trainings.Select(t => Convertor.Convert(t)).ToArray());
 
-                _logger?.LogTrace($"{this.User} completed {nameof(InsertTrainings)}");
+                _logger?.LogTrace($"{this.User} completed {nameof(InsertTrainingsAsync)}");
 
                 return ids;
             }
@@ -358,7 +358,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertTrainings)}: {ex.Message}");
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(InsertTrainingsAsync)}: {ex.Message}");
 
                 // Throw a more generic exception for unexpected errors
                 throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
@@ -424,65 +424,26 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="deletingIds">The list of training identifiers.</param>
         /// <returns>The numbe rof deleted trainings.</returns>
-        public virtual async Task<long> DeleteTrainings(string[] deletingIds)
+        public virtual async Task<long> DeleteTrainingsAsync(string[] deletingIds)
         {
             try
             {
-                _logger?.LogTrace($"{this.User} entered {nameof(DeleteTrainings)}");
+                _logger?.LogTrace($"{this.User} entered {nameof(DeleteTrainingsAsync)}");
 
                 var res = await _dal.DeleteManyAsync(GetCollectionName<Training>(), deletingIds);
 
-                _logger?.LogTrace($"{this.User} completed {nameof(DeleteTrainings)}");
+                _logger?.LogTrace($"{this.User} completed {nameof(DeleteTrainingsAsync)}");
 
                 return res;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteTrainings)}: {ex.Message}");
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteTrainingsAsync)}: {ex.Message}");
 
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
             }
         }
 
-
-        /// <summary>
-        /// Deletes multiple Training instances by their IDs.
-        /// </summary>
-        /// <param name="deletingIds">The array of training IDs to delete.</param>
-        /// <returns>A list of deleted record counts for each ID.</returns>
-        public virtual async Task<List<long>> DeleteTraining(string[] deletingIds)
-        {
-            try
-            {
-                _logger?.LogTrace($"{this.User} entered {nameof(DeleteTrainings)}");
-
-                var deletedCounts = new List<long>();
-
-                foreach (var id in deletingIds)
-                {
-                    await _dal.DeleteAsync(GetCollectionName<Training>(), id);
-
-                   
-                    deletedCounts.Add(1);
-                }
-
-                _logger?.LogTrace($"{this.User} completed {nameof(DeleteTrainings)}");
-
-                return deletedCounts;
-            }
-            catch (ApolloApiException)
-            {
-             
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteTrainings)}: {ex.Message}");
-
-                // Throw a more generic exception for unexpected errors
-                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
-            }
-        }
 
     }
 }

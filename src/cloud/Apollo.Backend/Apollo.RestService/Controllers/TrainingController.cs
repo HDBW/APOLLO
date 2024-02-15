@@ -49,7 +49,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace($"{nameof(GetTrainingAsync)} entered.");
 
                 // Call the Apollo API to retrieve the training with the specified ID.
-                var res = await _api.GetTraining(id);
+                var res = await _api.GetTrainingAsync(id);
 
                 _logger.LogTrace($"{nameof(GetTrainingAsync)} completed.");
 
@@ -205,7 +205,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace($"{nameof(DeleteAsync)} entered.");
 
                 // Assuming you need to pass the ID of the training to delete.
-                await _api.DeleteTrainings(new string[] { id });
+                await _api.DeleteTrainingsAsync(new string[] { id });
 
                 _logger.LogTrace($"{nameof(DeleteAsync)} completed.");
             }
