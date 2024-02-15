@@ -15,7 +15,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Trainings
         /// The CorrelationId is used to identify the occurence of the appointment that might be grouped with other appointment.
         /// Used for recurring appointment.
         /// </summary>
-        public string CorrelationId { get; set; }
+        public string? CorrelationId { get; set; }
         // [BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
@@ -29,9 +29,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Trainings
         public TimeSpan Duration => EndDate - StartDate;
 
         //[BsonElement("Description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         //[BsonElement("Location")]
-        public Contact Location { get; set; }
+        public Contact? Location { get; set; }
     }
 }
