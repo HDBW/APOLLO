@@ -216,5 +216,35 @@ namespace Apollo.Service.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Deletes all the trainings with the specified Provider Ids in the query.
+        /// Return all deleted Training Ids in response
+        /// </summary>
+        [HttpDelete("DeleteProviderTrainings")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of queried trainings.", typeof(List<DeleteProviderTrainigsResponse>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        public async Task<DeleteProviderTrainigsResponse> DeleteProviderTrainigsAsync([FromBody] DeleteProviderTrainigsRequest req)
+        {
+            try
+            {
+                _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} entered.");
+
+                // Call the Apollo API to delete trainings based on the request.
+                var trainings = await _api.DeleteProviderTrainingsAsync(req);
+
+                _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} completed.");
+
+                // Return all deleted Training Ids in response.
+                return new DeleteProviderTrainigsResponse { Trainings = trainings.Select(id => new Training { Id = id }).ToList() };
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger.LogError($"{nameof(DeleteProviderTrainigsAsync)} failed: {ex.Message}");
+                throw;
+            }
+
+        }
     }
 }
