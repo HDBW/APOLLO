@@ -547,6 +547,7 @@ namespace De.HDBW.Apollo.Client
         {
 #if IOS
             handlers.AddHandler(typeof(SearchBar), typeof(De.HDBW.Apollo.Client.Platforms.iOS.CustomSearchbarHandler));
+            handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
 #elif ANDROID
             handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
 #endif

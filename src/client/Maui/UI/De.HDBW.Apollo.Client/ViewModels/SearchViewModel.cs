@@ -4,9 +4,11 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Converter;
 using De.HDBW.Apollo.Client.Enums;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Models;
@@ -353,6 +355,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             Recents = new ObservableCollection<HistoricalSuggestionEntry>();
             Suggestions = new ObservableCollection<SearchSuggestionEntry>();
+            WeakReferenceMessenger.Default.Send<HideSearchSuggestionsMessage>(new ());
         }
 
         private void LoadonUIThread(IEnumerable<SearchInteractionEntry> interactionEntries)

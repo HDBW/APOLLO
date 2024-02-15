@@ -34,4 +34,14 @@ public partial class SearchView
             return BindingContext as SearchViewModel;
         }
     }
+
+    protected override void OnDisappearing()
+    {
+        PART_SearchHandler?.Close();
+    }
+
+    private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
+    {
+        PART_SearchHandler?.Close();
+    }
 }

@@ -34,6 +34,12 @@ namespace De.HDBW.Apollo.Client.Controls
             set => SetValue(SearchCommandProperty, value);
         }
 
+        public void Close()
+        {
+            Unfocus();
+            KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
+        }
+
         protected override void OnQueryChanged(string oldValue, string newValue)
         {
             base.OnQueryChanged(oldValue, newValue);
@@ -65,9 +71,6 @@ namespace De.HDBW.Apollo.Client.Controls
             KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
 
             SearchCommand?.Execute(Query);
-            // SearchBoxVisibility = SearchBoxVisibility.Hidden;
-            // await Task.Delay(200);
-            // SearchBoxVisibility = SearchBoxVisibility.Expanded;
         }
 
         protected override void OnItemSelected(object item)
@@ -85,10 +88,6 @@ namespace De.HDBW.Apollo.Client.Controls
             KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
             var entry = item as SearchSuggestionEntry;
             SearchCommand?.Execute(entry);
-
-            // SearchBoxVisibility = SearchBoxVisibility.Hidden;
-            // await Task.Delay(200);
-            // SearchBoxVisibility = SearchBoxVisibility.Expanded;
         }
 
         private static void HandleSuggestionsChanged(BindableObject bindable, object oldValue, object newValue)
@@ -103,6 +102,7 @@ namespace De.HDBW.Apollo.Client.Controls
             result = result.Union(control.Recent ?? Array.Empty<object>());
             control.ItemsSource = new ObservableCollection<object>(result);
             control.SearchBoxVisibility = SearchBoxVisibility.Expanded;
+
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -119,5 +119,6 @@ namespace De.HDBW.Apollo.Client.Controls
 #endif
             base.OnPropertyChanged(propertyName);
         }
+
     }
 }

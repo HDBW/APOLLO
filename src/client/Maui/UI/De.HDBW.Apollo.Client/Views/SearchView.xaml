@@ -36,7 +36,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="filter.png" />
     </ContentPage.ToolbarItems>
-    <CollectionView ItemsSource="{x:Binding SearchResults}">
+    <CollectionView ItemsSource="{x:Binding SearchResults}" Scrolled="HandleScrolled">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
         </CollectionView.ItemsLayout>

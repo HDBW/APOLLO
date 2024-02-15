@@ -12,6 +12,9 @@
              x:DataType="viewModels:PersonalInformationEditViewModel"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout Style="{StaticResource FormContent}">
         <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" Style="{StaticResource Noto14SemiBold}"/>
         <Border Style="{StaticResource InputBorderStyle}">

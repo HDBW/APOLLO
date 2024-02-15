@@ -47,6 +47,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         public override async Task OnNavigatedToAsync()
         {
+            if (IsShowingDialog)
+            {
+                return;
+            }
+
             using (var worker = ScheduleWork())
             {
                 try
