@@ -7,13 +7,13 @@ namespace Apollo.Common.Entities
     /// Based on Original BA Dataset.
     /// Needs to be reviewd? maybe we can change it.
     /// </summary>
-    public enum WorkingTimeModel
+    public class WorkingTimeModel : ApolloListItem
     {
-        Unknown,
-        FULLTIME,
-        PARTTIME,
-        SHIFT_NIGHT_WORK_WEEKEND,
-        MINIJOB,
-        HOME_TELEWORK
+        //Unknown,
+        //FULLTIME,
+        //PARTTIME,
+        //SHIFT_NIGHT_WORK_WEEKEND,
+        //MINIJOB,
+        //HOME_TELEWORK
     }
 }

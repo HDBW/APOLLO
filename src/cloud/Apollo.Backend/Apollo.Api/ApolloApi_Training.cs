@@ -453,18 +453,18 @@ namespace Apollo.Api
         {
             try
             {
-                _logger?.LogTrace($"{this.User} entered {nameof(DeleteTrainings)}");
+                _logger?.LogTrace($"{this.User} entered {nameof(DeleteProviderTrainingsAsync)}");
 
                 throw new NotImplementedException();
                // var res = await _dal.DeleteManyAsync(GetCollectionName<Training>(), deletingIds);
 
-                _logger?.LogTrace($"{this.User} completed {nameof(DeleteTrainings)}");
+                _logger?.LogTrace($"{this.User} completed {nameof(DeleteProviderTrainingsAsync)}");
 
                // return res;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteTrainings)}: {ex.Message}");
+                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteProviderTrainingsAsync)}: {ex.Message}");
 
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
             }

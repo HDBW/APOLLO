@@ -14,10 +14,10 @@ namespace Apollo.RestService.Apollo.Common.Messages
         /// <summary>
         /// The Id of the user to whom the profile belongs.
         /// </summary>
-        public string UserId { get; set; }
+        public  string UserId { get; set; }
 
         // Property to hold the profile to be created or updated
-        public Profile Profile { get; internal set; }
+        public  Profile Profile { get; set; }
 
         
     }
