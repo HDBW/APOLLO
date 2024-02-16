@@ -49,12 +49,12 @@ namespace De.HDBW.Apollo.Client.Controls
                 ItemsSource = null;
                 return;
             }
-
             ItemsSource = new ObservableCollection<object>(Recent ?? Array.Empty<object>());
             SearchBoxVisibility = SearchBoxVisibility.Expanded;
             var viewModel = BindingContext as ILoadSuggestionsProvider;
             viewModel?.StartLoadSuggestions(newValue);
         }
+
 
         protected override void OnQueryConfirmed()
         {
