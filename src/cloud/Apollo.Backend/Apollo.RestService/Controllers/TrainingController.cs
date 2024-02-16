@@ -216,5 +216,32 @@ namespace Apollo.Service.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="providerId">TODO</param>
+        [HttpDelete("provider/{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Training deleted successfully.")]
+        public async Task DeleteProviderTrainigsAsync([FromRoute] string providerId)
+        {
+            try
+            {
+                _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} entered.");
+
+                // Assuming you need to pass the ID of the training to delete.
+                await _api.DeleteProviderTrainingsAsync( providerId ); // TODO
+
+                _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} completed.");
+            }
+            catch (Exception ex)
+            {
+                // Log and re-throw any exceptions encountered.
+                _logger.LogError($"{nameof(DeleteProviderTrainigsAsync)} failed: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

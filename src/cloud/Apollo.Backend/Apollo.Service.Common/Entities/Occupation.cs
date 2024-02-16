@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Apollo.Common.Entities
 {
-    [DataContract]
+    //[DataContract]
     public abstract class Occupation
     {
         /// <summary>

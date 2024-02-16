@@ -56,6 +56,7 @@ namespace Apollo.Common.Entities
     {
         /// <summary>
         /// Identifier of the item in the list.
+        /// If set on -1, the item is new and has to be created.
         /// </summary>
         public required int ListItemId { get; set; }
 

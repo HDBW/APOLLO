@@ -17,4 +17,19 @@ namespace Apollo.Common.Entities
         //C1 = 5,
         //C2 = 6,
     }
+
+
+    // Write the method which calculates the sun of elements in the list
+    public class LanguageNiveauService
+    {
+        public int SumOfElementsInList(List<LanguageNiveau> list)
+        {
+            int sum = 0;
+            foreach (var item in list)
+            {
+                sum += item.Id;
+            }
+            return sum;
+        }
+    }
 }

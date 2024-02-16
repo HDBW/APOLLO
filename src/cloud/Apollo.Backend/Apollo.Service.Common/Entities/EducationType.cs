@@ -3,18 +3,18 @@
 
 namespace Apollo.Common.Entities
 {
-    public enum EducationType
+    public class EducationType : ApolloListItem
     {
-        Unkown = 0,
-        // Schulbildung
-        Education = 1,
-        // Berufsausbildung (betr./außerbetr.)
-        CompanyBasedVocationalTraining = 2,
-        // Studium
-        Study = 3,
-        // Berufsausbildung (schulisch)
-        VocationalTraining = 4,
-        // Weiterbildung
-        FurtherEducation = 5,
+        //Unkown = 0,
+        //// Schulbildung
+        //Education = 1,
+        //// Berufsausbildung (betr./außerbetr.)
+        //CompanyBasedVocationalTraining = 2,
+        //// Studium
+        //Study = 3,
+        //// Berufsausbildung (schulisch)
+        //VocationalTraining = 4,
+        //// Weiterbildung
+        //FurtherEducation = 5,
     }
 }

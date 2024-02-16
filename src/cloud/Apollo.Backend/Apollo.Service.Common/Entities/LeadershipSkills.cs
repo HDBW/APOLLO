@@ -4,6 +4,7 @@
 namespace Apollo.Common.Entities
 {
     /// <summary>
+    /// Currentlly not a part of UI
     /// This is not a esco or ai taxonomy skillset it is basically a skillset from ba data.
     /// since we have a lot of data, why not use it.
     /// </summary>

@@ -16,8 +16,9 @@ namespace Apollo.Common.Entities
     [DataContract]
     public class Skill
     {
+
         /// <summary>
-        /// The Apollo Id of the Skill.
+        /// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
         /// </summary>
         public string Id { get; set; }
 

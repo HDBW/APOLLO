@@ -87,6 +87,7 @@ namespace Apollo.Common.Entities
         /// </summary>
         public List<Occupation>? Occupations { get; set; }
 
+
         /// <summary>
         /// Knowledge is part of the original BA Dataset for Machine Learning.
         /// This is part of the classification of the User Profile Data.
@@ -100,6 +101,7 @@ namespace Apollo.Common.Entities
         public Knowledge? Knowledge { get; set; }
 
         /// <summary>
+        /// Currentlly not used.
         /// Apprenticeship is part of the original BA Dataset for Machine Learning.
         /// This is part of the classification of the User Profile Data.
         /// This is not shared with the User or mobile App.
