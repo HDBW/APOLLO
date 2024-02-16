@@ -27,7 +27,7 @@ namespace Apollo.Common.Entities
             int sum = 0;
             foreach (var item in list)
             {
-                sum += item.Id;
+                sum += item.ListItemId;
             }
             return sum;
         }
