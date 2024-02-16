@@ -17,7 +17,10 @@
         <local:BindableSearchHandler
             QueryIcon="magnify.png"
             x:Name="PART_SearchHandler"
-            TextColor="{StaticResource TextColor}"
+            TextColor="{StaticResource Primary}"
+            ClearIcon="searchclear.png"
+            Placeholder="{x:Static strings:Resources.SearchView_Title}" 
+            PlaceholderColor="{StaticResource Primary300}"
             BackgroundColor="{StaticResource White}"
             SearchCommand="{x:Binding SearchCommand}"
             Suggestions="{x:Binding Suggestions}"
@@ -25,10 +28,12 @@
             ShowsResults="True">
             <local:BindableSearchHandler.ItemTemplate>
                 <DataTemplate x:DataType="models:SearchSuggestionEntry">
-                    <Grid ColumnDefinitions="auto,*" BackgroundColor="{StaticResource White}">
-                        <Image Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Margin="8,0"/>
-                        <Label Grid.Column="1" Text="{x:Binding Name}" TextColor="{StaticResource Primary}" Padding="0,0,5,0" VerticalOptions="Center"/>
-                    </Grid>
+                    <Border Padding="0,8" StrokeThickness="0">
+                        <Grid ColumnDefinitions="auto,*" BackgroundColor="{StaticResource White}">
+                            <Image Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Margin="8,0"/>
+                            <Label Grid.Column="1" Text="{x:Binding Name}" TextColor="{StaticResource Primary}" Padding="0,0,5,0" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </local:BindableSearchHandler.ItemTemplate>
         </local:BindableSearchHandler>
@@ -39,19 +44,20 @@
     <Grid>
         <CollectionView ItemsSource="{x:Binding SearchResults}" Scrolled="HandleScrolled">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
             </CollectionView.ItemsLayout>
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="Fill">
-                    <Grid Padding="24">
-                        <Image Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                    <Grid RowDefinitions="auto, *" Padding="24">
+                        <Label Text="{x:Static strings:Resources.SearchView_Interest}" HorizontalTextAlignment="Center" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}"/>
+                        <Image Grid.Row="1" Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
                     </Grid>
                 </ContentView>
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="interactionModels:SearchInteractionEntry">
                     <ContentView>
-                        <Border BackgroundColor="White" StrokeThickness="0" MaximumHeightRequest="240" Margin="24,0">
+                        <Border Style="{StaticResource ShadowBorderStyle}" MaximumHeightRequest="240" Margin="24,4">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="8" />
                             </Border.StrokeShape>
@@ -65,7 +71,7 @@
                                     </Border.StrokeShape>
                                     <HorizontalStackLayout>
                                         <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
-                                        <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
+                                        <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
                                     </HorizontalStackLayout>
                                 </Border>
                                 <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8" Command="{x:Binding ToggleIsFavoriteCommand}" Source="makefavorite.png" VerticalOptions="Start">
@@ -75,11 +81,11 @@
                                         </DataTrigger>
                                     </ImageButton.Triggers>
                                 </ImageButton>
-                                <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto14Primary}" Padding="16,8" />
+                                <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" />
                                 <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
                                 <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
                                     <Image Source="{x:Binding SublineImagePath}" IsVisible="{x:Binding HasSublineImage}" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" />
-                                    <Label Grid.Column="1" InputTransparent="True" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24}" />
+                                    <Label Grid.Column="1" InputTransparent="True" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
                                 </Grid>
                             </Grid>
                         </Border>

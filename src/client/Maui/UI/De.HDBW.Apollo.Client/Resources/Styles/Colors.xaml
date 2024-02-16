@@ -21,7 +21,7 @@
     <Color x:Key="Primary100">#C6B6E0</Color>
     <Color x:Key="Primary150">#6B5F77</Color>
     <Color x:Key="Primary200">#A185CC</Color>
-    <Color x:Key="Primary300">#7B54B7</Color>
+    <Color x:Key="Primary300">#BFA2EB</Color>
     <Color x:Key="Primary400">#5E2FA7</Color>
     <Color x:Key="Primary">#420A98</Color>
     <Color x:Key="Primary600">#3C0990</Color>

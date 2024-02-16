@@ -1324,4 +1324,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="Global_Training" xml:space="preserve">
     <value>Kurs</value>
   </data>
+  <data name="SearchView_Interest" xml:space="preserve">
+    <value>Was interessiert Dich?</value>
+  </data>
 </root>
