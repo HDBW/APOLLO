@@ -392,7 +392,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             else
             {
                 Assert.NotNull(existingUser.Profile!.LanguageSkills);
-                var language = existingUser.Profile!.LanguageSkills[index]!;
+                var language = existingUser.Profile!.LanguageSkills![index]!;
                 language.Niveau = niveau.ToApolloListItem();
                 language.Name = new CultureInfo(code).DisplayName;
                 language.Code = code;

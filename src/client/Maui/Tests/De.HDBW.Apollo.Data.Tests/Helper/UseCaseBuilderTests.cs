@@ -37,7 +37,7 @@ public class UseCaseBuilderTests
 
             UseCaseBuilder useCaseBuilder = null;
             var ctor = typeof(UseCaseBuilder).GetConstructors().FirstOrDefault();
-            var parameters = ctor.GetParameters();
+            var parameters = ctor?.GetParameters()!;
             var ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
             Assert.Equal(parameters[0].Name, ex.ParamName);
 

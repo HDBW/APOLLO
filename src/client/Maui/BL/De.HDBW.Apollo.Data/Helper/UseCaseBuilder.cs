@@ -13,24 +13,24 @@ namespace De.HDBW.Apollo.Data.Helper
     public class UseCaseBuilder : IUseCaseBuilder
     {
         public UseCaseBuilder(
-            ILogger<UseCaseBuilder> logger,
-            IAssessmentItemRepository assessmentItemRepository,
-            IAssessmentCategoryRepository assessmentCategoriesRepository,
-            IAssessmentCategoryResultRepository assessmentCategoryResultRepository,
-            IAssessmentScoreRepository assessmentScoreRepository,
-            IQuestionItemRepository questionItemRepository,
-            IAnswerItemRepository answerItemRepository,
-            IAnswerItemResultRepository answerItemResultRepository,
-            IMetaDataMetaDataRelationRepository metaDataMetaDataRelationRepository,
-            IAnswerMetaDataRelationRepository answerMetaDataRelationRepository,
-            IQuestionMetaDataRelationRepository questionMetaDataRelationRepository,
-            IMetaDataRepository metadataRepository,
-            ICourseItemRepository courseItemRepository,
-            ICourseContactRepository courseContactRepository,
-            ICourseAppointmentRepository courseAppointmentRepository,
-            ICourseContactRelationRepository courseContactRelationRepository,
-            IEduProviderItemRepository eduProviderItemRepository,
-            ICategoryRecomendationItemRepository categoryRecomendationItemRepository)
+            ILogger<UseCaseBuilder>? logger,
+            IAssessmentItemRepository? assessmentItemRepository,
+            IAssessmentCategoryRepository? assessmentCategoriesRepository,
+            IAssessmentCategoryResultRepository? assessmentCategoryResultRepository,
+            IAssessmentScoreRepository? assessmentScoreRepository,
+            IQuestionItemRepository? questionItemRepository,
+            IAnswerItemRepository? answerItemRepository,
+            IAnswerItemResultRepository? answerItemResultRepository,
+            IMetaDataMetaDataRelationRepository? metaDataMetaDataRelationRepository,
+            IAnswerMetaDataRelationRepository? answerMetaDataRelationRepository,
+            IQuestionMetaDataRelationRepository? questionMetaDataRelationRepository,
+            IMetaDataRepository? metadataRepository,
+            ICourseItemRepository? courseItemRepository,
+            ICourseContactRepository? courseContactRepository,
+            ICourseAppointmentRepository? courseAppointmentRepository,
+            ICourseContactRelationRepository? courseContactRelationRepository,
+            IEduProviderItemRepository? eduProviderItemRepository,
+            ICategoryRecomendationItemRepository? categoryRecomendationItemRepository)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
