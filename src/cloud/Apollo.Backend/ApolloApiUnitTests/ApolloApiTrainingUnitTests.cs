@@ -22,7 +22,7 @@ namespace Apollo.Api.UnitTests
     {
         Training[] _testTrainings = new Training[]
           {
-                new Training(){  Id = "UT01", ProviderId = "unittest", TrainingName = "Open AI",
+                new Training(){  Id = "UT01", ProviderId = "unittest01", TrainingName = "Open AI",
                     PublishingDate = DateTime.Now, Price = 42.0, PriceDescription = "EUR",
                 Loans = new List<Loans>(
                     new Loans[]
@@ -32,10 +32,10 @@ namespace Apollo.Api.UnitTests
                     }
                     )},
 
-                new Training(){  Id = "UT02", ProviderId = "unittest", TrainingName = "Azure AI",
+                new Training(){  Id = "UT02", ProviderId = "unittest02", TrainingName = "Azure AI",
                     PublishingDate = DateTime.Now.AddDays(1),Price = 7.1, PriceDescription = "EUR",},
 
-                new Training(){  Id = "UT03" , ProviderId = "unittest",
+                new Training(){  Id = "UT03" , ProviderId = "unittest03",
                     PublishingDate = DateTime.Now.AddDays(3),Price = 1192.0, PriceDescription = "EUR" ,   Loans = new List<Loans>(
                     new Loans[]
                     {
@@ -76,7 +76,7 @@ namespace Apollo.Api.UnitTests
                                 IsGuaranteed = true,
                                 TrainingMode = TrainingMode.Offline,
                                 //TimeInvestAttendee = TimeSpan.MinValue,
-                                TimeModel = TrainingTimeModel.Unkonwn,
+                                TimeModel = TrainingTimeModel.Unknown,
                                 OccurenceNoteOnTime = "Weekly",
                                 ExecutionDuration = "2",
                                 ExecutionDurationUnit = "UE",
@@ -97,7 +97,7 @@ namespace Apollo.Api.UnitTests
                                 IsGuaranteed = true,
                                 TrainingMode = TrainingMode.Offline,
                                 //TimeInvestAttendee = TimeSpan.MinValue,
-                                TimeModel = TrainingTimeModel.Unkonwn,
+                                TimeModel = TrainingTimeModel.Unknown,
                                 OccurenceNoteOnTime = "Weekly",
                                 ExecutionDuration = "2",
                                 ExecutionDurationUnit = "UE",
@@ -711,13 +711,13 @@ namespace Apollo.Api.UnitTests
                 // Set values for other properties as needed
             };
 
-            await api.InsertTraining(training);
+            await api.InsertTrainingAsync(training);
 
-            await api.DeleteTrainings(new string[] { training.Id });
+            await api.DeleteTrainingsAsync(new string[] { training.Id });
 
-            await api.InsertTrainings(_testTrainings);
+            await api.InsertTrainingsAsync(_testTrainings);
 
-            await api.DeleteTrainings(_testTrainings.Select(i => i.Id).ToArray());
+            await api.DeleteTrainingsAsync(_testTrainings.Select(i => i.Id).ToArray());
         }
 
 
@@ -762,7 +762,7 @@ namespace Apollo.Api.UnitTests
             Assert.AreEqual(newTraining.Id, updatedTrainingIds[0]); // The ID should remain the same
 
             // Clean up: Delete the created or updated training
-            await api.DeleteTrainings(updatedTrainingIds.ToArray());
+            await api.DeleteTrainingsAsync(updatedTrainingIds.ToArray());
         }
 
 
@@ -784,10 +784,10 @@ namespace Apollo.Api.UnitTests
             try
             {
                 // Insert a test training record into the database
-                await api.InsertTraining(training);
+                await api.InsertTrainingAsync(training);
 
                 // Retrieve the inserted training using the GetTrainingTest method
-                var retrievedTraining = await api.GetTraining(training.Id);
+                var retrievedTraining = await api.GetTrainingAsync(training.Id);
 
                 // Ensure that the retrieved training is not null and has the same ID as the inserted training
                 Assert.IsNotNull(retrievedTraining);
@@ -796,7 +796,7 @@ namespace Apollo.Api.UnitTests
             finally
             {
                 // Clean up: Delete the test training record from the database
-                await api.DeleteTrainings(new string[] { training.Id });
+                await api.DeleteTrainingsAsync(new string[] { training.Id });
             }
         }
 
@@ -811,20 +811,34 @@ namespace Apollo.Api.UnitTests
             var api = Helpers.GetApolloApi();
 
             // Ensure that _testTrainings includes "Training T05" with a valid IndividualStartDate
-            await api.InsertTrainings(_testTrainings);
+            await api.InsertTrainingsAsync(_testTrainings);
 
-            // Case 1: Query by TrainingName and PublishingDate
+            // Case 1: Query by TrainingName
             var query = new Apollo.Common.Entities.Query
             {
-               
+                Filter = new Filter
+                {
+                    Fields = new List<FieldExpression>
+                    {
+                        new FieldExpression
+                        {
+                            FieldName = "id",
+                            Operator = QueryOperator.Equals,
+                            Argument = new string[]{ "SER02" }
+                        }
+                        // Add other FieldExpressions as needed for additional conditions
+                    }
+                }
             };
 
             var trainings = await api.QueryTrainingsAsync(query);
-                       
+
             // Assert for Case 1
             Assert.IsNotNull(trainings);
-            Assert.IsTrue(trainings.Count>0);          
+            Assert.IsTrue(trainings.Count > 0);
+
         }
+
 
 
         /// <summary>
@@ -838,8 +852,7 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            // Ensure that _testTrainings includes "Training T05" with a valid IndividualStartDate
-            await api.InsertTrainings(_testTrainings);
+            await api.InsertTrainingsAsync(_testTrainings);
 
             // Specifying the filter date in the desired format
             long filterDateTimestamp = -62135596800000; // Negative Unix timestamp
@@ -924,7 +937,7 @@ namespace Apollo.Api.UnitTests
             // Cleanup: Delete the training records inserted during the test
             foreach (var training in trainings)
             {
-                await api.DeleteTrainings(new string[] { training.Id });
+                await api.DeleteTrainingsAsync(new string[] { training.Id });
             }
         }
 
@@ -947,9 +960,9 @@ namespace Apollo.Api.UnitTests
 
             Training[]? t = System.Text.Json.JsonSerializer.Deserialize<Training[]>(_complexTrainingJson, opts);
 
-            await api.InsertTrainings(t!);
+            await api.InsertTrainingsAsync(t!);
 
-            await api.DeleteTrainings(t.Select(x=>x.Id).ToArray());
+            await api.DeleteTrainingsAsync(t.Select(x=>x.Id).ToArray());
             
         }
 
@@ -963,7 +976,7 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            await api.InsertTrainings(_testTrainings);
+            await api.InsertTrainingsAsync(_testTrainings);
 
             var query = new Apollo.Common.Entities.Query
             {
@@ -1025,7 +1038,7 @@ namespace Apollo.Api.UnitTests
             // Cleanup: Delete the training records inserted during the test
             foreach (var training in trainings)
             {
-                await api.DeleteTrainings(new string[] { training.Id });
+                await api.DeleteTrainingsAsync(new string[] { training.Id });
             }
 
             // add more assertions based on your specific testing requirements
@@ -1044,10 +1057,10 @@ namespace Apollo.Api.UnitTests
             var api = Helpers.GetApolloApi();
 
             // Insert a test training record into the database
-            await api.InsertTrainings(_testTrainingwithAppointments);
+            await api.InsertTrainingsAsync(_testTrainingwithAppointments);
 
             // Retrieve the inserted training using the GetTrainingTest method
-            var retrievedTraining = await api.GetTraining(_testTrainingwithAppointments.Select(i => i.Id).ToArray().First());
+            var retrievedTraining = await api.GetTrainingAsync(_testTrainingwithAppointments.Select(i => i.Id).ToArray().First());
 
             // Ensure that the retrieved training is not null and has the same ID as the inserted training
             Assert.IsNotNull(retrievedTraining);
@@ -1153,7 +1166,7 @@ namespace Apollo.Api.UnitTests
         {
             var api = Helpers.GetApolloApi();
 
-            await api.InsertTrainings(_testTrainings);
+            await api.InsertTrainingsAsync(_testTrainings);
 
             var query = new Apollo.Common.Entities.Query
             {
@@ -1227,6 +1240,41 @@ namespace Apollo.Api.UnitTests
         [TestMethod]
         public async Task TrainingAssessibilityTest()
         {
+        }
+
+
+        /// <summary>
+        /// Delete Trainings test by Provider Ids
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task ProviderTrainingsDeleteTest()
+        {
+            var api = Helpers.GetApolloApi();
+            //
+            // test training has three provider id with "unittest01", "unittest02", "unittest03"
+            await api.InsertTrainingsAsync(_testTrainings);
+
+            var query = new Apollo.Common.Entities.Query
+            {
+                Filter = new Filter
+                {
+                    Fields = new List<FieldExpression>
+                    {
+                        new FieldExpression
+                        {
+                            FieldName = "ProviderId",
+                            Operator = QueryOperator.Equals,
+                            Argument = new string[]{ "unittest01", "unittest02", "unittest03" }
+                        }
+                    }
+                }
+            };
+
+            var trainings = await api.DeleteProviderTrainingsAsync(query);
+            Assert.IsNotNull(trainings);
+            Assert.IsTrue(trainings.Count == 3);
+
         }
 
 

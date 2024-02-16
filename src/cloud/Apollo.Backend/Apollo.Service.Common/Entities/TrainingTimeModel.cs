@@ -5,8 +5,9 @@ namespace Apollo.Common.Entities
 {
     public enum TrainingTimeModel
     {
-        Unkonwn = 0,
+        Unknown = 0,
         Fulltime = 1,
         Parttime = 2,
+        Block = 3,
     }
 }
