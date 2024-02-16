@@ -163,7 +163,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var courseData = new NavigationParameters();
                 courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
-                var data = new NavigationData(Routes.CourseView, courseData);
+                var data = new NavigationData(Routes.TrainingView, courseData);
 
                 var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
 

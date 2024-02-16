@@ -7,9 +7,9 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Views
 {
-    public partial class CourseView
+    public partial class TrainingView
     {
-        public CourseView(CourseViewModel model)
+        public TrainingView(TrainingViewModel model)
         {
 #if DEBUG
             Debug.WriteLine($"Create {GetType()}");
@@ -18,18 +18,18 @@ namespace De.HDBW.Apollo.Client.Views
             BindingContext = model;
         }
 
-        ~CourseView()
+        ~TrainingView()
         {
 #if DEBUG
             Debug.WriteLine($"~{GetType()}");
 #endif
         }
 
-        public CourseViewModel? ViewModel
+        public TrainingViewModel? ViewModel
         {
             get
             {
-                return BindingContext as CourseViewModel;
+                return BindingContext as TrainingViewModel;
             }
         }
 

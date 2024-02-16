@@ -189,7 +189,7 @@
     <MauiXaml Update="Views\AssessmentView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\CourseView.xaml">
+    <MauiXaml Update="Views\TrainingView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\EmptyView.xaml">
@@ -324,6 +324,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TrainingView.xaml.cs">
+      <DependentUpon>TrainingView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\PickUserNameView.xaml.cs">
       <DependentUpon>PickUserNameView.xaml</DependentUpon>

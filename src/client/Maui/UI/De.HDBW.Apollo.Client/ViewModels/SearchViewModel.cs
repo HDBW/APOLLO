@@ -280,6 +280,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
             items = items ?? new List<Training>();
             var result = new List<SearchInteractionEntry>();
+            result.AddRange(CreateTrainingResults(items));
+
+            return result;
+        }
+
+        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<Training> items)
+        {
+            var trainings = new List<SearchInteractionEntry>();
             foreach (var item in items)
             {
                 var parts = new List<string>();
@@ -290,13 +298,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var text = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
 
-                parts = new List<string>();
-                {
-                    parts.Add(Resources.Strings.Resources.Global_Training);
-                    parts.Add(item.TrainingType);
-                }
-
-                var decoratorText = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
+                var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
                 var decoratorImagePath = "training.png";
 
                 EduProvider? eduProvider = null;
@@ -315,15 +317,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var parameters = new NavigationParameters();
                 parameters.AddValue(NavigationParameter.Id, item.Id);
-                var data = new NavigationData(Routes.CourseView, parameters);
+                var data = new NavigationData(Routes.TrainingView, parameters);
 
                 var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
 
                 // interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
-                result.Add(interaction);
+                trainings.Add(interaction);
             }
 
-            return result;
+            return trainings;
         }
 
         private bool CanHandleToggleIsFavorite(SearchInteractionEntry entry)

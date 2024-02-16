@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public partial class CourseViewModel : BaseViewModel
+    public partial class TrainingViewModel : BaseViewModel
     {
         private long? _courseItemId;
 
@@ -146,7 +146,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private string? _decoratorText;
 
-        public CourseViewModel(
+        public TrainingViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -155,7 +155,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ICourseContactRelationRepository courseContactRelationRepository,
             ICourseContactRepository courseContactRepository,
             IEduProviderItemRepository eduProviderItemRepository,
-            ILogger<CourseViewModel> logger)
+            ILogger<TrainingViewModel> logger)
             : base(
                 dispatcherService,
                 navigationService,
