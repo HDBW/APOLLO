@@ -8,5 +8,7 @@ namespace De.HDBW.Apollo.Client.Models
         public const string History = "history.png";
 
         public const string Magnify = "magnify.png";
+
+        public const string Training = "training.png";
     }
 }

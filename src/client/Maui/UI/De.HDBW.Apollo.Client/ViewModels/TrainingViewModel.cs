@@ -12,149 +12,43 @@ using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Course;
 using De.HDBW.Apollo.Client.Models.Interactions;
-using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class TrainingViewModel : BaseViewModel
     {
-        private long? _courseItemId;
+        private string? _trainingId;
 
         [ObservableProperty]
-        private string? _title;
+        private string? _trainingName;
 
         [ObservableProperty]
-        private string? _description;
+        private string? _subTitle;
 
         [ObservableProperty]
-        private string? _shortDescription;
-
-        [ObservableProperty]
-        private string? _provider;
-
-        [ObservableProperty]
-        private string? _duration;
-
-        [ObservableProperty]
-        private string? _targetGroup;
-
-        [ObservableProperty]
-        private CourseType? _courseType;
-
-        [ObservableProperty]
-        private string? _displayCourseType;
-
-        [ObservableProperty]
-        private CourseAvailability? _availability;
-
-        [ObservableProperty]
-        private DateTime? _latestUpdateFromProvider;
-
-        [ObservableProperty]
-        private string? _preRequisitesDescription;
-
-        [ObservableProperty]
-        private string? _keyPhrases;
-
-        [ObservableProperty]
-        private Uri? _courseUrl;
-
-        [ObservableProperty]
-        private OccurrenceType? _occurrence;
-
-        [ObservableProperty]
-        private string? _displayOccurrence;
-
-        [ObservableProperty]
-        private string? _language;
-
-        [ObservableProperty]
-        private string? _learningOutcomes;
-
-        [ObservableProperty]
-        private long? _instructorId;
-
-        [ObservableProperty]
-        private long? _trainingProviderId;
-
-        [ObservableProperty]
-        private long? _courseProviderId;
-
-        [ObservableProperty]
-        private string? _benefits;
-
-        [ObservableProperty]
-        private DateTime? _publishingDate;
-
-        [ObservableProperty]
-        private DateTime? _latestUpdate;
-
-        [ObservableProperty]
-        private DateTime? _deprecation;
-
-        [ObservableProperty]
-        private string? _deprecationReason;
-
-        [ObservableProperty]
-        private DateTime? _unPublishingDate;
-
-        [ObservableProperty]
-        private DateTime? _deleted;
-
-        [ObservableProperty]
-        private long? _successorId;
-
-        [ObservableProperty]
-        private long? _predecessorId;
-
-        [ObservableProperty]
-        private CourseTagType? _courseTagType;
-
-        [ObservableProperty]
-        private decimal? _price;
-
-        [ObservableProperty]
-        private string? _currency;
-
-        [ObservableProperty]
-        private string? _loanOptions;
-
-        [ObservableProperty]
-        private EduProviderItem? _trainingProvider;
-
-        [ObservableProperty]
-        private EduProviderItem? _courseProvider;
-
-        [ObservableProperty]
-        private CourseContact? _instructor;
-
-        [ObservableProperty]
-        private CourseContact? _contact;
-
-        [ObservableProperty]
-        private ObservableCollection<InteractionEntry> _skills = new ObservableCollection<InteractionEntry>();
-
-        [ObservableProperty]
-        private ObservableCollection<CourseAppointmentEntry> _courseAppointments = new ObservableCollection<CourseAppointmentEntry>();
-
-        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasImage))]
         private string? _imagePath;
 
         [ObservableProperty]
-        private string? _decoratorText;
+        private string? _trainingType;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasProviderImage))]
+        private string? _providerImage;
+
+        [ObservableProperty]
+        private string? _providerName;
 
         public TrainingViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ICourseItemRepository courseItemRepository,
-            ICourseAppointmentRepository courseAppointmentRepository,
-            ICourseContactRelationRepository courseContactRelationRepository,
-            ICourseContactRepository courseContactRepository,
-            IEduProviderItemRepository eduProviderItemRepository,
+            ITrainingService trainingService,
             ILogger<TrainingViewModel> logger)
             : base(
                 dispatcherService,
@@ -162,16 +56,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 dialogService,
                 logger)
         {
-            ArgumentNullException.ThrowIfNull(courseItemRepository);
-            ArgumentNullException.ThrowIfNull(courseAppointmentRepository);
-            ArgumentNullException.ThrowIfNull(courseContactRelationRepository);
-            ArgumentNullException.ThrowIfNull(courseContactRepository);
-            ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
-            CourseItemRepository = courseItemRepository;
-            CourseAppointmentRepository = courseAppointmentRepository;
-            CourseContactRelationRepository = courseContactRelationRepository;
-            CourseContactRepository = courseContactRepository;
-            EduProviderItemRepository = eduProviderItemRepository;
+            ArgumentNullException.ThrowIfNull(trainingService);
+            TrainingService = trainingService;
         }
 
         public bool HasImage
@@ -182,119 +68,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public string DisplayPrice
+        public bool HasProviderImage
         {
             get
             {
-                var parts = new List<string>();
-                parts.Add("ab ");
-                parts.Add((Price ?? 0).ToString());
-                parts.Add(Currency ?? string.Empty);
-                return string.Join(string.Empty, parts.Where(s => !string.IsNullOrWhiteSpace(s)));
+                return !string.IsNullOrWhiteSpace(ProviderImage);
             }
         }
 
-        public bool HasPrice
-        {
-            get
-            {
-                return Price.HasValue && Price.Value > 0;
-            }
-        }
-
-        public bool HasInstructor
-        {
-            get
-            {
-                return Instructor != null;
-            }
-        }
-
-        public bool HasTrainingProvider
-        {
-            get
-            {
-                return TrainingProvider != null;
-            }
-        }
-
-        public string? DisplayTrainingProvider
-        {
-            get
-            {
-                return TrainingProvider?.Name;
-            }
-        }
-
-        public bool HasCourseProvider
-        {
-            get
-            {
-                return CourseProvider != null;
-            }
-        }
-
-        public bool HasContact
-        {
-            get
-            {
-                return Contact != null;
-            }
-        }
-
-        public bool HasCourseAppointments
-        {
-            get
-            {
-                return CourseAppointments?.Any() ?? false;
-            }
-        }
-
-        public bool HasSkills
-        {
-            get
-            {
-                return Skills?.Any() ?? false;
-            }
-        }
-
-        public bool HasLearningOutcomes
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(LearningOutcomes);
-            }
-        }
-
-        public bool HasPreRequisitesDescription
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(PreRequisitesDescription);
-            }
-        }
-
-        public bool HasCourseType
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(DisplayCourseType);
-            }
-        }
-
-        private ICourseItemRepository CourseItemRepository { get; }
-
-        private ICourseAppointmentRepository CourseAppointmentRepository { get; }
-
-        private ICourseContactRelationRepository CourseContactRelationRepository { get; }
-
-        private ICourseContactRepository CourseContactRepository { get; }
-
-        private IEduProviderItemRepository EduProviderItemRepository { get; }
+        private ITrainingService TrainingService { get; }
 
         public async override Task OnNavigatedToAsync()
         {
-            if (!_courseItemId.HasValue)
+            if (string.IsNullOrWhiteSpace(_trainingId))
             {
                 return;
             }
@@ -303,25 +89,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var courseItem = await CourseItemRepository.GetItemByIdAsync(_courseItemId.Value, worker.Token).ConfigureAwait(false);
-                    if (courseItem == null)
+                    var training = await TrainingService.GetTrainingAsync(_trainingId!, worker.Token).ConfigureAwait(false);
+                    if (training == null)
                     {
                         return;
                     }
 
-                    var courseAppointments = await CourseAppointmentRepository.GetItemsByForeignKeyAsync(_courseItemId.Value, worker.Token).ConfigureAwait(false);
-                    var relations = await CourseContactRelationRepository.GetItemsByForeignKeyAsync(_courseItemId.Value, worker.Token).ConfigureAwait(false);
-                    var contacts = await CourseContactRepository.GetItemsByIdsAsync(relations.Select(r => r.CourseContactId), worker.Token).ConfigureAwait(false);
-                    var eduProviders = await EduProviderItemRepository.GetItemsByIdsAsync(new List<long>() { courseItem.CourseProviderId, courseItem.TrainingProviderId, courseItem.InstructorId }, worker.Token).ConfigureAwait(false);
-                    var skills = ParseSkills(courseItem?.Skills);
-
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(
-                        courseItem,
-                        courseAppointments,
-                        contacts,
-                        eduProviders,
-                        skills), worker.Token);
+                        () => LoadonUIThread(training), worker.Token);
                 }
                 catch (Exception ex)
                 {
@@ -336,7 +111,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
-            _courseItemId = navigationParameters.GetValue<long?>(NavigationParameter.Id);
+            _trainingId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
         }
 
         protected override void RefreshCommands()
@@ -349,85 +124,20 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private void LoadonUIThread(
-            CourseItem? courseItem,
-            IEnumerable<CourseAppointment> courseAppointments,
-            IEnumerable<CourseContact> contacts,
-            IEnumerable<EduProviderItem> eduProviders,
-            IEnumerable<(string Link, string Text)> skills)
+            Training? training)
         {
-            switch (courseItem?.CourseTagType)
+            TrainingName = training?.TrainingName;
+            SubTitle = training?.SubTitle;
+            ImagePath = "placeholderinfoevent.png";
+            TrainingType = training?.TrainingType;
+            var eduProvider = training?.TrainingProvider;
+            if (string.IsNullOrWhiteSpace(eduProvider?.Name))
             {
-                case Invite.Apollo.App.Graph.Common.Models.Course.Enums.CourseTagType.InfoEvent:
-                    ImagePath = "placeholderinfoevent.png";
-                    break;
-                default:
-                    ImagePath = "placeholdercontinuingeducation.png";
-                    break;
+                eduProvider = training?.CourseProvider;
             }
 
-            IValueConverter converter = new CourseTagTypeToStringConverter();
-            DecoratorText = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
-            OnPropertyChanged(nameof(HasImage));
-            Title = courseItem?.Title;
-            Description = courseItem?.Description?.Trim();
-            ShortDescription = courseItem?.ShortDescription.Trim();
-            TargetGroup = courseItem?.TargetGroup;
-            CourseAppointments = new ObservableCollection<CourseAppointmentEntry>(courseAppointments?.Select(e => CourseAppointmentEntry.Import(e)) ?? new List<CourseAppointmentEntry>());
-            OnPropertyChanged(nameof(HasCourseAppointments));
-
-            CourseType = courseItem?.CourseType;
-            converter = new CourseTypeToStringConverter();
-            DisplayCourseType = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
-            OnPropertyChanged(nameof(HasCourseType));
-
-            Availability = courseItem?.Availability;
-            LatestUpdateFromProvider = courseItem?.LatestUpdateFromProvider;
-            PreRequisitesDescription = courseItem?.PreRequisitesDescription;
-            OnPropertyChanged(nameof(HasPreRequisitesDescription));
-            KeyPhrases = courseItem?.KeyPhrases;
-            Duration = courseItem?.Duration;
-
-            CourseUrl = courseItem?.CourseUrl;
-            Occurrence = courseItem?.Occurrence;
-            converter = new OccurrenceTypeToStringConverter();
-            DisplayOccurrence = converter.Convert(courseItem, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString();
-            Language = courseItem?.Language;
-
-            LearningOutcomes = courseItem?.LearningOutcomes;
-            OnPropertyChanged(nameof(HasLearningOutcomes));
-            InstructorId = courseItem?.InstructorId;
-            Instructor = contacts.FirstOrDefault(c => c.Id == InstructorId);
-            OnPropertyChanged(nameof(HasInstructor));
-
-            TrainingProviderId = courseItem?.TrainingProviderId;
-            TrainingProvider = eduProviders.FirstOrDefault(c => c.Id == TrainingProviderId);
-            OnPropertyChanged(nameof(HasTrainingProvider));
-            OnPropertyChanged(nameof(DisplayTrainingProvider));
-            CourseProviderId = courseItem?.CourseProviderId;
-            CourseProvider = eduProviders.FirstOrDefault(c => c.Id == CourseProviderId);
-            OnPropertyChanged(nameof(HasCourseProvider));
-
-            Benefits = courseItem?.Benefits;
-            PublishingDate = courseItem?.PublishingDate;
-            LatestUpdate = courseItem?.LatestUpdate;
-            Deprecation = courseItem?.Deprecation;
-            DeprecationReason = courseItem?.DeprecationReason;
-            UnPublishingDate = courseItem?.UnPublishingDate;
-            Deleted = courseItem?.Deleted;
-            SuccessorId = courseItem?.SuccessorId;
-            PredecessorId = courseItem?.PredecessorId;
-            CourseTagType = courseItem?.CourseTagType;
-
-            Price = courseItem?.Price;
-            Currency = courseItem?.Currency;
-            OnPropertyChanged(nameof(DisplayPrice));
-            OnPropertyChanged(nameof(HasPrice));
-            Contact = contacts.FirstOrDefault(c => c != Instructor);
-            OnPropertyChanged(nameof(HasContact));
-
-            LoanOptions = courseItem?.LoanOptions;
-            Skills = new ObservableCollection<InteractionEntry>(skills?.Select(s => InteractionEntry.Import(s.Text, s.Link, OpenSkill, CanOpenSkill)) ?? new List<InteractionEntry>());
-            OnPropertyChanged(nameof(HasSkills));
+            ProviderName = eduProvider?.Name;
+            ProviderImage = eduProvider?.Image?.OriginalString;
         }
 
         private IEnumerable<(string Link, string Text)> ParseSkills(string? skills)
@@ -492,7 +202,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await Browser.Default.OpenAsync(CourseUrl!, BrowserLaunchMode.SystemPreferred);
+                    //await Browser.Default.OpenAsync(CourseUrl!, BrowserLaunchMode.SystemPreferred);
                 }
                 catch (OperationCanceledException)
                 {
@@ -515,7 +225,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanOpenCourse()
         {
-            return !IsBusy && CourseUrl != null;
+            return !IsBusy;// && CourseUrl != null;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShowLoanOptions))]
@@ -526,7 +236,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var parameters = new NavigationParameters();
-                    parameters.AddValue(NavigationParameter.Data, LoanOptions);
+                    //parameters.AddValue(NavigationParameter.Data, LoanOptions);
                     await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -550,7 +260,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanShowLoanOptions()
         {
-            return !IsBusy && !string.IsNullOrWhiteSpace(LoanOptions);
+            return !IsBusy;//&& !string.IsNullOrWhiteSpace(LoanOptions);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenMail))]
@@ -560,20 +270,20 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    if (Email.Default.IsComposeSupported)
-                    {
-                        string[] recipients = new[] { Contact!.ContactMail };
+                    //if (Email.Default.IsComposeSupported)
+                    //{
+                    //    string[] recipients = new[] { Contact!.ContactMail };
 
-                        var message = new EmailMessage
-                        {
-                            Subject = string.Empty,
-                            Body = string.Empty,
-                            BodyFormat = EmailBodyFormat.PlainText,
-                            To = new List<string>(recipients),
-                        };
+                    //    var message = new EmailMessage
+                    //    {
+                    //        Subject = string.Empty,
+                    //        Body = string.Empty,
+                    //        BodyFormat = EmailBodyFormat.PlainText,
+                    //        To = new List<string>(recipients),
+                    //    };
 
-                        await Email.Default.ComposeAsync(message);
-                    }
+                    //    await Email.Default.ComposeAsync(message);
+                    //}
                 }
                 catch (OperationCanceledException)
                 {
@@ -596,7 +306,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanOpenMail()
         {
-            return !IsBusy && !string.IsNullOrWhiteSpace(Contact?.ContactMail);
+            return !IsBusy;// && !string.IsNullOrWhiteSpace(Contact?.ContactMail);
         }
 
         [RelayCommand(CanExecute = nameof(CanOpenDailer))]
@@ -606,7 +316,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 if (PhoneDialer.Default.IsSupported)
                 {
-                    PhoneDialer.Default.Open(Contact!.ContactPhone);
+                    //PhoneDialer.Default.Open(Contact!.ContactPhone);
                 }
             }
             catch (OperationCanceledException)
@@ -625,7 +335,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanOpenDailer()
         {
-            return !IsBusy && !string.IsNullOrWhiteSpace(Contact?.ContactPhone);
+            return !IsBusy;// && !string.IsNullOrWhiteSpace(Contact?.ContactPhone);
         }
     }
 }

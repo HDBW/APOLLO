@@ -299,7 +299,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var text = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
-                var decoratorImagePath = "training.png";
+                var decoratorImagePath = KnonwIcons.Training;
 
                 EduProvider? eduProvider = null;
                 if (!string.IsNullOrWhiteSpace(item.TrainingProvider?.Name))
