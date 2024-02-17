@@ -2564,6 +2564,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Was interessiert Dich?.
+        /// </summary>
+        public static string SearchView_Interest {
+            get {
+                return ResourceManager.GetString("SearchView_Interest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suche.
         /// </summary>
         public static string SearchView_Title {
