@@ -16,9 +16,10 @@ namespace Apollo.RestService.Apollo.Common.Messages
         /// </summary>
         public string UserId { get; set; }
 
-        // Property to hold the profile to be created or updated
+        /// <summary>
+        ///  Property to hold the profile to be created or updated
+        /// </summary>
         public Profile Profile { get; internal set; }
 
-        
     }
 }

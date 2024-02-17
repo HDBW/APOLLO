@@ -10,16 +10,20 @@ namespace Apollo.Common.Entities
     public class WebReference
     {
         /// <summary>
-        /// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
+        /// Any string describing the WebReference. Not needed by Backend. It is fully maintained by the caller.
         /// </summary>
         public string? Id { get; set; }
 
-        // WebReference_Link_filtered.txt
-        // Freitext
+        /// <summary>
+        /// WebReference_Link_filtered.txt
+        /// Freitext
+        /// </summary>
         public Uri Url { get; set; }
 
-        // WebReference_Title_filtered.txt
-        // Freitext
+        /// <summary>
+        /// WebReference_Link_filtered.txt
+        /// Freitext
+        /// </summary>
         public string Title { get; set; }
     }
 }

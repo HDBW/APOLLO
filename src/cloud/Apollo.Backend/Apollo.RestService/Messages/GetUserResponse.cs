@@ -5,10 +5,12 @@ using Apollo.Common.Entities;
 
 namespace Apollo.RestService.Messages
 {
-    // Define a response message for retrieving a user.
+   
     public class GetUserResponse
     {
-        // Property to hold the retrieved user information
+        /// <summary>
+        /// Property to hold the retrieved user information
+        /// </summary>
         public User User { get; internal set; }
     }
 }

@@ -11,6 +11,6 @@ public class QueryProfilesResponse
     }
 
     public List<Apollo.Common.Entities.Profile> Profiles { get; set; }
-    // ... other properties or methods
+   
 }
 

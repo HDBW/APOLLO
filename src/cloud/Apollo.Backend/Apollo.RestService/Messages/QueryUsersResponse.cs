@@ -11,6 +11,6 @@ public class QueryUsersResponse
     }
 
     public List<Apollo.Common.Entities.User> Users { get; set; }
-    // ... other properties or methods
+    
 }
 
