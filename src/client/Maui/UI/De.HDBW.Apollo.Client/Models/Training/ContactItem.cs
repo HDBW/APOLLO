@@ -34,7 +34,14 @@ namespace De.HDBW.Apollo.Client.Models.Training
             parts.Add(contact.Address);
             parts.Add(contact.ZipCode);
             parts.Add(contact.City);
+            parts.Add(contact.Region);
+            parts.Add(contact.Country);
             parts = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+            if (parts.Any())
+            {
+                Items.Add(LineItem.Import(KnonwIcons.Location, string.Join(" ", parts)));
+            }
+
             if (!string.IsNullOrWhiteSpace(contact.Mail))
             {
                 Items.Add(LineItem.Import(KnonwIcons.EMail, contact.Mail));

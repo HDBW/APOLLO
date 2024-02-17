@@ -110,20 +110,54 @@
             </VerticalStackLayout>
         </DataTemplate>
 
+        <DataTemplate x:Key="ContactListItemTemplate" x:DataType="trainingsModels:ContactListItem">
+            <Grid RowDefinitions="auto, auto, auto" Margin="24,0">
+                <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
+                <CarouselView Grid.Row="1"
+                              ItemsSource="{x:Binding Items}"
+                              IndicatorView="indicatorView"
+                              x:Name="PART_Animation">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="trainingsModels:ContactItem">
+                            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="trainingsModels:LineItem">
+                                        <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
+                                            <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                                            <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <IndicatorView Grid.Row="2" x:Name="indicatorView" Margin="24,8,24,8"/>
+            </Grid>
+        </DataTemplate>
+
         <selector:TrainingsItemTemplateSelector x:Key="TrainingsItemTemplateSelector"
                                                 HeaderItemTemplate="{StaticResource HeaderItemTemplate}"
                                                 ExpandableItemTemplate="{StaticResource ExpandableItemTemplate}"
                                                 ExpandableListItemTemplate="{StaticResource ExpandableListItemTemplate}"
                                                 TagItemTemplate="{StaticResource TagItemTemplate}"
-                                                AppointmentItemTemplate="{StaticResource AppointmentItemTemplate}"/>
+                                                AppointmentItemTemplate="{StaticResource AppointmentItemTemplate}"
+                                                ContactListItemTemplate="{StaticResource ContactListItemTemplate}"/>
 
 
     </ContentPage.Resources>
-    <CollectionView
-        ItemsSource="{x:Binding Sections}"
-        ItemTemplate="{StaticResource TrainingsItemTemplateSelector}">
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout  Orientation="Vertical" ItemSpacing="16" />
-        </CollectionView.ItemsLayout>
-    </CollectionView>
+    <Grid RowDefinitions="*, auto">
+        <CollectionView
+            ItemsSource="{x:Binding Sections}"
+            ItemTemplate="{StaticResource TrainingsItemTemplateSelector}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout  Orientation="Vertical" ItemSpacing="16" />
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+            <VerticalStackLayout Margin="24,16">
+                <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
 </ContentPage>

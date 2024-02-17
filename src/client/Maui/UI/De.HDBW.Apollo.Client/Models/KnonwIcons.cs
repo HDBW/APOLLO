@@ -16,5 +16,7 @@ namespace De.HDBW.Apollo.Client.Models
         public const string Phone = "phone.png";
 
         public const string Contact = "profilepersonalinfo.png";
+
+        public const string Location = "location.png";
     }
 }

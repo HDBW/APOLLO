@@ -13,6 +13,7 @@ using De.HDBW.Apollo.Client.Models.Training;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
+using Contact = Invite.Apollo.App.Graph.Common.Models.Contact;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -119,6 +120,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             sections.Add(certificates);
                         }
 
+                        if (TryCreateContactListItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject contacts))
+                        {
+                            sections.Add(contacts);
+                        }
 
                         foreach (var appointment in training.Appointment ?? new List<Appointment>())
                         {
@@ -379,6 +384,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool CanOpenDailer()
         {
             return !IsBusy;// && !string.IsNullOrWhiteSpace(Contact?.ContactPhone);
+        }
+
+        private bool TryCreateContactListItem(string headline, List<Contact>? contacts, out ObservableObject item)
+        {
+            item = null;
+            if (contacts == null || !contacts.Any())
+            {
+                return false;
+            }
+
+            item = ContactListItem.Import(headline, contacts);
+            return true;
         }
 
         private bool TryCreateExpandableListItem(string headline, IEnumerable<string>? content, out ObservableObject item)

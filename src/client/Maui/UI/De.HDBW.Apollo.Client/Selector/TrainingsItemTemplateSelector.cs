@@ -17,6 +17,8 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? TagItemTemplate { get; set; }
 
+        public DataTemplate? ContactListItemTemplate { get; set; }
+
         private DataTemplate? DefaultTemplate { get; } = new DataTemplate();
 
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
@@ -33,6 +35,8 @@ namespace De.HDBW.Apollo.Client.Selector
                     return ExpandableListItemTemplate;
                 case AppointmentItem _:
                     return AppointmentItemTemplate;
+                case ContactListItem _:
+                    return ContactListItemTemplate;
                 default:
                     return DefaultTemplate;
             }
