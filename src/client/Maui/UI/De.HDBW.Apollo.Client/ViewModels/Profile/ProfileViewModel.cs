@@ -22,7 +22,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 {
     public partial class ProfileViewModel : BaseViewModel
     {
-        private const string PersonalInfoIcon = "profilepersonalinfo.png";
+        private const string PersonalInfoIcon = KnonwIcons.Contact;
         private const string ContactInfoIcon = "profilecontactinfo.png";
         private const string QualificationInfoIcon = "profilequalificationinfo.png";
         private const string LicensInfoIcon = "profilelicensinfo.png";

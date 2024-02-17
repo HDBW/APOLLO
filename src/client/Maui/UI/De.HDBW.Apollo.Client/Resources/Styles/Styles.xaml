@@ -690,7 +690,18 @@
 
     <Style x:Key="BorderListContent" TargetType="Border">
         <Setter Property="Padding" Value="24,16,20,16" />
-        <Setter Property="Background" Value="{StaticResource Background}" />
+        <Setter Property="Background" Value="{StaticResource Neutral0}" />
+        <Setter Property="StrokeThickness" Value="0" />
+    </Style>
+
+    <Style x:Key="FrameBorder" TargetType="Border">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource Neutral0}" />
         <Setter Property="StrokeThickness" Value="0" />
     </Style>
 

@@ -603,74 +603,11 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vorteile.
-        /// </summary>
-        public static string CourseView_Benefits {
-            get {
-                return ResourceManager.GetString("CourseView_Benefits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ansprechpartner.
-        /// </summary>
-        public static string CourseView_Contact {
-            get {
-                return ResourceManager.GetString("CourseView_Contact", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ergebnis.
-        /// </summary>
-        public static string CourseView_LearningOutcomes {
-            get {
-                return ResourceManager.GetString("CourseView_LearningOutcomes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Finanzierungsoptionen anzeigen.
         /// </summary>
         public static string CourseView_LoanOptions {
             get {
                 return ResourceManager.GetString("CourseView_LoanOptions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voraussetzungen.
-        /// </summary>
-        public static string CourseView_PreRequisites {
-            get {
-                return ResourceManager.GetString("CourseView_PreRequisites", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ESCO-Skills.
-        /// </summary>
-        public static string CourseView_Skills {
-            get {
-                return ResourceManager.GetString("CourseView_Skills", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Zielgruppe.
-        /// </summary>
-        public static string CourseView_TargetGroup {
-            get {
-                return ResourceManager.GetString("CourseView_TargetGroup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kursinformationen.
-        /// </summary>
-        public static string CourseView_Title {
-            get {
-                return ResourceManager.GetString("CourseView_Title", resourceCulture);
             }
         }
         
@@ -1278,6 +1215,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vorteile.
+        /// </summary>
+        public static string Global_Benefits {
+            get {
+                return ResourceManager.GetString("Global_Benefits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Benutzername.
         /// </summary>
         public static string Global_Benutzername {
@@ -1292,6 +1238,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_CareerType {
             get {
                 return ResourceManager.GetString("Global_CareerType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kategorien.
+        /// </summary>
+        public static string Global_Categories {
+            get {
+                return ResourceManager.GetString("Global_Categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abschluss.
+        /// </summary>
+        public static string Global_Certificates {
+            get {
+                return ResourceManager.GetString("Global_Certificates", resourceCulture);
             }
         }
         
@@ -1323,11 +1287,29 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ansprechpartner.
+        /// </summary>
+        public static string Global_Contact {
+            get {
+                return ResourceManager.GetString("Global_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Art des Kontakts.
         /// </summary>
         public static string Global_ContactType {
             get {
                 return ResourceManager.GetString("Global_ContactType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inhalte.
+        /// </summary>
+        public static string Global_Contents {
+            get {
+                return ResourceManager.GetString("Global_Contents", resourceCulture);
             }
         }
         
@@ -1494,6 +1476,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        public static string Global_Location_Online {
+            get {
+                return ResourceManager.GetString("Global_Location_Online", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Institution.
         /// </summary>
         public static string Global_NameOfInstitution {
@@ -1535,6 +1526,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Phone {
             get {
                 return ResourceManager.GetString("Global_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voraussetzungen.
+        /// </summary>
+        public static string Global_PreRequisites {
+            get {
+                return ResourceManager.GetString("Global_PreRequisites", resourceCulture);
             }
         }
         
@@ -1625,6 +1625,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_StartNow {
             get {
                 return ResourceManager.GetString("Global_StartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string Global_Tags {
+            get {
+                return ResourceManager.GetString("Global_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zielgruppe.
+        /// </summary>
+        public static string Global_TargetAudience {
+            get {
+                return ResourceManager.GetString("Global_TargetAudience", resourceCulture);
             }
         }
         
@@ -2886,6 +2904,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_UseCaseC_RecomondationsHeadline {
             get {
                 return ResourceManager.GetString("StartViewModel_UseCaseC_RecomondationsHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurs.
+        /// </summary>
+        public static string TrainingsView_Title {
+            get {
+                return ResourceManager.GetString("TrainingsView_Title", resourceCulture);
             }
         }
         

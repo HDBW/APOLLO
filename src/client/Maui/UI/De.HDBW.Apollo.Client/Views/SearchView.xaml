@@ -51,7 +51,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="interactionModels:SearchInteractionEntry">
                     <ContentView>
-                        <Border BackgroundColor="White" StrokeThickness="0" MaximumHeightRequest="240" Margin="24,0">
+                        <Border BackgroundColor="White" StrokeThickness="0" Margin="24,0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="8" />
                             </Border.StrokeShape>
@@ -75,7 +75,7 @@
                                         </DataTrigger>
                                     </ImageButton.Triggers>
                                 </ImageButton>
-                                <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto14Primary}" Padding="16,8" />
+                                <Label InputTransparent="True" Grid.ColumnSpan="2" TextType="Html" Text="{x:Binding Text, Mode=OneTime}" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14Primary}" Padding="16,8" />
                                 <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
                                 <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
                                     <Image Source="{x:Binding SublineImagePath}" IsVisible="{x:Binding HasSublineImage}" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" />

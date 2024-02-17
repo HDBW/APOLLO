@@ -444,16 +444,13 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="StartViewModel_UseCaseC_RecomondationsHeadline" xml:space="preserve">
     <value>Beschleunige deinen Aufstieg</value>
   </data>
-  <data name="CourseView_Benefits" xml:space="preserve">
+  <data name="Global_Benefits" xml:space="preserve">
     <value>Vorteile</value>
   </data>
-  <data name="CourseView_Contact" xml:space="preserve">
+  <data name="Global_Contact" xml:space="preserve">
     <value>Ansprechpartner</value>
   </data>
-  <data name="CourseView_LearningOutcomes" xml:space="preserve">
-    <value>Ergebnis</value>
-  </data>
-  <data name="CourseView_PreRequisites" xml:space="preserve">
+  <data name="Global_PreRequisites" xml:space="preserve">
     <value>Voraussetzungen</value>
   </data>
   <data name="CourseView_LoanOptions" xml:space="preserve">
@@ -480,7 +477,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="CourseType_Online" xml:space="preserve">
     <value>Online</value>
   </data>
-  <data name="CourseView_TargetGroup" xml:space="preserve">
+  <data name="Global_TargetAudience" xml:space="preserve">
     <value>Zielgruppe</value>
   </data>
   <data name="Global_DurationFormatHours" xml:space="preserve">
@@ -504,11 +501,8 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="AssessmentType_Survey" xml:space="preserve">
     <value>Umfrage</value>
   </data>
-  <data name="CourseView_Skills" xml:space="preserve">
-    <value>ESCO-Skills</value>
-  </data>
-  <data name="CourseView_Title" xml:space="preserve">
-    <value>Kursinformationen</value>
+  <data name="TrainingsView_Title" xml:space="preserve">
+    <value>Kurs</value>
   </data>
   <data name="Global_Next" xml:space="preserve">
     <value>Weiter</value>
@@ -1323,5 +1317,20 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="Global_Training" xml:space="preserve">
     <value>Kurs</value>
+  </data>
+  <data name="Global_Location_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="Global_Categories" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="Global_Certificates" xml:space="preserve">
+    <value>Abschluss</value>
+  </data>
+  <data name="Global_Contents" xml:space="preserve">
+    <value>Inhalte</value>
+  </data>
+  <data name="Global_Tags" xml:space="preserve">
+    <value>Tags</value>
   </data>
 </root>

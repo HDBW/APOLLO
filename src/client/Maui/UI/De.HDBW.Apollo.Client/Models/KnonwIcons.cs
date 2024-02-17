@@ -10,5 +10,11 @@ namespace De.HDBW.Apollo.Client.Models
         public const string Magnify = "magnify.png";
 
         public const string Training = "training.png";
+
+        public const string EMail = "mail.png";
+
+        public const string Phone = "phone.png";
+
+        public const string Contact = "profilepersonalinfo.png";
     }
 }

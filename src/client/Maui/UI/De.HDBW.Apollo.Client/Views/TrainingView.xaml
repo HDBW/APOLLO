@@ -1,39 +1,129 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.TrainingView"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:trainingsModels="clr-namespace:De.HDBW.Apollo.Client.Models.Training"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:courseModels="clr-namespace:De.HDBW.Apollo.Client.Models.Course"
              x:DataType="viewModels:TrainingViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resources.CourseView_Title}"
+             Title="{x:Static strings:Resources.TrainingsView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource FormContent}" Spacing="16">
-            <VerticalStackLayout>
-                <Label Text="{x:Binding TrainingName}" />
-                <Label Text="{x:Binding SubTitle}" />
+    <ContentPage.Resources>
+        <DataTemplate x:Key="HeaderItemTemplate" x:DataType="trainingsModels:HeaderItem">
+            <VerticalStackLayout Spacing="16" Margin="24,0">
+                <VerticalStackLayout>
+                    <Label Text="{x:Binding TrainingName}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}"/>
+                    <Label Text="{x:Binding SubTitle}" Style="{StaticResource Noto16SemiBold}" />
+                </VerticalStackLayout>
+                <Grid>
+                    <Image Source="{x:Binding ImagePath}" MaximumHeightRequest="200" Aspect="AspectFill" IsVisible="{x:Binding HasImage}"/>
+                    <Border VerticalOptions="End" HorizontalOptions="Start" Background="{StaticResource Primary}" Padding="16,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0,8,0,0" />
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout>
+                            <Image WidthRequest="16" HeightRequest="16" Source="{x:Static models:KnonwIcons.Training}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                            <Label Text="{x:Binding TrainingType}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
             </VerticalStackLayout>
-            <Grid>
-                <Image Source="{x:Binding ImagePath}" MaximumHeightRequest="200" Aspect="AspectFill" IsVisible="{x:Binding HasImage}"/>
-                <Border VerticalOptions="End" HorizontalOptions="Start" Background="{StaticResource Primary}">
-                    <HorizontalStackLayout>
-                        <Image WidthRequest="16" HeightRequest="16" Source="{x:Static models:KnonwIcons.Training}" Margin="0,0,8,0" VerticalOptions="Center"/>
-                        <Label Text="{x:Binding TrainingType, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
-                    </HorizontalStackLayout>
-                </Border>
-            </Grid>
-            <Grid ColumnDefinitions="*,*">
-                <Image Source="{x:Binding ProviderImage}" />
-                <Label Text="{x:Binding ProviderName}" Grid.Column="1" />
-            </Grid>
-            <toolkit:Expander>
-                <toolkit:Expander.Header>
-                    <Label Text="{x:Static strings:Resources.Global_Description}" />
-                </toolkit:Expander.Header>
-            </toolkit:Expander>
-        </VerticalStackLayout>
-    </ScrollView>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ExpandableItemTemplate" x:DataType="trainingsModels:ExpandableItem">
+            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                <toolkit:Expander x:Name="PART_Expander">
+                    <toolkit:Expander.Header>
+                        <Grid ColumnDefinitions="*, auto">
+                            <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                            <Image Source="chevrondown.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image" Binding="{Binding IsExpanded, Source={x:Reference PART_Expander}}" Value="True">
+                                        <Setter Property="Source" Value="chevronup.png" />
+                                        <!-- Multiple Setter elements are allowed -->
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
+                    </toolkit:Expander.Header>
+                    <toolkit:Expander.Content>
+                        <Label TextType="Html" Text="{x:Binding Content}" />
+                    </toolkit:Expander.Content>
+                </toolkit:Expander>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ExpandableListItemTemplate" x:DataType="trainingsModels:ExpandableListItem">
+            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                <toolkit:Expander x:Name="PART_Expander">
+                    <toolkit:Expander.Header>
+                        <Grid ColumnDefinitions="*, auto">
+                            <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                            <Image Source="chevrondown.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image" Binding="{Binding IsExpanded, Source={x:Reference PART_Expander}}" Value="True">
+                                        <Setter Property="Source" Value="chevronup.png" />
+                                        <!-- Multiple Setter elements are allowed -->
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
+                    </toolkit:Expander.Header>
+                    <toolkit:Expander.Content>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Content}" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="system:String">
+                                    <Label TextType="Html" Text="{x:Binding}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </toolkit:Expander.Content>
+                </toolkit:Expander>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TagItemTemplate" x:DataType="trainingsModels:TagItem">
+            <VerticalStackLayout>
+                <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="24,0,24,8"/>
+                <FlexLayout BindableLayout.ItemsSource="{x:Binding Items}" Wrap="Wrap" Direction="Row" JustifyContent="Start" Margin="24,0">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="system:String">
+                            <Label Text="{x:Binding}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,8"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AppointmentItemTemplate" x:DataType="trainingsModels:AppointmentItem">
+            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items}" Margin="24,0">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="system:String">
+                        <Label Text="{x:Binding}" Padding="8,4" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <selector:TrainingsItemTemplateSelector x:Key="TrainingsItemTemplateSelector"
+                                                HeaderItemTemplate="{StaticResource HeaderItemTemplate}"
+                                                ExpandableItemTemplate="{StaticResource ExpandableItemTemplate}"
+                                                ExpandableListItemTemplate="{StaticResource ExpandableListItemTemplate}"
+                                                TagItemTemplate="{StaticResource TagItemTemplate}"
+                                                AppointmentItemTemplate="{StaticResource AppointmentItemTemplate}"/>
+
+
+    </ContentPage.Resources>
+    <CollectionView
+        ItemsSource="{x:Binding Sections}"
+        ItemTemplate="{StaticResource TrainingsItemTemplateSelector}">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout  Orientation="Vertical" ItemSpacing="16" />
+        </CollectionView.ItemsLayout>
+    </CollectionView>
 </ContentPage>

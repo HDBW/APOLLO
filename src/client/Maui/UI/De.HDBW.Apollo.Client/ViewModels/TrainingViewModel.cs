@@ -2,19 +2,15 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Converter;
 using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Client.Models.Course;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Client.Models.Training;
 using De.HDBW.Apollo.SharedContracts.Services;
-using Invite.Apollo.App.Graph.Common.Models.Course;
-using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 
@@ -25,24 +21,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _trainingId;
 
         [ObservableProperty]
-        private string? _trainingName;
+        private string? _description;
 
         [ObservableProperty]
-        private string? _subTitle;
+        private string? _location;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(HasImage))]
-        private string? _imagePath;
+        [NotifyPropertyChangedFor(nameof(HasTags))]
+        private ObservableCollection<string> _tags = new ObservableCollection<string>();
 
         [ObservableProperty]
-        private string? _trainingType;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(HasProviderImage))]
-        private string? _providerImage;
-
-        [ObservableProperty]
-        private string? _providerName;
+        private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
         public TrainingViewModel(
             IDispatcherService dispatcherService,
@@ -60,19 +49,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             TrainingService = trainingService;
         }
 
-        public bool HasImage
+        public bool HasTags
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(ImagePath);
-            }
-        }
-
-        public bool HasProviderImage
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(ProviderImage);
+                return Tags.Any();
             }
         }
 
@@ -90,13 +71,86 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var training = await TrainingService.GetTrainingAsync(_trainingId!, worker.Token).ConfigureAwait(false);
-                    if (training == null)
+                    var sections = new List<ObservableObject>();
+                    if (training != null)
                     {
-                        return;
+                        if (TryCreateHeader(training, out ObservableObject header))
+                        {
+                            sections.Add(header);
+                        }
+
+                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject description))
+                        {
+                            sections.Add(description);
+                        }
+
+                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject tags))
+                        {
+                            sections.Add(tags);
+                        }
+
+                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Categories, training.Categories, out ObservableObject categories))
+                        {
+                            sections.Add(categories);
+                        }
+
+                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_TargetAudience, training.TargetAudience, out ObservableObject targetAudience))
+                        {
+                            sections.Add(targetAudience);
+                        }
+
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_PreRequisites, training.Prerequisites, out ObservableObject prerequisites))
+                        {
+                            sections.Add(prerequisites);
+                        }
+
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Contents, training.Content, out ObservableObject contents))
+                        {
+                            sections.Add(contents);
+                        }
+
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Benefits, training.BenefitList, out ObservableObject benefits))
+                        {
+                            sections.Add(benefits);
+                        }
+
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Certificates, training.Certificate, out ObservableObject certificates))
+                        {
+                            sections.Add(certificates);
+                        }
+
+
+                        foreach (var appointment in training.Appointment ?? new List<Appointment>())
+                        {
+                            if (TryCreateAppointmentItem(appointment, out ObservableObject item))
+                            {
+                                sections.Add(item);
+                            }
+                        }
                     }
 
-                    await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(training), worker.Token);
+                    //if (training?.TrainingMode == TrainingMode.Online)
+                    //{
+                    //    Location = Resources.Strings.Resources.Global_Location_Online;
+                    //}
+                    //else
+                    //{
+                    //    var hasSet = new HashSet<string?>();
+                    //    foreach (var appointment in training?.Appointment ?? new List<Appointment>())
+                    //    {
+                    //        hasSet.Add(appointment.AppointmentLocation?.City);
+                    //        foreach (var occurence in appointment.Occurences)
+                    //        {
+                    //            hasSet.Add(occurence?.Location?.City);
+                    //        }
+                    //    }
+
+                    //    Location = string.Join(",", hasSet.Where(x => !string.IsNullOrWhiteSpace(x)));
+                    //}
+
+                    //Duration = training?.Appointment[0].DurationDescription
+
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections), worker.Token).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -124,20 +178,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private void LoadonUIThread(
-            Training? training)
+            Training? training, List<ObservableObject> sections)
         {
-            TrainingName = training?.TrainingName;
-            SubTitle = training?.SubTitle;
-            ImagePath = "placeholderinfoevent.png";
-            TrainingType = training?.TrainingType;
-            var eduProvider = training?.TrainingProvider;
-            if (string.IsNullOrWhiteSpace(eduProvider?.Name))
-            {
-                eduProvider = training?.CourseProvider;
-            }
-
-            ProviderName = eduProvider?.Name;
-            ProviderImage = eduProvider?.Image?.OriginalString;
+            Sections = new ObservableCollection<ObservableObject>(sections);
         }
 
         private IEnumerable<(string Link, string Text)> ParseSkills(string? skills)
@@ -336,6 +379,69 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool CanOpenDailer()
         {
             return !IsBusy;// && !string.IsNullOrWhiteSpace(Contact?.ContactPhone);
+        }
+
+        private bool TryCreateExpandableListItem(string headline, IEnumerable<string>? content, out ObservableObject item)
+        {
+            item = null;
+            if (!(content?.Any() ?? false))
+            {
+                return false;
+            }
+
+            content = content.Select(x => x.Trim());
+
+            item = ExpandableListItem.Import(headline, content);
+            return true;
+        }
+
+        private bool TryCreateAppointmentItem(Appointment appointment, out ObservableObject item)
+        {
+            item = AppointmentItem.Import(appointment);
+            return true;
+        }
+
+        private bool TryCreateTagItem(string? headline, List<string>? tags, out ObservableObject item)
+        {
+            item = null;
+            if (!(tags?.Any() ?? false))
+            {
+                return false;
+            }
+
+            item = TagItem.Import(headline, tags);
+            return true;
+        }
+
+        private bool TryCreateExpandableItem(string headline, string? content, out ObservableObject item)
+        {
+            item = null;
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                return false;
+            }
+
+            item = ExpandableItem.Import(headline, content);
+            return true;
+        }
+
+        private bool TryCreateHeader(Training training, out ObservableObject item)
+        {
+            var eduProvider = training.TrainingProvider;
+            if (string.IsNullOrWhiteSpace(eduProvider?.Name))
+            {
+                eduProvider = training.CourseProvider;
+            }
+
+            item = HeaderItem.Import(
+                     training?.TrainingName,
+                     training?.SubTitle,
+                     "placeholderinfoevent.png",
+                     training?.TrainingType,
+                     eduProvider?.Name,
+                     eduProvider?.Image?.OriginalString);
+
+            return true;
         }
     }
 }

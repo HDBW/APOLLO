@@ -56,7 +56,8 @@ namespace De.HDBW.Apollo.Data.Services
         private async Task<Training?> GetTrainingInternalAsync(string id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            return await DoGetAsync<GetTrainingResponse>(id, token);
+            var result = await DoGetAsync<GetTrainingResponse>(id, token).ConfigureAwait(false);
+            return result?.Training;
         }
     }
 }
