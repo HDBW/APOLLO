@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using Amazon.Runtime.Internal.Util;
@@ -137,10 +138,9 @@ namespace Apollo.Api
         {
             try
             {
+                
                 List<string> ids = new List<string>();
 
-                // TODO Validate if profile is null
-                // TODO Validate if userId exists.
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateProfile)}");
 
                 if (profile == null)
@@ -163,6 +163,14 @@ namespace Apollo.Api
                     if (res == false)
                         throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
                 }
+
+                //
+                //Set ID for different items in a List in case empty or null
+                SetIds(profile?.EducationInfos, nameof(Profile.EducationInfos));
+                SetIds(profile?.CareerInfos, nameof(Profile.CareerInfos));
+                SetIds(profile?.Qualifications, nameof(Profile.Qualifications));
+                SetIds(profile?.LanguageSkills, nameof(Profile.LanguageSkills));
+                SetIds(profile?.WebReferences, nameof(Profile.WebReferences));
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
@@ -207,6 +215,54 @@ namespace Apollo.Api
             {
                 _logger?.LogError(ex, $"Failed execution of {nameof(DeleteProfiles)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.ProfileErrors.DeleteProfileError, "Error while deleting profiles", ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Generic method to ensure that objects in a list have unique IDs.
+        /// </summary>
+        /// <typeparam name="T">The type of objects in the list.</typeparam>
+        /// <param name="itemList">The list of objects to check and set IDs for.</param>
+        /// <param name="entityName">The name of the entity for which IDs are being set.</param>
+        /// <remarks>
+        /// This method iterates through the list of objects, checks if the ID property is already present,
+        /// and generates and sets a new ID if necessary. Optionally, you can add logic here to search for
+        /// the ID in the database if needed.
+        /// </remarks>
+        private async void  SetIds<T>(List<T>? itemList, string propertyName) where T : class
+        {
+            if (itemList != null)
+            {
+                foreach (var item in itemList)
+                {
+                    var idProperty = typeof(T).GetProperty("Id");
+                    var idValue = idProperty?.GetValue(item);
+
+                    //
+                    // Check if ID is not  present, generate and set an ID
+                    if (idValue == null || string.IsNullOrEmpty(idValue.ToString()))
+                    {
+                        idProperty?.SetValue(item, CreateId(propertyName));
+                    }
+                    else
+                    {
+
+                        //
+                        //TODO:Need to Plan with Damir
+                        // ID is provided, check if it exists in the database
+                        // var doesIdExist = await _dal.IsExistAsync<Profile>("profile", idValue.ToString());
+
+                        //if (!doesIdExist)
+                        //{
+                        //    throw new ApolloApiException(
+                        //        ErrorCodes.ProfileErrors.ListItemNotfound,
+                        //        $"Item not found with ID {idValue.ToString()} for property {propertyName}");
+                        //}
+
+                    }
+
+                }
             }
         }
 

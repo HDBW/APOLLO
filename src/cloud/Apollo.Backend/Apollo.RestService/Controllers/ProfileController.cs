@@ -105,16 +105,37 @@ namespace Apollo.Service.Controllers
             {
                 _logger.LogTrace("Enter {method}", nameof(CreateOrUpdateProfile));
 
+                //
+                // As Skills,Knowledge,Apprenticeships,Occupations 
+                // this list items  should not be changeable by the client so we filter out
+                // them form rquested profile object
+
+                var filteredProfile = new Profile
+                {
+                    Id = req.Profile.Id,
+                    CareerInfos = req.Profile.CareerInfos,
+                    EducationInfos = req.Profile.EducationInfos,
+                    Qualifications = req.Profile.Qualifications,
+                    MobilityInfo = req.Profile.MobilityInfo,
+                    LanguageSkills = req.Profile.LanguageSkills,
+                    Licenses = req.Profile.Licenses,
+                    LeadershipSkills = req.Profile.LeadershipSkills,
+                    WebReferences = req.Profile.WebReferences
+                };
+
+                //
                 // Call the Apollo API to create or update a profile based on the request.
-                var result = await _api.CreateOrUpdateProfile(req.UserId, req.Profile);
+                var result = await _api.CreateOrUpdateProfile(req.UserId, filteredProfile);
 
                 _logger.LogTrace("Leave {method}", nameof(CreateOrUpdateProfile));
 
-                // Return the result of the create/update operation as a response.
-                return new CreateOrUpdateProfileResponse { Result = result.FirstOrDefault() };
+                //
+                //Return the result of the create/update operation as a response.
+                return new CreateOrUpdateProfileResponse { Result = result.FirstOrDefault()! };
             }
             catch (Exception ex)
             {
+                //
                 // Log and re-throw any exceptions encountered.
                 _logger?.LogError(ex, "Method {method} failed", nameof(CreateOrUpdateProfile));
                 throw;

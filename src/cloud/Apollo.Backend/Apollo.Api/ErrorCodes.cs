@@ -81,6 +81,7 @@ namespace Apollo.Api
             public const int ProfileIsNullOrEmpty = TrainingCodeBase + 131;
             public const int ProfileAlreadyExists = TrainingCodeBase + 140;
             public const int NoProfilesToDelete = TrainingCodeBase + 150;
+            public const int ListItemNotfound = TrainingCodeBase + 160;
 
             public static void HandleException(Exception ex)
             {
