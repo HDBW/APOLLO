@@ -6,8 +6,11 @@ using System.Runtime.Serialization;
 
 namespace Apollo.Common.Entities
 {
-    //[DataContract]
-    public abstract class Occupation
+
+    /// <summary>
+    /// TODO: Patric.
+    /// </summary>
+    public class Occupation
     {
         /// <summary>
         /// This can be used as Unique Identifier for the Occupation within the apollo system.
