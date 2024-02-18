@@ -603,15 +603,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finanzierungsoptionen anzeigen.
-        /// </summary>
-        public static string CourseView_LoanOptions {
-            get {
-                return ResourceManager.GetString("CourseView_LoanOptions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Datum eingeben.
         /// </summary>
         public static string DatePicker_Watermark {
@@ -1625,6 +1616,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Training {
             get {
                 return ResourceManager.GetString("Global_Training", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kursart.
+        /// </summary>
+        public static string Global_TrainingMode {
+            get {
+                return ResourceManager.GetString("Global_TrainingMode", resourceCulture);
             }
         }
         
@@ -2872,11 +2872,74 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hybrid.
+        /// </summary>
+        public static string TrainingMode_Hybrid {
+            get {
+                return ResourceManager.GetString("TrainingMode_Hybrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string TrainingMode_Offline {
+            get {
+                return ResourceManager.GetString("TrainingMode_Offline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auf Anfrage.
+        /// </summary>
+        public static string TrainingMode_OnDemand {
+            get {
+                return ResourceManager.GetString("TrainingMode_OnDemand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        public static string TrainingMode_Online {
+            get {
+                return ResourceManager.GetString("TrainingMode_Online", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Termine.
+        /// </summary>
+        public static string TrainingsView_Appointment {
+            get {
+                return ResourceManager.GetString("TrainingsView_Appointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finanzierungsoptionen anzeigen.
+        /// </summary>
+        public static string TrainingsView_LoanOptions {
+            get {
+                return ResourceManager.GetString("TrainingsView_LoanOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kurs.
         /// </summary>
         public static string TrainingsView_Title {
             get {
                 return ResourceManager.GetString("TrainingsView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barrierefrei zugänglich.
+        /// </summary>
+        public static string TrainingView_Accessibility {
+            get {
+                return ResourceManager.GetString("TrainingView_Accessibility", resourceCulture);
             }
         }
         

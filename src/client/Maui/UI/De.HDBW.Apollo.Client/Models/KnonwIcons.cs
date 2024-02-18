@@ -18,5 +18,15 @@ namespace De.HDBW.Apollo.Client.Models
         public const string Contact = "profilepersonalinfo.png";
 
         public const string Location = "location.png";
+
+        public const string ChevronDown = "chevrondown.png";
+
+        public const string ChevronUp = "chevronup.png";
+
+        public const string ChevronLink = "chevronlink.png";
+
+        public const string Accessibility = "accessibility.png";
+
+        public const string Watch = "watch.png";
     }
 }

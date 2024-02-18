@@ -50,11 +50,13 @@
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_icon_tint.xml" />
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_tint.xml" />
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\accessibility.svg" />
     <None Remove="Resources\Images\add.svg" />
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\calender.svg" />
     <None Remove="Resources\Images\checkmark.svg" />
     <None Remove="Resources\Images\chevrondown.svg" />
+    <None Remove="Resources\Images\chevronlink.svg" />
     <None Remove="Resources\Images\chevronup.svg" />
     <None Remove="Resources\Images\completed.svg" />
     <None Remove="Resources\Images\delete.svg" />

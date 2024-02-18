@@ -18,7 +18,7 @@
             <VerticalStackLayout Spacing="16" Margin="24,0">
                 <VerticalStackLayout>
                     <Label Text="{x:Binding TrainingName}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}"/>
-                    <Label Text="{x:Binding SubTitle}" Style="{StaticResource Noto16SemiBold}" />
+                    <Label Text="{x:Binding SubTitle}" Style="{StaticResource Noto16SemiBold}" IsVisible="{Binding HasSubTitle}"/>
                 </VerticalStackLayout>
                 <Grid>
                     <Image Source="{x:Binding ImagePath}" MaximumHeightRequest="200" Aspect="AspectFill" IsVisible="{x:Binding HasImage}"/>
@@ -32,6 +32,24 @@
                         </HorizontalStackLayout>
                     </Border>
                 </Grid>
+                <VerticalStackLayout IsVisible="{x:Binding HasModes}">
+                    <Label Text="{x:Static strings:Resources.Global_TrainingMode}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
+                    <FlexLayout BindableLayout.ItemsSource="{x:Binding Modes}" Wrap="Wrap" Direction="Row" JustifyContent="Start">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="system:String">
+                                <Label Text="{x:Binding}" Padding="8,4" Background="{StaticResource Neutral0}" TextColor="{StaticResource Primary}" Margin="0,0,4,4" VerticalOptions="Start"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable}">
+                    <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
+                </Grid>
+                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate}">
+                    <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Watch}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding IndividualStartDate}" />
+                </Grid>
             </VerticalStackLayout>
         </DataTemplate>
 
@@ -41,10 +59,10 @@
                     <toolkit:Expander.Header>
                         <Grid ColumnDefinitions="*, auto">
                             <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                            <Image Source="chevrondown.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                            <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
                                 <Image.Triggers>
                                     <DataTrigger TargetType="Image" Binding="{Binding IsExpanded, Source={x:Reference PART_Expander}}" Value="True">
-                                        <Setter Property="Source" Value="chevronup.png" />
+                                        <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
                                         <!-- Multiple Setter elements are allowed -->
                                     </DataTrigger>
                                 </Image.Triggers>
@@ -64,10 +82,10 @@
                     <toolkit:Expander.Header>
                         <Grid ColumnDefinitions="*, auto">
                             <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                            <Image Source="chevrondown.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                            <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
                                 <Image.Triggers>
                                     <DataTrigger TargetType="Image" Binding="{Binding IsExpanded, Source={x:Reference PART_Expander}}" Value="True">
-                                        <Setter Property="Source" Value="chevronup.png" />
+                                        <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
                                         <!-- Multiple Setter elements are allowed -->
                                     </DataTrigger>
                                 </Image.Triggers>
@@ -93,7 +111,7 @@
                 <FlexLayout BindableLayout.ItemsSource="{x:Binding Items}" Wrap="Wrap" Direction="Row" JustifyContent="Start" Margin="24,0">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="system:String">
-                            <Label Text="{x:Binding}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,8"/>
+                            <Label Text="{x:Binding}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4" VerticalOptions="Start"/>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
@@ -160,6 +178,18 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="NavigationItemTemplate" x:DataType="trainingsModels:NavigationItem">
+            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{x:Binding NavigateCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*, auto">
+                    <Label Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                    <Image Grid.Column="1" Source="{x:Static models:KnonwIcons.ChevronLink}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="End" />
+                </Grid>
+            </Border>
+        </DataTemplate>
+
         <selector:TrainingsItemTemplateSelector x:Key="TrainingsItemTemplateSelector"
                                                 HeaderItemTemplate="{StaticResource HeaderItemTemplate}"
                                                 ExpandableItemTemplate="{StaticResource ExpandableItemTemplate}"
@@ -167,7 +197,8 @@
                                                 TagItemTemplate="{StaticResource TagItemTemplate}"
                                                 AppointmentItemTemplate="{StaticResource AppointmentItemTemplate}"
                                                 ContactItemTemplate="{StaticResource ContactItemTemplate}"
-                                                ContactListItemTemplate="{StaticResource ContactListItemTemplate}"/>
+                                                ContactListItemTemplate="{StaticResource ContactListItemTemplate}"
+                                                NavigationItemTemplate="{StaticResource NavigationItemTemplate}"/>
 
 
     </ContentPage.Resources>

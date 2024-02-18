@@ -441,7 +441,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="Global_PreRequisites" xml:space="preserve">
     <value>Voraussetzungen</value>
   </data>
-  <data name="CourseView_LoanOptions" xml:space="preserve">
+  <data name="TrainingsView_LoanOptions" xml:space="preserve">
     <value>Finanzierungsoptionen anzeigen</value>
   </data>
   <data name="TrainingView_OpenProvider" xml:space="preserve">
@@ -1323,5 +1323,26 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="Global_Tags" xml:space="preserve">
     <value>Tags</value>
+  </data>
+  <data name="Global_TrainingMode" xml:space="preserve">
+    <value>Kursart</value>
+  </data>
+  <data name="TrainingMode_Hybrid" xml:space="preserve">
+    <value>Hybrid</value>
+  </data>
+  <data name="TrainingMode_Offline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="TrainingMode_OnDemand" xml:space="preserve">
+    <value>Auf Anfrage</value>
+  </data>
+  <data name="TrainingMode_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="TrainingsView_Appointment" xml:space="preserve">
+    <value>Termine</value>
+  </data>
+  <data name="TrainingView_Accessibility" xml:space="preserve">
+    <value>Barrierefrei zugänglich</value>
   </data>
 </root>

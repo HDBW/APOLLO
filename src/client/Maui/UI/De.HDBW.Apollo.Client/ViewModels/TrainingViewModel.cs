@@ -2,14 +2,12 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.Client.Models.Training;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
@@ -119,6 +117,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             sections.Add(certificates);
                         }
 
+                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_LoanOptions, Routes.LoansView, training.Loans?.Serialize(), out ObservableObject loans))
+                        {
+                            sections.Add(loans);
+                        }
+
                         if (TryCreateContactListItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject contacts))
                         {
                             sections.Add(contacts);
@@ -129,13 +132,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             sections.Add(contact);
                         }
 
-                        foreach (var appointment in training.Appointment ?? new List<Appointment>())
+                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_Appointment, Routes.AppointmentsView, training.Appointment?.Serialize(), out ObservableObject appointment))
                         {
-                            if (TryCreateAppointmentItem(appointment, out ObservableObject item))
-                            {
-                                sections.Add(item);
-                            }
+                            sections.Add(appointment);
                         }
+                        //foreach (var appointment in training.Appointment ?? new List<Appointment>())
+                        //{
+                        //    if (TryCreateAppointmentItem(appointment, out ObservableObject item))
+                        //    {
+                        //        sections.Add(item);
+                        //    }
+                        //}
                     }
 
                     //if (training?.TrainingMode == TrainingMode.Online)
@@ -180,12 +187,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            ShowLoanOptionsCommand?.NotifyCanExecuteChanged();
             OpenProductCommand?.NotifyCanExecuteChanged();
             var contactListSection = Sections.OfType<ContactListItem>().FirstOrDefault();
             contactListSection?.RefreshCommands();
             var contactItemSection = Sections.OfType<ContactItem>().FirstOrDefault();
             contactItemSection?.RefreshCommands();
+            var navigationItems = Sections.OfType<NavigationItem>().ToList();
+            foreach (var naviagtionItem in navigationItems)
+            {
+                naviagtionItem.RefreshCommands();
+            }
         }
 
         private void LoadonUIThread(
@@ -228,41 +239,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool CanOpenProduct()
         {
             return !IsBusy && ProductUrl != null;
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShowLoanOptions))]
-        private async Task ShowLoanOptions(CancellationToken token)
-        {
-            using (var worker = ScheduleWork(token))
-            {
-                try
-                {
-                    var parameters = new NavigationParameters();
-                    //parameters.AddValue(NavigationParameter.Data, LoanOptions);
-                    await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ShowLoanOptions)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ShowLoanOptions)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(ShowLoanOptions)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
-
-        private bool CanShowLoanOptions()
-        {
-            return !IsBusy && (_training?.Loans?.Any() ?? false);
         }
 
         private async Task OpenMail(string? email, CancellationToken token)
@@ -309,24 +285,64 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Task OpenDailer(string? phoneNumber, CancellationToken token)
         {
-            try
+            using (var worker = ScheduleWork(token))
             {
-                PhoneDialer.Default.Open(phoneNumber!);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error in {nameof(OpenDailer)} in {GetType().Name}.");
-            }
+                try
+                {
+                    token.ThrowIfCancellationRequested();
+                    PhoneDialer.Default.Open(phoneNumber!);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenDailer)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
 
-            return Task.CompletedTask;
+                return Task.CompletedTask;
+            }
+        }
+
+        private bool CanNavigateToRouteHandler(NavigationItem item)
+        {
+            return !IsBusy;
+        }
+
+        private async Task NavigateToRouteHandler(NavigationItem item, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(item.Route, token, item.Parameters).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NavigateToRouteHandler)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NavigateToRouteHandler)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(NavigateToRouteHandler)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
         private bool CanOpenDailer(string? phoneNumber)
@@ -428,8 +444,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
                      "placeholderinfoevent.png",
                      training?.TrainingType,
                      eduProvider?.Name,
-                     eduProvider?.Image?.OriginalString);
+                     eduProvider?.Image?.OriginalString,
+                     training?.AccessibilityAvailable,
+                     training?.TrainingMode,
+                     training?.IndividualStartDate);
 
+            return true;
+        }
+
+        private bool TryCreateNavigationItem(string text, string route, string? data, out ObservableObject item)
+        {
+            item = null;
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return false;
+            }
+
+            var parameters = new NavigationParameters();
+            parameters.AddValue(NavigationParameter.Id, _training?.Id);
+            parameters.AddValue(NavigationParameter.Data, data!);
+            item = NavigationItem.Import(text, route, parameters, NavigateToRouteHandler, CanNavigateToRouteHandler);
             return true;
         }
     }
