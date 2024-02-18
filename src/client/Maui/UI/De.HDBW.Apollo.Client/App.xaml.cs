@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Client
             _preferenceService = preferenceService;
             InitializeComponent();
             var parameters = new NavigationParameters();
-            parameters.AddValue(NavigationParameter.Id, "Training-4B1B311151A0414881E02956634528C1");
+            parameters.AddValue(NavigationParameter.Id, "Training-A9D8B29CFB0C44B09319ECB0FACBE94D");
 
             MainPage = new NavigationPage();
             navigationService.PushToRootAsync(Routes.TrainingView, CancellationToken.None, parameters);
