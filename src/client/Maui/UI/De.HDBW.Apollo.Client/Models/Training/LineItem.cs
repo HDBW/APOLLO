@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
         [ObservableProperty]
         private string? _text;
 
-        public LineItem(string? icon, string text)
+        protected LineItem(string? icon, string text)
         {
             Icon = icon;
             Text = text;

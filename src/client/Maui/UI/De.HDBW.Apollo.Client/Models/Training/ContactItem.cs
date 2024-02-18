@@ -9,13 +9,23 @@ namespace De.HDBW.Apollo.Client.Models.Training
     public partial class ContactItem : ObservableObject
     {
         [ObservableProperty]
+        private string? _header;
+
+        [ObservableProperty]
         private ObservableCollection<LineItem> _items = new ObservableCollection<LineItem>();
 
         private Contact _contact;
 
-        private ContactItem(Contact contact)
+        private ContactItem(
+            string? header,
+            Contact contact,
+            Func<string?, CancellationToken, Task>? openMailHandler,
+            Func<string?, bool>? canOpenMailHandler,
+            Func<string?, CancellationToken, Task>? openDailerHandler,
+            Func<string?, bool>? canOpenDailerHandler)
         {
             _contact = contact;
+            Header = header;
             var parts = new List<string>();
             parts.Add(contact.Firstname);
             parts.Add(contact.Surname);
@@ -34,8 +44,8 @@ namespace De.HDBW.Apollo.Client.Models.Training
             parts.Add(contact.Address);
             parts.Add(contact.ZipCode);
             parts.Add(contact.City);
-            parts.Add(contact.Region);
-            parts.Add(contact.Country);
+            parts.Add(contact.Region ?? string.Empty);
+            parts.Add(contact.Country ?? string.Empty);
             parts = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             if (parts.Any())
             {
@@ -44,18 +54,32 @@ namespace De.HDBW.Apollo.Client.Models.Training
 
             if (!string.IsNullOrWhiteSpace(contact.Mail))
             {
-                Items.Add(LineItem.Import(KnonwIcons.EMail, contact.Mail));
+                Items.Add(InteractiveLineItem.Import(KnonwIcons.EMail, contact.Mail, openMailHandler, canOpenMailHandler));
             }
 
             if (!string.IsNullOrWhiteSpace(contact.Phone))
             {
-                Items.Add(LineItem.Import(KnonwIcons.Phone, contact.Phone));
+                Items.Add(InteractiveLineItem.Import(KnonwIcons.Phone, contact.Phone, openDailerHandler, canOpenDailerHandler));
             }
         }
 
-        public static ContactItem Import(Contact contact)
+        public static ContactItem Import(
+            string? header,
+            Contact contact,
+            Func<string?, CancellationToken, Task>? openMailHandler,
+            Func<string?, bool>? canOpenMailHandler,
+            Func<string?, CancellationToken, Task>? openDailerHandler,
+            Func<string?, bool>? canOpenDailerHandler)
         {
-            return new ContactItem(contact);
+            return new ContactItem(header, contact, openMailHandler, canOpenMailHandler, openDailerHandler, canOpenDailerHandler);
+        }
+
+        public void RefreshCommands()
+        {
+            foreach (var item in Items.OfType<InteractiveLineItem>())
+            {
+                item.InteractCommand?.NotifyCanExecuteChanged();
+            }
         }
     }
 }

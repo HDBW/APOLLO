@@ -153,18 +153,6 @@
   <data name="FeedbackUrl" xml:space="preserve">
     <value>https://forms.office.com/e/cmES4qec8q</value>
   </data>
-  <data name="FirstTimeDialog_Continue" xml:space="preserve">
-    <value>direkt loslegen</value>
-  </data>
-  <data name="FirstTimeDialog_Message" xml:space="preserve">
-    <value>zum ersten mal hier?</value>
-  </data>
-  <data name="FirstTimeDialog_OpenTutorial" xml:space="preserve">
-    <value>Tutorial anzeigen</value>
-  </data>
-  <data name="FirstTimeDialog_Title" xml:space="preserve">
-    <value>Willkommen!</value>
-  </data>
   <data name="Global_Back" xml:space="preserve">
     <value>Zurück</value>
   </data>
@@ -456,7 +444,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="CourseView_LoanOptions" xml:space="preserve">
     <value>Finanzierungsoptionen anzeigen</value>
   </data>
-  <data name="CourseView_VisitVendor" xml:space="preserve">
+  <data name="TrainingView_OpenProvider" xml:space="preserve">
     <value>Zum Anbieter</value>
   </data>
   <data name="Global_Close" xml:space="preserve">

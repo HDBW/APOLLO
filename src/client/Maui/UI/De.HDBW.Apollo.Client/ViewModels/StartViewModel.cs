@@ -118,30 +118,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                            userProfile,
                            eduProviders,
                            notifyUseCaseChanged), worker.Token);
-
-                    var taskList = new List<Task>();
-
-                    /*
-                    Task<NavigationParameters?>? dialogTask = null;
-                    var isFirstTime = PreferenceService.GetValue(Preference.IsFirstTime, true);
-                    if (isFirstTime)
-                    {
-                        PreferenceService.SetValue(Preference.IsFirstTime, false);
-                        dialogTask = DialogService.ShowPopupAsync<FirstTimeDialog, NavigationParameters>(token);
-                        taskList.Add(dialogTask);
-                    }
-
-                    if (taskList.Any())
-                    {
-                        await Task.WhenAll(taskList).ConfigureAwait(false);
-                    }
-
-                    var selection = dialogTask?.Result?.GetValue<bool>(NavigationParameter.Result) ?? false;
-                    if (selection)
-                    {
-                        await NavigationService.NavigateAsnc(Routes.TutorialView, token);
-                    }
-                    */
                 }
                 catch (OperationCanceledException)
                 {

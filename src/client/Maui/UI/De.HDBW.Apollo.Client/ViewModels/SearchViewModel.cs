@@ -313,7 +313,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var subline = eduProvider?.Name ?? Resources.Strings.Resources.StartViewModel_UnknownProvider;
                 var sublineImagePath = eduProvider?.Image?.OriginalString;
-                var info = $"{item.Price:0.##} €";
+                var info = $"{item.Price ?? 0:0.##} €";
 
                 var parameters = new NavigationParameters();
                 parameters.AddValue(NavigationParameter.Id, item.Id);

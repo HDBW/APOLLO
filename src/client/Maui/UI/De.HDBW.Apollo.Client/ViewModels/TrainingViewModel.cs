@@ -22,17 +22,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _trainingId;
 
         [ObservableProperty]
-        private string? _description;
+        [NotifyPropertyChangedFor(nameof(HasProductUrl))]
+        private Uri? _productUrl;
 
         [ObservableProperty]
-        private string? _location;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(HasTags))]
-        private ObservableCollection<string> _tags = new ObservableCollection<string>();
+        private string? _price;
 
         [ObservableProperty]
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
+
+        private Training? _training;
 
         public TrainingViewModel(
             IDispatcherService dispatcherService,
@@ -50,11 +49,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             TrainingService = trainingService;
         }
 
-        public bool HasTags
+        public bool HasProductUrl
         {
             get
             {
-                return Tags.Any();
+                return ProductUrl != null;
             }
         }
 
@@ -62,7 +61,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         public async override Task OnNavigatedToAsync()
         {
-            if (string.IsNullOrWhiteSpace(_trainingId))
+            if (string.IsNullOrWhiteSpace(_trainingId) || _training != null)
             {
                 return;
             }
@@ -125,6 +124,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             sections.Add(contacts);
                         }
 
+                        if (TryCreateContactItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject contact))
+                        {
+                            sections.Add(contact);
+                        }
+
                         foreach (var appointment in training.Appointment ?? new List<Appointment>())
                         {
                             if (TryCreateAppointmentItem(appointment, out ObservableObject item))
@@ -177,92 +181,42 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             base.RefreshCommands();
             ShowLoanOptionsCommand?.NotifyCanExecuteChanged();
-            OpenCourseCommand?.NotifyCanExecuteChanged();
-            OpenMailCommand?.NotifyCanExecuteChanged();
-            OpenDailerCommand?.NotifyCanExecuteChanged();
+            OpenProductCommand?.NotifyCanExecuteChanged();
+            var contactListSection = Sections.OfType<ContactListItem>().FirstOrDefault();
+            contactListSection?.RefreshCommands();
+            var contactItemSection = Sections.OfType<ContactItem>().FirstOrDefault();
+            contactItemSection?.RefreshCommands();
         }
 
         private void LoadonUIThread(
             Training? training, List<ObservableObject> sections)
         {
+            _training = training;
+            ProductUrl = _training?.ProductUrl;
+            Price = $"{_training?.Price ?? 0:0.##} €";
             Sections = new ObservableCollection<ObservableObject>(sections);
         }
 
-        private IEnumerable<(string Link, string Text)> ParseSkills(string? skills)
-        {
-            var result = new List<(string Link, string Text)>();
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(skills))
-                {
-                    var xml = new XmlDocument();
-                    skills = System.Text.RegularExpressions.Regex.Unescape(skills);
-                    xml.LoadXml(skills);
-                    foreach (var node in xml.FirstChild?.ChildNodes.OfType<XmlNode>() ?? new List<XmlNode>())
-                    {
-                        var content = $"<html>{node.InnerText.Trim()}</html>";
-                        var linkList = new XmlDocument();
-                        linkList.LoadXml(content);
-                        var links = linkList.FirstChild?.ChildNodes.OfType<XmlElement>() ?? new List<XmlElement>();
-                        foreach (var link in links)
-                        {
-                            var url = link.Attributes["href"]?.Value;
-                            var text = link.InnerText;
-                            if (!string.IsNullOrWhiteSpace(url) && !string.IsNullOrWhiteSpace(text))
-                            {
-                                result.Add((url, text));
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error in {nameof(ParseSkills)} in {GetType().Name}.");
-            }
-
-            return result;
-        }
-
-        private bool CanOpenSkill(InteractionEntry entry)
-        {
-            return true;
-        }
-
-        private async Task OpenSkill(InteractionEntry entry)
-        {
-            try
-            {
-                Logger?.LogDebug($"Try to opening url {entry.Data?.ToString()}.");
-                var uri = new Uri(entry.Data?.ToString() ?? string.Empty, UriKind.Absolute);
-                await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error in {nameof(OpenSkill)} in {GetType().Name}.");
-            }
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenCourse))]
-        private async Task OpenCourse(CancellationToken token)
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenProduct))]
+        private async Task OpenProduct(CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
-                    //await Browser.Default.OpenAsync(CourseUrl!, BrowserLaunchMode.SystemPreferred);
+                    await Browser.Default.OpenAsync(ProductUrl!, BrowserLaunchMode.SystemPreferred);
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OpenCourse)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OpenProduct)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OpenCourse)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OpenProduct)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenCourse)} in {GetType().Name}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenProduct)} in {GetType().Name}.");
                 }
                 finally
                 {
@@ -271,9 +225,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private bool CanOpenCourse()
+        private bool CanOpenProduct()
         {
-            return !IsBusy;// && CourseUrl != null;
+            return !IsBusy && ProductUrl != null;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShowLoanOptions))]
@@ -308,30 +262,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanShowLoanOptions()
         {
-            return !IsBusy;//&& !string.IsNullOrWhiteSpace(LoanOptions);
+            return !IsBusy && (_training?.Loans?.Any() ?? false);
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenMail))]
-        private async Task OpenMail(CancellationToken token)
+        private async Task OpenMail(string? email, CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
-                    //if (Email.Default.IsComposeSupported)
-                    //{
-                    //    string[] recipients = new[] { Contact!.ContactMail };
+                    string[] recipients = new[] { email! };
 
-                    //    var message = new EmailMessage
-                    //    {
-                    //        Subject = string.Empty,
-                    //        Body = string.Empty,
-                    //        BodyFormat = EmailBodyFormat.PlainText,
-                    //        To = new List<string>(recipients),
-                    //    };
+                    var message = new EmailMessage
+                    {
+                        Subject = string.Empty,
+                        Body = string.Empty,
+                        BodyFormat = EmailBodyFormat.PlainText,
+                        To = new List<string>(recipients),
+                    };
 
-                    //    await Email.Default.ComposeAsync(message);
-                    //}
+                    await Email.Default.ComposeAsync(message);
                 }
                 catch (OperationCanceledException)
                 {
@@ -352,20 +302,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private bool CanOpenMail()
+        private bool CanOpenMail(string? email)
         {
-            return !IsBusy;// && !string.IsNullOrWhiteSpace(Contact?.ContactMail);
+            return !IsBusy && !string.IsNullOrWhiteSpace(email) && Email.Default.IsComposeSupported;
         }
 
-        [RelayCommand(CanExecute = nameof(CanOpenDailer))]
-        private void OpenDailer()
+        private Task OpenDailer(string? phoneNumber, CancellationToken token)
         {
             try
             {
-                if (PhoneDialer.Default.IsSupported)
-                {
-                    //PhoneDialer.Default.Open(Contact!.ContactPhone);
-                }
+                PhoneDialer.Default.Open(phoneNumber!);
             }
             catch (OperationCanceledException)
             {
@@ -379,22 +325,48 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 Logger?.LogError(ex, $"Unknown error in {nameof(OpenDailer)} in {GetType().Name}.");
             }
+
+            return Task.CompletedTask;
         }
 
-        private bool CanOpenDailer()
+        private bool CanOpenDailer(string? phoneNumber)
         {
-            return !IsBusy;// && !string.IsNullOrWhiteSpace(Contact?.ContactPhone);
+            return !IsBusy && !string.IsNullOrWhiteSpace(phoneNumber) && PhoneDialer.Default.IsSupported;
         }
 
         private bool TryCreateContactListItem(string headline, List<Contact>? contacts, out ObservableObject item)
         {
             item = null;
-            if (contacts == null || !contacts.Any())
+            if (contacts == null || contacts.Count() < 2)
             {
                 return false;
             }
 
-            item = ContactListItem.Import(headline, contacts);
+            item = ContactListItem.Import(
+                headline,
+                contacts,
+                OpenMail,
+                CanOpenMail,
+                OpenDailer,
+                CanOpenDailer);
+            return true;
+        }
+
+        private bool TryCreateContactItem(string headline, List<Contact>? contacts, out ObservableObject item)
+        {
+            item = null;
+            if (contacts == null || contacts.Count() != 1)
+            {
+                return false;
+            }
+
+            item = ContactItem.Import(
+                headline,
+                contacts.First(),
+                OpenMail,
+                CanOpenMail,
+                OpenDailer,
+                CanOpenDailer);
             return true;
         }
 

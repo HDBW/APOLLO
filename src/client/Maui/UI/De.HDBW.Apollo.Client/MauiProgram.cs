@@ -297,9 +297,6 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<UseCaseSelectionView>();
             services.AddTransient<UseCaseSelectionViewModel>();
 
-            services.AddTransient<FirstTimeDialog>();
-            services.AddTransient<FirstTimeDialogViewModel>();
-
             services.AddTransient<CancelAssessmentDialog>();
             services.AddTransient<CancelAssessmentDialogViewModel>();
 

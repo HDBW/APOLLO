@@ -17,6 +17,8 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? TagItemTemplate { get; set; }
 
+        public DataTemplate? ContactItemTemplate { get; set; }
+
         public DataTemplate? ContactListItemTemplate { get; set; }
 
         private DataTemplate? DefaultTemplate { get; } = new DataTemplate();
@@ -35,6 +37,8 @@ namespace De.HDBW.Apollo.Client.Selector
                     return ExpandableListItemTemplate;
                 case AppointmentItem _:
                     return AppointmentItemTemplate;
+                case ContactItem _:
+                    return ContactItemTemplate;
                 case ContactListItem _:
                     return ContactListItemTemplate;
                 default:

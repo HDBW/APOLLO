@@ -14,17 +14,35 @@ namespace De.HDBW.Apollo.Client.Models.Training
         [ObservableProperty]
         private ObservableCollection<ContactItem> _items;
 
-        private ContactListItem(string header, IEnumerable<Contact> items)
+        private ContactListItem(
+            string header,
+            IEnumerable<Contact> items,
+            Func<string?, CancellationToken, Task>? openMailHandler,
+            Func<string?, bool>? canOpenMailHandler,
+            Func<string?, CancellationToken, Task>? openDailerHandler,
+            Func<string?, bool>? canOpenDailerHandler)
         {
             Header = header;
-            Items = new ObservableCollection<ContactItem>(items.Select(x => ContactItem.Import(x)));
+            Items = new ObservableCollection<ContactItem>(items.Select(x => ContactItem.Import(null, x, openMailHandler, canOpenMailHandler, openDailerHandler, canOpenDailerHandler)));
         }
 
         public static ContactListItem Import(
             string header,
-            IEnumerable<Contact> items)
+            IEnumerable<Contact> items,
+            Func<string?, CancellationToken, Task>? openMailHandler,
+            Func<string?, bool>? canOpenMailHandler,
+            Func<string?, CancellationToken, Task>? openDailerHandler,
+            Func<string?, bool>? canOpenDailerHandler)
         {
-            return new ContactListItem(header, items);
+            return new ContactListItem(header, items, openMailHandler, canOpenMailHandler, openDailerHandler, canOpenDailerHandler);
+        }
+
+        public void RefreshCommands()
+        {
+            foreach (var item in Items)
+            {
+                item.RefreshCommands();
+            }
         }
     }
 }

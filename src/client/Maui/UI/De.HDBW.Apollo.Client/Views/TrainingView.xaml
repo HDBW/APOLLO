@@ -110,6 +110,28 @@
             </VerticalStackLayout>
         </DataTemplate>
 
+        <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
+            <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
+                <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InteractiveLineItemTemplate" x:DataType="trainingsModels:InteractiveLineItem">
+            <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5" Background="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{x:Binding InteractCommand}" />
+                </Grid.GestureRecognizers>
+                <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
+            </Grid>
+        </DataTemplate>
+
+        <selector:LineItemTemplateSelector x:Key="LineItemTemplateSelector"
+                                           DefaultTemplate="{StaticResource LineItemTemplate}"
+                                           InteractiveLineItemTemplate="{StaticResource InteractiveLineItemTemplate}" />
+
+        
         <DataTemplate x:Key="ContactListItemTemplate" x:DataType="trainingsModels:ContactListItem">
             <Grid RowDefinitions="auto, auto, auto" Margin="24,0">
                 <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
@@ -119,20 +141,22 @@
                               x:Name="PART_Animation">
                     <CarouselView.ItemTemplate>
                         <DataTemplate x:DataType="trainingsModels:ContactItem">
-                            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="trainingsModels:LineItem">
-                                        <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
-                                            <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
-                                            <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
+                            <VerticalStackLayout
+                                BindableLayout.ItemsSource="{x:Binding Items}"
+                                Spacing="8"
+                                BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}" />
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
                 <IndicatorView Grid.Row="2" x:Name="indicatorView" Margin="24,8,24,8"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ContactItemTemplate" x:DataType="trainingsModels:ContactItem">
+            <Grid RowDefinitions="auto, auto" Margin="24,0">
+                <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
+                <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8"
+                                     BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
             </Grid>
         </DataTemplate>
 
@@ -142,6 +166,7 @@
                                                 ExpandableListItemTemplate="{StaticResource ExpandableListItemTemplate}"
                                                 TagItemTemplate="{StaticResource TagItemTemplate}"
                                                 AppointmentItemTemplate="{StaticResource AppointmentItemTemplate}"
+                                                ContactItemTemplate="{StaticResource ContactItemTemplate}"
                                                 ContactListItemTemplate="{StaticResource ContactListItemTemplate}"/>
 
 
@@ -155,9 +180,10 @@
             </CollectionView.ItemsLayout>
         </CollectionView>
         <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
-            <VerticalStackLayout Margin="24,16">
-                <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" />
-            </VerticalStackLayout>
+            <Grid ColumnDefinitions="*, Auto" Margin="24,16">
+                <Label Text="{x:Binding Price}" Style="{StaticResource NotoSerif24Bold}" VerticalOptions="Center" Margin="0,0,8,0"/>
+                <Button Grid.Column="1" Command="{x:Binding OpenProductCommand}" Text="{x:Static strings:Resources.TrainingView_OpenProvider}" IsVisible="{x:Binding HasProductUrl}"/>
+            </Grid>
         </Border>
     </Grid>
 </ContentPage>

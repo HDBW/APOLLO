@@ -612,15 +612,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zum Anbieter.
-        /// </summary>
-        public static string CourseView_VisitVendor {
-            get {
-                return ResourceManager.GetString("CourseView_VisitVendor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Datum eingeben.
         /// </summary>
         public static string DatePicker_Watermark {
@@ -1157,42 +1148,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string FiltersSheet_Sorting {
             get {
                 return ResourceManager.GetString("FiltersSheet_Sorting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to direkt loslegen.
-        /// </summary>
-        public static string FirstTimeDialog_Continue {
-            get {
-                return ResourceManager.GetString("FirstTimeDialog_Continue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to zum ersten mal hier?.
-        /// </summary>
-        public static string FirstTimeDialog_Message {
-            get {
-                return ResourceManager.GetString("FirstTimeDialog_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tutorial anzeigen.
-        /// </summary>
-        public static string FirstTimeDialog_OpenTutorial {
-            get {
-                return ResourceManager.GetString("FirstTimeDialog_OpenTutorial", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Willkommen!.
-        /// </summary>
-        public static string FirstTimeDialog_Title {
-            get {
-                return ResourceManager.GetString("FirstTimeDialog_Title", resourceCulture);
             }
         }
         
@@ -2922,6 +2877,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TrainingsView_Title {
             get {
                 return ResourceManager.GetString("TrainingsView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zum Anbieter.
+        /// </summary>
+        public static string TrainingView_OpenProvider {
+            get {
+                return ResourceManager.GetString("TrainingView_OpenProvider", resourceCulture);
             }
         }
         
