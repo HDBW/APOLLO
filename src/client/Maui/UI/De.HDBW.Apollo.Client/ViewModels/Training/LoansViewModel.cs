@@ -58,12 +58,20 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             _loans = data.Deserialize<List<Loans>>();
         }
 
+        protected override void RefreshCommands()
+        {
+            foreach (var item in Sections)
+            {
+                item.RefreshCommands();
+            }
+        }
+
         private void LoadonUIThread(List<LoanItem> sections)
         {
             Sections = new ObservableCollection<LoanItem>(sections);
         }
 
-        private async Task OpenLink(Uri? uri, CancellationToken token)
+        private async Task OpenLink(string? uri, CancellationToken token)
         {
             using (var worker = ScheduleWork(token))
             {
@@ -90,9 +98,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             }
         }
 
-        private bool CanOpenLink(Uri? uri)
+        private bool CanOpenLink(string? uri)
         {
-            return !IsBusy && uri != null;
+            return !IsBusy && !string.IsNullOrWhiteSpace(uri);
         }
 
         private async Task OpenMail(string? email, CancellationToken token)

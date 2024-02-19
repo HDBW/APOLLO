@@ -47,9 +47,10 @@
                 <DataTemplate x:DataType="trainingsModels:LoanItem">
                     <Border StrokeThickness="0">
                         <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-                            <Grid RowDefinitions="auto, auto" Margin="24,0">
+                            <Grid RowDefinitions="auto, auto, auto" >
                                 <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
-                                <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8" BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
+                                <Label Grid.Row="1" Text="{x:Binding Description}" Style="{StaticResource Noto16}" Margin="0,0,0,8"/>
+                                <VerticalStackLayout Grid.Row="2" BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8" BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
                             </Grid>
                         </Border>
                     </Border>

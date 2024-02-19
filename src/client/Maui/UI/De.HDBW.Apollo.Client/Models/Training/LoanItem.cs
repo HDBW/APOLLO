@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Contact = Invite.Apollo.App.Graph.Common.Models.Contact;
 
@@ -8,10 +9,13 @@ namespace De.HDBW.Apollo.Client.Models.Training
 {
     public partial class LoanItem : ContactItem
     {
+        [ObservableProperty]
+        private string? _description;
+
         private LoanItem(
             Loans loan,
-            Func<Uri?, CancellationToken, Task>? openUrlHandler,
-            Func<Uri?, bool>? canOpenUrlHandler,
+            Func<string?, CancellationToken, Task>? openUrlHandler,
+            Func<string?, bool>? canOpenUrlHandler,
             Contact contact,
             Func<string?, CancellationToken, Task>? openMailHandler,
             Func<string?, bool>? canOpenMailHandler,
@@ -19,21 +23,17 @@ namespace De.HDBW.Apollo.Client.Models.Training
             Func<string?, bool>? canOpenDailerHandler)
             : base(loan.Name, contact, openMailHandler, canOpenMailHandler, openDailerHandler, canOpenDailerHandler)
         {
-            if (!string.IsNullOrWhiteSpace(loan.Description))
-            {
-                Items.Insert(0, LineItem.Import(null, loan.Description));
-            }
-
+            Description = loan.Description;
             if (loan.Url != null)
             {
-                Items.Add(InteractiveLineItem.Import(KnonwIcons.Web, loan.Url.OriginalString));
+                Items.Add(InteractiveLineItem.Import(KnonwIcons.Web, loan.Url.OriginalString, openUrlHandler, canOpenUrlHandler));
             }
         }
 
         public static LoanItem Import(
             Loans loan,
-            Func<Uri?, CancellationToken, Task>? openUrlHandler,
-            Func<Uri?, bool>? canOpenUrlHandler,
+            Func<string?, CancellationToken, Task>? openUrlHandler,
+            Func<string?, bool>? canOpenUrlHandler,
             Func<string?, CancellationToken, Task>? openMailHandler,
             Func<string?, bool>? canOpenMailHandler,
             Func<string?, CancellationToken, Task>? openDailerHandler,
