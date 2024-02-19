@@ -197,7 +197,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task NavigateToRoute(string route, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();

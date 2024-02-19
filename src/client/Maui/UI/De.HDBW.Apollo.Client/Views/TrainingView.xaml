@@ -53,58 +53,65 @@
             </VerticalStackLayout>
         </DataTemplate>
 
-        <DataTemplate x:Key="ExpandableItemTemplate" x:DataType="trainingsModels:ExpandableItem">
-            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-                <toolkit:Expander x:Name="PART_Expander">
-                    <toolkit:Expander.Header>
-                        <Grid ColumnDefinitions="*, auto">
-                            <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                            <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
-                                <Image.Triggers>
-                                    <DataTrigger TargetType="Image" Binding="{Binding IsExpanded, Source={x:Reference PART_Expander}}" Value="True">
-                                        <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
-                                        <!-- Multiple Setter elements are allowed -->
-                                    </DataTrigger>
-                                </Image.Triggers>
-                            </Image>
-                        </Grid>
-                    </toolkit:Expander.Header>
-                    <toolkit:Expander.Content>
-                        <Label TextType="Html" Text="{x:Binding Content}" />
-                    </toolkit:Expander.Content>
-                </toolkit:Expander>
-            </Border>
+        <DataTemplate x:Key="SeperatorItemTemplate" x:DataType="trainingsModels:SeperatorItem">
+            <Border StrokeThickness="0" HeightRequest="16" />
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandableListItemTemplate" x:DataType="trainingsModels:ExpandableListItem">
             <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-                <toolkit:Expander x:Name="PART_Expander">
-                    <toolkit:Expander.Header>
-                        <Grid ColumnDefinitions="*, auto">
-                            <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                            <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
-                                <Image.Triggers>
-                                    <DataTrigger TargetType="Image" Binding="{Binding IsExpanded, Source={x:Reference PART_Expander}}" Value="True">
-                                        <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
-                                        <!-- Multiple Setter elements are allowed -->
-                                    </DataTrigger>
-                                </Image.Triggers>
-                            </Image>
-                        </Grid>
-                    </toolkit:Expander.Header>
-                    <toolkit:Expander.Content>
-                        <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Content}" Spacing="8">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="system:String">
-                                    <Label TextType="Html" Text="{x:Binding}" />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-                    </toolkit:Expander.Content>
-                </toolkit:Expander>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*, auto">
+                    <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                    <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                        <Image.Triggers>
+                            <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
+                                <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
             </Border>
         </DataTemplate>
 
+        <DataTemplate x:Key="ExpandableItemTemplate" x:DataType="trainingsModels:ExpandableItem">
+            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*, auto">
+                    <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                    <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                        <Image.Triggers>
+                            <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
+                                <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
+                                <!-- Multiple Setter elements are allowed -->
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ExpandedItemContentTemplate" x:DataType="trainingsModels:ExpandedItemContent">
+            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+               <Label TextType="Html" Text="{x:Binding Content}" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ExpandedListContentTemplate" x:DataType="trainingsModels:ExpandedListContent">
+            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Content}" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="system:String">
+                            <Label TextType="Html" Text="{x:Binding}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </Border>
+        </DataTemplate>
+        
         <DataTemplate x:Key="TagItemTemplate" x:DataType="trainingsModels:TagItem">
             <VerticalStackLayout>
                 <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="24,0,24,8"/>
@@ -194,11 +201,14 @@
                                                 HeaderItemTemplate="{StaticResource HeaderItemTemplate}"
                                                 ExpandableItemTemplate="{StaticResource ExpandableItemTemplate}"
                                                 ExpandableListItemTemplate="{StaticResource ExpandableListItemTemplate}"
+                                                ExpandedItemContentTemplate="{StaticResource ExpandedItemContentTemplate}"
+                                                ExpandedListContentTemplate="{StaticResource ExpandedListContentTemplate}"
                                                 TagItemTemplate="{StaticResource TagItemTemplate}"
                                                 AppointmentItemTemplate="{StaticResource AppointmentItemTemplate}"
                                                 ContactItemTemplate="{StaticResource ContactItemTemplate}"
                                                 ContactListItemTemplate="{StaticResource ContactListItemTemplate}"
-                                                NavigationItemTemplate="{StaticResource NavigationItemTemplate}"/>
+                                                NavigationItemTemplate="{StaticResource NavigationItemTemplate}"
+                                                SeperatorItemTemplate="{StaticResource SeperatorItemTemplate}"/>
 
 
     </ContentPage.Resources>
@@ -207,7 +217,7 @@
             ItemsSource="{x:Binding Sections}"
             ItemTemplate="{StaticResource TrainingsItemTemplateSelector}">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout  Orientation="Vertical" ItemSpacing="16" />
+                <LinearItemsLayout Orientation="Vertical" />
             </CollectionView.ItemsLayout>
         </CollectionView>
         <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">

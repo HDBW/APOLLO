@@ -70,72 +70,159 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     var training = await TrainingService.GetTrainingAsync(_trainingId!, worker.Token).ConfigureAwait(false);
                     var sections = new List<ObservableObject>();
+                    var addedItem = false;
                     if (training != null)
                     {
                         if (TryCreateHeader(training, out ObservableObject header))
                         {
                             sections.Add(header);
+                            addedItem = true;
                         }
 
                         if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject description))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(description);
+                            addedItem = true;
                         }
 
                         if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject tags))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(tags);
+                            addedItem = true;
                         }
 
                         if (TryCreateTagItem(Resources.Strings.Resources.Global_Categories, training.Categories, out ObservableObject categories))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(categories);
+                            addedItem = true;
                         }
 
                         if (TryCreateExpandableItem(Resources.Strings.Resources.Global_TargetAudience, training.TargetAudience, out ObservableObject targetAudience))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(targetAudience);
+                            addedItem = true;
                         }
 
                         if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_PreRequisites, training.Prerequisites, out ObservableObject prerequisites))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(prerequisites);
+                            addedItem = true;
                         }
 
                         if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Contents, training.Content, out ObservableObject contents))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(contents);
+                            addedItem = true;
                         }
 
                         if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Benefits, training.BenefitList, out ObservableObject benefits))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(benefits);
+                            addedItem = true;
                         }
 
                         if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Certificates, training.Certificate, out ObservableObject certificates))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(certificates);
+                            addedItem = true;
                         }
 
                         if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_LoanOptions, Routes.LoansView, training.Loans?.Serialize(), out ObservableObject loans))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(loans);
+                            addedItem = true;
                         }
 
                         if (TryCreateContactListItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject contacts))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(contacts);
+                            addedItem = true;
                         }
 
                         if (TryCreateContactItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject contact))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(contact);
+                            addedItem = true;
                         }
 
                         if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_Appointment, Routes.AppointmentsView, training.Appointment?.Serialize(), out ObservableObject appointment))
                         {
+                            if (addedItem)
+                            {
+                                sections.Add(SeperatorItem.Import());
+                                addedItem = false;
+                            }
+
                             sections.Add(appointment);
+                            addedItem = true;
                         }
+
                         //foreach (var appointment in training.Appointment ?? new List<Appointment>())
                         //{
                         //    if (TryCreateAppointmentItem(appointment, out ObservableObject item))
@@ -396,7 +483,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             content = content.Select(x => x.Trim());
 
-            item = ExpandableListItem.Import(headline, content);
+            item = ExpandableListItem.Import(headline, content, OnToggleState);
             return true;
         }
 
@@ -426,7 +513,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return false;
             }
 
-            item = ExpandableItem.Import(headline, content);
+            item = ExpandableItem.Import(headline, content, OnToggleState);
             return true;
         }
 
@@ -465,6 +552,32 @@ namespace De.HDBW.Apollo.Client.ViewModels
             parameters.AddValue(NavigationParameter.Data, data!);
             item = NavigationItem.Import(text, route, parameters, NavigateToRouteHandler, CanNavigateToRouteHandler);
             return true;
+        }
+
+        private void OnToggleState(ExpandableItem item)
+        {
+            var index = Sections.IndexOf(item);
+            if (item.IsExpanded)
+            {
+                Sections.Insert(index + 1, ExpandedItemContent.Import(item.Content));
+            }
+            else
+            {
+                Sections.RemoveAt(index + 1);
+            }
+        }
+
+        private void OnToggleState(ExpandableListItem item)
+        {
+            var index = Sections.IndexOf(item);
+            if (item.IsExpanded)
+            {
+                Sections.Insert(index + 1, ExpandedListContent.Import(item.Content));
+            }
+            else
+            {
+                Sections.RemoveAt(index + 1);
+            }
         }
     }
 }

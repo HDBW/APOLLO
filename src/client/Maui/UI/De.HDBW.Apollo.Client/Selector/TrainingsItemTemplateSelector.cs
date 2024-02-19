@@ -13,6 +13,10 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? ExpandableListItemTemplate { get; set; }
 
+        public DataTemplate? ExpandedItemContentTemplate { get; set; }
+
+        public DataTemplate? ExpandedListContentTemplate { get; set; }
+
         public DataTemplate? AppointmentItemTemplate { get; set; }
 
         public DataTemplate? TagItemTemplate { get; set; }
@@ -23,12 +27,16 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? NavigationItemTemplate { get; set; }
 
+        public DataTemplate? SeperatorItemTemplate { get; set; }
+
         private DataTemplate? DefaultTemplate { get; } = new DataTemplate();
 
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
             switch (item)
             {
+                case SeperatorItem _:
+                    return SeperatorItemTemplate;
                 case HeaderItem _:
                     return HeaderItemTemplate;
                 case TagItem _:
@@ -37,6 +45,10 @@ namespace De.HDBW.Apollo.Client.Selector
                     return ExpandableItemTemplate;
                 case ExpandableListItem _:
                     return ExpandableListItemTemplate;
+                case ExpandedItemContent _:
+                    return ExpandedItemContentTemplate;
+                case ExpandedListContent _:
+                    return ExpandedListContentTemplate;
                 case AppointmentItem _:
                     return AppointmentItemTemplate;
                 case ContactItem _:
