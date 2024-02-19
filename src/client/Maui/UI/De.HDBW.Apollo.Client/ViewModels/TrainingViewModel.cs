@@ -466,15 +466,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateTagItem(string? headline, List<string>? tags, [MaybeNullWhen(false)] out ObservableObject item)
+        private bool TryCreateTagItem(string? headline, List<string>? items, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
-            if (!(tags?.Any() ?? false))
+            var validItems = items?.Where(x => !string.IsNullOrWhiteSpace(x)) ?? new List<string>();
+            if (!(validItems?.Any() ?? false))
             {
                 return false;
             }
 
-            item = TagItem.Import(headline, tags);
+            item = TagItem.Import(headline, validItems);
             return true;
         }
 

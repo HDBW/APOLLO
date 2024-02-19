@@ -16,8 +16,8 @@
         <DataTemplate x:Key="HeaderItemTemplate" x:DataType="trainingsModels:HeaderItem">
             <VerticalStackLayout Spacing="16">
                 <VerticalStackLayout Margin="24,0">
-                    <Label Text="{x:Binding TrainingName}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
-                    <Label Text="{x:Binding SubTitle}" Style="{StaticResource Noto16SemiBold}" IsVisible="{Binding HasSubTitle}"/>
+                    <Label Text="{x:Binding TrainingName}" TextType="Html" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
+                    <Label Text="{x:Binding SubTitle}" TextType="Html" Style="{StaticResource Noto16SemiBold}" IsVisible="{Binding HasSubTitle}"/>
                 </VerticalStackLayout>
                 <Grid>
                     <Image Source="{x:Binding ImagePath}" MaximumHeightRequest="200" Aspect="AspectFill" IsVisible="{x:Binding HasImage}"/>
@@ -27,10 +27,16 @@
                         </Border.StrokeShape>
                         <HorizontalStackLayout>
                             <Image WidthRequest="16" HeightRequest="16" Source="{x:Static models:KnonwIcons.Training}" Margin="0,0,8,0" VerticalOptions="Center"/>
-                            <Label Text="{x:Binding TrainingType}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
+                            <Label Text="{x:Binding TrainingType}" TextType="Html" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
                         </HorizontalStackLayout>
                     </Border>
                 </Grid>
+
+                <Grid ColumnDefinitions="auto, *" Margin="24,0">
+                    <Image Source="{x:Binding ProviderImage}" IsVisible="{x:Binding HasProviderImage}" MaximumHeightRequest="60" VerticalOptions="Start" Margin="0,4,8,0"/>
+                    <Label Text="{x:Binding ProviderName}" TextType="Html" Style="{StaticResource Noto16}" MaxLines="2" Grid.Column="1"/>
+                </Grid>
+
                 <VerticalStackLayout IsVisible="{x:Binding HasModes}" Margin="24,0">
                     <Label Text="{x:Static strings:Resources.Global_TrainingMode}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
                     <FlexLayout BindableLayout.ItemsSource="{x:Binding Modes}" Wrap="Wrap" Direction="Row" JustifyContent="Start">
@@ -41,13 +47,15 @@
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
                 </VerticalStackLayout>
+
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable}" Margin="24,0">
                     <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
                 </Grid>
+
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate}" Margin="24,0">
                     <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Watch}" Margin="0,0,8,0" VerticalOptions="Center"/>
-                    <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding IndividualStartDate}" />
+                    <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding IndividualStartDate}" TextType="Html" />
                 </Grid>
             </VerticalStackLayout>
         </DataTemplate>
@@ -139,7 +147,7 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="2" />
                                 </Border.StrokeShape>
-                                <Label Text="{x:Binding}" Style="{StaticResource Noto14SemiBold}"/>
+                                <Label Text="{x:Binding}" TextType="Html" Style="{StaticResource Noto14SemiBold}"/>
                             </Border>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -163,7 +171,7 @@
             <Border StrokeThickness="0">
                 <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
                     <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
-                    <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0"/>
+                    <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -175,7 +183,7 @@
                         <TapGestureRecognizer Command="{x:Binding InteractCommand}" />
                     </Grid.GestureRecognizers>
                     <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
-                    <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
+                    <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
                 </Grid>
             </Border>
         </DataTemplate>
