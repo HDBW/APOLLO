@@ -1345,4 +1345,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="TrainingView_Accessibility" xml:space="preserve">
     <value>Barrierefrei zugänglich</value>
   </data>
+  <data name="LoansView_Title" xml:space="preserve">
+    <value>Finanzierungsoptionen</value>
+  </data>
 </root>
