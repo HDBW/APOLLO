@@ -7,7 +7,7 @@ using Apollo.Service.Controllers;
 namespace Apollo.RestService.Messages
 {
     /// <summary>
-    /// Defines the request message of the <see cref="nameof(ListController.QueryListAsync)"/> operation.
+    /// Defines the request message of the <see cref="ListController.QueryListItemsAsync(QueryListRequest)"/> operation.
     /// </summary>
     public class QueryListRequest
     {
@@ -19,11 +19,11 @@ namespace Apollo.RestService.Messages
         /// <summary>
         /// Lookups only items of the given type.
         /// </summary>
-        public string ItemType { get; set; }
+        public required string ItemType { get; set; }
 
         /// <summary>
         /// The ISO code of the language.
         /// </summary>
-        public string?   Language { get; set; }
+        public string? Language { get; set; }
     }
 }

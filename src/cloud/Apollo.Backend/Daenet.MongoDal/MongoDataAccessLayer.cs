@@ -771,7 +771,7 @@ namespace Daenet.MongoDal
         /// <param name="collectionName"></param>
         /// <param name="id"></param>
         /// <param name="idEntityName">Default value _id. Additionally any other alternative property can be used as id.</param>
-        /// <returns>The single entity.</returns>
+        /// <returns>The single entity if the instance exists. NULL if the entiry instance does not exist.</returns>
         public async Task<T> GetByIdAsync<T>(string collectionName, string id, string? idEntityName = "_id")
         {
             var coll = GetCollection(collectionName);

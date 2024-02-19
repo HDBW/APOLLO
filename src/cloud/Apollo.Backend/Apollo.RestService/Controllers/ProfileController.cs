@@ -94,7 +94,8 @@ namespace Apollo.Service.Controllers
         /// Handles HTTP PUT requests to  update a profile based on a request object.
         /// </summary>
         /// <param name="req">Request object containing profile information for create or update.</param>
-        /// <returns>Response containing the result of the create/update operation.</returns>
+        /// <returns>Response containing the result of the create/update operation. It holds the Id of the profile,
+        /// which is typically not known by the client when the new profile instance is created.</returns>
         /// <remarks></remarks>
         [HttpPut]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the result of the create/update operation.")]
@@ -110,28 +111,37 @@ namespace Apollo.Service.Controllers
                 // this list items  should not be changeable by the client so we filter out
                 // them form rquested profile object
 
-                var filteredProfile = new Profile
+                Profile filteredProfile;
+
+                if (IsBackendServiceCall())
                 {
-                    Id = req.Profile.Id,
-                    CareerInfos = req.Profile.CareerInfos,
-                    EducationInfos = req.Profile.EducationInfos,
-                    Qualifications = req.Profile.Qualifications,
-                    MobilityInfo = req.Profile.MobilityInfo,
-                    LanguageSkills = req.Profile.LanguageSkills,
-                    Licenses = req.Profile.Licenses,
-                    LeadershipSkills = req.Profile.LeadershipSkills,
-                    WebReferences = req.Profile.WebReferences
-                };
+                    filteredProfile = req.Profile;
+                }
+                else
+                {
+                    filteredProfile = new Profile
+                    {
+                        Id = req.Profile.Id,
+                        CareerInfos = req.Profile.CareerInfos,
+                        EducationInfos = req.Profile.EducationInfos,
+                        Qualifications = req.Profile.Qualifications,
+                        MobilityInfo = req.Profile.MobilityInfo,
+                        LanguageSkills = req.Profile.LanguageSkills,
+                        Licenses = req.Profile.Licenses,
+                        LeadershipSkills = req.Profile.LeadershipSkills,
+                        WebReferences = req.Profile.WebReferences
+                    };
+                }
 
                 //
                 // Call the Apollo API to create or update a profile based on the request.
-                var result = await _api.CreateOrUpdateProfile(req.UserId, filteredProfile);
+                var id = await _api.CreateOrUpdateProfile(req.UserId, filteredProfile);
 
                 _logger.LogTrace("Leave {method}", nameof(CreateOrUpdateProfile));
 
                 //
                 //Return the result of the create/update operation as a response.
-                return new CreateOrUpdateProfileResponse { Result = result.FirstOrDefault()! };
+                return new CreateOrUpdateProfileResponse { Id = id };
             }
             catch (Exception ex)
             {
@@ -140,6 +150,18 @@ namespace Apollo.Service.Controllers
                 _logger?.LogError(ex, "Method {method} failed", nameof(CreateOrUpdateProfile));
                 throw;
             }
+        }
+
+
+        /// <summary>
+        /// Will be implemented in the future.
+        /// Returns true if the call is from the backend service, which will be checked by reading some header value.
+        /// Right now we return false, which means, the Front-End is calling the API.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsBackendServiceCall()
+        {
+            return false;
         }
 
 
@@ -192,7 +214,7 @@ namespace Apollo.Service.Controllers
         /// Handles HTTP DELETE requests to delete a profile by ID.
         /// </summary>
         /// <param name="id">ID of the profile to delete.</param>
-       
+
         [HttpDelete("{id}")]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Profiles deleted successfully.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]

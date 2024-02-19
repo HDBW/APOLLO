@@ -8,8 +8,8 @@ namespace Apollo.RestService.Messages
     {
 
         /// <summary>
-        ///  Property to store the result of the create/update operation.
+        ///  The identifier of the profile.
         /// </summary>
-        public object Result { get; internal set; }
+        public string Id { get; internal set; }
     }
 }
