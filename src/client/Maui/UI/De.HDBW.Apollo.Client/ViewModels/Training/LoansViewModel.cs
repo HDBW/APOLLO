@@ -16,7 +16,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
     public partial class LoansViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
+        private ObservableCollection<LoanItem> _sections = new ObservableCollection<LoanItem>();
 
         private List<Loans>? _loans;
 
@@ -24,7 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger logger)
+            ILogger<LoansViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
         }
@@ -35,7 +35,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             {
                 try
                 {
-                    var sections = new List<ObservableObject>();
+                    var sections = new List<LoanItem>();
                     var loanItems = _loans?.Select(x => LoanItem.Import(x, OpenLink, CanOpenLink, OpenMail, CanOpenMail, OpenDailer, CanOpenDailer)) ?? new List<LoanItem>();
                     sections.AddRange(loanItems);
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections), worker.Token).ConfigureAwait(false);
@@ -58,8 +58,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             _loans = data.Deserialize<List<Loans>>();
         }
 
-        private void LoadonUIThread(List<ObservableObject> sections)
+        private void LoadonUIThread(List<LoanItem> sections)
         {
+            Sections = new ObservableCollection<LoanItem>(sections);
         }
 
         private async Task OpenLink(Uri? uri, CancellationToken token)

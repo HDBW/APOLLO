@@ -12,10 +12,49 @@
              Title="{x:Static strings:Resources.LoansView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.Resources>
+        <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
+            <Border StrokeThickness="0">
+                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
+                    <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InteractiveLineItemTemplate" x:DataType="trainingsModels:InteractiveLineItem">
+            <Border StrokeThickness="0">
+                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5" Background="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding InteractCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <selector:LineItemTemplateSelector x:Key="LineItemTemplateSelector"
+                                    DefaultTemplate="{StaticResource LineItemTemplate}"
+                                    InteractiveLineItemTemplate="{StaticResource InteractiveLineItemTemplate}" />
+    </ContentPage.Resources>
+    <Grid>
+        <CollectionView ItemsSource="{x:Binding Sections}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="trainingsModels:LoanItem">
+                    <Border StrokeThickness="0">
+                        <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                            <Grid RowDefinitions="auto, auto" Margin="24,0">
+                                <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
+                                <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8" BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
+                            </Grid>
+                        </Border>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

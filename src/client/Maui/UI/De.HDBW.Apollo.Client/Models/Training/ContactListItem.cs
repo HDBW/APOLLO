@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
             Func<string?, bool>? canOpenDailerHandler)
         {
             Header = header;
-            Items = new ObservableCollection<ContactItem>(items.Select(x => ContactItem.Import(null, x, openMailHandler, canOpenMailHandler, openDailerHandler, canOpenDailerHandler)));
+            Items = new ObservableCollection<ContactItem>(items.Select(x => ContactItem.Import(null, x, openMailHandler, canOpenMailHandler, openDailerHandler, canOpenDailerHandler)).Where(x => x.Items.Any()));
         }
 
         public static ContactListItem Import(

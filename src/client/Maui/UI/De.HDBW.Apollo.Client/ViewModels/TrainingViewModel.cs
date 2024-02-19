@@ -418,13 +418,20 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return false;
             }
 
-            item = ContactListItem.Import(
+            var contactItem = ContactListItem.Import(
                 headline,
                 contacts,
                 OpenMail,
                 CanOpenMail,
                 OpenDailer,
                 CanOpenDailer);
+
+            if (!contactItem.Items.Any())
+            {
+                return false;
+            }
+
+            item = contactItem;
             return true;
         }
 
@@ -436,13 +443,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return false;
             }
 
-            item = ContactItem.Import(
+            var contact = ContactItem.Import(
                 headline,
                 contacts.First(),
                 OpenMail,
                 CanOpenMail,
                 OpenDailer,
                 CanOpenDailer);
+
+            if (!contact.Items.Any())
+            {
+                return false;
+            }
+
+            item = contact;
+
             return true;
         }
 
@@ -516,7 +531,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private bool TryCreateNavigationItem(string text, string route, string? data, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
-            if (string.IsNullOrWhiteSpace(data))
+            if (string.IsNullOrWhiteSpace(data) || string.Equals(data, "[]"))
             {
                 return false;
             }
