@@ -143,20 +143,7 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateProfile)}");
 
-                //
-                //Check User Id is exist
-                var res = await _dal.IsExistAsync<User>(GetCollectionName<User>(), userId);
-                //
-                //If Not trough Exception
-                if (res == false)
-                    throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
-
-                //
-                // Checking Profile Is Null or empty
-                if (profile == null)
-                {
-                    throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileIsNullOrEmpty, $"Object Profile is NULL Or Empty");
-                }
+                await ValidateProfile(userId, profile);
 
                 Profile? existingProfile;
 
@@ -171,8 +158,6 @@ namespace Apollo.Api
                     existingProfile = _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profile.Id).Result;
                 }
 
-                
-
                 //
                 //Set ID for different items in a List in case empty or null
                 await CreateOrEnsureIds<CareerInfo>(profile!, profile?.CareerInfos, existingProfile?.CareerInfos);
@@ -184,6 +169,7 @@ namespace Apollo.Api
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfile)}");
+
                 return ids;
             }
             catch (ApolloApiException)
@@ -197,6 +183,24 @@ namespace Apollo.Api
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
                 throw new ApolloApiException(ErrorCodes.ProfileErrors.CreateOrUpdateProfileError, "An error occurred while creating or updating profiles.", ex);
+            }
+        }
+
+        private async Task ValidateProfile(string userId, Profile profile)
+        {
+            // Check User Id is exist
+            var res = await _dal.IsExistAsync<User>(GetCollectionName<User>(), userId);
+
+            //
+            //If Not trough Exception
+            if (res == false)
+                throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
+
+            //
+            // Checking Profile Is Null or empty
+            if (profile == null)
+            {
+                throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileIsNullOrEmpty, $"Object Profile is NULL Or Empty");
             }
         }
 
