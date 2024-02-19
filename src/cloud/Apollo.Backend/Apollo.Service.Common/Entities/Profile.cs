@@ -16,14 +16,9 @@ namespace Apollo.Common.Entities
     /// A user can not restore this information.
     /// So if a user deletes his account and creates a new one he has to fill out the profile again.
     /// </summary>
-    public class Profile
+    public class Profile : ObjectBase
     {
-        /// <summary>
-        /// This is the Unique Identifier set by Apollo for the User.
-        /// Also used as a partition key.
-        /// </summary>
-        public string? Id { get; set; }
-
+      
         /// <summary>
         ///  This is the Professional career information of the User.
         /// </summary>

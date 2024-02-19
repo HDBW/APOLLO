@@ -9,12 +9,9 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Apollo.Common.Entities
 {
-    public class Training
+    public class Training : ObjectBase
     {
-        //[BsonId]
        
-        public string Id { get; set; }
-
         /// <summary>
         /// External Identifier from the Training Providers.
         /// </summary>

@@ -166,11 +166,11 @@ namespace Apollo.Api
 
                 //
                 //Set ID for different items in a List in case empty or null
-                SetIds(profile?.EducationInfos, nameof(Profile.EducationInfos));
-                SetIds(profile?.CareerInfos, nameof(Profile.CareerInfos));
-                SetIds(profile?.Qualifications, nameof(Profile.Qualifications));
-                SetIds(profile?.LanguageSkills, nameof(Profile.LanguageSkills));
-                SetIds(profile?.WebReferences, nameof(Profile.WebReferences));
+                CreateOrEnsureIds(profile?.EducationInfos);
+                CreateOrEnsureIds(profile?.CareerInfos);
+                CreateOrEnsureIds(profile?.Qualifications);
+                CreateOrEnsureIds(profile?.LanguageSkills);
+                CreateOrEnsureIds(profile?.WebReferences);
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
@@ -224,13 +224,12 @@ namespace Apollo.Api
         /// </summary>
         /// <typeparam name="T">The type of objects in the list.</typeparam>
         /// <param name="itemList">The list of objects to check and set IDs for.</param>
-        /// <param name="entityName">The name of the entity for which IDs are being set.</param>
         /// <remarks>
         /// This method iterates through the list of objects, checks if the ID property is already present,
         /// and generates and sets a new ID if necessary. Optionally, you can add logic here to search for
         /// the ID in the database if needed.
         /// </remarks>
-        private async void  SetIds<T>(List<T>? itemList, string propertyName) where T : class
+        private async void  CreateOrEnsureIds<T>(List<T>? itemList) where T : class
         {
             if (itemList != null)
             {
@@ -243,7 +242,7 @@ namespace Apollo.Api
                     // Check if ID is not  present, generate and set an ID
                     if (idValue == null || string.IsNullOrEmpty(idValue.ToString()))
                     {
-                        idProperty?.SetValue(item, CreateId(propertyName));
+                        idProperty?.SetValue(item, CreateListId(nameof(T)));
                     }
                     else
                     {

@@ -9,7 +9,16 @@ using System.Threading.Tasks;
 
 namespace Apollo.Common.Entities
 {
-    internal class ObjectBase
+    /// <summary>
+    /// The base type for all types that are used as collections in the database.
+    /// For example: User, Training, Profile.
+    /// </summary>
+    public class ObjectBase
     {
+    /// <summary>
+    /// This is the Unique Identifier set by Apollo for the object.
+    /// </summary>
+    public string? Id { get; set; }
+
     }
 }

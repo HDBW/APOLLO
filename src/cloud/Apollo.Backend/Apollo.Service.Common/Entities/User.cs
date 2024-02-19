@@ -7,12 +7,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Apollo.Common.Entities
 {
-    public class User
-    {
-        /// <summary>
-        /// This is the Unique Identifier set by Apollo for the User.
-        /// </summary>
-        public string? Id { get; set; }
+    public class User : ObjectBase
+    {      
 
         /// <summary>
         /// This is the Unique Identifier of the User from the Identity Provider.
