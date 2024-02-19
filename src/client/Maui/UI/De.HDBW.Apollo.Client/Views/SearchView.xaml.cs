@@ -12,7 +12,15 @@ public partial class SearchView
     {
         InitializeComponent();
         BindingContext = model;
-        PART_SearchHandler.QueryIcon.Parent = this;
+        if (PART_SearchHandler.QueryIcon != null)
+        {
+            PART_SearchHandler.QueryIcon.Parent = this;
+        }
+
+        if (PART_SearchHandler.ClearIcon != null)
+        {
+            PART_SearchHandler.ClearIcon.Parent = this;
+        }
     }
 
     public SearchView()

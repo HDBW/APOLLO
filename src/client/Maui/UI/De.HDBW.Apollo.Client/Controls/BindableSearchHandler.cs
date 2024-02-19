@@ -4,7 +4,9 @@
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Platforms;
 
@@ -49,12 +51,12 @@ namespace De.HDBW.Apollo.Client.Controls
                 ItemsSource = null;
                 return;
             }
+
             ItemsSource = new ObservableCollection<object>(Recent ?? Array.Empty<object>());
             SearchBoxVisibility = SearchBoxVisibility.Expanded;
             var viewModel = BindingContext as ILoadSuggestionsProvider;
             viewModel?.StartLoadSuggestions(newValue);
         }
-
 
         protected override void OnQueryConfirmed()
         {
@@ -69,7 +71,7 @@ namespace De.HDBW.Apollo.Client.Controls
             }
 
             KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
-
+            WeakReferenceMessenger.Default.Send<HideSearchSuggestionsMessage>(new HideSearchSuggestionsMessage());
             SearchCommand?.Execute(Query);
         }
 
