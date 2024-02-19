@@ -8,10 +8,10 @@ namespace Apollo.Common.Entities
     /// </summary>
     public class Qualification : EntityBase
     {
-        /// <summary>
-        /// Identifier of the item in the list.
-        /// </summary>
-        public string? Id { get; set; }
+        ///// <summary>
+        ///// Identifier of the item in the list.
+        ///// </summary>
+        //public string? Id { get; set; }
 
         // Qualification_Description_filtered.txt
         // FreiText

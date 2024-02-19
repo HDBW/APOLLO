@@ -9,10 +9,10 @@ namespace Apollo.Common.Entities
     /// </summary>
     public class WebReference : EntityBase
     {
-        /// <summary>
-        /// Any string describing the WebReference. Not needed by Backend. It is fully maintained by the caller.
-        /// </summary>
-        public string? Id { get; set; }
+        ///// <summary>
+        ///// Any string describing the WebReference. Not needed by Backend. It is fully maintained by the caller.
+        ///// </summary>
+        //public string? Id { get; set; }
 
         /// <summary>
         /// WebReference_Link_filtered.txt

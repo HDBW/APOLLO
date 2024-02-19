@@ -143,6 +143,16 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateProfile)}");
 
+                //
+                //Check User Id is exist
+                var res = await _dal.IsExistAsync<User>(GetCollectionName<User>(), userId);
+                //
+                //If Not trough Exception
+                if (res == false)
+                    throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
+
+                //
+                // Checking Profile Is Null or empty
                 if (profile == null)
                 {
                     throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileIsNullOrEmpty, $"Object Profile is NULL Or Empty");
@@ -159,21 +169,14 @@ namespace Apollo.Api
                 else
                 {
                     existingProfile = _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profile.Id).Result;
-                 }
+                }
 
-                //
-                //Check User Id is exist
-                var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile?.Id!);
-                //
-                //If Not trough Exception
-                if (res == false)
-                    throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
-
+                
 
                 //
                 //Set ID for different items in a List in case empty or null
-                await CreateOrEnsureIds<EducationInfo>(profile!, profile?.EducationInfos, existingProfile?.EducationInfos);
                 await CreateOrEnsureIds<CareerInfo>(profile!, profile?.CareerInfos, existingProfile?.CareerInfos);
+                await CreateOrEnsureIds<EducationInfo>(profile!, profile?.EducationInfos, existingProfile?.EducationInfos);
                 await CreateOrEnsureIds<Qualification>(profile!, profile?.Qualifications, existingProfile?.Qualifications);
                 await CreateOrEnsureIds<LanguageSkill>(profile!, profile?.LanguageSkills, existingProfile?.LanguageSkills);
                 await CreateOrEnsureIds<WebReference>(profile!, profile?.WebReferences, existingProfile?.WebReferences);
@@ -181,7 +184,6 @@ namespace Apollo.Api
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
                 _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfile)}");
-
                 return ids;
             }
             catch (ApolloApiException)
@@ -235,7 +237,7 @@ namespace Apollo.Api
         /// and generates and sets a new ID if necessary. Optionally, you can add logic here to search for
         /// the ID in the database if needed.
         /// </remarks>
-        private async Task CreateOrEnsureIds<T>(Profile profile, List<T>? updatingItems, List<T>? existingItems) where T : EntityBase
+        private  async Task CreateOrEnsureIds<T>(Profile profile, List<T>? updatingItems, List<T>? existingItems) where T : EntityBase
         {
             if (updatingItems != null)
             {
@@ -261,11 +263,18 @@ namespace Apollo.Api
                         }
                     }       
                 }
-
-                var expandoItems = Convertor.Convert<T>(updatingItems);
-
-                await _dal.UpsertAsync(ApolloApi.GetCollectionName<Profile>(), expandoItems);
+               
+                ////
+                //// In case of new Profile existing items will be null
+                //// So we dont need to perfrom Any Upsert Operation for new Profile Properties
+                //if (existingItems != null)
+                //{
+                //    var expandoItems = Convertor.Convert<T>(updatingItems);
+                //    await _dal.UpsertAsync(ApolloApi.GetCollectionName<Profile>(), expandoItems);
+                //}
+         
             }
+            await Task.CompletedTask;
         }
     }
 }

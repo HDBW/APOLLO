@@ -14,13 +14,13 @@ namespace Apollo.Common.Entities
     /// It is only the entry point for a taxonomy. It has no information about the graph complexity behind it other then the concept it relates to. 
     /// </summary>
     [DataContract]
-    public class Skill
+    public class Skill:EntityBase
     {
 
-        /// <summary>
-        /// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
-        /// </summary>
-        public string Id { get; set; }
+        ///// <summary>
+        ///// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
+        ///// </summary>
+        //public string Id { get; set; }
 
         public string Identifier { get; set; }
         public string UniqueIdentifier { get; set; }

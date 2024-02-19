@@ -5,10 +5,10 @@ namespace Apollo.Common.Entities
 {
     public class CareerInfo : EntityBase
     {
-        /// <summary>
-        /// Any string describing the CareerInfo. Not needed by Backend. It is fully maintained by the caller.
-        /// </summary>
-        public string? Id { get; set; }
+        ///// <summary>
+        ///// Any string describing the CareerInfo. Not needed by Backend. It is fully maintained by the caller.
+        ///// </summary>
+        //public string? Id { get; set; }
 
         /// <summary>
         /// Start date of the Experience

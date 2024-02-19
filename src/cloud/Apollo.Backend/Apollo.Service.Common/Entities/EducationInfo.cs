@@ -57,10 +57,10 @@ namespace Apollo.Common.Entities
     /// </remarks>
     public class EducationInfo : EntityBase
     {
-        /// <summary>
-        /// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
-        /// </summary>
-        public string Id { get; set; }
+        ///// <summary>
+        ///// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
+        ///// </summary>
+        //public string Id { get; set; }
 
         /// <summary>
         /// Start Date of the education

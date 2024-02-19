@@ -12,10 +12,10 @@ namespace Apollo.Common.Entities
     public class LanguageSkill : EntityBase
     {
 
-        /// <summary>
-        /// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
-        /// </summary>
-        public string Id { get; set; }
+        ///// <summary>
+        ///// Any string describing the EducationInfo. Not needed by Backend. It is fully maintained by the caller.
+        ///// </summary>
+        //public string Id { get; set; }
 
         public string Name { get; set; }
 
