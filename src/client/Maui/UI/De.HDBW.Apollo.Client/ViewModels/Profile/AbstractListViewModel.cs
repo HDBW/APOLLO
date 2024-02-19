@@ -45,6 +45,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected User? User { get; set; }
 
+        protected bool IsShowingDialog { get; set; }
+
         protected override void RefreshCommands()
         {
             AddCommand?.NotifyCanExecuteChanged();

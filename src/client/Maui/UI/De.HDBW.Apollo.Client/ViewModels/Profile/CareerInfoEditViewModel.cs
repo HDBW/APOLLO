@@ -30,6 +30,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         public override async Task OnNavigatedToAsync()
         {
+            if (IsShowingDialog)
+            {
+                return;
+            }
+
             using (var worker = ScheduleWork())
             {
                 try
@@ -76,6 +81,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
+                    IsShowingDialog = true;
+
                     var parameters = new NavigationParameters();
                     parameters.Add(NavigationParameter.Data, CareerType.WorkExperience);
                     var result = await DialogService.ShowPopupAsync<SelectOptionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
@@ -146,6 +153,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 }
                 finally
                 {
+                    IsShowingDialog = false;
                     UnscheduleWork(worker);
                 }
             }
