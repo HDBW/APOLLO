@@ -709,6 +709,23 @@
         <Setter Property="StrokeThickness" Value="0" />
     </Style>
 
+    <Style x:Key="HeaderExpandedFrameBorder" TargetType="Border" BasedOn="{StaticResource FrameBorder}">
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8,8,0,0" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="ContentFrameBorder" TargetType="Border" BasedOn="{StaticResource FrameBorder}">
+        <Setter Property="Padding" Value="12,4,12,12" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="0,0,8,8" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ContentViewListContent" TargetType="ContentView">
         <Setter Property="BackgroundColor" Value="{StaticResource Neutral500}" />
     </Style>

@@ -14,14 +14,14 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="HeaderItemTemplate" x:DataType="trainingsModels:HeaderItem">
-            <VerticalStackLayout Spacing="16" Margin="24,0">
-                <VerticalStackLayout>
-                    <Label Text="{x:Binding TrainingName}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}"/>
+            <VerticalStackLayout Spacing="16">
+                <VerticalStackLayout Margin="24,0">
+                    <Label Text="{x:Binding TrainingName}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
                     <Label Text="{x:Binding SubTitle}" Style="{StaticResource Noto16SemiBold}" IsVisible="{Binding HasSubTitle}"/>
                 </VerticalStackLayout>
                 <Grid>
                     <Image Source="{x:Binding ImagePath}" MaximumHeightRequest="200" Aspect="AspectFill" IsVisible="{x:Binding HasImage}"/>
-                    <Border VerticalOptions="End" HorizontalOptions="Start" Background="{StaticResource Primary}" Padding="16,8">
+                    <Border VerticalOptions="End" HorizontalOptions="Start" Background="{StaticResource Primary}" Padding="24,8" StrokeThickness="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="0,8,0,0" />
                         </Border.StrokeShape>
@@ -31,7 +31,7 @@
                         </HorizontalStackLayout>
                     </Border>
                 </Grid>
-                <VerticalStackLayout IsVisible="{x:Binding HasModes}">
+                <VerticalStackLayout IsVisible="{x:Binding HasModes}" Margin="24,0">
                     <Label Text="{x:Static strings:Resources.Global_TrainingMode}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
                     <FlexLayout BindableLayout.ItemsSource="{x:Binding Modes}" Wrap="Wrap" Direction="Row" JustifyContent="Start">
                         <BindableLayout.ItemTemplate>
@@ -41,11 +41,11 @@
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
                 </VerticalStackLayout>
-                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable}">
+                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable}" Margin="24,0">
                     <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
                 </Grid>
-                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate}">
+                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate}" Margin="24,0">
                     <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Watch}" Margin="0,0,8,0" VerticalOptions="Center"/>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding IndividualStartDate}" />
                 </Grid>
@@ -57,57 +57,75 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandableListItemTemplate" x:DataType="trainingsModels:ExpandableListItem">
-            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand}" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="*, auto">
-                    <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                    <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
-                        <Image.Triggers>
-                            <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
-                                <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
-                            </DataTrigger>
-                        </Image.Triggers>
-                    </Image>
-                </Grid>
+            <Border StrokeThickness="0">
+                <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{x:Binding IsExpanded}" Value="True">
+                            <Setter Property="Style" Value="{StaticResource HeaderExpandedFrameBorder}"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="*, auto">
+                        <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                        <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
+                                    <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                </Border>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandableItemTemplate" x:DataType="trainingsModels:ExpandableItem">
-            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand}" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="*, auto">
-                    <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                    <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
-                        <Image.Triggers>
-                            <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
-                                <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
-                                <!-- Multiple Setter elements are allowed -->
-                            </DataTrigger>
-                        </Image.Triggers>
-                    </Image>
-                </Grid>
+            <Border StrokeThickness="0">
+                <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{x:Binding IsExpanded}" Value="True">
+                            <Setter Property="Style" Value="{StaticResource HeaderExpandedFrameBorder}"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="*, auto">
+                        <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                        <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
+                                    <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
+                                    <!-- Multiple Setter elements are allowed -->
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                </Border>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandedItemContentTemplate" x:DataType="trainingsModels:ExpandedItemContent">
-            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-               <Label TextType="Html" Text="{x:Binding Content}" />
+            <Border StrokeThickness="0">
+                <Border Style="{StaticResource ContentFrameBorder}" Margin="24,0">
+                    <Label TextType="Html" Text="{x:Binding Content}" />
+                </Border>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandedListContentTemplate" x:DataType="trainingsModels:ExpandedListContent">
-            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-                <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Content}" Spacing="8">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="system:String">
-                            <Label TextType="Html" Text="{x:Binding}" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </VerticalStackLayout>
+            <Border StrokeThickness="0">
+                <Border Style="{StaticResource ContentFrameBorder}" Margin="24,0">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Content}" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="system:String">
+                                <Label TextType="Html" Text="{x:Binding}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
             </Border>
         </DataTemplate>
         
@@ -117,7 +135,12 @@
                 <FlexLayout BindableLayout.ItemsSource="{x:Binding Items}" Wrap="Wrap" Direction="Row" JustifyContent="Start" Margin="24,0">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="system:String">
-                            <Label Text="{x:Binding}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4" VerticalOptions="Start"/>
+                            <Border StrokeThickness="0" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4" VerticalOptions="Start">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="2" />
+                                </Border.StrokeShape>
+                                <Label Text="{x:Binding}" Style="{StaticResource Noto14SemiBold}"/>
+                            </Border>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
@@ -125,74 +148,86 @@
         </DataTemplate>
 
         <DataTemplate x:Key="AppointmentItemTemplate" x:DataType="trainingsModels:AppointmentItem">
-            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items}" Margin="24,0">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="system:String">
-                        <Label Text="{x:Binding}" Padding="8,4" />
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
+            <Border StrokeThickness="0">
+                <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items}" Margin="24,0">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="system:String">
+                            <Label Text="{x:Binding}" Padding="8,4" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
-            <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
-                <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
-                <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0"/>
-            </Grid>
+            <Border StrokeThickness="0">
+                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
+                    <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0"/>
+                </Grid>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="InteractiveLineItemTemplate" x:DataType="trainingsModels:InteractiveLineItem">
-            <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5" Background="Transparent">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{x:Binding InteractCommand}" />
-                </Grid.GestureRecognizers>
-                <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
-                <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
-            </Grid>
+            <Border StrokeThickness="0">
+                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5" Background="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding InteractCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
+                </Grid>
+            </Border>
         </DataTemplate>
 
         <selector:LineItemTemplateSelector x:Key="LineItemTemplateSelector"
                                            DefaultTemplate="{StaticResource LineItemTemplate}"
                                            InteractiveLineItemTemplate="{StaticResource InteractiveLineItemTemplate}" />
 
-        
+
         <DataTemplate x:Key="ContactListItemTemplate" x:DataType="trainingsModels:ContactListItem">
-            <Grid RowDefinitions="auto, auto, auto" Margin="24,0">
-                <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
-                <CarouselView Grid.Row="1"
+            <Border StrokeThickness="0">
+                <Grid RowDefinitions="auto, auto, auto" Margin="24,0">
+                    <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
+                    <CarouselView Grid.Row="1"
                               ItemsSource="{x:Binding Items}"
                               IndicatorView="indicatorView"
                               x:Name="PART_Animation">
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate x:DataType="trainingsModels:ContactItem">
-                            <VerticalStackLayout
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="trainingsModels:ContactItem">
+                                <VerticalStackLayout
                                 BindableLayout.ItemsSource="{x:Binding Items}"
                                 Spacing="8"
                                 BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}" />
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
-                <IndicatorView Grid.Row="2" x:Name="indicatorView" Margin="24,8,24,8"/>
-            </Grid>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView Grid.Row="2" x:Name="indicatorView" Margin="24,8,24,8"/>
+                </Grid>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="ContactItemTemplate" x:DataType="trainingsModels:ContactItem">
-            <Grid RowDefinitions="auto, auto" Margin="24,0">
-                <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
-                <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8"
+            <Border StrokeThickness="0">
+                <Grid RowDefinitions="auto, auto" Margin="24,0">
+                    <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
+                    <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8"
                                      BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
-            </Grid>
+                </Grid>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="NavigationItemTemplate" x:DataType="trainingsModels:NavigationItem">
-            <Border Style="{StaticResource FrameBorder}" Margin="24,0">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{x:Binding NavigateCommand}" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="*, auto">
-                    <Label Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                    <Image Grid.Column="1" Source="{x:Static models:KnonwIcons.ChevronLink}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="End" />
-                </Grid>
+            <Border StrokeThickness="0">
+                <Border Style="{StaticResource FrameBorder}" Margin="24,0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding NavigateCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="*, auto">
+                        <Label Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                        <Image Grid.Column="1" Source="{x:Static models:KnonwIcons.ChevronLink}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="End" />
+                    </Grid>
+                </Border>
             </Border>
         </DataTemplate>
 

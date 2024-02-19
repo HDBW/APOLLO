@@ -18,7 +18,6 @@
             QueryIcon="magnify.png"
             x:Name="PART_SearchHandler"
             TextColor="{StaticResource Primary}"
-            ClearIcon="searchclear.png"
             Placeholder="{x:Static strings:Resources.SearchView_Title}" 
             PlaceholderColor="{StaticResource Primary300}"
             BackgroundColor="{StaticResource White}"
