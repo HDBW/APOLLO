@@ -1348,4 +1348,19 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="LoansView_Title" xml:space="preserve">
     <value>Finanzierungsoptionen</value>
   </data>
+  <data name="AppointmentsView_Title" xml:space="preserve">
+    <value>Termine</value>
+  </data>
+  <data name="TimeModel_Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="TimeModel_Fulltime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="TimeModel_Parttime" xml:space="preserve">
+    <value>Teilzeit</value>
+  </data>
+  <data name="Global_Location" xml:space="preserve">
+    <value>Ort</value>
+  </data>
 </root>

@@ -61,6 +61,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Termine.
+        /// </summary>
+        public static string AppointmentsView_Title {
+            get {
+                return ResourceManager.GetString("AppointmentsView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to *Kann nur einmalig ausgeführt werden.
         /// </summary>
         public static string AssessmentDescriptionView_OnlyOnce {
@@ -1418,6 +1427,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_LanguageNiveau {
             get {
                 return ResourceManager.GetString("Global_LanguageNiveau", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ort.
+        /// </summary>
+        public static string Global_Location {
+            get {
+                return ResourceManager.GetString("Global_Location", resourceCulture);
             }
         }
         
@@ -2877,6 +2895,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string StartViewModel_UseCaseC_RecomondationsHeadline {
             get {
                 return ResourceManager.GetString("StartViewModel_UseCaseC_RecomondationsHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block.
+        /// </summary>
+        public static string TimeModel_Block {
+            get {
+                return ResourceManager.GetString("TimeModel_Block", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vollzeit.
+        /// </summary>
+        public static string TimeModel_Fulltime {
+            get {
+                return ResourceManager.GetString("TimeModel_Fulltime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teilzeit.
+        /// </summary>
+        public static string TimeModel_Parttime {
+            get {
+                return ResourceManager.GetString("TimeModel_Parttime", resourceCulture);
             }
         }
         
