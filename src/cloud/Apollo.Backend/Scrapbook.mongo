@@ -16,7 +16,7 @@ db.lists.find()
 
 db.lists.find({"ItemType": "TestListType1"})
 
-db.lists.find({"ItemType": "TestListType1", "Items.Lng": "ENw"})
+db.lists.find({"ItemType": "License", "Items.Lng": "de-de"})
 
 db.lists.aggregate([
   {

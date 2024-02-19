@@ -3,7 +3,7 @@
 
 namespace Apollo.Common.Entities
 {
-    public class CareerInfo
+    public class CareerInfo : EntityBase
     {
         /// <summary>
         /// Any string describing the CareerInfo. Not needed by Backend. It is fully maintained by the caller.

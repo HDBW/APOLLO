@@ -138,7 +138,7 @@ namespace Apollo.Api
         {
             try
             {
-                
+
                 List<string> ids = new List<string>();
 
                 _logger?.LogTrace($"Entered {nameof(CreateOrUpdateProfile)}");
@@ -148,29 +148,35 @@ namespace Apollo.Api
                     throw new ApolloApiException(ErrorCodes.ProfileErrors.ProfileIsNullOrEmpty, $"Object Profile is NULL Or Empty");
                 }
 
+                Profile? existingProfile;
+
                 // Generate a unique profile ID if it's not provided
                 if (String.IsNullOrEmpty(profile.Id))
                 {
                     profile.Id = CreateProfileId(userId);
+                    existingProfile = null;
                 }
                 else
                 {
-                    //
-                    //Check User Id is exist
-                    var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile?.Id!);
-                    //
-                    //If Not trough Exception
-                    if (res == false)
-                        throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
-                }
+                    existingProfile = _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profile.Id).Result;
+                 }
+
+                //
+                //Check User Id is exist
+                var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile?.Id!);
+                //
+                //If Not trough Exception
+                if (res == false)
+                    throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
+
 
                 //
                 //Set ID for different items in a List in case empty or null
-                CreateOrEnsureIds(profile?.EducationInfos);
-                CreateOrEnsureIds(profile?.CareerInfos);
-                CreateOrEnsureIds(profile?.Qualifications);
-                CreateOrEnsureIds(profile?.LanguageSkills);
-                CreateOrEnsureIds(profile?.WebReferences);
+                await CreateOrEnsureIds<EducationInfo>(profile!, profile?.EducationInfos, existingProfile?.EducationInfos);
+                await CreateOrEnsureIds<CareerInfo>(profile!, profile?.CareerInfos, existingProfile?.CareerInfos);
+                await CreateOrEnsureIds<Qualification>(profile!, profile?.Qualifications, existingProfile?.Qualifications);
+                await CreateOrEnsureIds<LanguageSkill>(profile!, profile?.LanguageSkills, existingProfile?.LanguageSkills);
+                await CreateOrEnsureIds<WebReference>(profile!, profile?.WebReferences, existingProfile?.WebReferences);
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
@@ -223,47 +229,43 @@ namespace Apollo.Api
         /// Generic method to ensure that objects in a list have unique IDs.
         /// </summary>
         /// <typeparam name="T">The type of objects in the list.</typeparam>
-        /// <param name="itemList">The list of objects to check and set IDs for.</param>
+        /// <param name="updatingItems">The list of objects to check and set IDs for.</param>
         /// <remarks>
         /// This method iterates through the list of objects, checks if the ID property is already present,
         /// and generates and sets a new ID if necessary. Optionally, you can add logic here to search for
         /// the ID in the database if needed.
         /// </remarks>
-        private async void  CreateOrEnsureIds<T>(List<T>? itemList) where T : class
+        private async Task CreateOrEnsureIds<T>(Profile profile, List<T>? updatingItems, List<T>? existingItems) where T : EntityBase
         {
-            if (itemList != null)
+            if (updatingItems != null)
             {
-                foreach (var item in itemList)
+                foreach (var item in updatingItems)
                 {
-                    var idProperty = typeof(T).GetProperty("Id");
-                    var idValue = idProperty?.GetValue(item);
-
                     //
                     // Check if ID is not  present, generate and set an ID
-                    if (idValue == null || string.IsNullOrEmpty(idValue.ToString()))
+                    if (String.IsNullOrEmpty(item.Id))
                     {
-                        idProperty?.SetValue(item, CreateListId(nameof(T)));
+                        item.Id = CreateListId(nameof(T));
                     }
                     else
                     {
-
-                        //
-                        //TODO:Need to Plan with Damir
-                        // ID is provided, check if it exists in the database
-                        // var doesIdExist = await _dal.IsExistAsync<Profile>("profile", idValue.ToString());
-
-                        //if (!doesIdExist)
-                        //{
-                        //    throw new ApolloApiException(
-                        //        ErrorCodes.ProfileErrors.ListItemNotfound,
-                        //        $"Item not found with ID {idValue.ToString()} for property {propertyName}");
-                        //}
-
-                    }
-
+                        if (existingItems == null || existingItems?.FirstOrDefault(eI => eI.Id == item.Id) == null)
+                        {
+                            throw new ApolloApiException(
+                                ErrorCodes.ProfileErrors.ListItemNotfound,
+                                $"Item not found with ID {item.Id} for property {nameof(T)}");
+                        }
+                        else
+                        {
+                            // nothing to do.
+                        }
+                    }       
                 }
+
+                var expandoItems = Convertor.Convert<T>(updatingItems);
+
+                await _dal.UpsertAsync(ApolloApi.GetCollectionName<Profile>(), expandoItems);
             }
         }
-
     }
 }

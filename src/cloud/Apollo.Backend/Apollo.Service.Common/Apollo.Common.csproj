@@ -7,15 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\EntityBase.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Entities\EntityBase.cs" />
   </ItemGroup>
 
   <ItemGroup>

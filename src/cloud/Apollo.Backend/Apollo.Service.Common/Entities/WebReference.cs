@@ -7,7 +7,7 @@ namespace Apollo.Common.Entities
     /// This is used to store Professional career information from different platforms of the User.
     /// Maybe we can integrate and automate that process in the future.
     /// </summary>
-    public class WebReference
+    public class WebReference : EntityBase
     {
         /// <summary>
         /// Any string describing the WebReference. Not needed by Backend. It is fully maintained by the caller.
