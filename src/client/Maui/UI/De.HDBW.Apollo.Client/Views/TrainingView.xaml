@@ -7,7 +7,6 @@
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:trainingsModels="clr-namespace:De.HDBW.Apollo.Client.Models.Training"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
-             xmlns:courseModels="clr-namespace:De.HDBW.Apollo.Client.Models.Course"
              x:DataType="viewModels:TrainingViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.TrainingsView_Title}"
