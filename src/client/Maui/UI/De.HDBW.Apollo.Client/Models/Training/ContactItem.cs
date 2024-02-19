@@ -16,7 +16,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
 
         private Contact _contact;
 
-        private ContactItem(
+        protected ContactItem(
             string? header,
             Contact contact,
             Func<string?, CancellationToken, Task>? openMailHandler,

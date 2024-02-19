@@ -11,8 +11,9 @@ using De.HDBW.Apollo.Client.ViewModels.PropertyEditors;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Course;
-using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
+using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
+
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -63,10 +64,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var providers = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     providers = providers ?? Array.Empty<EduProviderItem>();
                     var editableProperties = new List<string>();
-                    editableProperties.Add(nameof(Training.TrainingType));
-                    editableProperties.Add(nameof(Training.CourseProvider));
-                    editableProperties.Add(nameof(Training.CourseProvider));
-                    editableProperties.Add(nameof(Training.Price));
+                    editableProperties.Add(nameof(TrainingModel.TrainingType));
+                    editableProperties.Add(nameof(TrainingModel.CourseProvider));
+                    editableProperties.Add(nameof(TrainingModel.CourseProvider));
+                    editableProperties.Add(nameof(TrainingModel.Price));
 
                     var courseTypes = new List<PickerValue>()
                     {

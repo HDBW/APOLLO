@@ -14,6 +14,7 @@ using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -266,26 +267,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
             token.ThrowIfCancellationRequested();
             var visibleFields = new List<string>()
                     {
-                        nameof(Training.Id),
-                        nameof(Training.TrainingName),
-                        nameof(Training.TrainingType),
-                        nameof(Training.ShortDescription),
-                        nameof(Training.Price),
-                        $"{nameof(Training.TrainingProvider)}.{nameof(EduProvider.Name)}",
-                        $"{nameof(Training.TrainingProvider)}.{nameof(EduProvider.Image)}",
-                        $"{nameof(Training.CourseProvider)}.{nameof(EduProvider.Name)}",
-                        $"{nameof(Training.CourseProvider)}.{nameof(EduProvider.Image)}",
+                        nameof(TrainingModel.Id),
+                        nameof(TrainingModel.TrainingName),
+                        nameof(TrainingModel.TrainingType),
+                        nameof(TrainingModel.ShortDescription),
+                        nameof(TrainingModel.Price),
+                        $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Name)}",
+                        $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Image)}",
+                        $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Name)}",
+                        $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Image)}",
                     };
 
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
-            items = items ?? new List<Training>();
+            items = items ?? new List<TrainingModel>();
             var result = new List<SearchInteractionEntry>();
             result.AddRange(CreateTrainingResults(items));
 
             return result;
         }
 
-        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<Training> items)
+        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items)
         {
             var trainings = new List<SearchInteractionEntry>();
             foreach (var item in items)
@@ -363,7 +364,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             token.ThrowIfCancellationRequested();
             UpdateTrainingsFilter(inputValue);
-            var suggestions = inputValue?.Length >= 2 ? await TrainingService.SearchSuggesionsAsync(Filter, null, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<Training>();
+            var suggestions = inputValue?.Length >= 2 ? await TrainingService.SearchSuggesionsAsync(Filter, null, _maxSugestionItemsCount, token).ConfigureAwait(false) : Array.Empty<TrainingModel>();
             var recents = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, inputValue, token).ConfigureAwait(false);
             if (!(recents?.Any() ?? false))
             {
@@ -371,7 +372,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             recents = recents ?? Array.Empty<SearchHistory>();
-            suggestions = suggestions.Take(_maxSugestionItemsCount) ?? Array.Empty<Training>();
+            suggestions = suggestions.Take(_maxSugestionItemsCount) ?? Array.Empty<TrainingModel>();
             var courses = suggestions.Where(x => !string.IsNullOrWhiteSpace(x.TrainingName)).Select(x => SearchSuggestionEntry.Import(x.TrainingName)).ToList();
             var history = recents.Take(Math.Max(_maxHistoryItemsCount - courses.Count, 0)).Select(x => HistoricalSuggestionEntry.Import(x)).ToList();
             await ExecuteOnUIThreadAsync(
@@ -389,11 +390,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private Filter CreateDefaultTrainingsFilter(string query)
         {
-            var filter = Filter.CreateQuery(nameof(Training.TrainingName), new List<object>() { query }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.Description), new List<object>() { query }, QueryOperator.Contains);
-            filter.AddExpression(nameof(Training.ShortDescription), new List<object>() { query }, QueryOperator.Contains);
-            filter.AddExpression($"{nameof(Training.TrainingProvider)}.{nameof(EduProvider.Name)}", new List<object>() { query }, QueryOperator.Contains);
-            filter.AddExpression($"{nameof(Training.CourseProvider)}.{nameof(EduProvider.Name)}", new List<object>() { query }, QueryOperator.Contains);
+            var filter = Filter.CreateQuery(nameof(TrainingModel.TrainingName), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression(nameof(TrainingModel.Description), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression(nameof(TrainingModel.ShortDescription), new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression($"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Name)}", new List<object>() { query }, QueryOperator.Contains);
+            filter.AddExpression($"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Name)}", new List<object>() { query }, QueryOperator.Contains);
             filter.IsOrOperator = true;
             return filter;
         }

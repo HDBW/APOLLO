@@ -17,6 +17,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
+using De.HDBW.Apollo.Client.ViewModels.Training;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
@@ -25,6 +26,7 @@ using De.HDBW.Apollo.Client.Views.Profile.Language;
 using De.HDBW.Apollo.Client.Views.Profile.License;
 using De.HDBW.Apollo.Client.Views.Profile.Qualification;
 using De.HDBW.Apollo.Client.Views.Profile.WebReference;
+using De.HDBW.Apollo.Client.Views.Training;
 using De.HDBW.Apollo.Data;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
@@ -331,6 +333,9 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<TrainingView>();
             services.AddTransient<TrainingViewModel>();
 
+            services.AddTransient<LoansView>();
+            services.AddTransient<LoansViewModel>();
+
             services.AddTransient<SettingsView>();
             services.AddTransient<SettingsViewModel>();
 
@@ -432,8 +437,10 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
             Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
             Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
-            Routing.RegisterRoute(Routes.TrainingView, typeof(TrainingView));
             Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
+
+            Routing.RegisterRoute(Routes.TrainingView, typeof(TrainingView));
+            Routing.RegisterRoute(Routes.LoansView, typeof(LoansView));
 
             Routing.RegisterRoute(Routes.ProfileView, typeof(ProfileView));
             Routing.RegisterRoute(Routes.PersonalInformationEditView, typeof(PersonalInformationEditView));

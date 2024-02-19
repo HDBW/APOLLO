@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -12,6 +13,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 using Contact = Invite.Apollo.App.Graph.Common.Models.Contact;
+using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -29,7 +31,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
-        private Training? _training;
+        private TrainingModel? _training;
 
         public TrainingViewModel(
             IDispatcherService dispatcherService,
@@ -79,7 +81,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject description))
+                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject? description))
                         {
                             if (addedItem)
                             {
@@ -91,7 +93,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject tags))
+                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject? tags))
                         {
                             if (addedItem)
                             {
@@ -103,7 +105,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Categories, training.Categories, out ObservableObject categories))
+                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Categories, training.Categories, out ObservableObject? categories))
                         {
                             if (addedItem)
                             {
@@ -115,7 +117,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_TargetAudience, training.TargetAudience, out ObservableObject targetAudience))
+                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_TargetAudience, training.TargetAudience, out ObservableObject? targetAudience))
                         {
                             if (addedItem)
                             {
@@ -127,7 +129,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_PreRequisites, training.Prerequisites, out ObservableObject prerequisites))
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_PreRequisites, training.Prerequisites, out ObservableObject? prerequisites))
                         {
                             if (addedItem)
                             {
@@ -139,7 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Contents, training.Content, out ObservableObject contents))
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Contents, training.Content, out ObservableObject? contents))
                         {
                             if (addedItem)
                             {
@@ -151,7 +153,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Benefits, training.BenefitList, out ObservableObject benefits))
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Benefits, training.BenefitList, out ObservableObject? benefits))
                         {
                             if (addedItem)
                             {
@@ -163,7 +165,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Certificates, training.Certificate, out ObservableObject certificates))
+                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Certificates, training.Certificate, out ObservableObject? certificates))
                         {
                             if (addedItem)
                             {
@@ -175,7 +177,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_LoanOptions, Routes.LoansView, training.Loans?.Serialize(), out ObservableObject loans))
+                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_LoanOptions, Routes.LoansView, training.Loans?.Serialize(), out ObservableObject? loans))
                         {
                             if (addedItem)
                             {
@@ -187,7 +189,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateContactListItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject contacts))
+                        if (TryCreateContactListItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject? contacts))
                         {
                             if (addedItem)
                             {
@@ -199,7 +201,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateContactItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject contact))
+                        if (TryCreateContactItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject? contact))
                         {
                             if (addedItem)
                             {
@@ -211,7 +213,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             addedItem = true;
                         }
 
-                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_Appointment, Routes.AppointmentsView, training.Appointment?.Serialize(), out ObservableObject appointment))
+                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_Appointment, Routes.AppointmentsView, training.Appointment?.Serialize(), out ObservableObject? appointment))
                         {
                             if (addedItem)
                             {
@@ -222,36 +224,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             sections.Add(appointment);
                             addedItem = true;
                         }
-
-                        //foreach (var appointment in training.Appointment ?? new List<Appointment>())
-                        //{
-                        //    if (TryCreateAppointmentItem(appointment, out ObservableObject item))
-                        //    {
-                        //        sections.Add(item);
-                        //    }
-                        //}
                     }
-
-                    //if (training?.TrainingMode == TrainingMode.Online)
-                    //{
-                    //    Location = Resources.Strings.Resources.Global_Location_Online;
-                    //}
-                    //else
-                    //{
-                    //    var hasSet = new HashSet<string?>();
-                    //    foreach (var appointment in training?.Appointment ?? new List<Appointment>())
-                    //    {
-                    //        hasSet.Add(appointment.AppointmentLocation?.City);
-                    //        foreach (var occurence in appointment.Occurences)
-                    //        {
-                    //            hasSet.Add(occurence?.Location?.City);
-                    //        }
-                    //    }
-
-                    //    Location = string.Join(",", hasSet.Where(x => !string.IsNullOrWhiteSpace(x)));
-                    //}
-
-                    //Duration = training?.Appointment[0].DurationDescription
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections), worker.Token).ConfigureAwait(false);
                 }
@@ -287,7 +260,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private void LoadonUIThread(
-            Training? training, List<ObservableObject> sections)
+            TrainingModel? training, List<ObservableObject> sections)
         {
             _training = training;
             ProductUrl = _training?.ProductUrl;
@@ -437,7 +410,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy && !string.IsNullOrWhiteSpace(phoneNumber) && PhoneDialer.Default.IsSupported;
         }
 
-        private bool TryCreateContactListItem(string headline, List<Contact>? contacts, out ObservableObject item)
+        private bool TryCreateContactListItem(string headline, List<Contact>? contacts, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             if (contacts == null || contacts.Count() < 2)
@@ -455,7 +428,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateContactItem(string headline, List<Contact>? contacts, out ObservableObject item)
+        private bool TryCreateContactItem(string headline, List<Contact>? contacts, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             if (contacts == null || contacts.Count() != 1)
@@ -473,7 +446,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateExpandableListItem(string headline, IEnumerable<string>? content, out ObservableObject item)
+        private bool TryCreateExpandableListItem(string headline, IEnumerable<string>? content, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             if (!(content?.Any() ?? false))
@@ -493,7 +466,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateTagItem(string? headline, List<string>? tags, out ObservableObject item)
+        private bool TryCreateTagItem(string? headline, List<string>? tags, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             if (!(tags?.Any() ?? false))
@@ -505,7 +478,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateExpandableItem(string headline, string? content, out ObservableObject item)
+        private bool TryCreateExpandableItem(string headline, string? content, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             if (string.IsNullOrWhiteSpace(content))
@@ -517,7 +490,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateHeader(Training training, out ObservableObject item)
+        private bool TryCreateHeader(TrainingModel training, out ObservableObject item)
         {
             var eduProvider = training.TrainingProvider;
             if (string.IsNullOrWhiteSpace(eduProvider?.Name))
@@ -539,7 +512,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateNavigationItem(string text, string route, string? data, out ObservableObject item)
+        private bool TryCreateNavigationItem(string text, string route, string? data, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             if (string.IsNullOrWhiteSpace(data))

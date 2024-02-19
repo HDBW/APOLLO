@@ -1961,6 +1961,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finanzierungsoptionen.
+        /// </summary>
+        public static string LoansView_Title {
+            get {
+                return ResourceManager.GetString("LoansView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zukünftig werden dir hier weitere Funktionen zur Verfügung stehen.
         /// </summary>
         public static string MainNavigation_BetaDescription {

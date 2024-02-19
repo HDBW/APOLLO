@@ -28,5 +28,7 @@ namespace De.HDBW.Apollo.Client.Models
         public const string Accessibility = "accessibility.png";
 
         public const string Watch = "watch.png";
+
+        public const string Web = "web.png";
     }
 }

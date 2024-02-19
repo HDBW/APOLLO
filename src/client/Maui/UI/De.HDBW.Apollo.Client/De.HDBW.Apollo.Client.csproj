@@ -138,6 +138,7 @@
     <None Remove="Resources\Images\user2.svg" />
     <None Remove="Resources\Images\user3.svg" />
     <None Remove="Resources\Images\watch.svg" />
+    <None Remove="Resources\Images\web.svg" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
@@ -284,6 +285,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Training\LoansView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\UseCaseSelectionView.xaml">
