@@ -161,16 +161,16 @@ namespace Apollo.Common.Entities
         //TODO: This should be set on Insert or Update of the Element in the DAL
         // The desired Format is: DateTime.Now.Ticks.ToString();
         // This way the client can check if the Training has been updated since the last time he checked
-        public string? ChangedAt { get; set; }
+        //public string? ChangedAt { get; set; }
 
-        // This way the client can check if the Training has been updated since the last time he checked
-        public string? CreatedAt { get; set; }
+        //// This way the client can check if the Training has been updated since the last time he checked
+        //public string? CreatedAt { get; set; }
 
-        // This way the client can check if the Training has been updated since the last time he checked
-        public string? ChangedBy { get; set; }
+        //// This way the client can check if the Training has been updated since the last time he checked
+        //public string? ChangedBy { get; set; }
 
-        // This way the client can check if the Training has been updated since the last time he checked
-        public string? CreatedBy { get; set; }
+        //// This way the client can check if the Training has been updated since the last time he checked
+        //public string? CreatedBy { get; set; }
         #endregion
 
 
