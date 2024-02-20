@@ -59,6 +59,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ITrainingService TrainingService { get; }
 
+        public override Task OnNavigatingFromAsync()
+        {
+            Sections.Clear();
+            return base.OnNavigatingFromAsync();
+        }
+
         public async override Task OnNavigatedToAsync()
         {
             if (string.IsNullOrWhiteSpace(_trainingId) || _training != null)
@@ -70,163 +76,167 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var training = await TrainingService.GetTrainingAsync(_trainingId!, worker.Token).ConfigureAwait(false);
-                    var sections = new List<ObservableObject>();
-                    var addedItem = false;
-                    if (training != null)
+                    await Task.Run(
+                        async () =>
                     {
-                        if (TryCreateHeader(training, out ObservableObject header))
+                        var training = await TrainingService.GetTrainingAsync(_trainingId!, worker.Token).ConfigureAwait(false);
+                        var sections = new List<ObservableObject>();
+                        var addedItem = false;
+                        if (training != null)
                         {
-                            sections.Add(header);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject? description))
-                        {
-                            if (addedItem)
+                            if (TryCreateHeader(training, out ObservableObject header))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                sections.Add(header);
+                                addedItem = true;
                             }
 
-                            sections.Add(description);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject? tags))
-                        {
-                            if (addedItem)
+                            if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject? description))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(description);
+                                addedItem = true;
                             }
 
-                            sections.Add(tags);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateTagItem(Resources.Strings.Resources.Global_Categories, training.Categories, out ObservableObject? categories))
-                        {
-                            if (addedItem)
+                            if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject? tags))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(tags);
+                                addedItem = true;
                             }
 
-                            sections.Add(categories);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateExpandableItem(Resources.Strings.Resources.Global_TargetAudience, training.TargetAudience, out ObservableObject? targetAudience))
-                        {
-                            if (addedItem)
+                            if (TryCreateTagItem(Resources.Strings.Resources.Global_Categories, training.Categories, out ObservableObject? categories))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(categories);
+                                addedItem = true;
                             }
 
-                            sections.Add(targetAudience);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_PreRequisites, training.Prerequisites, out ObservableObject? prerequisites))
-                        {
-                            if (addedItem)
+                            if (TryCreateExpandableItem(Resources.Strings.Resources.Global_TargetAudience, training.TargetAudience, out ObservableObject? targetAudience))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(targetAudience);
+                                addedItem = true;
                             }
 
-                            sections.Add(prerequisites);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Contents, training.Content, out ObservableObject? contents))
-                        {
-                            if (addedItem)
+                            if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_PreRequisites, training.Prerequisites, out ObservableObject? prerequisites))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(prerequisites);
+                                addedItem = true;
                             }
 
-                            sections.Add(contents);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Benefits, training.BenefitList, out ObservableObject? benefits))
-                        {
-                            if (addedItem)
+                            if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Contents, training.Content, out ObservableObject? contents))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(contents);
+                                addedItem = true;
                             }
 
-                            sections.Add(benefits);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Certificates, training.Certificate, out ObservableObject? certificates))
-                        {
-                            if (addedItem)
+                            if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Benefits, training.BenefitList, out ObservableObject? benefits))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(benefits);
+                                addedItem = true;
                             }
 
-                            sections.Add(certificates);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_LoanOptions, Routes.LoansView, training.Loans?.Serialize(), out ObservableObject? loans))
-                        {
-                            if (addedItem)
+                            if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Certificates, training.Certificate, out ObservableObject? certificates))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(certificates);
+                                addedItem = true;
                             }
 
-                            sections.Add(loans);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateContactListItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject? contacts))
-                        {
-                            if (addedItem)
+                            if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_LoanOptions, Routes.LoansView, training.Loans?.Serialize(), out ObservableObject? loans))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(loans);
+                                addedItem = true;
                             }
 
-                            sections.Add(contacts);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateContactItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject? contact))
-                        {
-                            if (addedItem)
+                            if (TryCreateContactListItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject? contacts))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(contacts);
+                                addedItem = true;
                             }
 
-                            sections.Add(contact);
-                            addedItem = true;
-                        }
-
-                        if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_Appointment, Routes.AppointmentsView, training.Appointment?.Serialize(), out ObservableObject? appointment))
-                        {
-                            if (addedItem)
+                            if (TryCreateContactItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject? contact))
                             {
-                                sections.Add(SeperatorItem.Import());
-                                addedItem = false;
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(contact);
+                                addedItem = true;
                             }
 
-                            sections.Add(appointment);
-                            addedItem = true;
-                        }
-                    }
+                            if (TryCreateNavigationItem(Resources.Strings.Resources.TrainingsView_Appointment, Routes.AppointmentsView, training.Appointment?.Serialize(), out ObservableObject? appointment))
+                            {
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
 
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections), worker.Token).ConfigureAwait(false);
+                                sections.Add(appointment);
+                                addedItem = true;
+                            }
+                        }
+
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections), worker.Token).ConfigureAwait(false);
+                    }, worker.Token);
                 }
                 catch (Exception ex)
                 {
