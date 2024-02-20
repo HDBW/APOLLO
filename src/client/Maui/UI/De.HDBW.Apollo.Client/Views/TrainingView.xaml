@@ -42,7 +42,7 @@
                     <FlexLayout BindableLayout.ItemsSource="{x:Binding Modes, Mode=OneTime}" Wrap="Wrap" Direction="Row" JustifyContent="Start">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="system:String">
-                                <Label Text="{x:Binding, Mode=OneTime}" Padding="8,4" Background="{StaticResource Neutral0}" TextColor="{StaticResource Primary}" Margin="0,0,4,4" VerticalOptions="Start"/>
+                                <Label Text="{x:Binding Mode=OneTime}" Padding="8,4" Background="{StaticResource Neutral0}" TextColor="{StaticResource Primary}" Margin="0,0,4,4" VerticalOptions="Start"/>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
@@ -129,7 +129,7 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Content, Mode=OneTime}" Spacing="8">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="system:String">
-                                <Label TextType="Html" Text="{x:Binding, Mode=OneTime}" />
+                                <Label TextType="Html" Text="{x:Binding Mode=OneTime}" />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
@@ -147,7 +147,7 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="2" />
                                 </Border.StrokeShape>
-                                <Label Text="{x:Binding, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14SemiBold}"/>
+                                <Label Text="{x:Binding Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14SemiBold}"/>
                             </Border>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -160,7 +160,7 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items, Mode=OneTime}" Margin="24,0">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="system:String">
-                            <Label Text="{x:Binding, Mode=OneTime}" Padding="8,4" />
+                            <Label Text="{x:Binding Mode=OneTime}" Padding="8,4" />
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
