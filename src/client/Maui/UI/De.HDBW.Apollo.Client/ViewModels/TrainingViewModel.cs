@@ -63,17 +63,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ITrainingService TrainingService { get; }
 
-        public async override Task OnNavigatingFromAsync()
-        {
-            await base.OnNavigatingFromAsync();
-
-            // see https://github.com/dotnet/maui/issues/7237
-            lock (_lockObject)
-            {
-                _canceled = true;
-            }
-        }
-
         public async override Task OnNavigatedToAsync()
         {
             if (string.IsNullOrWhiteSpace(_trainingId) || _training != null)
@@ -160,7 +149,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                                 addedItem = true;
                             }
 
-                            if (TryCreateExpandableListItem(Resources.Strings.Resources.Global_Contents, training.Content, out ObservableObject? contents))
+                            if (TryCreateNavigationItem(Resources.Strings.Resources.Global_Contents, Routes.TrainingContentView, training.Content.Serialize<List<string>>(), out ObservableObject? contents))
                             {
                                 if (addedItem)
                                 {
@@ -268,6 +257,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             base.RefreshCommands();
             OpenProductCommand?.NotifyCanExecuteChanged();
+            NavigateBackCommand?.NotifyCanExecuteChanged();
             var contactListSection = Sections?.OfType<ContactListItem>().FirstOrDefault();
             contactListSection?.RefreshCommands();
             var contactItemSection = Sections?.OfType<ContactItem>().FirstOrDefault();
@@ -332,6 +322,23 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateBack))]
+        private async Task NavigateBack(CancellationToken token)
+        {
+            // see https://github.com/dotnet/maui/issues/7237
+            lock (_lockObject)
+            {
+                _canceled = true;
+            }
+
+            await NavigationService.PopAsync(token);
+        }
+
+        private bool CanNavigateBack()
+        {
+            return !IsBusy;
         }
 
         private bool CanOpenProduct()

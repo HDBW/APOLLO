@@ -2926,6 +2926,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kursinhalte.
+        /// </summary>
+        public static string TrainingContentView_Title {
+            get {
+                return ResourceManager.GetString("TrainingContentView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hybrid.
         /// </summary>
         public static string TrainingMode_Hybrid {

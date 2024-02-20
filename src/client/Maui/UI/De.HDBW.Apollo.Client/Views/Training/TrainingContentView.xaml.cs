@@ -6,9 +6,9 @@ using De.HDBW.Apollo.Client.ViewModels.Training;
 
 namespace De.HDBW.Apollo.Client.Views.Training;
 
-public partial class LoansView : ContentPage
+public partial class TrainingContentView : ContentPage
 {
-    public LoansView(LoansViewModel model)
+    public TrainingContentView(TrainingContentViewModel model)
     {
 #if DEBUG
         Debug.WriteLine($"Create {GetType()}");
@@ -17,18 +17,18 @@ public partial class LoansView : ContentPage
         BindingContext = model;
     }
 
-    ~LoansView()
+    ~TrainingContentView()
     {
 #if DEBUG
         Debug.WriteLine($"~{GetType()}");
 #endif
     }
 
-    public LoansViewModel? ViewModel
+    public TrainingContentViewModel? ViewModel
     {
         get
         {
-            return BindingContext as LoansViewModel;
+            return BindingContext as TrainingContentViewModel;
         }
     }
 }

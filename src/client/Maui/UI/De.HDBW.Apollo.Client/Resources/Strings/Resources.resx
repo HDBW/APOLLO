@@ -1363,4 +1363,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="Global_Location" xml:space="preserve">
     <value>Ort</value>
   </data>
+  <data name="TrainingContentView_Title" xml:space="preserve">
+    <value>Kursinhalte</value>
+  </data>
 </root>

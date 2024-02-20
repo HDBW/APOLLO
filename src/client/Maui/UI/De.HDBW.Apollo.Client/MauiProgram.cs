@@ -343,6 +343,9 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<AppointmentsView>();
             services.AddTransient<AppointmentsViewModel>();
 
+            services.AddTransient<TrainingContentView>();
+            services.AddTransient<TrainingContentViewModel>();
+
             // Profile
             services.AddTransient<ProfileView>();
             services.AddTransient<ProfileViewModel>();
@@ -446,6 +449,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.TrainingView, typeof(TrainingView));
             Routing.RegisterRoute(Routes.LoansView, typeof(LoansView));
             Routing.RegisterRoute(Routes.AppointmentsView, typeof(AppointmentsView));
+            Routing.RegisterRoute(Routes.TrainingContentView, typeof(TrainingContentView));
 
             Routing.RegisterRoute(Routes.ProfileView, typeof(ProfileView));
             Routing.RegisterRoute(Routes.PersonalInformationEditView, typeof(PersonalInformationEditView));

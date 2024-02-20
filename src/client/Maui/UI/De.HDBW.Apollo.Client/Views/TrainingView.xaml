@@ -11,6 +11,9 @@
              Title="{x:Static strings:Resources.TrainingsView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.Resources>
         <DataTemplate x:Key="HeaderItemTemplate" x:DataType="trainingsModels:HeaderItem">
             <VerticalStackLayout Spacing="16">
