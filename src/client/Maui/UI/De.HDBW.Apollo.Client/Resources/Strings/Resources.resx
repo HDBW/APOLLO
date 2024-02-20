@@ -1366,4 +1366,34 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="TrainingContentView_Title" xml:space="preserve">
     <value>Kursinhalte</value>
   </data>
+  <data name="AppointmentsView_Duration" xml:space="preserve">
+    <value>Dauer</value>
+  </data>
+  <data name="AppointmentsView_ExecutionDuration" xml:space="preserve">
+    <value>Ausführungsdauer</value>
+  </data>
+  <data name="AppointmentsView_ExecutionDurationDescription" xml:space="preserve">
+    <value>Ausführungsdetails</value>
+  </data>
+  <data name="AppointmentsView_Period" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="Global_OpenBooking" xml:space="preserve">
+    <value>Buchen</value>
+  </data>
+  <data name="AppointmentsView_OpenTraining" xml:space="preserve">
+    <value>Zum Kurs</value>
+  </data>
+  <data name="AppointmentsView_IsGuaranteed" xml:space="preserve">
+    <value>Kurs mit garantierter Durchführung</value>
+  </data>
+  <data name="AppointmentsView_LessonType" xml:space="preserve">
+    <value>Lektionsart</value>
+  </data>
+  <data name="AppointmentsView_Occurences" xml:space="preserve">
+    <value>Termine</value>
+  </data>
+  <data name="AppointmentsView_TimeModel" xml:space="preserve">
+    <value>Zeitmodel</value>
+  </data>
 </root>

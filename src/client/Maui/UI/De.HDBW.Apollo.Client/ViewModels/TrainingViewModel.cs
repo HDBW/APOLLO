@@ -83,7 +83,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         var addedItem = false;
                         if (training != null)
                         {
-                            if (TryCreateHeader(training, out ObservableObject header))
+                            if (TryCreateTrainingsHeader(training, out ObservableObject header))
                             {
                                 sections.Add(header);
                                 addedItem = true;
@@ -231,6 +231,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                                 sections.Add(appointment);
                                 addedItem = true;
+                            }
+
+                            if (sections.Any())
+                            {
+                                sections.Add(SeperatorItem.Import());
                             }
                         }
 
@@ -551,7 +556,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return true;
         }
 
-        private bool TryCreateHeader(TrainingModel training, out ObservableObject item)
+        private bool TryCreateTrainingsHeader(TrainingModel training, out ObservableObject item)
         {
             var eduProvider = training.TrainingProvider;
             if (string.IsNullOrWhiteSpace(eduProvider?.Name))
@@ -559,7 +564,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 eduProvider = training.CourseProvider;
             }
 
-            item = HeaderItem.Import(
+            item = TrainingsHeaderItem.Import(
                      training?.TrainingName,
                      training?.SubTitle,
                      "placeholderinfoevent.png",

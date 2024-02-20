@@ -7,7 +7,7 @@ namespace De.HDBW.Apollo.Client.Selector
 {
     public class TrainingsItemTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate? HeaderItemTemplate { get; set; }
+        public DataTemplate? TrainingsHeaderItemTemplate { get; set; }
 
         public DataTemplate? ExpandableItemTemplate { get; set; }
 
@@ -35,8 +35,8 @@ namespace De.HDBW.Apollo.Client.Selector
             {
                 case SeperatorItem _:
                     return SeperatorItemTemplate;
-                case HeaderItem _:
-                    return HeaderItemTemplate;
+                case TrainingsHeaderItem _:
+                    return TrainingsHeaderItemTemplate;
                 case TagItem _:
                     return TagItemTemplate;
                 case ExpandableItem _:

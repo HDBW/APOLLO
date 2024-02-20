@@ -15,7 +15,7 @@
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.Resources>
-        <DataTemplate x:Key="HeaderItemTemplate" x:DataType="trainingsModels:HeaderItem">
+        <DataTemplate x:Key="TrainingsHeaderItemTemplate" x:DataType="trainingsModels:TrainingsHeaderItem">
             <VerticalStackLayout Spacing="16">
                 <VerticalStackLayout Margin="24,0">
                     <Label Text="{x:Binding TrainingName, Mode=OneTime}" TextType="Html" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
@@ -221,7 +221,7 @@
         </DataTemplate>
 
         <selector:TrainingsItemTemplateSelector x:Key="TrainingsItemTemplateSelector"
-                                                HeaderItemTemplate="{StaticResource HeaderItemTemplate}"
+                                                TrainingsHeaderItemTemplate="{StaticResource TrainingsHeaderItemTemplate}"
                                                 ExpandableItemTemplate="{StaticResource ExpandableItemTemplate}"
                                                 ExpandableListItemTemplate="{StaticResource ExpandableListItemTemplate}"
                                                 ExpandedItemContentTemplate="{StaticResource ExpandedItemContentTemplate}"

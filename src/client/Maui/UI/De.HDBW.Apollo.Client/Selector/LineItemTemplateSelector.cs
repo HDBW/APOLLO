@@ -9,6 +9,8 @@ namespace De.HDBW.Apollo.Client.Selector
     {
         public DataTemplate? InteractiveLineItemTemplate { get; set; }
 
+        public DataTemplate? LineWithoutIconItemTemplate { get; set; }
+
         public DataTemplate? DefaultTemplate { get; set; }
 
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
@@ -17,6 +19,8 @@ namespace De.HDBW.Apollo.Client.Selector
             {
                 case InteractiveLineItem _:
                     return InteractiveLineItemTemplate;
+                case LineWithoutIconItem _:
+                    return LineWithoutIconItemTemplate;
                 default:
                     return DefaultTemplate;
             }

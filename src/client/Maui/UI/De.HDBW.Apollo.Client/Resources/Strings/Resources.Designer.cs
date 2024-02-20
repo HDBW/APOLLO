@@ -61,6 +61,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dauer.
+        /// </summary>
+        public static string AppointmentsView_Duration {
+            get {
+                return ResourceManager.GetString("AppointmentsView_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ausführungsdauer.
+        /// </summary>
+        public static string AppointmentsView_ExecutionDuration {
+            get {
+                return ResourceManager.GetString("AppointmentsView_ExecutionDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ausführungsdetails.
+        /// </summary>
+        public static string AppointmentsView_ExecutionDurationDescription {
+            get {
+                return ResourceManager.GetString("AppointmentsView_ExecutionDurationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurs mit garantierter Durchführung.
+        /// </summary>
+        public static string AppointmentsView_IsGuaranteed {
+            get {
+                return ResourceManager.GetString("AppointmentsView_IsGuaranteed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lektionsart.
+        /// </summary>
+        public static string AppointmentsView_LessonType {
+            get {
+                return ResourceManager.GetString("AppointmentsView_LessonType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Termine.
+        /// </summary>
+        public static string AppointmentsView_Occurences {
+            get {
+                return ResourceManager.GetString("AppointmentsView_Occurences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zum Kurs.
+        /// </summary>
+        public static string AppointmentsView_OpenTraining {
+            get {
+                return ResourceManager.GetString("AppointmentsView_OpenTraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zeitraum.
+        /// </summary>
+        public static string AppointmentsView_Period {
+            get {
+                return ResourceManager.GetString("AppointmentsView_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zeitmodel.
+        /// </summary>
+        public static string AppointmentsView_TimeModel {
+            get {
+                return ResourceManager.GetString("AppointmentsView_TimeModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Termine.
         /// </summary>
         public static string AppointmentsView_Title {
@@ -1481,6 +1562,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Occupation {
             get {
                 return ResourceManager.GetString("Global_Occupation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buchen.
+        /// </summary>
+        public static string Global_OpenBooking {
+            get {
+                return ResourceManager.GetString("Global_OpenBooking", resourceCulture);
             }
         }
         

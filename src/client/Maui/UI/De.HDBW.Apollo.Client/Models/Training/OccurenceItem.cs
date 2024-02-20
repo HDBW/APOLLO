@@ -11,11 +11,10 @@ namespace De.HDBW.Apollo.Client.Models.Training
 {
     public partial class OccurenceItem : ObservableObject
     {
-        private Occurence _occurence;
-
         [ObservableProperty]
         private string? _header;
 
+        [NotifyPropertyChangedFor(nameof(CanExpand))]
         [ObservableProperty]
         private ObservableCollection<LineItem> _items = new ObservableCollection<LineItem>();
 
@@ -24,8 +23,8 @@ namespace De.HDBW.Apollo.Client.Models.Training
 
         private OccurenceItem(Occurence occurence, Action<OccurenceItem> changeStateHandler)
         {
-            _occurence = occurence;
-            Header = $"{occurence.StartDate.ToUIDate()} - {occurence.EndDate.ToUIDate()}";
+            ChangeStateHandler = changeStateHandler;
+            Header = $"{occurence.StartDate.ToUIDate().ToShortDateString()} - {occurence.EndDate.ToUIDate().ToShortDateString()}";
             if (occurence.Location != null)
             {
                 Items = ContactItem.Import(null, occurence.Location, null, null, null, null).Items;
@@ -33,7 +32,15 @@ namespace De.HDBW.Apollo.Client.Models.Training
 
             if (!string.IsNullOrWhiteSpace(occurence.Description))
             {
-                Items.Add(LineItem.Import(null, occurence.Description));
+                Items.Add(LineWithoutIconItem.Import(null, occurence.Description));
+            }
+        }
+
+        public bool CanExpand
+        {
+            get
+            {
+                return Items.Any();
             }
         }
 
@@ -47,6 +54,11 @@ namespace De.HDBW.Apollo.Client.Models.Training
         [RelayCommand]
         private void ToggleExpandState()
         {
+            if (!CanExpand)
+            {
+                return;
+            }
+
             IsExpanded = !IsExpanded;
             ChangeStateHandler?.Invoke(this);
         }

@@ -7,7 +7,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
 {
     public partial class InteractiveLineItem : LineItem
     {
-        private InteractiveLineItem(string? icon, string text, Func<string?, CancellationToken, Task>? executeHander, Func<string?, bool>? canExecuteHander)
+        protected InteractiveLineItem(string? icon, string text, Func<string?, CancellationToken, Task>? executeHander, Func<string?, bool>? canExecuteHander)
             : base(icon, text)
         {
             CanExecuteHander = canExecuteHander;
