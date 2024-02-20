@@ -17,8 +17,6 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? ExpandedListContentTemplate { get; set; }
 
-        public DataTemplate? AppointmentItemTemplate { get; set; }
-
         public DataTemplate? TagItemTemplate { get; set; }
 
         public DataTemplate? ContactItemTemplate { get; set; }
@@ -49,8 +47,6 @@ namespace De.HDBW.Apollo.Client.Selector
                     return ExpandedItemContentTemplate;
                 case ExpandedListContent _:
                     return ExpandedListContentTemplate;
-                case AppointmentItem _:
-                    return AppointmentItemTemplate;
                 case ContactItem _:
                     return ContactItemTemplate;
                 case ContactListItem _:

@@ -19,6 +19,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class TrainingViewModel : BaseViewModel
     {
+        private readonly object _lockObject = new object();
+
+        private bool _canceled;
+
         private string? _trainingId;
 
         [ObservableProperty]
@@ -59,10 +63,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ITrainingService TrainingService { get; }
 
-        public override Task OnNavigatingFromAsync()
+        public async override Task OnNavigatingFromAsync()
         {
-            Sections.Clear();
-            return base.OnNavigatingFromAsync();
+            await base.OnNavigatingFromAsync();
+
+            // see https://github.com/dotnet/maui/issues/7237
+            lock (_lockObject)
+            {
+                _canceled = true;
+            }
         }
 
         public async override Task OnNavigatedToAsync()
@@ -80,6 +89,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         async () =>
                     {
                         var training = await TrainingService.GetTrainingAsync(_trainingId!, worker.Token).ConfigureAwait(false);
+                        Logger?.LogDebug("StartCreationOfSections");
                         var sections = new List<ObservableObject>();
                         var addedItem = false;
                         if (training != null)
@@ -258,24 +268,42 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             base.RefreshCommands();
             OpenProductCommand?.NotifyCanExecuteChanged();
-            var contactListSection = Sections.OfType<ContactListItem>().FirstOrDefault();
+            var contactListSection = Sections?.OfType<ContactListItem>().FirstOrDefault();
             contactListSection?.RefreshCommands();
-            var contactItemSection = Sections.OfType<ContactItem>().FirstOrDefault();
+            var contactItemSection = Sections?.OfType<ContactItem>().FirstOrDefault();
             contactItemSection?.RefreshCommands();
-            var navigationItems = Sections.OfType<NavigationItem>().ToList();
+            var navigationItems = Sections?.OfType<NavigationItem>().ToList() ?? new List<NavigationItem>();
             foreach (var naviagtionItem in navigationItems)
             {
                 naviagtionItem.RefreshCommands();
             }
         }
 
-        private void LoadonUIThread(
+        private async void LoadonUIThread(
             TrainingModel? training, List<ObservableObject> sections)
         {
             _training = training;
             ProductUrl = _training?.ProductUrl;
             Price = $"{_training?.Price ?? 0:0.##} €";
-            Sections = new ObservableCollection<ObservableObject>(sections);
+            foreach (var section in sections)
+            {
+                await DispatcherService.BeginInvokeOnMainThreadAsync(
+                    () =>
+                    {
+                        lock (_lockObject)
+                        {
+                            if (_canceled)
+                            {
+                                return;
+                            }
+
+                            Sections.Add(section);
+                        }
+                    },
+                    CancellationToken.None);
+            }
+
+            Logger?.LogDebug("Finished");
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenProduct))]

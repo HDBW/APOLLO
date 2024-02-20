@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.TrainingView"
              xmlns:system="clr-namespace:System;assembly=netstandard"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:trainingsModels="clr-namespace:De.HDBW.Apollo.Client.Models.Training"
@@ -61,11 +60,11 @@
         </DataTemplate>
 
         <DataTemplate x:Key="SeperatorItemTemplate" x:DataType="trainingsModels:SeperatorItem">
-            <Border StrokeThickness="0" HeightRequest="16" />
+            <ContentView HeightRequest="16" />
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandableListItemTemplate" x:DataType="trainingsModels:ExpandableListItem">
-            <Border StrokeThickness="0">
+            <ContentView>
                 <Border Style="{StaticResource FrameBorder}" Margin="24,0">
                     <Border.Triggers>
                         <DataTrigger TargetType="Border" Binding="{x:Binding IsExpanded}" Value="True">
@@ -86,11 +85,11 @@
                         </Image>
                     </Grid>
                 </Border>
-            </Border>
+            </ContentView>
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandableItemTemplate" x:DataType="trainingsModels:ExpandableItem">
-            <Border StrokeThickness="0">
+            <ContentView>
                 <Border Style="{StaticResource FrameBorder}" Margin="24,0">
                     <Border.Triggers>
                         <DataTrigger TargetType="Border" Binding="{x:Binding IsExpanded}" Value="True">
@@ -112,19 +111,19 @@
                         </Image>
                     </Grid>
                 </Border>
-            </Border>
+            </ContentView>
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandedItemContentTemplate" x:DataType="trainingsModels:ExpandedItemContent">
-            <Border StrokeThickness="0">
+            <ContentView>
                 <Border Style="{StaticResource ContentFrameBorder}" Margin="24,0">
                     <Label TextType="Html" Text="{x:Binding Content, Mode=OneTime}" />
                 </Border>
-            </Border>
+            </ContentView>
         </DataTemplate>
 
         <DataTemplate x:Key="ExpandedListContentTemplate" x:DataType="trainingsModels:ExpandedListContent">
-            <Border StrokeThickness="0">
+            <ContentView>
                 <Border Style="{StaticResource ContentFrameBorder}" Margin="24,0">
                     <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Content, Mode=OneTime}" Spacing="8">
                         <BindableLayout.ItemTemplate>
@@ -134,7 +133,7 @@
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
                 </Border>
-            </Border>
+            </ContentView>
         </DataTemplate>
         
         <DataTemplate x:Key="TagItemTemplate" x:DataType="trainingsModels:TagItem">
@@ -143,49 +142,31 @@
                 <FlexLayout BindableLayout.ItemsSource="{x:Binding Items, Mode=OneTime}" Wrap="Wrap" Direction="Row" JustifyContent="Start" Margin="24,0">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="system:String">
-                            <Border StrokeThickness="0" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4" VerticalOptions="Start">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="2" />
-                                </Border.StrokeShape>
-                                <Label Text="{x:Binding Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14SemiBold}"/>
-                            </Border>
+                            <ContentView>
+                                <Label Text="{x:Binding Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14SemiBold}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4"/>
+                            </ContentView>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
             </VerticalStackLayout>
         </DataTemplate>
 
-        <DataTemplate x:Key="AppointmentItemTemplate" x:DataType="trainingsModels:AppointmentItem">
-            <Border StrokeThickness="0">
-                <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items, Mode=OneTime}" Margin="24,0">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="system:String">
-                            <Label Text="{x:Binding Mode=OneTime}" Padding="8,4" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </VerticalStackLayout>
-            </Border>
-        </DataTemplate>
 
         <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
-            <Border StrokeThickness="0">
-                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
-                    <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
-                    <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,2,0,0"/>
-                </Grid>
-            </Border>
+            <Grid ColumnDefinitions="32,*" MinimumHeightRequest="34" >
+                <Image VerticalOptions="Center" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,7,0,0"/>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="InteractiveLineItemTemplate" x:DataType="trainingsModels:InteractiveLineItem">
-            <Border StrokeThickness="0">
-                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5" Background="Transparent">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{x:Binding InteractCommand, Mode=OneTime}" />
-                    </Grid.GestureRecognizers>
-                    <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon, Mode=OneTime}" />
-                    <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
-                </Grid>
-            </Border>
+            <Grid ColumnDefinitions="32,*" MinimumHeightRequest="34" Background="Transparent">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{x:Binding InteractCommand, Mode=OneTime}" />
+                </Grid.GestureRecognizers>
+                <Image VerticalOptions="Center" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon, Mode=OneTime}" />
+                <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,7,0,0" TextColor="{StaticResource Primary}"/>
+            </Grid>
         </DataTemplate>
 
         <selector:LineItemTemplateSelector x:Key="LineItemTemplateSelector"
@@ -194,39 +175,36 @@
 
 
         <DataTemplate x:Key="ContactListItemTemplate" x:DataType="trainingsModels:ContactListItem">
-            <Border StrokeThickness="0">
-                <Grid RowDefinitions="auto, auto, auto" Margin="24,0">
-                    <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
-                    <CarouselView Grid.Row="1"
+            <Grid RowDefinitions="auto, auto, auto">
+                <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" Margin="24,0,24,8"/>
+                <CarouselView Grid.Row="1"
+                              Margin="24,0"
                               ItemsSource="{x:Binding Items, Mode=OneTime}"
                               IndicatorView="indicatorView"
                               x:Name="PART_Animation">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="trainingsModels:ContactItem">
-                                <VerticalStackLayout
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="trainingsModels:ContactItem">
+                            <VerticalStackLayout
                                 BindableLayout.ItemsSource="{x:Binding Items, Mode=OneTime}"
                                 Spacing="8"
                                 BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}" />
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                    <IndicatorView Grid.Row="2" x:Name="indicatorView" Margin="24,8,24,8"/>
-                </Grid>
-            </Border>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <IndicatorView Grid.Row="2" x:Name="indicatorView" Margin="24,8,24,8"/>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="ContactItemTemplate" x:DataType="trainingsModels:ContactItem">
-            <Border StrokeThickness="0">
-                <Grid RowDefinitions="auto, auto" Margin="24,0">
-                    <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
-                    <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{x:Binding Items, Mode=OneTime}" Spacing="8"
-                                     BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
-                </Grid>
-            </Border>
+            <Grid RowDefinitions="auto, auto" >
+                <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" Margin="24,0,24,8"/>
+                <VerticalStackLayout Grid.Row="1" BindableLayout.ItemsSource="{x:Binding Items, Mode=OneTime}" Margin="24,0" Spacing="8"
+                                    BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="NavigationItemTemplate" x:DataType="trainingsModels:NavigationItem">
-            <Border StrokeThickness="0">
+            <ContentView>
                 <Border Style="{StaticResource FrameBorder}" Margin="24,0">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding NavigateCommand, Mode=OneTime}" />
@@ -236,7 +214,7 @@
                         <Image Grid.Column="1" Source="{x:Static models:KnonwIcons.ChevronLink}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="End" />
                     </Grid>
                 </Border>
-            </Border>
+            </ContentView>
         </DataTemplate>
 
         <selector:TrainingsItemTemplateSelector x:Key="TrainingsItemTemplateSelector"
@@ -246,7 +224,6 @@
                                                 ExpandedItemContentTemplate="{StaticResource ExpandedItemContentTemplate}"
                                                 ExpandedListContentTemplate="{StaticResource ExpandedListContentTemplate}"
                                                 TagItemTemplate="{StaticResource TagItemTemplate}"
-                                                AppointmentItemTemplate="{StaticResource AppointmentItemTemplate}"
                                                 ContactItemTemplate="{StaticResource ContactItemTemplate}"
                                                 ContactListItemTemplate="{StaticResource ContactListItemTemplate}"
                                                 NavigationItemTemplate="{StaticResource NavigationItemTemplate}"
@@ -262,7 +239,7 @@
                 <LinearItemsLayout Orientation="Vertical" />
             </CollectionView.ItemsLayout>
         </CollectionView>
-        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" HeightRequest="76">
             <Grid ColumnDefinitions="*, Auto" Margin="24,16">
                 <Label Text="{x:Binding Price}" Style="{StaticResource NotoSerif24Bold}" VerticalOptions="Center" Margin="0,0,8,0"/>
                 <Button Grid.Column="1" Command="{x:Binding OpenProductCommand}" Text="{x:Static strings:Resources.TrainingView_OpenProvider}" IsVisible="{x:Binding HasProductUrl}"/>
