@@ -89,18 +89,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                                 addedItem = true;
                             }
 
-                            if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject? description))
-                            {
-                                if (addedItem)
-                                {
-                                    sections.Add(SeperatorItem.Import());
-                                    addedItem = false;
-                                }
-
-                                sections.Add(description);
-                                addedItem = true;
-                            }
-
                             if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject? tags))
                             {
                                 if (addedItem)
@@ -122,6 +110,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
                                 }
 
                                 sections.Add(categories);
+                                addedItem = true;
+                            }
+
+                            if (TryCreateExpandableItem(Resources.Strings.Resources.Global_Description, training.Description ?? training.ShortDescription, out ObservableObject? description))
+                            {
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(description);
                                 addedItem = true;
                             }
 
