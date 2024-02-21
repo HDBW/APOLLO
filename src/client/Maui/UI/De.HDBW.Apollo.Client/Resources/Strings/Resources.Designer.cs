@@ -3016,6 +3016,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preisdetails.
+        /// </summary>
+        public static string TraingsView_PriceDescription {
+            get {
+                return ResourceManager.GetString("TraingsView_PriceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kursinhalte.
         /// </summary>
         public static string TrainingContentView_Title {

@@ -209,6 +209,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
                                 addedItem = true;
                             }
 
+                            if (TryCreateExpandableItem(Resources.Strings.Resources.TraingsView_PriceDescription, training.PriceDescription, out ObservableObject? priceDescription))
+                            {
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(priceDescription);
+                                addedItem = true;
+                            }
+
                             if (TryCreateContactItem(Resources.Strings.Resources.Global_Contact, training.Contacts, out ObservableObject? contact))
                             {
                                 if (addedItem)

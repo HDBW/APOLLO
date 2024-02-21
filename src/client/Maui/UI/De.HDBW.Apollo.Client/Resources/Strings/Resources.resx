@@ -1396,4 +1396,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="AppointmentsView_TimeModel" xml:space="preserve">
     <value>Zeitmodel</value>
   </data>
+  <data name="TraingsView_PriceDescription" xml:space="preserve">
+    <value>Preisdetails</value>
+  </data>
 </root>

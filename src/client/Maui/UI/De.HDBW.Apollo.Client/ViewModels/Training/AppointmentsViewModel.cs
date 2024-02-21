@@ -53,7 +53,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
                             sections.Add(item);
                         }
 
-                        if (TryCreateAppointmentTimeModel(appointment, out ObservableObject? timeModel))
+                        if (TryCreateAppointmentTimeModelItem(appointment, out ObservableObject? timeModel))
                         {
                             addedAppointment = true;
                             sections.Add(timeModel);
@@ -113,7 +113,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
                             sections.Add(link);
                         }
 
-                        if (TryCreateOccurenceNoteOnTime(appointment, out ObservableObject? occurenceNoteOnTime))
+                        if (TryCreateOccurenceNoteOnTimeItem(appointment, out ObservableObject? occurenceNoteOnTime))
                         {
                             addedAppointment = true;
                             sections.Add(occurenceNoteOnTime);
@@ -140,6 +140,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
                                     addedOccurence = true;
                                 }
                             }
+                        }
+
+                        if (TryCreateCommentItem(appointment, out ObservableObject? comment))
+                        {
+                            addedAppointment = true;
+                            sections.Add(comment);
                         }
 
                         if (addedAppointment)
@@ -271,7 +277,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             return true;
         }
 
-        private bool TryCreateOccurenceNoteOnTime(Appointment appointment, [MaybeNullWhen(false)] out ObservableObject item)
+        private bool TryCreateOccurenceNoteOnTimeItem(Appointment appointment, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             if (string.IsNullOrWhiteSpace(appointment.OccurenceNoteOnTime))
@@ -338,7 +344,20 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             return true;
         }
 
-        private bool TryCreateAppointmentTimeModel(Appointment appointment, [MaybeNullWhen(false)] out ObservableObject item)
+        private bool TryCreateCommentItem(Appointment appointment, [MaybeNullWhen(false)] out ObservableObject item)
+        {
+            item = null;
+
+            if (string.IsNullOrWhiteSpace(appointment.Comment))
+            {
+                return false;
+            }
+
+            item = LineItem.Import(null, appointment.Comment);
+            return true;
+        }
+
+        private bool TryCreateAppointmentTimeModelItem(Appointment appointment, [MaybeNullWhen(false)] out ObservableObject item)
         {
             item = null;
             string? timeModel = null;
