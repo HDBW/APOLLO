@@ -137,8 +137,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     if (!await SaveAsync(worker.Token).ConfigureAwait(false))
                     {
-                        var parameters = new NavigationParameters();
-                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_UnableToSaveData);
                         await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, token).ConfigureAwait(false);
                     }
                 }
