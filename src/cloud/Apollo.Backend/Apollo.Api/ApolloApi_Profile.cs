@@ -58,7 +58,7 @@ namespace Apollo.Api
 
 
         /// <summary>
-        /// Queries for a set of prfiles that match specified criteria.
+        /// Queries for a set of profiles that match specified criteria.
         /// </summary>
         /// <param name="query">The filter that specifies profiles to be retrieved.</param>
         /// <returns>List of profiles.</returns>

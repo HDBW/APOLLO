@@ -107,7 +107,7 @@ namespace Apollo.Common.Entities
         public Occupation? ProfessionalTitle { get; set; }
 
         // Auswahlliste
-        public CompletionState CompletionState { get; set; }
+        public CompletionState? CompletionState { get; set; }
 
         // EducationInfo_Graduation_filtered.txt
         // Auswahlliste
@@ -127,7 +127,7 @@ namespace Apollo.Common.Entities
 
         // EducationInfo_EducationType_filtered.txt
         // Auswahlliste
-        public EducationType EducationType { get; set; }
+        public EducationType? EducationType { get; set; }
 
         // EducationInfo_Recognition_filtered.txt
         // Auswahlliste

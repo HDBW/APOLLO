@@ -14,8 +14,8 @@ namespace Apollo.Common.Entities
 
         public bool BudgetResponsibility { get; set; }
 
-        public YearRange YearsofLeadership { get; set; }
+        public YearRange? YearsofLeadership { get; set; }
 
-        public StaffResponsibility StaffResponsibility { get; set; }
+        public StaffResponsibility? StaffResponsibility { get; set; }
     }
 }

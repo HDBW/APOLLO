@@ -18,12 +18,12 @@ namespace Apollo.Common.Entities
         /// WebReference_Link_filtered.txt
         /// Freitext
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri? Url { get; set; }
 
         /// <summary>
         /// WebReference_Link_filtered.txt
         /// Freitext
         /// </summary>
-        public string Title { get; set; }
+        public string? Title { get; set; }
     }
 }

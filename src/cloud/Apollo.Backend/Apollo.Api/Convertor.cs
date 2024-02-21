@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Reflection;
@@ -367,19 +368,359 @@ namespace Apollo.Api
         /// <returns>A Profile object converted from the expando object.</returns>
         public static Profile ToProfile(ExpandoObject expando)
         {
-            // TODO
+            if (expando == null)
+                throw new ArgumentException($"The argument {nameof(expando)} cannot be null!");
 
             IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
             Profile profile = new Profile
             {
-                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
-                //to do mapp all properties in profile entity ... #Mukit
-
-
+                Id = dict.ContainsKey(nameof(Profile.Id)) ? (string)dict[nameof(Profile.Id)] : null,
+                CareerInfos = dict.ContainsKey(nameof(Profile.CareerInfos)) ? ConvertToList<CareerInfo>(dict[nameof(Profile.CareerInfos)], conversionFunc: ConvertToCareerInfo!) : new List<CareerInfo>(),
+                EducationInfos = dict.ContainsKey(nameof(Profile.EducationInfos)) ? ConvertToList<EducationInfo>(dict[nameof(Profile.EducationInfos)], conversionFunc: ConvertToEducationInfo!) : new List<EducationInfo>(),
+                LanguageSkills = dict.ContainsKey(nameof(Profile.LanguageSkills)) ? ConvertToList<LanguageSkill>(dict[nameof(Profile.LanguageSkills)],ConvertToLanguageSkills!) : new List<LanguageSkill>(),
+                Licenses = dict.ContainsKey(nameof(Profile.Licenses)) ? ConvertToList<License>(dict[nameof(Profile.Licenses)], ConvertToLicenses!) : new List<License>(),
+                WebReferences = dict.ContainsKey("WebReferences") ? ConvertToList<WebReference>(dict[nameof(Profile.WebReferences)], ConvertToWebReference!) : new List<WebReference>(),
+                MobilityInfo = dict.ContainsKey("MobilityInfo") ? ConvertToType<Mobility>(dict[nameof(Profile.MobilityInfo)], ConvertToMobilityInfo!)  : null,
+                LeadershipSkills = dict.ContainsKey("LeadershipSkills") ? ConvertToType<LeadershipSkills>(dict[nameof(Profile.LeadershipSkills)], ConvertToLeaderShipSkills!) : null,
             };
 
             return profile;
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable CareerInfo instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A CareerInfo instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for CareerInfo.
+        /// </exception>
+        private static CareerInfo? ConvertToCareerInfo(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var careerInfo = new CareerInfo
+                {
+                    Id = dict.ContainsKey(nameof(CareerInfo.Id)) ? (string)dict[nameof(CareerInfo.Id)] : null,
+                    Start = dict.ContainsKey(nameof(CareerInfo.Start)) ? (DateTime)dict[nameof(CareerInfo.Start)] : default,
+                    End = dict.ContainsKey(nameof(CareerInfo.End)) ? (DateTime?)dict[nameof(CareerInfo.End)] : null,
+                    Description = dict.ContainsKey(nameof(CareerInfo.Description)) ? (string)dict[nameof(CareerInfo.Description)] : null,
+                    NameOfInstitution = dict.ContainsKey(nameof(CareerInfo.NameOfInstitution)) ? (string)dict[nameof(CareerInfo.NameOfInstitution)] : null,
+                    City = dict.ContainsKey(nameof(CareerInfo.City)) ? (string)dict[nameof(CareerInfo.City)] : null,
+                    Country = dict.ContainsKey(nameof(CareerInfo.Country)) ? (string)dict[nameof(CareerInfo.Country)] : null,
+                    VoluntaryServiceType = dict.ContainsKey(nameof(CareerInfo.VoluntaryServiceType))? ConvertToObject<VoluntaryServiceType>(dict[nameof(CareerInfo.VoluntaryServiceType)]) : null,
+                    WorkingTimeModel = dict.ContainsKey(nameof(CareerInfo.WorkingTimeModel)) ? ConvertToObject<WorkingTimeModel>(dict[nameof(CareerInfo.WorkingTimeModel)]) : null,
+                    CareerType = dict.ContainsKey(nameof(CareerInfo.CareerType)) ? ConvertToObject<CareerType>(dict[nameof(CareerInfo.CareerType)]) : null,
+                    ServiceType = dict.ContainsKey(nameof(CareerInfo.ServiceType)) ? ConvertToObject<ServiceType>(dict[nameof(CareerInfo.ServiceType)]) : null,
+                };
+
+                return careerInfo;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+            // Handle other cases or throw an exception
+            throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.CareerInfos)}");
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable EducationInfo instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// An EducationInfo instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for EducationInfo.
+        /// </exception>
+        private static EducationInfo? ConvertToEducationInfo(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var educationInfo = new EducationInfo
+                {
+                    Start = dict.ContainsKey(nameof(EducationInfo.Start)) ? (DateTime)dict[nameof(EducationInfo.Start)] : default,
+                    End = dict.ContainsKey(nameof(EducationInfo.End)) ? (DateTime?)dict[nameof(EducationInfo.End)] : null,
+                    Description = dict.ContainsKey(nameof(EducationInfo.Description)) ? (string)dict[nameof(EducationInfo.Description)] : null,
+                    NameOfInstitution = dict.ContainsKey(nameof(EducationInfo.NameOfInstitution)) ? (string)dict[nameof(EducationInfo.NameOfInstitution)] : null,
+                    City = dict.ContainsKey(nameof(EducationInfo.City)) ? (string)dict[nameof(EducationInfo.City)] : null,
+                    Country = dict.ContainsKey(nameof(EducationInfo.Country)) ? (string)dict[nameof(EducationInfo.Country)] : null,
+                    Graduation = dict.ContainsKey(nameof(EducationInfo.Graduation)) ? ConvertToObject<SchoolGraduation>(dict[nameof(EducationInfo.Graduation)]) : null,
+                    TypeOfSchool = dict.ContainsKey(nameof(EducationInfo.TypeOfSchool)) ? ConvertToObject<TypeOfSchool>(dict[nameof(EducationInfo.TypeOfSchool)]) : null,
+                    UniversityDegree = dict.ContainsKey(nameof(EducationInfo.UniversityDegree)) ? ConvertToObject<UniversityDegree>(dict[nameof(EducationInfo.UniversityDegree)]) : null,
+                    EducationType = dict.ContainsKey(nameof(EducationInfo.EducationType)) ? ConvertToObject<EducationType>(dict[nameof(EducationInfo.EducationType)]) : null,
+                    Recognition = dict.ContainsKey(nameof(EducationInfo.Recognition)) ? ConvertToObject<RecognitionType>(dict[nameof(EducationInfo.Recognition)]) : null,
+                    CompletionState = dict.ContainsKey(nameof(EducationInfo.CompletionState)) ? ConvertToObject<CompletionState>(dict[nameof(EducationInfo.CompletionState)]) : null,
+                };
+
+                return educationInfo;
+
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+                // Handle other cases or throw an exception
+                throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.EducationInfos)}");
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable LanguageSkill instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A LanguageSkill instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for LanguageSkill.
+        /// </exception>
+        private static LanguageSkill? ConvertToLanguageSkills(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var languageSkill = new LanguageSkill
+                {
+                    Id = dict.ContainsKey(nameof(LanguageSkill.Id)) ? (string)dict[nameof(LanguageSkill.Id)] : null,
+                    Code = dict.ContainsKey(nameof(LanguageSkill.Code)) ? (string)dict[nameof(LanguageSkill.Code)] : "",
+                    Name = dict.ContainsKey(nameof(LanguageSkill.Name)) ? (string)dict[nameof(LanguageSkill.Name)] : "",
+                    Niveau = dict.ContainsKey(nameof(LanguageSkill.Niveau)) ? ConvertToObject<LanguageNiveau>(dict[nameof(LanguageSkill.Niveau)]) : null,
+                };
+
+               return languageSkill;
+            }
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+            // Handle other cases or throw an exception
+            throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.LanguageSkills)}");
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable License instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A License instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for License.
+        /// </exception>
+        private static License? ConvertToLicenses(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var license = new License
+                {
+                    Granted = dict.ContainsKey(nameof(License.Granted)) ? (DateTime?)dict[nameof(License.Granted)] : null,
+                    Expires = dict.ContainsKey(nameof(License.Expires)) ? (DateTime?)dict[nameof(License.Expires)] : null,
+                    IssuingAuthority = dict.ContainsKey(nameof(License.IssuingAuthority)) ? (string)dict[nameof(License.IssuingAuthority)] : null,
+                    ListItemId = (int)dict[nameof(ApolloListItem.ListItemId)]!,
+                    Value = (string)dict[nameof(ApolloListItem.Value)]!,
+                    Lng = dict.ContainsKey(nameof(License.Lng)) ? (string)dict[nameof(ApolloListItem.Lng)] : null,
+                    Description = dict.ContainsKey(nameof(License.Description)) ? (string)dict[nameof(ApolloListItem.Description)] : null
+            };
+
+                return license;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+            // Handle other cases or throw an exception
+            throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.Licenses)}");
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable WebReference instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A WebReference instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for WebReference.
+        /// </exception>
+        private static WebReference? ConvertToWebReference(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var webReference = new WebReference
+                {
+                    Id = dict.ContainsKey(nameof(WebReference.Id)) ? (string?)dict[nameof(WebReference.Id)] : null,
+                    Title = dict.ContainsKey(nameof(WebReference.Title)) ? (string?)dict[nameof(WebReference.Title)] : null,
+                    Url = dict.ContainsKey(nameof(WebReference.Url)) ? new Uri((string)dict[nameof(WebReference.Url)]): null,
+                };
+
+                return webReference;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+
+            // Handle other cases or throw an exception
+            throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.WebReferences)}");
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable Mobility instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A Mobility instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for Mobility.
+        /// </exception>
+        private static Mobility? ConvertToMobilityInfo(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var mobilityInfo = new Mobility
+                {
+                    WillingToTravel = dict.ContainsKey(nameof(Mobility.WillingToTravel)) ? ConvertToObject<Willing>(dict[nameof(Mobility.WillingToTravel)]) : null,
+                    HasVehicle = dict.ContainsKey(nameof(Mobility.HasVehicle)) ? (bool)dict[nameof(Mobility.HasVehicle)] : false,
+                };
+
+                return mobilityInfo;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+                // Handle other cases or throw an exception
+                throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.MobilityInfo)}");
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable LeadershipSkills instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A LeadershipSkills instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for LeadershipSkills.
+        /// </exception>
+        private static LeadershipSkills? ConvertToLeaderShipSkills(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var leaderShipSkills = new LeadershipSkills
+                {
+                    StaffResponsibility = dict.ContainsKey(nameof(LeadershipSkills.StaffResponsibility)) ? ConvertToObject<StaffResponsibility>(dict[nameof(LeadershipSkills.StaffResponsibility)]) : null,
+                    YearsofLeadership = dict.ContainsKey(nameof(LeadershipSkills.YearsofLeadership)) ? ConvertToObject<YearRange>(dict[nameof(LeadershipSkills.YearsofLeadership)]) : null,
+                    BudgetResponsibility = dict.ContainsKey(nameof(LeadershipSkills.BudgetResponsibility)) ? (bool)dict[nameof(LeadershipSkills.BudgetResponsibility)] : false,
+                    PowerOfAttorney = dict.ContainsKey(nameof(LeadershipSkills.PowerOfAttorney)) ? (bool)dict[nameof(LeadershipSkills.PowerOfAttorney)] : false,
+                };
+
+                return leaderShipSkills;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+                // Handle other cases or throw an exception
+                throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.LeadershipSkills)}");
+        }
+
+        /// <summary>
+        /// Converts a generic object to a specified type using a conversion function.
+        /// </summary>
+        /// <typeparam name="T">The type to convert the object to.</typeparam>
+        /// <param name="value">The object to be converted.</param>
+        /// <param name="conversionFunc">A function that performs the conversion to type T.</param>
+        /// <returns>
+        /// The result of applying the conversion function to the input object, resulting in an object of type T.
+        /// </returns>
+        private static T ConvertToType<T>(object value, Func<object, T> conversionFunc)
+        {
+            return conversionFunc(value);
+        }
+
+        /// <summary>
+        /// Converts a generic object, typically a List of objects, to a List of a specified type using a conversion function.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the resulting List.</typeparam>
+        /// <param name="value">The object to be converted, usually a List of objects.</param>
+        /// <param name="conversionFunc">A function that converts individual objects to the desired type.</param>
+        /// <returns>
+        /// A List of elements of type T, where each element is obtained by applying the conversion function to the original elements.
+        /// If the input is not a List or is null, returns an empty List of type T.
+        /// </returns>
+        private static List<T> ConvertToList<T>(object value, Func<object, T> conversionFunc)
+        {
+            if (value is List<object> list)
+            {
+                return list.Select(conversionFunc).ToList();
+            }
+            return new List<T>();
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a specified subtype of ApolloListItem.
+        /// </summary>
+        /// <typeparam name="T">The type of the ApolloListItem subclass to convert to.</typeparam>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// An instance of the specified ApolloListItem subtype, populated with values from the input object.
+        /// If the input is null or an empty string, returns null.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected subtype.
+        /// </exception>
+        private static T? ConvertToObject<T>(object item) where T : ApolloListItem
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                T result = Activator.CreateInstance<T>();
+                result.ListItemId = (int)dict[nameof(ApolloListItem.ListItemId)]!;
+                result.Value = (string)dict[nameof(ApolloListItem.Value)]!;
+                result.Lng = dict.ContainsKey(nameof(License.Lng)) ? (string)dict[nameof(ApolloListItem.Lng)] : null;
+                result.Description = dict.ContainsKey(nameof(License.Description)) ? (string)dict[nameof(ApolloListItem.Description)] : null;
+                return result;
+            }
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return item as T;
+            }
+            else
+            // Handle other cases or throw an exception
+            throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {typeof(T).Name}");
         }
 
 

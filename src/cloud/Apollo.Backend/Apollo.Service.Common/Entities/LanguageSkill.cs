@@ -17,12 +17,12 @@ namespace Apollo.Common.Entities
         ///// </summary>
         //public string Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public LanguageNiveau Niveau { get; set; }
+        public LanguageNiveau? Niveau { get; set; }
 
         //// CultureInfo get Culture ISO639-2 
-        public string Code { get; set; }
+        public string? Code { get; set; }
     }
 
 

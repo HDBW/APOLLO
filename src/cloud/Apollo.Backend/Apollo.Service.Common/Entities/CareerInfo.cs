@@ -42,7 +42,7 @@ namespace Apollo.Common.Entities
         /// <note>
         /// CareerInfo_CareerType_filtered.txt
         /// </note>
-        public CareerType CareerType { get; set; }
+        public CareerType? CareerType { get; set; }
 
         /// <summary>
         /// Description of the Experience
