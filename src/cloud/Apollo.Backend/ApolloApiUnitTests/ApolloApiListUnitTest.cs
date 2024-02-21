@@ -401,7 +401,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(ContactType));
-            Assert.IsTrue(dbItem.Items.Count == 6);
+            Assert.IsTrue(dbItem.Items?.Count == 6);
         }
 
         private async Task PopulateCarreerType()
@@ -436,7 +436,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(CareerType));
-            Assert.IsTrue(dbItem.Items.Count == 13);
+            Assert.IsTrue(dbItem.Items?.Count == 13);
         }
 
         private async Task PopulateCompletionState()
@@ -462,7 +462,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(CompletionState));
-            Assert.IsTrue(dbItem.Items.Count == 4);
+            Assert.IsTrue(dbItem.Items?.Count == 4);
         }
 
 
@@ -519,7 +519,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(DriversLicense));
-            Assert.IsTrue(dbItem.Items.Count == 33);
+            Assert.IsTrue(dbItem.Items?.Count == 33);
         }
 
 
@@ -548,7 +548,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(EducationType));
-            Assert.IsTrue(dbItem.Items.Count == 6);
+            Assert.IsTrue(dbItem.Items?.Count == 6);
         }
 
         private async Task PopulateLanguageNiveau()
@@ -577,7 +577,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(LanguageNiveau));
-            Assert.IsTrue(dbItem.Items.Count == 7);
+            Assert.IsTrue(dbItem.Items?.Count == 7);
         }
 
 
@@ -606,7 +606,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(RecognitionType));
-            Assert.IsTrue(dbItem.Items.Count == 6);
+            Assert.IsTrue(dbItem.Items?.Count == 6);
         }
 
 
@@ -667,7 +667,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(ServiceType));
-            Assert.IsTrue(dbItem.Items.Count == 5);
+            Assert.IsTrue(dbItem.Items?.Count == 5);
         }
 
 
@@ -695,7 +695,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(StaffResponsibility));
-            Assert.IsTrue(dbItem.Items.Count == 5);
+            Assert.IsTrue(dbItem.Items?.Count == 5);
         }
 
 
@@ -741,7 +741,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(TypeOfSchool));
-            Assert.IsTrue(dbItem.Items.Count == 22);
+            Assert.IsTrue(dbItem.Items?.Count == 22);
         }
 
 
@@ -775,7 +775,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(UniversityDegree));
-            Assert.IsTrue(dbItem.Items.Count == 11);
+            Assert.IsTrue(dbItem.Items?.Count == 11);
         }
 
 
@@ -807,7 +807,7 @@ namespace Apollo.Api.UnitTests
 
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(VoluntaryServiceType));
-            Assert.IsTrue(dbItem.Items.Count == 9);
+            Assert.IsTrue(dbItem.Items?.Count == 9);
         }
 
         private async Task PopulateWilling()
@@ -831,7 +831,7 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(Willing));
-            Assert.IsTrue(dbItem.Items.Count == 4);
+            Assert.IsTrue(dbItem.Items?.Count == 4);
         }
 
 
@@ -858,7 +858,7 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(YearRange));
-            Assert.IsTrue(dbItem.Items.Count == 4);
+            Assert.IsTrue(dbItem.Items?.Count == 4);
         }
 
 
@@ -887,7 +887,7 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(WorkingTimeModel));
-            Assert.IsTrue(dbItem.Items.Count == 6);
+            Assert.IsTrue(dbItem.Items?.Count == 6);
         }
 
 
@@ -952,7 +952,6 @@ namespace Apollo.Api.UnitTests
                     new ApolloListItem { ListItemId = 52, Value = "Elektro-Schweißen Basisqualifikation", Lng = "de-de", Description = null },
                     new ApolloListItem { ListItemId = 53, Value = "Elektronikpass", Lng = "de-de", Description = null },
                     new ApolloListItem { ListItemId = 54, Value = "Emspatent", Lng = "de-de", Description = null },
-
                     // New Items: Mukit
                     new ApolloListItem { ListItemId = 55, Value = "Extended certificate of good conduct", Lng = "de-de", Description = null },
                     new ApolloListItem { ListItemId = 56, Value = "Certified Specialist Lawyer (Examination)", Lng = "de-de", Description = null },
@@ -1147,7 +1146,7 @@ namespace Apollo.Api.UnitTests
             var dbItem = await api.GetListAsync(id: id);
             Assert.IsNotNull(dbItem);
             Assert.IsTrue(dbItem.ItemType == nameof(License));
-          // Assert.IsTrue(dbItem.Items.Count == 6);
+            Assert.IsTrue(dbItem.Items?.Count == 232);
         }
         #endregion
     }
