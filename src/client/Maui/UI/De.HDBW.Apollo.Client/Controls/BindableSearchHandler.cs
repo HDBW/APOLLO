@@ -61,6 +61,7 @@ namespace De.HDBW.Apollo.Client.Controls
         protected override void OnQueryConfirmed()
         {
             base.OnQueryConfirmed();
+            var query = Query;
             Unfocus();
             if (OperatingSystem.IsAndroid())
             {
@@ -72,7 +73,7 @@ namespace De.HDBW.Apollo.Client.Controls
 
             KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
             WeakReferenceMessenger.Default.Send<HideSearchSuggestionsMessage>(new HideSearchSuggestionsMessage());
-            SearchCommand?.Execute(Query);
+            SearchCommand?.Execute(query);
         }
 
         protected override void OnItemSelected(object item)
