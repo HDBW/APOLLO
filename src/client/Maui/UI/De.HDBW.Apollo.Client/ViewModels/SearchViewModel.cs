@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.Concurrent;
+using System.Collections.Frozen;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -32,6 +34,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private ObservableCollection<SearchInteractionEntry> _searchResults = new ObservableCollection<SearchInteractionEntry>();
 
+        private ConcurrentDictionary<Uri, List<SearchInteractionEntry>> _loadingCache = new ConcurrentDictionary<Uri, List<SearchInteractionEntry>>();
+        private CancellationTokenSource _loadingCts;
+        private List<Task> _loadingTask;
+
         public SearchViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -40,6 +46,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ISheetService sheetService,
             ITrainingService trainingService,
             ISearchHistoryRepository searchHistoryRepository,
+            IImageCacheService imageCacheService,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -47,12 +54,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(sheetService);
             ArgumentNullException.ThrowIfNull(trainingService);
             ArgumentNullException.ThrowIfNull(searchHistoryRepository);
+            ArgumentNullException.ThrowIfNull(imageCacheService);
             SessionService = sessionService;
             SheetService = sheetService;
             TrainingService = trainingService;
             SearchHistoryRepository = searchHistoryRepository;
+            ImageCacheService = imageCacheService;
             Filter = CreateDefaultTrainingsFilter(string.Empty);
         }
+
+        private IImageCacheService ImageCacheService { get; }
 
         private ISessionService SessionService { get; }
 
@@ -204,6 +215,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             LoadonUIThread(interactions);
                             ClearSuggesionsAndHistory();
                         }, worker.Token);
+
+                    _loadingCts?.Cancel();
+                    _loadingCts = new CancellationTokenSource();
+                    _loadingTask = new List<Task>();
+                    foreach (var url in _loadingCache.Keys.ToList())
+                    {
+                        _loadingTask.Add(ImageCacheService.DownloadAsync(url, _loadingCts.Token).ContinueWith(OnApplyImageData));
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -222,6 +241,36 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        private async void OnApplyImageData(Task<(Uri Uri, string? Data)> task)
+        {
+            var result = task.Result;
+            _loadingTask.Remove(task);
+            if (!_loadingTask.Any())
+            {
+                _loadingCts?.Dispose();
+                _loadingCts = null;
+            }
+
+            if (string.IsNullOrWhiteSpace(result.Data))
+            {
+                return;
+            }
+
+            if (!_loadingCache.TryGetValue(result.Uri, out List<SearchInteractionEntry>? entries))
+            {
+                return;
+            }
+
+            await ExecuteOnUIThreadAsync(
+                () =>
+            {
+                foreach (var entry in entries)
+                {
+                    entry.ImageData = result.Data;
+                }
+            }, CancellationToken.None);
         }
 
         private async Task SaveSearchHistoryAsync(string query, HistoricalSuggestionEntry? historyEntry, SearchSuggestionEntry? suggestionEntry, CancellationToken token)
@@ -288,6 +337,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items)
         {
+            _loadingCache.Clear();
             var trainings = new List<SearchInteractionEntry>();
             foreach (var item in items)
             {
@@ -321,6 +371,20 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var data = new NavigationData(Routes.TrainingView, parameters);
 
                 var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
+                {
+                    if (!_loadingCache.ContainsKey(eduProvider.Image))
+                    {
+                        if (!_loadingCache.TryAdd(eduProvider.Image, new List<SearchInteractionEntry>() { interaction }))
+                        {
+                            _loadingCache[eduProvider.Image].Add(interaction);
+                        }
+                    }
+                    else
+                    {
+                        _loadingCache[eduProvider.Image].Add(interaction);
+                    }
+                }
 
                 // interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
                 trainings.Add(interaction);

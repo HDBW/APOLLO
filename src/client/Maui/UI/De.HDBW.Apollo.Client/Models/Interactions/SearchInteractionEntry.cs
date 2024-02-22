@@ -25,12 +25,15 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         private string? _decoratorImagePath;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(HasSublineImage))]
         private string? _sublineImagePath;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasDecorator))]
         private string? _decoratorText;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasSublineImage))]
+        private string? _imageData;
 
         [ObservableProperty]
         private bool _isFiltered;
@@ -54,7 +57,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             _handleToggleIsFavorite = handleToggleIsFavorite;
             _canHandleToggleIsFavorite = canHandleToggleIsFavorite;
             Subline = subline;
-            SublineImagePath = sublineImagePath?.ToUniformedName();
+            SublineImagePath = sublineImagePath;
             DecoratorText = decoratorText;
             DecoratorImagePath = decoratorImagePath?.ToUniformedName();
             Info = info;

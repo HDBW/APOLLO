@@ -11,14 +11,17 @@ namespace De.HDBW.Apollo.Data.Services
     {
         private readonly List<(long Id, Type Type)> _favorites = new List<(long Id, Type Type)>();
 
-        public SessionService(AccountId? accountId)
+        public SessionService(string accessToken, AccountId? accountId)
         {
             AccountId = accountId;
+            AccessToken = accessToken;
         }
 
         public bool HasRegisteredUser => AccountId != null;
 
         public AccountId? AccountId { get; private set; }
+
+        public string AccessToken { get; private set; }
 
         public UseCase? UseCase { get; private set; }
 

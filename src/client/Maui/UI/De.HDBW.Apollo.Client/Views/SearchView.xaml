@@ -6,6 +6,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              x:DataType="viewModels:SearchViewModel"
              x:Class="De.HDBW.Apollo.Client.Views.SearchView"
              Shell.TabBarIsVisible="True"
@@ -81,8 +82,8 @@
                                 <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" />
                                 <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
                                 <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
-                                    <Image Source="{x:Binding SublineImagePath}" IsVisible="{x:Binding HasSublineImage}" Aspect="AspectFit" HorizontalOptions="StartAndExpand" VerticalOptions="Fill" />
-                                    <Label Grid.Column="1" InputTransparent="True" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
+                                    <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasSublineImage}" HeightRequest="60" VerticalOptions="Fill" />
+                                    <Label Grid.Column="1" InputTransparent="True" VerticalOptions="Center" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
                                 </Grid>
                             </Grid>
                         </Border>

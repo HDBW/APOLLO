@@ -50,6 +50,7 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.ApplicationInsights;
 using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using The49.Maui.BottomSheet;
 
 namespace De.HDBW.Apollo.Client
@@ -83,6 +84,7 @@ namespace De.HDBW.Apollo.Client
                 .UseMauiCommunityToolkit()
                 .UseMauiCompatibility()
                 .UseCustomDatePicker()
+                .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
@@ -209,11 +211,12 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AuthenticationResult? authenticationResult)
         {
+            services.AddSingleton<IImageCacheService, ImageCacheService>();
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();
             services.AddSingleton<IDispatcherService, DispatcherService>();
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.Account.HomeAccountId));
+            services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.AccessToken, authenticationResult?.Account.HomeAccountId));
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<ISheetService, SheetService>();
             services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
