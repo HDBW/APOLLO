@@ -218,16 +218,17 @@ namespace Apollo.Service.Controllers
         [HttpDelete("{id}")]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Profiles deleted successfully.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
-        public async Task DeleteProfile(string[] ids)
+        public async Task DeleteProfile([FromRoute] string id)
         {
             try
             {
                 _logger.LogTrace("Enter {method}", nameof(DeleteProfile));
 
                 // Call the Apollo API to delete a profile by ID.
-                await _api.DeleteProfiles(ids);
+                var response = await _api.DeleteProfile(id);
 
                 _logger.LogTrace("Leave {method}", nameof(DeleteProfile));
+
             }
             catch (Exception ex)
             {

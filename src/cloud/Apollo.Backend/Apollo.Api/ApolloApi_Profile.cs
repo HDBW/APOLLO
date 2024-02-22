@@ -210,24 +210,25 @@ namespace Apollo.Api
         /// <summary>
         /// Delete Profiles with specified Ids.
         /// </summary>
-        /// <param name="deletingIds">The list of profile identifiers.</param>
-        /// <returns>The number of deleted Profiles</returns>
-        public virtual async Task<long> DeleteProfiles(string[] deletingIds)
+        /// <param name="deletingId">The id of profile identifier.</param>
+        /// <returns>The deleted id</returns>
+        public virtual async Task<string> DeleteProfile(string deletingId)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(DeleteProfiles)}");
+                _logger?.LogTrace($"Entered {nameof(DeleteProfile)}");
 
                 // Call the DAL method to delete the profile by their IDs
-                var res = await _dal.DeleteManyAsync(GetCollectionName<Profile>(), deletingIds, throwIfNotDeleted: false);
+                await _dal.DeleteAsync(GetCollectionName<Profile>(), deletingId);
 
-                _logger?.LogTrace($"Completed {nameof(DeleteProfiles)}");
+                _logger?.LogTrace($"Completed {nameof(DeleteProfile)}");
 
-                return res;
+                return deletingId;
+
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteProfiles)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteProfile)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.ProfileErrors.DeleteProfileError, "Error while deleting profiles", ex);
             }
         }
