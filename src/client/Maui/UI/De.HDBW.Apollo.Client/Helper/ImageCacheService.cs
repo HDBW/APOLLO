@@ -1,7 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using AndroidX.Browser.Trusted;
 using De.HDBW.Apollo.Client.Contracts;
 using Microsoft.Extensions.Logging;
 
@@ -159,11 +158,6 @@ namespace De.HDBW.Apollo.Client.Helper
                         imageData = new MemoryStream();
                         await stream.CopyToAsync(imageData);
                         imageData.Seek(0, SeekOrigin.Begin);
-                        //Logger.LogDebug($"stream length {stream.Length}");
-                        //if (stream.Length > 0)
-                        //{
-
-                        //
                     }
                 }
             }

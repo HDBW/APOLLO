@@ -6,6 +6,7 @@
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:trainingsModels="clr-namespace:De.HDBW.Apollo.Client.Models.Training"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              x:DataType="viewModels:TrainingViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.TrainingsView_Title}"
@@ -34,9 +35,16 @@
                     </Border>
                 </Grid>
 
-                <Grid ColumnDefinitions="auto, *" Margin="24,0">
-                    <Image Source="{x:Binding ProviderImage, Mode=OneTime}" IsVisible="{x:Binding HasProviderImage}" MaximumHeightRequest="60" VerticalOptions="Start" Margin="0,4,8,0"/>
-                    <Label Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16}" MaxLines="2" Grid.Column="1"/>
+                <Grid ColumnDefinitions="*, *" Margin="24,0">
+                    <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasProviderImage}" MaximumHeightRequest="60" VerticalOptions="Start" Margin="0,4,8,0"/>
+                    <Label x:Name="PART_ProviderName" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16}" MaxLines="2" Grid.Column="1">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{x:Binding HasProviderImage}" Value="False">
+                                <Setter Property="Grid.Column" Value="0" TargetName="PART_ProviderName" />
+                                <Setter Property="Grid.ColumnSpan" Value="2" TargetName="PART_ProviderName" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
                 </Grid>
 
                 <VerticalStackLayout IsVisible="{x:Binding HasModes, Mode=OneTime}" Margin="24,0">
@@ -51,7 +59,7 @@
                 </VerticalStackLayout>
 
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable, Mode=OneTime}" Margin="24,0">
-                    <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                    <Image HeightRequest="60" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
                 </Grid>
 

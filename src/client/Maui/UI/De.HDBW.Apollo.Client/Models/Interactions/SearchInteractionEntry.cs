@@ -3,11 +3,12 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 
 namespace De.HDBW.Apollo.Client.Models.Interactions
 {
-    public partial class SearchInteractionEntry : InteractionEntry, ICloneable
+    public partial class SearchInteractionEntry : InteractionEntry, ICloneable, IProvideImageData
     {
         private readonly Func<SearchInteractionEntry, Task> _handleToggleIsFavorite;
 
@@ -91,7 +92,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(SublineImagePath);
+                return !string.IsNullOrWhiteSpace(ImageData);
             }
         }
 

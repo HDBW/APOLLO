@@ -46,7 +46,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     await AuthService.LogoutAsync(worker.Token);
                     var authentication = await AuthService.AcquireTokenSilent(worker.Token);
-                    SessionService.UpdateRegisteredUser(authentication?.Account?.HomeAccountId);
+                    SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);
                 }
                 catch (OperationCanceledException)
                 {

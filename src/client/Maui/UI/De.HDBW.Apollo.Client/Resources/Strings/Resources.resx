@@ -220,7 +220,7 @@
     <value>Entdecke dein Karrierepotential
 (Ist-Stand bekannt – Inspiration)</value>
   </data>
-  <data name="StartViewModel_UnknownProvider" xml:space="preserve">
+  <data name="Global_UnknownProvider" xml:space="preserve">
     <value>Unbekannter Anbieter</value>
   </data>
   <data name="StartView_ChangeUseCase" xml:space="preserve">

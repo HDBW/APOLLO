@@ -101,6 +101,11 @@ public class SvgImage : SKCanvasView
             var info = args.Info;
 
             var bounds = _svg.Model.CullRect;
+            if (!IsVisible || (info.Width == 0 && info.Height == 0) || bounds.IsEmpty)
+            {
+                return;
+            }
+
             float xRatio = info.Width / bounds.Width;
             float yRatio = info.Height / bounds.Height;
 

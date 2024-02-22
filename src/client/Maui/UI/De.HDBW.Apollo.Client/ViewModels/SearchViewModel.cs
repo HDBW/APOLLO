@@ -24,6 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
     {
         private readonly int _maxHistoryItemsCount = 10;
         private readonly int _maxSugestionItemsCount = 10;
+        private readonly ConcurrentDictionary<Uri, List<IProvideImageData>> _loadingCache = new ConcurrentDictionary<Uri, List<IProvideImageData>>();
 
         [ObservableProperty]
         private ObservableCollection<SearchSuggestionEntry> _suggestions = new ObservableCollection<SearchSuggestionEntry>();
@@ -34,9 +35,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private ObservableCollection<SearchInteractionEntry> _searchResults = new ObservableCollection<SearchInteractionEntry>();
 
-        private ConcurrentDictionary<Uri, List<SearchInteractionEntry>> _loadingCache = new ConcurrentDictionary<Uri, List<SearchInteractionEntry>>();
-        private CancellationTokenSource _loadingCts;
-        private List<Task> _loadingTask;
+        private CancellationTokenSource? _loadingCts;
+        private List<Task>? _loadingTask;
 
         public SearchViewModel(
             IDispatcherService dispatcherService,
@@ -219,9 +219,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     _loadingCts?.Cancel();
                     _loadingCts = new CancellationTokenSource();
                     _loadingTask = new List<Task>();
+                    var loadingToken = _loadingCts.Token;
                     foreach (var url in _loadingCache.Keys.ToList())
                     {
-                        _loadingTask.Add(ImageCacheService.DownloadAsync(url, _loadingCts.Token).ContinueWith(OnApplyImageData));
+                        _loadingTask.Add(ImageCacheService.DownloadAsync(url, loadingToken).ContinueWith(OnApplyImageData));
                     }
                 }
                 catch (OperationCanceledException)
@@ -246,9 +247,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private async void OnApplyImageData(Task<(Uri Uri, string? Data)> task)
         {
             var result = task.Result;
-            _loadingTask.Remove(task);
-            if (!_loadingTask.Any())
+            _loadingTask?.Remove(task);
+            if (!(_loadingTask?.Any() ?? false))
             {
+                _loadingCache.Clear();
                 _loadingCts?.Dispose();
                 _loadingCts = null;
             }
@@ -258,7 +260,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return;
             }
 
-            if (!_loadingCache.TryGetValue(result.Uri, out List<SearchInteractionEntry>? entries))
+            if (!_loadingCache.TryGetValue(result.Uri, out List<IProvideImageData>? entries))
             {
                 return;
             }
@@ -338,6 +340,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items)
         {
             _loadingCache.Clear();
+            _loadingCts?.Cancel();
+            _loadingCts = null;
+            _loadingTask = null;
             var trainings = new List<SearchInteractionEntry>();
             foreach (var item in items)
             {
@@ -362,7 +367,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     eduProvider = item.CourseProvider;
                 }
 
-                var subline = eduProvider?.Name ?? Resources.Strings.Resources.StartViewModel_UnknownProvider;
+                var subline = eduProvider?.Name ?? Resources.Strings.Resources.Global_UnknownProvider;
                 var sublineImagePath = eduProvider?.Image?.OriginalString;
                 var info = $"{item.Price ?? 0:0.##} €";
 
@@ -373,9 +378,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
                 {
-                    if (!_loadingCache.ContainsKey(eduProvider.Image))
+                    if (!_loadingCache.Keys.Any(x => x.OriginalString == eduProvider.Image.OriginalString))
                     {
-                        if (!_loadingCache.TryAdd(eduProvider.Image, new List<SearchInteractionEntry>() { interaction }))
+                        if (!_loadingCache.TryAdd(eduProvider.Image, new List<IProvideImageData>() { interaction }))
                         {
                             _loadingCache[eduProvider.Image].Add(interaction);
                         }

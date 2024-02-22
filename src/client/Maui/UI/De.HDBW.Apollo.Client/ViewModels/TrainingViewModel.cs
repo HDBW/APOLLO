@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -21,9 +22,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
     {
         private readonly object _lockObject = new object();
 
+        private readonly ConcurrentDictionary<Uri, List<IProvideImageData>> _loadingCache = new ConcurrentDictionary<Uri, List<IProvideImageData>>();
+
         private bool _canceled;
 
         private string? _trainingId;
+
+        private CancellationTokenSource? _loadingCts;
+
+        private List<Task>? _loadingTask;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasProductUrl))]
@@ -42,6 +49,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             ITrainingService trainingService,
+            IImageCacheService imageCacheService,
             ILogger<TrainingViewModel> logger)
             : base(
                 dispatcherService,
@@ -50,7 +58,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 logger)
         {
             ArgumentNullException.ThrowIfNull(trainingService);
+            ArgumentNullException.ThrowIfNull(imageCacheService);
             TrainingService = trainingService;
+            ImageCacheService = imageCacheService;
         }
 
         public bool HasProductUrl
@@ -62,6 +72,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private ITrainingService TrainingService { get; }
+
+        private IImageCacheService ImageCacheService { get; }
 
         public async override Task OnNavigatedToAsync()
         {
@@ -253,6 +265,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                         await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections), worker.Token).ConfigureAwait(false);
                     }, worker.Token);
+
+                    _loadingCts?.Cancel();
+                    _loadingCts = new CancellationTokenSource();
+                    _loadingTask = new List<Task>();
+                    foreach (var url in _loadingCache.Keys.ToList())
+                    {
+                        _loadingTask.Add(ImageCacheService.DownloadAsync(url, _loadingCts.Token).ContinueWith(OnApplyImageData));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -284,6 +304,37 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 naviagtionItem.RefreshCommands();
             }
+        }
+
+        private async void OnApplyImageData(Task<(Uri Uri, string? Data)> task)
+        {
+            var result = task.Result;
+            _loadingTask?.Remove(task);
+            if (!(_loadingTask?.Any() ?? false))
+            {
+                _loadingCache.Clear();
+                _loadingCts?.Dispose();
+                _loadingCts = null;
+            }
+
+            if (string.IsNullOrWhiteSpace(result.Data))
+            {
+                return;
+            }
+
+            if (!_loadingCache.TryGetValue(result.Uri, out List<IProvideImageData>? entries))
+            {
+                return;
+            }
+
+            await ExecuteOnUIThreadAsync(
+                () =>
+                {
+                    foreach (var entry in entries)
+                    {
+                        entry.ImageData = result.Data;
+                    }
+                }, CancellationToken.None);
         }
 
         private async void LoadonUIThread(
@@ -350,6 +401,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 _canceled = true;
             }
 
+            _loadingCts?.Cancel();
+            _loadingCts = null;
+            _loadingTask = null;
+            _loadingCache.Clear();
             await NavigationService.PopAsync(token);
         }
 
@@ -576,16 +631,36 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 eduProvider = training.CourseProvider;
             }
 
-            item = TrainingsHeaderItem.Import(
+            var header = TrainingsHeaderItem.Import(
                      training?.TrainingName,
                      training?.SubTitle,
                      "placeholderinfoevent.png",
                      training?.TrainingType,
-                     eduProvider?.Name,
+                     eduProvider?.Name ?? Resources.Strings.Resources.Global_UnknownProvider,
                      eduProvider?.Image?.OriginalString,
                      training?.AccessibilityAvailable,
                      training?.TrainingMode,
                      training?.IndividualStartDate);
+
+            item = header;
+
+            if (eduProvider?.Image != null)
+            {
+                if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
+                {
+                    if (!_loadingCache.Keys.Any(x => x.OriginalString == eduProvider.Image.OriginalString))
+                    {
+                        if (!_loadingCache.TryAdd(eduProvider.Image, new List<IProvideImageData>() { header }))
+                        {
+                            _loadingCache[eduProvider.Image].Add(header);
+                        }
+                    }
+                    else
+                    {
+                        _loadingCache[eduProvider.Image].Add(header);
+                    }
+                }
+            }
 
             return true;
         }

@@ -14,7 +14,6 @@ using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
 using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
-
 namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class SearchFilterSheetViewModel : BaseViewModel

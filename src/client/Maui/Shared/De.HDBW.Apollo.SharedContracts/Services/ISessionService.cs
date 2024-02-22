@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         IEnumerable<(long Id, Type Type)> GetFavorites();
 
-        void UpdateRegisteredUser(AccountId? accountId);
+        void UpdateRegisteredUser(string? accessToken, AccountId? accountId);
 
         void UpdateUseCase(UseCase? useCase);
     }

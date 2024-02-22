@@ -81,7 +81,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    SessionService.UpdateRegisteredUser(null);
+                    SessionService.UpdateRegisteredUser(null, null);
                     await NavigationService.PushToRootAsync(Routes.Shell, worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -141,7 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    SessionService.UpdateRegisteredUser(authentication?.Account?.HomeAccountId);
+                    SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);
                     OnPropertyChanged(nameof(HasRegisterdUser));
                     UnscheduleWork(worker);
                 }
@@ -201,7 +201,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 finally
                 {
                     UserService?.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    SessionService.UpdateRegisteredUser(authentication?.Account.HomeAccountId);
+                    SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account.HomeAccountId);
                     if (SessionService.HasRegisteredUser)
                     {
                         await NavigationService.PushToRootAsync(Routes.PickUserNameView, worker.Token);

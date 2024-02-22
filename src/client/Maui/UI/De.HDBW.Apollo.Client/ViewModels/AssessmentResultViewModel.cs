@@ -168,7 +168,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
 
                 var duration = course.Duration ?? string.Empty;
-                var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
+                var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.Global_UnknownProvider;
                 var image = "placeholdercontinuingeducation.png";
                 switch (course.CourseTagType)
                 {
