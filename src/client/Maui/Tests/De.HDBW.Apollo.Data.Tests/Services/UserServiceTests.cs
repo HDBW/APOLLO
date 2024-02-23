@@ -134,13 +134,15 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.NotNull(user);
                 Assert.False(string.IsNullOrWhiteSpace(user!.Id));
                 var profile = user?.Profile ?? new Profile();
-                profile.Licenses = null;
-                profile.CareerInfos = null;
-                profile.EducationInfos = null;
-                profile.Qualifications = null;
-                profile.WebReferences = null;
-                profile.MobilityInfo = null;
+                profile.Licenses = new List<License>();
+                profile.CareerInfos = new List<CareerInfo>();
+                profile.EducationInfos = new List<EducationInfo>();
+                profile.Qualifications = new List<Qualification>();
+                profile.WebReferences = new List<WebReference>();
+                profile.LanguageSkills = new List<Language>();
+                profile.MobilityInfo = new Mobility();
                 user!.Profile = profile;
+                user.ContactInfos = new List<Invite.Apollo.App.Graph.Common.Models.Contact>();
                 var savedUserId = await Service.SaveAsync(user, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
                 user = await Service.GetAsync(userId, TokenSource!.Token);
@@ -148,7 +150,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.NotNull(user);
                 Assert.Equal(userId, user!.Id);
                 Assert.NotNull(user.Profile);
-                //Assert.False(string.IsNullOrWhiteSpace(user!.Profile!.Id));
+                Assert.False(string.IsNullOrWhiteSpace(user!.Profile!.Id));
                 Assert.Null(user.Profile.CareerInfos);
                 Assert.Null(user.Profile.Licenses);
                 Assert.Null(user.Profile.EducationInfos);
@@ -456,6 +458,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 license.Granted = granted;
                 license.Expires = expires;
                 existingUser.Profile!.Licenses!.Add(license);
+                license.
                 savedUserId = await Service.SaveAsync(existingUser, TokenSource!.Token);
                 Assert.Equal(userId, savedUserId);
             }
@@ -509,7 +512,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.True(savedUser.Profile!.EducationInfos!.Count()! >= index + 1);
             Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.EducationInfos![index].Id));
             Assert.Equal(educationType, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<EducationType>());
-            Assert.Equal(state, savedUser.Profile!.EducationInfos![index]!.EducationType.AsEnum<CompletionState>());
+            Assert.Equal(state, savedUser.Profile!.EducationInfos![index]!.CompletionState.AsEnum<CompletionState>());
             return savedUser;
         }
     }
