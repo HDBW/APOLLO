@@ -243,7 +243,7 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IProfileService>((serviceProvider) =>
             {
                 var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
-                var service = new ProfileService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, handler);
+                var service = new ProfileService(serviceProvider.GetService<ILogger<ProfileService>>(), apiUrl, apiToken, handler);
                 return service;
             });
 

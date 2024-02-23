@@ -44,7 +44,7 @@ namespace De.HDBW.Apollo.Data.Services
                 user.Profile = profile;
             }
 
-            return response?.User;
+            return user;
         }
 
         public async Task<string?> SaveAsync(User user, CancellationToken token)
