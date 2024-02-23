@@ -10,6 +10,6 @@ namespace Invite.Apollo.App.Graph.Common.Backend.Api
         /// <summary>
         ///  The identifier of the profile.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; set; }
     }
 }
