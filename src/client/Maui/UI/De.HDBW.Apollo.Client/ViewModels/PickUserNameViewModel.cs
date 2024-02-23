@@ -104,7 +104,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         throw new NotSupportedException("Unable to create user.");
                     }
 
-                    user = await UserService.GetUserAsync(result, token).ConfigureAwait(false);
+                    user = await UserService.GetAsync(result, token).ConfigureAwait(false);
                     if (user == null)
                     {
                         throw new NotSupportedException("Unable to create user.");

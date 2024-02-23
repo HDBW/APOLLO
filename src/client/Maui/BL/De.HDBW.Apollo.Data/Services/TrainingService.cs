@@ -30,7 +30,7 @@ namespace De.HDBW.Apollo.Data.Services
             return response ?? Array.Empty<Training>();
         }
 
-        public async Task<Training?> GetTrainingAsync(string id, CancellationToken token)
+        public async Task<Training?> GetAsync(string id, CancellationToken token)
         {
             var response = await GetTrainingInternalAsync(id, token).ConfigureAwait(false);
             return response;

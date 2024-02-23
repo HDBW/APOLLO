@@ -2,7 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.SharedContracts.Services;
-using Invite.Apollo.App.Graph.Common.Backend.Api.Apollo.RestService.Apollo.Common.Messages;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +19,7 @@ namespace De.HDBW.Apollo.Data.Services
         {
         }
 
-        public async Task<Profile?> GetProfileAsync(string id, CancellationToken token)
+        public async Task<Profile?> GetAsync(string id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             var response = await DoGetAsync<GetProfileResponse>(id, token).ConfigureAwait(false);
@@ -31,7 +31,7 @@ namespace De.HDBW.Apollo.Data.Services
             token.ThrowIfCancellationRequested();
             var request = new CreateOrUpdateProfileRequest() { Profile = profile, UserId = userId };
             var response = await DoPutAsync<CreateOrUpdateProfileResponse>(request, token).ConfigureAwait(false);
-            return response?.Result;
+            return response?.Id;
         }
     }
 }

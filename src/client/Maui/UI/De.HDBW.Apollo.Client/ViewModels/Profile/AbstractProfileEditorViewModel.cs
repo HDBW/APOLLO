@@ -108,7 +108,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             }
 
             User.Id = response;
-            var userResult = await UserService.GetUserAsync(User.Id, token).ConfigureAwait(false);
+            var userResult = await UserService.GetAsync(User.Id, token).ConfigureAwait(false);
             if (userResult == null || !await UserRepository.SaveAsync(userResult, CancellationToken.None).ConfigureAwait(false))
             {
                 Logger.LogError($"Unable to save {nameof(TU)} locally {nameof(SaveAsync)} in {GetType().Name}.");

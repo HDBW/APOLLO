@@ -12,6 +12,6 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string> visibleFields, int? skip, int? top, CancellationToken token);
 
-        Task<Training?> GetTrainingAsync(string id, CancellationToken token);
+        Task<Training?> GetAsync(string id, CancellationToken token);
     }
 }

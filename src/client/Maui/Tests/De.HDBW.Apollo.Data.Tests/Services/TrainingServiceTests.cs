@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 cts.Cancel();
                 await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, null, null, null, cts.Token));
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", cts.Token));
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", cts.Token));
             }
         }
 
@@ -38,7 +38,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Training? training = null;
             try
             {
-                training = await Service.GetTrainingAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", TokenSource!.Token);
+                training = await Service.GetAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {

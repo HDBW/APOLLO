@@ -89,7 +89,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     await Task.Run(
                         async () =>
                     {
-                        var training = await TrainingService.GetTrainingAsync(_trainingId!, worker.Token).ConfigureAwait(false);
+                        var training = await TrainingService.GetAsync(_trainingId!, worker.Token).ConfigureAwait(false);
                         Logger?.LogDebug("StartCreationOfSections");
                         var sections = new List<ObservableObject>();
                         var addedItem = false;
