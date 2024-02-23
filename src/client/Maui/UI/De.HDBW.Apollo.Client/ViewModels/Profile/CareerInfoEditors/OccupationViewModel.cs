@@ -62,12 +62,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             var currentData = await base.LoadDataAsync(user, entryId, token).ConfigureAwait(false);
             var isDirty = IsDirty;
             var occupation = currentData?.Job;
-            var selectedTimeModel = _workTime != null ? timeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : (timeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == currentData?.WorkingTimeModel) ?? timeModels.FirstOrDefault());
+            var selectedTimeModel = _workTime != null ? timeModels.FirstOrDefault(x => ((WorkingTimeModel?)x.Data) == _workTime) : (timeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == currentData?.WorkingTimeModel.AsEnum<WorkingTimeModel>()) ?? timeModels.FirstOrDefault());
 
             if (EditState != null)
             {
                 occupation = EditState?.Job;
-                selectedTimeModel = timeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == EditState?.WorkingTimeModel);
+                selectedTimeModel = timeModels.FirstOrDefault(x => (x.Data as WorkingTimeModel?) == EditState?.WorkingTimeModel.AsEnum<WorkingTimeModel>());
             }
 
             var selection = SelectionResult.Deserialize<Occupation>();
@@ -99,11 +99,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
             base.ApplyChanges(entry);
             if (ShowWorkTimeModelsSelection)
             {
-                entry.WorkingTimeModel = (WorkingTimeModel?)SelectedWorkTimeModel?.Data;
+                entry.WorkingTimeModel = SelectedWorkTimeModel?.Data != null ? ((WorkingTimeModel)SelectedWorkTimeModel.Data).ToApolloListItem() : null;
             }
             else
             {
-                entry.WorkingTimeModel = _workTime;
+                entry.WorkingTimeModel = _workTime != null ? _workTime?.ToApolloListItem() : null;
             }
 
             entry.Job = _job;

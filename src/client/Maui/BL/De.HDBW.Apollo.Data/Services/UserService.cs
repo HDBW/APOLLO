@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Data.Services
             ILogger<UserService>? logger,
             string baseUrl,
             string authKey,
-            IProfileService profileService,
+            IProfileService? profileService,
             HttpMessageHandler httpClientHandler)
             : base(logger, $"{baseUrl}/{nameof(User)}", authKey, httpClientHandler)
         {

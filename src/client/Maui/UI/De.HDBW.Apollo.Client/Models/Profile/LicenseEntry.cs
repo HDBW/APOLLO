@@ -27,7 +27,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<StringValue> GetAllLines(License data)
         {
             var items = new List<StringValue>();
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Designation, data.Name));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_Designation, data.Value));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Validity, GetDateRangeText(data.Granted, data.Expires)));
             return new ObservableCollection<StringValue>(items.Where(x => !string.IsNullOrWhiteSpace(x.Data)));
         }

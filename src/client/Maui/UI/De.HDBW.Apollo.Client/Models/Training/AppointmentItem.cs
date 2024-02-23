@@ -13,7 +13,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
         private readonly Appointment _appointment;
 
         [ObservableProperty]
-        private string _dateRange;
+        private string _dateRange = string.Empty;
 
         [ObservableProperty]
         private bool _isGuaranteed;

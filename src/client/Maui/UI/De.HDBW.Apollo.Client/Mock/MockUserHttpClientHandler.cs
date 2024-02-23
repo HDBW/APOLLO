@@ -69,9 +69,9 @@ namespace De.HDBW.Apollo.Data.Services
 
                         foreach (var item in _user.Profile?.Licenses ?? new List<License>())
                         {
-                            if (item.Id == null)
+                            if (item.ListItemId < 1)
                             {
-                                item.Id = $"{nameof(License)}-{Guid.NewGuid()}";
+                                item.ListItemId = _user.Profile?.Licenses?.IndexOf(item) ?? 0;
                             }
                         }
 

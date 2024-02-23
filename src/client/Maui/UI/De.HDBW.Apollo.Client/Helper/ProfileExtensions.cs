@@ -22,7 +22,7 @@ namespace De.HDBW.Apollo.Client.Helper
 
         public static List<License> AsSortedList(this List<License>? items)
         {
-            return items?.OrderBy(x => x.Name).OrderByDescending(x => x.Expires ?? (x.Granted.HasValue ? DateTime.MaxValue.AddDays(-1) : DateTime.MaxValue)).ThenByDescending(x => x.Granted ?? x.Expires ?? DateTime.MaxValue).ToList() ?? new List<License>();
+            return items?.OrderBy(x => x.Value).OrderByDescending(x => x.Expires ?? (x.Granted.HasValue ? DateTime.MaxValue.AddDays(-1) : DateTime.MaxValue)).ThenByDescending(x => x.Granted ?? x.Expires ?? DateTime.MaxValue).ToList() ?? new List<License>();
         }
 
         public static List<EducationInfo> AsSortedList(this List<EducationInfo>? items)
