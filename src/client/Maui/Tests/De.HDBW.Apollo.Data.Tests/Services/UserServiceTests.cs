@@ -413,7 +413,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.LanguageSkills![index].Id));
             Assert.Equal(code, savedUser.Profile!.LanguageSkills![index].Code);
             Assert.Equal(niveau, savedUser.Profile!.LanguageSkills![index].Niveau.AsEnum<LanguageNiveau>());
-            Assert.Equal(new CultureInfo(code).DisplayName, savedUser.Profile!.LanguageSkills![index].Name); 
+            Assert.Equal(new CultureInfo(code).DisplayName, savedUser.Profile!.LanguageSkills![index].Name);
             Assert.Equal(code, savedUser.Profile!.LanguageSkills![index].Code);
             return savedUser;
         }

@@ -253,7 +253,7 @@ namespace De.HDBW.Apollo.Client
                 var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, serviceProvider.GetService<IProfileService>(), new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
 #else
                 var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken,, serviceProvider.GetService<IProfileService>(), handler);
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, serviceProvider.GetService<IProfileService>(), handler);
 #endif
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
