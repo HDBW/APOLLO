@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.Data.Services
     public class ProfileService : AbstractAuthorizedSwaggerServiceBase, IProfileService
     {
         public ProfileService(
-            ILogger<UserService>? logger,
+            ILogger<ProfileService>? logger,
             string baseUrl,
             string authKey,
             HttpMessageHandler httpClientHandler)

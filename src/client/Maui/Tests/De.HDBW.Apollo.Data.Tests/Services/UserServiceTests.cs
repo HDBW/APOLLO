@@ -4,6 +4,7 @@
 using System.Globalization;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Services;
+using De.HDBW.Apollo.Data.Tests.Extensions;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
@@ -269,7 +270,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected override UserService SetupService(string apiKey, string baseUri, ILogger<UserService> logger, HttpMessageHandler httpClientHandler)
         {
-            return new UserService(logger, baseUri, apiKey, httpClientHandler);
+            var profileService = new ProfileService(this.SetupLogger<ProfileService>(OutputHelper), baseUri, apiKey, httpClientHandler);
+            return new UserService(logger, baseUri, apiKey, profileService, httpClientHandler);
         }
 
         protected override void CleanupAdditionalServices()

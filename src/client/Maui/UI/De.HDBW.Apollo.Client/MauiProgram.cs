@@ -240,13 +240,20 @@ namespace De.HDBW.Apollo.Client
                 return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, handler);
             });
 
+            services.AddSingleton<IProfileService>((serviceProvider) =>
+            {
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new ProfileService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, handler);
+                return service;
+            });
+
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
 #if DEBUG
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, serviceProvider.GetService<IProfileService>(), new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
 #else
                 var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, handler);
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken,, serviceProvider.GetService<IProfileService>(), handler);
 #endif
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
