@@ -69,7 +69,7 @@ public class SvgImage : SKCanvasView
         var skCanvasView = bindable as SKCanvasView;
         var imageView = bindable as SvgImage;
         imageView?.InvalidateSvg();
-        skCanvasView?.InvalidateSurface();
+        imageView?.InvalidateSurface();
     }
 
     private void InvalidateSvg()

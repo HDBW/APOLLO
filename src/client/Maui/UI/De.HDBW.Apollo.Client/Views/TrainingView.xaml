@@ -36,8 +36,8 @@
                 </Grid>
 
                 <Grid ColumnDefinitions="*, *" Margin="24,0">
-                    <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasProviderImage}" MaximumHeightRequest="60" VerticalOptions="Start" Margin="0,4,8,0"/>
-                    <Label x:Name="PART_ProviderName" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16}" MaxLines="2" Grid.Column="1">
+                    <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasProviderImage}" HeightRequest="60" VerticalOptions="Start" Margin="0,4,8,0"/>
+                    <Label x:Name="PART_ProviderName" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16}" MaxLines="2" Grid.Column="1" VerticalOptions="Center">
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{x:Binding HasProviderImage}" Value="False">
                                 <Setter Property="Grid.Column" Value="0" TargetName="PART_ProviderName" />

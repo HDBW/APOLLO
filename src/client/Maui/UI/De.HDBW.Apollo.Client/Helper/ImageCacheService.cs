@@ -74,6 +74,7 @@ namespace De.HDBW.Apollo.Client.Helper
                 var created = File.GetCreationTimeUtc(path);
                 if (created.Add(CacheValidity) < DateTime.UtcNow)
                 {
+                    File.Delete(path);
                     return false;
                 }
 
