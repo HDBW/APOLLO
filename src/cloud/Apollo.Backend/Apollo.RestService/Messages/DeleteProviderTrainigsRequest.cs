@@ -8,10 +8,8 @@ namespace Apollo.RestService.Messages
     /// <summary>
     /// Defines the request message of the DeleteProviderTrainings operation.
     /// </summary>
-    public class DeleteProviderTrainigsRequest : Query
+    public class DeleteProviderTrainigsRequest 
     {
-
-
-       
+        public required string[] providerIds { get; set; }
     }
 }

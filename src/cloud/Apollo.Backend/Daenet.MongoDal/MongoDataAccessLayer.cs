@@ -206,6 +206,32 @@ namespace Daenet.MongoDal
             return builder.Combine(updates);
         }
 
+        /// <summary>
+        /// Asynchronously removes trainings from a specified MongoDB collection based on the given provider IDs.
+        /// </summary>
+        /// <param name="collectionName">The name of the MongoDB collection containing the trainings.</param>
+        /// <param name="providerIds">An array of provider IDs identifying the trainings to be removed.</param>
+        /// <param name="throwIfNotDeleted">Flag indicating whether to throw an exception if deletion is unsuccessful (default is true).</param>
+        /// <returns>A list of  IDs corresponding to the trainings that were successfully removed.</returns>
+        public async Task<List<string>> RemoveTrainingsByProviderIdAsync(string collectionName, string[] providerIds, bool throwIfNotDeleted = true)
+        {
+            var filter = Builders<BsonDocument>.Filter.In("ProviderId", providerIds.Select(i => i));
+
+            var coll = GetCollection(collectionName);
+
+            var trainingsList = await coll.Find(filter).Project(Builders<BsonDocument>.Projection.Include("ProviderId")).ToListAsync();
+
+            var result = await coll.DeleteManyAsync(filter);
+
+            if (throwIfNotDeleted && result.DeletedCount != trainingsList.Count)
+                throw new ApplicationException("Documents cannot be deleted!");
+
+            // Extract the deleted IDs from the documents
+            var deletedIdList = trainingsList.Select(doc => doc["_id"].AsString).ToList();
+
+            return deletedIdList;
+        }
+
 
         /// <summary>
         /// Deletes document.

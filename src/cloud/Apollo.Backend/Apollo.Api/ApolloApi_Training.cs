@@ -445,22 +445,21 @@ namespace Apollo.Api
         }
 
         /// <summary>
-        /// Delete Trainings with specified Ids.
+        /// Delete All Trainings with a specified Prover Id.
         /// </summary>
-        /// <param name="deletingIds">The list of training identifiers.</param>
-        /// <returns>The numbe rof deleted trainings.</returns>
-        public virtual async Task<long> DeleteProviderTrainingsAsync(string providerId)
+        /// <param name="providerId">The Provider Id whise training need to be deleted</param>
+        /// <returns>The number row of deleted trainings.</returns>
+        public virtual async Task<List<string>> DeleteProviderTrainingsAsync(string[] providerId)
         {
             try
             {
                 _logger?.LogTrace($"{this.User} entered {nameof(DeleteProviderTrainingsAsync)}");
 
-                throw new NotImplementedException();
-               // var res = await _dal.DeleteManyAsync(GetCollectionName<Training>(), deletingIds);
+                var res = await _dal.RemoveTrainingsByProviderIdAsync(GetCollectionName<Training>(), providerId);
 
                 _logger?.LogTrace($"{this.User} completed {nameof(DeleteProviderTrainingsAsync)}");
 
-               // return res;
+                 return res;
             }
             catch (Exception ex)
             {
@@ -469,58 +468,6 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
             }
         }
-
-
-        /// <summary>
-        /// Deletes multiple Training instances by their IDs.
-        /// </summary>
-        /// <param name="query">The query with filter and other parameters.</param>
-        /// <returns>A list of deleted Training Ids.</returns>
-        public virtual async Task<IList<string>> DeleteProviderTrainingsAsync(Apollo.Common.Entities.Query query)
-        {
-            try
-            {
-                _logger?.LogTrace($"{this.User} entered {nameof(DeleteProviderTrainingsAsync)}");
-
-                // Execute the query 
-                var res = await _dal.ExecuteQuery<Training>(
-                    ApolloApi.GetCollectionName<Training>(),
-                    query.Fields,
-                    Convertor.ToDaenetQuery(query.Filter),
-                    query.Top,
-                    query.Skip,
-                    Convertor.ToDaenetSortExpression(query.SortExpression)!);
-
-                _logger?.LogTrace($"{this.User} executed {nameof(DeleteProviderTrainingsAsync)}");
-
-                var deletedTrainingIds = new List<string>();
-
-                if (res != null && res.Any())
-                {
-                    foreach (var training in res)
-                    {
-                        await _dal.DeleteAsync(GetCollectionName<Training>(), training.Id);
-                        deletedTrainingIds.Add(training.Id);
-                    }
-                }
-
-                _logger?.LogTrace($"{this.User} completed {nameof(DeleteProviderTrainingsAsync)}");
-
-                return deletedTrainingIds;
-            }
-            catch (ApolloApiException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex, $"{this.User} failed execution of {nameof(DeleteProviderTrainingsAsync)}: {ex.Message}");
-
-                // Throw a more generic exception for unexpected errors
-                throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
-            }
-        }
-
 
     }
 }

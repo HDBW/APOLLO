@@ -217,54 +217,29 @@ namespace Apollo.Service.Controllers
             }
         }
 
+
         /// <summary>
-        /// Deletes all the trainings with the specified Provider Ids in the query.
-        /// Return all deleted Training Ids in response
+        ///  Deletes all trainings based on the multiple providerIds specified in the  request body.
         /// </summary>
-        [HttpDelete("DeleteProviderTrainings")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of queried trainings.", typeof(List<DeleteProviderTrainigsResponse>))]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal server error.")]
+        /// <param name="req">The request containing multiple providerIds.</param>
+        /// <returns>A response indicating the result of the delete operation, including a list of deleted training IDs.</returns>
+        [HttpDelete("provider")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Training deleted successfully.")]
         public async Task<DeleteProviderTrainigsResponse> DeleteProviderTrainigsAsync([FromBody] DeleteProviderTrainigsRequest req)
         {
             try
             {
                 _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} entered.");
 
-                // Call the Apollo API to delete trainings based on the request.
-                var trainings = await _api.DeleteProviderTrainingsAsync(req);
-
-                _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} completed.");
-
-                // Return all deleted Training Ids in response.
-                return new DeleteProviderTrainigsResponse { Trainings = trainings.Select(id => new Training { Id = id }).ToList() };
-            }
-            catch (Exception ex)
-            {
-                // Log and re-throw any exceptions encountered.
-                _logger.LogError($"{nameof(DeleteProviderTrainigsAsync)} failed: {ex.Message}");
-                throw;
-            }
-
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="providerId">TODO</param>
-        [HttpDelete("provider/{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "ErrorCode: 140. Error while deleting the trainings")]
-        [SwaggerResponse(StatusCodes.Status204NoContent, "Training deleted successfully.")]
-        public async Task DeleteProviderTrainigsAsync([FromRoute] string providerId)
-        {
-            try
-            {
-                _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} entered.");
-
                 // Assuming you need to pass the ID of the training to delete.
-                await _api.DeleteProviderTrainingsAsync( providerId ); // TODO
+                var deletedTrainingIds = await _api.DeleteProviderTrainingsAsync( req.providerIds);
 
                 _logger.LogTrace($"{nameof(DeleteProviderTrainigsAsync)} completed.");
+                // Return all deleted Training Ids in response.
+                return new DeleteProviderTrainigsResponse { Trainings = deletedTrainingIds.Select(id => new Training { Id = id }).ToList() };
+
             }
             catch (Exception ex)
             {
