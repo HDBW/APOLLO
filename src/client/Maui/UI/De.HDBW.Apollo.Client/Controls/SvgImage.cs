@@ -115,6 +115,8 @@ public class SvgImage : SKCanvasView
             canvas.Scale(ratio);
             canvas.Translate(-(bounds.Width / 2), -(bounds.Height / 2));
             canvas.DrawPicture(_svg.Picture);
+
+            canvas.Flush();
         }
         catch (Exception ex)
         {

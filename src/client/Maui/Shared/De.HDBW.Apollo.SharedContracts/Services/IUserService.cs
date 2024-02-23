@@ -5,12 +5,12 @@ using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.SharedContracts.Services
 {
-    public interface IProfileService
+    public interface IUserService
     {
         void UpdateAuthorizationHeader(string? authorizationHeader);
 
-        Task<Profile?> GetProfileAsync(string id, CancellationToken token);
+        Task<User?> GetUserAsync(string id, CancellationToken token);
 
-        Task<string?> SaveProfileAsync(Profile user, CancellationToken token);
+        Task<string?> SaveAsync(User user, CancellationToken token);
     }
 }
