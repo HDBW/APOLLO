@@ -62,7 +62,7 @@
                 </VerticalStackLayout>
 
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable, Mode=OneTime}" Margin="24,0">
-                    <Image HeightRequest="60" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                    <Image HeightRequest="24" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
                 </Grid>
 
