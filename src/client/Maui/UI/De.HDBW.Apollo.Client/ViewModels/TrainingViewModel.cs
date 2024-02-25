@@ -295,6 +295,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             base.RefreshCommands();
             OpenProductCommand?.NotifyCanExecuteChanged();
             NavigateBackCommand?.NotifyCanExecuteChanged();
+            ShareProductCommand?.NotifyCanExecuteChanged();
             var contactListSection = Sections?.OfType<ContactListItem>().FirstOrDefault();
             contactListSection?.RefreshCommands();
             var contactItemSection = Sections?.OfType<ContactItem>().FirstOrDefault();
@@ -364,6 +365,38 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Logger?.LogDebug("Finished");
         }
 
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShareProduct))]
+        private async Task ShareProduct(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await Share.RequestAsync(new ShareTextRequest
+                    {
+                        Uri = ProductUrl!.OriginalString,
+                        Title = _training!.TrainingName,
+                    });
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenProduct)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenProduct)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenProduct)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenProduct))]
         private async Task OpenProduct(CancellationToken token)
         {
@@ -406,6 +439,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             _loadingTask = null;
             _loadingCache.Clear();
             await NavigationService.PopAsync(token);
+        }
+
+        private bool CanShareProduct()
+        {
+            return !IsBusy && CanOpenProduct();
         }
 
         private bool CanNavigateBack()

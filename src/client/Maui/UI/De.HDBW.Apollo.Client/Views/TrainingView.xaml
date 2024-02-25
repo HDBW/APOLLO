@@ -15,6 +15,9 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <DataTemplate x:Key="TrainingsHeaderItemTemplate" x:DataType="trainingsModels:TrainingsHeaderItem">
             <VerticalStackLayout Spacing="16">

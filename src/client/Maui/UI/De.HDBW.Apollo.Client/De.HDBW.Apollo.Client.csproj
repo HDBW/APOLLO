@@ -86,6 +86,7 @@
     <None Remove="Resources\Images\resultdeco.svg" />
     <None Remove="Resources\Images\search.svg" />
     <None Remove="Resources\Images\searchclear.svg" />
+    <None Remove="Resources\Images\share.svg" />
     <None Remove="Resources\Images\shortlist.svg" />
     <None Remove="Resources\Images\splashdeco.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
