@@ -8,14 +8,26 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 {
     public class StringPropertyEditor : BasePropertyEditor<string>
     {
-        protected StringPropertyEditor(string lable, StringValue editData)
-            : base(lable, editData, SetValueAction, GetValueAction)
+        protected StringPropertyEditor(string lable, StringValue editData, Action<BasePropertyEditor> clearValueAction)
+            : base(lable, editData, SetValueAction, GetValueAction, clearValueAction)
         {
         }
 
-        public static IPropertyEditor Import(string label, StringValue editData)
+        public static IPropertyEditor Import(string label, StringValue editData, Action<BasePropertyEditor> clearValueAction)
         {
-            return new StringPropertyEditor(label, editData);
+            return new StringPropertyEditor(label, editData, clearValueAction);
+        }
+
+        public override void Update(BaseValue? data, bool hasChanges)
+        {
+            Data = data;
+            Value = GetValueAction(this);
+            HasChanges = hasChanges;
+        }
+
+        public override void Save()
+        {
+            SetValueAction(this);
         }
 
         private static string GetValueAction(BasePropertyEditor<string> editor)

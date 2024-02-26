@@ -6,7 +6,7 @@
             x:Class="De.HDBW.Apollo.Client.Views.SearchFilterSheet"
             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
             IsCancelable="True"
-            BackgroundColor="Azure"
+            BackgroundColor="{StaticResource Neutral0}"
             ios:Page.UseSafeArea="true"
             HasHandle="True"
             HasBackdrop="True"
@@ -40,10 +40,6 @@
                 <editors:DefaultPickerPropertyEditor />
             </DataTemplate>
 
-            <DataTemplate x:Key="ComboboxPropertyEditorTemplate" x:DataType="editorViewModels:ComboboxPropertyEditor">
-                <editors:DefaultComboboxPropertyEditor />
-            </DataTemplate>
-
             <DataTemplate x:Key="DatePropertyEditorTemplate" x:DataType="editorViewModels:DatePropertyEditor">
                 <editors:DefaultDatePropertyEditor />
             </DataTemplate>
@@ -61,7 +57,6 @@
                                              StringPropertyEditorTemplate="{StaticResource StringPropertyEditorTemplate}"
                                              BooleanPropertyEditorTemplate="{StaticResource BooleanPropertyEditorTemplate}"
                                              PickerPropertyEditorTemplate="{StaticResource PickerPropertyEditorTemplate}"
-                                             ComboboxPropertyEditorTemplate="{StaticResource ComboboxPropertyEditorTemplate}"
                                              DatePropertyEditorTemplate="{StaticResource DatePropertyEditorTemplate}"
                                              RangePropertyEditorTemplate="{StaticResource RangePropertyEditorTemplate}"
                                              ListPropertyEditorTemplate="{StaticResource ListPropertyEditorTemplate}"/>
@@ -75,25 +70,25 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0"
+            <ImageButton Grid.Column="0"
                 Command="{x:Binding CloseCommand}"
-                Padding="0"
-                ImageSource="magnify.png"
+                Padding="5"
+                Source="chevronback.png"
                 HorizontalOptions="Start" />
 
-            <Button
+            <ImageButton
                 Grid.Column="2"
                 Command="{x:Binding ResetFilterCommand}"
-                ImageSource="magnify.png"
-                Padding="0"
-                HorizontalOptions="End">
-            </Button>
+                Source="delete.png"
+                HorizontalOptions="End"/>
+
         </Grid>
 
         <ScrollView VerticalOptions="FillAndExpand"
                     Grid.Row="1"
-                    Padding="20,0">
-            <VerticalStackLayout 
+                    Padding="24,12">
+            <VerticalStackLayout
+                Spacing="8"
                 BindableLayout.ItemsSource="{Binding EditorList}"
                 BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}">
             </VerticalStackLayout>
@@ -102,7 +97,7 @@
         <Button
             TextColor="White"
             BackgroundColor="{StaticResource Primary}"
-            Text="Filter"
+            Text="{Static strings:Resources.Global_SearchFilterSheet_ApplyFilter}"
             Command="{x:Binding ApplyFilterCommand}"
             Grid.Row="2"
             Margin="20,0"/>

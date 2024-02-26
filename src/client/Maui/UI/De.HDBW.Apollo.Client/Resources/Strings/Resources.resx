@@ -1399,4 +1399,28 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="TraingsView_PriceDescription" xml:space="preserve">
     <value>Preisdetails</value>
   </data>
+  <data name="Filter_Loans" xml:space="preserve">
+    <value>Finanzierungsoptionen</value>
+  </data>
+  <data name="Global_SearchFilterSheet_ApplyFilter" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
+  <data name="Filter_HasIndividualStartDate" xml:space="preserve">
+    <value>Startdatum individuell</value>
+  </data>
+  <data name="Filter_IsAccessible" xml:space="preserve">
+    <value>Barrierefrei</value>
+  </data>
+  <data name="Filter_TrainingsMode" xml:space="preserve">
+    <value>Kursart</value>
+  </data>
+  <data name="Filter_TrainingTimeModel" xml:space="preserve">
+    <value>Zeitmodel</value>
+  </data>
+  <data name="Global_RageEnd" xml:space="preserve">
+    <value>Bis</value>
+  </data>
+  <data name="Global_RageStart" xml:space="preserve">
+    <value>Von</value>
+  </data>
 </root>

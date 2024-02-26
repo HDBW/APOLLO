@@ -2,11 +2,14 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.Concurrent;
-using System.Collections.Frozen;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Models;
@@ -15,6 +18,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
 using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
@@ -37,6 +41,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private CancellationTokenSource? _loadingCts;
         private List<Task>? _loadingTask;
+
+        private Filter? _customFilter;
+        private string _query;
+
+        private List<TrainingModel> _trainings = new List<TrainingModel>();
 
         public SearchViewModel(
             IDispatcherService dispatcherService,
@@ -61,6 +70,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             SearchHistoryRepository = searchHistoryRepository;
             ImageCacheService = imageCacheService;
             Filter = CreateDefaultTrainingsFilter(string.Empty);
+            WeakReferenceMessenger.Default.Register<FilterChangedMessage>(this, OnFilterChangedMessage);
         }
 
         private IImageCacheService ImageCacheService { get; }
@@ -141,7 +151,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanOpenFilterSheet()
         {
-            return !IsBusy && (SearchResults?.Any() ?? false);
+            return !IsBusy && ((SearchResults?.Any() ?? false) || _customFilter != null);
         }
 
         private bool CanHandleInteract(InteractionEntry interaction)
@@ -165,8 +175,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFilterSheet))]
         private async Task OpenFilterSheet()
         {
-            var parameters = new NavigationParameters();
-            parameters.Add(NavigationParameter.Data, JsonConvert.SerializeObject(Filter));
+            var parameters = new NavigationParameters
+            {
+                { NavigationParameter.Data, JsonConvert.SerializeObject(_customFilter) },
+            };
             await SheetService.OpenAsync(Routes.SearchFilterSheet, CancellationToken.None, parameters);
         }
 
@@ -322,19 +334,52 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         nameof(TrainingModel.TrainingName),
                         nameof(TrainingModel.TrainingType),
                         nameof(TrainingModel.ShortDescription),
-                        nameof(TrainingModel.Price),
+                        KnownFilters.PriceFieldName,
                         $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Name)}",
                         $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Image)}",
                         $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Name)}",
                         $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Image)}",
+                        KnownFilters.LoansFieldName,
+                        KnownFilters.IndividualStartDateFieldName,
+                        KnownFilters.AccessibilityAvailableFieldName,
+                        KnownFilters.TrainingsModeFieldName,
+                        KnownFilters.AppointmenTrainingsModeFieldName,
                     };
 
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
             items = items ?? new List<TrainingModel>();
+            _trainings = items.ToList();
             var result = new List<SearchInteractionEntry>();
-            result.AddRange(CreateTrainingResults(items));
-
+            result.AddRange(CreateTrainingResults(_trainings));
             return result;
+        }
+
+        private IEnumerable<TrainingModel> TryFilter(IEnumerable<TrainingModel> items, Filter? customFilter)
+        {
+            if (items == null)
+            {
+                return new List<TrainingModel>();
+            }
+
+            if (customFilter == null)
+            {
+                return items;
+            }
+
+            bool? loansArg = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.LoansFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
+            bool? individualStartDateArg = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.IndividualStartDateFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
+            bool? accessibilityAvailableArg = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AccessibilityAvailableFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
+            decimal? minPrice = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Min();
+            decimal? maxPrice = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Max();
+            List<TrainingMode>? flags = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.TrainingsModeFieldName)?.Argument?.OfType<TrainingMode>().ToList();
+            var validItems = items.Where(x =>
+                FilterByLoans(x, loansArg)
+                && FilterByIndividualStartDate(x, individualStartDateArg)
+                && FilterByAccessibilityAvailable(x, accessibilityAvailableArg)
+                && FilterByPrice(x, (double?)minPrice, (double?)maxPrice)
+                && FilterByTrainingsMode(x, flags));
+
+            return validItems.Distinct();
         }
 
         private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items)
@@ -470,6 +515,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void UpdateTrainingsFilter(string query)
         {
+            _query = query;
             if (Filter == null)
             {
                 Filter = CreateDefaultTrainingsFilter(query);
@@ -486,5 +532,64 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
             }
         }
+
+        private void OnFilterChangedMessage(object recipient, FilterChangedMessage message)
+        {
+            _customFilter = message.Filter;
+            var filteredTrainings = TryFilter(_trainings, _customFilter);
+            var items = CreateTrainingResults(filteredTrainings);
+            LoadonUIThread(items);
+        }
+
+        private bool FilterByLoans(TrainingModel model, bool? argument)
+        {
+            if (argument == null)
+            {
+                return true;
+            }
+
+            return (model.Loans?.Any() ?? false) == argument!;
+        }
+
+        private bool FilterByAccessibilityAvailable(TrainingModel model, bool? argument)
+        {
+            if (argument == null)
+            {
+                return true;
+            }
+
+            return (model.AccessibilityAvailable ?? false) == argument!;
+        }
+
+        private bool FilterByIndividualStartDate(TrainingModel model, bool? argument)
+        {
+            if (argument == null)
+            {
+                return true;
+            }
+
+            return !string.IsNullOrWhiteSpace(model.IndividualStartDate) == argument!;
+        }
+
+        private bool FilterByPrice(TrainingModel model, double? start, double? end)
+        {
+            if (!model.Price.HasValue || !start.HasValue || !end.HasValue)
+            {
+                return true;
+            }
+
+            return model.Price.Value >= start.Value && model.Price.Value <= end.Value;
+        }
+
+        private bool FilterByTrainingsMode(TrainingModel model, List<TrainingMode>? flags)
+        {
+            if (!model.TrainingMode.HasValue || flags == null || !flags.Any())
+            {
+                return true;
+            }
+
+            return flags.Any(x => (model.TrainingMode & x) != 0);
+        }
+
     }
 }

@@ -53,6 +53,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
                             sections.Add(item);
                         }
 
+                        if (TryCreateAppointmentTrainingMode(appointment, out ObservableObject? trainingMode))
+                        {
+                            addedAppointment = true;
+                            sections.Add(trainingMode);
+                        }
+
                         if (TryCreateAppointmentTimeModelItem(appointment, out ObservableObject? timeModel))
                         {
                             addedAppointment = true;
@@ -198,6 +204,40 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             item = null;
             var rateRange = $"{appointment.StartDate.ToUIDate().ToShortDateString()}-{appointment.EndDate.ToUIDate().ToShortDateString()}";
             item = HeaderedLineItem.Import(null, rateRange, Resources.Strings.Resources.AppointmentsView_Period);
+            return true;
+        }
+
+        private bool TryCreateAppointmentTrainingMode(Appointment appointment, [MaybeNullWhen(false)] out ObservableObject item)
+        {
+            item = null;
+            if (!appointment.TrainingMode.HasValue)
+            {
+                return false;
+            }
+
+            var modes = new List<string>();
+            if ((appointment.TrainingMode & TrainingMode.Online) != 0)
+            {
+                modes.Add(Resources.Strings.Resources.TrainingMode_Online);
+            }
+
+            if ((appointment.TrainingMode & TrainingMode.Offline) != 0)
+            {
+                modes.Add(Resources.Strings.Resources.TrainingMode_Offline);
+            }
+
+            if ((appointment.TrainingMode & TrainingMode.Hybrid) != 0)
+            {
+                modes.Add(Resources.Strings.Resources.TrainingMode_Hybrid);
+            }
+
+            if ((appointment.TrainingMode & TrainingMode.OnDemand) != 0)
+            {
+                modes.Add(Resources.Strings.Resources.TrainingMode_OnDemand);
+            }
+
+            var rateRange = string.Join(", ", modes);
+            item = HeaderedLineItem.Import(null, rateRange, Resources.Strings.Resources.Global_TrainingMode);
             return true;
         }
 

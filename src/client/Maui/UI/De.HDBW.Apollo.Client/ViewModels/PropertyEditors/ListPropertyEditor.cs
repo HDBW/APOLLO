@@ -10,7 +10,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 {
     public partial class ListPropertyEditor : BasePropertyEditor
     {
-        private readonly ObservableCollection<SelectionValue> _values = new ObservableCollection<SelectionValue>();
+        private ObservableCollection<SelectionValue> _values = new ObservableCollection<SelectionValue>();
 
         [ObservableProperty]
         private SelectionValue? _value;
@@ -18,9 +18,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
         [ObservableProperty]
         private bool _isSingleSelect;
 
-        protected ListPropertyEditor(string label, IEnumerable<PickerValue> values, bool isSingleSelect)
-           : base(label)
+        protected ListPropertyEditor(string label, IEnumerable<PickerValue> values, bool isSingleSelect, Action<BasePropertyEditor> clearValueAction)
+           : base(label, clearValueAction)
         {
+            _isSingleSelect = isSingleSelect;
             _values = new ObservableCollection<SelectionValue>(values.Select(x => new SelectionValue(x.DisplayValue, x, OnSelectionChanged)));
         }
 
@@ -32,9 +33,31 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
             }
         }
 
-        public static IPropertyEditor Import(string label, IEnumerable<PickerValue> values, bool isSingleSelect = false)
+        public static IPropertyEditor Import(string label, IEnumerable<PickerValue> values, Action<BasePropertyEditor> clearValueAction, bool isSingleSelect = false)
         {
-            return new ListPropertyEditor(label, values, isSingleSelect);
+            return new ListPropertyEditor(label, values, isSingleSelect, clearValueAction);
+        }
+
+        public void Update(Dictionary<PickerValue, bool> values, bool hasChanges)
+        {
+            _values = new ObservableCollection<SelectionValue>(values.Select(x =>
+            {
+                var item = new SelectionValue(x.Key.DisplayValue, x.Key, OnSelectionChanged);
+                item.UpdateSelectedState(x.Value);
+                return item;
+            }));
+            OnPropertyChanged(nameof(Values));
+            Update((BaseValue?)null, hasChanges);
+        }
+
+        public override void Update(BaseValue? data, bool hasChanges)
+        {
+            Data = data;
+            HasChanges = hasChanges;
+        }
+
+        public override void Save()
+        {
         }
 
         private void OnSelectionChanged(SelectionValue item)

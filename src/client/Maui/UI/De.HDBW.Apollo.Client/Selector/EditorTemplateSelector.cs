@@ -15,8 +15,6 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? PickerPropertyEditorTemplate { get; set; }
 
-        public DataTemplate? ComboboxPropertyEditorTemplate { get; set; }
-
         public DataTemplate? DatePropertyEditorTemplate { get; set; }
 
         public DataTemplate? RangePropertyEditorTemplate { get; set; }
@@ -31,8 +29,6 @@ namespace De.HDBW.Apollo.Client.Selector
                     return StringPropertyEditorTemplate;
                 case BooleanPropertyEditor:
                     return BooleanPropertyEditorTemplate;
-                case ComboboxPropertyEditor:
-                    return ComboboxPropertyEditorTemplate;
                 case PickerPropertyEditor:
                     return PickerPropertyEditorTemplate;
                 case DatePropertyEditor:

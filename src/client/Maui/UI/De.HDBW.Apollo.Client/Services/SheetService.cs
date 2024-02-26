@@ -85,6 +85,12 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
+            var queryAble = sheet as IQueryAttributable ?? sheet.BindingContext as IQueryAttributable;
+            if (queryAble != null && parameters != null)
+            {
+                queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
+            }
+
             RegisterSheet(sheet);
             var window = Application.Current?.Windows?.FirstOrDefault();
             if (window != null)

@@ -2,10 +2,10 @@
 // The HDBW licenses this file to you under the MIT license.
 namespace De.HDBW.Apollo.Client.Models.PropertyEditor
 {
-    public class DecimalValue
-        : BaseValue<decimal>
+    public class DecimalRangeValue
+        : BaseValue<(decimal Start, decimal End)>
     {
-        public DecimalValue(decimal data)
+        public DecimalRangeValue((decimal Start, decimal End) data)
             : base(data)
         {
         }

@@ -7,46 +7,131 @@ using De.HDBW.Apollo.Client.Models.PropertyEditor;
 
 namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 {
-    public partial class RangePropertyEditor : BasePropertyEditor<double>
+    public partial class RangePropertyEditor : BasePropertyEditor<DecimalRangeValue>
     {
+        private readonly decimal _rangeValue;
+
+        private double _endValue;
+        private double _startValue;
+
         [ObservableProperty]
         private double _minValue;
 
         [ObservableProperty]
         private double _maxValue;
 
-        public RangePropertyEditor(string label, BaseValue<double> editValue, double minValue, double maxValue)
-            : base(label, editValue, SetValueAction, GetValueAction)
+        public RangePropertyEditor(string label, DecimalRangeValue editValue, decimal rangeValue, Action<BasePropertyEditor> clearValueAction)
+            : base(label, editValue, SetValueAction, GetValueAction, clearValueAction)
         {
             ArgumentNullException.ThrowIfNull(editValue);
-            ArgumentNullException.ThrowIfNull(minValue);
-            ArgumentNullException.ThrowIfNull(maxValue);
-            MinValue = minValue;
-            MaxValue = maxValue;
+            ArgumentNullException.ThrowIfNull(rangeValue);
+            _rangeValue = rangeValue;
+            MinValue = 0;
+            MaxValue = 1;
+            StartValue = Convert.ToDouble(editValue.Value.Start / RangeValue);
+            EndValue = Convert.ToDouble(editValue.Value.End / RangeValue);
+            HasChanges = false;
         }
 
-        public static IPropertyEditor Import(string label, BaseValue<double> editValue, double minValue, double maxValue)
+        public decimal RangeValue
         {
-            return new RangePropertyEditor(label, editValue, minValue, maxValue);
+            get
+            {
+                return _rangeValue;
+            }
         }
 
-        private static double GetValueAction(BasePropertyEditor<double> editor)
+        public string StartValueString
         {
-            var editValue = editor.Data as BaseValue<double>;
-            return editValue!.Value!;
+            get
+            {
+                return $"{StartValue * Convert.ToDouble(_rangeValue):N2} €";
+            }
         }
 
-        private static void SetValueAction(BasePropertyEditor<double> editor)
+        public string EndValueString
         {
-            var editValue = editor.Data as BaseValue<double>;
-            if (editValue == null)
+            get
+            {
+                return $"{EndValue * Convert.ToDouble(_rangeValue):N2} €";
+            }
+        }
+
+        public double StartValue
+        {
+            get
+            {
+                return _startValue;
+            }
+
+            set
+            {
+                if (SetProperty(ref _startValue, value))
+                {
+                    EndValue = Math.Max(EndValue, StartValue);
+                    OnPropertyChanged(nameof(StartValueString));
+                    HasChanges = true;
+                }
+            }
+        }
+
+        public double EndValue
+        {
+            get
+            {
+                return _endValue;
+            }
+
+            set
+            {
+                if (SetProperty(ref _endValue, value))
+                {
+                    StartValue = Math.Min(StartValue, EndValue);
+                    OnPropertyChanged(nameof(EndValueString));
+                    HasChanges = true;
+                }
+            }
+        }
+
+        public static IPropertyEditor Import(string label, DecimalRangeValue editValue, decimal rangeValue, Action<BasePropertyEditor> clearValueAction)
+        {
+            return new RangePropertyEditor(label, editValue, rangeValue, clearValueAction);
+        }
+
+        public override void Update(BaseValue? data, bool hasChanges)
+        {
+            Data = data;
+            Value = GetValueAction(this);
+            StartValue = Convert.ToDouble(Value.Value.Start / RangeValue);
+            EndValue = Convert.ToDouble(Value.Value.End / RangeValue);
+            HasChanges = hasChanges;
+        }
+
+        public override void Save()
+        {
+            SetValueAction(this);
+        }
+
+        private static DecimalRangeValue GetValueAction(BasePropertyEditor<DecimalRangeValue> editor)
+        {
+            var editValue = editor.Data as DecimalRangeValue;
+            return new DecimalRangeValue(editValue!.Value!);
+        }
+
+        private static void SetValueAction(BasePropertyEditor<DecimalRangeValue> editor)
+        {
+            var rangeEditor = editor as RangePropertyEditor;
+            var editValue = editor.Data as DecimalRangeValue;
+            if (editValue == null || rangeEditor == null)
             {
                 return;
             }
 
             if (editor.HasChanges)
             {
-                editValue.Value = editor.Value;
+                decimal start = Convert.ToDecimal(rangeEditor.StartValue) * rangeEditor.RangeValue;
+                decimal end = Convert.ToDecimal(rangeEditor.EndValue) * rangeEditor.RangeValue;
+                editValue.Value = (start, end);
             }
         }
     }

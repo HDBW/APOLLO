@@ -16,8 +16,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
             string label,
             BaseValue data,
             Action<BasePropertyEditor<TU>> setValueAction,
-            Func<BasePropertyEditor<TU>, TU> getValueAction)
-            : base(label, data)
+            Func<BasePropertyEditor<TU>, TU> getValueAction,
+            Action<BasePropertyEditor> clearValueAction)
+            : base(label, data, clearValueAction)
         {
             _getValueAction = getValueAction;
             _setValueAction = setValueAction;

@@ -55,6 +55,7 @@
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\calender.svg" />
     <None Remove="Resources\Images\checkmark.svg" />
+    <None Remove="Resources\Images\chevronback.svg" />
     <None Remove="Resources\Images\chevrondown.svg" />
     <None Remove="Resources\Images\chevronlink.svg" />
     <None Remove="Resources\Images\chevronup.svg" />
