@@ -8,8 +8,14 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface ISheetService
     {
+        bool IsShowingSheet
+        {
+            get;
+        }
+
         Task<bool> CloseAsync(BaseViewModel viewModel);
 
         Task<bool> OpenAsync(string route, CancellationToken token, NavigationParameters? parameters = null);
+
     }
 }

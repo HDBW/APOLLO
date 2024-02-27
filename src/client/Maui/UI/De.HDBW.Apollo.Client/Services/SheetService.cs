@@ -1,7 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -20,6 +22,14 @@ namespace De.HDBW.Apollo.Client.Services
             ServiceProvider = serviceProvider;
         }
 
+        public bool IsShowingSheet
+        {
+            get
+            {
+                return _sheetLookup.Any();
+            }
+        }
+
         private ILogger Logger { get; }
 
         private IDispatcherService DispatcherService { get; }
@@ -33,7 +43,7 @@ namespace De.HDBW.Apollo.Client.Services
             var result = false;
             try
             {
-                await DispatcherService.ExecuteOnMainThreadAsync(() => OpenOnUIThreadAsnc(route, token, parameters), token);
+                await DispatcherService.ExecuteOnMainThreadAsync(() => OpenOnUIThreadAsnc(route, token, parameters), token).ConfigureAwait(false);
                 result = true;
             }
             catch (OperationCanceledException)
@@ -77,6 +87,7 @@ namespace De.HDBW.Apollo.Client.Services
 
         private async Task OpenOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
+            Logger?.LogDebug($"OpenOnUIThreadAsnc in {GetType().Name}. {token.IsCancellationRequested}");
             token.ThrowIfCancellationRequested();
 
             var sheet = Routing.GetOrCreateContent(route, ServiceProvider) as BottomSheet;
@@ -91,6 +102,8 @@ namespace De.HDBW.Apollo.Client.Services
                 queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
             }
 
+            Logger?.LogDebug($"OpenOnUIThreadAsnc1 in {GetType().Name}. {token.IsCancellationRequested}");
+            token.ThrowIfCancellationRequested();
             RegisterSheet(sheet);
             var window = Application.Current?.Windows?.FirstOrDefault();
             if (window != null)
@@ -99,16 +112,19 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
+            Logger?.LogDebug($"OpenOnUIThreadAsnc3 in {GetType().Name}. {token.IsCancellationRequested}");
             await sheet.ShowAsync(true);
-            UnregisterSheet(sheet);
         }
 
-        private bool UnregisterSheet(BottomSheet sheet)
+        private bool UnregisterSheet(BottomSheet? sheet)
         {
             if (sheet == null)
             {
                 return false;
             }
+
+            sheet.Dismissed -= HandleSheetDismissed;
+            sheet.Shown -= HandleSheetShown;
 
             CleanupLookups();
             var exitingItem = _sheetLookup.FirstOrDefault(k => k.Key.TryGetTarget(out BottomSheet? s) && s == sheet);
@@ -144,8 +160,31 @@ namespace De.HDBW.Apollo.Client.Services
                 return false;
             }
 
+            sheet.InputTransparent = true;
+            sheet.IsEnabled = false;
+            sheet.IsCancelable = false;
+            sheet.Dismissed += HandleSheetDismissed;
+            sheet.Shown += HandleSheetShown;
             _sheetLookup.Add(new WeakReference<BottomSheet>(sheet), viewModel);
             return true;
+        }
+
+        private void HandleSheetShown(object? sender, EventArgs e)
+        {
+            var sheet = sender as BottomSheet;
+            if (sheet != null)
+            {
+                sheet.InputTransparent = false;
+                sheet.IsEnabled = true;
+                sheet.IsCancelable = true;
+            }
+        }
+
+        private void HandleSheetDismissed(object? sender, DismissOrigin e)
+        {
+            var sheet = sender as BottomSheet;
+            UnregisterSheet(sheet);
+            WeakReferenceMessenger.Default.Send(new SheetDismissedMessage());
         }
     }
 }

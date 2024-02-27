@@ -71,6 +71,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ImageCacheService = imageCacheService;
             Filter = CreateDefaultTrainingsFilter(string.Empty);
             WeakReferenceMessenger.Default.Register<FilterChangedMessage>(this, OnFilterChangedMessage);
+            WeakReferenceMessenger.Default.Register<SheetDismissedMessage>(this, OnSheetDismissedMessage);
         }
 
         private IImageCacheService ImageCacheService { get; }
@@ -151,7 +152,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanOpenFilterSheet()
         {
-            return !IsBusy && ((SearchResults?.Any() ?? false) || _customFilter != null);
+            return !IsBusy && ((SearchResults?.Any() ?? false) || _customFilter != null) && !SheetService.IsShowingSheet;
         }
 
         private bool CanHandleInteract(InteractionEntry interaction)
@@ -173,13 +174,38 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFilterSheet))]
-        private async Task OpenFilterSheet()
+        private async Task OpenFilterSheet(CancellationToken token)
         {
-            var parameters = new NavigationParameters
+            Logger.LogDebug("OpenFilterSheet START");
+            using (var worker = ScheduleWork(token))
             {
-                { NavigationParameter.Data, JsonConvert.SerializeObject(_customFilter) },
-            };
-            await SheetService.OpenAsync(Routes.SearchFilterSheet, CancellationToken.None, parameters);
+                try
+                {
+                    var parameters = new NavigationParameters
+                    {
+                        { NavigationParameter.Data, JsonConvert.SerializeObject(_customFilter) },
+                    };
+                    await SheetService.OpenAsync(Routes.SearchFilterSheet, worker.Token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenFilterSheet)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenFilterSheet)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenFilterSheet)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    Logger.LogDebug("OpenFilterSheet UnscheduleWork start");
+                    UnscheduleWork(worker);
+                    Logger.LogDebug("OpenFilterSheet UnscheduleWork end");
+                }
+            }
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch))]
@@ -541,7 +567,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
             _customFilter = message.Filter;
             var filteredTrainings = TryFilter(_trainings, _customFilter);
             var items = CreateTrainingResults(filteredTrainings);
-            LoadonUIThread(items);
+            if (MainThread.IsMainThread)
+            {
+                LoadonUIThread(items);
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(() => LoadonUIThread(items));
+            }
+        }
+
+        private void OnSheetDismissedMessage(object recipient, SheetDismissedMessage message)
+        {
+            if (MainThread.IsMainThread)
+            {
+                RefreshCommands();
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(RefreshCommands);
+            }
         }
 
         private bool FilterByLoans(TrainingModel model, bool? argument)
