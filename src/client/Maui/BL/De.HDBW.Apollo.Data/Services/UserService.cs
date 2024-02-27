@@ -70,10 +70,10 @@ namespace De.HDBW.Apollo.Data.Services
             return response?.Result;
         }
 
-        public async Task<bool> DeleteAsync(string? accessToken, CancellationToken token)
+        public Task<bool> DeleteAsync(string accessToken, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            return true;
+            return Task.FromResult(true);
         }
     }
 }

@@ -13,6 +13,6 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         Task<string?> SaveAsync(User user, CancellationToken token);
 
-        Task<bool> DeleteAsync(string? accessToken, CancellationToken token);
+        Task<bool> DeleteAsync(string accessToken, CancellationToken token);
     }
 }

@@ -48,10 +48,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    if (!await UserService.DeleteAsync(SessionService.AccessToken, worker.Token))
+                    if (!string.IsNullOrWhiteSpace(SessionService.AccessToken))
                     {
-                        Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
-                        return;
+                        if (!await UserService.DeleteAsync(SessionService.AccessToken, worker.Token))
+                        {
+                            Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
+                            return;
+                        }
                     }
 
                     await AuthService.LogoutAsync(worker.Token);

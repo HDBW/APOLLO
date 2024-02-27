@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface ISessionService
     {
-        public UseCase? UseCase { get; }
+        UseCase? UseCase { get; }
 
         bool HasRegisteredUser { get; }
 
