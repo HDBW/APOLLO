@@ -87,7 +87,6 @@ namespace De.HDBW.Apollo.Client.Services
 
         private async Task OpenOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
-            Logger?.LogDebug($"OpenOnUIThreadAsnc in {GetType().Name}. {token.IsCancellationRequested}");
             token.ThrowIfCancellationRequested();
 
             var sheet = Routing.GetOrCreateContent(route, ServiceProvider) as BottomSheet;
@@ -102,7 +101,6 @@ namespace De.HDBW.Apollo.Client.Services
                 queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
             }
 
-            Logger?.LogDebug($"OpenOnUIThreadAsnc1 in {GetType().Name}. {token.IsCancellationRequested}");
             token.ThrowIfCancellationRequested();
             RegisterSheet(sheet);
             var window = Application.Current?.Windows?.FirstOrDefault();
@@ -112,7 +110,6 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
-            Logger?.LogDebug($"OpenOnUIThreadAsnc3 in {GetType().Name}. {token.IsCancellationRequested}");
             await sheet.ShowAsync(true);
         }
 
