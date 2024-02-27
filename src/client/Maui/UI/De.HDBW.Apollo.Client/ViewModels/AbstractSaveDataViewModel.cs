@@ -137,7 +137,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     if (!await SaveAsync(worker.Token).ConfigureAwait(false))
                     {
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, token).ConfigureAwait(false);
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                     }
                 }
                 catch (OperationCanceledException)

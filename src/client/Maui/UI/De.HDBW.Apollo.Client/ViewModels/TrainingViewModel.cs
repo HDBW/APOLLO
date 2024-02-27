@@ -539,7 +539,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.NavigateAsync(item.Route, token, item.Parameters).ConfigureAwait(false);
+                    await NavigationService.NavigateAsync(item.Route, worker.Token, item.Parameters).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {

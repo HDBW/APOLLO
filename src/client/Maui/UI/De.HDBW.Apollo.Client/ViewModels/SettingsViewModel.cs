@@ -48,8 +48,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var userdeleted = await UserService.DeleteAsync(SessionService.AccessToken, token);
-                    if (!userdeleted)
+                    if (!await UserService.DeleteAsync(SessionService.AccessToken, worker.Token))
                     {
                         Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
                         return;

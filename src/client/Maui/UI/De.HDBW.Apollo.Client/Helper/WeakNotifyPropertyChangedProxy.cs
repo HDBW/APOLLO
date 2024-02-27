@@ -50,5 +50,4 @@ namespace De.HDBW.Apollo.Client.Helper
             }
         }
     }
-
 }
