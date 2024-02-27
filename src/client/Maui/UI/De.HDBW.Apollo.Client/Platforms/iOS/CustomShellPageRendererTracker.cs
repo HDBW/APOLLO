@@ -43,32 +43,6 @@ namespace De.HDBW.Apollo.Client.Platforms
             base.UpdateSearchVisibility(searchController);
         }
 
-        private void OnEditingStarted(object? sender, EventArgs e)
-        {
-            var searchBar = sender as UISearchBar;
-            if (searchBar == null)
-            {
-                return;
-            }
-
-            if (searchBar.InputAccessoryView == null)
-            {
-                var toolbar = new UIToolbar(new RectangleF(0.0f, 0.0f, 50.0f, 44.0f));
-
-                var doneButton = new UIBarButtonItem(Resources.Strings.Resources.Global_Close, UIBarButtonItemStyle.Done, (s, a) =>
-                {
-                    OnHideSearchSuggestions(this, new HideSearchSuggestionsMessage());
-                });
-
-                toolbar.Items = new UIBarButtonItem[]
-                {
-                    new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-                    doneButton,
-                };
-                searchBar.InputAccessoryView = toolbar;
-            }
-        }
-
         protected override void RemoveSearchController(UINavigationItem navigationItem)
         {
             base.RemoveSearchController(navigationItem);
@@ -92,6 +66,32 @@ namespace De.HDBW.Apollo.Client.Platforms
             {
                 controller.SearchBar.EndEditing(true);
                 controller.Active = false;
+            }
+        }
+
+        private void OnEditingStarted(object? sender, EventArgs e)
+        {
+            var searchBar = sender as UISearchBar;
+            if (searchBar == null)
+            {
+                return;
+            }
+
+            if (searchBar.InputAccessoryView == null)
+            {
+                var toolbar = new UIToolbar(new RectangleF(0.0f, 0.0f, 50.0f, 44.0f));
+
+                var doneButton = new UIBarButtonItem(Resources.Strings.Resources.Global_Close, UIBarButtonItemStyle.Done, (s, a) =>
+                {
+                    OnHideSearchSuggestions(this, new HideSearchSuggestionsMessage());
+                });
+
+                toolbar.Items = new UIBarButtonItem[]
+                {
+                    new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
+                    doneButton,
+                };
+                searchBar.InputAccessoryView = toolbar;
             }
         }
     }
