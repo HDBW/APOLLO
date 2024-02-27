@@ -2,9 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq.Expressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -257,7 +255,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     query = query ?? string.Empty;
                     UpdateTrainingsFilter(query);
                     var interactions = await SearchTrainingsAsync(Filter, worker.Token).ConfigureAwait(false);
-
                     if (!interactions.Any() || string.IsNullOrWhiteSpace(query))
                     {
                         await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token).ConfigureAwait(false);
@@ -395,6 +392,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
             items = items ?? new List<TrainingModel>();
             _trainings = items.ToList();
+            _customFilter = null;
             var result = new List<SearchInteractionEntry>();
             result.AddRange(CreateTrainingResults(_trainings, true));
             return result;
@@ -412,13 +410,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return items;
             }
 
-            bool? loansArg = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.LoansFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
-            bool? individualStartDateArg = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.IndividualStartDateFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
-            bool? accessibilityAvailableArg = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AccessibilityAvailableFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
-            decimal? minPrice = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Min();
-            decimal? maxPrice = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Max();
-            List<TrainingMode>? trainingModes = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.TrainingsModeFieldName)?.Argument?.OfType<TrainingMode>().ToList();
-            List<TrainingTimeModel>? trainingTimes = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenTrainingsTimeModelFieldName)?.Argument?.OfType<TrainingTimeModel>().ToList();
+            bool? loansArg = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.LoansFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
+            bool? individualStartDateArg = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.IndividualStartDateFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
+            bool? accessibilityAvailableArg = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AccessibilityAvailableFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
+            decimal? minPrice = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Min();
+            decimal? maxPrice = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Max();
+            List<TrainingMode>? trainingModes = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.TrainingsModeFieldName)?.Argument?.OfType<TrainingMode>().ToList();
+            List<TrainingTimeModel>? trainingTimes = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenTrainingsTimeModelFieldName)?.Argument?.OfType<TrainingTimeModel>().ToList();
             var validItems = items.Where(x =>
                 FilterByLoans(x, loansArg)
                 && FilterByIndividualStartDate(x, individualStartDateArg)
