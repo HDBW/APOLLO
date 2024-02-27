@@ -74,6 +74,22 @@ namespace De.HDBW.Apollo.Client.ViewModels
             WeakReferenceMessenger.Default.Register<SheetDismissedMessage>(this, OnSheetDismissedMessage);
         }
 
+        public bool HasFilter
+        {
+            get
+            {
+                return _customFilter?.Fields?.Any() ?? false;
+            }
+        }
+
+        public string FilterIcon
+        {
+            get
+            {
+                return HasFilter ? "filteractive.png" : "filter.png";
+            }
+        }
+
         private IImageCacheService ImageCacheService { get; }
 
         private ISessionService SessionService { get; }
@@ -501,6 +517,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(IEnumerable<SearchInteractionEntry> interactionEntries)
         {
             SearchResults = new ObservableCollection<SearchInteractionEntry>(interactionEntries);
+            OnPropertyChanged(nameof(HasFilter));
+            OnPropertyChanged(nameof(FilterIcon));
         }
 
         private async Task LoadTrainingsSuggestionsAsync(string inputValue, CancellationToken token)

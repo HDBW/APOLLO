@@ -65,6 +65,7 @@
     <None Remove="Resources\Images\edit.svg" />
     <None Remove="Resources\Images\emptysearchdeco.svg" />
     <None Remove="Resources\Images\filter.svg" />
+    <None Remove="Resources\Images\filteractive.svg" />
     <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />

@@ -37,7 +37,7 @@
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="filter.png" />
+        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon}" />
     </ContentPage.ToolbarItems>
     <Grid>
         <CollectionView ItemsSource="{x:Binding SearchResults}" Scrolled="HandleScrolled">
