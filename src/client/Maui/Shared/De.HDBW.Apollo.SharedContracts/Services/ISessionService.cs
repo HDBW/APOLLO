@@ -14,6 +14,8 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         AccountId? AccountId { get; }
 
+        string? AccessToken { get; }
+
         bool ChangedUseCase { get; }
 
         void AddFavorite(long id, Type type);
