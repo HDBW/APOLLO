@@ -25,6 +25,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private readonly List<(IPropertyEditor Editor, Action<IPropertyEditor, Filter> LoadAction, Action<IPropertyEditor, Filter> SaveAction)> _configuration = new List<(IPropertyEditor Editor, Action<IPropertyEditor, Filter> LoadAction, Action<IPropertyEditor, Filter> SaveAction)>();
 
         private string? _currentFilter;
+        private decimal? _maxPrice;
 
         [ObservableProperty]
         private ObservableCollection<IPropertyEditor> _editorList = new ObservableCollection<IPropertyEditor>();
@@ -105,18 +106,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     _configuration.Add((editor, LoadIndividualStartDateFilter, SaveIndividualStartDateFilter));
 
-                    editor = RangePropertyEditor.Import(Resources.Strings.Resources.Filter_Price, new DecimalRangeValue((0, 10000)), 10000, (e) =>
+                    if (_maxPrice > 1)
                     {
-                        var field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName);
-                        if (field != null)
+                        editor = RangePropertyEditor.Import(Resources.Strings.Resources.Filter_Price, new DecimalRangeValue((0, _maxPrice.Value)), _maxPrice.Value, (e) =>
                         {
-                            _filter.Fields.Remove(field);
-                        }
+                            var field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName);
+                            if (field != null)
+                            {
+                                _filter.Fields.Remove(field);
+                            }
 
-                        _configuration.FirstOrDefault(x => x.Editor == e).LoadAction(e, _filter);
-                    });
+                            _configuration.FirstOrDefault(x => x.Editor == e).LoadAction(e, _filter);
+                        });
 
-                    _configuration.Add((editor, LoadPriceFilter, SavePriceFilter));
+                        _configuration.Add((editor, LoadPriceFilter, SavePriceFilter));
+                    }
 
                     editor = ListPropertyEditor.Import(Resources.Strings.Resources.Filter_TrainingsMode, trainingModes, (e) =>
                     {
@@ -193,6 +197,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             _currentFilter = navigationParameters.GetValue<string>(NavigationParameter.Data);
+            _maxPrice = navigationParameters.GetValue<decimal>(NavigationParameter.SavedState);
         }
 
         private void LoadonUIThread(IEnumerable<IPropertyEditor> editorList)
@@ -462,7 +467,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void SavePriceFilter(IPropertyEditor editor, Filter filter)
         {
             var rangeEditor = editor as RangePropertyEditor;
-            if (rangeEditor == null)
+            if (rangeEditor == null || _maxPrice == null)
             {
                 return;
             }
@@ -470,13 +475,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             editor.Save();
 
             var value = rangeEditor.Data as DecimalRangeValue;
-            if (value?.Value == null)
+            if (value?.Value == null || !value.WasChanged)
             {
                 return;
             }
 
             var queryOperation = QueryOperator.In;
             var arguments = new List<object> { value.Value.Start, value.Value.End };
+
             filter.Fields.Add(new FieldExpression()
             {
                 FieldName = KnownFilters.PriceFieldName,

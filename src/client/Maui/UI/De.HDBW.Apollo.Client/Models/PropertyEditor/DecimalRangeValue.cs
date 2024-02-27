@@ -9,5 +9,7 @@ namespace De.HDBW.Apollo.Client.Models.PropertyEditor
             : base(data)
         {
         }
+
+        public bool WasChanged { get; set; }
     }
 }

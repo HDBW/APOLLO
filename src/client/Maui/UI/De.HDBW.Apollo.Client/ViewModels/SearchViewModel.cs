@@ -47,6 +47,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private List<TrainingModel> _trainings = new List<TrainingModel>();
 
+        private decimal _maxPrice;
+
         public SearchViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -201,6 +203,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         { NavigationParameter.Data, JsonConvert.SerializeObject(_customFilter) },
                     };
+                    parameters.AddValue<decimal>(NavigationParameter.SavedState, _maxPrice);
                     await SheetService.OpenAsync(Routes.SearchFilterSheet, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)
@@ -393,7 +396,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             items = items ?? new List<TrainingModel>();
             _trainings = items.ToList();
             var result = new List<SearchInteractionEntry>();
-            result.AddRange(CreateTrainingResults(_trainings));
+            result.AddRange(CreateTrainingResults(_trainings, true));
             return result;
         }
 
@@ -427,13 +430,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return validItems.Distinct();
         }
 
-        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items)
+        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items, bool setMaxPrice)
         {
             _loadingCache.Clear();
             _loadingCts?.Cancel();
             _loadingCts = null;
             _loadingTask = null;
             var trainings = new List<SearchInteractionEntry>();
+            if (setMaxPrice)
+            {
+                _maxPrice = 0;
+            }
+
             foreach (var item in items)
             {
                 var parts = new List<string>();
@@ -443,6 +451,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
 
                 var text = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
+                if (setMaxPrice)
+                {
+                    _maxPrice = Math.Max(_maxPrice, Convert.ToDecimal(item.Price ?? 0));
+                }
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
                 var decoratorImagePath = KnonwIcons.Training;
@@ -584,7 +596,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             _customFilter = message.Filter;
             var filteredTrainings = TryFilter(_trainings, _customFilter);
-            var items = CreateTrainingResults(filteredTrainings);
+            var items = CreateTrainingResults(filteredTrainings, false);
             if (MainThread.IsMainThread)
             {
                 LoadonUIThread(items);

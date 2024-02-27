@@ -132,6 +132,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
                 decimal start = Convert.ToDecimal(rangeEditor.StartValue) * rangeEditor.RangeValue;
                 decimal end = Convert.ToDecimal(rangeEditor.EndValue) * rangeEditor.RangeValue;
                 editValue.Value = (start, end);
+                editValue.WasChanged = true;
             }
         }
     }
