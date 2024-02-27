@@ -19,5 +19,7 @@ namespace De.HDBW.Apollo.Client.Models
         public const string TrainingsModeFieldName = nameof(TrainingModel.TrainingMode);
 
         public const string AppointmenTrainingsModeFieldName = $"{nameof(TrainingModel.Appointment)}.{nameof(Appointment.TrainingMode)}";
+
+        public const string AppointmenTrainingsTimeModelFieldName = $"{nameof(TrainingModel.Appointment)}.{nameof(Appointment.TimeModel)}";
     }
 }

@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -27,7 +28,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<IPropertyEditor> _editorList = new ObservableCollection<IPropertyEditor>();
-        private Filter _filter;
+
+        private Filter _filter = new Filter();
 
         public SearchFilterSheetViewModel(
            IDispatcherService dispatcherService,
@@ -135,18 +137,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     _configuration.Add((editor, LoadTrainingsModeFilter, SaveTrainingModeFilter));
 
+                    editor = ListPropertyEditor.Import(Resources.Strings.Resources.Filter_TrainingTimeModel, trainingTimeModels, (e) =>
+                    {
+                        var field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenTrainingsTimeModelFieldName);
+                        if (field != null)
+                        {
+                            _filter.Fields.Remove(field);
+                        }
+
+                        _configuration.FirstOrDefault(x => x.Editor == e).LoadAction(e, _filter);
+                    });
+
+                    _configuration.Add((editor, LoadTrainingsTimeFilter, SaveTrainingTimeFilter));
+
                     var editorList = new List<IPropertyEditor>()
                     {
-                        ListPropertyEditor.Import(Resources.Strings.Resources.Filter_TrainingTimeModel, trainingTimeModels, (e) =>
-                        {
-                           var trainingTimeModels = new Dictionary<PickerValue, bool>()
-                           {
-                               { new PickerValue(Resources.Strings.Resources.TimeModel_Block, TrainingTimeModel.Block), false },
-                               { new PickerValue(Resources.Strings.Resources.TimeModel_Parttime, TrainingTimeModel.Parttime), false },
-                               { new PickerValue(Resources.Strings.Resources.TimeModel_Fulltime, TrainingTimeModel.Fulltime), false },
-                           };
-                           ((ListPropertyEditor)e).Update(trainingTimeModels, false);
-                       }),
                         //PickerPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
                         //ComboboxPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
                         //DatePropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, new DateTimeValue(null)),
@@ -513,13 +518,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             editor.Save();
 
-            var selectedValues = listEditor.Values.Where(x => x.IsSelected).Select(x => x.Data! as PickerValue).Select(x => (TrainingMode)x.Data).OfType<object>().ToList();
+            var selectedValues = listEditor.Values.Where(x => x.IsSelected).Select(x => x.Data! as PickerValue).Select(x => (TrainingMode)x!.Data!).OfType<object>().ToList();
             if (!selectedValues.Any())
             {
                 return;
             }
 
-            var queryOperation = QueryOperator.Equals;
+            var queryOperation = QueryOperator.Contains;
             var arguments = selectedValues;
             filter.Fields.Add(new FieldExpression()
             {
@@ -555,6 +560,53 @@ namespace De.HDBW.Apollo.Client.ViewModels
             };
 
             listEditor.Update(trainingModes, field != null);
+        }
+
+        private void SaveTrainingTimeFilter(IPropertyEditor editor, Filter filter)
+        {
+            var listEditor = editor as ListPropertyEditor;
+            if (listEditor == null)
+            {
+                return;
+            }
+
+            editor.Save();
+
+            var selectedValues = listEditor.Values.Where(x => x.IsSelected).Select(x => x.Data! as PickerValue).Select(x => (TrainingTimeModel)x!.Data!).OfType<object>().ToList();
+            if (!selectedValues.Any())
+            {
+                return;
+            }
+
+            var queryOperation = QueryOperator.Equals;
+            var arguments = selectedValues;
+            filter.Fields.Add(new FieldExpression()
+            {
+                FieldName = KnownFilters.AppointmenTrainingsTimeModelFieldName,
+                Operator = queryOperation,
+                Argument = arguments,
+            });
+        }
+
+        private void LoadTrainingsTimeFilter(IPropertyEditor editor, Filter filter)
+        {
+            var field = filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenTrainingsTimeModelFieldName);
+            var listEditor = editor as ListPropertyEditor;
+            if (listEditor == null)
+            {
+                return;
+            }
+
+            var flags = field?.Argument?.OfType<JsonElement>().Select(x => (TrainingTimeModel)x.GetInt32()).ToList() ?? new List<TrainingTimeModel>();
+
+            var trainingTimeModels = new Dictionary<PickerValue, bool>()
+            {
+                { new PickerValue(Resources.Strings.Resources.TimeModel_Block, TrainingTimeModel.Block), flags.Contains(TrainingTimeModel.Block) },
+                { new PickerValue(Resources.Strings.Resources.TimeModel_Parttime, TrainingTimeModel.Parttime), flags.Contains(TrainingTimeModel.Parttime) },
+                { new PickerValue(Resources.Strings.Resources.TimeModel_Fulltime, TrainingTimeModel.Fulltime), flags.Contains(TrainingTimeModel.Fulltime) },
+            };
+
+            listEditor.Update(trainingTimeModels, field != null);
         }
     }
 }

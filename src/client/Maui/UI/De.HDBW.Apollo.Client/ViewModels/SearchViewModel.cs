@@ -344,6 +344,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         KnownFilters.AccessibilityAvailableFieldName,
                         KnownFilters.TrainingsModeFieldName,
                         KnownFilters.AppointmenTrainingsModeFieldName,
+                        KnownFilters.AppointmenTrainingsTimeModelFieldName,
                     };
 
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
@@ -371,13 +372,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             bool? accessibilityAvailableArg = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AccessibilityAvailableFieldName)?.Argument?.OfType<bool>().FirstOrDefault();
             decimal? minPrice = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Min();
             decimal? maxPrice = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Max();
-            List<TrainingMode>? flags = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.TrainingsModeFieldName)?.Argument?.OfType<TrainingMode>().ToList();
+            List<TrainingMode>? trainingModes = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.TrainingsModeFieldName)?.Argument?.OfType<TrainingMode>().ToList();
+            List<TrainingTimeModel>? trainingTimes = _customFilter?.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenTrainingsTimeModelFieldName)?.Argument?.OfType<TrainingTimeModel>().ToList();
             var validItems = items.Where(x =>
                 FilterByLoans(x, loansArg)
                 && FilterByIndividualStartDate(x, individualStartDateArg)
                 && FilterByAccessibilityAvailable(x, accessibilityAvailableArg)
                 && FilterByPrice(x, (double?)minPrice, (double?)maxPrice)
-                && FilterByTrainingsMode(x, flags));
+                && FilterByTrainingsMode(x, trainingModes)
+                && FilterByTrainingsTimeModel(x, trainingTimes));
 
             return validItems.Distinct();
         }
@@ -573,9 +576,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool FilterByPrice(TrainingModel model, double? start, double? end)
         {
-            if (!model.Price.HasValue || !start.HasValue || !end.HasValue)
+            if (!start.HasValue || !end.HasValue)
             {
                 return true;
+            }
+
+            if (!model.Price.HasValue)
+            {
+                return false;
             }
 
             return model.Price.Value >= start.Value && model.Price.Value <= end.Value;
@@ -583,13 +591,33 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool FilterByTrainingsMode(TrainingModel model, List<TrainingMode>? flags)
         {
-            if (!model.TrainingMode.HasValue || flags == null || !flags.Any())
+            if (flags == null || !flags.Any())
             {
                 return true;
+            }
+
+            if (model.TrainingMode.HasValue)
+            {
+                return false;
             }
 
             return flags.Any(x => (model.TrainingMode & x) != 0);
         }
 
+        private bool FilterByTrainingsTimeModel(TrainingModel model, List<TrainingTimeModel>? values)
+        {
+            if (values == null || !values.Any())
+            {
+                return true;
+            }
+
+            if (model.Appointment == null || !model.Appointment.Any(x => x.TrainingMode.HasValue))
+            {
+                return false;
+            }
+
+            var supportedModels = model.Appointment.Where(x => x.TimeModel.HasValue).Select(x => x.TimeModel).ToList();
+            return values.Any(x => supportedModels.Contains(x));
+        }
     }
 }

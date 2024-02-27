@@ -8,7 +8,7 @@
             <TapGestureRecognizer Command="{x:Binding ToggleStateCommand}" />
         </Grid.GestureRecognizers>
         <CheckBox IsChecked="{x:Binding Value, Mode=TwoWay}" HorizontalOptions="Start" InputTransparent="True"/>
-        <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}"/>
+        <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}" Margin="8,0"/>
         <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24"
              Source="delete.png" />
     </Grid>
