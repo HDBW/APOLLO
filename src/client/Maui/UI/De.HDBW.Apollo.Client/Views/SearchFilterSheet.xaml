@@ -1,4 +1,4 @@
-<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
@@ -44,8 +44,12 @@
                 <editors:DefaultDatePropertyEditor />
             </DataTemplate>
 
-            <DataTemplate x:Key="RangePropertyEditorTemplate" x:DataType="editorViewModels:RangePropertyEditor">
-                <editors:DefaultRangePropertyEditor />
+            <DataTemplate x:Key="DateRangePropertyEditorTemplate" x:DataType="editorViewModels:DateRangePropertyEditor">
+                <editors:DefaultDateRangePropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="DecimalRangePropertyEditorTemplate" x:DataType="editorViewModels:DecimalRangePropertyEditor">
+                <editors:DefaultDecimalRangePropertyEditor />
             </DataTemplate>
 
             <DataTemplate x:Key="ListPropertyEditorTemplate" x:DataType="editorViewModels:ListPropertyEditor">
@@ -58,7 +62,8 @@
                                              BooleanPropertyEditorTemplate="{StaticResource BooleanPropertyEditorTemplate}"
                                              PickerPropertyEditorTemplate="{StaticResource PickerPropertyEditorTemplate}"
                                              DatePropertyEditorTemplate="{StaticResource DatePropertyEditorTemplate}"
-                                             RangePropertyEditorTemplate="{StaticResource RangePropertyEditorTemplate}"
+                                             DecimalRangePropertyEditorTemplate="{StaticResource DecimalRangePropertyEditorTemplate}"
+                                             DateRangePropertyEditorTemplate="{StaticResource DateRangePropertyEditorTemplate}"
                                              ListPropertyEditorTemplate="{StaticResource ListPropertyEditorTemplate}"/>
             
         </Grid.Resources>

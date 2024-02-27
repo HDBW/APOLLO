@@ -1423,4 +1423,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="Global_RageStart" xml:space="preserve">
     <value>Von</value>
   </data>
+  <data name="Filter_Date" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
 </root>

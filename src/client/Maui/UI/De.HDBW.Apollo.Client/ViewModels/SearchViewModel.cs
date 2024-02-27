@@ -387,6 +387,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         KnownFilters.TrainingsModeFieldName,
                         KnownFilters.AppointmenTrainingsModeFieldName,
                         KnownFilters.AppointmenTrainingsTimeModelFieldName,
+                        KnownFilters.AppointmenStartDateFieldName,
+                        KnownFilters.AppointmenEndDateFieldName,
+                        KnownFilters.OccurenceStartDateFieldName,
+                        KnownFilters.OccurenceEndDateFieldName,
                     };
 
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
@@ -417,13 +421,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             decimal? maxPrice = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName)?.Argument?.OfType<decimal>().Max();
             List<TrainingMode>? trainingModes = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.TrainingsModeFieldName)?.Argument?.OfType<TrainingMode>().ToList();
             List<TrainingTimeModel>? trainingTimes = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenTrainingsTimeModelFieldName)?.Argument?.OfType<TrainingTimeModel>().ToList();
+            DateTime? startDate = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenStartDateFieldName)?.Argument?.OfType<DateTime>().FirstOrDefault();
+            DateTime? endDate = customFilter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenEndDateFieldName)?.Argument?.OfType<DateTime>().FirstOrDefault();
+
             var validItems = items.Where(x =>
                 FilterByLoans(x, loansArg)
                 && FilterByIndividualStartDate(x, individualStartDateArg)
                 && FilterByAccessibilityAvailable(x, accessibilityAvailableArg)
                 && FilterByPrice(x, (double?)minPrice, (double?)maxPrice)
                 && FilterByTrainingsMode(x, trainingModes)
-                && FilterByTrainingsTimeModel(x, trainingTimes));
+                && FilterByTrainingsTimeModel(x, trainingTimes)
+                && FilterByDate(x, startDate, endDate));
 
             return validItems.Distinct();
         }
@@ -691,6 +699,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             var supportedModels = model.Appointment.Where(x => x.TimeModel.HasValue).Select(x => x.TimeModel).ToList();
             return values.Any(x => supportedModels.Contains(x));
+        }
+
+        private bool FilterByDate(TrainingModel model, DateTime? start, DateTime? end)
+        {
+            if (start == null && end == null)
+            {
+                return true;
+            }
+
+            if (model.Appointment == null || model.Appointment.Any())
+            {
+                return false;
+            }
+
+            var appointmentDates = model.Appointment.Select(x => (x.StartDate, x.EndDate)).ToList();
+            if (appointmentDates.Any(x => x.StartDate.Date <= (start?.Date ?? x.StartDate.Date) && x.EndDate.Date >= (end?.Date ?? x.EndDate.Date)))
+            {
+                return true;
+            }
+
+            var occurencesDates = model.Appointment.Where(x => (x.Occurences?.Any() ?? false)).SelectMany(x => x.Occurences).Select(x => (x.StartDate, x.EndDate)).ToList();
+            return occurencesDates.Any(x => x.StartDate.Date <= (start?.Date ?? x.StartDate.Date) && x.EndDate.Date >= (end?.Date ?? x.EndDate.Date));
         }
     }
 }

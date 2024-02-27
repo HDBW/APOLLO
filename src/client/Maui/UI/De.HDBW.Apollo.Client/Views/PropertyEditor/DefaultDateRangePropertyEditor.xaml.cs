@@ -3,9 +3,9 @@
 
 namespace De.HDBW.Apollo.Client.Views.PropertyEditor;
 
-public partial class DefaultRangePropertyEditor : ContentView
+public partial class DefaultDateRangePropertyEditor : ContentView
 {
-    public DefaultRangePropertyEditor()
+    public DefaultDateRangePropertyEditor()
     {
         InitializeComponent();
     }

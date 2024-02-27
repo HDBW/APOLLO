@@ -1149,6 +1149,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zeitraum.
+        /// </summary>
+        public static string Filter_Date {
+            get {
+                return ResourceManager.GetString("Filter_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Anbieter.
         /// </summary>
         public static string Filter_EduProviders {

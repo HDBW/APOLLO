@@ -60,7 +60,10 @@ public partial class SearchView
 
     private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
     {
-        PART_SearchHandler.Close();
+        if (OperatingSystem.IsAndroid())
+        {
+            PART_SearchHandler.Close();
+        }
     }
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -77,6 +80,6 @@ public partial class SearchView
             return;
         }
 
-        collectionView.ScrollTo(0);
+        collectionView.ScrollTo(0, animate: false);
     }
 }

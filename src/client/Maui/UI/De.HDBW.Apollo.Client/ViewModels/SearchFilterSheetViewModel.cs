@@ -2,12 +2,12 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.PropertyEditor;
@@ -106,9 +106,40 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     _configuration.Add((editor, LoadIndividualStartDateFilter, SaveIndividualStartDateFilter));
 
+                    editor = DateRangePropertyEditor.Import(Resources.Strings.Resources.Filter_Date, new DateRangeValue((null, null)), (e) =>
+                    {
+                        var field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenStartDateFieldName);
+                        if (field != null)
+                        {
+                            _filter.Fields.Remove(field);
+                        }
+
+                        field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenEndDateFieldName);
+                        if (field != null)
+                        {
+                            _filter.Fields.Remove(field);
+                        }
+
+                        field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.OccurenceStartDateFieldName);
+                        if (field != null)
+                        {
+                            _filter.Fields.Remove(field);
+                        }
+
+                        field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.OccurenceEndDateFieldName);
+                        if (field != null)
+                        {
+                            _filter.Fields.Remove(field);
+                        }
+
+                        _configuration.FirstOrDefault(x => x.Editor == e).LoadAction(e, _filter);
+                    });
+
+                    _configuration.Add((editor, LoadDateFilter, SaveDateFilter));
+
                     if (_maxPrice > 1)
                     {
-                        editor = RangePropertyEditor.Import(Resources.Strings.Resources.Filter_Price, new DecimalRangeValue((0, _maxPrice.Value)), _maxPrice.Value, (e) =>
+                        editor = DecimalRangePropertyEditor.Import(Resources.Strings.Resources.Filter_Price, new DecimalRangeValue((0, _maxPrice.Value)), _maxPrice.Value, (e) =>
                         {
                             var field = _filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName);
                             if (field != null)
@@ -154,18 +185,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     _configuration.Add((editor, LoadTrainingsTimeFilter, SaveTrainingTimeFilter));
 
-                    var editorList = new List<IPropertyEditor>()
-                    {
-                        //PickerPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
-                        //ComboboxPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
-                        //DatePropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, new DateTimeValue(null)),
-                        //PickerPropertyEditor.Import(Resources.Strings.Resources.Filter_CourseType, courseTypes, courseTypes.First()),
-                        //RangePropertyEditor.Import(Resources.Strings.Resources.Filter_Price, new DoubleValue(100d), 0d, 2000d),
-                        //ListPropertyEditor.Import(Resources.Strings.Resources.Filter_EduProviders, eduProviders),
-                    };
-
                     _filter = _currentFilter.Deserialize<Filter>() ?? new Filter();
-                    editorList = _configuration.Select(c => c.Editor).ToList();
+                    var editorList = _configuration.Select(c => c.Editor).ToList();
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(editorList), worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -466,7 +487,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void SavePriceFilter(IPropertyEditor editor, Filter filter)
         {
-            var rangeEditor = editor as RangePropertyEditor;
+            var rangeEditor = editor as DecimalRangePropertyEditor;
             if (rangeEditor == null || _maxPrice == null)
             {
                 return;
@@ -494,7 +515,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadPriceFilter(IPropertyEditor editor, Filter filter)
         {
             var field = filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.PriceFieldName);
-            var rangeEditor = editor as RangePropertyEditor;
+            var rangeEditor = editor as DecimalRangePropertyEditor;
             if (rangeEditor == null)
             {
                 return;
@@ -613,6 +634,92 @@ namespace De.HDBW.Apollo.Client.ViewModels
             };
 
             listEditor.Update(trainingTimeModels, field != null);
+        }
+
+        private void SaveDateFilter(IPropertyEditor editor, Filter filter)
+        {
+            var rangeEditor = editor as DateRangePropertyEditor;
+            if (rangeEditor == null)
+            {
+                return;
+            }
+
+            editor.Save();
+
+            var value = rangeEditor.Data as DateRangeValue;
+            if (value?.Value == null || (!value.Value.Start.HasValue && !value.Value.End.HasValue))
+            {
+                return;
+            }
+
+            if (value.Value.Start.HasValue)
+            {
+                var queryOperation = QueryOperator.GreaterThanEqualTo;
+                var arguments = new List<object> { value.Value.Start.Value.ToDTODate() };
+
+                filter.Fields.Add(new FieldExpression()
+                {
+                    FieldName = KnownFilters.AppointmenStartDateFieldName,
+                    Operator = queryOperation,
+                    Argument = arguments,
+                });
+
+                filter.Fields.Add(new FieldExpression()
+                {
+                    FieldName = KnownFilters.OccurenceStartDateFieldName,
+                    Operator = queryOperation,
+                    Argument = arguments,
+                });
+            }
+
+            if (value.Value.End.HasValue)
+            {
+                var queryOperation = QueryOperator.LessThanEqualTo;
+                var arguments = new List<object> { value.Value.End.Value.ToDTODate() };
+
+                filter.Fields.Add(new FieldExpression()
+                {
+                    FieldName = KnownFilters.AppointmenEndDateFieldName,
+                    Operator = queryOperation,
+                    Argument = arguments,
+                });
+
+                filter.Fields.Add(new FieldExpression()
+                {
+                    FieldName = KnownFilters.OccurenceEndDateFieldName,
+                    Operator = queryOperation,
+                    Argument = arguments,
+                });
+            }
+        }
+
+        private void LoadDateFilter(IPropertyEditor editor, Filter filter)
+        {
+            var startField = filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenStartDateFieldName);
+            var endField = filter.Fields.FirstOrDefault(x => x.FieldName == KnownFilters.AppointmenEndDateFieldName);
+            var rangeEditor = editor as DateRangePropertyEditor;
+            if (rangeEditor == null)
+            {
+                return;
+            }
+
+            DateTime? start = null;
+            DateTime? end = null;
+            if (startField != null)
+            {
+                var elements = startField.Argument?.OfType<JsonElement>();
+                var element = elements?.FirstOrDefault();
+                start = element?.GetDateTime().ToUIDate();
+            }
+
+            if (endField != null)
+            {
+                var elements = endField.Argument?.OfType<JsonElement>();
+                var element = elements?.FirstOrDefault();
+                end = element?.GetDateTime().ToUIDate();
+            }
+
+            rangeEditor.Update(new DateRangeValue((start, end)), startField != null || endField != null);
         }
     }
 }

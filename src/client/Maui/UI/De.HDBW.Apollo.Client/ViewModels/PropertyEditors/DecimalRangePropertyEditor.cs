@@ -7,7 +7,7 @@ using De.HDBW.Apollo.Client.Models.PropertyEditor;
 
 namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 {
-    public partial class RangePropertyEditor : BasePropertyEditor<DecimalRangeValue>
+    public partial class DecimalRangePropertyEditor : BasePropertyEditor<DecimalRangeValue>
     {
         private readonly decimal _rangeValue;
 
@@ -20,7 +20,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
         [ObservableProperty]
         private double _maxValue;
 
-        public RangePropertyEditor(string label, DecimalRangeValue editValue, decimal rangeValue, Action<BasePropertyEditor> clearValueAction)
+        public DecimalRangePropertyEditor(string label, DecimalRangeValue editValue, decimal rangeValue, Action<BasePropertyEditor> clearValueAction)
             : base(label, editValue, SetValueAction, GetValueAction, clearValueAction)
         {
             ArgumentNullException.ThrowIfNull(editValue);
@@ -95,7 +95,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 
         public static IPropertyEditor Import(string label, DecimalRangeValue editValue, decimal rangeValue, Action<BasePropertyEditor> clearValueAction)
         {
-            return new RangePropertyEditor(label, editValue, rangeValue, clearValueAction);
+            return new DecimalRangePropertyEditor(label, editValue, rangeValue, clearValueAction);
         }
 
         public override void Update(BaseValue? data, bool hasChanges)
@@ -120,7 +120,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 
         private static void SetValueAction(BasePropertyEditor<DecimalRangeValue> editor)
         {
-            var rangeEditor = editor as RangePropertyEditor;
+            var rangeEditor = editor as DecimalRangePropertyEditor;
             var editValue = editor.Data as DecimalRangeValue;
             if (editValue == null || rangeEditor == null)
             {

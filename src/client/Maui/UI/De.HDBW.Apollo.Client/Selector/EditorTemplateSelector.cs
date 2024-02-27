@@ -17,7 +17,9 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? DatePropertyEditorTemplate { get; set; }
 
-        public DataTemplate? RangePropertyEditorTemplate { get; set; }
+        public DataTemplate? DecimalRangePropertyEditorTemplate { get; set; }
+
+        public DataTemplate? DateRangePropertyEditorTemplate { get; set; }
 
         public DataTemplate? ListPropertyEditorTemplate { get; set; }
 
@@ -33,8 +35,10 @@ namespace De.HDBW.Apollo.Client.Selector
                     return PickerPropertyEditorTemplate;
                 case DatePropertyEditor:
                     return DatePropertyEditorTemplate;
-                case RangePropertyEditor:
-                    return RangePropertyEditorTemplate;
+                case DecimalRangePropertyEditor:
+                    return DecimalRangePropertyEditorTemplate;
+                case DateRangePropertyEditor:
+                    return DateRangePropertyEditorTemplate;
                 case ListPropertyEditor:
                     return ListPropertyEditorTemplate;
             }
