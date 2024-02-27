@@ -16,6 +16,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
+            IUserService userService,
             ILogger<SettingsViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -23,6 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(sessionService);
             AuthService = authService;
             SessionService = sessionService;
+            UserService = userService;
         }
 
         public bool HasRegisterdUser
@@ -35,6 +37,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IAuthService AuthService { get; }
 
+        private IUserService UserService { get; }
+
         private ISessionService SessionService { get; }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
@@ -44,6 +48,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    var userdeleted = await UserService.DeleteAsync(SessionService.AccessToken, token);
+                    if (!userdeleted)
+                    {
+                        Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
+                        return;
+                    }
+
                     await AuthService.LogoutAsync(worker.Token);
                     var authentication = await AuthService.AcquireTokenSilent(worker.Token);
                     SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);

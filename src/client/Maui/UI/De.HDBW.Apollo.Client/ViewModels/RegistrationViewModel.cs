@@ -124,6 +124,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
 #if !DEBUG
                     await AuthService.SignInInteractively(worker.Token);
 #endif
+                    var userdeleted = await UserService.DeleteAsync(SessionService.AccessToken, token);
+                    if (!userdeleted)
+                    {
+                        Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
+                        return;
+                    }
+
                     await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
                     PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
                     UserService?.UpdateAuthorizationHeader(null);

@@ -533,7 +533,6 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
 
-
             Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping(nameof(DatePicker), (handler, view) =>
             {
 #if ANDROID
