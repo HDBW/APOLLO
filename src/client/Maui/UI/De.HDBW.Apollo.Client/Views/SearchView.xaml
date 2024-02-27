@@ -26,6 +26,13 @@
             Suggestions="{x:Binding Suggestions}"
             Recent="{x:Binding Recents}"
             ShowsResults="True">
+          <!-- <local:BindableSearchHandler.Keyboard>
+                 <Keyboard x:FactoryMethod="Create">
+                    <x:Arguments>
+                        <KeyboardFlags>None</KeyboardFlags>
+                    </x:Arguments>
+                </Keyboard>
+           </local:BindableSearchHandler.Keyboard> -->
             <local:BindableSearchHandler.ItemTemplate>
                 <DataTemplate x:DataType="models:SearchSuggestionEntry">
                     <Grid ColumnDefinitions="auto,*" BackgroundColor="{StaticResource White}">
@@ -39,8 +46,8 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon}" />
     </ContentPage.ToolbarItems>
-    <Grid>
-        <CollectionView ItemsSource="{x:Binding SearchResults}" Scrolled="HandleScrolled">
+    <Grid x:Name="PART_Root">
+        <CollectionView x:Name="PART_Collection" ItemsSource="{x:Binding SearchResults}" Scrolled="HandleScrolled" SelectionMode="None">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
             </CollectionView.ItemsLayout>

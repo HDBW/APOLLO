@@ -42,6 +42,7 @@
         </Border>
         <CollectionView SelectionMode="Single"
                         Grid.Row="1"
+                        Scrolled="HandleScrolled"
                         ItemsSource="{x:Binding Items}"
                         ItemTemplate="{StaticResource DefaultInteractionEntry}"
                         SelectedItem="{x:Binding SelectedItem, Mode=TwoWay}"

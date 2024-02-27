@@ -41,6 +41,7 @@ namespace De.HDBW.Apollo.Client
             switch (gestureRecognizer?.State)
             {
                 case UIGestureRecognizerState.Began:
+                case UIGestureRecognizerState.Possible:
                     TouchService?.TouchDownReceived((float)point.X, (float)point.Y);
                     break;
                 case UIGestureRecognizerState.Ended:

@@ -20,5 +20,13 @@ namespace De.HDBW.Apollo.Client.Views.Profile
                 return BindingContext as OccupationSearchViewModel;
             }
         }
+
+        private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
+        {
+            if (PART_SearchBar.IsFocused)
+            {
+                PART_SearchBar.Unfocus();
+            }
+        }
     }
 }

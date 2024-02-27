@@ -41,7 +41,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private List<Task>? _loadingTask;
 
         private Filter? _customFilter;
-        private string _query;
+        private string? _query;
 
         private List<TrainingModel> _trainings = new List<TrainingModel>();
 
@@ -669,7 +669,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return true;
             }
 
-            if (model.TrainingMode.HasValue)
+            if (!model.TrainingMode.HasValue)
             {
                 return false;
             }

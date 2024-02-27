@@ -57,9 +57,12 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigate))]
-        private Task Navigate()
+        private async Task Navigate(CancellationToken token)
         {
-            return NavigateHandler?.Invoke(this) ?? Task.CompletedTask;
+            if (NavigateHandler != null)
+            {
+                await NavigateHandler(this);
+            }
         }
     }
 }

@@ -38,8 +38,12 @@ namespace De.HDBW.Apollo.Client.Controls
 
         public void Close()
         {
-            Unfocus();
-            KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
+            if (IsFocused)
+            {
+                Unfocus();
+                KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
+                WeakReferenceMessenger.Default.Send<HideSearchSuggestionsMessage>(new HideSearchSuggestionsMessage());
+            }
         }
 
         protected override void OnQueryChanged(string oldValue, string newValue)

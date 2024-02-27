@@ -521,19 +521,6 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
 
-            WeakNotifyPropertyChangedProxy? proxy = null;
-            PropertyChangedEventHandler? propertyChanged = null;
-
-            Microsoft.Maui.Controls.Handlers.Items.CollectionViewHandler.Mapper.AppendToMapping(nameof(Microsoft.Maui.Controls.Handlers.Items.CollectionViewHandler), (handler, view) =>
-            {
-#if IOS
-                propertyChanged ??= CollectionViewPropertyChanged;
-                proxy ??= new ();
-                proxy.Subscribe(view, propertyChanged);
-#endif
-            });
-
-
             Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping(nameof(DatePicker), (handler, view) =>
             {
 #if ANDROID
@@ -576,24 +563,7 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
         }
-
-        private static void CollectionViewPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName?.Equals(nameof(CollectionView.ItemsSource)) != true)
-            {
-                return;
-            }
-
-            var collectionView = sender as CollectionView;
-
-            if (collectionView == null)
-            {
-                return;
-            }
-
-            collectionView.ScrollTo(0);
-        }
-
+ 
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
 #if IOS
