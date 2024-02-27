@@ -5,11 +5,13 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.PropertyEditor"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:ListPropertyEditor">
-    <VerticalStackLayout >
-        <Label Text="{x:Binding Label}"
-            VerticalOptions="Center"
-            HorizontalOptions="Start"/>
+    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
+        <Label Text="{x:Binding Label}" Style="{StaticResource Noto14SemiBold}" VerticalOptions="Center" HorizontalOptions="Start"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24"
+                     Source="delete.png" />
         <ListView
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
                 ItemsSource="{x:Binding Values}"
                 SelectedItem="{x:Binding Value, Mode=TwoWay}"
                 MaximumHeightRequest="190">
@@ -21,11 +23,11 @@
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand}" />
                             </Grid.GestureRecognizers>
                             <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}" VerticalOptions="Center"/>
-                            <Label Grid.Column="1" Text="{x:Binding DisplayValue}" Margin="8,0,0,0" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="{x:Binding DisplayValue}" Margin="8,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentView>

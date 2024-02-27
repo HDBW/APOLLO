@@ -1158,11 +1158,56 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Startdatum individuell.
+        /// </summary>
+        public static string Filter_HasIndividualStartDate {
+            get {
+                return ResourceManager.GetString("Filter_HasIndividualStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barrierefrei.
+        /// </summary>
+        public static string Filter_IsAccessible {
+            get {
+                return ResourceManager.GetString("Filter_IsAccessible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finanzierungsoptionen.
+        /// </summary>
+        public static string Filter_Loans {
+            get {
+                return ResourceManager.GetString("Filter_Loans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preis.
         /// </summary>
         public static string Filter_Price {
             get {
                 return ResourceManager.GetString("Filter_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kursart.
+        /// </summary>
+        public static string Filter_TrainingsMode {
+            get {
+                return ResourceManager.GetString("Filter_TrainingsMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zeitmodel.
+        /// </summary>
+        public static string Filter_TrainingTimeModel {
+            get {
+                return ResourceManager.GetString("Filter_TrainingTimeModel", resourceCulture);
             }
         }
         
@@ -1599,6 +1644,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bis.
+        /// </summary>
+        public static string Global_RageEnd {
+            get {
+                return ResourceManager.GetString("Global_RageEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Von.
+        /// </summary>
+        public static string Global_RageStart {
+            get {
+                return ResourceManager.GetString("Global_RageStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Anerkennunnung.
         /// </summary>
         public static string Global_RecognitionType {
@@ -1631,6 +1694,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_SchoolGraduation {
             get {
                 return ResourceManager.GetString("Global_SchoolGraduation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anwenden.
+        /// </summary>
+        public static string Global_SearchFilterSheet_ApplyFilter {
+            get {
+                return ResourceManager.GetString("Global_SearchFilterSheet_ApplyFilter", resourceCulture);
             }
         }
         

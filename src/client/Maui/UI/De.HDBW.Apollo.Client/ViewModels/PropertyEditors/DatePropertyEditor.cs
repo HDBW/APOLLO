@@ -8,14 +8,26 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
 {
     public class DatePropertyEditor : BasePropertyEditor<DateTime?>
     {
-        protected DatePropertyEditor(string label, DateTimeValue editValue)
-            : base(label, editValue, SetValueAction, GetValueAction)
+        protected DatePropertyEditor(string label, DateTimeValue editValue, Action<BasePropertyEditor> clearValueAction)
+            : base(label, editValue, SetValueAction, GetValueAction, clearValueAction)
         {
         }
 
-        public static IPropertyEditor Import(string label, DateTimeValue editValue)
+        public static IPropertyEditor Import(string label, DateTimeValue editValue, Action<BasePropertyEditor> clearValueAction)
         {
-            return new DatePropertyEditor(label, editValue);
+            return new DatePropertyEditor(label, editValue, clearValueAction);
+        }
+
+        public override void Update(BaseValue? data, bool hasChanges)
+        {
+            Data = data;
+            SetValueAction(this);
+            HasChanges = hasChanges;
+        }
+
+        public override void Save()
+        {
+            SetValueAction(this);
         }
 
         private static DateTime? GetValueAction(BasePropertyEditor<DateTime?> editor)

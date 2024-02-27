@@ -4,10 +4,17 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
              xmlns:contracts="clr-namespace:De.HDBW.Apollo.Client.Contracts"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:RangePropertyEditor">
-    <VerticalStackLayout>
-        <Label Text="{x:Binding Label}" VerticalOptions="Center" HorizontalOptions="Start"/>
-        <Slider Value="{x:Binding Value, Mode=TwoWay}" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}"/>
-        <Label Text="{x:Binding Value, Mode=TwoWay}" />
-    </VerticalStackLayout>
+    <Grid ColumnDefinitions="auto, *" RowDefinitions="auto, auto, auto, auto, auto">
+        <Label Text="{x:Binding Label}" Style="{StaticResource Noto14SemiBold}" HorizontalOptions="Start" VerticalOptions="Center"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24"
+              Source="delete.png" HorizontalOptions="End"/>
+        <Label Text="{x:Static strings:Resources.Global_RageStart}" Style="{StaticResource Noto14}" Grid.Row="1"/>
+        <Slider x:Name="PART_Min" Grid.Row="1" Grid.Column="2" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}" Value="{x:Binding StartValue, Mode=TwoWay}" MinimumTrackColor="{StaticResource Primary}" ThumbColor="{StaticResource Primary}" />
+        <Label Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Binding StartValueString, Mode=OneWay}" Style="{StaticResource Noto14}" HorizontalTextAlignment="End"/>
+        <Label Grid.Row="3" Text="{x:Static strings:Resources.Global_RageEnd}" Style="{StaticResource Noto14}"/>
+        <Slider x:Name="PART_Max" Grid.Row="3" Grid.Column="1" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}" Value="{x:Binding EndValue, Mode=TwoWay}" MinimumTrackColor="{StaticResource Gray200}" MaximumTrackColor="{StaticResource Primary}" ThumbColor="{StaticResource Primary}" />
+        <Label Grid.Row="4" Grid.ColumnSpan="2" Text="{x:Binding EndValueString, Mode=OneWay}" Style="{StaticResource Noto14}" HorizontalTextAlignment="End"/>
+    </Grid>
 </ContentView>

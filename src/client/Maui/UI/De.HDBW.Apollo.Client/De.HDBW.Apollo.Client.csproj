@@ -55,6 +55,7 @@
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\calender.svg" />
     <None Remove="Resources\Images\checkmark.svg" />
+    <None Remove="Resources\Images\chevronback.svg" />
     <None Remove="Resources\Images\chevrondown.svg" />
     <None Remove="Resources\Images\chevronlink.svg" />
     <None Remove="Resources\Images\chevronup.svg" />
@@ -86,6 +87,7 @@
     <None Remove="Resources\Images\resultdeco.svg" />
     <None Remove="Resources\Images\search.svg" />
     <None Remove="Resources\Images\searchclear.svg" />
+    <None Remove="Resources\Images\share.svg" />
     <None Remove="Resources\Images\shortlist.svg" />
     <None Remove="Resources\Images\splashdeco.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />

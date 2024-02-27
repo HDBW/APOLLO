@@ -3,13 +3,14 @@
              x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultBooleanPropertyEditor"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
              x:DataType="viewModels:BooleanPropertyEditor">
-    <VerticalStackLayout>
-        <Label 
-            Text="{x:Binding Label}"
-            VerticalOptions="Center"
-            HorizontalOptions="Start"/>
-        
-        <Switch IsToggled="{x:Binding Value, Mode=TwoWay}" />
-    </VerticalStackLayout>
+    <Grid ColumnDefinitions="Auto, *, Auto">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{x:Binding ToggleStateCommand}" />
+        </Grid.GestureRecognizers>
+        <CheckBox IsChecked="{x:Binding Value, Mode=TwoWay}" HorizontalOptions="Start" InputTransparent="True"/>
+        <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24"
+             Source="delete.png" />
+    </Grid>
     
 </ContentView>

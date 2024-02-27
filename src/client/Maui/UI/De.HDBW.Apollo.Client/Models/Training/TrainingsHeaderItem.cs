@@ -93,7 +93,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(IndividualStartDate);
+                return !string.IsNullOrWhiteSpace(ProviderImage);
             }
         }
 

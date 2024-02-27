@@ -12,8 +12,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
         private readonly ObservableCollection<PickerValue> _values = new ObservableCollection<PickerValue>();
         private PickerValue? _value;
 
-        protected PickerPropertyEditor(string label, IEnumerable<PickerValue> values, PickerValue? currentValue)
-           : base(label, currentValue)
+        protected PickerPropertyEditor(string label, IEnumerable<PickerValue> values, PickerValue? currentValue, Action<BasePropertyEditor> clearValueAction)
+           : base(label, currentValue, clearValueAction)
         {
             _values = new ObservableCollection<PickerValue>(values);
             Value = currentValue;
@@ -45,9 +45,21 @@ namespace De.HDBW.Apollo.Client.ViewModels.PropertyEditors
             }
         }
 
-        public static IPropertyEditor Import(string label, IEnumerable<PickerValue> values, PickerValue? currentValue)
+        public static IPropertyEditor Import(string label, IEnumerable<PickerValue> values, PickerValue? currentValue, Action<BasePropertyEditor> clearValueAction)
         {
-            return new PickerPropertyEditor(label, values, currentValue);
+            return new PickerPropertyEditor(label, values, currentValue, clearValueAction);
+        }
+
+        public override void Update(BaseValue? data, bool hasChanges)
+        {
+            Data = data;
+            Value = Data as PickerValue;
+            HasChanges = hasChanges;
+        }
+
+        public override void Save()
+        {
+            Data = Value;
         }
 
         protected virtual void OnValueChanged()

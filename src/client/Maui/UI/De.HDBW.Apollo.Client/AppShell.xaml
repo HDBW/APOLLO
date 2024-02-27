@@ -89,9 +89,5 @@
             Icon="profile.png">
             <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
-        <Tab Title="{x:Static strings:Resources.FavoriteView_Title}"
-            Icon="favorite.png">
-            <ShellContent ContentTemplate="{DataTemplate views:EmptyView}" />
-        </Tab>
     </TabBar>
 </Shell>
