@@ -5,6 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo
 {
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class CompanyBasedVocationalTrainingView : ContentPage
     {
         public CompanyBasedVocationalTrainingView(CompanyBasedVocationalTrainingViewModel model)
