@@ -284,6 +284,12 @@ namespace De.HDBW.Apollo.Client
             {
                 return new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"User_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<UserRepository>>());
             });
+
+            services.AddSingleton<IFavoriteRepository>((serviceProvider) =>
+            {
+                return new FavoriteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"Favorite_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<FavoriteRepository>>());
+            });
+
             services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
         }
 

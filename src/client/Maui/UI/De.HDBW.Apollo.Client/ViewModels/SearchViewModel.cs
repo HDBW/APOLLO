@@ -56,6 +56,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ITrainingService trainingService,
             ISearchHistoryRepository searchHistoryRepository,
             IImageCacheService imageCacheService,
+            IFavoriteRepository favoriteRepository,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -69,6 +70,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             TrainingService = trainingService;
             SearchHistoryRepository = searchHistoryRepository;
             ImageCacheService = imageCacheService;
+            FavoriteRepository = favoriteRepository;
             Filter = CreateDefaultTrainingsFilter(string.Empty);
             WeakReferenceMessenger.Default.Register<FilterChangedMessage>(this, OnFilterChangedMessage);
             WeakReferenceMessenger.Default.Register<SheetDismissedMessage>(this, OnSheetDismissedMessage);
@@ -91,6 +93,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private IImageCacheService ImageCacheService { get; }
+
+        private IFavoriteRepository FavoriteRepository { get; }
 
         private ISessionService SessionService { get; }
 
@@ -511,19 +515,35 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return entry != null;
         }
 
-        private Task HandleToggleIsFavorite(SearchInteractionEntry entry)
+        private async Task HandleToggleIsFavorite(SearchInteractionEntry entry)
         {
-            entry.IsFavorite = !entry.IsFavorite;
-            if (entry.IsFavorite)
+            using (var worker = ScheduleWork())
             {
-                // SessionService.AddFavorite(entry.EntityId.ToString(), entry.EntityType);
-            }
-            else
-            {
-                // SessionService.RemoveFavorite(entry.EntityId.ToString(), entry.EntityType);
+                var token = worker.Token;
+                try
+                {
+                    token.ThrowIfCancellationRequested();
+                    entry.IsFavorite = !entry.IsFavorite;
+                    if (entry.IsFavorite)
+                    {
+                        var res = await FavoriteRepository.SaveAsync(new Favorite() { ApiId = Guid.NewGuid().ToString() }, token);
+                    }
+                    else
+                    {
+                        var res = await FavoriteRepository.DeleteFavoriteAsync(Guid.NewGuid().ToString(), token);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(HandleToggleIsFavorite)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
             }
 
-            return Task.CompletedTask;
+            return;
         }
 
         private void ClearSuggesionsAndHistory()
