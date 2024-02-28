@@ -402,7 +402,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             _trainings = items.ToList();
             _customFilter = null;
             var result = new List<SearchInteractionEntry>();
-            result.AddRange(CreateTrainingResults(_trainings, true));
+            result.AddRange(CreateTrainingResults(_trainings, await FavoriteRepository.GetItemsAsync(token) ?? Array.Empty<Favorite>(), true));
             return result;
         }
 
@@ -440,7 +440,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return validItems.Distinct();
         }
 
-        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items, bool setMaxPrice)
+        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items, IEnumerable<Favorite?> favorites, bool setMaxPrice)
         {
             _loadingCache.Clear();
             _loadingCts?.Cancel();
@@ -503,7 +503,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     }
                 }
 
-                // interaction.IsFavorite = SessionService.GetFavorites().Any(f => f.Id == trainingItem?.Id && f.Type == typeof(Training));
+                interaction.IsFavorite = favorites.Any(f => f.ApiId == item?.Id);
                 trainings.Add(interaction);
             }
 
@@ -626,11 +626,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private void OnFilterChangedMessage(object recipient, FilterChangedMessage message)
+        private async void OnFilterChangedMessage(object recipient, FilterChangedMessage message)
         {
+            IEnumerable<Favorite?> favorites;
+            using (var worker = ScheduleWork())
+            {
+                var token = worker.Token;
+                favorites = await FavoriteRepository.GetItemsAsync(token) ?? Array.Empty<Favorite>();
+            }
+
             _customFilter = message.Filter;
             var filteredTrainings = TryFilter(_trainings, _customFilter);
-            var items = CreateTrainingResults(filteredTrainings, false);
+            var items = CreateTrainingResults(filteredTrainings, favorites, false);
             if (MainThread.IsMainThread)
             {
                 LoadonUIThread(items);
