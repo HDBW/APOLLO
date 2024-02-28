@@ -524,13 +524,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     token.ThrowIfCancellationRequested();
                     entry.IsFavorite = !entry.IsFavorite;
+
+                    var data = entry.Data as NavigationData;
+                    var entryId = data?.parameters?.GetValue<string?>(NavigationParameter.Id);
+                    if (string.IsNullOrWhiteSpace(entryId))
+                    {
+                        return;
+                    }
+
                     if (entry.IsFavorite)
                     {
-                        var res = await FavoriteRepository.SaveAsync(new Favorite() { ApiId = Guid.NewGuid().ToString() }, token);
+                        await FavoriteRepository.SaveAsync(new Favorite() { ApiId = entryId }, token);
                     }
                     else
                     {
-                        var res = await FavoriteRepository.DeleteFavoriteAsync(Guid.NewGuid().ToString(), token);
+                        await FavoriteRepository.DeleteFavoriteAsync(entryId, token);
                     }
                 }
                 catch (Exception ex)

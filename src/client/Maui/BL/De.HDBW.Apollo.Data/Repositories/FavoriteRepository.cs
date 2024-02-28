@@ -3,7 +3,6 @@
 
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Data.Repositories
@@ -17,17 +16,24 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
         }
 
-        public Task<bool> DeleteFavoriteAsync(string apiId, CancellationToken token)
+        public async Task<bool> DeleteFavoriteAsync(string apiId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             try
             {
-                if (File.Exists(BasePath))
+                if (string.IsNullOrWhiteSpace(apiId))
                 {
-                    File.Delete(BasePath);
+                    return false;
                 }
 
-                return Task.FromResult(true);
+                var list = (await LoadAsync(token) ?? new List<Favorite?>()).ToList();
+                var item = list.FirstOrDefault(x => x?.ApiId?.Equals(apiId) == true);
+                if (item != null)
+                {
+                    list.Remove(item);
+                }
+
+                return await SaveAsync(list, token);
             }
             catch (OperationCanceledException)
             {
@@ -42,7 +48,7 @@ namespace De.HDBW.Apollo.Data.Repositories
                 Logger.LogError(ex, $"Unknown error in {nameof(DeleteFavoriteAsync)} in {GetType().Name}.");
             }
 
-            return Task.FromResult(false);
+            return false;
         }
 
         public Task<IEnumerable<Favorite?>?> GetItemsAsync(CancellationToken token)
