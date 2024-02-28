@@ -35,33 +35,4 @@ public partial class FavoriteView
             return BindingContext as FavoriteViewModel;
         }
     }
-
-    protected override void OnDisappearing()
-    {
-        PART_Collection.PropertyChanged -= OnPropertyChanged;
-        base.OnDisappearing();
-    }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        PART_Collection.PropertyChanged += OnPropertyChanged;
-    }
-
-    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName?.Equals(nameof(CollectionView.ItemsSource)) != true)
-        {
-            return;
-        }
-
-        var collectionView = sender as CollectionView;
-
-        if (collectionView == null)
-        {
-            return;
-        }
-
-        collectionView.ScrollTo(0, animate: false);
-    }
 }

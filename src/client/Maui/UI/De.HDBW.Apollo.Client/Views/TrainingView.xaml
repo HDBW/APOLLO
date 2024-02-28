@@ -16,6 +16,7 @@
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="makefavorite.png"/>
         <ToolbarItem Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
