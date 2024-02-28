@@ -39,7 +39,11 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [ObservableProperty]
         private bool _isFiltered;
 
+        [ObservableProperty]
         private bool _isFavorite;
+
+        [ObservableProperty]
+        private bool _canBeMadeFavorite;
 
         private SearchInteractionEntry(
             string? text,
@@ -49,6 +53,8 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             string? decoratorImagePath,
             string? info,
             object? data,
+            bool canBeMadeFavorite,
+            bool isFavorite,
             Func<SearchInteractionEntry, Task> handleToggleIsFavorite,
             Func<SearchInteractionEntry, bool> canHandleToggleIsFavorite,
             Func<InteractionEntry, Task> navigateHandler,
@@ -62,6 +68,8 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             DecoratorText = decoratorText;
             DecoratorImagePath = decoratorImagePath?.ToUniformedName();
             Info = info;
+            CanBeMadeFavorite = canBeMadeFavorite;
+            IsFavorite = isFavorite;
         }
 
         public bool HasDecorator
@@ -96,33 +104,14 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             }
         }
 
-        public bool IsFavorite
+        public static SearchInteractionEntry Import(string? text, string? subline, string? sublineImagePath, string? decoratorText, string? decoratorImagePath, string? info, object? data, bool canBeMadeFavorite, bool isFavorite, Func<SearchInteractionEntry, Task> handleToggleIsFavorite, Func<SearchInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
         {
-            get
-            {
-                return _isFavorite;
-            }
-
-            set
-            {
-                if (SetProperty(ref _isFavorite, value))
-                {
-                    ToggleIsFavoriteCommand?.NotifyCanExecuteChanged();
-                }
-            }
-        }
-
-        public static SearchInteractionEntry Import(string? text, string? subline, string? sublineImagePath, string? decoratorText, string? decoratorImagePath, string? info, object? data, Func<SearchInteractionEntry, Task> handleToggleIsFavorite, Func<SearchInteractionEntry, bool> canHandleToggleIsFavorite, Func<InteractionEntry, Task> handleInteract, Func<InteractionEntry, bool> canHandleInteract)
-        {
-            return new SearchInteractionEntry(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, handleToggleIsFavorite, canHandleToggleIsFavorite, handleInteract, canHandleInteract);
+            return new SearchInteractionEntry(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, canBeMadeFavorite, isFavorite, handleToggleIsFavorite, canHandleToggleIsFavorite, handleInteract, canHandleInteract);
         }
 
         public object Clone()
         {
-            return new SearchInteractionEntry(Text, Subline, SublineImagePath, DecoratorText, DecoratorImagePath, Info, Data, _handleToggleIsFavorite, _canHandleToggleIsFavorite, NavigateHandler, CanNavigateHandle)
-            {
-                _isFavorite = IsFavorite,
-            };
+            return new SearchInteractionEntry(Text, Subline, SublineImagePath, DecoratorText, DecoratorImagePath, Info, Data, CanBeMadeFavorite, IsFavorite, _handleToggleIsFavorite, _canHandleToggleIsFavorite, NavigateHandler, CanNavigateHandle);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]

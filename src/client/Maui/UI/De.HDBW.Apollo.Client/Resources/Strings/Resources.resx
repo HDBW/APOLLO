@@ -1408,7 +1408,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Finanzierungsoptionen</value>
   </data>
   <data name="Global_SearchFilterSheet_ApplyFilter" xml:space="preserve">
-    <value>Anwenden</value>
+    <value>Filter anwenden</value>
   </data>
   <data name="Filter_HasIndividualStartDate" xml:space="preserve">
     <value>Startdatum individuell</value>
@@ -1430,5 +1430,11 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="Filter_Date" xml:space="preserve">
     <value>Zeitraum</value>
+  </data>
+  <data name="Global_SearchFilterSheet_ResetFilter" xml:space="preserve">
+    <value>Filter zurücksetzen</value>
+  </data>
+  <data name="Global_SearchFilterSheet_Title" xml:space="preserve">
+    <value>Filter</value>
   </data>
 </root>

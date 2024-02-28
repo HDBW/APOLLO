@@ -248,7 +248,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 parameters.AddValue(NavigationParameter.Id, item.Id);
                 var data = new NavigationData(Routes.TrainingView, parameters);
 
-                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data,true, true, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
                 {
                     if (!_loadingCache.Keys.Any(x => x.OriginalString == eduProvider.Image.OriginalString))
@@ -263,6 +263,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         _loadingCache[eduProvider.Image].Add(interaction);
                     }
                 }
+
                 trainings.Add(interaction);
             }
 

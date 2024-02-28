@@ -27,6 +27,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private readonly int _maxHistoryItemsCount = 10;
         private readonly int _maxSugestionItemsCount = 10;
         private readonly ConcurrentDictionary<Uri, List<IProvideImageData>> _loadingCache = new ConcurrentDictionary<Uri, List<IProvideImageData>>();
+        private readonly IReadOnlyCollection<string> _favoriteDisabledProviderNames = new List<string>() {
+            "Bildungswerk der Baden-Württembergischen Wirtschaft e. V.",
+            "BBQ Bildung und Berufliche Qualifizierung gGmbH",
+        };
 
         [ObservableProperty]
         private ObservableCollection<SearchSuggestionEntry> _suggestions = new ObservableCollection<SearchSuggestionEntry>();
@@ -46,6 +50,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private List<TrainingModel> _trainings = new List<TrainingModel>();
 
         private decimal _maxPrice;
+        private ICollection<Favorite?> _favorites;
 
         public SearchViewModel(
             IDispatcherService dispatcherService,
@@ -134,6 +139,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    _favorites = (await FavoriteRepository.GetItemsAsync(worker.Token))?.ToList() ?? new List<Favorite?>();
                     var history = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, null, worker.Token).ConfigureAwait(false);
                     if (!(history?.Any() ?? false))
                     {
@@ -402,7 +408,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             _trainings = items.ToList();
             _customFilter = null;
             var result = new List<SearchInteractionEntry>();
-            result.AddRange(CreateTrainingResults(_trainings, await FavoriteRepository.GetItemsAsync(token) ?? Array.Empty<Favorite>(), true));
+            result.AddRange(CreateTrainingResults(_trainings, true));
             return result;
         }
 
@@ -440,7 +446,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return validItems.Distinct();
         }
 
-        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items, IEnumerable<Favorite?> favorites, bool setMaxPrice)
+        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items, bool setMaxPrice)
         {
             _loadingCache.Clear();
             _loadingCts?.Cancel();
@@ -487,7 +493,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 parameters.AddValue(NavigationParameter.Id, item.Id);
                 var data = new NavigationData(Routes.TrainingView, parameters);
 
-                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var isFavorite = _favorites.Any(f => f?.ApiId == item.Id);
+                var canBeMadeFavorite = !_favoriteDisabledProviderNames.Any(id => item.CourseProvider?.Name == id || item.TrainingProvider?.Name == id);
+
+                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, canBeMadeFavorite, isFavorite, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
                 {
                     if (!_loadingCache.Keys.Any(x => x.OriginalString == eduProvider.Image.OriginalString))
@@ -503,7 +512,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     }
                 }
 
-                interaction.IsFavorite = favorites.Any(f => f.ApiId == item?.Id);
                 trainings.Add(interaction);
             }
 
@@ -512,7 +520,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanHandleToggleIsFavorite(SearchInteractionEntry entry)
         {
-            return entry != null;
+            return entry != null && entry.CanBeMadeFavorite;
         }
 
         private async Task HandleToggleIsFavorite(SearchInteractionEntry entry)
@@ -540,6 +548,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         await FavoriteRepository.DeleteFavoriteAsync(entryId, token);
                     }
+
+                    _favorites = (await FavoriteRepository.GetItemsAsync(token))?.ToList() ?? new List<Favorite?>();
                 }
                 catch (Exception ex)
                 {
@@ -626,18 +636,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private async void OnFilterChangedMessage(object recipient, FilterChangedMessage message)
+        private void OnFilterChangedMessage(object recipient, FilterChangedMessage message)
         {
-            IEnumerable<Favorite?> favorites;
-            using (var worker = ScheduleWork())
-            {
-                var token = worker.Token;
-                favorites = await FavoriteRepository.GetItemsAsync(token) ?? Array.Empty<Favorite>();
-            }
-
             _customFilter = message.Filter;
             var filteredTrainings = TryFilter(_trainings, _customFilter);
-            var items = CreateTrainingResults(filteredTrainings, favorites, false);
+            var items = CreateTrainingResults(filteredTrainings, false);
             if (MainThread.IsMainThread)
             {
                 LoadonUIThread(items);

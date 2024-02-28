@@ -5,6 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.License
 {
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class LicenseView : ContentPage
     {
         public LicenseView(LicenseViewModel model)
