@@ -92,10 +92,12 @@
 
   <style name="MauiAlertDialogButtonPositiveStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
     <item name="android:textColor">@color/colorPrimary</item>
+    <item name="android:backgroundTint">@color/neutral0</item>
   </style>
 
   <style name="MauiAlertDialogButtonNeutralStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
     <item name="android:textColor">@color/colorPrimary</item>
+    <item name="android:backgroundTint">@color/neutral0</item>
   </style>
   <!-- 
     The collectionViewScrollBars style will be used as the default style for ItemsViewRenderer (the base renderer
