@@ -1152,6 +1152,11 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="FavoriteView_Title" xml:space="preserve">
     <value>Inhalte</value>
   </data>
+
+  <data name="FavoriteView_Empty" xml:space="preserve">
+    <value>Du hast keine Favoriten ausgewählt</value>
+  </data>
+
   <data name="Global_Delete" xml:space="preserve">
     <value>Löschen</value>
   </data>

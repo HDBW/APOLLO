@@ -350,6 +350,9 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<SettingsView>();
             services.AddTransient<SettingsViewModel>();
 
+            services.AddTransient<FavoriteView>();
+            services.AddTransient<FavoriteViewModel>();
+
             // Training
             services.AddTransient<TrainingView>();
             services.AddTransient<TrainingViewModel>();

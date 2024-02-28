@@ -10,6 +10,9 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Training;
 using De.HDBW.Apollo.Data.Helper;
+using De.HDBW.Apollo.Data.Repositories;
+using De.HDBW.Apollo.SharedContracts.Models;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
@@ -40,6 +43,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _price;
 
         [ObservableProperty]
+        private bool _isFavorite;
+
+        [ObservableProperty]
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
         private TrainingModel? _training;
@@ -49,6 +55,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             ITrainingService trainingService,
+            IFavoriteRepository favoriteRepository,
             IImageCacheService imageCacheService,
             ILogger<TrainingViewModel> logger)
             : base(
@@ -61,6 +68,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(imageCacheService);
             TrainingService = trainingService;
             ImageCacheService = imageCacheService;
+            FavoriteRepository = favoriteRepository;
         }
 
         public bool HasProductUrl
@@ -74,6 +82,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private ITrainingService TrainingService { get; }
 
         private IImageCacheService ImageCacheService { get; }
+
+        private IFavoriteRepository FavoriteRepository { get; }
 
         public async override Task OnNavigatedToAsync()
         {
@@ -93,6 +103,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         Logger?.LogDebug("StartCreationOfSections");
                         var sections = new List<ObservableObject>();
                         var addedItem = false;
+                        var isFavorite = false;
                         if (training != null)
                         {
                             if (TryCreateTrainingsHeader(training, out ObservableObject header))
@@ -285,9 +296,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             {
                                 sections.Add(SeperatorItem.Import());
                             }
+
+                            isFavorite = await FavoriteRepository.GetItemByApiIdAsync(training.Id, worker.Token).ConfigureAwait(false) != null;
                         }
 
-                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections), worker.Token).ConfigureAwait(false);
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections, isFavorite), worker.Token).ConfigureAwait(false);
                     }, worker.Token);
 
                     _loadingCts?.Cancel();
@@ -320,6 +333,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             OpenProductCommand?.NotifyCanExecuteChanged();
             NavigateBackCommand?.NotifyCanExecuteChanged();
             ShareProductCommand?.NotifyCanExecuteChanged();
+            ToggleIsFavoriteCommand?.NotifyCanExecuteChanged();
             var contactListSection = Sections?.OfType<ContactListItem>().FirstOrDefault();
             contactListSection?.RefreshCommands();
             var contactItemSection = Sections?.OfType<ContactItem>().FirstOrDefault();
@@ -363,11 +377,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private async void LoadonUIThread(
-            TrainingModel? training, List<ObservableObject> sections)
+            TrainingModel? training,
+            List<ObservableObject> sections,
+            bool isFavorite)
         {
             _training = training;
             ProductUrl = _training?.ProductUrl;
             Price = $"{_training?.Price ?? 0:0.##} €";
+            IsFavorite = isFavorite;
             foreach (var section in sections)
             {
                 await DispatcherService.BeginInvokeOnMainThreadAsync(
@@ -387,6 +404,40 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             Logger?.LogDebug("Finished");
+        }
+
+        private bool CanToggleIsFavorite()
+        {
+            return _training != null && !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]
+        private async Task ToggleIsFavorite(CancellationToken token)
+        {
+            try
+            {
+                token.ThrowIfCancellationRequested();
+
+                if (string.IsNullOrWhiteSpace(_training?.Id))
+                {
+                    return;
+                }
+
+                IsFavorite = !IsFavorite;
+
+                if (IsFavorite)
+                {
+                    await FavoriteRepository.SaveAsync(new Favorite() { ApiId = _training?.Id }, token);
+                }
+                else
+                {
+                    await FavoriteRepository.DeleteFavoriteAsync(_training.Id, token);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(ToggleIsFavorite)} in {GetType().Name}.");
+            }
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShareProduct))]
