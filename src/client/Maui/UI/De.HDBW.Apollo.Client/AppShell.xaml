@@ -83,7 +83,7 @@
         </Tab>
         <Tab Title="{x:Static strings:Resources.FavoriteView_Title}"
             Icon="favorite.png">
-            <ShellContent ContentTemplate="{DataTemplate views:FavoriteView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:FavoriteView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
     </TabBar>
 </Shell>

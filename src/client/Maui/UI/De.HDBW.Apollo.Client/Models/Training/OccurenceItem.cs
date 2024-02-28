@@ -21,7 +21,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
         [ObservableProperty]
         private bool _isExpanded;
 
-        private OccurenceItem(Occurence occurence, Action<OccurenceItem> changeStateHandler)
+        private OccurenceItem(Occurence occurence, Action<OccurenceItem>? changeStateHandler)
         {
             ChangeStateHandler = changeStateHandler;
             Header = $"{occurence.StartDate.ToUIDate().ToShortDateString()} - {occurence.EndDate.ToUIDate().ToShortDateString()}";
@@ -46,7 +46,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
 
         private Action<OccurenceItem>? ChangeStateHandler { get; }
 
-        public static OccurenceItem Import(Occurence occurence, Action<OccurenceItem> changeStateHandler)
+        public static OccurenceItem Import(Occurence occurence, Action<OccurenceItem>? changeStateHandler)
         {
             return new OccurenceItem(occurence, changeStateHandler);
         }

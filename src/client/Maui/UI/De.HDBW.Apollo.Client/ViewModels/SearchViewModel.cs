@@ -16,7 +16,6 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
 using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
@@ -27,11 +26,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private readonly int _maxHistoryItemsCount = 10;
         private readonly int _maxSugestionItemsCount = 10;
         private readonly ConcurrentDictionary<Uri, List<IProvideImageData>> _loadingCache = new ConcurrentDictionary<Uri, List<IProvideImageData>>();
-        private readonly IReadOnlyCollection<string> _favoriteDisabledProviderNames = new List<string>() {
-            "Bildungswerk der Baden-Württembergischen Wirtschaft e. V.",
-            "BBQ Bildung und Berufliche Qualifizierung gGmbH",
-        };
-
+        
         [ObservableProperty]
         private ObservableCollection<SearchSuggestionEntry> _suggestions = new ObservableCollection<SearchSuggestionEntry>();
 
@@ -43,14 +38,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private CancellationTokenSource? _loadingCts;
         private List<Task>? _loadingTask;
-
         private Filter? _customFilter;
         private string? _query;
-
         private List<TrainingModel> _trainings = new List<TrainingModel>();
-
         private decimal _maxPrice;
-        private ICollection<Favorite?> _favorites;
+        private ICollection<Favorite> _favorites = new List<Favorite>();
 
         public SearchViewModel(
             IDispatcherService dispatcherService,
@@ -79,6 +71,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             Filter = CreateDefaultTrainingsFilter(string.Empty);
             WeakReferenceMessenger.Default.Register<FilterChangedMessage>(this, OnFilterChangedMessage);
             WeakReferenceMessenger.Default.Register<SheetDismissedMessage>(this, OnSheetDismissedMessage);
+            WeakReferenceMessenger.Default.Register<ShellContentChangedMessage>(this, OnShellContentChangedMessage);
         }
 
         public bool HasFilter
@@ -139,7 +132,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    _favorites = (await FavoriteRepository.GetItemsAsync(worker.Token))?.ToList() ?? new List<Favorite?>();
+                    _favorites = (await FavoriteRepository.GetItemsByTypeAsync(nameof(Training), worker.Token))?.ToList() ?? new List<Favorite>();
                     var history = await SearchHistoryRepository.GetMaxItemsAsync(_maxHistoryItemsCount, null, worker.Token).ConfigureAwait(false);
                     if (!(history?.Any() ?? false))
                     {
@@ -386,6 +379,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         nameof(TrainingModel.TrainingName),
                         nameof(TrainingModel.TrainingType),
                         nameof(TrainingModel.ShortDescription),
+                        nameof(TrainingModel.ProviderId),
                         KnownFilters.PriceFieldName,
                         $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Name)}",
                         $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Image)}",
@@ -493,8 +487,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 parameters.AddValue(NavigationParameter.Id, item.Id);
                 var data = new NavigationData(Routes.TrainingView, parameters);
 
-                var isFavorite = _favorites.Any(f => f?.ApiId == item.Id);
-                var canBeMadeFavorite = !_favoriteDisabledProviderNames.Any(id => item.CourseProvider?.Name == id || item.TrainingProvider?.Name == id);
+                var isFavorite = _favorites.Any(f => f?.Id == item.Id);
+                var canBeMadeFavorite = SessionService.HasRegisteredUser && !KnownEduProviders.FavoriteDisabledProviders.Any(id => item.ProviderId == id);
 
                 var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, canBeMadeFavorite, isFavorite, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
@@ -540,16 +534,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         return;
                     }
 
+                    var result = false;
                     if (entry.IsFavorite)
                     {
-                        await FavoriteRepository.SaveAsync(new Favorite() { ApiId = entryId }, token);
+                        result = await FavoriteRepository.SaveAsync(new Favorite(entryId, nameof(Training)), token).ConfigureAwait(false);
                     }
                     else
                     {
-                        await FavoriteRepository.DeleteFavoriteAsync(entryId, token);
+                        result = await FavoriteRepository.DeleteFavoriteAsync(entryId, nameof(Training), token).ConfigureAwait(false);
                     }
 
-                    _favorites = (await FavoriteRepository.GetItemsAsync(token))?.ToList() ?? new List<Favorite?>();
+                    if (result)
+                    {
+                        _favorites = (await FavoriteRepository.GetItemsByTypeAsync(nameof(Training), CancellationToken.None).ConfigureAwait(false))?.ToList() ?? new List<Favorite>();
+                    }
+                    else
+                    {
+                        await ExecuteOnUIThreadAsync(() => { entry.IsFavorite = !entry.IsFavorite; }, CancellationToken.None).ConfigureAwait(false);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -560,8 +562,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     UnscheduleWork(worker);
                 }
             }
-
-            return;
         }
 
         private void ClearSuggesionsAndHistory()
@@ -603,6 +603,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private void LoadonUIThread(IEnumerable<HistoricalSuggestionEntry> recents)
         {
             Recents = new ObservableCollection<HistoricalSuggestionEntry>(recents);
+            var favoriteIds = _favorites?.Select(x => x.Id) ?? new List<string>();
+            foreach (var searchResult in SearchResults)
+            {
+                if (!searchResult.CanBeMadeFavorite)
+                {
+                    continue;
+                }
+
+                var navigationData = searchResult.Data as NavigationData;
+                if (navigationData == null)
+                {
+                    continue;
+                }
+
+                var id = navigationData.Parameters?.GetValue<string>(NavigationParameter.Id);
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    continue;
+                }
+
+                searchResult.IsFavorite = favoriteIds.Contains(id);
+            }
         }
 
         private Filter CreateDefaultTrainingsFilter(string query)
@@ -648,6 +670,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             else
             {
                 MainThread.BeginInvokeOnMainThread(() => LoadonUIThread(items));
+            }
+        }
+
+        private void OnShellContentChangedMessage(object recipient, ShellContentChangedMessage message)
+        {
+            if (message.NewViewModelType != typeof(SearchViewModel))
+            {
+                if (MainThread.IsMainThread)
+                {
+                    SearchResults = new ObservableCollection<SearchInteractionEntry>();
+                }
+                else
+                {
+                    MainThread.BeginInvokeOnMainThread(()=>SearchResults = new ObservableCollection<SearchInteractionEntry>());
+                }
             }
         }
 

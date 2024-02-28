@@ -1,14 +1,18 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using Invite.Apollo.App.Graph.Common.Models;
-
 namespace De.HDBW.Apollo.SharedContracts.Models
 {
-    public class Favorite : BaseItem
+    public class Favorite
     {
-        public string? ApiId { get;  set;  }
+        public Favorite(string id, string type)
+        {
+            Id = id;
+            Type = type;
+        }
 
-        public Type? Type { get; set; }
+        public string Id { get;  set;  }
+
+        public string Type { get; set; }
     }
 }

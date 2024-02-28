@@ -78,9 +78,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var favorites = (await FavoriteRepository.GetItemsAsync(worker.Token).ConfigureAwait(false)) ?? new List<Favorite?>();
+                    var favorites = (await FavoriteRepository.GetItemsByTypeAsync(nameof(Training), worker.Token).ConfigureAwait(false)) ?? new List<Favorite>();
 
-                    var filter = Filter.CreateQuery(nameof(TrainingModel.Id), favorites.Where(x => !string.IsNullOrWhiteSpace(x?.ApiId)).Select(x => x?.ApiId).Cast<object>().ToList(), QueryOperator.Contains);
+                    var filter = Filter.CreateQuery(nameof(TrainingModel.Id), favorites.Where(x => !string.IsNullOrWhiteSpace(x.Id)).Select(x => x.Id).Cast<object>().ToList(), QueryOperator.Contains);
                     filter.IsOrOperator = true;
                     var interactions = await SearchTrainingsAsync(filter, worker.Token).ConfigureAwait(false);
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token).ConfigureAwait(false);
@@ -284,13 +284,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         return;
                     }
 
+                    var result = false;
                     if (entry.IsFavorite)
                     {
-                        await FavoriteRepository.SaveAsync(new Favorite() { ApiId = entryId }, token);
+                        result = await FavoriteRepository.SaveAsync(new Favorite(entryId, nameof(Training)), token).ConfigureAwait(false);
                     }
                     else
                     {
-                        await FavoriteRepository.DeleteFavoriteAsync(entryId, token);
+                        result = await FavoriteRepository.DeleteFavoriteAsync(entryId, nameof(Training), token).ConfigureAwait(false);
+                    }
+
+                    if (!result)
+                    {
+                        await ExecuteOnUIThreadAsync(() => { entry.IsFavorite = !entry.IsFavorite; }, CancellationToken.None).ConfigureAwait(false);
                     }
                 }
                 catch (Exception ex)
@@ -302,8 +308,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     UnscheduleWork(worker);
                 }
             }
-
-            return;
         }
 
         private void ClearSuggesionsAndHistory()

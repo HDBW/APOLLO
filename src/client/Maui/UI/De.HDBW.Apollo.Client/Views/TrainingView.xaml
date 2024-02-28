@@ -7,16 +7,16 @@
              xmlns:trainingsModels="clr-namespace:De.HDBW.Apollo.Client.Models.Training"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
-             x:DataType="viewModels:TrainingViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.TrainingsView_Title}"
              IsBusy="{x:Binding IsBusy}"
+             x:DataType="viewModels:TrainingViewModel"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="makefavorite.png"/>
+        <ToolbarItem Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon}"/>
         <ToolbarItem Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>

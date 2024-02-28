@@ -7,11 +7,11 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
 {
     public interface IFavoriteRepository
     {
-        Task<bool> DeleteFavoriteAsync(string apiId, CancellationToken token);
+        Task<bool> DeleteFavoriteAsync(string id, string type, CancellationToken token);
 
-        Task<Favorite?> GetItemByApiIdAsync(string apiId, CancellationToken token);
+        Task<IEnumerable<Favorite>?> GetItemsByTypeAsync(string type, CancellationToken token);
 
-        Task<IEnumerable<Favorite?>?> GetItemsAsync(CancellationToken token);
+        Task<Favorite?> GetItemByIdAsync(string id, string type, CancellationToken token);
 
         Task<bool> SaveAsync(Favorite favorite, CancellationToken token);
     }

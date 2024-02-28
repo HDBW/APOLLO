@@ -43,6 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private string? _price;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FavoriteIcon))]
         private bool _isFavorite;
 
         [ObservableProperty]
@@ -54,10 +55,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
+            ILogger<TrainingViewModel> logger,
             ITrainingService trainingService,
             IFavoriteRepository favoriteRepository,
             IImageCacheService imageCacheService,
-            ILogger<TrainingViewModel> logger)
+            ISessionService sessionService)
             : base(
                 dispatcherService,
                 navigationService,
@@ -65,10 +67,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 logger)
         {
             ArgumentNullException.ThrowIfNull(trainingService);
+            ArgumentNullException.ThrowIfNull(favoriteRepository);
             ArgumentNullException.ThrowIfNull(imageCacheService);
+            ArgumentNullException.ThrowIfNull(sessionService);
             TrainingService = trainingService;
             ImageCacheService = imageCacheService;
             FavoriteRepository = favoriteRepository;
+            SessionService = sessionService;
         }
 
         public bool HasProductUrl
@@ -79,11 +84,21 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public string FavoriteIcon
+        {
+            get
+            {
+                return IsFavorite ? KnonwIcons.IsFavorite : KnonwIcons.MakeFavorite;
+            }
+        }
+
         private ITrainingService TrainingService { get; }
 
         private IImageCacheService ImageCacheService { get; }
 
         private IFavoriteRepository FavoriteRepository { get; }
+
+        private ISessionService SessionService { get; }
 
         public async override Task OnNavigatedToAsync()
         {
@@ -297,7 +312,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                                 sections.Add(SeperatorItem.Import());
                             }
 
-                            isFavorite = await FavoriteRepository.GetItemByApiIdAsync(training.Id, worker.Token).ConfigureAwait(false) != null;
+                            isFavorite = await FavoriteRepository.GetItemByIdAsync(training.Id, nameof(Training), worker.Token).ConfigureAwait(false) != null;
                         }
 
                         await ExecuteOnUIThreadAsync(() => LoadonUIThread(training, sections, isFavorite), worker.Token).ConfigureAwait(false);
@@ -408,7 +423,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanToggleIsFavorite()
         {
-            return _training != null && !IsBusy;
+            return _training != null && !IsBusy && SessionService.HasRegisteredUser && !KnownEduProviders.FavoriteDisabledProviders.Any(id => _training.ProviderId == id);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]
@@ -427,11 +442,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 if (IsFavorite)
                 {
-                    await FavoriteRepository.SaveAsync(new Favorite() { ApiId = _training?.Id }, token);
+                    await FavoriteRepository.SaveAsync(new Favorite(_training!.Id, nameof(Training)), token).ConfigureAwait(false);
                 }
                 else
                 {
-                    await FavoriteRepository.DeleteFavoriteAsync(_training.Id, token);
+                    await FavoriteRepository.DeleteFavoriteAsync(_training.Id, nameof(Training), token).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -770,7 +785,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 eduProvider = training.CourseProvider;
             }
 
-            var provider = EduProviderItem.Import(eduProvider?.Name ?? Resources.Strings.Resources.Global_UnknownProvider,eduProvider?.Image?.OriginalString);
+            var provider = EduProviderItem.Import(eduProvider?.Name ?? Resources.Strings.Resources.Global_UnknownProvider, eduProvider?.Image?.OriginalString);
 
             item = provider;
 

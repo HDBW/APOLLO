@@ -30,5 +30,9 @@ namespace De.HDBW.Apollo.Client.Models
         public const string Watch = "watch.png";
 
         public const string Web = "web.png";
+
+        public const string IsFavorite = "isfavorite.png";
+
+        public const string MakeFavorite = "makefavorite.png";
     }
 }
