@@ -11,6 +11,6 @@ namespace Apollo.RestService.Messages
         /// <summary>
         ///  Will return response as type profile
         /// </summary>
-        public Profile Profile { get; set; }
+        public Profile? Profile { get; set; }
     }
 }

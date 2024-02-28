@@ -22,7 +22,7 @@ namespace Apollo.Api
         /// <summary>
         /// Gets the specific instance of the profile.
         /// </summary>
-        /// <param name="trainingId"></param>
+        /// <param name="profileId"></param>
         /// <returns></returns>
         public virtual async Task<Profile> GetProfile(string profileId)
         {
@@ -167,6 +167,7 @@ namespace Apollo.Api
                 EnsureIds<Qualification>(profile!, profile?.Qualifications, existingProfile?.Qualifications);
                 EnsureIds<LanguageSkill>(profile!, profile?.LanguageSkills, existingProfile?.LanguageSkills);
                 EnsureIds<WebReference>(profile!, profile?.WebReferences, existingProfile?.WebReferences);
+                EnsureIds<Occupation>(profile!, profile?.Occupations, existingProfile?.Occupations);
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
@@ -254,7 +255,7 @@ namespace Apollo.Api
                     // Check if ID is not  present, generate and set an ID
                     if (String.IsNullOrEmpty(item.Id))
                     {
-                        item.Id = CreateListId(nameof(T));
+                        item.Id = CreateListId(typeof(T).Name);
                     }
                     else
                     {

@@ -2,8 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Globalization;
 using System.Reflection;
 using Apollo.Common.Entities;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using MongoDB.Driver.Core.Events.Diagnostics;
 
 namespace Apollo.Api
@@ -57,6 +60,46 @@ namespace Apollo.Api
                     expoDict.Add("Id", prop.GetValue(item)!);
                     expoDict.Add("_id", prop.GetValue(item)!);
                 }
+                else if (prop.Name == "CultureString")
+                {
+                    var val = prop.GetValue(item);
+                    expoDict.Add("CultureString", val == null ? null : val.ToString());
+
+                    if (val != null)
+                    {
+                        try
+                        {
+                            var culture = CultureInfo.GetCultureInfo((string)val);
+                            expoDict.Add("Culture", culture.Name);
+                        }
+                        catch (CultureNotFoundException ex)
+                        {
+                            // Handle the case where the culture cannot be found
+                            throw new InvalidOperationException($"Invalid Culture String: {val}", ex);
+                        }
+                    }
+                    else
+                    {
+                        expoDict.Add("Culture", null);
+                    }
+                }
+                else if (prop.Name == "OccupationGroup" && prop.PropertyType == typeof(Dictionary<string, string>))
+                {
+                    var val = prop.GetValue(item) as Dictionary<string, string>;
+                    if (val != null)
+                    {
+                        ExpandoObject occupationGroupExpo = new ExpandoObject();
+                        foreach (var kvp in val)
+                        {
+                            (occupationGroupExpo as IDictionary<string, object?>)?.Add(kvp.Key, kvp.Value);
+                        }
+                        expoDict.Add("OccupationGroup", occupationGroupExpo);
+                    }
+                    else
+                    {
+                        expoDict.Add("OccupationGroup", null);
+                    }
+                }
                 else
                 {
                     if (IsList(prop.PropertyType))
@@ -82,6 +125,8 @@ namespace Apollo.Api
 
             return expo;
         }
+
+
 
         private static bool IsList(Type type)
         {

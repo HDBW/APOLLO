@@ -3,15 +3,16 @@
 
 using System.Globalization;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Apollo.Common.Entities
 {
-    public class Occupation
+    public class Occupation: EntityBase
     {
-        /// <summary>
-        /// This can be used as Unique Identifier for the Occupation within the apollo system.
-        /// </summary>
-        public string? Id { get; set; }
+        ///// <summary>
+        ///// This can be used as Unique Identifier for the Occupation within the apollo system.
+        ///// </summary>
+        //public string? Id { get; set; }
 
         /// <summary>
         /// This is the unique identifier for the occupation if there is one in the specific Taxonomie.
@@ -92,31 +93,20 @@ namespace Apollo.Common.Entities
         /// </summary>
         public string TaxonomieVersion { get; set; } = String.Empty;
 
-        private CultureInfo? _culture;
 
         /// <summary>
         /// This is the language of the occupation.
         /// </summary>
-        public string? CultureString
-        {
-            get => _culture?.Name;
-            set
-            {
-                var x = new CultureInfo(value);
-                _culture = string.IsNullOrWhiteSpace(value)
-                    ? null
-                    : new System.Globalization.CultureInfo(value);
-            }
-        }
+        public string? CultureString { get; set; }
 
-        public CultureInfo? Culture
-        {
-            get => _culture;
-            set
-            {
-                _culture = value;
-            }
-        }
+        /// <summary>
+        /// Represents the culture information for the entity.
+        /// The Backend Converter utilizes this property.
+        /// </summary>
+        [JsonIgnore]
+        public CultureInfo? Culture;
+
+
 
         //[ProtoMember(15)]
         //public CultureInfo Culture { get; set; }
@@ -143,9 +133,11 @@ namespace Apollo.Common.Entities
 
         public List<string> OptionalKnowledge { get; set; } = new();
 
-        public List<string> Documents { get; set; } = new List<string>();
+        public List<string> Documents { get; set; } = new();
 
-        public KeyValuePair<string, string> OccupationGroup { get; set; } = new KeyValuePair<string, string>();
+      
+        public Dictionary<string, string> OccupationGroup { get; set; } = new Dictionary<string, string>();
+
 
         public bool DkzApprenticeship { get; set; } = false;
 

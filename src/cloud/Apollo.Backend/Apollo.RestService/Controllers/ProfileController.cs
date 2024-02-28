@@ -1,10 +1,13 @@
-﻿using Apollo.Api;
+﻿using System.Text.Json.Serialization;
+using System.Text.Json;
+using Apollo.Api;
 using Apollo.Common.Entities;
 using Apollo.RestService.Apollo.Common.Messages;
 using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using MongoDB.Bson;
 
 namespace Apollo.Service.Controllers
 {
@@ -49,8 +52,11 @@ namespace Apollo.Service.Controllers
 
                 _logger.LogTrace("Leave {method}", nameof(GetProfile));
 
+                
+                
                 // Return the retrieved profile as a response.
-                return new GetProfileResponse { Profile = profile};
+                return new GetProfileResponse { Profile =  profile };
+            
             }
             catch (Exception ex)
             {
