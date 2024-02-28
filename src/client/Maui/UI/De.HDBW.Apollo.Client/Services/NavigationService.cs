@@ -2,7 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Diagnostics;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -404,6 +406,12 @@ namespace De.HDBW.Apollo.Client.Services
             if (page == null)
             {
                 return;
+            }
+
+            if (e?.Source == ShellNavigationSource.ShellSectionChanged)
+            {
+                var vm = GetViewModel(page);
+                WeakReferenceMessenger.Default.Send(new ShellContentChangedMessage(vm?.GetType()));
             }
 
             NavigatedToPage(page, null);
