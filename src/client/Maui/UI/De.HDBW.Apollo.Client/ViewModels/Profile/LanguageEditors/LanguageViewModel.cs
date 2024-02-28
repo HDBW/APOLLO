@@ -37,7 +37,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
 
         private string? _selectionResult;
 
-        private CultureInfo? _code;
+        private CultureInfo? _culture;
 
         public LanguageViewModel(
             IDispatcherService dispatcherService,
@@ -82,7 +82,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
                 {
                     niveau = currentState.Niveau;
                     culture = currentState.Name != null ? CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.Name == currentState.Name) : null;
-                    name = currentState.Name;
+#if ANDROID
+                    name = culture?.DisplayName;
+#elif IOS
+                    name = culture?.NativeName;
+#endif
                 }
             }
 
@@ -126,12 +130,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
 
         protected override void ApplyChanges(Language entity)
         {
-            entity.Code = _code!.Name;
-#if ANDROID
-            entity.Name = _code.Name;
-#elif IOS
-            entity.Name = _code.NativeName;
-#endif
+            entity.Code = _culture!.ThreeLetterISOLanguageName;
+            entity.Name = _culture.Name;
             entity.Niveau = ((LanguageNiveau)SelectedLanguageNiveau!.Data!).ToApolloListItem();
         }
 
@@ -155,7 +155,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
 
         private void LoadonUIThread(CultureInfo? culture, string? name, List<InteractionEntry> languageNiveaus, InteractionEntry? selectedNivau, bool isDirty)
         {
-            _code = culture;
+            _culture = culture;
             LanguageName = name;
             LanguageNiveaus = new ObservableCollection<InteractionEntry>(languageNiveaus);
             SelectedLanguageNiveau = selectedNivau ?? LanguageNiveaus.FirstOrDefault();
@@ -173,7 +173,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
                     var language = new Language();
                     language.Id = EntryId;
                     language.Niveau = SelectedLanguageNiveau?.Data != null ? ((LanguageNiveau)SelectedLanguageNiveau.Data).ToApolloListItem() : null;
-                    language.Name = _code?.Name ?? string.Empty;
+                    language.Name = _culture?.Name ?? string.Empty;
 
                     var data = language.Serialize();
 
