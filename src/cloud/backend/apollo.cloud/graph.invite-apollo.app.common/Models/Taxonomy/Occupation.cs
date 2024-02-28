@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json.Serialization;
@@ -11,8 +12,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
     [ProtoContract]
     public class Occupation
     {
-        private CultureInfo? _culture;
-
         /// <summary>
         /// This can be used as Unique Identifier for the Occupation within the apollo system.
         /// </summary>
@@ -62,7 +61,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// This is a url to a regulatory aspect of the occupation. For example the "baker" has a regulatory aspect in Germany set by the HWK in the law: HwO.
         /// </summary>
         [ProtoMember(7)]
-        public string RegulatoryAspect { get; set; }
+        public string RegulatoryAspect { get; set; } = String.Empty;
 
         /// <summary>
         /// This indicates wheter a occupation has/is a apprenticeship or not.
@@ -90,14 +89,14 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// UI Query related
         /// </summary>
         [ProtoMember(11)]
-        public List<string> PreferedTerm { get; set; } = new List<string>();
+        public List<string> PreferedTerm { get; set; }
 
         /// <summary>
         /// This is a list of terms that are commonly used in a region or language but are not the prefered term.
         /// For example "Bäckergeselle" is a common term for a "baker" in Germany but not the prefered term.
         /// </summary>
         [ProtoMember(12)]
-        public List<string> NonePreferedTerm { get; set; } = new List<string>();
+        public List<string> NonePreferedTerm { get; set; } = new();
 
         /// <summary>
         /// Related Taxonomy
@@ -109,7 +108,9 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         /// This information is relevant since some Taxonomies have different versions.
         /// </summary>
         [ProtoMember(14)]
-        public string TaxonomieVersion { get; set; }
+        public string TaxonomieVersion { get; set; } = String.Empty;
+
+        private CultureInfo? _culture;
 
         /// <summary>
         /// This is the language of the occupation.
@@ -138,37 +139,64 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
             }
         }
 
+        //[ProtoMember(15)]
+        //public CultureInfo Culture { get; set; }
+
         /// <summary>
         /// Describes the Occupation
         /// </summary>
         [ProtoMember(16)]
         public string? Description { get; set; }
 
-        [ProtoMember(17)]
-        public List<string> BroaderConcepts { get; set; } = new List<string>();
+
+        [ProtoMember(17)] public List<string> BroaderConcepts { get; set; } = new();
 
         [ProtoMember(18)]
-        public List<string?> NarrowerConcepts { get; set; } = new List<string?>();
+        public List<string?> NarrowerConcepts { get; set; } = new();
 
         [ProtoMember(19)]
-        public List<string?> RelatedConcepts { get; set; } = new List<string?>();
+        public List<string?> RelatedConcepts { get; set; } = new();
 
         [ProtoMember(20)]
-        public List<string> Skills { get; set; } = new List<string>();
+        public List<string> Skills { get; set; } = new();
 
         [ProtoMember(21)]
-        public List<string> EssentialSkills { get; set; } = new List<string>();
+        public List<string> EssentialSkills { get; set; } = new();
 
         [ProtoMember(22)]
-        public List<string> OptionalSkills { get; set; } = new List<string>();
+        public List<string> OptionalSkills { get; set; } = new();
 
         [ProtoMember(23)]
-        public List<string> EssentialKnowledge { get; set; } = new List<string>();
+        public List<string> EssentialKnowledge { get; set; } = new();
 
         [ProtoMember(24)]
-        public List<string> OptionalKnowledge { get; set; } = new List<string>();
+        public List<string> OptionalKnowledge { get; set; } = new();
 
         [ProtoMember(25)]
-        public List<string> DocumentIds { get; set; } = new List<string>();
+        public List<string> Documents { get; set; } = new List<string>();
+
+        [ProtoMember(26)]
+        public Dictionary<string, string> OccupationGroup { get; set; } = new Dictionary<string, string>();
+
+        [ProtoMember(27)]
+        public bool DkzApprenticeship { get; set; } = false;
+
+        [ProtoMember(28)]
+        public bool QualifiedProfessional { get; set; } = false;
+
+        [ProtoMember(29)]
+        public bool NeedsUniversityDegree { get; set; } = false;
+
+        [ProtoMember(30)]
+        public bool IsMilitaryApprenticeship { get; set; }
+
+        [ProtoMember(31)]
+        public bool IsGovernmentApprenticeship { get; set; }
+
+        [ProtoMember(32)]
+        public DateTime? ValidFrom { get; set; }
+
+        [ProtoMember(33)]
+        public DateTime? ValidTill { get; set; }
     }
 }

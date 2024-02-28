@@ -18,10 +18,16 @@ namespace OccupationGrpcService.Protos
         [ProtoMember(3)]
         public string? OccupationId { get; set; }
 
-        [ProtoMember(4)]
-        public Taxonomy TaxonomyType { get; set; }
+        [ProtoMember(4)] public Taxonomy TaxonomyType { get; set; }
 
-        [ProtoMember(5)]
-        public string? CultureName { get; set; }
+        [ProtoMember(5)] public string? CultureName { get; set; }
+
+        [ProtoMember(6)] public bool DkzApprenticeShip { get; set; }
+
+        [ProtoMember(7)] public bool HasApprenticeShip { get; set; }
+
+        [ProtoMember(8)] public bool IsUniversityDegree { get; set; }
+        [ProtoMember(9)] public bool IsUniversityOccupation { get; set; }
+        [ProtoMember(10)] public bool QualifiedProfessional { get; set; }
     }
 }
