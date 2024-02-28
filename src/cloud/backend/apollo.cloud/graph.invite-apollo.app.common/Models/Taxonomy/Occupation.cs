@@ -174,7 +174,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         public List<string> Documents { get; set; } = new List<string>();
 
         [ProtoMember(26)]
-        public KeyValuePair<string, string> OccupationGroup { get; set; } = new KeyValuePair<string, string>();
+        public Dictionary<string, string> OccupationGroup { get; set; } = new Dictionary<string, string>();
 
         [ProtoMember(27)]
         public bool DkzApprenticeship { get; set; } = false;
