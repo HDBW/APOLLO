@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json.Serialization;
 using ProtoBuf;
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
@@ -127,6 +128,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
         }
 
         [ProtoIgnore]
+        [JsonIgnore]
         public CultureInfo? Culture
         {
             get => _culture;
