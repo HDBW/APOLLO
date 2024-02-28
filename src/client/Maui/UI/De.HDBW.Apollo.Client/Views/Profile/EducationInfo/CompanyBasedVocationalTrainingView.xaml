@@ -22,13 +22,13 @@
         <VerticalStackLayout Style="{StaticResource FormContent}">
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-                    <FlexLayout.GestureRecognizers>
+                <Grid ColumnDefinitions="*, auto">
+                    <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchOccupationCommand}"  />
-                    </FlexLayout.GestureRecognizers>
-                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
-                    <Image Source="longlist.png" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
-                </FlexLayout>
+                    </Grid.GestureRecognizers>
+                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Center" LineBreakMode="TailTruncation" Margin="0,0,4,0"/>
+                    <Image Grid.Column="1" Source="longlist.png" HeightRequest="24" WidthRequest="24"/>
+                </Grid>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_SchoolGraduation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
