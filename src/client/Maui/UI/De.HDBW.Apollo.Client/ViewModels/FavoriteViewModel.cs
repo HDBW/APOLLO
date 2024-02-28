@@ -78,20 +78,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var favorites = await FavoriteRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
-                    if (favorites?.Any() != true)
-                    {
-                        return;
-                    }
+                    var favorites = (await FavoriteRepository.GetItemsAsync(worker.Token).ConfigureAwait(false)) ?? new List<Favorite?>();
 
                     var filter = Filter.CreateQuery(nameof(TrainingModel.Id), favorites.Where(x => !string.IsNullOrWhiteSpace(x?.ApiId)).Select(x => x?.ApiId).Cast<object>().ToList(), QueryOperator.Contains);
                     filter.IsOrOperator = true;
                     var interactions = await SearchTrainingsAsync(filter, worker.Token).ConfigureAwait(false);
-                    if (interactions.Any())
-                    {
-                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token).ConfigureAwait(false);
-                        return;
-                    }
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -248,7 +240,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 parameters.AddValue(NavigationParameter.Id, item.Id);
                 var data = new NavigationData(Routes.TrainingView, parameters);
 
-                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data,true, true, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
+                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, true, true, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
                 {
                     if (!_loadingCache.Keys.Any(x => x.OriginalString == eduProvider.Image.OriginalString))
