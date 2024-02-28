@@ -1150,13 +1150,11 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Inhalte merken und Erinnerungen erhalten</value>
   </data>
   <data name="FavoriteView_Title" xml:space="preserve">
-    <value>Inhalte</value>
+    <value>Favoriten</value>
   </data>
-
   <data name="FavoriteView_Empty" xml:space="preserve">
     <value>Du hast keine Favoriten ausgewählt</value>
   </data>
-
   <data name="Global_Delete" xml:space="preserve">
     <value>Löschen</value>
   </data>
@@ -1436,5 +1434,14 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="Global_SearchFilterSheet_Title" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="FavoriteView_Description_EmptyView" xml:space="preserve">
+    <value>Schau Dich mal um, was Dir gefällt. Markiere das über das Fav-Ivon.</value>
+  </data>
+  <data name="FavoriteView_Headline" xml:space="preserve">
+    <value>Deine Favoriten</value>
+  </data>
+  <data name="FavoriteView_Subline_EmptyView" xml:space="preserve">
+    <value>Du hast noch keine Favoriten.</value>
   </data>
 </root>
