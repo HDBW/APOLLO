@@ -26,7 +26,7 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchOccupationCommand}"  />
                     </Grid.GestureRecognizers>
-                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Center" LineBreakMode="TailTruncation" Margin="0,0,4,0"/>
+                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" Margin="0,0,4,0"/>
                     <Image Grid.Column="1" Source="longlist.png" HeightRequest="24" WidthRequest="24"/>
                 </Grid>
             </Border>
