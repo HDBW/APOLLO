@@ -16,6 +16,7 @@
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="makefavorite.png"/>
         <ToolbarItem Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
@@ -75,7 +76,7 @@
 
         <DataTemplate x:Key="EduProviderItemTemplate" x:DataType="trainingsModels:EduProviderItem">
             <ContentView>
-                <Label x:Name="PART_ProviderName" Margin="24,0" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14}" MaxLines="2" Grid.Column="1" VerticalOptions="Center" />
+                <Label x:Name="PART_ProviderName" Margin="24,0" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14}" MaxLines="2" LineBreakMode="TailTruncation" Grid.Column="1" VerticalOptions="Center" />
             </ContentView>
         </DataTemplate>
 
@@ -83,7 +84,7 @@
             <ContentView>
                 <Grid Margin="24,0" HeightRequest="60" ColumnDefinitions="*,8,*" >
                     <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasProviderImage}" HeightRequest="60" VerticalOptions="Start" />
-                    <Label x:Name="PART_ProviderName" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14}" MaxLines="2" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Fill" />
+                    <Label x:Name="PART_ProviderName" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14}" MaxLines="2" Grid.Column="2" LineBreakMode="TailTruncation" VerticalOptions="Center" HorizontalOptions="Fill" />
                 </Grid>
             </ContentView>
         </DataTemplate>

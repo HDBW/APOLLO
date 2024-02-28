@@ -29,7 +29,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         protected override ObservableCollection<StringValue> GetAllLines(Language data)
         {
-            var culture = CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(x => x.Name == data.Code);
+            var culture = CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(x => x.Name == data.Name);
 
             var items = new List<StringValue>();
 #if ANDROID

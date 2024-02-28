@@ -6,11 +6,11 @@
             x:Class="De.HDBW.Apollo.Client.Views.SearchFilterSheet"
             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
             IsCancelable="True"
-            BackgroundColor="{StaticResource Neutral0}"
+            BackgroundColor="{StaticResource Neutral500}"
             ios:Page.UseSafeArea="true"
             HasHandle="True"
             HasBackdrop="True"
-            CornerRadius="20"
+            CornerRadius="16"
             Shown="OnShown"
             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
             xmlns:editorViewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
@@ -23,7 +23,7 @@
     <the49:BottomSheet.Detents>
         <the49:RatioDetent x:Name="PART_Detent" Ratio="0.7" />
     </the49:BottomSheet.Detents>
-    <Grid RowDefinitions="auto,*,auto">
+    <Grid RowDefinitions="auto,*,auto,auto">
         <Grid.Resources>
             <DataTemplate x:Key="DefaultEditorTemplate">
             </DataTemplate>
@@ -70,22 +70,17 @@
         
         <Grid HorizontalOptions="FillAndExpand" Padding="20,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-
-            <ImageButton Grid.Column="0"
+            <Label Text="{Static strings:Resources.Global_SearchFilterSheet_Title}" Style="{StaticResource Noto20Bold}"/>
+            
+            <ImageButton Grid.Column="1"
                 Command="{x:Binding CloseCommand}"
-                Padding="5"
-                Source="chevronback.png"
-                HorizontalOptions="Start" />
-
-            <ImageButton
-                Grid.Column="2"
-                Command="{x:Binding ResetFilterCommand}"
-                Source="delete.png"
-                HorizontalOptions="End"/>
+                HeightRequest="24"
+                WidthRequest="24"
+                Source="close.png"
+                HorizontalOptions="End" />
 
         </Grid>
 
@@ -95,17 +90,23 @@
             <VerticalStackLayout
                 Spacing="8"
                 BindableLayout.ItemsSource="{Binding EditorList}"
-                BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}">
-            </VerticalStackLayout>
+                BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}"/>
         </ScrollView>
 
+        <Border Grid.Row="2" Grid.RowSpan="2" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}"/>
+
         <Button
-            TextColor="White"
-            BackgroundColor="{StaticResource Primary}"
+            Style="{StaticResource BorderButton}"
+            Text="{Static strings:Resources.Global_SearchFilterSheet_ResetFilter}"
+            Command="{x:Binding ResetFilterCommand}"
+            Grid.Row="2"
+            Margin="20,16,20,8"/>
+
+        <Button
             Text="{Static strings:Resources.Global_SearchFilterSheet_ApplyFilter}"
             Command="{x:Binding ApplyFilterCommand}"
-            Grid.Row="2"
-            Margin="20,0"/>
+            Grid.Row="3"
+            Margin="20,0,20,16"/>
     </Grid>
 
 </the49:BottomSheet>

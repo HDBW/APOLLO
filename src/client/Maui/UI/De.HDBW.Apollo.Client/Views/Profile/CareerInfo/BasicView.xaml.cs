@@ -5,6 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.CareerInfo
 {
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class BasicView : ContentPage
     {
         public BasicView(BasicViewModel model)

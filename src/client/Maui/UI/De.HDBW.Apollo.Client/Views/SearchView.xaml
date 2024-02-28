@@ -79,7 +79,10 @@
                                         <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
                                     </HorizontalStackLayout>
                                 </Border>
-                                <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8" Command="{x:Binding ToggleIsFavoriteCommand}" Source="makefavorite.png" VerticalOptions="Start">
+                                <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8"
+                                             Command="{x:Binding ToggleIsFavoriteCommand}"
+                                             IsVisible="{x:Binding CanBeMadeFavorite}"
+                                             Source="makefavorite.png" VerticalOptions="Start">
                                     <ImageButton.Triggers>
                                         <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
                                             <Setter Property="Source"  Value="isfavorite.png" />

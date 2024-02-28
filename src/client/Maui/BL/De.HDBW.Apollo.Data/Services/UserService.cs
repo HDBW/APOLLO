@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
@@ -37,8 +38,10 @@ namespace De.HDBW.Apollo.Data.Services
                 {
                     profile = await ProfileService.GetAsync(profileId, token).ConfigureAwait(false);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    profile = null;
+                    Logger?.LogError(ex, $"Unknown error in {nameof(GetAsync)} in {GetType().Name}.");
                 }
 
                 user.Profile = profile;
@@ -61,6 +64,11 @@ namespace De.HDBW.Apollo.Data.Services
                 {
                     await ProfileService.SaveAsync(response.Result, profile, token).ConfigureAwait(false);
                 }
+            }
+            catch (Exception ex)
+            {
+                response = null;
+                Logger?.LogError(ex, $"Unknown error in {nameof(SaveAsync)} in {GetType().Name}.");
             }
             finally
             {
