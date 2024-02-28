@@ -101,6 +101,30 @@ namespace De.HDBW.Apollo.Client.ViewModels
                                 addedItem = true;
                             }
 
+                            if (TryCreateTrainingsModeItem(training, out ObservableObject? trainingMode))
+                            {
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(trainingMode);
+                                addedItem = true;
+                            }
+
+                            if (TryCreateEduProviderItem(training, out ObservableObject? eduprovider))
+                            {
+                                if (addedItem)
+                                {
+                                    sections.Add(SeperatorItem.Import());
+                                    addedItem = false;
+                                }
+
+                                sections.Add(eduprovider);
+                                addedItem = true;
+                            }
+
                             if (TryCreateTagItem(Resources.Strings.Resources.Global_Tags, training.Tags, out ObservableObject? tags))
                             {
                                 if (addedItem)
@@ -663,24 +687,41 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool TryCreateTrainingsHeader(TrainingModel training, out ObservableObject item)
         {
+            var header = TrainingsHeaderItem.Import(
+                     training?.TrainingName,
+                     training?.SubTitle,
+                     "placeholderinfoevent.png",
+                     training?.TrainingType,
+                     training?.AccessibilityAvailable,
+                     training?.IndividualStartDate);
+
+            item = header;
+            return true;
+        }
+
+        private bool TryCreateTrainingsModeItem(TrainingModel training, [MaybeNullWhen(false)] out ObservableObject item)
+        {
+            item = null;
+            if (training?.TrainingMode == null)
+            {
+                return false;
+            }
+
+            item = TrainingModeItem.Import(training.TrainingMode.Value);
+            return true;
+        }
+
+        private bool TryCreateEduProviderItem(TrainingModel training, [MaybeNullWhen(false)] out ObservableObject item)
+        {
             var eduProvider = training.TrainingProvider;
             if (string.IsNullOrWhiteSpace(eduProvider?.Name))
             {
                 eduProvider = training.CourseProvider;
             }
 
-            var header = TrainingsHeaderItem.Import(
-                     training?.TrainingName,
-                     training?.SubTitle,
-                     "placeholderinfoevent.png",
-                     training?.TrainingType,
-                     eduProvider?.Name ?? Resources.Strings.Resources.Global_UnknownProvider,
-                     eduProvider?.Image?.OriginalString,
-                     training?.AccessibilityAvailable,
-                     training?.TrainingMode,
-                     training?.IndividualStartDate);
+            var provider = EduProviderItem.Import(eduProvider?.Name ?? Resources.Strings.Resources.Global_UnknownProvider,eduProvider?.Image?.OriginalString);
 
-            item = header;
+            item = provider;
 
             if (eduProvider?.Image != null)
             {
@@ -688,14 +729,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (!_loadingCache.Keys.Any(x => x.OriginalString == eduProvider.Image.OriginalString))
                     {
-                        if (!_loadingCache.TryAdd(eduProvider.Image, new List<IProvideImageData>() { header }))
+                        if (!_loadingCache.TryAdd(eduProvider.Image, new List<IProvideImageData>() { provider }))
                         {
-                            _loadingCache[eduProvider.Image].Add(header);
+                            _loadingCache[eduProvider.Image].Add(provider);
                         }
                     }
                     else
                     {
-                        _loadingCache[eduProvider.Image].Add(header);
+                        _loadingCache[eduProvider.Image].Add(provider);
                     }
                 }
             }

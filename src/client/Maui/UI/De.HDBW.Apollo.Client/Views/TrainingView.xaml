@@ -38,7 +38,7 @@
                     </Border>
                 </Grid>
 
-                <Grid ColumnDefinitions="*, *" Margin="24,0">
+                <!--<Grid ColumnDefinitions="*, *" Margin="24,0">
                     <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasProviderImage}" HeightRequest="60" VerticalOptions="Start" Margin="0,4,8,0"/>
                     <Label x:Name="PART_ProviderName" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16}" MaxLines="2" Grid.Column="1" VerticalOptions="Center">
                         <Label.Triggers>
@@ -48,9 +48,9 @@
                             </DataTrigger>
                         </Label.Triggers>
                     </Label>
-                </Grid>
+                </Grid>-->
 
-                <VerticalStackLayout IsVisible="{x:Binding HasModes, Mode=OneTime}" Margin="24,0">
+                <!--<VerticalStackLayout IsVisible="{x:Binding HasModes, Mode=OneTime}" Margin="24,0">
                     <Label Text="{x:Static strings:Resources.Global_TrainingMode}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
                     <FlexLayout BindableLayout.ItemsSource="{x:Binding Modes, Mode=OneTime}" Wrap="Wrap" Direction="Row" JustifyContent="Start">
                         <BindableLayout.ItemTemplate>
@@ -59,7 +59,7 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
-                </VerticalStackLayout>
+                </VerticalStackLayout>-->
 
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable, Mode=OneTime}" Margin="24,0">
                     <Image HeightRequest="24" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
@@ -73,6 +73,36 @@
             </VerticalStackLayout>
         </DataTemplate>
 
+        <DataTemplate x:Key="EduProviderItemTemplate" x:DataType="trainingsModels:EduProviderItem">
+            <ContentView>
+                <Label x:Name="PART_ProviderName" Margin="24,0" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14}" MaxLines="2" Grid.Column="1" VerticalOptions="Center" />
+            </ContentView>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EduProviderItemWithImageTemplate" x:DataType="trainingsModels:EduProviderItem">
+            <ContentView>
+                <Grid Margin="24,0" HeightRequest="60" ColumnDefinitions="*,8,*" >
+                    <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasProviderImage}" HeightRequest="60" VerticalOptions="Start" />
+                    <Label x:Name="PART_ProviderName" Text="{x:Binding ProviderName, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14}" MaxLines="2" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Fill" />
+                </Grid>
+            </ContentView>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TrainingModeItemTemplate" x:DataType="trainingsModels:TrainingModeItem">
+            <ContentView>
+                <VerticalStackLayout Margin="24,0">
+                    <Label Text="{x:Static strings:Resources.Global_TrainingMode}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
+                    <FlexLayout BindableLayout.ItemsSource="{x:Binding Modes, Mode=OneTime}" Wrap="Wrap" Direction="Row" JustifyContent="Start">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="system:String">
+                                <Label Text="{x:Binding Mode=OneTime}" Padding="8,4" Background="{StaticResource Neutral0}" TextColor="{StaticResource Primary}" Margin="0,0,4,4" VerticalOptions="Start"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </ContentView>
+        </DataTemplate>
+        
         <DataTemplate x:Key="SeperatorItemTemplate" x:DataType="trainingsModels:SeperatorItem">
             <ContentView HeightRequest="16" />
         </DataTemplate>
@@ -233,6 +263,9 @@
 
         <selector:TrainingsItemTemplateSelector x:Key="TrainingsItemTemplateSelector"
                                                 TrainingsHeaderItemTemplate="{StaticResource TrainingsHeaderItemTemplate}"
+                                                TrainingModeItemTemplate="{StaticResource TrainingModeItemTemplate}"
+                                                EduProviderItemTemplate="{StaticResource EduProviderItemTemplate}"
+                                                EduProviderItemWithImageTemplate="{StaticResource EduProviderItemWithImageTemplate}"
                                                 ExpandableItemTemplate="{StaticResource ExpandableItemTemplate}"
                                                 ExpandableListItemTemplate="{StaticResource ExpandableListItemTemplate}"
                                                 ExpandedItemContentTemplate="{StaticResource ExpandedItemContentTemplate}"
