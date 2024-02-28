@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
@@ -60,6 +61,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     await AuthService.LogoutAsync(worker.Token);
                     var authentication = await AuthService.AcquireTokenSilent(worker.Token);
                     SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);
+                    await NavigationService.RestartAsync(CancellationToken.None);
                 }
                 catch (OperationCanceledException)
                 {

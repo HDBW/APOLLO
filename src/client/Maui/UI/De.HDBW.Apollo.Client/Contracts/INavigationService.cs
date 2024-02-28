@@ -14,5 +14,7 @@ namespace De.HDBW.Apollo.Client.Contracts
         Task<bool> PushToRootAsync(CancellationToken token);
 
         Task<bool> PopAsync(CancellationToken token, NavigationParameters? parameters = null);
+
+        Task RestartAsync(CancellationToken token);
     }
 }

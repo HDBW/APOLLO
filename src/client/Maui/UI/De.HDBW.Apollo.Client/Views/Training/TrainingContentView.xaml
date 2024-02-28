@@ -15,7 +15,7 @@
     <CollectionView ItemsSource="{x:Binding Sections}">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="system:String">
-                <Label Text="{x:Binding Mode=OneTime}" TextType="Html" Padding="24,0"/>
+                <Label Text="{x:Binding}" TextType="Html" Padding="24,0"/>
             </DataTemplate>
         </CollectionView.ItemTemplate>
         <CollectionView.ItemsLayout>
