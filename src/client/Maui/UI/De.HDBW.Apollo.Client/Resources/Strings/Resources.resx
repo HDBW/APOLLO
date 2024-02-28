@@ -1436,7 +1436,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Filter</value>
   </data>
   <data name="FavoriteView_Description_EmptyView" xml:space="preserve">
-    <value>Schau Dich mal um, was Dir gefällt. Markiere das über das Fav-Ivon.</value>
+    <value>Schau Dich um und merke Dir, was Dir gefällt. Nutze dafür das Favoriten-Icon.</value>
   </data>
   <data name="FavoriteView_Headline" xml:space="preserve">
     <value>Deine Favoriten</value>

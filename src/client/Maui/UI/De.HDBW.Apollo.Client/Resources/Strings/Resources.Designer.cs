@@ -1125,7 +1125,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schau Dich mal um, was Dir gefällt. Markiere das über das Fav-Ivon..
+        ///   Looks up a localized string similar to Schau Dich um und merke Dir, was Dir gefällt. Nutze dafür das Favoriten-Icon..
         /// </summary>
         public static string FavoriteView_Description_EmptyView {
             get {
