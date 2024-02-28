@@ -452,5 +452,32 @@ namespace De.HDBW.Apollo.Client.Services
         {
             return page.BindingContext as BaseViewModel;
         }
+
+        public async Task RestartAsync(CancellationToken token)
+        {
+            await DispatcherService.ExecuteOnMainThreadAsync(
+                () =>
+                {
+                    try
+                    {
+                        var current = Application.Current.MainPage;
+                        Application.Current.MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, ServiceProvider) as Page);
+                        if (current != null)
+                        {
+                            var stack = current.Navigation.NavigationStack.ToArray();
+                            for (int i = stack.Length - 1; i > 0; i--)
+                            {
+                                current.Navigation.RemovePage(stack[i]);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger?.LogError(ex, $"Unknown error while {nameof(RestartAsync)} in {GetType().Name}.");
+                    }
+
+                    return Task.CompletedTask;
+                }, token);
+        }
     }
 }
