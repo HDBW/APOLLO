@@ -21,6 +21,8 @@ namespace Invite.Apollo.App.Graph.Common.Models
         //[BsonElement("Surname")]
         public string Surname { get; set; }
 
+        public string Firstname { get; set; }
+
         //[BsonElement("Mail")]
         public string Mail { get; set; }
 
