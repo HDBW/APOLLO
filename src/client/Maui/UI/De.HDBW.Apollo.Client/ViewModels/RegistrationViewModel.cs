@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -28,6 +27,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IUserService userService,
             IProfileService profileService,
             IUserRepository userRepository,
+            IUnregisterUserService unregisterUserService,
+            IApolloListService apolloListService,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -36,12 +37,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(userService);
             ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(unregisterUserService);
+            ArgumentNullException.ThrowIfNull(apolloListService);
             AuthService = authService;
             SessionService = sessionService;
             PreferenceService = preferenceService;
             UserService = userService;
             ProfileService = profileService;
             UserRepository = userRepository;
+            UnregisterUserService = unregisterUserService;
+            ApolloListService = apolloListService;
             Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resources.RegistrationView_Instruction1, null));
             Instructions.Add(InstructionEntry.Import("splashdeco2.png", null, Resources.Strings.Resources.RegistrationView_Instruction2, null));
         }
@@ -62,6 +67,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IAuthService AuthService { get; }
 
         private IUserService UserService { get; }
+
+        private IUnregisterUserService UnregisterUserService { get; }
+
+        private IApolloListService ApolloListService { get; }
 
         private IProfileService ProfileService { get; }
 
@@ -121,22 +130,28 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
-#if !DEBUG
-                    await AuthService.SignInInteractively(worker.Token);
-#endif
                     if (!string.IsNullOrWhiteSpace(SessionService.AccessToken))
                     {
-                        if (!await UserService.DeleteAsync(SessionService.AccessToken, worker.Token).ConfigureAwait(false))
+                        if (!await UnregisterUserService.DeleteAsync(SessionService.AccessToken, worker.Token))
                         {
                             Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
                             return;
                         }
                     }
-
-                    await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
-                    PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
-                    UserService?.UpdateAuthorizationHeader(null);
-                    ProfileService?.UpdateAuthorizationHeader(null);
+#if !DEBUG
+                    await AuthService.LogoutAsync(CancellationToken.None);
+                    authentication = await AuthService.AcquireTokenSilent(CancellationToken.None);
+#endif
+                    if (authentication == null)
+                    {
+                        await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
+                        PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
+                        UserService.UpdateAuthorizationHeader(null);
+                        ProfileService.UpdateAuthorizationHeader(null);
+                        UnregisterUserService.UpdateAuthorizationHeader(null);
+                        ApolloListService.UpdateAuthorizationHeader(null);
+                        SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -156,8 +171,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);
-                    OnPropertyChanged(nameof(HasRegisterdUser));
+                    await ExecuteOnUIThreadAsync(() => { OnPropertyChanged(nameof(HasRegisterdUser)); }, CancellationToken.None);
                     UnscheduleWork(worker);
                 }
             }
@@ -215,8 +229,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    UserService?.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    ProfileService?.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    UserService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    ProfileService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    UnregisterUserService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    ApolloListService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
                     SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account.HomeAccountId);
                     if (SessionService.HasRegisteredUser)
                     {

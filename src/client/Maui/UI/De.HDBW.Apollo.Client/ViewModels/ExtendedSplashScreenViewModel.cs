@@ -24,16 +24,25 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             ILogger<ExtendedSplashScreenViewModel> logger,
             IUserService userService,
+            IProfileService profileService,
+            IUnregisterUserService unregisterUserService,
+            IApolloListService apolloListService,
             IPreferenceService preferenceService,
             ISessionService sessionService,
             IAuthService authService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(userService);
+            ArgumentNullException.ThrowIfNull(profileService);
+            ArgumentNullException.ThrowIfNull(unregisterUserService);
+            ArgumentNullException.ThrowIfNull(apolloListService);
             ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(sessionService);
             ArgumentNullException.ThrowIfNull(authService);
             UserService = userService;
+            ProfileService = profileService;
+            UnregisterUserService = unregisterUserService;
+            ApolloListService = apolloListService;
             PreferenceService = preferenceService;
             SessionService = sessionService;
             AuthService = authService;
@@ -86,6 +95,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private IUserService UserService { get; }
+
+        private IUnregisterUserService UnregisterUserService { get; }
+
+        private IApolloListService ApolloListService { get; }
+
+        private IProfileService ProfileService { get; }
 
         private IPreferenceService PreferenceService { get; }
 
@@ -222,6 +237,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 finally
                 {
                     UserService?.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    ProfileService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    UnregisterUserService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    ApolloListService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
                     SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account.HomeAccountId);
                     if (SessionService.HasRegisteredUser)
                     {

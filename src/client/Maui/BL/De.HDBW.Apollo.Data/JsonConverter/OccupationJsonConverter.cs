@@ -9,12 +9,11 @@ namespace De.HDBW.Apollo.Data.Converter
 {
     public class OccupationJsonConverter : JsonConverter<Occupation>
     {
-        public override Occupation Read(
+        public override Occupation? Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-
             if (reader.TokenType != JsonTokenType.StartObject)
             {
                 throw new JsonException();
@@ -24,26 +23,25 @@ namespace De.HDBW.Apollo.Data.Converter
             {
                 return null;
             }
-            var jo = JsonDocument.ParseValue(ref reader);
-            //if (jo.ContainsKey("TaxonomyInfo"))
-            //{
-            //    if (jo.ContainsKey("$type"))
-            //    {
-            //        jo.Remove("$type");
-            //    }
 
-            //    var data = jo.ToString();
-            //    switch (jo["TaxonomyInfo"]?.ToObject(typeof(Taxonomy)))
-            //    {
-            //        case Taxonomy.KldB2010:
-            //            var z = new KldbOccupation();
-            //            JsonConvert.PopulateObject(data, z);
-            //            var x = System.Text.Json.JsonSerializer.Deserialize<KldbOccupation>(data);
-            //            return x;
-            //        default:
-            //            return System.Text.Json.JsonSerializer.Deserialize<UnknownOccupation>(data);
-            //    }
-            //}
+            var jo = JsonDocument.ParseValue(ref reader);
+            foreach (var occ in jo.RootElement.EnumerateObject())
+            {
+                if (!string.Equals(occ.Name, nameof(Occupation.TaxonomyInfo), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    continue;
+                }
+
+                var enumValue = occ.Value.Deserialize<Taxonomy>();
+
+                switch (enumValue)
+                {
+                    case Taxonomy.KldB2010:
+                        return jo.Deserialize<KldbOccupation>();
+                    default:
+                        return jo.Deserialize<UnknownOccupation>();
+                }
+            }
 
             return null;
         }

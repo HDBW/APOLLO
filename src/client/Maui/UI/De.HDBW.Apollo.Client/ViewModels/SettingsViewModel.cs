@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
@@ -18,14 +17,27 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IAuthService authService,
             ISessionService sessionService,
             IUserService userService,
+            IProfileService profileService,
+            IUnregisterUserService unregisterUserService,
+            IApolloListService apolloListService,
+            IPreferenceService preferenceService,
             ILogger<SettingsViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(authService);
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(userService);
+            ArgumentNullException.ThrowIfNull(profileService);
+            ArgumentNullException.ThrowIfNull(unregisterUserService);
+            ArgumentNullException.ThrowIfNull(apolloListService);
+            ArgumentNullException.ThrowIfNull(preferenceService);
             AuthService = authService;
             SessionService = sessionService;
             UserService = userService;
+            ProfileService = profileService;
+            UnregisterUserService = unregisterUserService;
+            ApolloListService = apolloListService;
+            PreferenceService = preferenceService;
         }
 
         public bool HasRegisterdUser
@@ -40,7 +52,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IUserService UserService { get; }
 
+        private IProfileService ProfileService { get; }
+
+        private IUnregisterUserService UnregisterUserService { get; }
+
+        private IApolloListService ApolloListService { get; }
+
         private ISessionService SessionService { get; }
+
+        private IPreferenceService PreferenceService { get; }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
         private async Task UnRegister(CancellationToken token)
@@ -51,17 +71,25 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (!string.IsNullOrWhiteSpace(SessionService.AccessToken))
                     {
-                        if (!await UserService.DeleteAsync(SessionService.AccessToken, worker.Token))
+                        if (!await UnregisterUserService.DeleteAsync(SessionService.AccessToken, worker.Token))
                         {
                             Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
-                            return;
+                            throw new NotSupportedException("Unable to delete User.");
                         }
                     }
 
-                    await AuthService.LogoutAsync(worker.Token);
-                    var authentication = await AuthService.AcquireTokenSilent(worker.Token);
-                    SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);
-                    await NavigationService.RestartAsync(CancellationToken.None);
+                    await AuthService.LogoutAsync(CancellationToken.None);
+                    var authentication = await AuthService.AcquireTokenSilent(CancellationToken.None);
+                    if (authentication == null)
+                    {
+                        UserService.UpdateAuthorizationHeader(null);
+                        ProfileService.UpdateAuthorizationHeader(null);
+                        UnregisterUserService.UpdateAuthorizationHeader(null);
+                        ApolloListService.UpdateAuthorizationHeader(null);
+                        SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account?.HomeAccountId);
+                        PreferenceService.Delete();
+                        await NavigationService.RestartAsync(CancellationToken.None);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -81,7 +109,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    OnPropertyChanged(nameof(HasRegisterdUser));
+                    await ExecuteOnUIThreadAsync(() => { OnPropertyChanged(nameof(HasRegisterdUser)); }, CancellationToken.None);
                     UnscheduleWork(worker);
                 }
             }

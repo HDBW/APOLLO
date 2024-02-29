@@ -245,6 +245,26 @@ namespace De.HDBW.Apollo.Client
             {
                 var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
                 var service = new ProfileService(serviceProvider.GetService<ILogger<ProfileService>>(), apiUrl, apiToken, handler);
+                service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
+                return service;
+            });
+
+            services.AddSingleton<IApolloListService>((serviceProvider) =>
+            {
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new ApolloListService(serviceProvider.GetService<ILogger<ApolloListService>>(), apiUrl, apiToken, handler);
+                service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
+
+                return service;
+            });
+
+            var unregisterUserUrl = userSecretsService["UnRegisteUserEndpointURL"] ?? string.Empty;
+            services.AddSingleton<IUnregisterUserService>((serviceProvider) =>
+            {
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new UnregisterUserService(serviceProvider.GetService<ILogger<UnregisterUserService>>(), apiUrl, apiToken, handler);
+                service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
+
                 return service;
             });
 
