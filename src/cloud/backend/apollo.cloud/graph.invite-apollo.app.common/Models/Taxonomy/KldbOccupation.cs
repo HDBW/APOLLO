@@ -3,6 +3,7 @@
 
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
+    [Obsolete("Remove")]
     public class KldbOccupation : Occupation
     {
         public KldbOccupation()
