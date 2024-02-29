@@ -4,7 +4,7 @@
 namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
 {
 
-    [Obsolete("Remove")]
+    [System.Obsolete("Remove")]
     public class UnknownOccupation : Occupation
     {
         public UnknownOccupation()
