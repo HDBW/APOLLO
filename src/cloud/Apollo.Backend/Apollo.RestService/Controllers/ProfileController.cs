@@ -48,7 +48,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace("Enter {method}", nameof(GetProfile));
 
                 // Call the Apollo API to retrieve a profile by ID.
-                var profile = await _api.GetProfile(id);
+                var profile = await _api.GetProfileAsync(id);
 
                 _logger.LogTrace("Leave {method}", nameof(GetProfile));
 
@@ -141,7 +141,7 @@ namespace Apollo.Service.Controllers
 
                 //
                 // Call the Apollo API to create or update a profile based on the request.
-                var id = await _api.CreateOrUpdateProfile(req.UserId, filteredProfile);
+                var id = await _api.CreateOrUpdateProfileAsync(req.UserId, filteredProfile);
 
                 _logger.LogTrace("Leave {method}", nameof(CreateOrUpdateProfile));
 
@@ -231,7 +231,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace("Enter {method}", nameof(DeleteProfile));
 
                 // Call the Apollo API to delete a profile by ID.
-                var response = await _api.DeleteProfile(id);
+                var response = await _api.DeleteProfileAsync(id);
 
                 _logger.LogTrace("Leave {method}", nameof(DeleteProfile));
 
