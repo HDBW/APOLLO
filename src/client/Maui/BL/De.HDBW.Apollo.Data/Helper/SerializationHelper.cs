@@ -3,7 +3,6 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using De.HDBW.Apollo.Data.Converter;
 using De.HDBW.Apollo.Data.JsonConverter;
 
 namespace De.HDBW.Apollo.Data.Helper
@@ -16,7 +15,7 @@ namespace De.HDBW.Apollo.Data.Helper
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             WriteIndented = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            Converters = { new CultureInfoJsonConverter(), new OccupationJsonConverter() },
+            Converters = { new CultureInfoJsonConverter() },
         };
 
         public static string? Serialize<TU>(this TU? data)

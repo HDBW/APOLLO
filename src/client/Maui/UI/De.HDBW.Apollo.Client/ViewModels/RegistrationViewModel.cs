@@ -130,14 +130,22 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 AuthenticationResult? authentication = null;
                 try
                 {
-                    if (!string.IsNullOrWhiteSpace(SessionService.AccessToken))
+                    if (SessionService.HasRegisteredUser)
                     {
-                        if (!await UnregisterUserService.DeleteAsync(SessionService.AccessToken, worker.Token))
+                        var userId = PreferenceService.GetValue<string>(Preference.RegisteredUserId, null);
+                        var objectId = SessionService.AccountId?.ObjectId;
+                        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(objectId))
+                        {
+                            throw new NotSupportedException("Tokens not set.");
+                        }
+
+                        if (!await UnregisterUserService.DeleteAsync(userId, objectId, worker.Token))
                         {
                             Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
-                            return;
+                            throw new NotSupportedException("Unable to delete User.");
                         }
                     }
+
 #if !DEBUG
                     await AuthService.LogoutAsync(CancellationToken.None);
                     authentication = await AuthService.AcquireTokenSilent(CancellationToken.None);

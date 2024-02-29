@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
@@ -69,9 +70,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    if (!string.IsNullOrWhiteSpace(SessionService.AccessToken))
+                    if (SessionService.HasRegisteredUser)
                     {
-                        if (!await UnregisterUserService.DeleteAsync(SessionService.AccessToken, worker.Token))
+                        var userId = PreferenceService.GetValue<string>(Preference.RegisteredUserId, null);
+                        var objectId = SessionService.AccountId?.ObjectId;
+                        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(objectId))
+                        {
+                            throw new NotSupportedException("Tokens not set.");
+                        }
+
+                        if (!await UnregisterUserService.DeleteAsync(userId, objectId, worker.Token))
                         {
                             Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
                             throw new NotSupportedException("Unable to delete User.");

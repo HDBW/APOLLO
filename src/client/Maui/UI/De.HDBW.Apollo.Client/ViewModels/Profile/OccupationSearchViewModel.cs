@@ -142,7 +142,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                          : await Task.Run(() => { return result.Select(x => InteractionEntry.Import(x.Title, x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList(); }, worker.Token);
                     if (!items.Any() && !string.IsNullOrWhiteSpace(searchtext))
                     {
-                        items.Add(InteractionEntry.Import(searchtext, new UnknownOccupation() { PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                        items.Add(InteractionEntry.Import(searchtext, new Occupation() { TaxonomyInfo = Taxonomy.Unknown, PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                     }
 
                     worker.Token.ThrowIfCancellationRequested();
@@ -245,7 +245,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
                 if (!items.Any() && !string.IsNullOrWhiteSpace(searchtext))
                 {
-                    items.Add(InteractionEntry.Import(searchtext, new UnknownOccupation() { PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    items.Add(InteractionEntry.Import(searchtext, new Occupation() { TaxonomyInfo = Taxonomy.Unknown, PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                 }
 
                 token.Value.ThrowIfCancellationRequested();

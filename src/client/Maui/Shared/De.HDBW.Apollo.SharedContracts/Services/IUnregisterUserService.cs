@@ -7,6 +7,6 @@ namespace De.HDBW.Apollo.SharedContracts.Services
     {
         void UpdateAuthorizationHeader(string? authorizationHeader);
 
-        Task<bool> DeleteAsync(string accessToken, CancellationToken token);
+        Task<bool> DeleteAsync(string userId, string objectId, CancellationToken token);
     }
 }

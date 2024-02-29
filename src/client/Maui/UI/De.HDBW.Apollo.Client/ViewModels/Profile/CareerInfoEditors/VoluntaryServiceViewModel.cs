@@ -78,7 +78,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
                 return;
             }
 
-            var occupation = new UnknownOccupation() { PreferedTerm = new List<string>() { OccupationName! } };
+            var occupation = new Occupation() { TaxonomyInfo = Taxonomy.Unknown, PreferedTerm = new List<string>() { OccupationName! } };
 
             // if there was no job. apply
             if (entry.Job == null)
