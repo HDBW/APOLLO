@@ -153,12 +153,12 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.Equal(userId, user!.Id);
                 Assert.NotNull(user.Profile);
                 Assert.False(string.IsNullOrWhiteSpace(user!.Profile!.Id));
-                Assert.Null(user.Profile.CareerInfos);
-                Assert.Null(user.Profile.Licenses);
-                Assert.Null(user.Profile.EducationInfos);
-                Assert.Null(user.Profile.Qualifications);
-                Assert.Null(user.Profile.CareerInfos);
-                Assert.Null(user.Profile.WebReferences);
+                Assert.False(user.Profile.CareerInfos!.Any());
+                Assert.False(user.Profile.Licenses!.Any());
+                Assert.False(user.Profile.EducationInfos!.Any());
+                Assert.False(user.Profile.Qualifications!.Any());
+                Assert.False(user.Profile.CareerInfos!.Any());
+                Assert.False(user.Profile.WebReferences!.Any());
                 try
                 {
                     user.Profile!.CareerInfos = user.Profile!.CareerInfos ?? new List<CareerInfo>();

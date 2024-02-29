@@ -24,8 +24,7 @@ namespace De.HDBW.Apollo.Data.Converter
             {
                 return null;
             }
-            KldbOccupation
-        var jo = JsonDocument.ParseValue(ref reader);
+            var jo = JsonDocument.ParseValue(ref reader);
             //if (jo.ContainsKey("TaxonomyInfo"))
             //{
             //    if (jo.ContainsKey("$type"))
