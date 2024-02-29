@@ -2,7 +2,8 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 
 namespace Invite.Apollo.App.Graph.Common.Models
@@ -22,7 +23,7 @@ namespace Invite.Apollo.App.Graph.Common.Models
 
             sb.AppendLine($"Type: {obj.GetType()}");
             sb.AppendLine("__________________________");
-            sb.AppendLine(JsonConvert.SerializeObject(obj));
+            sb.AppendLine(JsonSerializer.Serialize(obj));
             //foreach (var property in obj.GetType().GetProperties())
             //{
             //    writer.WriteLine($"{property.Name} = {property.GetValue(obj)}");
