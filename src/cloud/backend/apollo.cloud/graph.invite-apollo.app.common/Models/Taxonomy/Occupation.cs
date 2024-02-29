@@ -121,7 +121,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.Taxonomy
             get => _culture?.Name;
             set
             {
-                var x = new CultureInfo(value);
                 _culture = string.IsNullOrWhiteSpace(value)
                     ? null
                     : new System.Globalization.CultureInfo(value);
