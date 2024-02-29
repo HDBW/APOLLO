@@ -2,12 +2,13 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Net;
+using System.Text.Json;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using De.HDBW.Apollo.Data.Converter;
+using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace De.HDBW.Apollo.Data.Services
 {
@@ -66,7 +67,7 @@ namespace De.HDBW.Apollo.Data.Services
                     if (statusCode != HttpStatusCode.OK || response == null)
                     {
                         var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
-                        var ex = JsonConvert.DeserializeObject<ApolloApiException>(responseData);
+                        var ex = SerializationHelper.Deserialize<ApolloApiException>(responseData);
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
@@ -137,14 +138,14 @@ namespace De.HDBW.Apollo.Data.Services
                     url = $"{BaseUri.TrimEnd('/')}/{action.TrimStart('/')}";
                 }
 
-                using (var response = await client.PostAsJsonAsync(url, content, token).ConfigureAwait(false))
+                using (var response = await client.PostAsJsonAsync(url, content, SerializationHelper.Options, token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
                     var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;
                     if (statusCode != HttpStatusCode.OK || response == null)
                     {
                         var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
-                        var ex = JsonConvert.DeserializeObject<ApolloApiException>(responseData);
+                        var ex = SerializationHelper.Deserialize<ApolloApiException>(responseData);
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
@@ -215,14 +216,14 @@ namespace De.HDBW.Apollo.Data.Services
             try
             {
                 Logger?.LogDebug($"#HTTP# #{requestId}# --------->        Start {nameof(DoPutAsync)} {callerName} in {GetType().Name}.");
-                using (var response = await client.PutAsJsonAsync(BaseUri, content, token).ConfigureAwait(false))
+                using (var response = await client.PutAsJsonAsync(BaseUri, content, SerializationHelper.Options, token).ConfigureAwait(false))
                 {
                     var responseHeaders = response?.Headers.ToDictionary(k => k.Key, v => v.Value) ?? new Dictionary<string, IEnumerable<string>>();
                     var statusCode = response?.StatusCode ?? HttpStatusCode.InternalServerError;
                     if (statusCode != HttpStatusCode.OK || response == null)
                     {
                         var responseData = await (response?.Content?.ReadAsStringAsync(token) ?? Task.FromResult(string.Empty)).ConfigureAwait(false);
-                        var ex = JsonConvert.DeserializeObject<ApolloApiException>(responseData);
+                        var ex = SerializationHelper.Deserialize<ApolloApiException>(responseData);
                         throw ex ?? new ApolloApiException(-1, "Unknown response.");
                     }
 
@@ -287,15 +288,7 @@ namespace De.HDBW.Apollo.Data.Services
                 var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
                 using (var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    using (var streamReader = new StreamReader(responseStream))
-                    {
-                        using (var jsonTextReader = new JsonTextReader(streamReader))
-                        {
-                            var serializer = JsonSerializer.Create();
-                            serializer.Converters.Add(new OccupationJsonConverter());
-                            result = serializer.Deserialize<TU>(jsonTextReader);
-                        }
-                    }
+                    result = await SerializationHelper.DeserializeAsync<TU>(responseStream, cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (JsonException exception)

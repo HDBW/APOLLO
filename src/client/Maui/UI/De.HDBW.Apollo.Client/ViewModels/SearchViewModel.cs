@@ -10,13 +10,13 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
+using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
 namespace De.HDBW.Apollo.Client.ViewModels
@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private readonly int _maxHistoryItemsCount = 10;
         private readonly int _maxSugestionItemsCount = 10;
         private readonly ConcurrentDictionary<Uri, List<IProvideImageData>> _loadingCache = new ConcurrentDictionary<Uri, List<IProvideImageData>>();
-        
+
         [ObservableProperty]
         private ObservableCollection<SearchSuggestionEntry> _suggestions = new ObservableCollection<SearchSuggestionEntry>();
 
@@ -200,9 +200,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    var filter = SerializationHelper.Serialize(_customFilter);
                     var parameters = new NavigationParameters
                     {
-                        { NavigationParameter.Data, JsonConvert.SerializeObject(_customFilter) },
+                        { NavigationParameter.Data, filter ?? string.Empty },
                     };
                     parameters.AddValue<decimal>(NavigationParameter.SavedState, _maxPrice);
                     await SheetService.OpenAsync(Routes.SearchFilterSheet, worker.Token, parameters);
@@ -679,13 +680,23 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 if (MainThread.IsMainThread)
                 {
-                    SearchResults = new ObservableCollection<SearchInteractionEntry>();
+                    CleanUp();
                 }
                 else
                 {
-                    MainThread.BeginInvokeOnMainThread(()=>SearchResults = new ObservableCollection<SearchInteractionEntry>());
+                    MainThread.BeginInvokeOnMainThread(() => SearchResults = new ObservableCollection<SearchInteractionEntry>());
                 }
             }
+        }
+
+        private void CleanUp()
+        {
+            SearchResults = new ObservableCollection<SearchInteractionEntry>();
+            _customFilter = null;
+            _query = null;
+            _trainings = new List<TrainingModel>();
+            OnPropertyChanged(nameof(HasFilter));
+            OnPropertyChanged(nameof(FilterIcon));
         }
 
         private void OnSheetDismissedMessage(object recipient, SheetDismissedMessage message)

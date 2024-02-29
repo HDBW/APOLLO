@@ -11,6 +11,9 @@ namespace De.HDBW.Apollo.Data.Helper
     {
         public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions()
         {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            WriteIndented = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
             Converters = { new CultureInfoJsonConverter() },
         };

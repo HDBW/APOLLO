@@ -171,12 +171,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         return;
                     }
 
-                    var careerType = entry.Export().CareerType;
+                    var careerType = entry.Export().CareerType.AsEnum<CareerType>();
                     NavigationParameters? editorParameters = new NavigationParameters();
                     editorParameters.AddValue<string>(NavigationParameter.Id, id);
                     editorParameters.Add(NavigationParameter.Type, careerType);
                     var route = string.Empty;
-                    switch (careerType.AsEnum<CareerType>())
+                    switch (careerType)
                     {
                         case CareerType.Other:
                             route = Routes.CareerInfoOtherView;

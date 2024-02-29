@@ -1,52 +1,60 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace De.HDBW.Apollo.Data.Converter
 {
     public class OccupationJsonConverter : JsonConverter<Occupation>
     {
-        public override Occupation? ReadJson(JsonReader reader, Type objectType, Occupation? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override Occupation Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
         {
-            if (hasExistingValue)
+
+            if (reader.TokenType != JsonTokenType.StartObject)
             {
-                return existingValue;
+                throw new JsonException();
             }
 
-            if (reader.TokenType == JsonToken.Null)
+            if (reader.TokenType == JsonTokenType.Null)
             {
                 return null;
             }
+            KldbOccupation
+        var jo = JsonDocument.ParseValue(ref reader);
+            //if (jo.ContainsKey("TaxonomyInfo"))
+            //{
+            //    if (jo.ContainsKey("$type"))
+            //    {
+            //        jo.Remove("$type");
+            //    }
 
-            JObject jo = JObject.Load(reader);
-            if (jo.ContainsKey("TaxonomyInfo"))
-            {
-                if (jo.ContainsKey("$type"))
-                {
-                    jo.Remove("$type");
-                }
-
-                var data = jo.ToString();
-                switch (jo["TaxonomyInfo"]?.ToObject(typeof(Taxonomy)))
-                {
-                    case Taxonomy.KldB2010:
-                        var z = new KldbOccupation();
-                        JsonConvert.PopulateObject(data, z);
-                        var x = System.Text.Json.JsonSerializer.Deserialize<KldbOccupation>(data);
-                        return x;
-                    default:
-                        return System.Text.Json.JsonSerializer.Deserialize<UnknownOccupation>(data);
-                }
-            }
+            //    var data = jo.ToString();
+            //    switch (jo["TaxonomyInfo"]?.ToObject(typeof(Taxonomy)))
+            //    {
+            //        case Taxonomy.KldB2010:
+            //            var z = new KldbOccupation();
+            //            JsonConvert.PopulateObject(data, z);
+            //            var x = System.Text.Json.JsonSerializer.Deserialize<KldbOccupation>(data);
+            //            return x;
+            //        default:
+            //            return System.Text.Json.JsonSerializer.Deserialize<UnknownOccupation>(data);
+            //    }
+            //}
 
             return null;
         }
 
-        public override void WriteJson(JsonWriter writer, Occupation? value, JsonSerializer serializer)
+        public override void Write(
+           Utf8JsonWriter writer,
+           Occupation value,
+           JsonSerializerOptions options)
         {
-            serializer.Serialize(writer, value);
+            JsonSerializer.Serialize(writer, value);
         }
     }
 }

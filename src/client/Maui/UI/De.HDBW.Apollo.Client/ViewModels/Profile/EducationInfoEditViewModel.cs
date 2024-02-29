@@ -130,11 +130,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         return;
                     }
 
-                    var careerType = entry.Export().EducationType;
+                    var careerType = entry.Export().EducationType.AsEnum<EducationType>();
                     NavigationParameters? editorParameters = new NavigationParameters();
                     editorParameters.AddValue<string>(NavigationParameter.Id, id);
                     editorParameters.Add(NavigationParameter.Type, careerType);
-                    await NavigationService.NavigateAsync(GetRoute(careerType.AsEnum<EducationType>()), worker.Token, editorParameters);
+                    await NavigationService.NavigateAsync(GetRoute(careerType), worker.Token, editorParameters);
                 }
                 catch (OperationCanceledException)
                 {
