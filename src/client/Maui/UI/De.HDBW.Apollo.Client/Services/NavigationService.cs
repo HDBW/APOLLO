@@ -157,6 +157,33 @@ namespace De.HDBW.Apollo.Client.Services
             return result;
         }
 
+        public async Task RestartAsync(CancellationToken token)
+        {
+            await DispatcherService.ExecuteOnMainThreadAsync(
+                () =>
+                {
+                    try
+                    {
+                        var current = Application.Current.MainPage;
+                        Application.Current.MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, ServiceProvider) as Page);
+                        if (current != null)
+                        {
+                            var stack = current.Navigation.NavigationStack.ToArray();
+                            for (int i = stack.Length - 1; i > 0; i--)
+                            {
+                                current.Navigation.RemovePage(stack[i]);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger?.LogError(ex, $"Unknown error while {nameof(RestartAsync)} in {GetType().Name}.");
+                    }
+
+                    return Task.CompletedTask;
+                }, token);
+        }
+
         private async Task NavigateOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
             Logger?.LogDebug($"NavigateOnUI to {route} with parameters: {parameters?.ToString() ?? "null"}.");
@@ -459,33 +486,6 @@ namespace De.HDBW.Apollo.Client.Services
         private BaseViewModel? GetViewModel(Page page)
         {
             return page.BindingContext as BaseViewModel;
-        }
-
-        public async Task RestartAsync(CancellationToken token)
-        {
-            await DispatcherService.ExecuteOnMainThreadAsync(
-                () =>
-                {
-                    try
-                    {
-                        var current = Application.Current.MainPage;
-                        Application.Current.MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, ServiceProvider) as Page);
-                        if (current != null)
-                        {
-                            var stack = current.Navigation.NavigationStack.ToArray();
-                            for (int i = stack.Length - 1; i > 0; i--)
-                            {
-                                current.Navigation.RemovePage(stack[i]);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger?.LogError(ex, $"Unknown error while {nameof(RestartAsync)} in {GetType().Name}.");
-                    }
-
-                    return Task.CompletedTask;
-                }, token);
         }
     }
 }
