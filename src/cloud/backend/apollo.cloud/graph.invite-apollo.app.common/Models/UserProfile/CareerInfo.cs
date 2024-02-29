@@ -111,6 +111,6 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// <note>
         /// This is a reverse engineered Enum based on the Data we have in the BA Dataset.
         /// </note>
-        public WorkingTimeModel? WorkingTimeModel { get; set; }
+        public ApolloListItem? WorkingTimeModel { get; set; }
     }
 }

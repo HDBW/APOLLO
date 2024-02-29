@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
+using Invite.Apollo.App.Graph.Common.Models.Lists;
 
 namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
 {
@@ -10,15 +11,8 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
     /// This information is relevant for User Profile classification.
     /// This information is not PII relevant.
     /// </summary>
-    public class License
+    public class License : ApolloListItem
     {
-        public string? Id { get; set; }
-
-        /// <summary>
-        /// License as of defined in the BA Dataset for Machine Learning.
-        /// See Sample Data for more Information.
-        /// </summary>
-        public string Name { get; set; }
 
         /// <summary>
         /// The Date the License was granted.
@@ -29,5 +23,7 @@ namespace Invite.Apollo.App.Graph.Common.Models.UserProfile
         /// The Date the License expires.
         /// </summary>
         public DateTime? Expires { get; set; }
+
+        public string? IssuingAuthority { get; set; }
     }
 }

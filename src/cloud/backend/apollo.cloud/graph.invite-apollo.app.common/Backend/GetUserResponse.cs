@@ -6,7 +6,7 @@ using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
-    public class GetUserRespnse
+    public class GetUserResponse
     {
         public User User { get; set; }
     }

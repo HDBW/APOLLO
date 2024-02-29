@@ -2,7 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {

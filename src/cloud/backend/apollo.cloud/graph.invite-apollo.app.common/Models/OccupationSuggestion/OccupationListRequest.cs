@@ -11,7 +11,7 @@ namespace OccupationGrpcService.Services
     public class OccupationListRequest
     {
         [ProtoMember(1)]
-        public Taxonomy? Taxonomy { get; set; }
+        public Taxonomy Taxonomy { get; set; }
 
         [ProtoMember(2)]
         public string CorrelationId { get; set; }
