@@ -8,11 +8,13 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface ISessionService
     {
-        public UseCase? UseCase { get; }
+        UseCase? UseCase { get; }
 
         bool HasRegisteredUser { get; }
 
         AccountId? AccountId { get; }
+
+        string? UniqueId { get; }
 
         bool ChangedUseCase { get; }
 
@@ -26,7 +28,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         IEnumerable<(long Id, Type Type)> GetFavorites();
 
-        void UpdateRegisteredUser(AccountId? accountId);
+        void UpdateRegisteredUser(string? uniqueId, AccountId? accountId);
 
         void UpdateUseCase(UseCase? useCase);
     }

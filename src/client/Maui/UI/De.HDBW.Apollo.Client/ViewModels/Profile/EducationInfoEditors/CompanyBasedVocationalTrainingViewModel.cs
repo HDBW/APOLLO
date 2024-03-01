@@ -120,7 +120,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
                 {
                     var parameter = new NavigationParameters();
                     parameter.AddValue(NavigationParameter.SavedState, GetCurrentState());
-                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, token, parameter);
+                    await NavigationService.NavigateAsync(Routes.OccupationSearchView, worker.Token, parameter);
                 }
                 catch (OperationCanceledException)
                 {

@@ -62,7 +62,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
         protected override async Task<License?> LoadDataAsync(User user, string? enityId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var entry = user.Profile?.Licenses?.FirstOrDefault(x => x.Id == enityId);
+            var entry = user.Profile?.Licenses?.FirstOrDefault(x => x.ListItemId.ToString() == enityId);
             await ExecuteOnUIThreadAsync(() => LoadonUIThread(entry), token).ConfigureAwait(false);
             return entry;
         }
@@ -72,17 +72,22 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
             var entry = new License();
             user.Profile!.Licenses = user.Profile!.Licenses ?? new List<License>();
             user.Profile!.Licenses.Add(entry);
+            entry.ListItemId = user.Profile!.Licenses.IndexOf(entry);
             return entry;
         }
 
         protected override void DeleteEntry(User user, License entry)
         {
             user.Profile!.Licenses!.Remove(entry);
+            foreach (var license in user.Profile!.Licenses)
+            {
+                license.ListItemId = user.Profile!.Licenses.IndexOf(license);
+            }
         }
 
         protected override void ApplyChanges(License entity)
         {
-            entity.Name = Name?.Trim() ?? string.Empty;
+            entity.Value = Name?.Trim() ?? string.Empty;
             entity.Expires = End.ToDTODate();
             entity.Granted = Start.ToDTODate();
         }
@@ -136,7 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
 
         private void LoadonUIThread(License? license)
         {
-            Name = license?.Name;
+            Name = license?.Value;
             Start = license?.Granted.ToUIDate();
             End = license?.Expires.ToUIDate();
             IsDirty = false;

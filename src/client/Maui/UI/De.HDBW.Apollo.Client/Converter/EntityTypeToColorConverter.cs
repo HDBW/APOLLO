@@ -9,9 +9,9 @@ namespace De.HDBW.Apollo.Client.Converter
 {
     public class EntityTypeToColorConverter : IValueConverter
     {
-        public Color? AssessmentItemColor { get; set; }
-
         public Color? CourseItemColor { get; set; }
+
+        public Color? AssessmentItemColor { get; set; }
 
         public Color? DefaultColor { get; set; }
 

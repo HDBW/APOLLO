@@ -29,6 +29,6 @@
             </VerticalStackLayout>
         </ScrollView>
         <Button Grid.Row="3" Margin="24,8,24,8" Text="{Binding StartText}" Command="{Binding StartCommand}"/>
-        <Label  Grid.Row="4" Margin="24,0,24,8" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" Text="{x:Static strings:Resources.AssessmentDescriptionView_OnlyOnce}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}"/>
+        <Label Grid.Row="4" Margin="24,0,24,8" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" Text="{x:Static strings:Resources.AssessmentDescriptionView_OnlyOnce}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}"/>
     </Grid>
 </ContentPage>

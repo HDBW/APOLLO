@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors.ContactView"
@@ -12,6 +12,9 @@
              Title="{x:Static strings:Resources.ContactView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>

@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -56,7 +57,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get { return Shell.Current; }
         }
 
-        private Dictionary<string, CancellationTokenSource> Workers { get; } = new Dictionary<string, CancellationTokenSource>();
+        private ConcurrentDictionary<string, CancellationTokenSource> Workers { get; } = new ConcurrentDictionary<string, CancellationTokenSource>();
 
         [IndexerName("Item")]
         public string this[string columnName]
@@ -105,10 +106,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             CancellationTokenSource scope;
             if (Workers.ContainsKey(workerName))
             {
-                scope = Workers[workerName];
-                Workers.Remove(workerName);
-                scope.Cancel();
-                scope.Dispose();
+                if (Workers.Remove(workerName, out CancellationTokenSource? currentscope))
+                {
+                    scope = currentscope;
+                    scope.Cancel();
+                    scope.Dispose();
+                }
             }
 
             if (token?.IsCancellationRequested ?? false)
@@ -124,7 +127,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 scope = CancellationTokenSource.CreateLinkedTokenSource(token.Value);
             }
 
-            Workers.Add(workerName, scope);
+            Workers.TryAdd(workerName, scope);
             DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
             if (token?.IsCancellationRequested ?? false)
             {
@@ -142,7 +145,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return;
             }
 
-            Workers.Remove(kv.Key);
+            Workers.Remove(kv.Key, out CancellationTokenSource? token);
             worker.Dispose();
             DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
         }
@@ -197,7 +200,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task NavigateToRoute(string route, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();

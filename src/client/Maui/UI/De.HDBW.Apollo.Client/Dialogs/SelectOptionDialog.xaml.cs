@@ -24,7 +24,7 @@ namespace De.HDBW.Apollo.Client.Dialogs
 
         private void OnPointerReleased(object sender, PointerEventArgs e)
         {
-            var position = e.GetPosition(PART_Root) ?? Point.Zero;
+            var position = e.GetPosition(PART_Screen) ?? Point.Zero;
             if (!PART_Root.Frame.Contains(position))
             {
                 ViewModel?.CancelCommand?.Execute(null);

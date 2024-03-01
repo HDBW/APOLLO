@@ -5,6 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile;
 
 namespace De.HDBW.Apollo.Client.Views.Profile
 {
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class PersonalInformationEditView : ContentPage
     {
         public PersonalInformationEditView(PersonalInformationEditViewModel model)

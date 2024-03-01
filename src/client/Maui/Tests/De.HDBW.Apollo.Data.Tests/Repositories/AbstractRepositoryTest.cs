@@ -5,16 +5,22 @@ using De.HDBW.Apollo.Data.Tests.Model;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Repositories
 {
-    public abstract class AbstractRepositoryTest<TU>
+    public abstract class AbstractRepositoryTest<TU> : AbstractTest
         where TU : IEntity, new()
     {
+        protected AbstractRepositoryTest(ITestOutputHelper outputHelper)
+            : base(outputHelper)
+        {
+        }
+
         [Fact]
         public async Task TestRepositoryWithCanceledAndDisposedTokenAsync()
         {
-            using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+            using (var context = new DatabaseTestContext(Path.GetTempFileName(), Logger))
             {
                 var repository = GetRepository(context);
                 using (var cts = new CancellationTokenSource())
@@ -46,7 +52,7 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
         [Fact]
         public async Task TestRepositoryAsync()
         {
-            using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+            using (var context = new DatabaseTestContext(Path.GetTempFileName(), Logger))
             {
                 var repository = GetRepository(context);
                 var result = await repository.GetItemsAsync(CancellationToken.None);

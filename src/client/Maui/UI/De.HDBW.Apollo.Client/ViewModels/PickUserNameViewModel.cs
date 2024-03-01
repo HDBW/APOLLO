@@ -94,23 +94,23 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     user.Id = "User-5DE545AEF9974FD6826151725A9961F8";
 #endif
                     user.Name = Name!;
-                    user.ObjectId = SessionService.AccountId!.ObjectId;
+                    user.ObjectId = SessionService.UniqueId!;
                     user.Upn = SessionService.AccountId!.Identifier;
                     user.IdentityProvicer = SessionService.AccountId!.TenantId;
-                    var result = await UserService.SaveAsync(user, token).ConfigureAwait(false);
+                    var result = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
 
                     if (string.IsNullOrWhiteSpace(result))
                     {
                         throw new NotSupportedException("Unable to create user.");
                     }
 
-                    user = await UserService.GetUserAsync(result, token).ConfigureAwait(false);
+                    user = await UserService.GetAsync(result, worker.Token).ConfigureAwait(false);
                     if (user == null)
                     {
                         throw new NotSupportedException("Unable to create user.");
                     }
 
-                    if (!await UserRepository.SaveAsync(user, token).ConfigureAwait(false))
+                    if (!await UserRepository.SaveAsync(user, worker.Token).ConfigureAwait(false))
                     {
                         throw new NotSupportedException("Unable to save user.");
                     }
@@ -130,7 +130,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
-                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, token).ConfigureAwait(false);
+                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                 }
                 finally
                 {
@@ -141,7 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanCreateAccount()
         {
-            return !IsBusy && !HasErrors && !string.IsNullOrWhiteSpace(SessionService.AccountId?.ObjectId);
+            return !IsBusy && !HasErrors && !string.IsNullOrWhiteSpace(SessionService.UniqueId);
         }
     }
 }

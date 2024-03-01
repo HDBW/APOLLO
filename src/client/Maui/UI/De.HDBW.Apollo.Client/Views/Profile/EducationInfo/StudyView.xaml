@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.EducationInfo.StudyView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -12,6 +12,9 @@
              Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
@@ -26,7 +29,7 @@
                 </Entry>
             </Border>
             <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
-
+            
             <Label Text="{x:Static strings:Resources.Global_UniversityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
@@ -45,7 +48,7 @@
                     </ImageButton>
                 </Grid>
             </Border>
-            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
+            <Label Text="{x:Binding [SelectedUniverityDegree]}" Style="{StaticResource ValidationErrorLabel}" />
 
             <Label Text="{x:Static strings:Resources.Global_CompletionState}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">

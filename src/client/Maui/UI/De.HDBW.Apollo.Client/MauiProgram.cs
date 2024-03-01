@@ -1,6 +1,7 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
@@ -17,6 +18,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
+using De.HDBW.Apollo.Client.ViewModels.Training;
 using De.HDBW.Apollo.Client.Views;
 using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
@@ -25,12 +27,14 @@ using De.HDBW.Apollo.Client.Views.Profile.Language;
 using De.HDBW.Apollo.Client.Views.Profile.License;
 using De.HDBW.Apollo.Client.Views.Profile.Qualification;
 using De.HDBW.Apollo.Client.Views.Profile.WebReference;
+using De.HDBW.Apollo.Client.Views.Training;
 using De.HDBW.Apollo.Data;
 using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
+using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using FedericoNembrini.Maui.CustomDatePicker;
@@ -40,12 +44,15 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Microsoft.Maui.Handlers;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.ApplicationInsights;
 using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using The49.Maui.BottomSheet;
 
 namespace De.HDBW.Apollo.Client
 {
@@ -78,6 +85,7 @@ namespace De.HDBW.Apollo.Client
                 .UseMauiCommunityToolkit()
                 .UseMauiCompatibility()
                 .UseCustomDatePicker()
+                .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
@@ -85,7 +93,8 @@ namespace De.HDBW.Apollo.Client
                     fonts.AddFont("NotoSans-Bold.ttf", "NotoSansBold");
                     fonts.AddFont("NotoSerif-Regular.ttf", "NotoSerifRegular");
                     fonts.AddFont("NotoSerif-Bold.ttf", "NotoSerifBold");
-                });
+                })
+            .UseBottomSheet();
             builder.ConfigureMauiHandlers(SetupHandlers);
             return builder.Build();
         }
@@ -145,7 +154,11 @@ namespace De.HDBW.Apollo.Client
         {
             var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db.sqlite");
             var flags = SQLite.SQLiteOpenFlags.ReadWrite | SQLite.SQLiteOpenFlags.Create | SQLite.SQLiteOpenFlags.SharedCache;
-            builder.Services.AddSingleton<IDataBaseConnectionProvider>(new DataBaseConnectionProvider(dbFilePath, flags, IocServiceHelper.ServiceProvider?.GetService<ILogger<DataBaseConnectionProvider>>()));
+            var localEntities = new List<Type>()
+            {
+                typeof(SearchHistory),
+            };
+            builder.Services.AddSingleton<IDataBaseConnectionProvider>(new DataBaseConnectionProvider(dbFilePath, flags, IocServiceHelper.ServiceProvider?.GetService<ILogger<DataBaseConnectionProvider>>(), localEntities));
         }
 
         private static void SetupLogging()
@@ -199,16 +212,19 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AuthenticationResult? authenticationResult)
         {
+            services.AddSingleton<IImageCacheService, ImageCacheService>();
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();
             services.AddSingleton<IDispatcherService, DispatcherService>();
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.Account.HomeAccountId));
+            services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.UniqueId, authenticationResult?.Account.HomeAccountId));
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<ISheetService, SheetService>();
             services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
             services.AddSingleton<IFeedbackService, FeedbackService>();
             services.AddSingleton<IMessenger, WeakReferenceMessenger>();
             services.AddSingleton<INetworkService, NetworkService>();
+            services.AddSingleton<ITouchService, TouchService>();
             services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
 
             var occupationSearchUrl = userSecretsService["OccupationSearchAPIURL"] ?? string.Empty;
@@ -221,15 +237,46 @@ namespace De.HDBW.Apollo.Client
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
             {
-                return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, new HttpClientHandler());
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, handler);
+            });
+
+            services.AddSingleton<IProfileService>((serviceProvider) =>
+            {
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new ProfileService(serviceProvider.GetService<ILogger<ProfileService>>(), apiUrl, apiToken, handler);
+                service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
+                return service;
+            });
+
+            services.AddSingleton<IApolloListService>((serviceProvider) =>
+            {
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new ApolloListService(serviceProvider.GetService<ILogger<ApolloListService>>(), apiUrl, apiToken, handler);
+                service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
+
+                return service;
+            });
+
+            var unregisterUserUrl = userSecretsService["UnRegisteUserEndpointURL"] ?? string.Empty;
+            services.AddSingleton<IUnregisterUserService>((serviceProvider) =>
+            {
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new UnregisterUserService(serviceProvider.GetService<ILogger<UnregisterUserService>>(), unregisterUserUrl, apiToken, handler);
+                service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
+
+                return service;
             });
 
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
 #if DEBUG
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
+
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, serviceProvider.GetService<IProfileService>(), new MockUserHttpClientHandler(serviceProvider.GetService<IUserRepository>()));
 #else
-                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, new HttpClientHandler());
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, serviceProvider.GetService<IProfileService>(), handler);
 #endif
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
@@ -259,6 +306,13 @@ namespace De.HDBW.Apollo.Client
             {
                 return new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"User_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<UserRepository>>());
             });
+
+            services.AddSingleton<IFavoriteRepository>((serviceProvider) =>
+            {
+                return new FavoriteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"Favorite_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<FavoriteRepository>>());
+            });
+
+            services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
         }
 
         private static void SetupViewsAndViewModels(IServiceCollection services)
@@ -283,9 +337,6 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<UseCaseSelectionView>();
             services.AddTransient<UseCaseSelectionViewModel>();
-
-            services.AddTransient<FirstTimeDialog>();
-            services.AddTransient<FirstTimeDialogViewModel>();
 
             services.AddTransient<CancelAssessmentDialog>();
             services.AddTransient<CancelAssessmentDialogViewModel>();
@@ -318,11 +369,24 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<AssessmentDescriptionView>();
             services.AddTransient<AssessmentDescriptionViewModel>();
 
-            services.AddTransient<CourseView>();
-            services.AddTransient<CourseViewModel>();
-
             services.AddTransient<SettingsView>();
             services.AddTransient<SettingsViewModel>();
+
+            services.AddTransient<FavoriteView>();
+            services.AddTransient<FavoriteViewModel>();
+
+            // Training
+            services.AddTransient<TrainingView>();
+            services.AddTransient<TrainingViewModel>();
+
+            services.AddTransient<LoansView>();
+            services.AddTransient<LoansViewModel>();
+
+            services.AddTransient<AppointmentsView>();
+            services.AddTransient<AppointmentsViewModel>();
+
+            services.AddTransient<TrainingContentView>();
+            services.AddTransient<TrainingContentViewModel>();
 
             // Profile
             services.AddTransient<ProfileView>();
@@ -402,6 +466,12 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<OccupationSearchViewModel>();
 
             services.AddSingleton<GlobalErrorViewModel>();
+
+            services.AddTransient<SearchView>();
+            services.AddTransient<SearchViewModel>();
+
+            services.AddTransient<SearchFilterSheet>();
+            services.AddTransient<SearchFilterSheetViewModel>();
         }
 
         private static void SetupRoutes()
@@ -416,8 +486,12 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
             Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
             Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
-            Routing.RegisterRoute(Routes.CourseView, typeof(CourseView));
             Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
+
+            Routing.RegisterRoute(Routes.TrainingView, typeof(TrainingView));
+            Routing.RegisterRoute(Routes.LoansView, typeof(LoansView));
+            Routing.RegisterRoute(Routes.AppointmentsView, typeof(AppointmentsView));
+            Routing.RegisterRoute(Routes.TrainingContentView, typeof(TrainingContentView));
 
             Routing.RegisterRoute(Routes.ProfileView, typeof(ProfileView));
             Routing.RegisterRoute(Routes.PersonalInformationEditView, typeof(PersonalInformationEditView));
@@ -453,6 +527,9 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.CareerInfoBasicView, typeof(BasicView));
             Routing.RegisterRoute(Routes.CareerInfoVoluntaryServiceView, typeof(VoluntaryServiceView));
             Routing.RegisterRoute(Routes.OccupationSearchView, typeof(OccupationSearchView));
+
+            Routing.RegisterRoute(Routes.SearchView, typeof(SearchView));
+            Routing.RegisterRoute(Routes.SearchFilterSheet, typeof(SearchFilterSheet));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
@@ -510,20 +587,22 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
 
-            Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchBar), (handler, view) =>
+            Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping(nameof(SearchBarHandler), (handler, view) =>
             {
 #if ANDROID
 #elif IOS
 #endif
             });
         }
-
+ 
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
 #if IOS
             handlers.AddHandler(typeof(SearchBar), typeof(De.HDBW.Apollo.Client.Platforms.iOS.CustomSearchbarHandler));
+            handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
 #elif ANDROID
+            handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
 #endif
         }
     }
-}
+    }

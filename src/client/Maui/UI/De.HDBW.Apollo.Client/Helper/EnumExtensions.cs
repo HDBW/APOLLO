@@ -1,4 +1,7 @@
-﻿using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace De.HDBW.Apollo.Client.Helper
 {
@@ -221,7 +224,7 @@ namespace De.HDBW.Apollo.Client.Helper
             return GetLocalizedString((SchoolGraduation?)schoolGraduation);
         }
 
-        public static string GetLocalizedString(SchoolGraduation? schoolGraduation)
+        public static string GetLocalizedString(this SchoolGraduation? schoolGraduation)
         {
             switch (schoolGraduation)
             {
@@ -253,7 +256,7 @@ namespace De.HDBW.Apollo.Client.Helper
             return GetLocalizedString((UniversityDegree?)universityDegree);
         }
 
-        public static string GetLocalizedString(UniversityDegree? universityDegree)
+        public static string GetLocalizedString(this UniversityDegree? universityDegree)
         {
             switch (universityDegree)
             {
@@ -287,7 +290,7 @@ namespace De.HDBW.Apollo.Client.Helper
             return GetLocalizedString((CompletionState?)completionState);
         }
 
-        public static string GetLocalizedString(CompletionState? completionState)
+        public static string GetLocalizedString(this CompletionState? completionState)
         {
             switch (completionState)
             {
@@ -307,7 +310,7 @@ namespace De.HDBW.Apollo.Client.Helper
             return GetLocalizedString((Willing?)willing);
         }
 
-        public static string GetLocalizedString(Willing? willing)
+        public static string GetLocalizedString(this Willing? willing)
         {
             switch (willing)
             {

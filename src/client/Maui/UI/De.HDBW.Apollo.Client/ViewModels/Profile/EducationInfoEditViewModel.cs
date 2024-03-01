@@ -35,6 +35,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         public override async Task OnNavigatedToAsync()
         {
+            if (IsShowingDialog)
+            {
+                return;
+            }
+
             using (var worker = ScheduleWork())
             {
                 try
@@ -81,6 +86,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             {
                 try
                 {
+                    IsShowingDialog = true;
                     var parameters = new NavigationParameters();
                     parameters.Add(NavigationParameter.Data, EducationType.Unknown);
                     var result = await DialogService.ShowPopupAsync<SelectOptionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
@@ -106,6 +112,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 }
                 finally
                 {
+                    IsShowingDialog = false;
                     UnscheduleWork(worker);
                 }
             }
@@ -123,11 +130,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         return;
                     }
 
-                    var careerType = entry.Export().EducationType;
+                    var careerType = entry.Export().EducationType.AsEnum<EducationType>();
                     NavigationParameters? editorParameters = new NavigationParameters();
                     editorParameters.AddValue<string>(NavigationParameter.Id, id);
                     editorParameters.Add(NavigationParameter.Type, careerType);
-                    await NavigationService.NavigateAsync(GetRoute(careerType.AsEnum<EducationType>()), worker.Token, editorParameters);
+                    await NavigationService.NavigateAsync(GetRoute(careerType), worker.Token, editorParameters);
                 }
                 catch (OperationCanceledException)
                 {

@@ -11,14 +11,17 @@ namespace De.HDBW.Apollo.Data.Services
     {
         private readonly List<(long Id, Type Type)> _favorites = new List<(long Id, Type Type)>();
 
-        public SessionService(AccountId? accountId)
+        public SessionService(string? uniqueId, AccountId? accountId)
         {
             AccountId = accountId;
+            UniqueId = uniqueId;
         }
 
         public bool HasRegisteredUser => AccountId != null;
 
         public AccountId? AccountId { get; private set; }
+
+        public string? UniqueId { get; private set; }
 
         public UseCase? UseCase { get; private set; }
 
@@ -54,9 +57,10 @@ namespace De.HDBW.Apollo.Data.Services
             }
         }
 
-        public void UpdateRegisteredUser(AccountId? accountId)
+        public void UpdateRegisteredUser(string? uniqueId, AccountId? accountId)
         {
             AccountId = accountId;
+            UniqueId = uniqueId;
         }
 
         public void UpdateUseCase(UseCase? useCase)

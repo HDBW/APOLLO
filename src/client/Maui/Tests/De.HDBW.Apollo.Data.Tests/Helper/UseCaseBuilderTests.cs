@@ -14,7 +14,7 @@ public class UseCaseBuilderTests
     public void TestCreation()
     {
         var logger = this.SetupLogger<UseCaseBuilder>();
-        using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+        using (var context = new DatabaseTestContext(Path.GetTempFileName(), logger))
         {
             var connectionProvider = this.SetupDataBaseConnectionProvider(context);
             var assessmentItemRepository = new AssessmentItemRepository(connectionProvider, this.SetupLogger<AssessmentItemRepository>());
@@ -37,7 +37,7 @@ public class UseCaseBuilderTests
 
             UseCaseBuilder useCaseBuilder = null;
             var ctor = typeof(UseCaseBuilder).GetConstructors().FirstOrDefault();
-            var parameters = ctor.GetParameters();
+            var parameters = ctor?.GetParameters()!;
             var ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
             Assert.Equal(parameters[0].Name, ex.ParamName);
 
@@ -104,7 +104,7 @@ public class UseCaseBuilderTests
     public async Task TestBuildAsyncWithCanceledTokenAsync()
     {
         var logger = this.SetupLogger<UseCaseBuilder>();
-        using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+        using (var context = new DatabaseTestContext(Path.GetTempFileName(), logger))
         {
             var connectionProvider = this.SetupDataBaseConnectionProvider(context);
             var assessmentItemRepository = new AssessmentItemRepository(connectionProvider, this.SetupLogger<AssessmentItemRepository>());
@@ -137,7 +137,7 @@ public class UseCaseBuilderTests
     public async Task TestBuildAsyncDisposedTokenAsync()
     {
         var logger = this.SetupLogger<UseCaseBuilder>();
-        using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+        using (var context = new DatabaseTestContext(Path.GetTempFileName(), logger))
         {
             var connectionProvider = this.SetupDataBaseConnectionProvider(context);
             var assessmentItemRepository = new AssessmentItemRepository(connectionProvider, this.SetupLogger<AssessmentItemRepository>());
@@ -170,7 +170,7 @@ public class UseCaseBuilderTests
     public async Task TestBuildAsyncWithUnknownUseCaseAsync()
     {
         var logger = this.SetupLogger<UseCaseBuilder>();
-        using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+        using (var context = new DatabaseTestContext(Path.GetTempFileName(), logger))
         {
             var connectionProvider = this.SetupDataBaseConnectionProvider(context);
             var assessmentItemRepository = new AssessmentItemRepository(connectionProvider, this.SetupLogger<AssessmentItemRepository>());
@@ -201,7 +201,7 @@ public class UseCaseBuilderTests
     public async Task TestBuildAsyncWithUseCaseAAsync()
     {
         var logger = this.SetupLogger<UseCaseBuilder>();
-        using (var context = new DatabaseTestContext(Path.GetTempFileName()))
+        using (var context = new DatabaseTestContext(Path.GetTempFileName(), logger))
         {
             var connectionProvider = this.SetupDataBaseConnectionProvider(context);
             var assessmentItemRepository = new AssessmentItemRepository(connectionProvider, this.SetupLogger<AssessmentItemRepository>());

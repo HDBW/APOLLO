@@ -3,6 +3,7 @@
              x:Class="De.HDBW.Apollo.Client.Views.SettingsView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:SettingsViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.SettingsView_Title}"
@@ -17,7 +18,7 @@
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding OpenMailCommand}" />
                     </HorizontalStackLayout.GestureRecognizers>
-                    <Image WidthRequest="24" HeightRequest="24" Source="mail.png" />
+                    <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.EMail}" />
                     <Label Text="{x:Static strings:Resources.SettingsView_QuestionEmail}" LineBreakMode="WordWrap" MaxLines="2" Style="{StaticResource NotoSerif16}"/>
                 </HorizontalStackLayout>
                 <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{x:Binding UnRegisterCommand}" Margin="0,24,0,0"/>

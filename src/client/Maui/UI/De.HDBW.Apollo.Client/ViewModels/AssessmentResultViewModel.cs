@@ -163,12 +163,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 var courseData = new NavigationParameters();
                 courseData.AddValue<long?>(NavigationParameter.Id, course.Id);
-                var data = new NavigationData(Routes.CourseView, courseData);
+                var data = new NavigationData(Routes.TrainingView, courseData);
 
                 var eduProvider = eduProviderItems?.FirstOrDefault(p => p.Id == course.CourseProviderId);
 
                 var duration = course.Duration ?? string.Empty;
-                var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.StartViewModel_UnknownProvider;
+                var provider = !string.IsNullOrWhiteSpace(eduProvider?.Name) ? eduProvider.Name : Resources.Strings.Resources.Global_UnknownProvider;
                 var image = "placeholdercontinuingeducation.png";
                 switch (course.CourseTagType)
                 {

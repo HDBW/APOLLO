@@ -5,6 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class PickUserNameView
     {
         public PickUserNameView(PickUserNameViewModel model)

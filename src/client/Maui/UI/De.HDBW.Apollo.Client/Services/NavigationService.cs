@@ -2,7 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Diagnostics;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -153,6 +155,33 @@ namespace De.HDBW.Apollo.Client.Services
             }
 
             return result;
+        }
+
+        public async Task RestartAsync(CancellationToken token)
+        {
+            await DispatcherService.ExecuteOnMainThreadAsync(
+                () =>
+                {
+                    try
+                    {
+                        var current = Application.Current.MainPage;
+                        Application.Current.MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, ServiceProvider) as Page);
+                        if (current != null)
+                        {
+                            var stack = current.Navigation.NavigationStack.ToArray();
+                            for (int i = stack.Length - 1; i > 0; i--)
+                            {
+                                current.Navigation.RemovePage(stack[i]);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger?.LogError(ex, $"Unknown error while {nameof(RestartAsync)} in {GetType().Name}.");
+                    }
+
+                    return Task.CompletedTask;
+                }, token);
         }
 
         private async Task NavigateOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
@@ -394,15 +423,6 @@ namespace De.HDBW.Apollo.Client.Services
                 return;
             }
 
-            var interceptor = page as IBackNavigationInterceptor ?? page.BindingContext as IBackNavigationInterceptor;
-            if ((interceptor?.NeedsToCancel ?? false) && (e?.Source == ShellNavigationSource.Pop || e?.Source == ShellNavigationSource.PopToRoot) && (e?.CanCancel ?? false))
-            {
-                // It was a back navigation;
-                e.Cancel();
-                interceptor.CanceledNavigation();
-                return;
-            }
-
             NavigatedFromPage(page, null);
         }
 
@@ -413,6 +433,12 @@ namespace De.HDBW.Apollo.Client.Services
             if (page == null)
             {
                 return;
+            }
+
+            if (e?.Source == ShellNavigationSource.ShellSectionChanged)
+            {
+                var vm = GetViewModel(page);
+                WeakReferenceMessenger.Default.Send(new ShellContentChangedMessage(vm?.GetType()));
             }
 
             NavigatedToPage(page, null);

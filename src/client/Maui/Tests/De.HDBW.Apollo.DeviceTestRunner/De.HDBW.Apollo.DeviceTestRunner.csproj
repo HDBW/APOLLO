@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>De.HDBW.Apollo.DeviceTestRunner</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -18,8 +17,6 @@
     <ApplicationVersion>1</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
     <DefineConstants>DEVICEBUILD</DefineConstants>
   </PropertyGroup>
@@ -41,8 +38,8 @@
     <PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>

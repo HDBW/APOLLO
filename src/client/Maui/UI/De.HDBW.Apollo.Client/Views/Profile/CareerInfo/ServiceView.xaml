@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfo.ServiceView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -11,6 +11,9 @@
              Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
@@ -76,13 +79,13 @@
 
             <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
-                    <FlexLayout.GestureRecognizers>
+                <Grid ColumnDefinitions="*, auto">
+                    <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchOccupationCommand}"  />
-                    </FlexLayout.GestureRecognizers>
-                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Start"/>
-                    <Image Source="longlist.png" VerticalOptions="End" HeightRequest="24" WidthRequest="24"/>
-                </FlexLayout>
+                    </Grid.GestureRecognizers>
+                    <Label Grid.Column="0" Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" Margin="0,0,4,0"/>
+                    <Image Grid.Column="1" Source="longlist.png"  HeightRequest="24" WidthRequest="24"/>
+                </Grid>
             </Border>
 
             <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>

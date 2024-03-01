@@ -153,18 +153,6 @@
   <data name="FeedbackUrl" xml:space="preserve">
     <value>https://forms.office.com/e/cmES4qec8q</value>
   </data>
-  <data name="FirstTimeDialog_Continue" xml:space="preserve">
-    <value>direkt loslegen</value>
-  </data>
-  <data name="FirstTimeDialog_Message" xml:space="preserve">
-    <value>zum ersten mal hier?</value>
-  </data>
-  <data name="FirstTimeDialog_OpenTutorial" xml:space="preserve">
-    <value>Tutorial anzeigen</value>
-  </data>
-  <data name="FirstTimeDialog_Title" xml:space="preserve">
-    <value>Willkommen!</value>
-  </data>
   <data name="Global_Back" xml:space="preserve">
     <value>Zurück</value>
   </data>
@@ -232,7 +220,7 @@
     <value>Entdecke dein Karrierepotential
 (Ist-Stand bekannt – Inspiration)</value>
   </data>
-  <data name="StartViewModel_UnknownProvider" xml:space="preserve">
+  <data name="Global_UnknownProvider" xml:space="preserve">
     <value>Unbekannter Anbieter</value>
   </data>
   <data name="StartView_ChangeUseCase" xml:space="preserve">
@@ -444,22 +432,19 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="StartViewModel_UseCaseC_RecomondationsHeadline" xml:space="preserve">
     <value>Beschleunige deinen Aufstieg</value>
   </data>
-  <data name="CourseView_Benefits" xml:space="preserve">
+  <data name="Global_Benefits" xml:space="preserve">
     <value>Vorteile</value>
   </data>
-  <data name="CourseView_Contact" xml:space="preserve">
+  <data name="Global_Contact" xml:space="preserve">
     <value>Ansprechpartner</value>
   </data>
-  <data name="CourseView_LearningOutcomes" xml:space="preserve">
-    <value>Ergebnis</value>
-  </data>
-  <data name="CourseView_PreRequisites" xml:space="preserve">
+  <data name="Global_PreRequisites" xml:space="preserve">
     <value>Voraussetzungen</value>
   </data>
-  <data name="CourseView_LoanOptions" xml:space="preserve">
+  <data name="TrainingsView_LoanOptions" xml:space="preserve">
     <value>Finanzierungsoptionen anzeigen</value>
   </data>
-  <data name="CourseView_VisitVendor" xml:space="preserve">
+  <data name="TrainingView_OpenProvider" xml:space="preserve">
     <value>Zum Anbieter</value>
   </data>
   <data name="Global_Close" xml:space="preserve">
@@ -480,7 +465,7 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="CourseType_Online" xml:space="preserve">
     <value>Online</value>
   </data>
-  <data name="CourseView_TargetGroup" xml:space="preserve">
+  <data name="Global_TargetAudience" xml:space="preserve">
     <value>Zielgruppe</value>
   </data>
   <data name="Global_DurationFormatHours" xml:space="preserve">
@@ -504,11 +489,8 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="AssessmentType_Survey" xml:space="preserve">
     <value>Umfrage</value>
   </data>
-  <data name="CourseView_Skills" xml:space="preserve">
-    <value>ESCO-Skills</value>
-  </data>
-  <data name="CourseView_Title" xml:space="preserve">
-    <value>Kursinformationen</value>
+  <data name="TrainingsView_Title" xml:space="preserve">
+    <value>Kurs</value>
   </data>
   <data name="Global_Next" xml:space="preserve">
     <value>Weiter</value>
@@ -1050,7 +1032,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>nicht vorhanden</value>
   </data>
   <data name="Willing_Partly" xml:space="preserve">
-    <value>zeitweise vorhanden</value>
+    <value>eingeschränkt vorhanden</value>
   </data>
   <data name="Willing_Yes" xml:space="preserve">
     <value>vorhanden</value>
@@ -1059,7 +1041,7 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
     <value>Du bist nicht mit dem Internet verbunden. Bitte prüfe deine Netzwerkverbindung.</value>
   </data>
   <data name="ProfileView_RecommendationSection_SubTitle" xml:space="preserve">
-    <value>Je besser Dein Profil gefüllt ist, desto bessere Vorschläge liefern wir Dir.</value>
+    <value>Befülle Dein Profil und erhalte passendere Kursvorschläge.</value>
   </data>
   <data name="ProfileView_RecommendationSection_Title" xml:space="preserve">
     <value>Dein Fortschritt</value>
@@ -1168,10 +1150,10 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Inhalte merken und Erinnerungen erhalten</value>
   </data>
   <data name="FavoriteView_Title" xml:space="preserve">
-    <value>Inhalte</value>
+    <value>Favoriten</value>
   </data>
-  <data name="SearchView_Title" xml:space="preserve">
-    <value>Suche</value>
+  <data name="FavoriteView_Empty" xml:space="preserve">
+    <value>Du hast keine Favoriten ausgewählt</value>
   </data>
   <data name="Global_Delete" xml:space="preserve">
     <value>Löschen</value>
@@ -1254,5 +1236,212 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="ProfileView_Empty_Button" xml:space="preserve">
     <value>Los geht's!</value>
+  </data>
+  <data name="SearchView_Title" xml:space="preserve">
+    <value>Suche</value>
+  </data>
+  <data name="FiltersSheet_Location" xml:space="preserve">
+    <value>Standort</value>
+  </data>
+  <data name="FiltersSheet_IndividualStartDate" xml:space="preserve">
+    <value>individuelles Startdatum</value>
+  </data>
+  <data name="FiltersSheet_Price" xml:space="preserve">
+    <value>Preis</value>
+  </data>
+  <data name="FiltersSheet_SelectPrice" xml:space="preserve">
+    <value>Preis auswählen</value>
+  </data>
+  <data name="PropertyEditor_StartDate" xml:space="preserve">
+    <value>Startdatum</value>
+  </data>
+  <data name="PropertyEditor_EndDate" xml:space="preserve">
+    <value>Enddatum</value>
+  </data>
+  <data name="FiltersSheet_Sorting" xml:space="preserve">
+    <value>Sortierung</value>
+  </data>
+  <data name="FiltersSheet_RelevanceDescending" xml:space="preserve">
+    <value>Relevanz absteigend</value>
+  </data>
+  <data name="FiltersSheet_RelevanceAscending" xml:space="preserve">
+    <value>Relevanz aufsteigend</value>
+  </data>
+  <data name="Filter_CourseType" xml:space="preserve">
+    <value>Art</value>
+  </data>
+  <data name="Filter_EduProviders" xml:space="preserve">
+    <value>Anbieter</value>
+  </data>
+  <data name="Filter_Price" xml:space="preserve">
+    <value>Preis</value>
+  </data>
+  <data name="Global_CareerType" xml:space="preserve">
+    <value>Art der Berufserfahrung</value>
+  </data>
+  <data name="ProfileView_CareerEmpty" xml:space="preserve">
+    <value>Berufserfahrungen hinzufügen</value>
+  </data>
+  <data name="ProfileView_ContactInfoEmpty" xml:space="preserve">
+    <value>Kontakte hinzufügen</value>
+  </data>
+  <data name="ProfileView_EducationEmpty" xml:space="preserve">
+    <value>Bildung hinzufügen</value>
+  </data>
+  <data name="ProfileView_LanguageEmpty" xml:space="preserve">
+    <value>Sprachkenntnisse hinzufügen</value>
+  </data>
+  <data name="ProfileView_LizenzenEmpty" xml:space="preserve">
+    <value>Lizenzen hinzufügen</value>
+  </data>
+  <data name="ProfileView_MobilityEmpty" xml:space="preserve">
+    <value>Angaben zur Mobilität hinzufügen</value>
+  </data>
+  <data name="ProfileView_PersonalInformationEmpty" xml:space="preserve">
+    <value>Persönliche Informationen hinzufügen</value>
+  </data>
+  <data name="ProfileView_QualificationEmpty" xml:space="preserve">
+    <value>Qualifikationen hinzufügen</value>
+  </data>
+  <data name="ProfileView_WebReferenceEmpty" xml:space="preserve">
+    <value>Webprofile hinzufügen</value>
+  </data>
+  <data name="Global_Training" xml:space="preserve">
+    <value>Kurs</value>
+  </data>
+  <data name="SearchView_Interest" xml:space="preserve">
+    <value>Was interessiert Dich?</value>
+  </data>
+  <data name="Global_Location_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="Global_Categories" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="Global_Certificates" xml:space="preserve">
+    <value>Abschluss</value>
+  </data>
+  <data name="Global_Contents" xml:space="preserve">
+    <value>Inhalte</value>
+  </data>
+  <data name="Global_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Global_TrainingMode" xml:space="preserve">
+    <value>Kursart</value>
+  </data>
+  <data name="TrainingMode_Hybrid" xml:space="preserve">
+    <value>Hybrid</value>
+  </data>
+  <data name="TrainingMode_Offline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="TrainingMode_OnDemand" xml:space="preserve">
+    <value>Auf Anfrage</value>
+  </data>
+  <data name="TrainingMode_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="TrainingsView_Appointment" xml:space="preserve">
+    <value>Termine</value>
+  </data>
+  <data name="TrainingView_Accessibility" xml:space="preserve">
+    <value>Barrierefrei zugänglich</value>
+  </data>
+  <data name="LoansView_Title" xml:space="preserve">
+    <value>Finanzierungsoptionen</value>
+  </data>
+  <data name="AppointmentsView_Title" xml:space="preserve">
+    <value>Termine</value>
+  </data>
+  <data name="TimeModel_Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="TimeModel_Fulltime" xml:space="preserve">
+    <value>Vollzeit</value>
+  </data>
+  <data name="TimeModel_Parttime" xml:space="preserve">
+    <value>Teilzeit</value>
+  </data>
+  <data name="Global_Location" xml:space="preserve">
+    <value>Ort</value>
+  </data>
+  <data name="TrainingContentView_Title" xml:space="preserve">
+    <value>Kursinhalte</value>
+  </data>
+  <data name="AppointmentsView_Duration" xml:space="preserve">
+    <value>Dauer</value>
+  </data>
+  <data name="AppointmentsView_ExecutionDuration" xml:space="preserve">
+    <value>Ausführungsdauer</value>
+  </data>
+  <data name="AppointmentsView_ExecutionDurationDescription" xml:space="preserve">
+    <value>Ausführungsdetails</value>
+  </data>
+  <data name="AppointmentsView_Period" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="Global_OpenBooking" xml:space="preserve">
+    <value>Buchen</value>
+  </data>
+  <data name="AppointmentsView_OpenTraining" xml:space="preserve">
+    <value>Zum Kurs</value>
+  </data>
+  <data name="AppointmentsView_IsGuaranteed" xml:space="preserve">
+    <value>Kurs mit garantierter Durchführung</value>
+  </data>
+  <data name="AppointmentsView_LessonType" xml:space="preserve">
+    <value>Lektionsart</value>
+  </data>
+  <data name="AppointmentsView_Occurences" xml:space="preserve">
+    <value>Termine</value>
+  </data>
+  <data name="AppointmentsView_TimeModel" xml:space="preserve">
+    <value>Zeitmodel</value>
+  </data>
+  <data name="TraingsView_PriceDescription" xml:space="preserve">
+    <value>Preisdetails</value>
+  </data>
+  <data name="Filter_Loans" xml:space="preserve">
+    <value>Finanzierungsoptionen</value>
+  </data>
+  <data name="Global_SearchFilterSheet_ApplyFilter" xml:space="preserve">
+    <value>Filter anwenden</value>
+  </data>
+  <data name="Filter_HasIndividualStartDate" xml:space="preserve">
+    <value>Startdatum individuell</value>
+  </data>
+  <data name="Filter_IsAccessible" xml:space="preserve">
+    <value>Barrierefrei</value>
+  </data>
+  <data name="Filter_TrainingsMode" xml:space="preserve">
+    <value>Kursart</value>
+  </data>
+  <data name="Filter_TrainingTimeModel" xml:space="preserve">
+    <value>Zeitmodel</value>
+  </data>
+  <data name="Global_RageEnd" xml:space="preserve">
+    <value>Bis</value>
+  </data>
+  <data name="Global_RageStart" xml:space="preserve">
+    <value>Von</value>
+  </data>
+  <data name="Filter_Date" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="Global_SearchFilterSheet_ResetFilter" xml:space="preserve">
+    <value>Filter zurücksetzen</value>
+  </data>
+  <data name="Global_SearchFilterSheet_Title" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FavoriteView_Description_EmptyView" xml:space="preserve">
+    <value>Schau Dich um und merke Dir, was Dir gefällt. Nutze dafür das Favoriten-Icon.</value>
+  </data>
+  <data name="FavoriteView_Headline" xml:space="preserve">
+    <value>Deine Favoriten</value>
+  </data>
+  <data name="FavoriteView_Subline_EmptyView" xml:space="preserve">
+    <value>Du hast noch keine Favoriten.</value>
   </data>
 </root>

@@ -59,12 +59,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override string? GetIdFromItem(AbstractProfileEntry<License> entry)
         {
-            return entry.Export().Id;
+            return entry.Export().ListItemId.ToString();
         }
 
         protected override void RemoveItemFromUser(User user, AbstractProfileEntry<License> entry)
         {
             user.Profile!.Licenses!.Remove(entry.Export());
+            foreach (var license in user.Profile!.Licenses)
+            {
+                license.ListItemId = user.Profile!.Licenses.IndexOf(license);
+            }
         }
     }
 }

@@ -12,6 +12,9 @@
              Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>

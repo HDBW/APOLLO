@@ -3,28 +3,27 @@
 
 using De.HDBW.Apollo.Data.Tests.Extensions;
 using De.HDBW.Apollo.Data.Tests.Helper;
-using Microsoft.Extensions.Http.Logging;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Services
 {
-    public abstract class AbstractServiceTestSetup<TU> : IDisposable
+    public abstract class AbstractServiceTestSetup<TU> : AbstractTest, IDisposable
     {
         private bool _disposed;
 
         protected AbstractServiceTestSetup(ITestOutputHelper outputHelper)
+            : base(outputHelper)
         {
             SetupSecrets();
             TokenSource = new CancellationTokenSource();
-            Logger = this.SetupLogger<TU>(outputHelper);
             ArgumentException.ThrowIfNullOrWhiteSpace(APIKey);
             ArgumentException.ThrowIfNullOrWhiteSpace(BaseUri);
-            var logger = this.SetupLogger<LoggingHttpMessageHandler>(outputHelper);
-            var handler = new ContentLoggingHttpMessageHandler(logger);
-            Service = SetupService(APIKey, BaseUri, Logger, handler);
-            SetupAdditionalServices(APIKey, BaseUri, handler);
+            var handler = new ContentLoggingHttpMessageHandler(Logger);
+            var logger = this.SetupLogger<TU>(OutputHelper);
+            Service = SetupService(APIKey, BaseUri, logger, handler);
+            SetupAdditionalServices(APIKey, BaseUri, logger, handler);
         }
 
         ~AbstractServiceTestSetup()
@@ -35,8 +34,6 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         protected TU Service { get; private set; }
 
         protected CancellationTokenSource TokenSource { get; private set; }
-
-        protected ILogger<TU> Logger { get; private set; }
 
         private string APIKey { get; set; }
 
@@ -82,7 +79,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected abstract void CleanupAdditionalServices();
 
-        protected abstract void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler);
+        protected abstract void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TU> logger, HttpMessageHandler httpClientHandler);
 
         protected abstract TU SetupService(string apiKey, string baseUri, ILogger<TU> logger, HttpMessageHandler httpClientHandler);
     }

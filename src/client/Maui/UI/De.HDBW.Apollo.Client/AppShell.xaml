@@ -71,15 +71,7 @@
             </VerticalStackLayout>
         </Frame>
     </Shell.FlyoutFooter>
-    <!--<MenuItem IconImageSource="user.png" Text="{x:Static strings:Resources.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding ChangeUseCaseCommand}"/>-->
     <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
-    <!--<MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SkillsAndBadges}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CertificatesAndDegrees}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_LearningPath}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CoursesFavorites}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CVGenerator}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_ViewTutorial}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />-->
     <TabBar x:Name="PART_Tabs">
         <Tab Title="{x:Static strings:Resources.SearchView_Title}"
              Icon="search.png">
@@ -91,7 +83,7 @@
         </Tab>
         <Tab Title="{x:Static strings:Resources.FavoriteView_Title}"
             Icon="favorite.png">
-            <ShellContent ContentTemplate="{DataTemplate views:EmptyView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:FavoriteView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
     </TabBar>
 </Shell>

@@ -10,5 +10,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
         TU GetValue<TU>(Preference key, TU defaultValue);
 
         bool SetValue<TU>(Preference key, TU value);
+
+        bool Delete();
     }
 }

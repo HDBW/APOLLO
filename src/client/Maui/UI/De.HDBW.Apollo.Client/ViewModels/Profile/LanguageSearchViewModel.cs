@@ -9,7 +9,6 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
-using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile

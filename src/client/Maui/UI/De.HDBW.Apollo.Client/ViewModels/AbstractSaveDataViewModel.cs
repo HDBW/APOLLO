@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public abstract partial class AbstractSaveDataViewModel : BaseViewModel, IBackNavigationInterceptor
+    public abstract partial class AbstractSaveDataViewModel : BaseViewModel
     {
         private bool _isDirty;
 
@@ -37,74 +37,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public bool NeedsToCancel
-        {
-            get
-            {
-                return IsDirty;
-            }
-        }
-
-        public async void CanceledNavigation()
-        {
-            using (var worker = ScheduleWork())
-            {
-                try
-                {
-                    if (HasErrors)
-                    {
-                        var parameters = new NavigationParameters();
-                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_InvalidData);
-                        var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
-                        if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
-                        {
-                            return;
-                        }
-
-                        _isDirty = false;
-                        await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
-                        return;
-                    }
-
-                    var savedData = false;
-                    while (!savedData)
-                    {
-                        savedData = await SaveAsync(worker.Token).ConfigureAwait(false);
-                        if (!savedData)
-                        {
-                            var parameters = new NavigationParameters();
-                            parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_RetryUnableToSaveData);
-                            var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
-                            savedData = !(result?.GetValue<bool?>(NavigationParameter.Result) ?? false);
-                        }
-                    }
-
-                    _isDirty = false;
-                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(CanceledNavigation)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(CanceledNavigation)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(CanceledNavigation)} in {GetType().Name}.");
-                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
-                }
-                finally
-                {
-                    UnscheduleWork(worker);
-                }
-            }
-        }
+        protected bool IsShowingDialog { get; set; }
 
         protected override void RefreshCommands()
         {
             SaveCommand?.NotifyCanExecuteChanged();
+            CancelCommand?.NotifyCanExecuteChanged();
             base.RefreshCommands();
         }
 
@@ -113,6 +51,76 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected virtual bool CanSave()
         {
             return !IsBusy && IsDirty;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCancel))]
+        private async Task Cancel(CancellationToken token)
+        {
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    if (IsDirty)
+                    {
+                        if (HasErrors)
+                        {
+                            var parameters = new NavigationParameters();
+                            parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_InvalidData);
+                            IsShowingDialog = true;
+                            var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+                            if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
+                            {
+                                return;
+                            }
+
+                            _isDirty = false;
+                            await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                            return;
+                        }
+
+                        var savedData = false;
+                        while (!savedData)
+                        {
+                            savedData = await SaveAsync(worker.Token).ConfigureAwait(false);
+                            if (!savedData)
+                            {
+                                var parameters = new NavigationParameters();
+                                parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_RetryUnableToSaveData);
+                                IsShowingDialog = true;
+                                var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+                                savedData = !(result?.GetValue<bool?>(NavigationParameter.Result) ?? false);
+                            }
+                        }
+
+                        _isDirty = false;
+                    }
+
+                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Cancel)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Cancel)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Cancel)} in {GetType().Name}.");
+                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                }
+                finally
+                {
+                    IsShowingDialog = false;
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanCancel()
+        {
+            return !IsBusy;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSave))]
@@ -129,9 +137,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                     if (!await SaveAsync(worker.Token).ConfigureAwait(false))
                     {
-                        var parameters = new NavigationParameters();
-                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_UnableToSaveData);
-                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, token).ConfigureAwait(false);
+                        await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                     }
                 }
                 catch (OperationCanceledException)

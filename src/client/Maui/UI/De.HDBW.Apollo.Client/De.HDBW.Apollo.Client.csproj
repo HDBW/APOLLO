@@ -50,14 +50,22 @@
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_icon_tint.xml" />
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_tint.xml" />
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\accessibility.svg" />
     <None Remove="Resources\Images\add.svg" />
     <None Remove="Resources\Images\calendar.svg" />
     <None Remove="Resources\Images\calender.svg" />
+    <None Remove="Resources\Images\checkmark.svg" />
+    <None Remove="Resources\Images\chevronback.svg" />
+    <None Remove="Resources\Images\chevrondown.svg" />
+    <None Remove="Resources\Images\chevronlink.svg" />
+    <None Remove="Resources\Images\chevronup.svg" />
     <None Remove="Resources\Images\completed.svg" />
     <None Remove="Resources\Images\delete.svg" />
     <None Remove="Resources\Images\deletelight.svg" />
     <None Remove="Resources\Images\edit.svg" />
     <None Remove="Resources\Images\emptysearchdeco.svg" />
+    <None Remove="Resources\Images\filter.svg" />
+    <None Remove="Resources\Images\filteractive.svg" />
     <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />
@@ -67,7 +75,10 @@
     <None Remove="Resources\Images\Icon_ProfileWebReference.svg" />
     <None Remove="Resources\Images\Icon_ProfilLicensInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfilQualificationInfo.svg" />
+    <None Remove="Resources\Images\isfavorite.svg" />
+    <None Remove="Resources\Images\location.svg" />
     <None Remove="Resources\Images\longlist.svg" />
+    <None Remove="Resources\Images\makefavorite.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
@@ -76,10 +87,13 @@
     <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\resultdeco.svg" />
     <None Remove="Resources\Images\search.svg" />
+    <None Remove="Resources\Images\searchclear.svg" />
+    <None Remove="Resources\Images\share.svg" />
     <None Remove="Resources\Images\shortlist.svg" />
     <None Remove="Resources\Images\splashdeco.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\splashdeco2.svg" />
+    <None Remove="Resources\Images\training.svg" />
     <None Remove="Resources\Images\usecase4deco.svg" />
     <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
@@ -127,13 +141,15 @@
     <None Remove="Resources\Images\user2.svg" />
     <None Remove="Resources\Images\user3.svg" />
     <None Remove="Resources\Images\watch.svg" />
+    <None Remove="Resources\Images\web.svg" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.55" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.68" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.22.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.59.0" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
@@ -142,10 +158,15 @@
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.3.1" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
+    <PackageReference Include="Svg.Skia" Version="1.0.0.13" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" />
+    <PackageReference Include="The49.Maui.BottomSheet" Version="8.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BL\De.HDBW.Apollo.Data\De.HDBW.Apollo.Data.csproj" />
@@ -159,9 +180,6 @@
     <MauiXaml Update="Dialogs\RetryDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Dialogs\FirstTimeDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Dialogs\ErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -169,6 +187,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="FlyoutMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\FavoriteView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\PickUserNameView.xaml">
@@ -183,7 +204,7 @@
     <MauiXaml Update="Views\AssessmentView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\CourseView.xaml">
+    <MauiXaml Update="Views\TrainingView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\EmptyView.xaml">
@@ -276,6 +297,15 @@
     <MauiXaml Update="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Training\AppointmentsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Training\LoansView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Training\TrainingContentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\UseCaseSelectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -318,6 +348,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TrainingView.xaml.cs">
+      <DependentUpon>TrainingView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\PickUserNameView.xaml.cs">
       <DependentUpon>PickUserNameView.xaml</DependentUpon>

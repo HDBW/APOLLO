@@ -1,0 +1,26 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultDatePropertyEditor"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             x:DataType="viewModels:DatePropertyEditor">
+    <VerticalStackLayout Margin="0,0,0,16">
+        <Label 
+            Text="{x:Binding Label}"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"
+             Style="{StaticResource Noto14SemiBold}"/>
+
+        <Border Style="{StaticResource InputBorderStyle}">
+            <Grid ColumnDefinitions="*, auto">
+                <DatePicker Date="{x:Binding Value, Mode=TwoWay}" x:Name="PART_DatePropertyEditor"/>
+                <ImageButton Source="calendar.png" Grid.Column="1">
+                    <ImageButton.Behaviors>
+                        <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_DatePropertyEditor}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </Grid>
+        </Border>
+    </VerticalStackLayout>
+    
+</ContentView>

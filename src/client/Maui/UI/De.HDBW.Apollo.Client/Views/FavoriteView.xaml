@@ -1,0 +1,72 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:De.HDBW.Apollo.Client.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="De.HDBW.Apollo.Client.Views.FavoriteView"
+             Shell.NavBarIsVisible="True"
+             xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Shell.TabBarIsVisible="True"
+             Shell.FlyoutBehavior="Flyout"
+             Title="{x:Static strings:Resources.FavoriteView_Headline}"
+             x:DataType="viewModels:FavoriteViewModel"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+
+    <Grid x:Name="PART_Root">
+        <CollectionView x:Name="PART_Collection" ItemsSource="{x:Binding FavoriteItems}"  SelectionMode="None" Grid.Row="1">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                <ContentView VerticalOptions="Fill">
+                    <Grid RowDefinitions="auto, *" Padding="24,24,24,24">
+                        <VerticalStackLayout>
+                            <Label Text="{x:Static strings:Resources.FavoriteView_Subline_EmptyView}" HorizontalTextAlignment="Center" Style="{StaticResource NotoSerif24Bold}" Margin="0,0,0,16" TextColor="{StaticResource Primary}"/>
+                            <Label Text="{x:Static strings:Resources.FavoriteView_Description_EmptyView}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}"/>
+                        </VerticalStackLayout>
+                        <Image Grid.Row="1" Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                    </Grid>
+                </ContentView>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="interactionModels:SearchInteractionEntry">
+                    <ContentView>
+                        <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
+                            </Border.GestureRecognizers>
+                            <Grid RowDefinitions="44, *, auto, auto, auto" Padding="0" ColumnDefinitions="*, 40">
+                                <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="16,8">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8,0,0,8" />
+                                    </Border.StrokeShape>
+                                    <HorizontalStackLayout>
+                                        <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                        <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
+                                    </HorizontalStackLayout>
+                                </Border>
+
+                                <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" />
+                                <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
+                                <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
+                                    <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasSublineImage}" HeightRequest="60" VerticalOptions="Fill" />
+                                    <Label Grid.Column="1" InputTransparent="True" VerticalOptions="Center" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </Grid>
+</ContentPage>

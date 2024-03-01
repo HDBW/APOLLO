@@ -29,10 +29,10 @@ namespace De.HDBW.Apollo.Client.Models.Profile
         protected override ObservableCollection<StringValue> GetAllLines(CareerInfo data)
         {
             var items = new List<StringValue>();
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_ContactType, data.CareerType.AsEnum<CareerType>().GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_CareerType, data.CareerType.AsEnum<CareerType>().GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.ServiceType.AsEnum<ServiceType>().GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_ServiceType, data.VoluntaryServiceType.AsEnum<VoluntaryServiceType>().GetLocalizedString()));
-            items.Add(StringValue.Import(Resources.Strings.Resources.Global_WorkTimeModel, data.WorkingTimeModel.GetLocalizedString()));
+            items.Add(StringValue.Import(Resources.Strings.Resources.Global_WorkTimeModel, data.WorkingTimeModel.AsEnum<WorkingTimeModel>().GetLocalizedString()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Description, data.Description));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_Occupation, data.Job?.PreferedTerm?.FirstOrDefault()));
             items.Add(StringValue.Import(Resources.Strings.Resources.Global_DateRange, GetDateRangeText(data.Start, data.End)));

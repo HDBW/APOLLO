@@ -1,7 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;

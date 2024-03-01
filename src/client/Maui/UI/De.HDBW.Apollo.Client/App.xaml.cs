@@ -10,9 +10,9 @@ namespace De.HDBW.Apollo.Client
 {
     public partial class App : Application
     {
-        private IServiceProvider _serviceProvider;
-        private ISessionService _sessionService;
-        private IPreferenceService _preferenceService;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ISessionService _sessionService;
+        private readonly IPreferenceService _preferenceService;
 
         public App(
             IServiceProvider provider,
@@ -24,6 +24,7 @@ namespace De.HDBW.Apollo.Client
             _sessionService = sessionService;
             _preferenceService = preferenceService;
             InitializeComponent();
+
             if (!_preferenceService.GetValue(Preference.ConfirmedDataUsage, false))
             {
                 MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);

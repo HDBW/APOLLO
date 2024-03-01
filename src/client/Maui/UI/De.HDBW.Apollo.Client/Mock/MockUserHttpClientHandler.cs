@@ -69,9 +69,9 @@ namespace De.HDBW.Apollo.Data.Services
 
                         foreach (var item in _user.Profile?.Licenses ?? new List<License>())
                         {
-                            if (item.Id == null)
+                            if (item.ListItemId < 1)
                             {
-                                item.Id = $"{nameof(License)}-{Guid.NewGuid()}";
+                                item.ListItemId = _user.Profile?.Licenses?.IndexOf(item) ?? 0;
                             }
                         }
 
@@ -108,7 +108,7 @@ namespace De.HDBW.Apollo.Data.Services
                 case "/api/User/User_00000000-0000-0000-0000-000000000000":
                     if (_user != null)
                     {
-                        var response = new GetUserRespnse();
+                        var response = new GetUserResponse();
                         response.User = _user;
                         return new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = JsonContent.Create(response, options: SerializationHelper.Options) };
                     }

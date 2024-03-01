@@ -1,0 +1,15 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultBooleanPropertyEditor"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
+             x:DataType="viewModels:BooleanPropertyEditor">
+    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,4">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{x:Binding ToggleStateCommand}" />
+        </Grid.GestureRecognizers>
+        <CheckBox IsChecked="{x:Binding Value, Mode=TwoWay}" HorizontalOptions="Start" InputTransparent="True" Margin="{OnPlatform '0', Android='-6,0,0,0'}"/>
+        <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}" Margin="8,0"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24" Source="delete.png" />
+    </Grid>
+    
+</ContentView>

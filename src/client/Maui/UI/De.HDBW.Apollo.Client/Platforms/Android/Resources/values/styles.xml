@@ -76,10 +76,29 @@
   </style>
 
   <style name="MauiAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-    <item name="colorPrimary">?attr/colorOnSurface</item>
+    <!--background-->
+    <item name="android:windowBackground">@color/neutral0</item>
+
+    <item name="materialAlertDialogBodyTextStyle">@style/MauiAlertDialogTextStyle</item>
+
+    <item name="buttonBarPositiveButtonStyle">@style/MauiAlertDialogButtonPositiveStyle</item>
+    <item name="buttonBarNegativeButtonStyle">@style/MauiAlertDialogButtonNeutralStyle</item>
+    <item name="buttonBarNeutralButtonStyle">@style/MauiAlertDialogButtonNeutralStyle</item>
   </style>
 
+  <style name="MauiAlertDialogTextStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+    <item name="android:textColor">@color/colorPrimary</item>
+  </style>
 
+  <style name="MauiAlertDialogButtonPositiveStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <item name="android:textColor">@color/colorPrimary</item>
+    <item name="android:backgroundTint">@color/neutral0</item>
+  </style>
+
+  <style name="MauiAlertDialogButtonNeutralStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <item name="android:textColor">@color/colorPrimary</item>
+    <item name="android:backgroundTint">@color/neutral0</item>
+  </style>
   <!-- 
     The collectionViewScrollBars style will be used as the default style for ItemsViewRenderer (the base renderer
     for CollectionView and CarouselView. We have to use a style to set up the scrollbars because there is currently
@@ -110,7 +129,7 @@
     <!--selected day textcolor-->
     <item name="android:textColorPrimaryInverse">#ffffff</item>
     <!--days of the month-->
-    <item name="android:textColorPrimary">#141414</item>
+    <item name="android:textColorPrimary">@color/textColor</item>
     <!--days of the week-->
     <item name="android:textColorSecondary">@color/colorPrimary</item>
     <!--cancel&ok-->

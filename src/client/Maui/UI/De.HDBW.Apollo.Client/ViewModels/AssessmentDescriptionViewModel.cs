@@ -9,7 +9,6 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Assessment;
 using Invite.Apollo.App.Graph.Common.Models.Assessment.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -143,10 +142,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 catch (ObjectDisposedException)
                 {
                     Logger?.LogDebug($"Canceled {nameof(Start)} in {GetType().Name}.");
-                }
-                catch (MsalException ex)
-                {
-                    Logger?.LogWarning(ex, $"Error while starting assessment in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
