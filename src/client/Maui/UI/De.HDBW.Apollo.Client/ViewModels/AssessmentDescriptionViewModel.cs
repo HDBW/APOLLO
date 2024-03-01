@@ -1,7 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -135,7 +134,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     var parameters = new NavigationParameters();
                     parameters.AddValue<long?>(NavigationParameter.Id, _assessmentItemId);
-                    await NavigationService.NavigateAsnc(Routes.AssessmentView, worker.Token, parameters);
+                    await NavigationService.NavigateAsync(Routes.AssessmentView, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)
                 {

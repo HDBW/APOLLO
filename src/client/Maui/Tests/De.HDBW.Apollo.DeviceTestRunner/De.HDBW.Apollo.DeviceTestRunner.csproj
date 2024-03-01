@@ -6,7 +6,7 @@
     <RootNamespace>De.HDBW.Apollo.DeviceTestRunner</RootNamespace>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- Display name -->
     <ApplicationTitle>De.HDBW.Apollo.DeviceTestRunner</ApplicationTitle>
@@ -27,6 +27,9 @@
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\UI\De.HDBW.Apollo.Client\Helper\ProfileExtensions.cs" Link="Client\ProfileExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
     <!-- Splash Screen -->
@@ -37,9 +40,9 @@
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.7" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
@@ -47,4 +50,6 @@
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
   </ItemGroup>
   <Import Project="..\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.projitems" Label="Shared" />
+  <Import Project="..\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.projitems" Label="Shared" />
+  <Import Project="..\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests.projitems" Label="Shared" />
 </Project>

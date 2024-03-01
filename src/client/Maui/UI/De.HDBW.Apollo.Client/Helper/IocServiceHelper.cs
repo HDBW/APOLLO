@@ -1,22 +1,24 @@
-﻿using System;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
-namespace De.HDBW.Apollo.Client.Helper;
-
-public static class IocServiceHelper
+namespace De.HDBW.Apollo.Client.Helper
 {
-    public static IServiceProvider? ServiceProvider
+    public static class IocServiceHelper
     {
-        get
+        public static IServiceProvider? ServiceProvider
         {
-            IPlatformApplication? app = null;
+            get
+            {
+                IPlatformApplication? app = null;
 #if ANDROID
-            app = MauiApplication.Current;
+                app = MauiApplication.Current;
 #elif IOS
-            app = MauiUIApplicationDelegate.Current;
+                app = MauiUIApplicationDelegate.Current;
 #elif WINDOWS
-            app = MauiWinUIApplication.Current;
+                app = MauiWinUIApplication.Current;
 #endif
-            return app?.Services;
+                return app?.Services;
+            }
         }
     }
 }

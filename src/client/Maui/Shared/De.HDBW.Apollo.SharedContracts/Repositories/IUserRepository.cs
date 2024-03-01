@@ -5,9 +5,12 @@ using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.SharedContracts.Repositories
 {
-    public interface IUserProfileItemRepository :
-        IRepository<UserProfileItem>,
-        IDatabaseRepository<UserProfileItem>
+    public interface IUserRepository
     {
+        Task<bool> DeleteUserAsync(CancellationToken token);
+
+        Task<User?> GetItemAsync(CancellationToken token);
+
+        Task<bool> SaveAsync(User user, CancellationToken token);
     }
 }

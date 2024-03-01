@@ -1,9 +1,9 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using Apollo.Common.Entities;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 
 namespace De.HDBW.Apollo.Data.Extensions
 {
@@ -17,15 +17,15 @@ namespace De.HDBW.Apollo.Data.Extensions
                 return null;
             }
 
-            result.Benefits = string.Join(',', (IEnumerable<string>)item.BenefitList ?? Array.Empty<string>());
+            result.Benefits = string.Join(',', item.BenefitList ?? new List<string>());
             result.CourseProviderId = item.ProviderId.TryToLong();
             result.Description = item.Description ?? string.Empty;
             result.Id = item.Id.TryToLong();
             result.ShortDescription = item.ShortDescription ?? string.Empty;
             result.LoanOptions = string.Join(',', item.Loans?.Select(f => f?.Name ?? string.Empty) ?? Array.Empty<string>());
-            result.Availability = item.AccessibilityAvailable ? CourseAvailability.Available : CourseAvailability.Unknown;
+            result.Availability = (item.AccessibilityAvailable ?? false) ? CourseAvailability.Available : CourseAvailability.Unknown;
             result.CourseTagType = ((IEnumerable<string>)item.Tags ?? Array.Empty<string>()).Select(f => f.ToCourseTagType())?.FirstOrDefault() ?? CourseTagType.Unknown;
-            result.CourseUrl = item.ProductUrl ?? new Uri(string.Empty);
+            result.CourseUrl = item.ProductUrl ?? new Uri("about:blank");
             result.PublishingDate = item.PublishingDate;
             result.UnPublishingDate = item.UnpublishingDate;
             result.Title = item.TrainingName ?? string.Empty;
@@ -41,7 +41,7 @@ namespace De.HDBW.Apollo.Data.Extensions
             result.SuccessorId = item.Successor.TryToLong();
 
             // TODO: CourseItem PreRequisitesDescription, right ??
-            result.PreRequisitesDescription = string.Join(',', (IEnumerable<string>)item.Prerequisites ?? Array.Empty<string>());
+            result.PreRequisitesDescription = string.Join(',', item.Prerequisites ?? new List<string>());
 
             // TODO: CourseItem Skills ??
             // TODO: CourseItem LatestUpdate ??
@@ -95,10 +95,10 @@ namespace De.HDBW.Apollo.Data.Extensions
 
             var courseProvider = item.CourseProvider;
             result.Id = courseProvider.Id.TryToLong();
-            result.Logo = courseProvider.Image ?? new Uri(string.Empty);
+            result.Logo = courseProvider.Image ?? new Uri("about:blank");
             result.Name = courseProvider.Name ?? string.Empty;
             result.Description = courseProvider.Description ?? string.Empty;
-            result.Website = courseProvider.Url ?? new Uri(string.Empty);
+            result.Website = courseProvider.Url ?? new Uri("about:blank");
 
             // result.Ticks??
             return result;
@@ -115,17 +115,17 @@ namespace De.HDBW.Apollo.Data.Extensions
 
             foreach (var contact in item.Contacts)
             {
-                if (contact.Value == null)
+                if (contact == null)
                 {
                     continue;
                 }
 
                 var resultContact = new CourseContact();
-                resultContact.ContactMail = contact.Value.Mail ?? string.Empty;
-                resultContact.ContactName = contact.Value.Surname ?? string.Empty;
-                resultContact.ContactPhone = contact.Value.Phone ?? string.Empty;
-                resultContact.Id = (contact.Value.Id ?? string.Empty).TryToLong();
-                resultContact.Url = contact.Value.EAppointmentUrl ?? new Uri(string.Empty);
+                resultContact.ContactMail = contact?.Mail ?? string.Empty;
+                resultContact.ContactName = contact?.Surname ?? string.Empty;
+                resultContact.ContactPhone = contact?.Phone ?? string.Empty;
+                resultContact.Id = (contact?.Id ?? string.Empty).TryToLong();
+                resultContact.Url = contact?.EAppointmentUrl ?? new Uri(string.Empty);
                 result.Add(resultContact);
             }
 
@@ -143,14 +143,13 @@ namespace De.HDBW.Apollo.Data.Extensions
 
             foreach (var contact in item.Contacts)
             {
-                if (contact.Value == null)
+                if (contact == null)
                 {
                     continue;
                 }
 
                 var resultCourseContactRelation = new CourseContactRelation();
-                resultCourseContactRelation.CourseContactId = contact.Key.TryToLong();
-                resultCourseContactRelation.CourseContactId = contact.Value.Id.TryToLong();
+                resultCourseContactRelation.CourseContactId = contact.Id.TryToLong();
                 resultCourseContactRelation.CourseId = item.Id.TryToLong();
                 result.Add(resultCourseContactRelation);
             }

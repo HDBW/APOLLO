@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#ffffff</color>
+    <color name="neutral0">#FFFFFCF7</color>
+    <color name="textColor">#141414</color>
     <color name="defaultBackground">#F7EEE1</color>
     <color name="colorPrimary">#420A98</color>
     <color name="colorPrimaryDark">#2B057B</color>

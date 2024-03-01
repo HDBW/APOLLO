@@ -4,26 +4,45 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
-             Shell.FlyoutBehavior="Disabled"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:RegistrationViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             IsBusy="{Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <ResourceDictionary>
-            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
-        </ResourceDictionary>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     </ContentPage.Resources>
-    <Grid RowDefinitions="3*,7*">
-        <Image Source="registrationdeco.png" Grid.Row="0" Aspect="AspectFit"/>
-        <ScrollView  Grid.Row="1" Padding="24,0,24,0" Margin="0,0, 0,16">
-            <Grid RowDefinitions="auto,auto,*, auto ,auto">
-                <Label FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.RegistrationView_RegisterNow}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
-                <Label Grid.Row="1" Text="{x:Static strings:Resources.RegistrationView_Description}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="24,0,24,8"/>
-                <Button Grid.Row="3" Text="{x:Static strings:Resources.RegistrationView_RegisterUser}" Command="{Binding RegisterCommand}" IsVisible="{Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>
-                <Button Grid.Row="3" Text="{x:Static strings:Resources.RegistrationView_UnRegisterUser}" Command="{Binding UnRegisterCommand}" IsVisible="{Binding HasRegisterdUser}"/>
-                <Button Grid.Row="4" Margin="0,16,0,0" Text="{x:Static strings:Resources.RegistrationView_Continue}" Style="{StaticResource SoftButton}" Command="{Binding SkipCommand}"/>
-            </Grid>
-        </ScrollView>
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+        <Label Grid.Row="0" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.RegistrationView_Title}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="24,32,24,0" />
+        <Label Grid.Row="1" Text="{x:Static strings:Resources.RegistrationView_Description}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="24,16,24,32"/>
+        <CarouselView Grid.Row="2"
+                      ItemsSource="{x:Binding Instructions}"
+                      IndicatorView="indicatorView"
+                      VerticalOptions="Fill"
+                      x:Name="PART_Animation">
+            <CarouselView.Behaviors>
+                <behaviours:SlideShowBehaviour />
+            </CarouselView.Behaviors>
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="models:InstructionEntry">
+                    <Grid RowDefinitions="*, auto" BackgroundColor="{StaticResource Background}">
+                        <Image Source="{x:Binding ImagePath}" IsVisible="{Binding HasImage}" Margin="70,0"/>
+                        <Label Grid.Row="1" Text="{x:Binding Text}" HorizontalTextAlignment="Center" Style="{StaticResource Noto14SemiBold}" Margin="70,8,70,0"/>
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <IndicatorView Grid.Row="3"
+               x:Name="indicatorView"
+               Margin="24,16,24,10"/>
+        <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+            <VerticalStackLayout Margin="24,16">
+                <Button Margin="0,0,0,8" Text="{x:Static strings:Resources.Global_ContinueAsGuest}" Style="{StaticResource BorderButton}" Command="{x:Binding SkipCommand}"/>
+                <Button Text="{x:Static strings:Resources.Global_RegisterUser}" Command="{x:Binding RegisterCommand}" IsVisible="{x:Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>
+                <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{x:Binding UnRegisterCommand}" IsVisible="{x:Binding HasRegisterdUser}"/>
+            </VerticalStackLayout>
+        </Border>
     </Grid>
 </ContentPage>

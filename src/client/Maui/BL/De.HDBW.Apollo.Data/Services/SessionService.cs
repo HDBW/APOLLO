@@ -3,6 +3,7 @@
 
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Identity.Client;
 
 namespace De.HDBW.Apollo.Data.Services
 {
@@ -10,12 +11,14 @@ namespace De.HDBW.Apollo.Data.Services
     {
         private readonly List<(long Id, Type Type)> _favorites = new List<(long Id, Type Type)>();
 
-        public SessionService(bool hasRegisteredUser)
+        public SessionService(AccountId? accountId)
         {
-            HasRegisteredUser = hasRegisteredUser;
+            AccountId = accountId;
         }
 
-        public bool HasRegisteredUser { get; private set; }
+        public bool HasRegisteredUser => AccountId != null;
+
+        public AccountId? AccountId { get; private set; }
 
         public UseCase? UseCase { get; private set; }
 
@@ -51,9 +54,9 @@ namespace De.HDBW.Apollo.Data.Services
             }
         }
 
-        public void UpdateRegisteredUser(bool hasRegisteredUser)
+        public void UpdateRegisteredUser(AccountId? accountId)
         {
-            HasRegisteredUser = hasRegisteredUser;
+            AccountId = accountId;
         }
 
         public void UpdateUseCase(UseCase? useCase)

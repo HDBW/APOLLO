@@ -191,7 +191,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.PushToRootAsnc(worker.Token);
+                    await NavigationService.PushToRootAsync(worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -227,7 +227,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             switch (interaction.Data)
             {
                 case NavigationData navigationData:
-                    await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
+                    await NavigationService.NavigateAsync(navigationData.Route, CancellationToken.None, navigationData.Parameters);
                     break;
                 default:
                     Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType().Name}.");

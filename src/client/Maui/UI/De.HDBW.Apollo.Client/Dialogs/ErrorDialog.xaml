@@ -1,0 +1,21 @@
+﻿<local:Dialog xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:local="clr-namespace:De.HDBW.Apollo.Client.Dialogs"
+               x:Class="De.HDBW.Apollo.Client.Dialogs.ErrorDialog"
+               xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+               xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+               Style="{StaticResource PopupStyle}"
+               x:DataType="viewModels:MessageDialogViewModel">
+    <Grid>
+        <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
+            <Grid RowDefinitions="20,auto,auto,32,auto, 20" Style="{StaticResource PopupContent}">
+                <Label Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ErrorDialog_Title}"  Margin="0,0,0,16" Style="{StaticResource Noto20Bold}"/>
+                <ScrollView Grid.Row="2" MaximumHeightRequest="400" HorizontalScrollBarVisibility="Never" VerticalOptions="Center">
+                    <Label HorizontalTextAlignment="Center" Text="{x:Binding Message}" Style="{StaticResource Noto16}"/>
+                </ScrollView>
+                <Button Text="{x:Static strings:Resources.Global_Close}" Command="{x:Binding CancelCommand}" Grid.Row="4"/>
+            </Grid>
+        </Border>
+    </Grid>
+</local:Dialog>

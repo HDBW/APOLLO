@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>net8.0-android;net8.0-ios;</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>De.HDBW.Apollo.Client</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -18,21 +17,24 @@
     <ApplicationVersion>23</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
     <NeutralLanguage>de</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+    <!-- In order to get correct language names from cultureinfo -->
+    <HybridGlobalization>true</HybridGlobalization>
     <CreatePackage>false</CreatePackage>
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+    <!-- In order to get correct language names from cultureinfo -->
+    <HybridGlobalization>true</HybridGlobalization>
     <CreatePackage>false</CreatePackage>
     <CodesignProvision>Automatic</CodesignProvision>
     <CodesignKey>iPhone Developer</CodesignKey>
     <UseInterpreter>true</UseInterpreter>
   </PropertyGroup>
+  
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
@@ -45,15 +47,39 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_icon_tint.xml" />
+    <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_tint.xml" />
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
+    <None Remove="Resources\Images\add.svg" />
     <None Remove="Resources\Images\calendar.svg" />
+    <None Remove="Resources\Images\calender.svg" />
     <None Remove="Resources\Images\completed.svg" />
+    <None Remove="Resources\Images\delete.svg" />
+    <None Remove="Resources\Images\deletelight.svg" />
+    <None Remove="Resources\Images\edit.svg" />
+    <None Remove="Resources\Images\emptysearchdeco.svg" />
+    <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileLanguage.svg" />
+    <None Remove="Resources\Images\Icon_ProfileMobilityInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfilePersonalInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfileWebReference.svg" />
+    <None Remove="Resources\Images\Icon_ProfilLicensInfo.svg" />
+    <None Remove="Resources\Images\Icon_ProfilQualificationInfo.svg" />
+    <None Remove="Resources\Images\longlist.svg" />
     <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
     <None Remove="Resources\Images\placeholdertest.svg" />
+    <None Remove="Resources\Images\profile.svg" />
     <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\resultdeco.svg" />
+    <None Remove="Resources\Images\search.svg" />
+    <None Remove="Resources\Images\shortlist.svg" />
+    <None Remove="Resources\Images\splashdeco.svg" />
+    <None Remove="Resources\Images\splashdeco1.svg" />
+    <None Remove="Resources\Images\splashdeco2.svg" />
     <None Remove="Resources\Images\usecase4deco.svg" />
     <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
@@ -89,7 +115,6 @@
     <None Remove="Resources\Images\sk34f04_karte.png" />
     <None Remove="Resources\Images\sk34g01_nettobedarfsrechnung.png" />
     <None Remove="Resources\Images\sk34g03_vergleichsmatrix.png" />
-    <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\star.svg" />
     <None Remove="Resources\Images\stardashed.svg" />
     <None Remove="Resources\Images\staroutline.svg" />
@@ -104,12 +129,12 @@
     <None Remove="Resources\Images\watch.svg" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.0.25" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.55" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.22.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.56.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.59.0" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
@@ -117,20 +142,39 @@
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.7" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.3.1" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BL\De.HDBW.Apollo.Data\De.HDBW.Apollo.Data.csproj" />
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
+    <ProjectReference Include="..\NullableDatePicker\NullableDatePicker\NullableDatePicker.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <MauiXaml Update="Controls\GlobalErrorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Dialogs\RetryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Dialogs\FirstTimeDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\ErrorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Dialogs\SelectOptionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="FlyoutMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\PickUserNameView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\ContactInfo\ContactView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\AssessmentDescriptionView.xaml">
@@ -146,6 +190,84 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\ExtendedSplashScreenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfoEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\BasicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\OccupationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\OtherView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\ServiceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\CareerInfo\VoluntaryServiceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\FurtherEducationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\VocationalTrainingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\CompanyBasedVocationalTrainingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\EducationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfo\StudyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\LanguageEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\Language\LanguageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\License\LicenseView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\MobilityEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\LanguageSearchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\OccupationSearchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\ProfileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\PersonalInformationEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\ContactInfoEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\LicenseEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\EducationInfoEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\QualificationEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\Qualification\QualificationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\WebReferenceEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Profile\WebReference\WebReferenceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\RegistrationView.xaml">
@@ -180,44 +302,57 @@
     </MauiXaml>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\GlobalErrorView.xaml.cs">
+      <DependentUpon>GlobalErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\RetryDialog.xaml.cs">
+      <DependentUpon>RetryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\ErrorDialog.xaml.cs">
+      <DependentUpon>ErrorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\SelectOptionDialog.xaml.cs">
+      <DependentUpon>SelectOptionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Strings\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\AssessmentDescriptionView.xaml.cs">
-      <DependentUpon>AssessmentDescriptionView.xaml</DependentUpon>
+    <Compile Update="Views\PickUserNameView.xaml.cs">
+      <DependentUpon>PickUserNameView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\AssessmentView.xaml.cs">
-      <DependentUpon>AssessmentView.xaml</DependentUpon>
+    <Compile Update="Views\Profile\CareerInfo\OtherView.xaml.cs">
+      <DependentUpon>OtherView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ExtendedSplashScreenView.xaml.cs">
-      <DependentUpon>ExtendedSplashScreenView.xaml</DependentUpon>
+    <Compile Update="Views\Profile\ContactInfoEditView.xaml.cs">
+      <DependentUpon>ContactInfoEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RegistrationView.xaml.cs">
-      <DependentUpon>RegistrationView.xaml</DependentUpon>
+    <Compile Update="Views\Profile\CareerInfoEditView.xaml.cs">
+      <DependentUpon>CareerInfoEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\StartView.xaml.cs">
-      <DependentUpon>StartView.xaml</DependentUpon>
+    <Compile Update="Views\Profile\EducationInfo\VocationalTrainingView.xaml.cs">
+      <DependentUpon>VocationalTrainingView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UseCaseDescriptionView.xaml.cs">
-      <DependentUpon>UseCaseDescriptionView.xaml</DependentUpon>
+    <Compile Update="Views\Profile\EducationInfo\EducationView.xaml.cs">
+      <DependentUpon>EducationView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Dialogs\CancelAssessmentDialog.xaml.cs">
-      <DependentUpon>CancelAssessmentDialog.xaml</DependentUpon>
+    <Compile Update="Views\Profile\LanguageEditView.xaml.cs">
+      <DependentUpon>LanguageEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Dialogs\FirstTimeDialog.xaml.cs">
-      <DependentUpon>FirstTimeDialog.xaml</DependentUpon>
+    <Compile Update="Views\Profile\LicenseEditView.xaml.cs">
+      <DependentUpon>LicenseEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Dialogs\SkipQuestionDialog.xaml.cs">
-      <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
+    <Compile Update="Views\Profile\EducationInfoEditView.xaml.cs">
+      <DependentUpon>EducationInfoEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Dialogs\MessageDialog.xaml.cs">
-      <DependentUpon>SkipQuestionDialog.xaml</DependentUpon>
+    <Compile Update="Views\Profile\LanguageSearchView.xaml.cs">
+      <DependentUpon>LanguageSearchView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Dialogs\ConfirmDataUsageDialog.xaml.cs">
-      <DependentUpon>ConfirmDataUsageDialog.xaml</DependentUpon>
+    <Compile Update="Views\Profile\QualificationEditView.xaml.cs">
+      <DependentUpon>QualificationEditView.xaml</DependentUpon>
     </Compile>
+    
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Resources.resx">

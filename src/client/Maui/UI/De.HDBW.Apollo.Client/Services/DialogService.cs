@@ -1,8 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using CommunityToolkit.Maui.Views;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -11,57 +13,75 @@ namespace De.HDBW.Apollo.Client.Services
 {
     public class DialogService : IDialogService
     {
-        private readonly Dictionary<WeakReference<Popup>, BaseViewModel> _dialogLookup = new Dictionary<WeakReference<Popup>, BaseViewModel>();
+        private readonly Dictionary<object, BaseViewModel> _completionLookup = new Dictionary<object, BaseViewModel>();
 
         public DialogService(IDispatcherService dispatcherService, ILogger<DialogService> logger, IServiceProvider serviceProvider)
         {
+            ArgumentNullException.ThrowIfNull(dispatcherService);
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(serviceProvider);
-            ArgumentNullException.ThrowIfNull(dispatcherService);
+            DispatcherService = dispatcherService;
             Logger = logger;
             ServiceProvider = serviceProvider;
-            DispatcherService = dispatcherService;
         }
 
         private ILogger Logger { get; }
 
         private IServiceProvider ServiceProvider { get; }
 
+        private INavigation Navigation
+        {
+            get
+            {
+                var navigation = Application.Current?.MainPage?.Navigation;
+                if (navigation == null)
+                {
+                    if (Debugger.IsAttached)
+                    {
+                        Debugger.Break();
+                    }
+
+                    throw new NotSupportedException("Navigation was not found");
+                }
+
+                return navigation;
+            }
+        }
+
         private IDispatcherService DispatcherService { get; }
 
-        public async Task<TV?> ShowPopupAsync<TU, TV, TW>(CancellationToken token, TW parameters)
-            where TU : Popup
+        public async Task<TV?> ShowPopupAsync<TU, TV, TW>(TW parameters, CancellationToken token)
+            where TU : Dialog
             where TV : NavigationParameters
             where TW : NavigationParameters?
         {
             token.ThrowIfCancellationRequested();
-            Popup? popup = null;
+            Dialog? popup = null;
+            TV? result = default;
             try
             {
-                popup = ServiceProvider.GetService<TU>();
-
-                var rootPage = Shell.Current?.CurrentPage ?? Application.Current?.MainPage;
-                if (popup == null || rootPage == null)
+                popup = await DispatcherService.ExecuteOnMainThreadAsync(() => { return Task.FromResult(ServiceProvider.GetService<TU>()); }, token);
+                var viewModel = popup?.BindingContext as BaseViewModel;
+                if (popup == null || viewModel == null)
                 {
                     throw new NotSupportedException();
                 }
 
-                RegisterDialog(popup);
-                var result = await DispatcherService.ExecuteOnMainThreadAsync(
-                    () =>
+                result = await DispatcherService.ExecuteOnMainThreadAsync(
+                async () =>
                 {
-                    var queryAble = popup as IQueryAttributable ?? popup.BindingContext as IQueryAttributable;
+                    var queryAble = popup as IModalQueryAttributable ?? viewModel as IModalQueryAttributable;
                     if (queryAble != null && parameters != null)
                     {
-                        queryAble.ApplyQueryAttributes(parameters.ToQueryDictionary());
+                        queryAble.ApplyModalQueryAttributes(parameters.ToQueryDictionary());
                     }
 
-                    return rootPage.ShowPopupAsync(popup);
+                    var cts = new TaskCompletionSource<TV>(token);
+                    _completionLookup.Add(cts, viewModel);
+                    await (Navigation?.PushModalAsync(popup, false) ?? Task.CompletedTask);
+                    var result = await cts.Task;
+                    return result;
                 }, token);
-
-                UnregisterDialog(popup);
-                popup.Parent = null;
-                return result as TV;
             }
             catch (OperationCanceledException)
             {
@@ -79,52 +99,17 @@ namespace De.HDBW.Apollo.Client.Services
             }
             finally
             {
-                if (popup != null)
-                {
-                    UnregisterDialog(popup);
-                }
+                await DispatcherService.ExecuteOnMainThreadAsync(() => (popup?.CloseAsync() ?? Task.CompletedTask), CancellationToken.None);
             }
 
-            return null;
+            return result;
         }
 
         public Task<TV?> ShowPopupAsync<TU, TV>(CancellationToken token)
-            where TU : Popup
+            where TU : Dialog
             where TV : NavigationParameters
         {
-            return ShowPopupAsync<TU, TV, NavigationParameters?>(token, null);
-        }
-
-        public Task ShowPopupAsync<TU>(CancellationToken token)
-            where TU : Popup
-        {
-            token.ThrowIfCancellationRequested();
-            try
-            {
-                var popup = ServiceProvider.GetService<TU>();
-                if (Shell.Current?.CurrentPage == null || popup == null)
-                {
-                    throw new NotSupportedException();
-                }
-
-                return DispatcherService.ExecuteOnMainThreadAsync(() => Shell.Current.CurrentPage.ShowPopupAsync(popup), token);
-            }
-            catch (OperationCanceledException)
-            {
-                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType().Name}.");
-                throw;
-            }
-            catch (ObjectDisposedException)
-            {
-                Logger?.LogDebug($"Canceled {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType().Name}.");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error while {nameof(ShowPopupAsync)}<{typeof(TU).Name}> in {GetType().Name}.");
-            }
-
-            return Task.CompletedTask;
+            return ShowPopupAsync<TU, TV, NavigationParameters?>(null, token);
         }
 
         public bool ClosePopup<TV>(BaseViewModel viewModel, TV result)
@@ -132,15 +117,18 @@ namespace De.HDBW.Apollo.Client.Services
         {
             try
             {
-                var itemToClose = _dialogLookup.FirstOrDefault(k => k.Value == viewModel);
-                if (!itemToClose.Key.TryGetTarget(out Popup? popup))
+                var itemToClose = _completionLookup.FirstOrDefault(k => k.Value == viewModel);
+                var completionHandler = itemToClose.Key as TaskCompletionSource<TV>;
+                if (completionHandler == null)
                 {
                     return false;
                 }
 
-                popup.Close(result);
-                UnregisterDialog(popup);
-                popup.Parent = null;
+                if (!completionHandler.TrySetResult(result))
+                {
+                    return false;
+                }
+
                 return true;
             }
             catch (Exception ex)
@@ -149,73 +137,6 @@ namespace De.HDBW.Apollo.Client.Services
             }
 
             return false;
-        }
-
-        public bool ClosePopup(BaseViewModel viewModel)
-        {
-            try
-            {
-                var itemToClose = _dialogLookup.FirstOrDefault(k => k.Value == viewModel);
-                if (!itemToClose.Key.TryGetTarget(out Popup? popup))
-                {
-                    return false;
-                }
-
-                popup.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error while {nameof(ClosePopup)} in {GetType().Name}.");
-            }
-
-            return false;
-        }
-
-        private bool UnregisterDialog(Popup popup)
-        {
-            if (popup == null)
-            {
-                return false;
-            }
-
-            CleanupLookups();
-            var exitingItem = _dialogLookup.FirstOrDefault(k => k.Key.TryGetTarget(out Popup? p) && p == popup);
-            if (exitingItem.Key == null)
-            {
-                return false;
-            }
-
-            _dialogLookup.Remove(exitingItem.Key);
-            return true;
-        }
-
-        private void CleanupLookups()
-        {
-            var disposedItems = _dialogLookup.Where(k => !k.Key.TryGetTarget(out _)).ToList();
-            foreach (var disposedItem in disposedItems)
-            {
-                _dialogLookup.Remove(disposedItem.Key);
-            }
-        }
-
-        private bool RegisterDialog(Popup popup)
-        {
-            if (popup == null)
-            {
-                return false;
-            }
-
-            CleanupLookups();
-            var dialog = popup;
-            var viewModel = dialog.BindingContext as BaseViewModel;
-            if (viewModel == null)
-            {
-                return false;
-            }
-
-            _dialogLookup.Add(new WeakReference<Popup>(dialog), viewModel);
-            return true;
         }
     }
 }

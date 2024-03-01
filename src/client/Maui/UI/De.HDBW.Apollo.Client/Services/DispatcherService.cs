@@ -3,7 +3,6 @@
 
 using De.HDBW.Apollo.Client.Contracts;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.ApplicationModel;
 
 namespace De.HDBW.Apollo.Client.Services
 {

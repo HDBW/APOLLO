@@ -29,7 +29,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private readonly Dictionary<InteractionEntry, object> _filtermappings = new Dictionary<InteractionEntry, object>();
 
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new User());
 
         public StartViewModel(
             IPreferenceService preferenceService,
@@ -39,7 +39,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ICourseItemRepository courseItemRepository,
             IAssessmentItemRepository assessmentItemRepository,
             IAnswerItemResultRepository answerItemResultRepository,
-            IUserProfileItemRepository userProfileItemRepository,
             IEduProviderItemRepository eduProviderItemRepository,
             ISessionService sessionService,
             ILogger<StartViewModel> logger)
@@ -49,14 +48,12 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(assessmentItemRepository);
             ArgumentNullException.ThrowIfNull(answerItemResultRepository);
             ArgumentNullException.ThrowIfNull(courseItemRepository);
-            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(eduProviderItemRepository);
             ArgumentNullException.ThrowIfNull(sessionService);
             PreferenceService = preferenceService;
             AssessmentItemRepository = assessmentItemRepository;
             AnswerItemResultRepository = answerItemResultRepository;
             CourseItemRepository = courseItemRepository;
-            UserProfileItemRepository = userProfileItemRepository;
             EduProviderItemRepository = eduProviderItemRepository;
             SessionService = sessionService;
         }
@@ -78,8 +75,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IAnswerItemResultRepository AnswerItemResultRepository { get; }
 
         private ICourseItemRepository CourseItemRepository { get; }
-
-        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         private IEduProviderItemRepository EduProviderItemRepository { get; }
 
@@ -112,7 +107,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     UseCase = useCase;
                     var courses = await CourseItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
                     courses = courses.Where(c => !c.UnPublishingDate.HasValue).ToList();
-                    var userProfile = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
+                    User? userProfile = null;
                     var eduProviders = await EduProviderItemRepository.GetItemsAsync(worker.Token).ConfigureAwait(false);
 
                     await ExecuteOnUIThreadAsync(
@@ -171,11 +166,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
            IEnumerable<AssessmentItem> assessmentItems,
            IEnumerable<AnswerItemResult> assessmentResults,
            IEnumerable<CourseItem> courseItems,
-           UserProfileItem? userProfile,
+           User? userProfile,
            IEnumerable<EduProviderItem> eduProviderItems,
            bool notifyUseCaseChanged)
         {
-            UserProfile = UserProfileEntry.Import(userProfile ?? new UserProfileItem());
+            UserProfile = UserProfileEntry.Import(userProfile ?? new User());
             InteractionCategories.Clear();
 
             var interactions = new List<InteractionEntry>();
@@ -190,7 +185,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     continue;
                 }
 
-                if (!filters.Any(f => ((AssessmentType)f.Data) == assesment.AssessmentType))
+                if (!filters.Any(f => ((AssessmentType?)f.Data) == assesment.AssessmentType))
                 {
                     filters.Add(FilterInteractionEntry.Import(filterText, assesment.AssessmentType, HandleFilter, CanHandleFilter));
                 }
@@ -218,7 +213,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 var decoratorText = converter.Convert(course, typeof(string), null, CultureInfo.CurrentUICulture)?.ToString() ?? string.Empty;
 
-                if (!filters.Any(f => ((CourseTagType)f.Data) == course.CourseTagType))
+                if (!filters.Any(f => ((CourseTagType?)f.Data) == course.CourseTagType))
                 {
                     filters.Add(FilterInteractionEntry.Import(decoratorText, course.CourseTagType, HandleFilter, CanHandleFilter));
                 }
@@ -354,7 +349,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             switch (interaction.Data)
             {
                 case NavigationData navigationData:
-                    await NavigationService.NavigateAsnc(navigationData.Route, CancellationToken.None, navigationData.Parameters);
+                    await NavigationService.NavigateAsync(navigationData.Route, CancellationToken.None, navigationData.Parameters);
                     break;
                 default:
                     Logger.LogWarning($"Unknown interaction data {interaction?.Data ?? "null"} while {nameof(HandleInteract)} in {GetType().Name}.");

@@ -82,17 +82,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 case UseCase.D:
                     if (IsUseCaseSelectionFromShell == true)
                     {
-                        await NavigationService.PushToRootAsnc(CancellationToken.None);
+                        await NavigationService.PushToRootAsync(CancellationToken.None);
                     }
                     else
                     {
-                        await NavigationService.PushToRootAsnc(Routes.Shell, CancellationToken.None);
+                        await NavigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
                     }
 
                     break;
                 default:
                     parameters.AddValue(NavigationParameter.Data, IsUseCaseSelectionFromShell);
-                    await NavigationService.NavigateAsnc(Routes.UseCaseDescriptionView, CancellationToken.None, parameters);
+                    await NavigationService.NavigateAsync(Routes.UseCaseDescriptionView, CancellationToken.None, parameters);
                     break;
             }
         }

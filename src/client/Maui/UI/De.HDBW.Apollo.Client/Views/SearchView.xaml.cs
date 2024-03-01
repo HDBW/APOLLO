@@ -1,9 +1,13 @@
-namespace De.HDBW.Apollo.Client.Views;
+// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
-public partial class SearchView : ContentPage
+namespace De.HDBW.Apollo.Client.Views
 {
-    public SearchView()
+    public partial class SearchView : ContentPage
     {
-        InitializeComponent();
+        public SearchView()
+        {
+            InitializeComponent();
+        }
     }
 }

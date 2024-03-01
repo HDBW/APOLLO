@@ -1,10 +1,7 @@
-﻿using Apollo.Api;
-using Apollo.Common.Entities;
-using De.HDBW.Apollo.Data.Services;
-using Invite.Apollo.App.Graph.Common.Models;
+﻿using De.HDBW.Apollo.Data.Services;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -26,7 +23,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 cts.Cancel();
                 await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, cts.Token));
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync(1, cts.Token));
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync("SER01", cts.Token));
             }
         }
 
@@ -35,10 +32,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            CourseItem training = null;
+            CourseItem? training = null;
             try
             {
-                training = await Service.GetTrainingAsync(1, TokenSource!.Token);
+                training = await Service.GetTrainingAsync("SER01", TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -46,7 +43,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
                 Assert.Equal(ErrorCodes.TrainingErrors.GetTrainingError, ex.ErrorCode);
             }
 
-            Assert.NotNull(training?.Id);
+            Assert.NotNull(training);
             Assert.Equal(1, training!.Id);
 
             // var courseItem = training.ToCourseItem();
@@ -67,7 +64,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            IEnumerable<CourseItem> trainings = null;
+            IEnumerable<CourseItem>? trainings = null;
             try
             {
                 trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token);
@@ -110,7 +107,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 Fields = fields,
             };
-            IEnumerable<CourseItem> trainings = null;
+            IEnumerable<CourseItem>? trainings = null;
             try
             {
                 trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);
@@ -134,7 +131,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
         }
 
-        protected override void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
+        protected override void SetupAdditionalServices(string apiKey, string baseUri, HttpMessageHandler httpClientHandler)
         {
         }
     }

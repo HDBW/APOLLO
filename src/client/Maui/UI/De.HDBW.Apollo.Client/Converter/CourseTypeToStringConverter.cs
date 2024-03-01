@@ -3,7 +3,6 @@
 
 using System.Globalization;
 using Invite.Apollo.App.Graph.Common.Models.Course;
-using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 
 namespace De.HDBW.Apollo.Client.Converter
 {

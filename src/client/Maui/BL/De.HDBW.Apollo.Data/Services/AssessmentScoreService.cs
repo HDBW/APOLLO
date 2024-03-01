@@ -15,19 +15,16 @@ namespace De.HDBW.Apollo.Data.Services
     {
         public AssessmentScoreService(
             ILogger<AssessmentScoreService>? logger,
-            IUserProfileItemRepository userProfileItemRepository,
             IQuestionItemRepository questionItemRepository,
             IAnswerItemRepository answerItemRepository,
             IAssessmentCategoryRepository assessmentCategoriesRepository,
             IAssessmentCategoryResultRepository assessmentCategoryResultRepository,
             IAssessmentScoreRepository assessmentScoresRepository)
         {
-            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
             ArgumentNullException.ThrowIfNull(questionItemRepository);
             ArgumentNullException.ThrowIfNull(answerItemRepository);
             ArgumentNullException.ThrowIfNull(assessmentCategoriesRepository);
             Logger = logger;
-            UserProfileItemRepository = userProfileItemRepository;
             QuestionItemRepository = questionItemRepository;
             AnswerItemRepository = answerItemRepository;
             AssessmentCategoriesRepository = assessmentCategoriesRepository;
@@ -36,8 +33,6 @@ namespace De.HDBW.Apollo.Data.Services
         }
 
         private ILogger? Logger { get; }
-
-        private IUserProfileItemRepository UserProfileItemRepository { get; }
 
         private IQuestionItemRepository QuestionItemRepository { get; }
 
@@ -60,11 +55,10 @@ namespace De.HDBW.Apollo.Data.Services
 
             token.ThrowIfCancellationRequested();
 
-            var userProfiles = await UserProfileItemRepository.GetItemsAsync(token).ConfigureAwait(false);
-            var userId = userProfiles.First().Id;
+            var userId = 0;
 
             // retrive assessmentId
-            long assessmentId = answerItemResults.FirstOrDefault() !.AssessmentItemId;
+            long assessmentId = answerItemResults.First().AssessmentItemId;
 
             // TODO: Iterate over answerItems and create Category result
             var questions = await QuestionItemRepository.GetItemsByForeignKeyAsync(assessmentId, token).ConfigureAwait(false);

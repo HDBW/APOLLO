@@ -3,28 +3,23 @@
 
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client.Dialogs;
-public partial class FirstTimeDialog
+namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public FirstTimeDialog(FirstTimeDialogViewModel model)
+    public partial class FirstTimeDialog : Dialog
     {
-        InitializeComponent();
-        var view = FindByName("Part_Root") as View;
-        if (view != null && Shell.Current != null)
+        public FirstTimeDialog(FirstTimeDialogViewModel model)
+            : base()
         {
-            view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
-            view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
-            Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
+            InitializeComponent();
+            BindingContext = model;
         }
 
-        BindingContext = model;
-    }
-
-    public FirstTimeDialogViewModel? ViewModel
-    {
-        get
+        public FirstTimeDialogViewModel? ViewModel
         {
-            return BindingContext as FirstTimeDialogViewModel;
+            get
+            {
+                return BindingContext as FirstTimeDialogViewModel;
+            }
         }
     }
 }

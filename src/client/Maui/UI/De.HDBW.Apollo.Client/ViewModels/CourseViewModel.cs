@@ -16,8 +16,6 @@ using De.HDBW.Apollo.SharedContracts.Repositories;
 using Invite.Apollo.App.Graph.Common.Models.Course;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -529,7 +527,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.Data, LoanOptions);
-                    await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(worker.Token, parameters);
+                    await DialogService.ShowPopupAsync<MessageDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {

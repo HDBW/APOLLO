@@ -1,0 +1,58 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.OccupationSearchView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewModels:OccupationSearchViewModel"
+             Title="{x:Static strings:Resources.OccupationSearchView_Title}"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">
+            <VerticalStackLayout>
+                <VerticalStackLayout.Style>
+                    <Style TargetType="VerticalStackLayout">
+                        <Setter Property="VisualStateManager.VisualStateGroups">
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </Setter>
+                    </Style>
+                </VerticalStackLayout.Style>
+                <Label Text="{x:Binding Text}" Margin="24,12" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+                <BoxView HeightRequest="1" Color="{StaticResource Neutral500}" />
+            </VerticalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="auto,*">
+        <Border Grid.Row="0" Style="{StaticResource SearchInputBorderStyle}" >
+            <SearchBar Text="{x:Binding SearchText, Mode=TwoWay}"
+                       SearchCommand="{x:Binding SearchCommand}"
+                       SearchCommandParameter="{x:Binding Text, Source={x:Reference PART_SearchBar}}"
+                       x:Name="PART_SearchBar"/>
+        </Border>
+        <CollectionView SelectionMode="Single"
+                        Grid.Row="1"
+                        ItemsSource="{x:Binding Items}"
+                        ItemTemplate="{StaticResource DefaultInteractionEntry}"
+                        SelectedItem="{x:Binding SelectedItem, Mode=TwoWay}"
+                        ItemsLayout="VerticalList">
+            <CollectionView.EmptyView>
+                <ContentView VerticalOptions="Fill">
+                    <Grid Padding="24">
+                        <Image Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                    </Grid>
+                </ContentView>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="De.HDBW.Apollo.Client.Views.PickUserNameView"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             x:DataType="viewModels:PickUserNameViewModel"
+             Title="{x:Static strings:Resources.PickUserNameView_Title}"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+    <Grid RowDefinitions="*, Auto">
+        <VerticalStackLayout Style="{StaticResource FormContent}" VerticalOptions="Start">
+            <Label Text="{x:Static strings:Resources.Global_Benutzername}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
+        </VerticalStackLayout>
+        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" />
+        <Button Grid.Row="1" Text="{x:Static strings:Resources.Global_Next}" Command="{x:Binding CreateAccountCommand}" Margin="24,16"/>
+    </Grid>
+</ContentPage>

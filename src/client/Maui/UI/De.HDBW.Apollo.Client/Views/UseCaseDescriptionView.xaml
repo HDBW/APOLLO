@@ -4,13 +4,13 @@
              NavigationPage.HasBackButton="True"
              NavigationPage.HasNavigationBar="True"
              Shell.NavBarIsVisible="True"
-             Shell.FlyoutBehavior="Disabled"
              NavigationPage.BackButtonTitle="{x:Static strings:Resources.Global_Back}"
              Title="{x:Static strings:Resources.UseCaseDescriptionView_Title}"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             IsBusy="{Binding IsBusy}"
-             x:DataType="viewModels:UseCaseDescriptionViewModel" Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             x:DataType="viewModels:UseCaseDescriptionViewModel"
+             Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*, auto">
         <ScrollView Padding="24,0" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
             <VerticalStackLayout>
@@ -21,7 +21,7 @@
                         </Image.Clip>
                     </Image>
                     <Label Text="{Binding UserProfile.FirstName}" MaxLines="1" Margin="0,8,0,0" LineBreakMode="TailTruncation" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" Grid.Row="1"/>
-                    <Label Text="{Binding DisplayAge}" MaxLines="1"  Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="3"/>
+                    <Label Text="{Binding DisplayAge}" MaxLines="1" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="3"/>
                     <Label Text="{Binding DisplayLocation}" MaxLines="1" Style="{StaticResource Noto10}" TextColor="{StaticResource Gray500}" LineBreakMode="TailTruncation" Grid.Row="4"/>
                     <Rectangle StrokeThickness="0" Margin="0,8,0,0" BackgroundColor="{StaticResource Primary}" Grid.Row="5" Grid.ColumnSpan="2" />
                     <Border Margin="0,0,16,0" StrokeThickness="0" BackgroundColor="{StaticResource Background}" IsVisible="{Binding HasImage}" Grid.Column="1" Grid.RowSpan="7">

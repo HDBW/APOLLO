@@ -1,0 +1,58 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.Language.LanguageView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewModels:LanguageViewModel"
+             Title="{x:Static strings:Resources.LanguageView_Title}"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+   
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource FormContent}">
+            <Label Text="{x:Static strings:Resources.Global_Language}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto" >
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding SearchLanguageCommand}"  />
+                    </Grid.GestureRecognizers>
+                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding LanguageName}" VerticalOptions="Center">
+                        <Label.Behaviors>
+                            <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="PropertyChanged" CommandParameter="LanguageName" />
+                        </Label.Behaviors>
+                    </Label>
+                    <Image Grid.Column="1" Source="longlist.png" />
+                </Grid>
+            </Border>
+            <Label Text="{x:Binding [LanguageName]}" Style="{StaticResource ValidationErrorLabel}"/>
+            
+            <Label Text="{x:Static strings:Resources.Global_LanguageNiveau}" Margin="0,2,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto" >
+                    <Picker ItemsSource="{x:Binding LanguageNiveaus}"
+                            ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_LanguageNiveau"
+                            SelectedItem="{x:Binding SelectedLanguageNiveau, Mode=TwoWay}">
+                        <Picker.Behaviors>
+                            <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="SelectedIndexChanged" CommandParameter="SelectedLanguageNiveau" />
+                        </Picker.Behaviors>
+                    </Picker>
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_LanguageNiveau}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </Grid>
+            </Border>
+            <Label Text="{x:Binding [SelectedLanguageNiveau]}" Style="{StaticResource ValidationErrorLabel}"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,50 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.PersonalInformationEditView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resources.PersonalInformationEditView_Title}"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             x:DataType="viewModels:PersonalInformationEditViewModel"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+    <VerticalStackLayout Style="{StaticResource FormContent}">
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" Style="{StaticResource Noto14SemiBold}"/>
+        <Border Style="{StaticResource InputBorderStyle}">
+            <Entry Text="{x:Binding Name, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
+                </Entry.Behaviors>
+            </Entry>
+        </Border>
+        <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
+
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+        <Border Style="{StaticResource InputBorderStyle}">
+            <Grid ColumnDefinitions="*, auto, auto">
+                <cdp:NullableDatePicker HorizontalOptions="Fill"
+                                        VerticalOptions="Center"
+                                        IsClearButtonVisible="False"
+                                        x:Name="PART_BirthDate"
+                                        NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                <ImageButton Source="delete.png" Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" VerticalOptions="Center"/>
+                <ImageButton Source="calendar.png" Grid.Column="2" VerticalOptions="Center">
+                    <ImageButton.Behaviors>
+                        <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_BirthDate}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </Grid>
+        </Border>
+        <HorizontalStackLayout Margin="0,20,0,0">
+            <HorizontalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleDisabilitiesCommand}" />
+            </HorizontalStackLayout.GestureRecognizers>
+            <CheckBox InputTransparent="True" IsChecked="{x:Binding Disabilities, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" />
+            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="8,0,0,0"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

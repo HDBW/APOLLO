@@ -65,21 +65,21 @@ namespace De.HDBW.Apollo.Client.Helper.Assessment
 
             source.IsAssociated = true;
             target.AssociatedIndex = source.IndexToAssociate;
-            answer.CurrentValue = GetValueForSelectedAnswer(selectedAnswer, answer.AnswerType) !;
+            answer.CurrentValue = GetValueForSelectedAnswer(selectedAnswer, answer.AnswerType);
             Logger.LogDebug($"Set result of answer with id {answer.Id} to {answer.CurrentValue ?? "null"}.");
             Logger.LogDebug($"Correct answer for id {answer.Id} would be {answer.Value}.");
             Logger.LogDebug($"The answer for id {answer.Id} is {(answer.IsCorrect ? "Correct" : "Incorrect")}.");
             Logger.LogDebug($"The question with id {Question.Id} is {(Question.IsCorrect ? "Correct" : "Incorrect")}.");
         }
 
-        private string? GetValueForSelectedAnswer(QuestionDetailEntry entry, AnswerType answerType)
+        private string GetValueForSelectedAnswer(QuestionDetailEntry? entry, AnswerType answerType)
         {
             switch (answerType)
             {
                 case AnswerType.Long:
-                    return entry?.Id.ToString();
+                    return entry?.Id.ToString() ?? string.Empty;
                 default:
-                    return null;
+                    return string.Empty;
             }
         }
     }

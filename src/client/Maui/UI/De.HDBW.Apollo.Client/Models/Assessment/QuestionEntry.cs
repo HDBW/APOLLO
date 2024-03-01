@@ -16,7 +16,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class QuestionEntry : ObservableObject
     {
+#pragma warning disable SA1308 // Variable names should not be prefixed
+#pragma warning disable SA1311 // Static readonly fields should begin with upper-case letter
         private static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
+#pragma warning restore SA1311 // Static readonly fields should begin with upper-case letter
+#pragma warning restore SA1308 // Variable names should not be prefixed
         private readonly QuestionItem _questionItem;
         private readonly IEnumerable<MetaDataItem> _questionMetaDataItems = new List<MetaDataItem>();
         private readonly ILogger _logger;
