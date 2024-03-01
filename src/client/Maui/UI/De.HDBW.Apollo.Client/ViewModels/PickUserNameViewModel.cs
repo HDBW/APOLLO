@@ -94,7 +94,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     user.Id = "User-5DE545AEF9974FD6826151725A9961F8";
 #endif
                     user.Name = Name!;
-                    user.ObjectId = SessionService.AccountId!.ObjectId;
+                    user.ObjectId = SessionService.UniqueId!;
                     user.Upn = SessionService.AccountId!.Identifier;
                     user.IdentityProvicer = SessionService.AccountId!.TenantId;
                     var result = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
@@ -141,7 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private bool CanCreateAccount()
         {
-            return !IsBusy && !HasErrors && !string.IsNullOrWhiteSpace(SessionService.AccountId?.ObjectId);
+            return !IsBusy && !HasErrors && !string.IsNullOrWhiteSpace(SessionService.UniqueId);
         }
     }
 }

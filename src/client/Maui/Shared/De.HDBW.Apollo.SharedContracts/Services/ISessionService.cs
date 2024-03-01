@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         AccountId? AccountId { get; }
 
-        string? AccessToken { get; }
+        string? UniqueId { get; }
 
         bool ChangedUseCase { get; }
 
@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         IEnumerable<(long Id, Type Type)> GetFavorites();
 
-        void UpdateRegisteredUser(string? accessToken, AccountId? accountId);
+        void UpdateRegisteredUser(string? uniqueId, AccountId? accountId);
 
         void UpdateUseCase(UseCase? useCase);
     }

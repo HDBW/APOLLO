@@ -141,14 +141,6 @@ namespace De.HDBW.Apollo.Client
             {
                 var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
                 authenticationResult = task.GetAwaiter().GetResult();
-                try
-                {
-                    Log.Debug("Token :" + SerializationHelper.Serialize(authenticationResult));
-                }
-                catch
-                {
-                    Log.Debug($"Token? :{authenticationResult?.AccessToken}");
-                }
             }
             catch (Exception ex)
             {
@@ -225,7 +217,7 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IPreferenceService, PreferenceService>();
             services.AddSingleton<IDispatcherService, DispatcherService>();
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.AccessToken, authenticationResult?.Account.HomeAccountId));
+            services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.UniqueId, authenticationResult?.Account.HomeAccountId));
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<ISheetService, SheetService>();
             services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();

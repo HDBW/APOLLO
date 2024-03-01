@@ -17,10 +17,10 @@ namespace De.HDBW.Apollo.Data.Services
         {
         }
 
-        public async Task<bool> DeleteAsync(string userId, string objectId, CancellationToken token)
+        public async Task<bool> DeleteAsync(string userId, string uniqueId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var request = new ApolloUser() { ApolloUserId = userId, UserObjectId = objectId };
+            var request = new ApolloUser() { ApolloUserId = userId, UserObjectId = uniqueId };
             return await DoPostAsync<bool>(request, token).ConfigureAwait(false);
         }
 

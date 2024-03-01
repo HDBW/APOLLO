@@ -240,7 +240,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     ProfileService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
                     UnregisterUserService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
                     ApolloListService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    SessionService.UpdateRegisteredUser(authentication?.AccessToken, authentication?.Account.HomeAccountId);
+                    SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account.HomeAccountId);
                     if (SessionService.HasRegisteredUser)
                     {
                         await NavigationService.PushToRootAsync(Routes.PickUserNameView, worker.Token);
