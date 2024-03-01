@@ -13,8 +13,8 @@
     <ApplicationId>de.hdbw.apollo.client</ApplicationId>
     <ApplicationIdGuid>1AAEF2B7-B10F-4EA6-969F-C63389D98EBE</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>23</ApplicationVersion>
+    <ApplicationDisplayVersion>0.2</ApplicationDisplayVersion>
+    <ApplicationVersion>24</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
