@@ -4,6 +4,5 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface IApolloListService
     {
-        void UpdateAuthorizationHeader(string? authorizationHeader);
     }
 }

@@ -7,8 +7,6 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface IProfileService
     {
-        void UpdateAuthorizationHeader(string? authorizationHeader);
-
         Task<Profile?> GetAsync(string id, CancellationToken token);
 
         Task<string?> SaveAsync(string userId, Profile profile, CancellationToken token);

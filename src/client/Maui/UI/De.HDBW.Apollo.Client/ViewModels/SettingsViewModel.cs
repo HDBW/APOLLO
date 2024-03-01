@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
+            IServiceProvider serviceProvider,
             IUserService userService,
             IProfileService profileService,
             IUnregisterUserService unregisterUserService,
@@ -34,6 +36,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(preferenceService);
             AuthService = authService;
             SessionService = sessionService;
+            ServiceProvider = serviceProvider;
             UserService = userService;
             ProfileService = profileService;
             UnregisterUserService = unregisterUserService;
@@ -60,6 +63,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IApolloListService ApolloListService { get; }
 
         private ISessionService SessionService { get; }
+
+        private IServiceProvider ServiceProvider { get; }
 
         private IPreferenceService PreferenceService { get; }
 
@@ -90,10 +95,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var authentication = await AuthService.AcquireTokenSilent(CancellationToken.None);
                     if (authentication == null)
                     {
-                        UserService.UpdateAuthorizationHeader(null);
-                        ProfileService.UpdateAuthorizationHeader(null);
-                        UnregisterUserService.UpdateAuthorizationHeader(null);
-                        ApolloListService.UpdateAuthorizationHeader(null);
+                        this.UpdateAuthorizationHeader(ServiceProvider, null);
                         SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account?.HomeAccountId);
                         PreferenceService.Delete();
                         await NavigationService.RestartAsync(CancellationToken.None);

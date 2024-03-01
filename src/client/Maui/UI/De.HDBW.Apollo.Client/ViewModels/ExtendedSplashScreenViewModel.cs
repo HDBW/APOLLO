@@ -4,6 +4,7 @@
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -29,6 +30,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IApolloListService apolloListService,
             IPreferenceService preferenceService,
             ISessionService sessionService,
+            IServiceProvider serviceProvider,
             IAuthService authService)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -40,6 +42,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(sessionService);
             ArgumentNullException.ThrowIfNull(authService);
             UserService = userService;
+            ServiceProvider = serviceProvider;
             ProfileService = profileService;
             UnregisterUserService = unregisterUserService;
             ApolloListService = apolloListService;
@@ -95,6 +98,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private IUserService UserService { get; }
+
+        private IServiceProvider ServiceProvider { get; }
 
         private IUnregisterUserService UnregisterUserService { get; }
 
@@ -236,10 +241,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    UserService?.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    ProfileService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    UnregisterUserService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    ApolloListService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    this.UpdateAuthorizationHeader(ServiceProvider, authentication?.CreateAuthorizationHeader());
                     SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account.HomeAccountId);
                     if (SessionService.HasRegisteredUser)
                     {

@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -23,6 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
+            IServiceProvider serviceProvider,
             IPreferenceService preferenceService,
             IUserService userService,
             IProfileService profileService,
@@ -41,6 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(apolloListService);
             AuthService = authService;
             SessionService = sessionService;
+            ServiceProvider = serviceProvider;
             PreferenceService = preferenceService;
             UserService = userService;
             ProfileService = profileService;
@@ -75,6 +78,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IProfileService ProfileService { get; }
 
         private ISessionService SessionService { get; }
+
+        private IServiceProvider ServiceProvider { get; }
 
         private IPreferenceService PreferenceService { get; }
 
@@ -154,10 +159,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
                         PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
-                        UserService.UpdateAuthorizationHeader(null);
-                        ProfileService.UpdateAuthorizationHeader(null);
-                        UnregisterUserService.UpdateAuthorizationHeader(null);
-                        ApolloListService.UpdateAuthorizationHeader(null);
+                        this.UpdateAuthorizationHeader(ServiceProvider, null);
                         SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account?.HomeAccountId);
                     }
                 }
@@ -237,10 +239,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    UserService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    ProfileService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    UnregisterUserService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
-                    ApolloListService.UpdateAuthorizationHeader(authentication?.CreateAuthorizationHeader());
+                    this.UpdateAuthorizationHeader(ServiceProvider, authentication?.CreateAuthorizationHeader());
+
                     SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account.HomeAccountId);
                     if (SessionService.HasRegisteredUser)
                     {
