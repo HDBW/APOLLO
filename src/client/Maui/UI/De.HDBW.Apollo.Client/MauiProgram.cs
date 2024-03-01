@@ -141,6 +141,14 @@ namespace De.HDBW.Apollo.Client
             {
                 var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
                 authenticationResult = task.GetAwaiter().GetResult();
+                try
+                {
+                    Log.Debug("Token :" + SerializationHelper.Serialize(authenticationResult));
+                }
+                catch
+                {
+                    Log.Debug($"Token? :{authenticationResult?.AccessToken}");
+                }
             }
             catch (Exception ex)
             {
