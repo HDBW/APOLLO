@@ -262,7 +262,7 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IUnregisterUserService>((serviceProvider) =>
             {
                 var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
-                var service = new UnregisterUserService(serviceProvider.GetService<ILogger<UnregisterUserService>>(), apiUrl, apiToken, handler);
+                var service = new UnregisterUserService(serviceProvider.GetService<ILogger<UnregisterUserService>>(), unregisterUserUrl, apiToken, handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
 
                 return service;
