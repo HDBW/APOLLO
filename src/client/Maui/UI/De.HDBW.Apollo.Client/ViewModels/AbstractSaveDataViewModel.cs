@@ -67,7 +67,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             var parameters = new NavigationParameters();
                             parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_InvalidData);
                             IsShowingDialog = true;
-                            var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+                            var result = await DialogService.ShowPopupAsync<ConfirmCancelDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
                             if (result?.GetValue<bool?>(NavigationParameter.Result) ?? false)
                             {
                                 return;
@@ -87,7 +87,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                                 var parameters = new NavigationParameters();
                                 parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.GlobalError_RetryUnableToSaveData);
                                 IsShowingDialog = true;
-                                var result = await DialogService.ShowPopupAsync<RetryDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+                                var result = await DialogService.ShowPopupAsync<ConfirmCancelDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
                                 savedData = !(result?.GetValue<bool?>(NavigationParameter.Result) ?? false);
                             }
                         }

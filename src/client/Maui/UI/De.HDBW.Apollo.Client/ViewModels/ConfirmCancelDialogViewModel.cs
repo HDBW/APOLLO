@@ -13,6 +13,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [ObservableProperty]
         private string? _message;
 
+        [ObservableProperty]
+        private string? _title;
+
         public ConfirmCancelDialogViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -30,6 +33,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         protected virtual void OnPrepareModal(NavigationParameters navigationParameters)
         {
             Message = navigationParameters.GetValue<string>(NavigationParameter.Data);
+            Title = navigationParameters.GetValue<string>(NavigationParameter.Title) ?? Resources.Strings.Resources.ErrorDialog_Title;
         }
 
         protected override void RefreshCommands()

@@ -351,7 +351,7 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<ErrorDialog>();
             services.AddTransient<MessageDialogViewModel>();
 
-            services.AddTransient<RetryDialog>();
+            services.AddTransient<ConfirmCancelDialog>();
             services.AddTransient<ConfirmCancelDialogViewModel>();
 
             services.AddTransient<SelectOptionDialog>();

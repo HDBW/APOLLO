@@ -501,6 +501,12 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="IntegerInput_Positive" xml:space="preserve">
     <value>Trifft voll zu</value>
   </data>
+  <data name="ConfirmUnRegisterUserDialog_Title" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
+  <data name="ConfirmUnRegisterUserDialog_Message" xml:space="preserve">
+    <value>Möchtest du dich abmelden?</value>
+  </data>
   <data name="ConfirmDataUsageDialog_Title" xml:space="preserve">
     <value>Nutzungsbedingungen</value>
   </data>

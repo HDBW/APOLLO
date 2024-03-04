@@ -2,7 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
@@ -77,6 +79,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (SessionService.HasRegisteredUser)
                     {
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.ConfirmUnRegisterUserDialog_Message);
+                        parameters.AddValue(NavigationParameter.Title, Resources.Strings.Resources.ConfirmUnRegisterUserDialog_Title);
+                        var result = await DialogService.ShowPopupAsync<ConfirmCancelDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+
+                        if (result?.GetValue<bool?>(NavigationParameter.Result) != true)
+                        {
+                            return;
+                        }
+
                         var userId = PreferenceService.GetValue<string>(Preference.RegisteredUserId, null);
                         var uniqueId = SessionService.UniqueId;
                         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(uniqueId))
