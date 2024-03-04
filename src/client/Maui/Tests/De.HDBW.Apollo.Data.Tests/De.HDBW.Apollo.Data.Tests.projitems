@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\AbstractServiceTestSetup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\PreferenceServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ApolloListServiceTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\UnregisterUserServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\UserServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TrainingServiceTests.cs" />
   </ItemGroup>

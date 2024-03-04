@@ -1,14 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using De.HDBW.Apollo.Data.Services;
-using De.HDBW.Apollo.SharedContracts.Services;
 
 namespace De.HDBW.Apollo.Data.Helper
 {
@@ -47,6 +41,27 @@ namespace De.HDBW.Apollo.Data.Helper
 
             authenticatedServices = typesDic;
             return authenticatedServices;
+        }
+
+        public static void UpdateAuthorizationHeader(IServiceProvider serviceProvider, List<(Type ClassType, Type InterfaceType)> authenticatedServices, string? authorizationHeader)
+        {
+            foreach (var type in authenticatedServices)
+            {
+                var method = type.ClassType.GetMethod(nameof(AbstractAuthorizedSwaggerServiceBase.UpdateAuthorizationHeader));
+                if (method == null || method.IsStatic)
+                {
+                    continue;
+                }
+
+                var instance = serviceProvider.GetService(type.InterfaceType);
+
+                if (instance == null)
+                {
+                    continue;
+                }
+
+                method?.Invoke(instance, new object?[] { authorizationHeader });
+            }
         }
     }
 }
