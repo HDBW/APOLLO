@@ -21,11 +21,7 @@ namespace TrainingControllerIntegrationTests
     [TestClass]
     public class TrainingControllerIntegrationTests 
     {
-        private readonly HttpClient _httpClient;
-        private readonly IMongoDatabase _database;
-
         private const string _cTrainingController = "Training";
-
 
         Training[] _testTrainings = new Training[]
          {
@@ -636,7 +632,7 @@ namespace TrainingControllerIntegrationTests
 
         public TrainingControllerIntegrationTests()
         {
-            _httpClient = Helpers.GetHttpClient();
+            
         }
 
 
@@ -696,11 +692,12 @@ namespace TrainingControllerIntegrationTests
         [TestMethod]
         public async Task GetTrainingTest()
         {
+            var httpClient = Helpers.GetHttpClient();
 
             foreach (var testTraining in _testTrainings)
             {
                 // GET the training by ID and verify the response is successful
-                var response = await _httpClient.GetAsync($"{_cTrainingController}/{testTraining.Id}");
+                var response = await httpClient.GetAsync($"{_cTrainingController}/{testTraining.Id}");
                 Assert.IsTrue(response.IsSuccessStatusCode);
 
                 // Deserialize the response content to a Training object
@@ -723,7 +720,7 @@ namespace TrainingControllerIntegrationTests
         [TestMethod]
         public async Task QueryTrainingsTest()
         {
-            
+            var httpClient = Helpers.GetHttpClient();
 
             // Construct the query
             var query = new Apollo.Common.Entities.Query
@@ -751,7 +748,7 @@ namespace TrainingControllerIntegrationTests
             var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
 
             // Execute the query against Api
-            var queryResponse = await _httpClient.PostAsync($"{_cTrainingController}", queryContent);
+            var queryResponse = await httpClient.PostAsync($"{_cTrainingController}", queryContent);
             Assert.IsTrue(queryResponse.IsSuccessStatusCode);
 
             // Deserialize the response
@@ -770,7 +767,7 @@ namespace TrainingControllerIntegrationTests
         [TestMethod]
         public async Task CreateOrUpdateTrainingTest()
         {
-            
+            var httpClient = Helpers.GetHttpClient();
 
             foreach (var testTraining in _testTrainings)
             {
@@ -785,12 +782,12 @@ namespace TrainingControllerIntegrationTests
                 if (string.IsNullOrEmpty(testTraining.Id))
                 {
                     // No ID means it's a new training, so use the POST endpoint
-                    response = await _httpClient.PostAsync($"{_cTrainingController}", content);
+                    response = await httpClient.PostAsync($"{_cTrainingController}", content);
                 }
                 else
                 {
                     // An ID is present, use the PUT endpoint to update
-                    response = await _httpClient.PutAsync($"{_cTrainingController}", content);
+                    response = await httpClient.PutAsync($"{_cTrainingController}", content);
                 }
 
                 // Assert that the response is successful

@@ -167,7 +167,7 @@ namespace Apollo.Api
                 EnsureIds<Qualification>(profile!, profile?.Qualifications, existingProfile?.Qualifications);
                 EnsureIds<LanguageSkill>(profile!, profile?.LanguageSkills, existingProfile?.LanguageSkills);
                 EnsureIds<WebReference>(profile!, profile?.WebReferences, existingProfile?.WebReferences);
-                EnsureIds<Occupation>(profile!, profile?.Occupations, existingProfile?.Occupations);
+                //EnsureIds<Occupation>(profile!, profile?.Occupations, existingProfile?.Occupations);
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
