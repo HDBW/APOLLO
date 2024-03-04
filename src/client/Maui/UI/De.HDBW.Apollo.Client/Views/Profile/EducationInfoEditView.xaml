@@ -17,7 +17,7 @@
             <ContentView Style="{StaticResource ContentViewListContent}">
                 <SwipeView Threshold="100" Margin="0,0,0,2">
                     <SwipeView.RightItems>
-                        <SwipeItems Mode="Execute">
+                        <SwipeItems Mode="Reveal">
                             <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
                                 <VerticalStackLayout VerticalOptions="Center">
                                     <Image WidthRequest="32" HeightRequest="32" Source="deletelight.png" />
