@@ -18,11 +18,9 @@ namespace Apollo.RestService.IntergrationTests
     /// <summary>
     /// Integration tests for the UserController class.
     /// </summary>
-    internal class UserControllerIntergrationTests
+    [TestClass]
+    public class UserControllerIntergrationTests
     {
-
-        private readonly HttpClient _httpClient;
-        private readonly IMongoDatabase _database;
 
         private const string _cUserController = "User";
 
@@ -100,7 +98,7 @@ namespace Apollo.RestService.IntergrationTests
         /// </summary>
         public UserControllerIntergrationTests()
         {
-            _httpClient = Helpers.GetHttpClient();
+            
         }
 
 
@@ -133,10 +131,11 @@ namespace Apollo.RestService.IntergrationTests
         {
             await CleanUp(); // Ensure any previous data is cleaned up
 
+            var httpClient = Helpers.GetHttpClient();
             var json = JsonSerializer.Serialize(_testUsers);
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("api/User/insert", content);
+            var response = await httpClient.PostAsync("api/User/insert", content);
 
             Assert.IsTrue(response.IsSuccessStatusCode);
 
@@ -149,7 +148,7 @@ namespace Apollo.RestService.IntergrationTests
             // Optionally, retrieve and assert some details about the inserted users...
             foreach (var id in insertedIds)
             {
-                var getUserResponse = await _httpClient.GetAsync($"api/User/{id}");
+                var getUserResponse = await httpClient.GetAsync($"api/User/{id}");
                 Assert.IsTrue(getUserResponse.IsSuccessStatusCode);
 
                 var userDataJson = await getUserResponse.Content.ReadAsStringAsync();
@@ -169,10 +168,12 @@ namespace Apollo.RestService.IntergrationTests
         [TestMethod]
         public async Task GetUserTest()
         {
+            var httpClient = Helpers.GetHttpClient();
+
             foreach (var testUser in _testUsers)
             {
 
-                var response = await _httpClient.GetAsync($"{_cUserController}/{testUser.Id}");
+                var response = await httpClient.GetAsync($"{_cUserController}/{testUser.Id}");
                 Assert.IsTrue(response.IsSuccessStatusCode);
 
                 var userJson = await response.Content.ReadAsStringAsync();
@@ -191,7 +192,8 @@ namespace Apollo.RestService.IntergrationTests
         [TestMethod]
         public async Task QueryUsersTest()
         {
-         
+            var httpClient = Helpers.GetHttpClient();
+
             var query = new Query
             {
                 Fields = new List<string> { "Name", "Email" },
@@ -223,7 +225,7 @@ namespace Apollo.RestService.IntergrationTests
             var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
 
             // Execute the query against Api
-            var queryResponse = await _httpClient.PostAsync($"{_cUserController}", queryContent);
+            var queryResponse = await httpClient.PostAsync($"{_cUserController}", queryContent);
             Assert.IsTrue(queryResponse.IsSuccessStatusCode);
 
             // Deserialize the response
@@ -242,6 +244,8 @@ namespace Apollo.RestService.IntergrationTests
         [TestMethod]
         public async Task CreateOrUpdateUserTest()
         {
+            var httpClient = Helpers.GetHttpClient();
+
             foreach (var testUser in _testUsers)
             {
                 // Serialize the individual user object to JSON
@@ -255,12 +259,12 @@ namespace Apollo.RestService.IntergrationTests
                 if (string.IsNullOrEmpty(testUser.Id))
                 {
                     // No ID means it's a new user, so use the POST endpoint
-                    response = await _httpClient.PostAsync($"{_cUserController}", content);
+                    response = await httpClient.PostAsync($"{_cUserController}", content);
                 }
                 else
                 {
                     // An ID is present, use the PUT endpoint to update
-                    response = await _httpClient.PutAsync($"{_cUserController}", content);
+                    response = await httpClient.PutAsync($"{_cUserController}", content);
                 }
 
                 // Assert that the response is successful

@@ -24,68 +24,134 @@ namespace TrainingControllerIntegrationTests
         private const string _cTrainingController = "Training";
 
         Training[] _testTrainings = new Training[]
-         {
-                new Training(){
-                    Id = "UT01",
-                    ProviderId = "IntergrationTest",
-                    TrainingName = "C",
-                    Loans = new List<Loans>(
-                        new Loans[]
-                        {
-                            new Loans() { Id = "L01", Name = "Loan 1" },
-                            new Loans() { Id = "L02", Name = "Loan 2" }
-                        }),
-                    Appointment = new List<Appointment>(
+        {
+        new Training()
+        {
+        Id = "UT01",
+        ProviderId = "IntegrationTestProvider",
+        TrainingName = "Advanced C# Programming",
+        TrainingType = "Online",
+        Description = "An advanced course in C# programming covering topics such as async programming, LINQ, and more.",
+        ShortDescription = "Advanced C# course",
+        Content = new List<string>() { "Async programming", "LINQ", "Memory management" },
+        BenefitList = new List<string>() { "Deep understanding of advanced C# features", "Preparation for professional certification" },
+        Certificate = new List<string>() { "Advanced C# Programmer" },
+        Prerequisites = new List<string>() { "Basic knowledge of C#", "Experience with .NET framework" },
+        Price = 299.99,
+        PriceDescription = "Includes course materials and certification exam",
+        ProductUrl = new Uri("https://example.com/csharp-advanced"),
+        PublishingDate = DateTime.Now,
+        UnpublishingDate = DateTime.Now.AddYears(1),
 
-                        new Appointment[]
-                        {
-                            new Appointment(){
-                                AppointmentUrl = null,
-                                AppointmentType = "In-person",
-                                AppointmentDescription = "Introduction session",
-                                AppointmentLocation = null,
-                                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
-                                EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
-                                DurationDescription = "2 hours",
-                                //Duration = TimeSpan.Zero,
-                                Occurences = null,
-                                IsGuaranteed = true,
-                                TrainingMode = TrainingMode.Offline,
-                                //TimeInvestAttendee = TimeSpan.MinValue,
-                                TimeModel = TrainingTimeModel.Unknown,
-                                OccurenceNoteOnTime = "Weekly",
-                                ExecutionDuration = "2",
-                                ExecutionDurationUnit = "UE",
-                                ExecutionDurationDescription = "Weekly",
-                                LessonType = "Practical",
-                                BookingUrl = null
-                            },
-                            new Appointment(){
-                                AppointmentUrl = null,
-                                AppointmentType = "In-person",
-                                AppointmentDescription = "Introduction session",
-                                AppointmentLocation = null,
-                                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
-                                EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
-                                DurationDescription = "2 hours",
-                                //Duration = TimeSpan.MaxValue,
-                                Occurences = null,
-                                IsGuaranteed = true,
-                                TrainingMode = TrainingMode.Offline,
-                                //TimeInvestAttendee = TimeSpan.MinValue,
-                                TimeModel = TrainingTimeModel.Unknown,
-                                OccurenceNoteOnTime = "Weekly",
-                                ExecutionDuration = "2",
-                                ExecutionDurationUnit = "UE",
-                                ExecutionDurationDescription = "Weekly",
-                                LessonType = "Practical",
-                                BookingUrl = null
-                            },
+        Loans = new List<Loans>(
+            new Loans[]
+            {
+                new Loans { Id = "L01", Name = "Loan 1" },
+                new Loans { Id = "L02", Name = "Loan 2" }
+            }),
 
-                        }
-                        ),
-                 },
-         };
+        TrainingProvider = new EduProvider()
+        {
+            Id = "EduProv01",
+            Name = "Tech Education Online",
+            Description = "An online platform offering tech-focused education.",
+            Url = new Uri("https://tech-education.com")
+        },
+
+       Appointment = new List<Appointment>
+
+        {
+            new Appointment
+        {
+
+        Id = "A01",
+        AppointmentUrl = new Uri("http://example.com/appointment1"),
+        AppointmentType = "In-person",
+        AppointmentDescription = "Introduction session",
+        AppointmentLocation = new Contact
+
+        {
+            Id = "C01",
+            Firstname = "John",
+            Surname = "Doe",
+            Mail = "john.doe@example.com",
+            Phone = "123456789",
+            Organization = "Example Org",
+            Address = "123 Main St",
+            City = "Anytown",
+            ZipCode = "12345",
+            Region = "Anyregion",
+            Country = "Anycountry",
+            EAppointmentUrl = new Uri("http://example.com/eappointment"),
+        },
+            StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
+            EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
+            DurationDescription = "2 hours",
+            Duration = 120, // This might need to be calculated or set based on the duration description
+            Occurences = new List<Occurence>
+          {
+            new Occurence
+            {
+                Id = "O01",
+                CorrelationId = "Corr01",
+                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
+                EndDate = DateTime.Parse("2024-01-17T12:30:00.000Z"),
+                Description = "First occurrence of the appointment",
+                Location = new Contact
+                {
+                    Id = "Location01",
+                    Firstname = "John",
+                    Surname = "Doe",
+                    Mail = "johndoe@example.com",
+                    Phone = "123-456-7890",
+                    Organization = "Test Venue",
+                    Address = "123 Test Street",
+                    City = "Test City",
+                    ZipCode = "12345",
+                    Region = "Test Region",
+                    Country = "Testland",
+                    EAppointmentUrl = new Uri("http://example.com/appointment-booking"),
+                }
+            }
+        },
+
+        IsGuaranteed = true,
+        TrainingMode = TrainingMode.Offline,
+        TimeInvestAttendee = 120,
+        TimeModel = TrainingTimeModel.Unknown,
+        OccurenceNoteOnTime = "Weekly",
+        ExecutionDuration = "2",
+        ExecutionDurationUnit = "UE",
+        ExecutionDurationDescription = "Weekly",
+        LessonType = "Practical",
+        BookingUrl = new Uri("http://example.com/booking"),
+        DurationUnit = "Hours",
+        Comment = "This is a sample appointment for testing."
+         }
+    },
+        Contacts = new List<Contact>()
+        {
+            new Contact()
+            {
+                Firstname = "Jane",
+                Surname = "Smith",
+                Mail = "jane.smith@conferencecenter.com",
+                Phone = "+491234567890",
+                Organization = "City Conference Center",
+                Address = "456 Conference Blvd",
+                City = "Metropolis",
+                ZipCode = "10101",
+                Region = "Metro Region",
+                Country = "Germany",
+                EAppointmentUrl = new Uri("https://www.conferencecenter.com/bookings"),
+            }
+        },
+        Tags = new List<string>() { "C#", ".NET", "Advanced" },
+        Categories = new List<string>() { "Programming", "Software Development" },
+        AccessibilityAvailable = true
+        }
+};
+
 
 
         /// <summary>
@@ -662,6 +728,12 @@ namespace TrainingControllerIntegrationTests
         }
 
 
+        /// <summary>
+        /// Inserts a predefined list of training objects into the database for testing purposes.
+        /// This method serializes the list of training objects to JSON, sends it to the training insert API endpoint,
+        /// and verifies the success of the operation by checking the response status code and the content.
+        /// Before and after insertion, it ensures the clean-up of test data to maintain test environment integrity.
+        /// </summary>
         private async Task InsertTestTrainings()
         {
             await CleanUp();
