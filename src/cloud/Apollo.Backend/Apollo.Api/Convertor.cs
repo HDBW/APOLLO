@@ -202,6 +202,9 @@ namespace Apollo.Api
             tr.TrainingName = dict.ContainsKey("TrainingName") ? (string)dict["TrainingName"] : "";
             tr.Description = dict.ContainsKey("Description") ? (string)dict["Description"] : "";
             tr.ShortDescription = dict.ContainsKey("ShortDescription") ? (string)dict["ShortDescription"] : "";
+            tr.TrainingType = dict.ContainsKey("TrainingType") ? (string)dict["TrainingType"] : "";
+            tr.Image = dict.ContainsKey("Image") ? new Uri((string)dict["Image"]) : null;
+            tr.SubTitle = dict.ContainsKey("SubTitle") ? (string)dict["SubTitle"] : null;
             tr.Content = dict.ContainsKey("Content") ? (List<string>)dict["Content"] : new List<string>();
             tr.BenefitList = dict.ContainsKey("BenefitList") ? (List<string>)dict["BenefitList"] : new List<string>();
             tr.Certificate = dict.ContainsKey("Certificate") ? (List<string>)dict["Certificate"] : new List<string>();
@@ -210,13 +213,36 @@ namespace Apollo.Api
             tr.Price = dict.ContainsKey("Price") ? (double)dict["Price"] : 0;
             tr.Loans = dict.ContainsKey("Loans") ? ToEntityList<Loans>(dict["Loans"] as List<ExpandoObject>, ToLoans) : new List<Loans>();
             tr.TrainingProvider = dict.ContainsKey("TrainingProvider") ? ToTrainingProvider(dict["TrainingProvider"] as ExpandoObject) : null;
-            // map other properties here
-            // tr.Tags = dict.ContainsKey("Tags") ? (List<string>)dict["Tags"] : new List<string>();
-            // tr.PublishingDate = dict.ContainsKey("PublishingDate") ? (DateTime)dict["PublishingDate"] : DateTime.MinValue;
-            //tr.Appointment = dict.ContainsKey("Appointment") ? ToEntityList<Appointment>(dict["Appoinment"] as List<ExpandoObject>, ToAppointments) : new List<Appointment>();
+            tr.CourseProvider = dict.ContainsKey("CourseProvider") ? ToTrainingProvider(dict["CourseProvider"] as ExpandoObject) : null;
+            tr.Appointment = dict.ContainsKey("Appointment") ? ToEntityList<Appointment>(dict["Appointment"] as List<ExpandoObject>, ToAppointments) : new List<Appointment>();
+        
+            tr.Tags = dict.ContainsKey("Tags") ? (List<string>)dict["Tags"] : new List<string>();
+            tr.PublishingDate = dict.ContainsKey("PublishingDate") ? (DateTime)dict["PublishingDate"] : DateTime.MinValue;
+            tr.Categories = dict.ContainsKey("Categories") ? (List<string>)dict["Categories"] : new List<string>();
+            tr.SimilarTrainings = dict.ContainsKey("SimilarTrainings") ? ToEntityList<Training>(dict["SimilarTrainings"] as List<ExpandoObject>, ToTraining) : new List<Training>();
+            tr.PriceDescription = dict.ContainsKey("PriceDescription") ? (string)dict["PriceDescription"] : null;
+            tr.AccessibilityAvailable = dict.ContainsKey("AccessibilityAvailable") ? (bool)dict["AccessibilityAvailable"] : false;
+            tr.UnpublishingDate = dict.ContainsKey("UnpublishingDate") ? DateTime.Parse((string)dict["UnpublishingDate"]) : null;
+            tr.RecommendedTrainings = dict.ContainsKey("RecommendedTrainings") ? ToEntityList<Training>(dict["RecommendedTrainings"] as List<ExpandoObject>, ToTraining) : new List<Training>();
 
             return tr;
         }
+
+        // is ToTrainingList needed?
+
+        //public static List<T> ToTrainingList<T>(List<ExpandoObject> expandoList, Func<ExpandoObject, T> converter)
+        //{
+        //    if (expandoList == null) throw new ArgumentNullException(nameof(expandoList));
+        //    if (converter == null) throw new ArgumentNullException(nameof(converter));
+
+        //    List<T> resultList = new List<T>();
+        //    foreach (var expando in expandoList)
+        //    {
+        //        T entity = converter(expando);
+        //        resultList.Add(entity);
+        //    }
+        //    return resultList;
+        //}
 
 
 
