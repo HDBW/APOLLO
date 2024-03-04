@@ -831,7 +831,7 @@ namespace Apollo.Api.UnitTests
                         {
                             FieldName = "id",
                             Operator = QueryOperator.Equals,
-                            Argument = new string[]{ "SER02" }
+                            Argument = new string[]{ "Training-B60B36B7B41B45D0800558228AB53A91" }
                         }
                         // Add other FieldExpressions as needed for additional conditions
                     }
