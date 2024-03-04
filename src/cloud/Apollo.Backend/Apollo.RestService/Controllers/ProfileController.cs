@@ -1,10 +1,13 @@
-﻿using Apollo.Api;
+﻿using System.Text.Json.Serialization;
+using System.Text.Json;
+using Apollo.Api;
 using Apollo.Common.Entities;
 using Apollo.RestService.Apollo.Common.Messages;
 using Apollo.RestService.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using MongoDB.Bson;
 
 namespace Apollo.Service.Controllers
 {
@@ -45,12 +48,15 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace("Enter {method}", nameof(GetProfile));
 
                 // Call the Apollo API to retrieve a profile by ID.
-                var profile = await _api.GetProfile(id);
+                var profile = await _api.GetProfileAsync(id);
 
                 _logger.LogTrace("Leave {method}", nameof(GetProfile));
 
+                
+                
                 // Return the retrieved profile as a response.
-                return new GetProfileResponse { Profile = profile};
+                return new GetProfileResponse { Profile =  profile };
+            
             }
             catch (Exception ex)
             {
@@ -135,7 +141,7 @@ namespace Apollo.Service.Controllers
 
                 //
                 // Call the Apollo API to create or update a profile based on the request.
-                var id = await _api.CreateOrUpdateProfile(req.UserId, filteredProfile);
+                var id = await _api.CreateOrUpdateProfileAsync(req.UserId, filteredProfile);
 
                 _logger.LogTrace("Leave {method}", nameof(CreateOrUpdateProfile));
 
@@ -225,7 +231,7 @@ namespace Apollo.Service.Controllers
                 _logger.LogTrace("Enter {method}", nameof(DeleteProfile));
 
                 // Call the Apollo API to delete a profile by ID.
-                var response = await _api.DeleteProfile(id);
+                var response = await _api.DeleteProfileAsync(id);
 
                 _logger.LogTrace("Leave {method}", nameof(DeleteProfile));
 

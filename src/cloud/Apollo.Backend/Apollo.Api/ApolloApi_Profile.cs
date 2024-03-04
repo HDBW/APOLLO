@@ -22,17 +22,17 @@ namespace Apollo.Api
         /// <summary>
         /// Gets the specific instance of the profile.
         /// </summary>
-        /// <param name="trainingId"></param>
+        /// <param name="profileId"></param>
         /// <returns></returns>
-        public virtual async Task<Profile> GetProfile(string profileId)
+        public virtual async Task<Profile> GetProfileAsync(string profileId)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(GetProfile)}");
+                _logger?.LogTrace($"Entered {nameof(GetProfileAsync)}");
 
                 var profile = await _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profileId);
 
-                _logger?.LogTrace($"Completed {nameof(GetProfile)}");//todo..
+                _logger?.LogTrace($"Completed {nameof(GetProfileAsync)}");//todo..
 
                 if (profile == null)
                 {
@@ -49,7 +49,7 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed execution of {nameof(GetProfile)}: {ex.Message}");
+                _logger.LogError(ex, $"Failed execution of {nameof(GetProfileAsync)}: {ex.Message}");
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
                 throw new ApolloApiException(ErrorCodes.ProfileErrors.GetProfileError, "An error occurred while getting the profile.", ex);
@@ -133,15 +133,15 @@ namespace Apollo.Api
         /// Creates or Updates the new Profile instance.
         /// </summary>
         /// <param name="profile">If the Id is specified, the update will be performed.</param>
-        public virtual async Task<string> CreateOrUpdateProfile(string userId, Profile profile)
+        public virtual async Task<string> CreateOrUpdateProfileAsync(string userId, Profile profile)
         {
             try
             {
                 List<string> ids = new List<string>();
 
-                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateProfile)}");
+                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateProfileAsync)}");
 
-                await ValidateProfile(userId, profile);
+                await ValidateProfileAsync(userId, profile);
 
                 Profile? existingProfile;
 
@@ -167,10 +167,11 @@ namespace Apollo.Api
                 EnsureIds<Qualification>(profile!, profile?.Qualifications, existingProfile?.Qualifications);
                 EnsureIds<LanguageSkill>(profile!, profile?.LanguageSkills, existingProfile?.LanguageSkills);
                 EnsureIds<WebReference>(profile!, profile?.WebReferences, existingProfile?.WebReferences);
+                EnsureIds<Occupation>(profile!, profile?.Occupations, existingProfile?.Occupations);
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
 
-                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfile)}");
+                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfileAsync)}");
 
                 return profile?.Id!;
             }
@@ -181,14 +182,14 @@ namespace Apollo.Api
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateProfile)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateProfileAsync)}: {ex.Message}");
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
                 throw new ApolloApiException(ErrorCodes.ProfileErrors.CreateOrUpdateProfileError, "An error occurred while creating or updating profiles.", ex);
             }
         }
 
-        private async Task ValidateProfile(string userId, Profile profile)
+        private async Task ValidateProfileAsync(string userId, Profile profile)
         {
             // Check User Id is exist
             var res = await _dal.IsExistAsync<User>(GetCollectionName<User>(), userId);
@@ -212,23 +213,23 @@ namespace Apollo.Api
         /// </summary>
         /// <param name="deletingId">The id of profile identifier.</param>
         /// <returns>The deleted id</returns>
-        public virtual async Task<string> DeleteProfile(string deletingId)
+        public virtual async Task<string> DeleteProfileAsync(string deletingId)
         {
             try
             {
-                _logger?.LogTrace($"Entered {nameof(DeleteProfile)}");
+                _logger?.LogTrace($"Entered {nameof(DeleteProfileAsync)}");
 
                 // Call the DAL method to delete the profile by their IDs
                 await _dal.DeleteAsync(GetCollectionName<Profile>(), deletingId);
 
-                _logger?.LogTrace($"Completed {nameof(DeleteProfile)}");
+                _logger?.LogTrace($"Completed {nameof(DeleteProfileAsync)}");
 
                 return deletingId;
 
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteProfile)}: {ex.Message}");
+                _logger?.LogError(ex, $"Failed execution of {nameof(DeleteProfileAsync)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.ProfileErrors.DeleteProfileError, "Error while deleting profiles", ex);
             }
         }
@@ -254,7 +255,7 @@ namespace Apollo.Api
                     // Check if ID is not  present, generate and set an ID
                     if (String.IsNullOrEmpty(item.Id))
                     {
-                        item.Id = CreateListId(nameof(T));
+                        item.Id = CreateListId(typeof(T).Name);
                     }
                     else
                     {
