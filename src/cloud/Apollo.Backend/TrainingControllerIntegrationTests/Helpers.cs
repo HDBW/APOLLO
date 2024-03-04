@@ -29,12 +29,16 @@ namespace Apollo.RestService.IntergrationTests
             cfg.Bind(_settings);
         }
 
+      
+
         public static HttpClient GetHttpClient()
         {
             var httpClient = new HttpClient
             {
                 BaseAddress = new Uri($"{_settings.ServiceUrl.TrimEnd('/')}/api/")
             };
+
+      
 
             httpClient.DefaultRequestHeaders.Add("ApiKey", _settings.ApiKey);
 
