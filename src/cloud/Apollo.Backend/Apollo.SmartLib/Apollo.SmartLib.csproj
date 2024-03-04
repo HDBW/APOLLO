@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
+  </ItemGroup>
+
 </Project>

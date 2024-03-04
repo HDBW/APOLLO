@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Apollo.Common.Entities;
 
 namespace Apollo.SmartLib
 {
@@ -11,5 +12,9 @@ namespace Apollo.SmartLib
     /// </summary>
     public class SemanticSearchApi
     {
+        public async Task IndexTraining(Training training)
+        {
+
+        }
     }
 }
