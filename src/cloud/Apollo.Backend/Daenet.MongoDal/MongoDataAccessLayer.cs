@@ -221,15 +221,27 @@ namespace Daenet.MongoDal
 
             var trainingsList = await coll.Find(filter).Project(Builders<BsonDocument>.Projection.Include("ProviderId")).ToListAsync();
 
-            var result = await coll.DeleteManyAsync(filter);
 
-            if (throwIfNotDeleted && result.DeletedCount != trainingsList.Count)
-                throw new ApplicationException("Documents cannot be deleted!");
+            var deletedIdList = new List<string>();
 
-            // Extract the deleted IDs from the documents
-            var deletedIdList = trainingsList.Select(doc => doc["_id"].AsString).ToList();
+            foreach (var training in trainingsList)
+            {
+                var id = training["_id"].AsString;
+                await DeleteAsync(collectionName, id);
+                deletedIdList.Add(id);
+            }
 
             return deletedIdList;
+
+            //var result = await coll.DeleteManyAsync(filter);
+
+            //if (throwIfNotDeleted && result.DeletedCount != trainingsList.Count)
+            //    throw new ApplicationException("Documents cannot be deleted!");
+
+            //// Extract the deleted IDs from the documents
+            ////var deletedIdList = trainingsList.Select(doc => doc["_id"].AsString).ToList();
+
+            //return deletedIdList;
         }
 
 
