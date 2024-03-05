@@ -817,7 +817,7 @@ namespace Daenet.MongoDal
         }
 
         /// <summary>
-        /// Checks if the document ecists in the collection.
+        /// Checks if the document exists in the collection.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="collectionName"></param>

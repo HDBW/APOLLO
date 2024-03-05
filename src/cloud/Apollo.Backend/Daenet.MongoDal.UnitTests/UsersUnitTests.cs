@@ -220,5 +220,32 @@ namespace Daenet.MongoDal.UnitTests
             }
         }
 
+
+        /// <summary>
+        /// Verifies the existence of a user in the database using the IsExistAsync method.
+        /// This test inserts a test user into the database, checks for its existence,
+        /// asserts that the user does indeed exist, and then cleans up by deleting the test user.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task IsExistAsyncTest()
+        {
+            var dal = Helpers.GetDal();
+            var testUser = _testUsers[0]; 
+
+            // Convert the user to an ExpandoObject for insertion
+            dynamic userExpando = Convertor.Convert(testUser);
+
+            // Insert the user
+            await dal.InsertAsync(Helpers.GetCollectionName<User>(), userExpando);
+
+            // Check if the user exists
+            bool exists = await dal.IsExistAsync<User>(Helpers.GetCollectionName<User>(), testUser.Id);
+
+            Assert.IsTrue(exists);
+
+            // Cleanup
+            await dal.DeleteAsync(Helpers.GetCollectionName<User>(), testUser.Id);
+        }
     }
 }
