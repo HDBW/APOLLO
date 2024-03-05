@@ -81,12 +81,20 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
                 if (currentState != null)
                 {
                     niveau = currentState.Niveau;
-                    culture = currentState.Name != null ? CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.Name == currentState.Name) : null;
+                    if (!string.IsNullOrWhiteSpace(currentState.Name))
+                    {
+                        culture = currentState.Name != null ? CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.Name == currentState.Name) : null;
 #if ANDROID
-                    name = culture?.DisplayName;
+                        name = culture?.DisplayName;
 #elif IOS
-                    name = culture?.NativeName;
+                        name = culture?.NativeName;
 #endif
+                    }
+                    else
+                    {
+                        culture = null;
+                        name = null;
+                    }
                 }
             }
 
@@ -101,7 +109,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
 #endif
             }
 
-            isDirty = name != language?.Name || niveau != language?.Niveau;
+            isDirty = culture?.Name != language?.Name || niveau != language?.Niveau;
 
             var languageNiveaus = new List<InteractionEntry>();
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_A1, LanguageNiveau.A1, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
