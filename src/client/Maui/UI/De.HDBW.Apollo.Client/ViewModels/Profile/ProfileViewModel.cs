@@ -179,6 +179,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanEditPersonalInformations))]
         private async Task EditPersonalInformations(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(EditPersonalInformationsCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -212,6 +213,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(RegisterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

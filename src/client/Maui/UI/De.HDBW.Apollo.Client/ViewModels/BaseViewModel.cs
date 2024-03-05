@@ -203,6 +203,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task NavigateToRoute(string route, CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(NavigateToRouteCommand)} in {GetType().Name}.");
             token.ThrowIfCancellationRequested();
             using (var worker = ScheduleWork(token))
             {

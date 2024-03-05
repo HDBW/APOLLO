@@ -141,6 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanDelete))]
         private async Task Delete(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(DeleteCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -154,7 +155,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     var response = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
                     if (string.IsNullOrWhiteSpace(response))
                     {
-                        Logger.LogError($"Unable to delete contact remotely {nameof(Delete)} in {GetType().Name}.");
+                        Logger.LogError($"Unable to {nameof(Delete)} in {GetType().Name}.");
                         await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
                         return;
                     }

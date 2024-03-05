@@ -169,6 +169,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleDisabilities))]
         private Task ToggleDisabilities(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(ToggleDisabilitiesCommand)} in {GetType().Name}.");
             Disabilities = !Disabilities;
             return Task.CompletedTask;
         }
@@ -181,6 +182,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [RelayCommand(CanExecute = nameof(CanClearBirthDate))]
         private void ClearBirthDate()
         {
+            Logger.LogInformation($"Invoked {nameof(ClearBirthDateCommand)} in {GetType().Name}.");
             BirthDate = null;
         }
 

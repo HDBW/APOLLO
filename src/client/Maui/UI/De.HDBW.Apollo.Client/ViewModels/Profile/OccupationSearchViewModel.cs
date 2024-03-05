@@ -127,6 +127,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch), IncludeCancelCommand =true)]
         private async Task Search(string searchtext, CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(SearchCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

@@ -94,6 +94,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
         private async Task LoadData(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(LoadDataCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

@@ -10,6 +10,5 @@ namespace De.HDBW.Apollo.Client.Models
                     "EduProvider-60844BDD47B34C3C86DEA3E898B075C5",
                     "EduProvider-2F0C26FFB4A24D85889CB015DAD5C5F5",
                 };
-
     }
 }

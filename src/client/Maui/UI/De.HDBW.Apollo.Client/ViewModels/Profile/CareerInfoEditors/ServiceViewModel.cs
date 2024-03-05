@@ -138,6 +138,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchOccupation))]
         private async Task SearchOccupation(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(SearchOccupationCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

@@ -166,6 +166,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearchLanguage))]
         private async Task SearchLanguage(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(SearchLanguage)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

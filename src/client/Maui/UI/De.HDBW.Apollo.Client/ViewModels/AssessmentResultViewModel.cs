@@ -187,6 +187,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanConfirm))]
         private async Task Confirm(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(ConfirmCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
