@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public abstract partial class AbstractSaveDataViewModel : BaseViewModel
+    public abstract partial class AbstractSaveDataViewModel : BaseViewModel, IPreventBackSwipe
     {
         private bool _isDirty;
 
