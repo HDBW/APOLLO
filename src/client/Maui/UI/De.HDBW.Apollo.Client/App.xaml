@@ -24,8 +24,19 @@
                     <Setter.Value>
                         <ControlTemplate>
                             <Grid RowDefinitions="Auto, *">
-                                <controls:GlobalErrorView />
-                                <ContentPresenter Grid.Row="1" />
+                                <controls:GlobalErrorView Grid.Row="0" />
+                                <Grid Grid.Row="1" >
+                                    <ContentPresenter />
+                                    <OnPlatform  x:TypeArguments="View"  >
+                                        <On Platform="Android">
+                                            <ActivityIndicator
+                                                BindingContext="{Binding Source={RelativeSource TemplatedParent}, Path=BindingContext}"
+                                                IsRunning="{Binding IsBusy}"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"/>
+                                        </On>
+                                    </OnPlatform>
+                                </Grid>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
