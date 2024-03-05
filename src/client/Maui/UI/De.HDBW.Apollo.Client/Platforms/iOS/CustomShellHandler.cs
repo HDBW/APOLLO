@@ -12,5 +12,10 @@ namespace De.HDBW.Apollo.Client.Platforms
         {
             return new CustomShellPageRendererTracker(this);
         }
+
+        protected override IShellSectionRenderer CreateShellSectionRenderer(ShellSection shellSection)
+        {
+            return new CustomSectionRenderer(this);
+        }
     }
 }
