@@ -70,16 +70,6 @@ namespace Apollo.Api
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-                // Removed. This is not needed. If no results are found, an empty list will be returned.
-                //if (res == null || !res.Any())
-                //{
-                //    // No matching records found, throw a specific exception
-                //    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.");
-                //}
-
-                // Convert results to a list of typed Training objects
-                //var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
-
                 _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
 
                 return res;
