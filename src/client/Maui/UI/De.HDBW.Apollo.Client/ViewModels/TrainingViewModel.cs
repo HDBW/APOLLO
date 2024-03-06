@@ -398,7 +398,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             _training = training;
             ProductUrl = _training?.ProductUrl;
-            Price = $"{_training?.Price ?? 0:0.##} €";
+            var price = _training?.Price ?? 0;
+            Price = price == -1d ? Resources.Strings.Resources.Global_PriceOnRequest : $"{price:0.##} €";
             IsFavorite = isFavorite;
             foreach (var section in sections)
             {
