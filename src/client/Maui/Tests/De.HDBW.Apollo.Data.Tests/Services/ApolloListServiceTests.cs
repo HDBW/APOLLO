@@ -103,7 +103,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
 
             var validItems = new List<ApolloListItem>();
-            foreach (var item in items)
+            foreach (var item in items!)
             {
                 TU enumValue = (TU)Enum.ToObject(typeof(TU), item.ListItemId);
                 if (enumValue.ToString() != item.Value)

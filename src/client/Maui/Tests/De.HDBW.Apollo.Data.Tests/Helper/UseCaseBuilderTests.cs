@@ -35,7 +35,7 @@ public class UseCaseBuilderTests
             var eduProviderItemRepository = new EduProviderItemRepository(connectionProvider, this.SetupLogger<EduProviderItemRepository>());
             var categoryRecomendationItemRepository = new CategoryRecomendationItemRepository(connectionProvider, this.SetupLogger<CategoryRecomendationItemRepository>());
 
-            UseCaseBuilder useCaseBuilder = null;
+            UseCaseBuilder? useCaseBuilder = null;
             var ctor = typeof(UseCaseBuilder).GetConstructors().FirstOrDefault();
             var parameters = ctor?.GetParameters()!;
             var ex = Assert.Throws<ArgumentNullException>(() => new UseCaseBuilder(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));

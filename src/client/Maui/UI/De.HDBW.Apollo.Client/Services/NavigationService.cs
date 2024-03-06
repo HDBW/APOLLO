@@ -164,6 +164,12 @@ namespace De.HDBW.Apollo.Client.Services
                 {
                     try
                     {
+                        if (Application.Current == null)
+                        {
+                            Logger.LogWarning($"Application is null during {nameof(RestartAsync)} in {GetType().Name}.");
+                            return Task.CompletedTask;
+                        }
+
                         var current = Application.Current.MainPage;
                         Application.Current.MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, ServiceProvider) as Page);
                         if (current != null)

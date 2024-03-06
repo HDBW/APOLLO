@@ -127,6 +127,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanStart))]
         private async Task Start(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(StartCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

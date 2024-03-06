@@ -197,7 +197,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     });
 
                     _configuration.Add((editor, LoadTrainingsTimeFilter, SaveTrainingTimeFilter));
-                   
 
                     var editorList = _configuration.Select(c => c.Editor).ToList();
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(editorList), worker.Token);
@@ -248,6 +247,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanClose), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task Close(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(CloseCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork())
             {
                 try
@@ -281,6 +281,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanReset), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task ResetFilter(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(ResetFilterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork())
             {
                 try
@@ -322,6 +323,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanApplyFilter), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task ApplyFilter(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(ApplyFilterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork())
             {
                 try

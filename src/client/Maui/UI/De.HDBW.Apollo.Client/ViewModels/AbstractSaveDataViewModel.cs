@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public abstract partial class AbstractSaveDataViewModel : BaseViewModel
+    public abstract partial class AbstractSaveDataViewModel : BaseViewModel, IPreventBackSwipe
     {
         private bool _isDirty;
 
@@ -56,6 +56,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCancel))]
         private async Task Cancel(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(CancelCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork())
             {
                 try
@@ -126,6 +127,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSave))]
         private async Task Save(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(SaveCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

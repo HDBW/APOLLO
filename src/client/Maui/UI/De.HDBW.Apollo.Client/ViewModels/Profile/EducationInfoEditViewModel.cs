@@ -131,6 +131,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     }
 
                     var careerType = entry.Export().EducationType.AsEnum<EducationType>();
+                    if (careerType == null)
+                    {
+                        return;
+                    }
+
                     NavigationParameters? editorParameters = new NavigationParameters();
                     editorParameters.AddValue<string>(NavigationParameter.Id, id);
                     editorParameters.Add(NavigationParameter.Type, careerType);
