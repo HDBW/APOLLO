@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.RegisterView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="">
+    <Grid RowDefinitions="auto, auto, *, auto, auto" VerticalOptions="Start">
+        <Label Grid.Row="0" Margin="0,16" Text="{x:Static strings:Resources.RegisterView_Headline}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+        <Label Grid.Row="1" Margin="0,0,0,16" Text="{x:Static strings:Resources.RegisterView_Subline}" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource Noto16}" HorizontalTextAlignment="Center"/>
+        <Image Grid.Row="2" Source="splashdeco1.png" />
+        <Grid Grid.Row="3" ColumnDefinitions="auto, auto" RowDefinitions="auto, auto, auto, auto" Margin="0,32,0,16" HorizontalOptions="Center">
+            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="{x:Static strings:Resources.RegisterView_Benefits}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,4"/>
+            <Image Grid.Column="0" Grid.Row="1" Source="checkmark.png" Margin="0,0,8,0"/>
+            <Label Grid.Column="1" Grid.Row="1" Text="{x:Static strings:Resources.RegisterView_Benefit1}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16}"/>
+            <Image Grid.Column="0" Grid.Row="2" Source="checkmark.png" Margin="0,0,8,0"/>
+            <Label Grid.Column="1" Grid.Row="2" Text="{x:Static strings:Resources.RegisterView_Benefit2}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16}"/>
+            <Image Grid.Column="0" Grid.Row="3" Source="checkmark.png" Margin="0,0,8,0"/>
+            <Label Grid.Column="1" Grid.Row="3" Text="{x:Static strings:Resources.RegisterView_Benefit3}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16}"/>
+        </Grid>
+        <Button Grid.Row="4" Text="{x:Static strings:Resources.RegisterView_Button}"  IsVisible="{x:Binding ConfirmedDataUsage}" Margin="0,0,0,16"/>
+    </Grid>
+</ContentPage>

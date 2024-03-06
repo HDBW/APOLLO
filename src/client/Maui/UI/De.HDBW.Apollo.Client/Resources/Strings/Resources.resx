@@ -1444,4 +1444,28 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="FavoriteView_Subline_EmptyView" xml:space="preserve">
     <value>Du hast noch keine Favoriten.</value>
   </data>
+  <data name="RegisterView_Benefit1" xml:space="preserve">
+    <value>Favoriten speichern</value>
+  </data>
+  <data name="RegisterView_Benefit2" xml:space="preserve">
+    <value>Profil anlegen</value>
+  </data>
+  <data name="RegisterView_Benefit3" xml:space="preserve">
+    <value>Zugriff auf alle Tests</value>
+  </data>
+  <data name="RegisterView_Benefits" xml:space="preserve">
+    <value>Deine Vorteile</value>
+  </data>
+  <data name="RegisterView_Button" xml:space="preserve">
+    <value>Zur Anmeldung</value>
+  </data>
+  <data name="RegisterView_Headline" xml:space="preserve">
+    <value>Entdecke neue Funktionen</value>
+  </data>
+  <data name="RegisterView_Subline" xml:space="preserve">
+    <value>Melde Dich an, um Zugriff auf weitere Features zu erhalten.</value>
+  </data>
+  <data name="RegisterView_Title" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
 </root>

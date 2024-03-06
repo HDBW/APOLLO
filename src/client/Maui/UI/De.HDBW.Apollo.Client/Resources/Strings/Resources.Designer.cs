@@ -2663,6 +2663,78 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Favoriten speichern.
+        /// </summary>
+        public static string RegisterView_Benefit1 {
+            get {
+                return ResourceManager.GetString("RegisterView_Benefit1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profil anlegen.
+        /// </summary>
+        public static string RegisterView_Benefit2 {
+            get {
+                return ResourceManager.GetString("RegisterView_Benefit2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zugriff auf alle Tests.
+        /// </summary>
+        public static string RegisterView_Benefit3 {
+            get {
+                return ResourceManager.GetString("RegisterView_Benefit3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deine Vorteile.
+        /// </summary>
+        public static string RegisterView_Benefits {
+            get {
+                return ResourceManager.GetString("RegisterView_Benefits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zur Anmeldung.
+        /// </summary>
+        public static string RegisterView_Button {
+            get {
+                return ResourceManager.GetString("RegisterView_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entdecke neue Funktionen.
+        /// </summary>
+        public static string RegisterView_Headline {
+            get {
+                return ResourceManager.GetString("RegisterView_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Melde Dich an, um Zugriff auf weitere Features zu erhalten..
+        /// </summary>
+        public static string RegisterView_Subline {
+            get {
+                return ResourceManager.GetString("RegisterView_Subline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anmelden.
+        /// </summary>
+        public static string RegisterView_Title {
+            get {
+                return ResourceManager.GetString("RegisterView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Melde Dich an, um Zugriff auf weitere Features zu erhalten..
         /// </summary>
         public static string RegistrationView_Description {

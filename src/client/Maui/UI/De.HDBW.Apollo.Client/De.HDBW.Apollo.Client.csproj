@@ -204,6 +204,9 @@
     <MauiXaml Update="Views\AssessmentView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\RegisterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\TrainingView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
