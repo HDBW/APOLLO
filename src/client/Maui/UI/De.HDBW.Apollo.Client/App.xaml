@@ -28,10 +28,12 @@
                                 <Grid Grid.Row="1" >
                                     <ContentPresenter />
                                     <OnPlatform  x:TypeArguments="View"  >
-                                        <On Platform="Android">
+                                        <On Platform="iOS">
                                             <ActivityIndicator
                                                 BindingContext="{Binding Source={RelativeSource TemplatedParent}, Path=BindingContext}"
                                                 IsRunning="{Binding IsBusy}"
+                                                Scale="2"
+                                                BackgroundColor="White"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center"/>
                                         </On>
