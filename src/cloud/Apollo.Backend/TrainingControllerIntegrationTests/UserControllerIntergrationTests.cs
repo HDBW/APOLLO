@@ -264,7 +264,7 @@ namespace Apollo.RestService.IntergrationTests
                 else
                 {
                     // An ID is present, use the PUT endpoint to update
-                    response = await httpClient.PutAsync($"{_cUserController}", content);
+                    response = await httpClient.PutAsync($"{_cUserController}/{testUser.Id}", content);
                 }
 
                 // Assert that the response is successful

@@ -859,7 +859,7 @@ namespace TrainingControllerIntegrationTests
                 else
                 {
                     // An ID is present, use the PUT endpoint to update
-                    response = await httpClient.PutAsync($"{_cTrainingController}", content);
+                    response = await httpClient.PutAsync($"{_cTrainingController}/{testTraining.Id}", content);
                 }
 
                 // Assert that the response is successful
