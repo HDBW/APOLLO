@@ -32,7 +32,7 @@
                                             Grid.Row="1"
                                             IsVisible="{x:TemplateBinding IsBusy}"
                                             IsRunning="{x:TemplateBinding IsBusy}"
-                                            Scale="2"
+                                            Scale="4"
                                             BackgroundColor="{StaticResource Neutral0}"
                                             Color="{StaticResource Primary}"
                                             HorizontalOptions="Center"
