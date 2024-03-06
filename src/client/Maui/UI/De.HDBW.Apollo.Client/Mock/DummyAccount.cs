@@ -3,7 +3,7 @@
 
 using Microsoft.Identity.Client;
 
-namespace De.HDBW.Apollo.Client
+namespace De.HDBW.Apollo.Client.Models
 {
 #if DEBUG
     internal class DummyAccount : IAccount
