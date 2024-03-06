@@ -22,25 +22,33 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
                 <Setter Property="ControlTemplate">
                     <Setter.Value>
-                        <ControlTemplate>
-                            <Grid RowDefinitions="Auto, *">
-                                <controls:GlobalErrorView Grid.Row="0" />
-                                <Grid Grid.Row="1" >
-                                    <ContentPresenter />
-                                    <OnPlatform  x:TypeArguments="View"  >
-                                        <On Platform="iOS">
-                                            <ActivityIndicator
-                                                BindingContext="{Binding Source={RelativeSource TemplatedParent}, Path=BindingContext}"
-                                                IsRunning="{Binding IsBusy}"
-                                                Scale="2"
-                                                BackgroundColor="White"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center"/>
-                                        </On>
-                                    </OnPlatform>
-                                </Grid>
-                            </Grid>
-                        </ControlTemplate>
+                        <OnPlatform  x:TypeArguments="ControlTemplate"  >
+                            <On Platform="iOS">
+                                <ControlTemplate>
+                                    <Grid RowDefinitions="Auto, *">
+                                        <controls:GlobalErrorView Grid.Row="0" />
+                                        <ContentPresenter Grid.Row="1" />
+                                        <ActivityIndicator
+                                            Grid.Row="1"
+                                            IsVisible="{x:TemplateBinding IsBusy}"
+                                            IsRunning="{x:TemplateBinding IsBusy}"
+                                            Scale="2"
+                                            BackgroundColor="{StaticResource Neutral0}"
+                                            Color="{StaticResource Primary}"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </On>
+                            <On Platform="Android">
+                                <ControlTemplate>
+                                    <Grid RowDefinitions="Auto, *">
+                                        <controls:GlobalErrorView Grid.Row="0" />
+                                        <ContentPresenter Grid.Row="1" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </On>
+                            </OnPlatform>
                     </Setter.Value>
                 </Setter>
             </Style>

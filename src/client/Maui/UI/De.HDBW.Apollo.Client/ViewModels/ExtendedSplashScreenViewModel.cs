@@ -212,7 +212,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                           expiresOn: DateTimeOffset.MaxValue,
                           extendedExpiresOn: DateTimeOffset.MaxValue,
                           tenantId: "Mock",
-                          account: new Data.Mock.DummyAccount(),
+                          account: new DummyAccount(),
                           idToken: "Mock",
                           scopes: new List<string>(),
                           correlationId: Guid.Empty,

@@ -3,10 +3,10 @@
 
 using Microsoft.Identity.Client;
 
-namespace De.HDBW.Apollo.Data.Mock
+namespace De.HDBW.Apollo.Client
 {
 #if DEBUG
-    public class DummyAccount : IAccount
+    internal class DummyAccount : IAccount
     {
         public string Username { get; } = "Dummy";
 
