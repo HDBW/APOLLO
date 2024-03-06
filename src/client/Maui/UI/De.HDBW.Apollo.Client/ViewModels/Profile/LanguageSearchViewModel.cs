@@ -1,8 +1,12 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -226,7 +230,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         private bool CanSearch(string? searchtext)
         {
-            return !IsBusy && (searchtext?.Replace(" ", string.Empty).Length ?? 0) > 0;
+            return !IsBusy;
         }
 
         private async void ApplyAndClose()
