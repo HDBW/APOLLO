@@ -4,6 +4,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using CommunityToolkit.Mvvm.Messaging;
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using Microsoft.Maui.Platform;
@@ -14,10 +15,12 @@ namespace De.HDBW.Apollo.Client.Platforms
     public class CustomShellPageRendererTracker : ShellPageRendererTracker
     {
         private WeakReference<UISearchController>? _searchController = null;
+        private IShellContext _context;
 
         public CustomShellPageRendererTracker(IShellContext context)
             : base(context)
         {
+            _context = context;
         }
 
         protected override void OnSearchHandlerPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -50,9 +53,17 @@ namespace De.HDBW.Apollo.Client.Platforms
 
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
+            var renderen = _context?.CurrentShellItemRenderer as ShellItemRenderer;
+            var navigationController = renderen?.SelectedViewController as UINavigationController;
+            if (navigationController != null)
+            {
+                navigationController.InteractivePopGestureRecognizer.Enabled = true;
+            }
+
+            _context = null;
             WeakReferenceMessenger.Default.Unregister<HideSearchSuggestionsMessage>(this);
             _searchController = null;
+            base.Dispose(disposing);
         }
 
         private void OnHideSearchSuggestions(object recipient, HideSearchSuggestionsMessage message)
@@ -92,6 +103,22 @@ namespace De.HDBW.Apollo.Client.Platforms
                     doneButton,
                 };
                 searchBar.InputAccessoryView = toolbar;
+            }
+        }
+
+        protected override void OnPageSet(Page oldPage, Page newPage)
+        {
+            base.OnPageSet(oldPage, newPage);
+            var preventBackSwipe = newPage as IPreventBackSwipe ?? newPage?.BindingContext as IPreventBackSwipe;
+            var renderen = _context?.CurrentShellItemRenderer as ShellItemRenderer;
+            var navigationController = renderen?.SelectedViewController as UINavigationController;
+            if (navigationController != null && preventBackSwipe != null)
+            {
+                navigationController.InteractivePopGestureRecognizer.Enabled = false;
+            }
+            else if (navigationController != null)
+            {
+                navigationController.InteractivePopGestureRecognizer.Enabled = true;
             }
         }
     }
