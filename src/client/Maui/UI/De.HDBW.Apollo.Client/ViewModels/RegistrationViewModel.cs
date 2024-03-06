@@ -91,6 +91,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(SkipCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -125,6 +126,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
         private async Task UnRegister(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(UnRegisterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 AuthenticationResult? authentication = null;
@@ -132,7 +134,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (SessionService.HasRegisteredUser)
                     {
-                        var userId = PreferenceService.GetValue<string>(Preference.RegisteredUserId, null);
+                        var userId = PreferenceService.GetValue<string?>(Preference.RegisteredUserId, null);
                         var uniqueId = SessionService.UniqueId;
                         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(uniqueId))
                         {
@@ -193,6 +195,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(RegisterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 AuthenticationResult? authentication = null;

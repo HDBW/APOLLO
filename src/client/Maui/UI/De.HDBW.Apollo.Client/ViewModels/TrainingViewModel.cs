@@ -431,6 +431,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             try
             {
+                Logger.LogInformation($"Invoked {nameof(ToggleIsFavoriteCommand)} in {GetType().Name}.");
                 token.ThrowIfCancellationRequested();
 
                 if (string.IsNullOrWhiteSpace(_training?.Id))
@@ -458,6 +459,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanShareProduct))]
         private async Task ShareProduct(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(shareProductCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -490,6 +492,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenProduct))]
         private async Task OpenProduct(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenProductCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -518,6 +521,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateBack))]
         private async Task NavigateBack(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(NavigateBackCommand)} in {GetType().Name}.");
+
             // see https://github.com/dotnet/maui/issues/7237
             lock (_lockObject)
             {

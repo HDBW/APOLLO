@@ -66,13 +66,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
         private async Task UnRegister(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(unRegisterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
                     if (SessionService.HasRegisteredUser)
                     {
-                        var userId = PreferenceService.GetValue<string>(Preference.RegisteredUserId, null);
+                        var userId = PreferenceService.GetValue<string?>(Preference.RegisteredUserId, null);
                         var uniqueId = SessionService.UniqueId;
                         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(uniqueId))
                         {
@@ -131,6 +132,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenTerms))]
         private Task OpenTerms(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenTermsCommand)} in {GetType().Name}.");
             return OpenUrlAsync(Resources.Strings.Resources.SettingsView_TermsUri, token);
         }
 
@@ -142,6 +144,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenPrivacy))]
         private Task OpenPrivacy(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenPrivacyCommand)} in {GetType().Name}.");
             return OpenUrlAsync(Resources.Strings.Resources.SettingsView_PrivacyUri, token);
         }
 
@@ -153,6 +156,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenImprint))]
         private Task OpenImprint(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenImprintCommand)} in {GetType().Name}.");
             return OpenUrlAsync(Resources.Strings.Resources.SettingsView_ImprintUri, token);
         }
 
@@ -164,6 +168,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenMail))]
         private async Task OpenMail(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenMailCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

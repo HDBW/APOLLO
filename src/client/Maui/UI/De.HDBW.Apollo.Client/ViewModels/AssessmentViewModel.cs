@@ -342,6 +342,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = true)]
         private async Task NextQuestion(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(NextQuestionCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -423,6 +424,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCancel))]
         private async Task Cancel(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(CancelCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

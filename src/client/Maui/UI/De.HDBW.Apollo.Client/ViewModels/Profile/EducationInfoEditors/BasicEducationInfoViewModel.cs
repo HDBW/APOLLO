@@ -208,6 +208,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         [RelayCommand(CanExecute = nameof(CanClearEnd))]
         private void ClearEnd()
         {
+            Logger.LogInformation($"Invoked {nameof(ClearEndCommand)} in {GetType().Name}.");
             End = null;
         }
 

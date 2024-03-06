@@ -67,7 +67,7 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
                 Assert.Null(itemResult);
                 itemResult = await repository.GetItemByIdAsync(item.Id, CancellationToken.None);
                 Assert.NotNull(itemResult);
-                Assert.Equal(item?.Id, itemResult?.Id);
+                Assert.Equal(item.Id, itemResult?.Id);
                 var itemResults = await repository.GetItemsByIdsAsync(null, CancellationToken.None);
                 Assert.NotNull(itemResults);
                 Assert.Empty(itemResults);
