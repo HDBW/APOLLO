@@ -40,12 +40,14 @@ jobs:
     - name: Init User-Secrets
       run: |
         echo ${{ github.workspace }}
+        ENCODED_SWAGGER_API_TOKEN=${{secrets.SWAGGERAPIKEYBASE64}}
+        DECODED_SWAGGER_API_TOKEN=$(echo "$ENCODED_SWAGGER_API_TOKEN" | base64 --decode)
         dotnet user-secrets init -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "ClientId" "${{secrets.B2CCLIENTID}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "TenantName" "${{secrets.B2CTENANTNAME}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "SignInPolicy" "${{secrets.SIGNINGPOLICY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "InstrumentationKey" "${{secrets.APPI_INSTUMENTATION_KEY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
-        dotnet user-secrets set "SwaggerAPIToken" "${{secrets.SWAGGERAPIKEY}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "SwaggerAPIToken" "$DECODED_SWAGGER_API_TOKEN" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "SwaggerAPIURL" "${{secrets.SWAGGERENDPOINTURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "OccupationSearchAPIURL" "${{secrets.OCCUPATIONSEARCHAPIURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "UnRegisteUserEndpointURL" "${{secrets.UNREGISTERUSERENDPOINTURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj

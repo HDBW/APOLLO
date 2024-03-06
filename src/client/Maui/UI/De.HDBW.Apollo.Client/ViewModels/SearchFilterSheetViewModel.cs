@@ -52,6 +52,19 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
+                    _filter = new Filter();
+                    if (!string.IsNullOrWhiteSpace(_currentFilter))
+                    {
+                        try
+                        {
+                            _filter = _currentFilter.Deserialize<Filter>() ?? new Filter();
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogError(ex, "Unknown error while loading existing filter.");
+                        }
+                    }
+
                     var trainingModes = new List<PickerValue>
                     {
                         new PickerValue(Resources.Strings.Resources.TrainingMode_Offline, TrainingMode.Offline),
@@ -184,8 +197,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     });
 
                     _configuration.Add((editor, LoadTrainingsTimeFilter, SaveTrainingTimeFilter));
+                   
 
-                    _filter = _currentFilter.Deserialize<Filter>() ?? new Filter();
                     var editorList = _configuration.Select(c => c.Editor).ToList();
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(editorList), worker.Token);
                 }
