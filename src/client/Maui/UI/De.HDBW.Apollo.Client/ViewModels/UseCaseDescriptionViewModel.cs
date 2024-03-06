@@ -115,6 +115,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateUseCase))]
         public async Task CreateUseCase(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(CreateUseCaseCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

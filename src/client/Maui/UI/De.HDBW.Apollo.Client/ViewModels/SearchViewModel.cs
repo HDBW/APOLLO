@@ -195,7 +195,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFilterSheet))]
         private async Task OpenFilterSheet(CancellationToken token)
         {
-            Logger.LogDebug("OpenFilterSheet START");
+            Logger.LogInformation($"Invoked {nameof(OpenFilterSheetCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -222,9 +222,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    Logger.LogDebug("OpenFilterSheet UnscheduleWork start");
                     UnscheduleWork(worker);
-                    Logger.LogDebug("OpenFilterSheet UnscheduleWork end");
                 }
             }
         }
@@ -232,6 +230,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSearch))]
         private async Task Search(object queryElement, CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(SearchCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

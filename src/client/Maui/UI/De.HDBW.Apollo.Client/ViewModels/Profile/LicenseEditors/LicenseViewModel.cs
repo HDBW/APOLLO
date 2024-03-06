@@ -120,6 +120,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
         [RelayCommand(CanExecute = nameof(CanClearStart))]
         private void ClearStart()
         {
+            Logger.LogInformation($"Invoked {nameof(ClearStartCommand)} in {GetType().Name}.");
             Start = null;
         }
 
@@ -131,6 +132,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors
         [RelayCommand(CanExecute = nameof(CanClearEnd))]
         private void ClearEnd()
         {
+            Logger.LogInformation($"Invoked {nameof(ClearEndCommand)} in {GetType().Name}.");
             End = null;
         }
 

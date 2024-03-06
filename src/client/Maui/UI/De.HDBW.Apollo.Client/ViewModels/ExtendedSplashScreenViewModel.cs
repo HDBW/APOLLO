@@ -125,12 +125,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenPrivacy))]
         private Task OpenPrivacy(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenPrivacyCommand)} in {GetType().Name}.");
             return OpenUrlAsync(Resources.Strings.Resources.SettingsView_PrivacyUri, token);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenPrivacy))]
         private async Task OpenDataUsageDialog(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenDataUsageDialogCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -164,6 +166,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanSkip))]
         private async Task Skip(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(SkipCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -197,6 +200,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRegister))]
         private async Task Register(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(RegisterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 AuthenticationResult? authentication = null;

@@ -62,6 +62,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanAdd))]
         protected virtual async Task Add(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(AddCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

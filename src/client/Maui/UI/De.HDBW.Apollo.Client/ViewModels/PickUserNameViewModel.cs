@@ -85,6 +85,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateAccount))]
         private async Task CreateAccount(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(CreateAccountCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
