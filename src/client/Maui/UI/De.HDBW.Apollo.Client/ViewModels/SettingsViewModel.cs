@@ -85,7 +85,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         parameters.AddValue(NavigationParameter.Title, Resources.Strings.Resources.ConfirmUnRegisterUserDialog_Title);
                         var result = await DialogService.ShowPopupAsync<ConfirmCancelDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
 
-                        if (result?.GetValue<bool?>(NavigationParameter.Result) != true)
+                        if (result?.GetValue<bool?>(NavigationParameter.Result) != false)
                         {
                             return;
                         }
