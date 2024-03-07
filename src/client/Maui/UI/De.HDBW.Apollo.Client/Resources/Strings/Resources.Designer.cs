@@ -1683,6 +1683,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kostenlos.
+        /// </summary>
+        public static string Global_PriceFreeOfCharge {
+            get {
+                return ResourceManager.GetString("Global_PriceFreeOfCharge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to auf Anfrage.
+        /// </summary>
+        public static string Global_PriceOnRequest {
+            get {
+                return ResourceManager.GetString("Global_PriceOnRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Qualifikation.
         /// </summary>
         public static string Global_Qualification {

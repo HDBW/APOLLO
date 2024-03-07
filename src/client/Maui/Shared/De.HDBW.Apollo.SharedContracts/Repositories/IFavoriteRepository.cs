@@ -14,5 +14,7 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         Task<Favorite?> GetItemByIdAsync(string id, string type, CancellationToken token);
 
         Task<bool> SaveAsync(Favorite favorite, CancellationToken token);
+
+        Task<bool> DeleteFavoritesAsync(CancellationToken none);
     }
 }

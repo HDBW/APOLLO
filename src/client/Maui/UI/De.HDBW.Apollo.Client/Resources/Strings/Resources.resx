@@ -1468,4 +1468,10 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="RegisterView_Title" xml:space="preserve">
     <value>Anmelden</value>
   </data>
+  <data name="Global_PriceOnRequest" xml:space="preserve">
+    <value>auf Anfrage</value>
+  </data>
+  <data name="Global_PriceFreeOfCharge" xml:space="preserve">
+    <value>Kostenlos</value>
+  </data>
 </root>
