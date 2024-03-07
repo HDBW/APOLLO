@@ -41,6 +41,14 @@ namespace De.HDBW.Apollo.Client.Controls
             if (IsFocused)
             {
                 Unfocus();
+                if (OperatingSystem.IsAndroid())
+                {
+                    while (IsFocused)
+                    {
+                        SetIsFocused(false);
+                    }
+                }
+
                 KeyboardHelper.HideKeyboard(Shell.Current?.Handler?.PlatformView);
                 WeakReferenceMessenger.Default.Send<HideSearchSuggestionsMessage>(new HideSearchSuggestionsMessage());
             }
@@ -71,7 +79,7 @@ namespace De.HDBW.Apollo.Client.Controls
             {
                 while (IsFocused)
                 {
-                    Unfocus();
+                    SetIsFocused(false);
                 }
             }
 
@@ -88,7 +96,7 @@ namespace De.HDBW.Apollo.Client.Controls
             {
                 while (IsFocused)
                 {
-                    Unfocus();
+                    SetIsFocused(false);
                 }
             }
 
@@ -110,6 +118,10 @@ namespace De.HDBW.Apollo.Client.Controls
             }
 #endif
             base.OnPropertyChanged(propertyName);
+            if (propertyName == nameof(IsFocused))
+            {
+
+            }
         }
 
         private static void HandleSuggestionsChanged(BindableObject bindable, object oldValue, object newValue)

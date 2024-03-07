@@ -91,9 +91,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 try
                 {
                     var user = new User();
-#if DEBUG
-                    user.Id = "User-5DE545AEF9974FD6826151725A9961F8";
-#endif
                     user.Name = Name!;
                     user.ObjectId = SessionService.UniqueId!;
                     user.Upn = SessionService.AccountId!.Identifier;

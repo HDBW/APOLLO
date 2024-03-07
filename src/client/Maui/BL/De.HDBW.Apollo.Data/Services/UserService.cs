@@ -59,7 +59,7 @@ namespace De.HDBW.Apollo.Data.Services
                 user.Profile = null;
                 var request = new CreateOrUpdateUserRequest(user);
                 response = await DoPutAsync<CreateOrUpdateUserResponse>(request, token).ConfigureAwait(false);
-                if (!string.IsNullOrWhiteSpace(response?.Result) && profile != null)
+                if (!string.IsNullOrWhiteSpace(response?.Result) && profile != null && user.Id != null)
                 {
                     await ProfileService.SaveAsync(response.Result, profile, token).ConfigureAwait(false);
                 }
