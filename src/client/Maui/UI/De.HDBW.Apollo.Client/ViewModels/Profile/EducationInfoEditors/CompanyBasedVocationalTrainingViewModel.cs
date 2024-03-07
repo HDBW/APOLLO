@@ -92,6 +92,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors
         protected override void ApplyChanges(EducationInfo entry)
         {
             base.ApplyChanges(entry);
+            entry.ProfessionalTitle = _job;
             entry.Graduation = ((SelectedSchoolGraduation?.Data as SchoolGraduation?) ?? SchoolGraduation.Unknown).ToApolloListItem();
         }
 

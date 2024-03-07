@@ -2,7 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -15,6 +17,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
     {
         [ObservableProperty]
         private UserProfileEntry? _userProfile = UserProfileEntry.Import(new User());
+
+        private bool _isFlyoutPresented;
 
         public AppShellViewModel(
             IDispatcherService dispatcherService,
@@ -36,6 +40,22 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get
             {
                 return SessionService?.HasRegisteredUser ?? false;
+            }
+        }
+
+        public bool IsFlyoutPresented
+        {
+            get
+            {
+                return _isFlyoutPresented;
+            }
+
+            set
+            {
+                if (SetProperty(ref _isFlyoutPresented, value))
+                {
+                    WeakReferenceMessenger.Default.Send(new FlyoutStateChangedMessage(IsFlyoutPresented));
+                }
             }
         }
 

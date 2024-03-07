@@ -139,8 +139,24 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<IAuthService>(authService);
             try
             {
-                var task = Task.Run(() => authService.AcquireTokenSilent(CancellationToken.None));
+                var task = Task.Run(async () =>
+                {
+                    var currentResult = await authService.AcquireTokenSilent(CancellationToken.None).ConfigureAwait(false);
+                    var existingUserId = Preferences.Default.Get<string?>(Preference.RegisteredUserId.ToString(), null);
+
+                    // We have an illigal state when user is signed into B2C, but does not have an local UserId.
+                    // So we sign him out of B2C.
+                    if (currentResult != null && string.IsNullOrWhiteSpace(existingUserId))
+                    {
+                        await authService.LogoutAsync(CancellationToken.None).ConfigureAwait(false);
+                        currentResult = await authService.AcquireTokenSilent(CancellationToken.None).ConfigureAwait(false);
+                    }
+
+                    return currentResult;
+                });
+
                 authenticationResult = task.GetAwaiter().GetResult();
+
             }
             catch (Exception ex)
             {
