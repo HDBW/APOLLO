@@ -177,7 +177,7 @@
     <MauiXaml Update="Controls\GlobalErrorView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Dialogs\RetryDialog.xaml">
+    <MauiXaml Update="Dialogs\ConfirmCancelDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Dialogs\ErrorDialog.xaml">
@@ -335,8 +335,8 @@
     <Compile Update="Controls\GlobalErrorView.xaml.cs">
       <DependentUpon>GlobalErrorView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Dialogs\RetryDialog.xaml.cs">
-      <DependentUpon>RetryDialog.xaml</DependentUpon>
+    <Compile Update="Dialogs\ConfirmCancelDialog.xaml.cs">
+      <DependentUpon>ConfirmCancelDialog.xaml</DependentUpon>
     </Compile>
     <Compile Update="Dialogs\ErrorDialog.xaml.cs">
       <DependentUpon>ErrorDialog.xaml</DependentUpon>

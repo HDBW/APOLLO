@@ -3,8 +3,8 @@
 
 namespace De.HDBW.Apollo.SharedContracts.Services
 {
-    public interface IUnregisterUserService
+    public interface IAuthenticatedService
     {
-        Task<bool> DeleteAsync(string userId, string objectId, CancellationToken token);
+        void UpdateAuthorizationHeader(string? authorizationHeader);
     }
 }

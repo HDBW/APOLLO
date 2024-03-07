@@ -6,7 +6,7 @@ using Microsoft.Identity.Client;
 namespace De.HDBW.Apollo.Client.Models
 {
 #if DEBUG
-    public class DummyAccount : IAccount
+    internal class DummyAccount : IAccount
     {
         public string Username { get; } = "Dummy";
 

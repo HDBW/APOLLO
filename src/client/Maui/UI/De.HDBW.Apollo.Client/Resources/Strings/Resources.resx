@@ -211,7 +211,7 @@
     <value>Anmelden</value>
   </data>
   <data name="Global_UnRegisterUser" xml:space="preserve">
-    <value>Abmelden</value>
+    <value>Benutzer löschen</value>
   </data>
   <data name="SettingsView_Title" xml:space="preserve">
     <value>Einstellungen</value>
@@ -500,6 +500,12 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="IntegerInput_Positive" xml:space="preserve">
     <value>Trifft voll zu</value>
+  </data>
+  <data name="ConfirmUnRegisterUserDialog_Title" xml:space="preserve">
+    <value>Benutzer löschen</value>
+  </data>
+  <data name="ConfirmUnRegisterUserDialog_Message" xml:space="preserve">
+    <value>Du bist dabei, den registrierten Benutzer zu löschen. Alle deine Daten gehen dabei verloren. Möchtest Du den Vorgang abbrechen?</value>
   </data>
   <data name="ConfirmDataUsageDialog_Title" xml:space="preserve">
     <value>Nutzungsbedingungen</value>

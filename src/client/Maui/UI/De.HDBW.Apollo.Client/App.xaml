@@ -22,12 +22,33 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
                 <Setter Property="ControlTemplate">
                     <Setter.Value>
-                        <ControlTemplate>
-                            <Grid RowDefinitions="Auto, *">
-                                <controls:GlobalErrorView />
-                                <ContentPresenter Grid.Row="1" />
-                            </Grid>
-                        </ControlTemplate>
+                        <OnPlatform  x:TypeArguments="ControlTemplate"  >
+                            <On Platform="iOS">
+                                <ControlTemplate>
+                                    <Grid RowDefinitions="Auto, *">
+                                        <controls:GlobalErrorView Grid.Row="0" />
+                                        <ContentPresenter Grid.Row="1" />
+                                        <ActivityIndicator
+                                            Grid.Row="1"
+                                            IsVisible="{x:TemplateBinding IsBusy}"
+                                            IsRunning="{x:TemplateBinding IsBusy}"
+                                            Scale="4"
+                                            BackgroundColor="{StaticResource Neutral0}"
+                                            Color="{StaticResource Primary}"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </On>
+                            <On Platform="Android">
+                                <ControlTemplate>
+                                    <Grid RowDefinitions="Auto, *">
+                                        <controls:GlobalErrorView Grid.Row="0" />
+                                        <ContentPresenter Grid.Row="1" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </On>
+                            </OnPlatform>
                     </Setter.Value>
                 </Setter>
             </Style>
