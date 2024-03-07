@@ -2,6 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -18,6 +21,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
+            IServiceProvider serviceProvider,
             IUserService userService,
             IProfileService profileService,
             IUnregisterUserService unregisterUserService,
@@ -39,6 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(favoriteRepository);
             AuthService = authService;
             SessionService = sessionService;
+            ServiceProvider = serviceProvider;
             UserService = userService;
             ProfileService = profileService;
             UnregisterUserService = unregisterUserService;
@@ -68,6 +73,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private ISessionService SessionService { get; }
 
+        private IServiceProvider ServiceProvider { get; }
+
         private IPreferenceService PreferenceService { get; }
 
         private IUserRepository UserRepository { get; }
@@ -84,6 +91,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 {
                     if (SessionService.HasRegisteredUser)
                     {
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.ConfirmUnRegisterUserDialog_Message);
+                        parameters.AddValue(NavigationParameter.Title, Resources.Strings.Resources.ConfirmUnRegisterUserDialog_Title);
+                        var result = await DialogService.ShowPopupAsync<ConfirmCancelDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+
+                        if (result?.GetValue<bool?>(NavigationParameter.Result) != false)
+                        {
+                            return;
+                        }
+
                         var userId = PreferenceService.GetValue<string?>(Preference.RegisteredUserId, null);
                         var uniqueId = SessionService.UniqueId;
                         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(uniqueId))
@@ -104,10 +121,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
                         await FavoriteRepository.DeleteFavoritesAsync(CancellationToken.None).ConfigureAwait(false);
-                        UserService.UpdateAuthorizationHeader(null);
-                        ProfileService.UpdateAuthorizationHeader(null);
-                        UnregisterUserService.UpdateAuthorizationHeader(null);
-                        ApolloListService.UpdateAuthorizationHeader(null);
+                        this.UpdateAuthorizationHeader(ServiceProvider, null);
                         SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account?.HomeAccountId);
                         PreferenceService.Delete();
                         await NavigationService.RestartAsync(CancellationToken.None);

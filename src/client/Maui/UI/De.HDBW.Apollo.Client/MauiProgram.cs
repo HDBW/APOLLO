@@ -338,6 +338,9 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<RegistrationView>();
             services.AddTransient<RegistrationViewModel>();
 
+            services.AddTransient<RegisterView>();
+            services.AddTransient<RegisterViewModel>();
+
             services.AddTransient<PickUserNameView>();
             services.AddTransient<PickUserNameViewModel>();
 
@@ -360,7 +363,7 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<ErrorDialog>();
             services.AddTransient<MessageDialogViewModel>();
 
-            services.AddTransient<RetryDialog>();
+            services.AddTransient<ConfirmCancelDialog>();
             services.AddTransient<ConfirmCancelDialogViewModel>();
 
             services.AddTransient<SelectOptionDialog>();
