@@ -81,6 +81,8 @@ namespace Apollo.Service
                 c.EnableAnnotations();
             });
 
+            ConfigureLogging(builder);
+
             // Registers the action filter
             builder.Services.AddControllers().AddMvcOptions(options =>
             {
@@ -132,6 +134,21 @@ namespace Apollo.Service
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void ConfigureLogging(WebApplicationBuilder bulder)
+        {
+        //    builder.Logging.AddAzureWebAppDiagnostics();
+        //    builder.Services.Configure<AzureFileLoggerOptions>(options =>
+        //    {
+        //        options.FileName = "azure-diagnostics-";
+        //        options.FileSizeLimit = 50 * 1024;
+        //        options.RetainedFileCountLimit = 5;
+        //    });
+        //    builder.Services.Configure<AzureBlobLoggerOptions>(options =>
+        //    {
+        //        options.BlobName = "log.txt";
+        //    });
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
