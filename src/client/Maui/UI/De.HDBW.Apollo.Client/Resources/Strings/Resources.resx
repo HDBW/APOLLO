@@ -1450,4 +1450,10 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="FavoriteView_Subline_EmptyView" xml:space="preserve">
     <value>Du hast noch keine Favoriten.</value>
   </data>
+  <data name="Global_PriceOnRequest" xml:space="preserve">
+    <value>auf Anfrage</value>
+  </data>
+  <data name="Global_PriceFreeOfCharge" xml:space="preserve">
+    <value>Kostenlos</value>
+  </data>
 </root>

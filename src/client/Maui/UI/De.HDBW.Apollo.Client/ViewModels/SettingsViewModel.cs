@@ -6,6 +6,7 @@ using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
@@ -26,6 +27,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IUnregisterUserService unregisterUserService,
             IApolloListService apolloListService,
             IPreferenceService preferenceService,
+            IUserRepository userRepository,
+            IFavoriteRepository favoriteRepository,
             ILogger<SettingsViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
@@ -36,6 +39,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(unregisterUserService);
             ArgumentNullException.ThrowIfNull(apolloListService);
             ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(favoriteRepository);
             AuthService = authService;
             SessionService = sessionService;
             ServiceProvider = serviceProvider;
@@ -44,6 +49,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             UnregisterUserService = unregisterUserService;
             ApolloListService = apolloListService;
             PreferenceService = preferenceService;
+            UserRepository = userRepository;
+            FavoriteRepository = favoriteRepository;
         }
 
         public bool HasRegisterdUser
@@ -69,6 +76,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IServiceProvider ServiceProvider { get; }
 
         private IPreferenceService PreferenceService { get; }
+
+        private IUserRepository UserRepository { get; }
+
+        private IFavoriteRepository FavoriteRepository { get; }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
         private async Task UnRegister(CancellationToken token)
@@ -108,6 +119,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     var authentication = await AuthService.AcquireTokenSilent(CancellationToken.None);
                     if (authentication == null)
                     {
+                        await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
+                        await FavoriteRepository.DeleteFavoritesAsync(CancellationToken.None).ConfigureAwait(false);
                         this.UpdateAuthorizationHeader(ServiceProvider, null);
                         SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account?.HomeAccountId);
                         PreferenceService.Delete();

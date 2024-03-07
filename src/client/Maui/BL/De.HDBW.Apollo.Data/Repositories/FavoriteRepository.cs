@@ -144,5 +144,11 @@ namespace De.HDBW.Apollo.Data.Repositories
 
             return false;
         }
+
+        public Task<bool> DeleteFavoritesAsync(CancellationToken token)
+        {
+            Logger.LogDebug($"{nameof(DeleteFavoritesAsync)} in {GetType().Name}.");
+            return SaveAsync(new List<Favorite>(), token);
+        }
     }
 }

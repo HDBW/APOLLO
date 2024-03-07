@@ -29,6 +29,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IUserService userService,
             IProfileService profileService,
             IUserRepository userRepository,
+            IFavoriteRepository favoriteRepository,
             IUnregisterUserService unregisterUserService,
             IApolloListService apolloListService,
             ILogger<RegistrationViewModel> logger)
@@ -39,6 +40,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(userService);
             ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(favoriteRepository);
             ArgumentNullException.ThrowIfNull(unregisterUserService);
             ArgumentNullException.ThrowIfNull(apolloListService);
             AuthService = authService;
@@ -48,6 +50,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             UserService = userService;
             ProfileService = profileService;
             UserRepository = userRepository;
+            FavoriteRepository = favoriteRepository;
             UnregisterUserService = unregisterUserService;
             ApolloListService = apolloListService;
             Instructions.Add(InstructionEntry.Import("splashdeco1.png", null, Resources.Strings.Resources.RegistrationView_Instruction1, null));
@@ -84,6 +87,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private IPreferenceService PreferenceService { get; }
 
         private IUserRepository UserRepository { get; }
+
+        private IFavoriteRepository FavoriteRepository { get; }
 
         protected override void RefreshCommands()
         {
@@ -160,6 +165,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     if (authentication == null)
                     {
                         await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
+                        await FavoriteRepository.DeleteFavoritesAsync(CancellationToken.None).ConfigureAwait(false);
                         PreferenceService.SetValue<string?>(Preference.RegisteredUserId, null);
                         this.UpdateAuthorizationHeader(ServiceProvider, null);
                         SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account?.HomeAccountId);
