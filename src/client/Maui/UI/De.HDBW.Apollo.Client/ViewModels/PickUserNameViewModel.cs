@@ -90,11 +90,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var user = new User();
-                    user.Name = Name!;
-                    user.ObjectId = SessionService.UniqueId!;
+                    var user = await UserService.GetAsync(Guid.NewGuid().ToString(), token).ConfigureAwait(false);
+                    if (user == null)
+                    {
+                        user = new User();
+                        user.ObjectId = SessionService.UniqueId!;
+                    }
+
                     user.Upn = SessionService.AccountId!.Identifier;
                     user.IdentityProvicer = SessionService.AccountId!.TenantId;
+                    user.Name = Name!;
                     var result = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
 
                     if (string.IsNullOrWhiteSpace(result))

@@ -11,6 +11,7 @@ namespace De.HDBW.Apollo.Data.Helper
     {
         public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions()
         {
+            IncludeFields = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             WriteIndented = true,
