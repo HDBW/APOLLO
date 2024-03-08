@@ -22,7 +22,7 @@ namespace Invite.Apollo.App.Graph.Common.Backend.Api
         }
 
         [JsonConstructor()]
-        public ApolloApiException(int errorCode, string message, Exception ex) : base(message, ex)
+        public ApolloApiException(int errorCode, string message, Exception? ex = null) : base(message, ex)
         {
             ErrorCode = errorCode;
         }
