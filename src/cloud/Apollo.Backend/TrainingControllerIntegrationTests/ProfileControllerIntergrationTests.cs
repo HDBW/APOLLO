@@ -237,20 +237,35 @@ namespace Apollo.RestService.IntergrationTests
         public async Task Initialize()
         {
             await Cleanup(); // Ensure clean state before each test
-            //await InsertTestProfiles(); // Insert test data
+            await InsertTestProfiles(); // Insert test data
         }
 
 
-        //private async Task InsertTestProfiles()
-        //{
-        //    var httpClient = Helpers.GetHttpClient();
-        //    foreach (var profile in _testProfiles)
-        //    {
-        //        var json = JsonSerializer.Serialize(profile);
-        //        HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-        //        await httpClient.PostAsync($"{_cProfileController}/insert", content);
-        //    }
-        //}
+        /// <summary>
+        /// Inserts test profiles into the system and verifies if the insertion was successful.
+        /// This method serializes the list of test profiles to JSON, posts it to the profile insert API endpoint,
+        /// and checks the response to ensure that all profiles were inserted as expected. It performs cleanup before
+        /// and after insertion to ensure a clean state for the test environment.
+        /// </summary>
+        private async Task InsertTestProfiles()
+        {
+            await Cleanup(); 
+
+            var httpClient = Helpers.GetHttpClient();
+            var json = JsonSerializer.Serialize(_testProfiles);
+            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            
+            var response = await httpClient.PostAsync($"{_cProfileController}/insert", content);
+            Assert.IsTrue(response.IsSuccessStatusCode);
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            var insertedIds = JsonSerializer.Deserialize<List<string>>(responseJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Assert.IsNotNull(insertedIds, "The response should include IDs of inserted profiles.");
+            Assert.AreEqual(_testProfiles.Length, insertedIds.Count, "The number of inserted profiles should match the input.");
+
+            await Cleanup();
+        }
 
 
         /// <summary>
