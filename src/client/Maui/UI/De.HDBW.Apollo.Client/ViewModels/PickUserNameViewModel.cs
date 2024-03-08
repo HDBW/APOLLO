@@ -8,7 +8,6 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
-using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -17,6 +16,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class PickUserNameViewModel : BaseViewModel
     {
         private string? _name;
+        private User? _user;
 
         public PickUserNameViewModel(
             IDispatcherService dispatcherService,
@@ -67,71 +67,30 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IPreferenceService PreferenceService { get; }
 
-        public override Task OnNavigatedToAsync()
+        public async override Task OnNavigatedToAsync()
         {
-            return ExecuteOnUIThreadAsync(
-               () =>
-               {
-                   ValidateCommand?.Execute(null);
-                   RefreshCommands();
-               }, CancellationToken.None);
-        }
-
-        protected override void RefreshCommands()
-        {
-            base.RefreshCommands();
-            CreateAccountCommand?.NotifyCanExecuteChanged();
-        }
-
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateAccount))]
-        private async Task CreateAccount(CancellationToken token)
-        {
-            Logger.LogInformation($"Invoked {nameof(CreateAccountCommand)} in {GetType().Name}.");
-            using (var worker = ScheduleWork(token))
+            using (var worker = ScheduleWork())
             {
                 try
                 {
-                    User? user = null;
-                    
-                       user = await UserService.GetAsync(Guid.NewGuid().ToString(), token).ConfigureAwait(false);
-                    }
-                    catch (ApolloApiException ex)
+                    _user = null;
+                    _user = await UserService.GetAsync(SessionService.UniqueId!, worker.Token).ConfigureAwait(false);
+
+                    if (_user == null)
                     {
-                        switch (ex.ErrorCode)
-                        {
-                            case ErrorCodes.UserErrors.UserNotFound:
-                        }
-                    }
-                    if (user == null)
-                    {
-                        user = new User();
-                        user.ObjectId = SessionService.UniqueId!;
+                        _user = new User();
+                        _user.ObjectId = SessionService.UniqueId!;
                     }
 
-                    user.Upn = SessionService.AccountId!.Identifier;
-                    user.IdentityProvicer = SessionService.AccountId!.TenantId;
-                    user.Name = Name!;
-                    var result = await UserService.SaveAsync(user, worker.Token).ConfigureAwait(false);
-
-                    if (string.IsNullOrWhiteSpace(result))
-                    {
-                        throw new NotSupportedException("Unable to create user.");
-                    }
-
-                    user = await UserService.GetAsync(result, worker.Token).ConfigureAwait(false);
-                    if (user == null)
-                    {
-                        throw new NotSupportedException("Unable to create user.");
-                    }
-
-                    if (!await UserRepository.SaveAsync(user, worker.Token).ConfigureAwait(false))
-                    {
-                        throw new NotSupportedException("Unable to save user.");
-                    }
-
-                    PreferenceService.SetValue(Preference.RegisteredUserId, user.Id);
-
-                    await NavigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
+                    _user.Upn = SessionService.AccountId!.Identifier;
+                    _user.IdentityProvicer = SessionService.AccountId!.TenantId;
+                    await ExecuteOnUIThreadAsync(
+                       () =>
+                       {
+                           Name = _user.Name;
+                           ValidateCommand?.Execute(null);
+                           RefreshCommands();
+                       }, CancellationToken.None);
                 }
                 catch (OperationCanceledException)
                 {
@@ -153,9 +112,71 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            CreateAccountCommand?.NotifyCanExecuteChanged();
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanCreateAccount))]
+        private async Task CreateAccount(CancellationToken token)
+        {
+            Logger.LogInformation($"Invoked {nameof(CreateAccountCommand)} in {GetType().Name}.");
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    _user!.Name = Name!;
+                    var result = await UserService.SaveAsync(_user, worker.Token).ConfigureAwait(false);
+
+                    if (string.IsNullOrWhiteSpace(result))
+                    {
+                        throw new NotSupportedException("Unable to create user.");
+                    }
+
+                    _user = await UserService.GetAsync(result, worker.Token).ConfigureAwait(false);
+                    if (_user == null)
+                    {
+                        throw new NotSupportedException("Unable to create user.");
+                    }
+
+                    if (string.IsNullOrWhiteSpace(_user.Id))
+                    {
+                        throw new NotSupportedException("User does not have id.");
+                    }
+
+                    if (!await UserRepository.SaveAsync(_user, worker.Token).ConfigureAwait(false))
+                    {
+                        throw new NotSupportedException("Unable to save user.");
+                    }
+
+                    PreferenceService.SetValue(Preference.RegisteredUserId, _user.Id);
+
+                    await NavigationService.PushToRootAsync(Routes.Shell, CancellationToken.None);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(CreateAccount)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(CreateAccount)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(CreateAccount)} in {GetType().Name}.");
+                    await ShowErrorAsync(Resources.Strings.Resources.GlobalError_UnableToSaveData, worker.Token).ConfigureAwait(false);
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
         private bool CanCreateAccount()
         {
-            return !IsBusy && !HasErrors && !string.IsNullOrWhiteSpace(SessionService.UniqueId);
+            return !IsBusy && !HasErrors && _user != null && !string.IsNullOrWhiteSpace(SessionService.UniqueId);
         }
     }
 }

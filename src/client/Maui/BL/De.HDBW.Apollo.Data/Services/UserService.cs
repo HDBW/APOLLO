@@ -42,14 +42,8 @@ namespace De.HDBW.Apollo.Data.Services
                     }
                     catch (ApolloApiException ex)
                     {
-                        Logger?.LogError(ex, $"Unknown error in {nameof(GetAsync)} in {GetType().Name}.");
-
-                        switch (ex.ErrorCode)
-                        {   case ErrorCodes.ProfileErrors.ProfileNotFound:
-                                break;
-                            default:
-                                throw;
-                        }
+                        profile = null;
+                        Logger.LogDebug(ex, $"{nameof(ApolloApiException)} when getting Profile.");
                     }
                     catch (Exception ex)
                     {
@@ -62,6 +56,7 @@ namespace De.HDBW.Apollo.Data.Services
             }
             catch (ApolloApiException ex)
             {
+                Logger.LogDebug(ex, $"{nameof(ApolloApiException)} when getting User.");
                 switch (ex.ErrorCode)
                 {
                     case ErrorCodes.UserErrors.UserNotFound:
