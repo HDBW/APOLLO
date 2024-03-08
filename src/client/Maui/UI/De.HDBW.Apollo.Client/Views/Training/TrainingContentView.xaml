@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Training.TrainingContentView"
              xmlns:system="clr-namespace:System;assembly=netstandard"
@@ -15,7 +15,9 @@
     <CollectionView ItemsSource="{x:Binding Sections}">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="system:String">
-                <Label Text="{x:Binding}" TextType="Html" Padding="24,0"/>
+                <ContentView>
+                    <Label Text="{x:Binding}" TextType="Html" Margin="24,0"/>
+                </ContentView>
             </DataTemplate>
         </CollectionView.ItemTemplate>
         <CollectionView.ItemsLayout>

@@ -18,18 +18,23 @@ namespace De.HDBW.Apollo.Client
             IServiceProvider provider,
             IPreferenceService preferenceService,
             ISessionService sessionService,
+            INetworkService networkService,
             INavigationService navigationService)
         {
+            ArgumentNullException.ThrowIfNull(provider);
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(networkService);
+            ArgumentNullException.ThrowIfNull(navigationService);
             _serviceProvider = provider;
             _sessionService = sessionService;
             _preferenceService = preferenceService;
             InitializeComponent();
-
             if (!_preferenceService.GetValue(Preference.ConfirmedDataUsage, false))
             {
                 MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, _serviceProvider) as Page);
             }
-            else if (!_sessionService.HasRegisteredUser)
+            else if (!_sessionService.HasRegisteredUser && networkService.HasNetworkConnection)
             {
                 MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.RegistrationView, _serviceProvider) as Page);
             }

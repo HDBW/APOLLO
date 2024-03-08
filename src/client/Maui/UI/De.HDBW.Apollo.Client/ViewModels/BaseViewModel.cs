@@ -150,6 +150,24 @@ namespace De.HDBW.Apollo.Client.ViewModels
             DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
         }
 
+        protected void UnscheduleAllWork()
+        {
+            var existingWorkers = Workers.ToList();
+            foreach (var kv in existingWorkers)
+            {
+                if (string.IsNullOrWhiteSpace(kv.Key))
+                {
+                    return;
+                }
+
+                Workers.Remove(kv.Key, out CancellationTokenSource? token);
+                token?.Cancel();
+                token?.Dispose();
+            }
+
+            DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
+        }
+
         protected Task ExecuteOnUIThreadAsync(Action methodeToExecute, CancellationToken token)
         {
             return DispatcherService.SafeExecuteOnMainThreadAsync(methodeToExecute, Logger, token);

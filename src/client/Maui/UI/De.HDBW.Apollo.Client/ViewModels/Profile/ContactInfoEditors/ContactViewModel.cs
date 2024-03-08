@@ -45,11 +45,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
         private string? _country;
 
         [ObservableProperty]
-        [EmailAddress(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidEmail))]
+        [NullableEmailAddress(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidEmail))]
         private string? _email;
 
         [ObservableProperty]
-        [Phone(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidPhoneNumber))]
+        [NullablePhone(ErrorMessageResourceType = typeof(Resources.Strings.Resources), ErrorMessageResourceName = nameof(Resources.Strings.Resources.GlobalError_InvalidPhoneNumber))]
         private string? _phone;
 
         public ContactViewModel(

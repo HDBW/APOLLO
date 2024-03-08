@@ -233,7 +233,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     return;
                 }
 
-                await Task.Delay(500, token.Value);
+                await Task.Delay(500, token.Value).ConfigureAwait(false);
                 token.Value.ThrowIfCancellationRequested();
 
                 var result = string.IsNullOrWhiteSpace(searchtext)

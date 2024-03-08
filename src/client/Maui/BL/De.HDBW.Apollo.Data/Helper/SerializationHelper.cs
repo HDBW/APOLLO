@@ -4,6 +4,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using De.HDBW.Apollo.Data.JsonConverter;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 
 namespace De.HDBW.Apollo.Data.Helper
 {
@@ -15,7 +16,7 @@ namespace De.HDBW.Apollo.Data.Helper
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             WriteIndented = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            Converters = { new CultureInfoJsonConverter() },
+            Converters = { new CultureInfoJsonConverter(), new ApolloApiExceptionConverter() },
         };
 
         public static string? Serialize<TU>(this TU? data)

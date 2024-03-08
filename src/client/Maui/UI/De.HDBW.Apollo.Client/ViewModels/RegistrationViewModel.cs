@@ -212,22 +212,30 @@ namespace De.HDBW.Apollo.Client.ViewModels
 #if !DEBUG
                     authentication = await AuthService.SignInInteractively(worker.Token);
 #else
-                    authentication = new AuthenticationResult(
-                          accessToken: "Mock",
-                          isExtendedLifeTimeToken: true,
-                          uniqueId: "Mock",
-                          expiresOn: DateTimeOffset.MaxValue,
-                          extendedExpiresOn: DateTimeOffset.MaxValue,
-                          tenantId: "Mock",
-                          account: new DummyAccount(),
-                          idToken: "Mock",
-                          scopes: new List<string>(),
-                          correlationId: Guid.Empty,
-                          tokenType: "Bearer",
-                          authenticationResultMetadata: null,
-                          claimsPrincipal: null,
-                          spaAuthCode: null,
-                          additionalResponseParameters: null);
+                    switch (DeviceInfo.Current.DeviceType)
+                    {
+                        case DeviceType.Physical:
+                            authentication = await AuthService.SignInInteractively(worker.Token);
+                            break;
+                        case DeviceType.Virtual:
+                            authentication = new AuthenticationResult(
+                              accessToken: "Mock",
+                              isExtendedLifeTimeToken: true,
+                              uniqueId: "Mock",
+                              expiresOn: DateTimeOffset.MaxValue,
+                              extendedExpiresOn: DateTimeOffset.MaxValue,
+                              tenantId: "Mock",
+                              account: new DummyAccount(),
+                              idToken: "Mock",
+                              scopes: new List<string>(),
+                              correlationId: Guid.Empty,
+                              tokenType: "Bearer",
+                              authenticationResultMetadata: null,
+                              claimsPrincipal: null,
+                              spaAuthCode: null,
+                              additionalResponseParameters: null);
+                            break;
+                    }
 #endif
                 }
                 catch (OperationCanceledException)

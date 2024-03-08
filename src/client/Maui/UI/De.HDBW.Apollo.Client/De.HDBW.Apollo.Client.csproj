@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios;</TargetFrameworks>
     <OutputType>Exe</OutputType>
@@ -14,7 +14,7 @@
     <ApplicationIdGuid>1AAEF2B7-B10F-4EA6-969F-C63389D98EBE</ApplicationIdGuid>
     <!-- Versions -->
     <ApplicationDisplayVersion>0.2</ApplicationDisplayVersion>
-    <ApplicationVersion>27</ApplicationVersion>
+    <ApplicationVersion>28</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
@@ -146,7 +146,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.68" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.70" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.22.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
@@ -159,7 +159,7 @@
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
-    <PackageReference Include="Svg.Skia" Version="1.0.0.13" />
+    <PackageReference Include="Svg.Skia" Version="1.0.0.14" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />

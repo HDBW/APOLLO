@@ -72,6 +72,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             WeakReferenceMessenger.Default.Register<FilterChangedMessage>(this, OnFilterChangedMessage);
             WeakReferenceMessenger.Default.Register<SheetDismissedMessage>(this, OnSheetDismissedMessage);
             WeakReferenceMessenger.Default.Register<ShellContentChangedMessage>(this, OnShellContentChangedMessage);
+            WeakReferenceMessenger.Default.Register<FlyoutStateChangedMessage>(this, OnFlyoutStateChangedMessage);
         }
 
         public bool HasFilter
@@ -590,6 +591,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             recents = recents ?? Array.Empty<SearchHistory>();
+            recents = Array.Empty<SearchHistory>();
             suggestions = suggestions.Take(_maxSugestionItemsCount) ?? Array.Empty<TrainingModel>();
             var courses = suggestions.Where(x => !string.IsNullOrWhiteSpace(x.TrainingName)).Select(x => SearchSuggestionEntry.Import(x.TrainingName)).ToList();
             var history = recents.Take(Math.Max(_maxHistoryItemsCount - courses.Count, 0)).Select(x => HistoricalSuggestionEntry.Import(x)).ToList();
@@ -674,6 +676,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        private void OnFlyoutStateChangedMessage(object recipient, FlyoutStateChangedMessage message)
+        {
+            if (MainThread.IsMainThread)
+            {
+                UnscheduleAllWork();
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(() => UnscheduleAllWork());
+            }
+        }
+
         private void OnShellContentChangedMessage(object recipient, ShellContentChangedMessage message)
         {
             if (message.NewViewModelType != typeof(SearchViewModel))
@@ -691,6 +705,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private void CleanUp()
         {
+            UnscheduleAllWork();
             SearchResults = new ObservableCollection<SearchInteractionEntry>();
             _customFilter = null;
             _query = null;
