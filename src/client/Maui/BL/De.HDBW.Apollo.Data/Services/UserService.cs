@@ -27,23 +27,48 @@ namespace De.HDBW.Apollo.Data.Services
         public async Task<User?> GetAsync(string id, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var response = await DoGetAsync<GetUserResponse>(id, token).ConfigureAwait(false);
-            var user = response?.User;
-            if (!string.IsNullOrWhiteSpace(user?.Id))
+            User? user = null;
+            try
             {
-                var profileId = $"Profile-{user.Id}_v01";
-                Profile? profile = null;
-                try
+                var response = await DoGetAsync<GetUserResponse>(id, token).ConfigureAwait(false);
+                user = response?.User;
+                if (!string.IsNullOrWhiteSpace(user?.Id))
                 {
-                    profile = await ProfileService.GetAsync(profileId, token).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    profile = null;
-                    Logger?.LogError(ex, $"Unknown error in {nameof(GetAsync)} in {GetType().Name}.");
-                }
+                    var profileId = $"Profile-{user.Id}_v01";
+                    Profile? profile = null;
+                    try
+                    {
+                        profile = await ProfileService.GetAsync(profileId, token).ConfigureAwait(false);
+                    }
+                    catch (ApolloApiException ex)
+                    {
+                        Logger?.LogError(ex, $"Unknown error in {nameof(GetAsync)} in {GetType().Name}.");
 
-                user.Profile = profile;
+                        switch (ex.ErrorCode)
+                        {   case ErrorCodes.ProfileErrors.ProfileNotFound:
+                                break;
+                            default:
+                                throw;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        profile = null;
+                        Logger?.LogError(ex, $"Unknown error in {nameof(GetAsync)} in {GetType().Name}.");
+                    }
+
+                    user.Profile = profile;
+                }
+            }
+            catch (ApolloApiException ex)
+            {
+                switch (ex.ErrorCode)
+                {
+                    case ErrorCodes.UserErrors.UserNotFound:
+                        break;
+                    default:
+                        throw;
+                }
             }
 
             return user;

@@ -8,6 +8,7 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -90,7 +91,17 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var user = await UserService.GetAsync(Guid.NewGuid().ToString(), token).ConfigureAwait(false);
+                    User? user = null;
+                    
+                       user = await UserService.GetAsync(Guid.NewGuid().ToString(), token).ConfigureAwait(false);
+                    }
+                    catch (ApolloApiException ex)
+                    {
+                        switch (ex.ErrorCode)
+                        {
+                            case ErrorCodes.UserErrors.UserNotFound:
+                        }
+                    }
                     if (user == null)
                     {
                         user = new User();
