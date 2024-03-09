@@ -1,4 +1,12 @@
-﻿// (c) Licensed to the HDBW under one or more agreements.
-// The HDBW licenses this file to you under the MIT license.
+﻿namespace Apollo.SemanticSearch.ExporterConsole
+{
+    internal class Program
+    {
+        static async Task Main(string[] args)
+        {
+            Console.WriteLine("Hello, World!");
+        }
 
-Console.WriteLine("Hello, World!");
+    }
+}
+
