@@ -100,7 +100,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(ImageData);
+                return !string.IsNullOrWhiteSpace(SublineImagePath);
             }
         }
 
