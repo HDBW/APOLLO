@@ -38,8 +38,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private List<TrainingModel> _trainings = new List<TrainingModel>();
 
-        private decimal _maxPrice;
-
         public FavoriteViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -84,6 +82,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     filter.IsOrOperator = true;
                     var interactions = await SearchTrainingsAsync(filter, worker.Token).ConfigureAwait(false);
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token).ConfigureAwait(false);
+                    _loadingCts?.Cancel();
+                    _loadingCts = new CancellationTokenSource();
+                    _loadingTask = new List<Task>();
+                    var loadingToken = _loadingCts.Token;
+                    foreach (var url in _loadingCache.Keys.ToList())
+                    {
+                        _loadingTask.Add(ImageCacheService.DownloadAsync(url, loadingToken).ContinueWith(OnApplyImageData));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -162,48 +168,45 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             token.ThrowIfCancellationRequested();
             var visibleFields = new List<string>()
-                    {
-                        nameof(TrainingModel.Id),
-                        nameof(TrainingModel.TrainingName),
-                        nameof(TrainingModel.TrainingType),
-                        nameof(TrainingModel.ShortDescription),
-                        KnownFilters.PriceFieldName,
-                        $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Name)}",
-                        $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Image)}",
-                        $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Name)}",
-                        $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Image)}",
-                        KnownFilters.LoansFieldName,
-                        KnownFilters.IndividualStartDateFieldName,
-                        KnownFilters.AccessibilityAvailableFieldName,
-                        KnownFilters.TrainingsModeFieldName,
-                        KnownFilters.AppointmenTrainingsModeFieldName,
-                        KnownFilters.AppointmenTrainingsTimeModelFieldName,
-                        KnownFilters.AppointmenStartDateFieldName,
-                        KnownFilters.AppointmenEndDateFieldName,
-                        KnownFilters.OccurenceStartDateFieldName,
-                        KnownFilters.OccurenceEndDateFieldName,
-                    };
+                {
+                    nameof(TrainingModel.Id),
+                    nameof(TrainingModel.TrainingName),
+                    nameof(TrainingModel.TrainingType),
+                    nameof(TrainingModel.ShortDescription),
+                    nameof(TrainingModel.ProviderId),
+                    KnownFilters.PriceFieldName,
+                    $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Name)}",
+                    $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Image)}",
+                    $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Name)}",
+                    $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Image)}",
+                    KnownFilters.LoansFieldName,
+                    KnownFilters.IndividualStartDateFieldName,
+                    KnownFilters.AccessibilityAvailableFieldName,
+                    KnownFilters.TrainingsModeFieldName,
+                    KnownFilters.AppointmenTrainingsModeFieldName,
+                    KnownFilters.AppointmenTrainingsTimeModelFieldName,
+                    KnownFilters.AppointmenStartDateFieldName,
+                    KnownFilters.AppointmenEndDateFieldName,
+                    KnownFilters.OccurenceStartDateFieldName,
+                    KnownFilters.OccurenceEndDateFieldName,
+                };
 
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
             items = items ?? new List<TrainingModel>();
             _trainings = items.ToList();
             _customFilter = null;
             var result = new List<SearchInteractionEntry>();
-            result.AddRange(CreateTrainingResults(_trainings, true));
+            result.AddRange(CreateTrainingResults(_trainings));
             return result;
         }
 
-        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items, bool setMaxPrice)
+        private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items)
         {
             _loadingCache.Clear();
             _loadingCts?.Cancel();
             _loadingCts = null;
             _loadingTask = null;
             var trainings = new List<SearchInteractionEntry>();
-            if (setMaxPrice)
-            {
-                _maxPrice = 0;
-            }
 
             foreach (var item in items)
             {
@@ -214,10 +217,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
 
                 var text = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
-                if (setMaxPrice)
-                {
-                    _maxPrice = Math.Max(_maxPrice, Convert.ToDecimal(item.Price ?? 0));
-                }
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
                 var decoratorImagePath = KnonwIcons.Training;
