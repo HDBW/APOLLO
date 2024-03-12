@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Apollo.SemanticSearch.ExporterConsole
 {
+    
     public class SemanticExporter
     {
     }

@@ -410,10 +410,11 @@ namespace Apollo.Api
 
 
         /// <summary>
-        /// Delete Trainings with specified Ids.
+        /// Asynchronously deletes multiple Training instances.
         /// </summary>
-        /// <param name="deletingIds">The list of training identifiers.</param>
-        /// <returns>The numbe rof deleted trainings.</returns>
+        /// <param name="deletingIds">An array of identifiers of the Training instances to delete.</param>
+        /// <returns>A Task that represents the asynchronous operation. The task result contains the number of deleted Training instances.</returns>
+        /// <exception cref="ApolloApiException">Thrown when there is an error during the operation.</exception>
         public virtual async Task<long> DeleteTrainingsAsync(string[] deletingIds)
         {
             try
@@ -433,6 +434,8 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
             }
         }
+
+        
 
         /// <summary>
         /// Delete All Trainings with a specified Prover Id.
