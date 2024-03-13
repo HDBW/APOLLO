@@ -3,31 +3,33 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Training;
 
-namespace De.HDBW.Apollo.Client.Views.Training;
-[XamlCompilation(XamlCompilationOptions.Skip)]
-public partial class TrainingContentView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Training
 {
-    public TrainingContentView(TrainingContentViewModel model)
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class TrainingContentView : ContentPage
     {
-#if DEBUG
-        System.Diagnostics.Debug.WriteLine($"Create {GetType()}");
-#endif
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    ~TrainingContentView()
-    {
-#if DEBUG
-        System.Diagnostics.Debug.WriteLine($"~{GetType()}");
-#endif
-    }
-
-    public TrainingContentViewModel? ViewModel
-    {
-        get
+        public TrainingContentView(TrainingContentViewModel model)
         {
-            return BindingContext as TrainingContentViewModel;
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine($"Create {GetType()}");
+#endif
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        ~TrainingContentView()
+        {
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine($"~{GetType()}");
+#endif
+        }
+
+        public TrainingContentViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as TrainingContentViewModel;
+            }
         }
     }
 }

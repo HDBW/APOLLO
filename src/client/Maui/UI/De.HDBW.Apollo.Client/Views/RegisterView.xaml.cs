@@ -1,6 +1,5 @@
-// <copyright file="RegisterView.xaml.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
 
 #if DEBUG
 using System.Diagnostics;

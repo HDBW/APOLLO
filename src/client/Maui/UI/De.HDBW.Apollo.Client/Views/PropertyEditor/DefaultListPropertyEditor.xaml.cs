@@ -1,12 +1,13 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-namespace De.HDBW.Apollo.Client.Views.PropertyEditor;
-
-public partial class DefaultListPropertyEditor : ContentView
+namespace De.HDBW.Apollo.Client.Views.PropertyEditor
 {
-    public DefaultListPropertyEditor()
+    public partial class DefaultListPropertyEditor : ContentView
     {
-        InitializeComponent();
+        public DefaultListPropertyEditor()
+        {
+            InitializeComponent();
+        }
     }
 }
