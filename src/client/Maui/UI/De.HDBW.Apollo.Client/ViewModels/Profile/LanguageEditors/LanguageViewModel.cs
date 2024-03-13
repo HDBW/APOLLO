@@ -38,6 +38,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         private string? _selectionResult;
 
         private CultureInfo? _culture;
+        private List<string> _existingLanguages;
 
         public LanguageViewModel(
             IDispatcherService dispatcherService,
@@ -65,6 +66,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         {
             token.ThrowIfCancellationRequested();
             var language = user?.Profile?.LanguageSkills?.FirstOrDefault(x => x.Id == enityId);
+            var existinglanguages = user?.Profile?.LanguageSkills?.Where(x => x != language).Select(x => x.Name).ToList() ?? new List<string>();
             var niveau = language?.Niveau;
             var culture = string.IsNullOrWhiteSpace(language?.Name) ? null : CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.Name == language!.Name);
 #if ANDROID
@@ -110,6 +112,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             }
 
             isDirty = culture?.Name != language?.Name || niveau != language?.Niveau;
+            if (!string.IsNullOrWhiteSpace(culture?.Name))
+            {
+                existinglanguages.Add(culture.Name);
+                existinglanguages = existinglanguages.Distinct().ToList();
+            }
 
             var languageNiveaus = new List<InteractionEntry>();
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_A1, LanguageNiveau.A1, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
@@ -119,7 +126,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C1, LanguageNiveau.C1, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             languageNiveaus.Add(InteractionEntry.Import(Resources.Strings.Resources.LanguageNiveau_C2, LanguageNiveau.C2, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
             var selectedNivau = languageNiveaus.FirstOrDefault(x => ((LanguageNiveau?)x.Data) == niveau?.AsEnum<LanguageNiveau>());
-            await ExecuteOnUIThreadAsync(() => LoadonUIThread(culture, name, languageNiveaus.AsSortedList(), selectedNivau, isDirty), token).ConfigureAwait(false);
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(culture, name, languageNiveaus.AsSortedList(), selectedNivau, isDirty, existinglanguages), token).ConfigureAwait(false);
             return language;
         }
 
@@ -161,9 +168,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
             IsDirty = true;
         }
 
-        private void LoadonUIThread(CultureInfo? culture, string? name, List<InteractionEntry> languageNiveaus, InteractionEntry? selectedNivau, bool isDirty)
+        private void LoadonUIThread(CultureInfo? culture, string? name, List<InteractionEntry> languageNiveaus, InteractionEntry? selectedNivau, bool isDirty, List<string> existingLanguages)
         {
             _culture = culture;
+            _existingLanguages = existingLanguages;
             LanguageName = name;
             LanguageNiveaus = new ObservableCollection<InteractionEntry>(languageNiveaus);
             SelectedLanguageNiveau = selectedNivau ?? LanguageNiveaus.FirstOrDefault();
@@ -190,6 +198,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
                     _savedState = data;
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.SavedState, data);
+                    var filteredLanguages = string.Join(",", _existingLanguages);
+                    parameters.AddValue(NavigationParameter.Data, filteredLanguages);
                     await NavigationService.NavigateAsync(Routes.LanguageSearchView, token, parameters);
                 }
                 catch (OperationCanceledException)
