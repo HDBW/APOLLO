@@ -14,7 +14,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class LicensesViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private string _licensText;
+        private string? _licensText;
 
         public LicensesViewModel(
             IDispatcherService dispatcherService,
@@ -36,11 +36,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     {
                         using (var reader = new StreamReader(stream))
                         {
-
                             licenses = reader.ReadToEnd();
                         }
-
                     }
+
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(licenses), worker.Token).ConfigureAwait(false);
                 }
                 catch (Exception ex)

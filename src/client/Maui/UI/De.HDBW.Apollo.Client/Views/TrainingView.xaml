@@ -16,8 +16,8 @@
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon}" />
-        <ToolbarItem Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
+        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon}" />
+        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <DataTemplate x:Key="TrainingsHeaderItemTemplate" x:DataType="trainingsModels:TrainingsHeaderItem">

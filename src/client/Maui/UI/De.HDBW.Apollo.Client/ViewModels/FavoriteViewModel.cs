@@ -33,9 +33,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private CancellationTokenSource? _loadingCts;
         private List<Task>? _loadingTask;
 
-        private Filter? _customFilter;
-        private string? _query;
-
         private List<TrainingModel> _trainings = new List<TrainingModel>();
 
         private decimal _maxPrice;
@@ -187,7 +184,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
             items = items ?? new List<TrainingModel>();
             _trainings = items.ToList();
-            _customFilter = null;
             var result = new List<SearchInteractionEntry>();
             result.AddRange(CreateTrainingResults(_trainings, true));
             return result;

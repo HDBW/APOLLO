@@ -609,7 +609,7 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
         }
- 
+
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
 #if IOS
