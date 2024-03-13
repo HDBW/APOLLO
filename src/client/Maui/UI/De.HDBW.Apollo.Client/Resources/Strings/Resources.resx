@@ -1480,4 +1480,10 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="Global_PriceFreeOfCharge" xml:space="preserve">
     <value>Kostenlos</value>
   </data>
+  <data name="LicensesView_Title" xml:space="preserve">
+    <value>Lizenzen</value>
+  </data>
+  <data name="SettingsView_Licenses" xml:space="preserve">
+    <value>Lizenzen</value>
+  </data>
 </root>

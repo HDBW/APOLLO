@@ -27,6 +27,7 @@
         <Button Grid.Column="0" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Terms}" Command="{x:Binding OpenTermsCommand}"/>
         <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Privacy}" Command="{x:Binding OpenPrivacyCommand}"/>
         <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Imprint}" Command="{x:Binding OpenImprintCommand}"/>
+        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Licenses}" Command="{x:Binding OpenLicensesCommand}"/>
     </Grid>
    
 </ContentPage>

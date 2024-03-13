@@ -47,6 +47,7 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="LICENSE" />
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_icon_tint.xml" />
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_tint.xml" />
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
@@ -142,6 +143,7 @@
     <None Remove="Resources\Images\user3.svg" />
     <None Remove="Resources\Images\watch.svg" />
     <None Remove="Resources\Images\web.svg" />
+    <None Remove="Resources\Raw\LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
@@ -190,6 +192,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\FavoriteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\LicensesView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\PickUserNameView.xaml">
@@ -352,6 +357,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\LicensesView.xaml.cs">
+      <DependentUpon>LicensesView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\TrainingView.xaml.cs">
       <DependentUpon>TrainingView.xaml</DependentUpon>
     </Compile>
@@ -396,4 +404,5 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
 </Project>
