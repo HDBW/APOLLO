@@ -44,6 +44,7 @@ namespace De.HDBW.Apollo.Client.Models
         public const string SearchFilterSheet = "/SearchFilterSheet";
 
         public const string SettingsView = "/SettingsView";
+        public const string LicensesView = "/LicensesView";
 
         public const string FeedbackView = "/FeedbackView";
 

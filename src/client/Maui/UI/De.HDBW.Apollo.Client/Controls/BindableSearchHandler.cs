@@ -118,10 +118,6 @@ namespace De.HDBW.Apollo.Client.Controls
             }
 #endif
             base.OnPropertyChanged(propertyName);
-            if (propertyName == nameof(IsFocused))
-            {
-
-            }
         }
 
         private static void HandleSuggestionsChanged(BindableObject bindable, object oldValue, object newValue)

@@ -3,23 +3,24 @@
 
 using CommunityToolkit.Maui.Core.Platform;
 
-namespace De.HDBW.Apollo.Client.Views.PropertyEditor;
-
-public partial class DefaultStringPropertyEditor : ContentView
+namespace De.HDBW.Apollo.Client.Views.PropertyEditor
 {
-    public DefaultStringPropertyEditor()
+    public partial class DefaultStringPropertyEditor : ContentView
     {
-        InitializeComponent();
-    }
-
-    private void HandleUnfocused(object sender, FocusEventArgs e)
-    {
-        var entry = sender as Entry;
-        if (!(entry?.IsFocused ?? true))
+        public DefaultStringPropertyEditor()
         {
-            return;
+            InitializeComponent();
         }
 
-        entry?.HideKeyboardAsync(CancellationToken.None);
+        private void HandleUnfocused(object sender, FocusEventArgs e)
+        {
+            var entry = sender as Entry;
+            if (!(entry?.IsFocused ?? true))
+            {
+                return;
+            }
+
+            entry?.HideKeyboardAsync(CancellationToken.None);
+        }
     }
 }

@@ -6,33 +6,34 @@ using System.Diagnostics;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client.Views;
-
-public partial class FavoriteView
+namespace De.HDBW.Apollo.Client.Views
 {
-    public FavoriteView(FavoriteViewModel model)
+    public partial class FavoriteView
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public FavoriteView()
-    {
-        InitializeComponent();
-    }
-
-    ~FavoriteView()
-    {
-#if DEBUG
-        Debug.WriteLine($"~{GetType()}");
-#endif
-    }
-
-    public FavoriteViewModel? ViewModel
-    {
-        get
+        public FavoriteView(FavoriteViewModel model)
         {
-            return BindingContext as FavoriteViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public FavoriteView()
+        {
+            InitializeComponent();
+        }
+
+        ~FavoriteView()
+        {
+#if DEBUG
+            Debug.WriteLine($"~{GetType()}");
+#endif
+        }
+
+        public FavoriteViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as FavoriteViewModel;
+            }
         }
     }
 }

@@ -81,6 +81,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IFavoriteRepository FavoriteRepository { get; }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            OpenPrivacyCommand?.NotifyCanExecuteChanged();
+            OpenMailCommand?.NotifyCanExecuteChanged();
+            OpenLicensesCommand?.NotifyCanExecuteChanged();
+            OpenImprintCommand?.NotifyCanExecuteChanged();
+        }
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
         private async Task UnRegister(CancellationToken token)
         {
@@ -237,6 +246,41 @@ namespace De.HDBW.Apollo.Client.ViewModels
         }
 
         private bool CanOpenMail()
+        {
+            return !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenLicenses))]
+
+        private async Task OpenLicenses(CancellationToken token)
+        {
+            Logger.LogInformation($"Invoked {nameof(OpenLicensesCommand)} in {GetType().Name}.");
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.LicensesView, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenLicenses)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenLicenses)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenLicenses)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenLicenses()
         {
             return !IsBusy;
         }

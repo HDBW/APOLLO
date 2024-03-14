@@ -4,31 +4,32 @@
 using System.Diagnostics;
 using De.HDBW.Apollo.Client.ViewModels.Training;
 
-namespace De.HDBW.Apollo.Client.Views.Training;
-
-public partial class AppointmentsView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Training
 {
-    public AppointmentsView(AppointmentsViewModel model)
+    public partial class AppointmentsView : ContentPage
     {
-#if DEBUG
-        Debug.WriteLine($"Create {GetType()}");
-#endif
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    ~AppointmentsView()
-    {
-#if DEBUG
-        Debug.WriteLine($"~{GetType()}");
-#endif
-    }
-
-    public AppointmentsViewModel? ViewModel
-    {
-        get
+        public AppointmentsView(AppointmentsViewModel model)
         {
-            return BindingContext as AppointmentsViewModel;
+#if DEBUG
+            Debug.WriteLine($"Create {GetType()}");
+#endif
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        ~AppointmentsView()
+        {
+#if DEBUG
+            Debug.WriteLine($"~{GetType()}");
+#endif
+        }
+
+        public AppointmentsViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as AppointmentsViewModel;
+            }
         }
     }
 }

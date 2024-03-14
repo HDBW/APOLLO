@@ -383,6 +383,8 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<SettingsView>();
             services.AddTransient<SettingsViewModel>();
+            services.AddTransient<LicensesView>();
+            services.AddTransient<LicensesViewModel>();
 
             services.AddTransient<FavoriteView>();
             services.AddTransient<FavoriteViewModel>();
@@ -499,6 +501,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
             Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
             Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
+            Routing.RegisterRoute(Routes.LicensesView, typeof(LicensesView));
 
             Routing.RegisterRoute(Routes.TrainingView, typeof(TrainingView));
             Routing.RegisterRoute(Routes.LoansView, typeof(LoansView));
@@ -606,7 +609,7 @@ namespace De.HDBW.Apollo.Client
 #endif
             });
         }
- 
+
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
 #if IOS
