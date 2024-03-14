@@ -105,6 +105,42 @@ namespace Apollo.Api.UnitTests
         }
 
 
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task UpdateUserWithNullDataTest()
+        {
+            var api = Helpers.GetApolloApi();
+
+            // Create a new user
+            var user = new User { Name = "John Doe", Email = "johndoe@example.com" };
+
+            // Insert the new user
+            var userIds = await api.CreateOrUpdateUserAsync(new List<User> { user });
+            Assert.IsNotNull(userIds);
+            Assert.AreEqual(1, userIds.Count);
+
+            // Retrieve and verify the inserted user
+            var insertedUser = await api.GetUserById(userIds.First());
+            Assert.IsNotNull(insertedUser);
+            Assert.AreEqual("John Doe", insertedUser.Name);
+
+            // Update the user with null data
+            insertedUser.Email = null;
+
+            // Update the user
+            var updatedUserIds = await api.CreateOrUpdateUserAsync(new List<User> { insertedUser });
+            Assert.IsNotNull(updatedUserIds);
+            Assert.AreEqual(1, updatedUserIds.Count);
+
+            // Retrieve and verify the updated user
+            var updatedUser = await api.GetUserById(updatedUserIds.First());
+            Assert.IsNotNull(updatedUser);
+            Assert.IsNull(updatedUser.Email);
+
+            // Clean up: Delete the user
+            await api.DeleteUsers(updatedUserIds.ToArray());
+        }
+
         //Case 1: Single User with ID
         /// <summary>
         /// Tests the CreateOrUpdateUser method by creating and then updating a user with a specific ID.

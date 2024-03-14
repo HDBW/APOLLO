@@ -102,15 +102,15 @@ namespace Daenet.MongoDal
             await coll.InsertOneAsync(new BsonDocument(document));
         }
 
-
         /// <summary>
-        /// 
+        /// Upserts documents into the specified collection.
         /// </summary>
-        /// <param name="collectionName"></param>
-        /// <param name="documents"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public async Task<UpsertResult> UpsertAsync(string collectionName, ICollection<ExpandoObject> documents)
+        /// <param name="collectionName">The name of the collection where documents will be upserted.</param>
+        /// <param name="documents">The documents to be upserted.</param>
+        /// <param name="isBackendServiceCall">Specifies whether the call is made from a backend service. Defaults to false.</param>
+        /// <returns>An UpsertResult indicating the outcome of the operation.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="collectionName"/> or <paramref name="documents"/> is null.</exception>
+        public async Task<UpsertResult> UpsertAsync(string collectionName, ICollection<ExpandoObject> documents, bool isBakendServiceCall = false)
         {
             if (documents == null)
                 throw new ArgumentNullException($"Argument {nameof(documents)} cannot be nulL!");
@@ -136,7 +136,7 @@ namespace Daenet.MongoDal
                     //    Builders<BsonDocument>.Filter.Eq("ShredKey", item[ShredKey]);
 
                     BsonDocument? doc =
-                        await coll.FindOneAndUpdateAsync<BsonDocument>(filter, BuildUpdate(item as ExpandoObject),
+                        await coll.FindOneAndUpdateAsync<BsonDocument>(filter, BuildUpdate(item as ExpandoObject, isBakendServiceCall),
                         new FindOneAndUpdateOptions<BsonDocument>
                         {
                             IsUpsert = true,
@@ -176,7 +176,7 @@ namespace Daenet.MongoDal
         /// <param name="doc">The document to build the update definition for.</param>
         /// <returns>The update definition for the given document.</returns>
         /// <exception cref="ArgumentNullException">Thrown when the given document is null.</exception>
-        private UpdateDefinition<BsonDocument> BuildUpdate(ExpandoObject doc)
+        private UpdateDefinition<BsonDocument> BuildUpdate(ExpandoObject doc, bool isBakendServiceCall)
         {
             if (doc == null)
                 throw new ArgumentNullException("The argument doc cannot be null.");
@@ -186,10 +186,15 @@ namespace Daenet.MongoDal
 
             foreach (var prop in (IDictionary<string, object>)doc!)
             {
+
+                //
+                //Mongo doesn't allow changing Mongo IDs
                 if (prop.Key == "_id")
-                    continue; // Mongo doesn't allow changing Mongo IDs
-                else if (prop.Value == null)// TODO we cannot update existing value to NULL!
-                    continue;
+                    continue; 
+                else if (prop.Value == null && !isBakendServiceCall)
+                {
+                    updates.Add(builder.Set(prop.Key, prop.Value));
+                }
                 else
                 {
                     if (prop.Key == "CreatedAt" || prop.Key == "CreatedBy")
