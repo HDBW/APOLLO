@@ -33,6 +33,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private NavigationParameters? _parameters;
 
         private CancellationTokenSource? _cts;
+        private List<string> _filteredLanguages;
 
         public LanguageSearchViewModel(
             IDispatcherService dispatcherService,
@@ -94,6 +95,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         {
                             continue;
                         }
+
+                        if (_filteredLanguages.Contains(cultur.Name))
+                        {
+                            continue;
+                        }
 #if ANDROID
                         allCultures.Add(InteractionEntry.Import(cultur.DisplayName, cultur.Name, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
 #elif IOS
@@ -126,6 +132,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             _parameters = navigationParameters;
+            var data = navigationParameters.GetValue<string>(NavigationParameter.Data);
+            _filteredLanguages = new List<string>();
+            if (!string.IsNullOrWhiteSpace(data))
+            {
+                _filteredLanguages = data.Split(",").ToList();
+            }
         }
 
         protected override void RefreshCommands()
