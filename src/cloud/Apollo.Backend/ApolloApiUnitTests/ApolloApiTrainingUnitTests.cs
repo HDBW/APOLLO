@@ -21,7 +21,7 @@ namespace Apollo.Api.UnitTests
     public class ApolloApiTrainingUnitTests
     {
         Training[] _testTrainings = new Training[]
-          {
+           {
                 new Training(){  Id = "UT01", ProviderId = "unittest01", TrainingName = "Open AI",
                     PublishingDate = DateTime.Now, Price = 42.0, PriceDescription = "EUR",
                 Loans = new List<Loans>(
@@ -45,7 +45,7 @@ namespace Apollo.Api.UnitTests
                     )},
 
 
-          };
+           };
 
         Training[] _testTrainingwithAppointments = new Training[]
          {
