@@ -7,12 +7,13 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Apollo.Common.Entities;
 using Apollo.RestService.IntergrationTests;
+using Apollo.RestService.Messages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Driver;
 
 
-namespace TrainingControllerIntegrationTests
+namespace Apollo.RestService.IntergrationTests
 {
 
     /// <summary>
@@ -734,6 +735,7 @@ namespace TrainingControllerIntegrationTests
         /// and verifies the success of the operation by checking the response status code and the content.
         /// Before and after insertion, it ensures the clean-up of test data to maintain test environment integrity.
         /// </summary>
+        /// 
         private async Task InsertTestTrainings()
         {
             await CleanUp();
@@ -794,19 +796,19 @@ namespace TrainingControllerIntegrationTests
         {
             var httpClient = Helpers.GetHttpClient();
 
-            // Construct the query
-            var query = new Apollo.Common.Entities.Query
+           
+           var query = new Query
             {
                 Fields = new List<string> { "TrainingName" },
-                Filter = new Apollo.Common.Entities.Filter
+                Filter = new Filter
                 {
                     IsOrOperator = false,
-                    Fields = new List<Apollo.Common.Entities.FieldExpression>
+                    Fields = new List<FieldExpression>
                 {
-                    new Apollo.Common.Entities.FieldExpression
+                    new FieldExpression
                     {
                         FieldName = "TrainingName",
-                        Operator = Apollo.Common.Entities.QueryOperator.Equals,
+                        Operator = QueryOperator.Equals,
                         Argument = new List<object> { "Business English A2/B1" } // The name we are querying for
                     }
                 }
@@ -819,15 +821,15 @@ namespace TrainingControllerIntegrationTests
             var jsonQuery = JsonSerializer.Serialize(query);
             var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
 
-            // Execute the query against Api
-            var queryResponse = await httpClient.PostAsync($"{_cTrainingController}", queryContent);
+           // Execute the query against Api
+           var queryResponse = await httpClient.PostAsync($"{_cTrainingController}", queryContent);
             Assert.IsTrue(queryResponse.IsSuccessStatusCode);
 
-            // Deserialize the response
-            var responseJson = await queryResponse.Content.ReadAsStringAsync();
-            var trainingsResponse = JsonSerializer.Deserialize<Apollo.RestService.Messages.QueryTrainingsResponse>(responseJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            //Deserialize the response
+           var responseJson = await queryResponse.Content.ReadAsStringAsync();
+            var trainingsResponse = JsonSerializer.Deserialize<QueryTrainingsResponse>(responseJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            // Perform assertions 
+            //Perform assertions
             Assert.IsNotNull(trainingsResponse);
             Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "Business English A2/B1"));
         }
