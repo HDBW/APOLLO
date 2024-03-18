@@ -3,84 +3,92 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
-using De.HDBW.Apollo.Client.Contracts;
+using CommunityToolkit.Mvvm.Messaging;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client.Views
+namespace De.HDBW.Apollo.Client.Views;
+
+public partial class SearchView
 {
-    public partial class SearchView
+    public SearchView(SearchViewModel model)
     {
-        public SearchView(SearchViewModel model)
+        InitializeComponent();
+        BindingContext = model;
+        if (PART_SearchHandler.QueryIcon != null)
         {
-            InitializeComponent();
-            BindingContext = model;
-            if (PART_SearchHandler.QueryIcon != null)
-            {
-                PART_SearchHandler.QueryIcon.Parent = this;
-            }
-
-            if (PART_SearchHandler.ClearIcon != null)
-            {
-                PART_SearchHandler.ClearIcon.Parent = this;
-            }
+            PART_SearchHandler.QueryIcon.Parent = this;
         }
 
-        public SearchView()
+        if (PART_SearchHandler.ClearIcon != null)
         {
-            InitializeComponent();
+            PART_SearchHandler.ClearIcon.Parent = this;
         }
+    }
 
-        ~SearchView()
-        {
+    public SearchView()
+    {
+        InitializeComponent();
+    }
+
+    ~SearchView()
+    {
 #if DEBUG
-            Debug.WriteLine($"~{GetType()}");
+        Debug.WriteLine($"~{GetType()}");
 #endif
-        }
+    }
 
-        public SearchViewModel? ViewModel
+    public SearchViewModel? ViewModel
+    {
+        get
         {
-            get
-            {
-                return BindingContext as SearchViewModel;
-            }
+            return BindingContext as SearchViewModel;
         }
+    }
 
-        protected override void OnDisappearing()
+    protected override void OnDisappearing()
+    {
+        WeakReferenceMessenger.Default.Unregister<FlyoutStateChangedMessage>(this);
+        PART_Collection.PropertyChanged -= OnPropertyChanged;
+        base.OnDisappearing();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(200), PART_SearchHandler.Close);
+        PART_Collection.PropertyChanged += OnPropertyChanged;
+        WeakReferenceMessenger.Default.Register<FlyoutStateChangedMessage>(this, OnFlyoutStateChangedMessage);
+    }
+
+    private void OnFlyoutStateChangedMessage(object recipient, FlyoutStateChangedMessage message)
+    {
+        PART_SearchHandler.Close();
+        PART_SearchHandler.Unfocus();
+    }
+
+    private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
+    {
+        if (OperatingSystem.IsAndroid())
         {
-            PART_Collection.PropertyChanged -= OnPropertyChanged;
-            base.OnDisappearing();
+            PART_SearchHandler.Close();
         }
+    }
 
-        protected override void OnAppearing()
+    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName?.Equals(nameof(CollectionView.ItemsSource)) != true)
         {
-            base.OnAppearing();
-            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(200), PART_SearchHandler.Close);
-            PART_Collection.PropertyChanged += OnPropertyChanged;
+            return;
         }
 
-        private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
+        var collectionView = sender as CollectionView;
+
+        if (collectionView == null)
         {
-            if (OperatingSystem.IsAndroid())
-            {
-                PART_SearchHandler.Close();
-            }
+            return;
         }
 
-        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName?.Equals(nameof(CollectionView.ItemsSource)) != true)
-            {
-                return;
-            }
-
-            var collectionView = sender as CollectionView;
-
-            if (collectionView == null)
-            {
-                return;
-            }
-
-            collectionView.ScrollTo(0, animate: false);
-        }
+        collectionView.ScrollTo(0, animate: false);
     }
 }
