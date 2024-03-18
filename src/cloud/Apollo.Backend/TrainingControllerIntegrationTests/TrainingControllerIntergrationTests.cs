@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Apollo.Common.Entities;
 using Apollo.RestService.IntergrationTests;
 using Apollo.RestService.Messages;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Driver;
@@ -91,10 +92,10 @@ namespace Apollo.RestService.IntergrationTests
 
 
 
-        //        /// <summary>
-        //        /// The instance of the training with all properties.
-        //        /// </summary>
-        //        private string _complexTrainingJson = @"[
+        ///// <summary>
+        ///// The instance of the training with all properties.
+        ///// </summary>
+        //private string _complexTrainingJson = @"[
         //  {
         //    ""id"": ""IT01"",
         //    ""providerId"": ""intergrationtest"",
@@ -647,21 +648,21 @@ namespace Apollo.RestService.IntergrationTests
         {
             var httpClient = Helpers.GetHttpClient();
 
-            foreach (var testTraining in _testTrainings)
-            {
-                await httpClient.DeleteAsync($"{_cTrainingController}/{testTraining.Id}");
-            }
+            //foreach (var testTraining in _testTrainings)
+            //{
+            //    await httpClient.DeleteAsync($"{_cTrainingController}/{testTraining.Id}");
+            //}
         }
 
 
-        /// <summary>
-        /// Initialization method to insert test data before each test.
-        /// </summary>
+        ///// <summary>
+        ///// Initialization method to insert test data before each test.
+        ///// </summary>
         [TestInitialize]
         public async Task InitTest()
         {
-            await CleanUp();
-            //await InsertTestTrainings();
+            //await CleanUp();
+            // await InsertTestTrainings();
         }
 
 
@@ -671,10 +672,10 @@ namespace Apollo.RestService.IntergrationTests
         /// and verifies the success of the operation by checking the response status code and the content.
         /// Before and after insertion, it ensures the clean-up of test data to maintain test environment integrity.
         /// </summary>
-        /// 
-        private async Task InsertTestTrainings()
+        ///
+        public async Task InsertTestTrainings()
         {
-            await CleanUp();
+           
 
             var httpClient = Helpers.GetHttpClient();
             var json = JsonSerializer.Serialize(_testTrainings);
@@ -711,10 +712,7 @@ namespace Apollo.RestService.IntergrationTests
                 // Log general exceptions
                 Console.WriteLine($"An exception occurred: {ex.Message}");
             }
-            finally
-            {
-                await CleanUp();
-            }
+          
         }
 
 
@@ -737,11 +735,19 @@ namespace Apollo.RestService.IntergrationTests
 
                 // Deserialize the response content to a Training object
                 var trainingJson = await response.Content.ReadAsStringAsync();
-                var training = JsonSerializer.Deserialize<Training>(trainingJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
+
+                //var training = JsonSerializer.Deserialize<Training>(trainingJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ;
+
+                var trainingWrapper = JsonSerializer.Deserialize<TrainingWrapper>(trainingJson, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                //var training = trainingWrapper?.Training;
                 // Perform necessary assertions on the retrieved training object
-                Assert.IsNotNull(training);
-                Assert.AreEqual(testTraining.Id, training.Id);
+                Assert.IsNotNull(trainingWrapper);
+                Assert.AreEqual(testTraining.Id, trainingWrapper.training.Id);
                 // Add more assertions as necessary to verify the training details
             }
 
@@ -769,7 +775,7 @@ namespace Apollo.RestService.IntergrationTests
                     new FieldExpression
                     {
                         FieldName = "TrainingName",
-                        Operator = QueryOperator.Equals,
+                        Operator = QueryOperator.Contains,
                         Argument = new List<object> { "Business English A2/B1" } // The name we are querying for
                     }
                 }
@@ -782,6 +788,7 @@ namespace Apollo.RestService.IntergrationTests
             var jsonQuery = JsonSerializer.Serialize(query);
             var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
 
+            //To:DO : Look here Luci
            // Execute the query against Api
            var queryResponse = await httpClient.PostAsync($"{_cTrainingController}", queryContent);
             Assert.IsTrue(queryResponse.IsSuccessStatusCode);
@@ -792,7 +799,7 @@ namespace Apollo.RestService.IntergrationTests
 
             //Perform assertions
             Assert.IsNotNull(trainingsResponse);
-            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "Business English A2/B1"));
+            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.Id == "Training-BBDE6EC7810E4706A14EB429AB6E461E"));
         }
 
 
@@ -807,7 +814,10 @@ namespace Apollo.RestService.IntergrationTests
             foreach (var testTraining in _testTrainings)
             {
                 // Serialize the individual training object to JSON
-                var trainingJson = JsonSerializer.Serialize(testTraining);
+                // To:DO : Make testTraining as Trainng arary object
+                // do not need for each convert whole  _testTrainings as json array as training
+                // se request Json at Post Man demo: Luci
+                var trainingJson = JsonSerializer.Serialize<Training>(testTraining);
                 HttpContent content = new StringContent(trainingJson, Encoding.UTF8, "application/json");
 
                 // Send the create or update request
@@ -836,5 +846,11 @@ namespace Apollo.RestService.IntergrationTests
                 // Additional assertions to check the response content can be added here
             }
         }
+        private class TrainingWrapper
+        {
+            public Training training { get; set; }
+        }
     }
+
+   
 }

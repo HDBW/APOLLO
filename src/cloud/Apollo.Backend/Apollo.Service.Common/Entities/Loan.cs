@@ -16,7 +16,7 @@ namespace Apollo.Common.Entities
         public string? Name { get; set; }
 
         //[BsonElement("Description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         //[BsonElement("Url")]
         public Uri? Url { get; set; }
