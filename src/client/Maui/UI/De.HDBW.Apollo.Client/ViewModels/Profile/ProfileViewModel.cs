@@ -56,6 +56,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
             SessionService = sessionService;
         }
 
+        private bool CantactEditingEnabled { get; set; } = false;
+
         private IUserRepository UserRepository { get; }
 
         private IUserService UserService { get; }
@@ -95,7 +97,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                         sections.AddRange(CreatePersonalInformations(user));
                     }
 
-                    if (!missingRoutes.Contains(Routes.ContactInfoEditView))
+                    if (CantactEditingEnabled && !missingRoutes.Contains(Routes.ContactInfoEditView))
                     {
                         sections.AddRange(CreateContactInformations(user));
                     }
@@ -539,7 +541,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             var weights = new Dictionary<string, double>();
             weights.Add(Routes.PersonalInformationEditView, 2);
-            weights.Add(Routes.ContactInfoEditView, 1);
+            if (CantactEditingEnabled)
+            {
+                weights.Add(Routes.ContactInfoEditView, 1);
+            }
+
             weights.Add(Routes.QualificationEditView, 2);
             weights.Add(Routes.LicenseEditView, 2);
             weights.Add(Routes.CareerInfoEditView, 2);
@@ -554,9 +560,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.ProfileView_PersonalInformationEmpty, new NavigationData(Routes.PersonalInformationEditView, null), NavigateToRoute, CanNavigateToRoute, PersonalInfoIcon));
             }
 
-            if (!(user.ContactInfos?.Any() ?? false))
+            if (CantactEditingEnabled)
             {
-                interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.ProfileView_ContactInfoEmpty, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute, ContactInfoIcon));
+                if (!(user.ContactInfos?.Any() ?? false))
+                {
+                    interactions.Add(InteractionEntry.Import(Resources.Strings.Resources.ProfileView_ContactInfoEmpty, new NavigationData(Routes.ContactInfoEditView, null), NavigateToRoute, CanNavigateToRoute, ContactInfoIcon));
+                }
             }
 
             if (!(user.Profile?.Qualifications?.Any() ?? false))
