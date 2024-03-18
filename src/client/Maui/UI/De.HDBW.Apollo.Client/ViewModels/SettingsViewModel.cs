@@ -133,7 +133,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         this.UpdateAuthorizationHeader(ServiceProvider, null);
                         SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account?.HomeAccountId);
                         PreferenceService.Delete();
-                        await NavigationService.RestartAsync(CancellationToken.None);
+                        await NavigationService.RestartAsync(false, CancellationToken.None);
                     }
                 }
                 catch (OperationCanceledException)

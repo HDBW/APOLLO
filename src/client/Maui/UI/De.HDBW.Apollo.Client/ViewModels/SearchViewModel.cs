@@ -591,7 +591,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
 
             recents = recents ?? Array.Empty<SearchHistory>();
-            recents = Array.Empty<SearchHistory>();
             suggestions = suggestions.Take(_maxSugestionItemsCount) ?? Array.Empty<TrainingModel>();
             var courses = suggestions.Where(x => !string.IsNullOrWhiteSpace(x.TrainingName)).Select(x => SearchSuggestionEntry.Import(x.TrainingName)).ToList();
             var history = recents.Take(Math.Max(_maxHistoryItemsCount - courses.Count, 0)).Select(x => HistoricalSuggestionEntry.Import(x)).ToList();
