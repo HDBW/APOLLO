@@ -12,6 +12,7 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Authentication;
 
 
 namespace Apollo.RestService.IntergrationTests
@@ -672,47 +673,24 @@ namespace Apollo.RestService.IntergrationTests
         /// and verifies the success of the operation by checking the response status code and the content.
         /// Before and after insertion, it ensures the clean-up of test data to maintain test environment integrity.
         /// </summary>
-        ///
         public async Task InsertTestTrainings()
         {
-           
 
             var httpClient = Helpers.GetHttpClient();
+
             var json = JsonSerializer.Serialize(_testTrainings);
+
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            try
-            {
-                // Attempt to post data to the server
-                var response = await httpClient.PostAsync($"{_cTrainingController}/insert", content);
+            var res = await httpClient.PostAsync($"{_cTrainingController}/insert", content);
 
-                // Log response status code and reason phrase for debugging
-                Console.WriteLine($"Response Status: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+            Assert.IsTrue(res.IsSuccessStatusCode);
 
-                // Ensure success status code, otherwise throw an exception
-                response.EnsureSuccessStatusCode();
+            var resjson = await res.Content.ReadAsStringAsync();
+            var insertedIds = JsonSerializer.Deserialize<List<string>>(resjson);
+            Assert.IsNotNull(insertedIds, "The response should include IDs of inserted trainings.");
+            Assert.AreEqual(_testTrainings.Length, insertedIds.Count, "The number of inserted trainings should match the input.");
 
-                // If successful, log and parse the response
-                var responseJson = await response.Content.ReadAsStringAsync();
-                var insertedIds = JsonSerializer.Deserialize<List<string>>(responseJson);
-                Assert.IsNotNull(insertedIds, "The response should include IDs of inserted trainings.");
-                Assert.AreEqual(_testTrainings.Length, insertedIds.Count, "The number of inserted trainings should match the input.");
-            }
-            catch (HttpRequestException httpEx)
-            {
-                // Log detailed information about HttpRequestException
-                Console.WriteLine($"HttpRequestException encountered: {httpEx.Message}");
-                if (httpEx.InnerException != null)
-                {
-                    Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log general exceptions
-                Console.WriteLine($"An exception occurred: {ex.Message}");
-            }
-          
         }
 
 
@@ -776,7 +754,7 @@ namespace Apollo.RestService.IntergrationTests
                     {
                         FieldName = "TrainingName",
                         Operator = QueryOperator.Contains,
-                        Argument = new List<object> { "Business English A2/B1" } // The name we are querying for
+                        Argument = new List<object> { "Open AI" } // The name we are querying for
                     }
                 }
                 },
@@ -788,7 +766,6 @@ namespace Apollo.RestService.IntergrationTests
             var jsonQuery = JsonSerializer.Serialize(query);
             var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
 
-            //To:DO : Look here Luci
            // Execute the query against Api
            var queryResponse = await httpClient.PostAsync($"{_cTrainingController}", queryContent);
             Assert.IsTrue(queryResponse.IsSuccessStatusCode);
@@ -799,7 +776,7 @@ namespace Apollo.RestService.IntergrationTests
 
             //Perform assertions
             Assert.IsNotNull(trainingsResponse);
-            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.Id == "Training-BBDE6EC7810E4706A14EB429AB6E461E"));
+            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "Open AI"));
         }
 
 
@@ -811,41 +788,46 @@ namespace Apollo.RestService.IntergrationTests
         {
             var httpClient = Helpers.GetHttpClient();
 
-            foreach (var testTraining in _testTrainings)
+            
+            var requestObj = new
             {
-                // Serialize the individual training object to JSON
-                // To:DO : Make testTraining as Trainng arary object
-                // do not need for each convert whole  _testTrainings as json array as training
-                // se request Json at Post Man demo: Luci
-                var trainingJson = JsonSerializer.Serialize<Training>(testTraining);
-                HttpContent content = new StringContent(trainingJson, Encoding.UTF8, "application/json");
+                Training = _testTrainings[0],
+                Filter = new { } // Including a dummy filter because its required by API
+            };
 
-                // Send the create or update request
-                HttpResponseMessage response;
+            // Serializing the request object to JSON for creation
+            var createRequestJson = JsonSerializer.Serialize(requestObj);
+            HttpContent createContent = new StringContent(createRequestJson, Encoding.UTF8, "application/json");
 
-                // Check if the training already has an ID to determine if it should be an update or insert
-                if (string.IsNullOrEmpty(testTraining.Id))
-                {
-                    // No ID means it's a new training, so use the POST endpoint
-                    response = await httpClient.PostAsync($"{_cTrainingController}", content);
-                }
-                else
-                {
-                    // An ID is present, use the PUT endpoint to update
-                    response = await httpClient.PutAsync($"{_cTrainingController}/{testTraining.Id}", content);
-                }
+            // PUT to the CreateOrUpdate endpoint for creation
+            var createResponse = await httpClient.PutAsync($"{_cTrainingController}", createContent);
+            Assert.IsTrue(createResponse.IsSuccessStatusCode, "Creation of the training failed.");
 
-                // Assert that the response is successful
-                Assert.IsTrue(response.IsSuccessStatusCode, "The response should be successful.");
+            // Logging response for debugging
+            var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+            Console.WriteLine($"Create Response Content: {createResponseContent}");
 
-                // Deserialize the response content to get the ID of the created or updated training
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var createdOrUpdatedId = JsonSerializer.Deserialize<string>(responseContent);
-                Assert.IsNotNull(createdOrUpdatedId, "The response should contain the ID of the created or updated training.");
+            
+            requestObj.Training.TrainingName = "Updated Training Name";
+            requestObj.Training.Description = "Updated description";
+           
 
-                // Additional assertions to check the response content can be added here
-            }
+            // Serializing the modified request object to JSON for update
+            var updateRequestJson = JsonSerializer.Serialize(requestObj);
+            HttpContent updateContent = new StringContent(updateRequestJson, Encoding.UTF8, "application/json");
+
+            // PUT to the CreateOrUpdate endpoint for update
+            var updateResponse = await httpClient.PutAsync($"{_cTrainingController}", updateContent);
+            Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Update of the training failed.");
+
+            // Logging response for debugging
+            var updateResponseContent = await updateResponse.Content.ReadAsStringAsync();
+            Console.WriteLine($"Update Response Content: {updateResponseContent}");
+
         }
+
+
+
         private class TrainingWrapper
         {
             public Training training { get; set; }
