@@ -10,16 +10,37 @@ namespace De.HDBW.Apollo.Client.Behaviors
         protected override void OnAttachedTo(CarouselView bindable)
         {
             base.OnAttachedTo(bindable);
-            _cts?.Dispose();
-            _cts = new CancellationTokenSource();
-            StartSlideShow(bindable, _cts.Token);
+            bindable.Loaded += HandleLoaded;
+            bindable.Unloaded += HandleUnloade;
         }
 
         protected override void OnDetachingFrom(CarouselView bindable)
         {
+            bindable.Loaded -= HandleLoaded;
+            bindable.Unloaded -= HandleUnloade;
             base.OnDetachingFrom(bindable);
             _cts?.Dispose();
             _cts = null;
+        }
+
+        private void HandleUnloade(object? sender, EventArgs e)
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
+        }
+
+        private void HandleLoaded(object? sender, EventArgs e)
+        {
+            var bindable = sender as CarouselView;
+            if (bindable == null)
+            {
+                return;
+            }
+
+            _cts?.Dispose();
+            _cts = new CancellationTokenSource();
+            StartSlideShow(bindable, _cts.Token);
         }
 
         private async void StartSlideShow(CarouselView view, CancellationToken token)

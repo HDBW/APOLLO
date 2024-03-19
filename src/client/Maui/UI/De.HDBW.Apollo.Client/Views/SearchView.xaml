@@ -1,9 +1,9 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:De.HDBW.Apollo.Client.Controls"
-             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
@@ -14,6 +14,72 @@
              Style="{StaticResource DefaultPageStyle}"
              Title="{x:Static strings:Resources.SearchView_Title}"
              IsBusy="{x:Binding IsBusy}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="SearchInteractionEntryWithImage" x:DataType="interactionModels:SearchInteractionEntry">
+            <ContentView>
+                <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
+                    </Border.GestureRecognizers>
+                    <Grid RowDefinitions="44, *, auto, 76" Padding="0" ColumnDefinitions="*, 40">
+                        <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="StartAndExpand" VerticalOptions="Start" Padding="16,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8,0,0,8" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout>
+                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" />
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
+                        <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" HeightRequest="76">
+                            <controls:SvgImage Source="{x:Binding ImageData}" HeightRequest="60" VerticalOptions="Fill" />
+                            <Label Grid.Column="1" InputTransparent="True" VerticalOptions="Center" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </ContentView>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SearchInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">
+            <ContentView>
+                <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
+                    </Border.GestureRecognizers>
+                    <Grid RowDefinitions="44, *, auto, auto" Padding="0" ColumnDefinitions="*, 40">
+                        <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="16,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8,0,0,8" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout>
+                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" />
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
+                        <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8">
+                            <Label Grid.Column="1" InputTransparent="True" VerticalOptions="Center" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </ContentView>
+        </DataTemplate>
+
+        <selector:SearchInteractionEntryTemplateSelector x:Key="SearchInteractionEntryTemplateSelector"
+                                                         DefaultTemplate="{StaticResource SearchInteractionEntry}"
+                                                         ImageTemplate="{StaticResource SearchInteractionEntryWithImage}" />
+    </ContentPage.Resources>
     <Shell.SearchHandler>
         <local:BindableSearchHandler
             QueryIcon="magnify.png"
@@ -47,7 +113,11 @@
         <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon}"/>
     </ContentPage.ToolbarItems>
     <Grid x:Name="PART_Root">
-        <CollectionView x:Name="PART_Collection" ItemsSource="{x:Binding SearchResults}" Scrolled="HandleScrolled" SelectionMode="None">
+        <CollectionView x:Name="PART_Collection"
+                        ItemsSource="{x:Binding SearchResults}"
+                        ItemTemplate="{StaticResource SearchInteractionEntryTemplateSelector}"
+                        Scrolled="HandleScrolled"
+                        SelectionMode="None">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
             </CollectionView.ItemsLayout>
@@ -59,48 +129,6 @@
                     </Grid>
                 </ContentView>
             </CollectionView.EmptyView>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="interactionModels:SearchInteractionEntry">
-                    <ContentView>
-                        <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4" SemanticProperties.Hint="{OnPlatform Android={x:Static strings:Resources.Global_Alttext_OpenKursDetails}}">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8" />
-                            </Border.StrokeShape>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
-                            </Border.GestureRecognizers>
-                            <Grid RowDefinitions="44, *, auto, auto, auto" Padding="0" ColumnDefinitions="*, 40">
-                                <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="16,8">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="8,0,0,8" />
-                                    </Border.StrokeShape>
-                                    <HorizontalStackLayout>
-                                        <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
-                                        <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}" SemanticProperties.Hint="{OnPlatform iOS={x:Static strings:Resources.Global_Alttext_OpenKursDetails}}"/>
-                                    </HorizontalStackLayout>
-                                </Border>
-                                <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" SemanticProperties.Hint="{OnPlatform iOS={x:Static strings:Resources.Global_Alttext_OpenKursDetails}}"/>
-                                <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8" 
-                                             Command="{x:Binding ToggleIsFavoriteCommand}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}"
-                                             IsVisible="{x:Binding CanBeMadeFavorite}"
-                                             Source="{x:Static models:KnonwIcons.MakeFavorite}" VerticalOptions="Start">
-                                    <ImageButton.Triggers>
-                                        <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
-                                            <Setter Property="Source" Value="{x:Static models:KnonwIcons.IsFavorite}" />
-                                            <Setter Property="SemanticProperties.Description" Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
-                                        </DataTrigger>
-                                    </ImageButton.Triggers>
-                                </ImageButton>
-                                <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" SemanticProperties.Hint="{OnPlatform iOS={x:Static strings:Resources.Global_Alttext_OpenKursDetails}}"/>
-                                <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" >
-                                    <controls:SvgImage Source="{x:Binding ImageData}" IsVisible="{x:Binding HasSublineImage}" HeightRequest="60" VerticalOptions="Fill" />
-                                    <Label Grid.Column="1" InputTransparent="True" VerticalOptions="Center" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" SemanticProperties.Hint="{OnPlatform iOS={x:Static strings:Resources.Global_Alttext_OpenKursDetails}}"/>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </ContentView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
 </ContentPage>

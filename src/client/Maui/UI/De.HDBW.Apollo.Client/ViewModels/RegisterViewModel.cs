@@ -3,6 +3,7 @@
 
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 
@@ -11,13 +12,18 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class RegisterViewModel : BaseViewModel
     {
         public RegisterViewModel(
+            IPreferenceService preferenceService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<RegistrationViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            PreferenceService = preferenceService;
         }
+
+        private IPreferenceService PreferenceService { get; }
 
         protected override void RefreshCommands()
         {
@@ -33,7 +39,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.RestartAsync(CancellationToken.None);
+                    var confirmedDataUsage = PreferenceService.GetValue<bool>(SharedContracts.Enums.Preference.ConfirmedDataUsage, false);
+                    await NavigationService.RestartAsync(confirmedDataUsage, CancellationToken.None);
                 }
                 catch (OperationCanceledException)
                 {

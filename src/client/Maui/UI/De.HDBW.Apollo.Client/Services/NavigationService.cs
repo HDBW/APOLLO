@@ -157,7 +157,7 @@ namespace De.HDBW.Apollo.Client.Services
             return result;
         }
 
-        public async Task RestartAsync(CancellationToken token)
+        public async Task RestartAsync(bool confirmedDataUsage, CancellationToken token)
         {
             await DispatcherService.ExecuteOnMainThreadAsync(
                 () =>
@@ -171,7 +171,9 @@ namespace De.HDBW.Apollo.Client.Services
                         }
 
                         var current = Application.Current.MainPage;
-                        Application.Current.MainPage = new NavigationPage(Routing.GetOrCreateContent(Routes.ExtendedSplashScreenView, ServiceProvider) as Page);
+
+                        var route = confirmedDataUsage ? Routes.RegistrationView : Routes.ExtendedSplashScreenView;
+                        Application.Current.MainPage = new NavigationPage(Routing.GetOrCreateContent(route, ServiceProvider) as Page);
                         if (current != null)
                         {
                             var stack = current.Navigation.NavigationStack.ToArray();
