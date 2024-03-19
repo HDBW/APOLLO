@@ -11,9 +11,9 @@
              Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*, Auto">
         <VerticalStackLayout Style="{StaticResource FormContent}" VerticalOptions="Start">
-            <Label Text="{x:Static strings:Resources.Global_Benutzername}" Style="{StaticResource Noto14SemiBold}"/>
+            <Label Text="{x:Static strings:Resources.Global_Benutzername}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.IsInAccessibleTree="False"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}">
+                <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}" SemanticProperties.Description="{x:Static strings:Resources.Global_Benutzername}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
                     </Entry.Behaviors>

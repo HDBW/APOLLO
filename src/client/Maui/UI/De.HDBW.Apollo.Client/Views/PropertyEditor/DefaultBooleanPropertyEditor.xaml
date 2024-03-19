@@ -2,14 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.PropertyEditor.DefaultBooleanPropertyEditor"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:BooleanPropertyEditor">
     <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,4">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Command="{x:Binding ToggleStateCommand}" />
         </Grid.GestureRecognizers>
-        <CheckBox IsChecked="{x:Binding Value, Mode=TwoWay}" HorizontalOptions="Start" InputTransparent="True" Margin="{OnPlatform '0', Android='-6,0,0,0'}"/>
-        <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}" Margin="8,0"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24" Source="delete.png" />
+        <CheckBox IsChecked="{x:Binding Value, Mode=TwoWay}" HorizontalOptions="Start" InputTransparent="True" Margin="{OnPlatform '0', Android='-6,0,0,0'}" SemanticProperties.Description="{x:Binding Label}"/>
+        <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}" Margin="8,0" AutomationProperties.IsInAccessibleTree="False"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24" Source="delete.png" SemanticProperties.Hint="{x:Binding Label}" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
     </Grid>
     
 </ContentView>

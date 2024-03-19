@@ -1486,4 +1486,22 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="SettingsView_Licenses" xml:space="preserve">
     <value>Lizenzen</value>
   </data>
+  <data name="Global_Alttext_IsFavorite" xml:space="preserve">
+    <value>Aus Favoriten entfernen</value>
+  </data>
+  <data name="Global_Alttext_LinkAGB" xml:space="preserve">
+    <value>Link öffnet Nutzungsbedingungen in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_LinkDSGVO" xml:space="preserve">
+    <value>Link öffnet Datenschutzerklärung in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_LinkImprint" xml:space="preserve">
+    <value>Link öffnet Impressum in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_MakeFavorite" xml:space="preserve">
+    <value>In Favoriten aufnehmen</value>
+  </data>
+  <data name="Global_Alttext_OpenKursDetails" xml:space="preserve">
+    <value>Taste öffnet Details des Kurses</value>
+  </data>
 </root>
