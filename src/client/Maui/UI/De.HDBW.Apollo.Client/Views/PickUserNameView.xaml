@@ -11,15 +11,15 @@
              Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*, Auto">
         <VerticalStackLayout Style="{StaticResource FormContent}" VerticalOptions="Start">
-            <Label Text="{x:Static strings:Resources.Global_Benutzername}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.IsInAccessibleTree="False"/>
+            <Label Text="{x:Static strings:Resources.Global_Benutzername}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}" SemanticProperties.Description="{x:Static strings:Resources.Global_Benutzername}">
+                <Entry  Text="{x:Binding Name, Mode=TwoWay}" ReturnCommand="{x:Binding CreateAccountCommand}" SemanticProperties.Description="{x:Static strings:Resources.Global_Benutzername}" SemanticProperties.Hint="{x:Binding [Name]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
+            <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True" />
         </VerticalStackLayout>
         <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" />
         <Button Grid.Row="1" Text="{x:Static strings:Resources.Global_Next}" Command="{x:Binding CreateAccountCommand}" Margin="24,16"/>

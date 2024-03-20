@@ -20,80 +20,80 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContent}">
-            <Label Text="{x:Static strings:Resources.Global_ContactType}" Style="{StaticResource Noto14SemiBold}"/>
+            <Label Text="{x:Static strings:Resources.Global_ContactType}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
-                    <Picker ItemsSource="{x:Binding ContactTypes}"
+                    <Picker ItemsSource="{x:Binding ContactTypes}" SemanticProperties.Description="{x:Static strings:Resources.Global_ContactType}"
                             ItemDisplayBinding="{x:Binding Text}"
                             x:Name="PART_ContactType"
                             SelectedItem="{x:Binding SelectedContactType, Mode=TwoWay}"/>
-                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                    <ImageButton Grid.Column="1" Source="shortlist.png" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_ContactType}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
                 </Grid>
             </Border>
-            
-            <Label Text="{x:Static strings:Resources.Global_Address}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+
+            <Label Text="{x:Static strings:Resources.Global_Address}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}" >
-                <Entry x:Name="PART_Address" Text="{x:Binding Address, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_ZipCode}" >
+                <Entry x:Name="PART_Address" Text="{x:Binding Address, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Address}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_ZipCode}"  SemanticProperties.Hint="{x:Binding [Address]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Address" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Address]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [Address]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
 
-            <Label Text="{x:Static strings:Resources.Global_ZipCode}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_ZipCode}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_ZipCode" Text="{x:Binding ZipCode, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}" MaxLength="5" Keyboard="Numeric" >
+                <Entry x:Name="PART_ZipCode" Text="{x:Binding ZipCode, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_ZipCode}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}" MaxLength="5" Keyboard="Numeric" SemanticProperties.Hint="{x:Binding [ZipCode]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="ZipCode" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [ZipCode]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [ZipCode]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
 
-            <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Region}">
+                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_City}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Region}" SemanticProperties.Hint="{x:Binding [City]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="City" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [City]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [City]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
 
-            <Label Text="{x:Static strings:Resources.Global_Region}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_Region}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Region" Text="{x:Binding Region, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}" />
+                <Entry x:Name="PART_Region" Text="{x:Binding Region, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Region}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}" />
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Email}" />
+                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Country}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Email}" />
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_Email}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_Email}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Email" Text="{x:Binding Email, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Phone}" Keyboard="Email">
+                <Entry x:Name="PART_Email" Text="{x:Binding Email, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Email}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Phone}" Keyboard="Email" SemanticProperties.Hint="{x:Binding [Email]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Email" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Email]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [Email]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
 
-            <Label Text="{x:Static strings:Resources.Global_Phone}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_Phone}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Phone" Text="{x:Binding Phone, Mode=TwoWay}" Keyboard="Telephone">
+                <Entry x:Name="PART_Phone" Text="{x:Binding Phone, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Phone}" Keyboard="Telephone" SemanticProperties.Hint="{x:Binding [Phone]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Phone" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Phone]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [Phone]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

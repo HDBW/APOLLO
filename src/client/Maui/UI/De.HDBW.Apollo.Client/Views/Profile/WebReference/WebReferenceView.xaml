@@ -18,25 +18,25 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContent}">
-            <Label Text="{x:Static strings:Resources.Global_Title}" Style="{StaticResource Noto14SemiBold}"/>
+            <Label Text="{x:Static strings:Resources.Global_Title}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Url}">
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Title}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Url}" SemanticProperties.Hint="{x:Binding [Description]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
 
-            <Label Text="{x:Static strings:Resources.Global_URL}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_URL}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Url" Text="{x:Binding Url, Mode=TwoWay}" Keyboard="Url">
+                <Entry x:Name="PART_Url" Text="{x:Binding Url, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_URL}" Keyboard="Url" SemanticProperties.Hint="{x:Binding [Url]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Url" />
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Url]}" Style="{StaticResource ValidationErrorLabel}"/>
+            <Label Text="{x:Binding [Url]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

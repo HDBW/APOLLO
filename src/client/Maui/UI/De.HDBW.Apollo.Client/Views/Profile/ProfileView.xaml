@@ -16,14 +16,14 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="ProfileInteractionTemplate" x:DataType="interactionModels:InteractionEntry">
-            <Grid ColumnDefinitions="Auto,*,Auto" Style="{StaticResource ProfileInteraction}">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
-                </Grid.GestureRecognizers>
-                <Image Source="{x:Binding ImagePath}" WidthRequest="24" HeightRequest="24" Margin="0,0,8,0"/>
-                <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
-                <Image Grid.Column="2" Source="edit.png"/>
-            </Grid>
+                <Grid ColumnDefinitions="Auto,*,Auto" Style="{StaticResource ProfileInteraction}" >
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Image Source="{x:Binding ImagePath}" WidthRequest="24" HeightRequest="24" Margin="0,0,8,0"/>
+                    <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" SemanticProperties.Hint="bearbeiten"/>
+                    <Image Grid.Column="2" Source="edit.png"/>
+                </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="StringValueTemplate" x:DataType="genericModels:StringValue">
@@ -40,7 +40,7 @@
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
                     <VerticalStackLayout>
-                        <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}"/>
+                        <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}" />
                         <Grid ColumnDefinitions="Auto, *">
                             <Label Text="{x:Binding ProgressDisplayText}" Style="{StaticResource Noto12Bold}" VerticalOptions="Center" Margin="0,0,8,0" TextColor="{StaticResource Primary}"/>
                             <ProgressBar Grid.Column="1" Progress="{x:Binding Progress}" VerticalOptions="Center"/>
@@ -54,7 +54,7 @@
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
                                         </HorizontalStackLayout.GestureRecognizers>
                                         <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,4,8,4"/>
-                                        <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center"/>
+                                        <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

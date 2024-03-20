@@ -22,7 +22,7 @@
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
+                        <TapGestureRecognizer Command="{x:Binding NavigateCommand}"/>
                     </Border.GestureRecognizers>
                     <Grid RowDefinitions="44, *, auto, 76" Padding="0" ColumnDefinitions="*, 40">
                         <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="StartAndExpand" VerticalOptions="Start" Padding="16,8">

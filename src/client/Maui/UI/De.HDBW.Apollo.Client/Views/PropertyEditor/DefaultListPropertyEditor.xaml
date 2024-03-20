@@ -24,7 +24,7 @@
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand}" />
                             </Grid.GestureRecognizers>
                             <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}" VerticalOptions="Center" Margin="{OnPlatform '0', Android='-6,0,0,0'}" SemanticProperties.Description="{x:Binding DisplayValue}"/>
-                            <Label Grid.Column="1" Text="{x:Binding DisplayValue}" Margin="8,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" AutomationProperties.IsInAccessibleTree="False"/>
+                            <Label Grid.Column="1" Text="{x:Binding DisplayValue}" Margin="8,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" AutomationProperties.ExcludedWithChildren="True"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
