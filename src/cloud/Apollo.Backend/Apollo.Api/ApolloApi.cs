@@ -158,6 +158,14 @@ namespace Apollo.Api
             return $"{typeName?.ToLower()}s";
         }
 
+        #region Export to CSV
+
+        #endregion
+
+
+        #region Private Methods
+
+
 
         /// <summary>
         /// Validates the configuration properties.
@@ -260,6 +268,6 @@ namespace Apollo.Api
         {
             return $"{entityName}-{id}";
         }
-
+        #endregion
     }
 }

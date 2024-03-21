@@ -70,6 +70,8 @@ namespace Apollo.Api
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
+                //TODO: Execute Semantic Search
+
                 _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
 
                 return res;
