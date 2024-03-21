@@ -10,7 +10,6 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Training;
 using De.HDBW.Apollo.Data.Helper;
-using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
