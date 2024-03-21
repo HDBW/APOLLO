@@ -1,4 +1,5 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
+// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
 using System.ComponentModel.DataAnnotations;
@@ -25,7 +26,7 @@ namespace Apollo.Common.Entities
         /// </summary>
         public string? ExternalTrainingId { get; set; }
 
-        public string TrainingType { get; set; }
+        public string? TrainingType { get; set; }
 
         public string TrainingName { get; set; }
 
@@ -36,10 +37,10 @@ namespace Apollo.Common.Entities
 
         public string? SubTitle { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
        
-        public string ShortDescription { get; set; }
+        public string? ShortDescription { get; set; }
 
         /// <summary>
         /// Training agenda.

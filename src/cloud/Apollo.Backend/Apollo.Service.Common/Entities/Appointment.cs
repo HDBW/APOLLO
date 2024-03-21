@@ -37,7 +37,7 @@ namespace Apollo.Common.Entities
         public int? Duration { get; set; }
 
         //Maybe better as a List?
-        public List<Occurence> Occurences { get; set; }
+        public List<Occurence>? Occurences { get; set; }
 
         //[BsonElement("IsGuaranteedAppointment")]
         public bool IsGuaranteed { get; set; }

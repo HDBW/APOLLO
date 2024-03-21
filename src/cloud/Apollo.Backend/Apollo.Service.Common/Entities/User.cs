@@ -19,7 +19,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The name of the identity provider.
         /// </summary>
-        public string IdentityProvicer { get; set; }
+        public string IdentityProvider { get; set; }
 
         /// <summary>
         /// This is the User principal name given by AADB2C.
