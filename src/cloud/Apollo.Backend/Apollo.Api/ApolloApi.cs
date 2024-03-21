@@ -158,10 +158,6 @@ namespace Apollo.Api
             return $"{typeName?.ToLower()}s";
         }
 
-        #region Export to CSV
-
-        #endregion
-
 
         #region Private Methods
 
