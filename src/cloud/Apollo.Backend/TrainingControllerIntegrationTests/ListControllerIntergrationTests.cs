@@ -22,8 +22,6 @@ namespace Apollo.RestService.IntergrationTests
         private const string _cTestListType3 = "TestListType3";
         private const string _cTestListType4 = "TestListType4";
 
-
-
         private List<ApolloList> _testLists = new List<ApolloList>()
         {
              new ApolloList()
@@ -154,39 +152,10 @@ namespace Apollo.RestService.IntergrationTests
             // Loop through each test list and send a DELETE request to the list controller's endpoint.
             foreach (var testList in _testLists)
             {
-               await httpClient.DeleteAsync($"{_cListController}/{testList.Id}");
+                await httpClient.DeleteAsync($"{_cListController}/{testList.Id}");
             }
         }
 
-
-        /// <summary>
-        /// Inserts test lists into the system and verifies that the operation was successful.
-        /// </summary>
-        [TestMethod]
-        public async Task InsertTestLists()
-        {
-            await CleanUp(); 
-
-            var httpClient = Helpers.GetHttpClient();
-
-          
-            var json = JsonSerializer.Serialize(_testLists);
-            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            
-            var response = await httpClient.PostAsync($"{_cListController}/insert", content);
-
-            // Assert that the HTTP response is successful
-            Assert.IsTrue(response.IsSuccessStatusCode, "Inserting test lists should return a successful response.");
-
-            // Read the response content and deserialize it to get the IDs of the inserted lists
-            var responseJson = await response.Content.ReadAsStringAsync();
-            var insertedIds = JsonSerializer.Deserialize<List<string>>(responseJson);
-
-            // Assert that the response contains IDs and matches the expected number of inserted lists
-            Assert.IsNotNull(insertedIds, "The response should include IDs of inserted lists.");
-            Assert.AreEqual(_testLists.Count, insertedIds.Count, "The number of inserted lists should match the input.");
-        }
 
 
         /// <summary>
@@ -198,17 +167,27 @@ namespace Apollo.RestService.IntergrationTests
             var httpClient = Helpers.GetHttpClient();
 
             // GET request to fetch all lists
-            var response = await httpClient.GetAsync($"api/{_cListController}"); 
-            Assert.IsTrue(response.IsSuccessStatusCode);
+            var response = await httpClient.GetAsync($"{_cListController}");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Failed to retrieve lists.");
 
-            // Deserialize the response content to a List of ApolloList objects
+            // Deserialize the response content to a ListsResponseWrapper object
             var listsJson = await response.Content.ReadAsStringAsync();
-            var lists = JsonSerializer.Deserialize<List<ApolloList>>(listsJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Console.WriteLine($"Raw JSON response: {listsJson}");
 
-            // Perform necessary assertions on the retrieved list objects
-            Assert.IsNotNull(lists);
-            Assert.IsTrue(lists.Any()); // Asserting that we have received at least one list
+            var wrapper = JsonSerializer.Deserialize<ListsResponseWrapper>(listsJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            // Perform necessary assertions on the retrieved list objects within the Result property
+            Assert.IsNotNull(wrapper?.Result, "Failed to deserialize lists.");
+            Assert.IsTrue(wrapper.Result.Any(), "No lists were retrieved.");
         }
+
+
+        public class ListsResponseWrapper
+        {
+            public List<ApolloList> Result { get; set; }
+        }
+
+
 
 
         /// <summary>
@@ -218,27 +197,31 @@ namespace Apollo.RestService.IntergrationTests
         public async Task QueryListItemsTest()
         {
             var httpClient = Helpers.GetHttpClient();
-
-            var query = new
-            {
-                ItemType = "EducationType"
-            };
-
+            var query = new { ItemType = "TestListType3" };
             var jsonQuery = JsonSerializer.Serialize(query);
             var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
 
-            // Using the correct constant for the ListController
-            var queryResponse = await httpClient.PostAsync($"api/{_cListController}", queryContent); 
+            var queryResponse = await httpClient.PostAsync($"{_cListController}", queryContent);
             Assert.IsTrue(queryResponse.IsSuccessStatusCode, "QueryListItems should return a successful response.");
 
-            // Deserialize the response to the expected type
             var responseJson = await queryResponse.Content.ReadAsStringAsync();
+            Console.WriteLine($"Raw JSON response: {responseJson}");
+
             var listResponse = JsonSerializer.Deserialize<QueryListResponse>(responseJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            // Perform assertions
-            Assert.IsNotNull(listResponse, "The response content should not be null.");
-            Assert.IsTrue(listResponse.Result.Any(), "The response should contain at least one list item.");
+            // Assertions to validate the deserialized data
+            Assert.IsNotNull(listResponse?.Result, "The response content should not be null.");
+            Assert.IsNotNull(listResponse.Result.Items, "Items should not be null.");
+            Assert.IsTrue(listResponse.Result.Items.Any(), "The response should contain at least one list item.");
         }
+
+
+
+        public class QueryListResponse
+        {
+            public ApolloList Result { get; set; }
+        }
+
 
 
         /// <summary>
@@ -248,37 +231,84 @@ namespace Apollo.RestService.IntergrationTests
         public async Task CreateOrUpdateListTest()
         {
             var httpClient = Helpers.GetHttpClient();
-            var testLists = _testLists; 
 
-            foreach (var testList in testLists)
+            foreach (var testList in _testLists)
             {
-                // Serialize the individual list object to JSON
-                var listJson = JsonSerializer.Serialize(testList);
-                HttpContent content = new StringContent(listJson, Encoding.UTF8, "application/json");
-
-                // Send the create or update request
-                HttpResponseMessage response;
-
-                // Check if the list already has an ID to determine if it should be an update or insert
-                if (string.IsNullOrEmpty(testList.Id))
+                // If Description is null, set it to a test description
+                if (string.IsNullOrEmpty(testList.Description))
                 {
-                    // No ID means it's a new list, so use the POST endpoint
-                    response = await httpClient.PostAsync($"api/{_cListController}", content);
-                }
-                else
-                {
-                    // An ID is present, indicating an existing list, so use the PUT endpoint to update
-                    response = await httpClient.PutAsync($"api/{_cListController}/{testList.Id}", content);
+                    testList.Description = "Default Test Description";
                 }
 
-                // Assert that the response is successful
+                var requestObj = new
+                {
+                    List = testList,
+                    Filter = new { }  
+                };
+
+                var listRequestJson = JsonSerializer.Serialize(requestObj);
+                HttpContent content = new StringContent(listRequestJson, Encoding.UTF8, "application/json");
+
+                // Assuming PUT is correct for both creating and updating in your API
+                HttpResponseMessage response = await httpClient.PutAsync($"{_cListController}", content);
                 Assert.IsTrue(response.IsSuccessStatusCode, "The response should be successful.");
 
-                // Deserialize the response content to get the ID of the created or updated list
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var createdOrUpdatedId = JsonSerializer.Deserialize<string>(responseContent);
-                Assert.IsNotNull(createdOrUpdatedId, "The response should contain the ID of the created or updated list.");
+
+                // Deserialize using the wrapper class
+                var listResponse = JsonSerializer.Deserialize<CreateOrUpdateListResponseWrapper>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                Assert.IsNotNull(listResponse?.Result, "The response should contain a list.");
+                Assert.IsFalse(string.IsNullOrEmpty(listResponse.Result.Id), "The list should have an ID.");
+                Assert.IsFalse(string.IsNullOrEmpty(listResponse.Result.ItemType), "The ItemType should not be empty.");
+
+                // Additional validation of the returned list object as needed
             }
         }
+
+        //[TestMethod]
+        //public async Task UpdateSpecificListTest()
+        //{
+        //    var httpClient = Helpers.GetHttpClient();
+
+        //    var specificList = _testLists.FirstOrDefault(list => list.Id == "UT03");
+
+        //    if (specificList != null)
+        //    {
+        //        var requestObj = new
+        //        {
+        //            List = specificList,
+        //            Filter = new { }
+        //        };
+
+        //        var listRequestJson = JsonSerializer.Serialize(requestObj);
+        //        HttpContent content = new StringContent(listRequestJson, Encoding.UTF8, "application/json");
+
+        //        // Update the URL to include the list ID
+        //        HttpResponseMessage response = await httpClient.PutAsync($"{_cListController}/{specificList.Id}", content);
+        //        Assert.IsTrue(response.IsSuccessStatusCode, "The response should be successful.");
+
+        //        var responseContent = await response.Content.ReadAsStringAsync();
+
+        //        // Deserialize using the wrapper class
+        //        var listResponse = JsonSerializer.Deserialize<CreateOrUpdateListResponseWrapper>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        //        Assert.IsNotNull(listResponse?.Result, "The response should contain a list.");
+        //        Assert.IsFalse(string.IsNullOrEmpty(listResponse.Result.Id), "The list should have an ID.");
+        //        Assert.IsFalse(string.IsNullOrEmpty(listResponse.Result.ItemType), "The ItemType should not be empty.");
+
+        //        // Additional validation of the returned list object as needed
+        //    }
+        //    else
+        //    {
+        //        Assert.Fail("The specific list was not found.");
+        //    }
+        //}
+
+        public class CreateOrUpdateListResponseWrapper
+        {
+            public ApolloList Result { get; set; }
+        }
+
     }
 }

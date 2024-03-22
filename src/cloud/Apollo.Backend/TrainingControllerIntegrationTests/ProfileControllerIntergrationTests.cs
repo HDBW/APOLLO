@@ -26,8 +26,6 @@ namespace Apollo.RestService.IntergrationTests
 
         private const string _cProfileController = "Profile";
 
-        private string UserId = "User-7a3751ab-d338-492c-a7a9-5607252e6eb3";
-
         private Profile CreateSampleProfile()
         {
             return new Profile
@@ -218,28 +216,13 @@ namespace Apollo.RestService.IntergrationTests
 
 
         /// <summary>
-        /// Cleans up test profiles from the database after each test to ensure a clean state.
-        /// </summary>
-        [TestCleanup]
-        public async Task Cleanup()
-        {
-            //var httpClient = Helpers.GetHttpClient();
-            //foreach (var profile in _testProfiles)
-            //{
-            //    await httpClient.DeleteAsync($"{_cProfileController}/{profile.Id}");
-            //}
-        }
-
-
-        /// <summary>
         /// Ensures a clean state before each test by deleting any existing test profiles.
         /// Then inserts test profiles into the database for testing.
         /// </summary>
         [TestInitialize]
         public async Task Initialize()
         {
-            //await Cleanup(); // Ensure clean state before each test
-            //await InsertTestProfiles(); // Insert test data
+            
         }
 
 
@@ -279,59 +262,73 @@ namespace Apollo.RestService.IntergrationTests
         public async Task GetProfileTest()
         {
             var httpClient = Helpers.GetHttpClient();
+            string createdProfileId = "User-LK-01";
 
-            // Assuming you have a predefined userId to use for testing
-            var userId = "User-LK-01";
-
-            // Create a sample profile for testing
-            var sampleProfile = CreateSampleProfile();
-
-            // Encapsulate the profile and userId in an object as expected by the API
-            var createRequestObj = new
+            try
             {
-                UserId = userId,
-                Profile = sampleProfile
-            };
+                // Assuming we have a predefined userId to use for testing
+                var userId = "User-LK-01";
 
-            // Serialize the request object to JSON
-            var createRequestJson = JsonSerializer.Serialize(createRequestObj);
-            var createContent = new StringContent(createRequestJson, Encoding.UTF8, "application/json");
+                // Create a sample profile for testing
+                var sampleProfile = CreateSampleProfile();
 
-            // PUT to the profile creation endpoint
-            var createResponse = await httpClient.PutAsync($"{_cProfileController}", createContent);
+                // Encapsulate the profile and userId in an object as expected by the API
+                var createRequestObj = new
+                {
+                    UserId = userId,
+                    Profile = sampleProfile
+                };
 
-            // Ensure the creation was successful before proceeding
-            Assert.IsTrue(createResponse.IsSuccessStatusCode, "Profile creation failed.");
+                // Serialize the request object to JSON
+                var createRequestJson = JsonSerializer.Serialize(createRequestObj);
+                var createContent = new StringContent(createRequestJson, Encoding.UTF8, "application/json");
 
-            // Log the status code and response content for debugging
-            var createResponseContent = await createResponse.Content.ReadAsStringAsync();
-            Console.WriteLine($"Create Profile Request Status Code: {createResponse.StatusCode}");
-            Console.WriteLine($"Create Profile Response Content: {createResponseContent}");
+                // PUT to the profile creation endpoint
+                var createResponse = await httpClient.PutAsync($"{_cProfileController}", createContent);
 
-            // Deserialize the response to get the ID of the created profile
-            var jsonResponse = JsonSerializer.Deserialize<JsonElement>(createResponseContent);
-            var createdProfileId = jsonResponse.GetProperty("id").GetString();
+                // Ensure the creation was successful before proceeding
+                Assert.IsTrue(createResponse.IsSuccessStatusCode, "Profile creation failed.");
 
-            // Ensure the ID was successfully retrieved
-            Assert.IsFalse(string.IsNullOrEmpty(createdProfileId), "Failed to obtain a valid profile ID from the creation response.");
+                // Log the status code and response content for debugging
+                var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"Create Profile Request Status Code: {createResponse.StatusCode}");
+                Console.WriteLine($"Create Profile Response Content: {createResponseContent}");
 
-            // Retrieve the profile using the ID obtained from the creation response
-            var retrievalResponse = await httpClient.GetAsync($"{_cProfileController}/{createdProfileId}");
+                // Deserialize the response to get the ID of the created profile
+                var jsonResponse = JsonSerializer.Deserialize<JsonElement>(createResponseContent);
+                createdProfileId = jsonResponse.GetProperty("id").GetString();
 
-            // Ensure the retrieval was successful
-            Assert.IsTrue(retrievalResponse.IsSuccessStatusCode, "Failed to retrieve the created profile.");
+                // Ensure the ID was successfully retrieved
+                Assert.IsFalse(string.IsNullOrEmpty(createdProfileId), "Failed to obtain a valid profile ID from the creation response.");
 
-            // Log the retrieval attempt details
-            var retrievedProfileJson = await retrievalResponse.Content.ReadAsStringAsync();
-            Console.WriteLine($"Retrieved Profile Content: {retrievedProfileJson}");
+                // Retrieve the profile using the ID obtained from the creation response
+                var retrievalResponse = await httpClient.GetAsync($"{_cProfileController}/{createdProfileId}");
 
-            // Deserialize the retrieved profile to access the ID correctly
-            var retrievedProfile = JsonSerializer.Deserialize<JsonElement>(retrievedProfileJson);
-            var retrievedProfileId = retrievedProfile.GetProperty("profile").GetProperty("id").GetString();
+                // Ensure the retrieval was successful
+                Assert.IsTrue(retrievalResponse.IsSuccessStatusCode, "Failed to retrieve the created profile.");
 
-            // Assert the retrieved profile ID matches the expected ID
-            Assert.AreEqual(createdProfileId, retrievedProfileId, "Retrieved profile ID does not match.");
+                // Log the retrieval attempt details
+                var retrievedProfileJson = await retrievalResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"Retrieved Profile Content: {retrievedProfileJson}");
+
+                // Deserialize the retrieved profile to access the ID correctly
+                var retrievedProfile = JsonSerializer.Deserialize<JsonElement>(retrievedProfileJson);
+                var retrievedProfileId = retrievedProfile.GetProperty("profile").GetProperty("id").GetString();
+
+                // Assert the retrieved profile ID matches the expected ID
+                Assert.AreEqual(createdProfileId, retrievedProfileId, "Retrieved profile ID does not match.");
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(createdProfileId))
+                {
+                    // Cleanup logic to delete the created profile
+                    var deleteResponse = await httpClient.DeleteAsync($"{_cProfileController}/{createdProfileId}");
+                    Assert.IsTrue(deleteResponse.IsSuccessStatusCode, "Failed to delete the created profile.");
+                }
+            }
         }
+
 
 
         public class CreateProfileResponse
@@ -348,113 +345,114 @@ namespace Apollo.RestService.IntergrationTests
         public async Task QueryProfilesTest()
         {
             var httpClient = Helpers.GetHttpClient();
-            var query = new
+
+            // Define your query object without sort expression
+            var query = new Query
             {
-                Fields = new string[] { }, // Assuming you're querying for all fields, or specify the fields you need
-                Filter = new
+                Fields = new List<string> { "NameOfInstitution"}, 
+                Filter = new Filter
                 {
                     IsOrOperator = false,
-                    Fields = new[]
-                    {
-                new
+                    Fields = new List<FieldExpression>
+            {
+                new FieldExpression
                 {
-                    FieldName = "CareerInfos._id",
-                    Operator = 1, // Assuming '1' signifies the equality operator in your system
-                    Argument = new[] { "CareerInfo-ApolloList-7373440846634EF7B29ECD1832A3B536" },
-                    Distinct = true
+                    FieldName = "CareerInfos.NameOfInstitution",
+                    Operator = QueryOperator.Contains,
+                    Argument = new List<object> { "Tech Corporation" } 
                 }
+                // Add more filters as needed
             }
                 },
                 RequestCount = true,
                 Top = 10,
-                Skip = 0,
-                SortExpression = new
-                {
-                    FieldName = "trainingName",
-                    Order = 1 // Assuming '1' signifies ascending order
-                }
+                Skip = 0
             };
 
+            // Serialize your query object to JSON
             var jsonQuery = JsonSerializer.Serialize(query, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            // Create StringContent from your serialized query
             var content = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
 
-            try
-            {
-                var response = await httpClient.PostAsync($"{_cProfileController}", content); // Ensure the URL matches your query endpoint
-                Console.WriteLine($"Response Status Code: {response.StatusCode}");
+            // Replace "{_cProfileController}" with your actual profile query API endpoint
+            var response = await httpClient.PostAsync($"{_cProfileController}", content);
+            Assert.IsTrue(response.IsSuccessStatusCode, "QueryProfiles should return a successful response.");
 
-                var responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Response Content: {responseContent}");
+            // Read the response content as a string
+            var responseContent = await response.Content.ReadAsStringAsync();
 
-                Assert.IsTrue(response.IsSuccessStatusCode, "QueryProfiles should return a successful response.");
+            // Manually parse the JSON response using JsonDocument
+            using var doc = JsonDocument.Parse(responseContent);
+            var profilesJson = doc.RootElement.GetProperty("profiles").GetRawText();
 
-                // Adjust the deserialization type according to the expected response structure
-                var profiles = JsonSerializer.Deserialize<List<Profile>>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            // Deserialize the "profiles" part of the response into a List<Profile>
+            var profiles = JsonSerializer.Deserialize<List<Profile>>(profilesJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                Assert.IsNotNull(profiles, "The response content should not be null.");
-                Assert.IsTrue(profiles.Any(), "The response should contain at least one profile.");
+            // Assuming QueryProfilesResponse can be directly instantiated with a list of profiles
+            var queryProfilesResponse = new QueryProfilesResponse(profiles);
 
-                // Further detailed assertions based on expected data
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"HttpRequestException caught: {ex.Message}");
-                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
-
-                throw; // Rethrow the exception to fail the test with the captured exception details
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An unexpected exception occurred: {ex.Message}");
-                throw; // Rethrow for any other unexpected exceptions
-            }
+            // Perform your assertions
+            Assert.IsNotNull(queryProfilesResponse, "The response content should not be null.");
+            Assert.IsTrue(queryProfilesResponse.Profiles.Any(), "The response should contain at least one profile.");
         }
 
 
+        /// <summary>
+        /// Tests creating or updating profiles.
+        /// Verifies profiles can be created or updated successfully and checks the response content.
+        /// </summary>
+        [TestMethod]
+        public async Task CreateOrUpdateProfileTest()
+        {
+            var httpClient = Helpers.GetHttpClient();
 
+            // Create a sample profile for testing
+            var sampleProfile = CreateSampleProfile();
 
-        ///// <summary>
-        ///// Tests creating or updating profiles.
-        ///// Verifies profiles can be created or updated successfully and checks the response content.
-        ///// </summary>
-        //[TestMethod]
-        //public async Task CreateOrUpdateProfileTest()
-        //{
-        //    var httpClient = Helpers.GetHttpClient();
+            var userId = "User-LK-01";
 
-        //    foreach (var testProfile in _testProfiles)
-        //    {
-        //        // Serialize the individual profile object to JSON
-        //        var profileJson = JsonSerializer.Serialize(testProfile);
-        //        HttpContent content = new StringContent(profileJson, Encoding.UTF8, "application/json");
+            var createRequestObj = new
+            {
+                UserId = userId,
+                Profile = sampleProfile,
+                Filter = new { } 
+            };
 
-        //        // Send the create or update request
-        //        HttpResponseMessage response;
+            // Serializing the request object to JSON for creation
+            var createRequestJson = JsonSerializer.Serialize(createRequestObj);
+            HttpContent createContent = new StringContent(createRequestJson, Encoding.UTF8, "application/json");
 
-        //        // Check if the profile already has an ID to determine if it should be an update or insert
-        //        if (string.IsNullOrEmpty(testProfile.Id))
-        //        {
-        //            // No ID means it's a new profile, so use the POST endpoint
-        //            response = await httpClient.PostAsync($"{_cProfileController}", content);
-        //        }
-        //        else
-        //        {
-        //            // An ID is present, use the PUT endpoint to update
-        //            response = await httpClient.PutAsync($"{_cProfileController}", content);
-        //        }
+            // PUT to the CreateOrUpdate endpoint for creation
+            // Ensure the endpoint URL matches your API's requirement for profile creation or update
+            var createResponse = await httpClient.PutAsync($"{_cProfileController}", createContent);
+            var createResponseContent = await createResponse.Content.ReadAsStringAsync();
+            Console.WriteLine($"Create Profile Response Status Code: {createResponse.StatusCode}");
+            Console.WriteLine($"Create Profile Response Content: {createResponseContent}");
 
-        //        // Assert that the response is successful
-        //        Assert.IsTrue(response.IsSuccessStatusCode, "The response should be successful.");
+            Assert.IsTrue(createResponse.IsSuccessStatusCode, "Creation of the profile failed.");
 
-        //        // Deserialize the response content to get the ID of the created or updated profile
-        //        var responseContent = await response.Content.ReadAsStringAsync();
-        //        var createdOrUpdatedId = JsonSerializer.Deserialize<string>(responseContent);
-        //        Assert.IsNotNull(createdOrUpdatedId, "The response should contain the ID of the created or updated profile.");
+            // Logging response for debugging
+            Console.WriteLine($"Create Profile Response Content: {createResponseContent}");
 
-        //        // Additional assertions to check the response content can be added here
-        //        // For example, we might want to retrieve the profile again using the ID and verify some of its properties
-        //    }
-        //}
+            // Modifying the profile object for update, assuming there's some property to modify
+            sampleProfile.CareerInfos[0].Description = "Updated advanced level applications.";
+
+            // Serializing the modified request object to JSON for update
+            var updateRequestJson = JsonSerializer.Serialize(createRequestObj);
+            HttpContent updateContent = new StringContent(updateRequestJson, Encoding.UTF8, "application/json");
+
+            // PUT to the CreateOrUpdate endpoint for update
+            var updateResponse = await httpClient.PutAsync($"{_cProfileController}", updateContent);
+            Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Update of the profile failed.");
+
+            // Logging response for debugging
+            var updateResponseContent = await updateResponse.Content.ReadAsStringAsync();
+            Console.WriteLine($"Update Profile Response Content: {updateResponseContent}");
+
+           // TODO: Deletetion
+        }
 
     }
 }
+
