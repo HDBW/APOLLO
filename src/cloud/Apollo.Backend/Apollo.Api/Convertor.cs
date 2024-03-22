@@ -420,13 +420,15 @@ namespace Apollo.Api
 
             User user = new User
             {
-                Id = dict.ContainsKey("Id") ? (string)dict["Id"] : "",
-                ObjectId = dict.ContainsKey("ObjectId") ? (string)dict["ObjectId"] : "",
-                Upn = dict.ContainsKey("Upn") ? (string)dict["Upn"] : null,
-                Email = dict.ContainsKey("Email") ? (string)dict["Email"] : null,
-                Name = dict.ContainsKey("Name") ? (string)dict["Name"] : "",
-
-                // Should add ContactInfos,  Birthdate,  Disabilities, Profile?
+                Id = dict.ContainsKey(nameof(User.Id)) ? (string)dict[nameof(User.Id)] : "",
+                ObjectId = dict.ContainsKey(nameof(User.ObjectId)) ? (string)dict[nameof(User.ObjectId)] : "",
+                Upn = dict.ContainsKey(nameof(User.Upn)) ? (string)dict[nameof(User.Upn)] : null,
+                Email = dict.ContainsKey(nameof(User.Email)) ? (string)dict[nameof(User.Email)] : null,
+                Name = dict.ContainsKey(nameof(User.Name)) ? (string)dict[nameof(User.Name)] : "",
+                Birthdate = dict.ContainsKey(nameof(User.Birthdate)) ? (DateTime?)dict[nameof(User.Birthdate)] : null,
+                ContactInfos = dict.ContainsKey(nameof(User.ContactInfos)) ? ConvertToList<Contact>(dict[nameof(User.ContactInfos)], ConvertToContact!) : new List<Contact>(),
+                Disabilities = dict.ContainsKey(nameof(User.Disabilities)) ? (bool)dict[nameof(User.Disabilities)] : null,
+                Profile = dict.ContainsKey(nameof(User.Profile)) ? ToProfile((ExpandoObject)dict[nameof(User.Profile)]):  null
             };
 
             return user;
@@ -451,9 +453,9 @@ namespace Apollo.Api
                 EducationInfos = dict.ContainsKey(nameof(Profile.EducationInfos)) ? ConvertToList<EducationInfo>(dict[nameof(Profile.EducationInfos)], conversionFunc: ConvertToEducationInfo!) : new List<EducationInfo>(),
                 LanguageSkills = dict.ContainsKey(nameof(Profile.LanguageSkills)) ? ConvertToList<LanguageSkill>(dict[nameof(Profile.LanguageSkills)],ConvertToLanguageSkills!) : new List<LanguageSkill>(),
                 Licenses = dict.ContainsKey(nameof(Profile.Licenses)) ? ConvertToList<License>(dict[nameof(Profile.Licenses)], ConvertToLicenses!) : new List<License>(),
-                WebReferences = dict.ContainsKey("WebReferences") ? ConvertToList<WebReference>(dict[nameof(Profile.WebReferences)], ConvertToWebReference!) : new List<WebReference>(),
-                MobilityInfo = dict.ContainsKey("MobilityInfo") ? ConvertToType<Mobility>(dict[nameof(Profile.MobilityInfo)], ConvertToMobilityInfo!)  : null,
-                LeadershipSkills = dict.ContainsKey("LeadershipSkills") ? ConvertToType<LeadershipSkills>(dict[nameof(Profile.LeadershipSkills)], ConvertToLeaderShipSkills!) : null,
+                WebReferences = dict.ContainsKey(nameof(Profile.WebReferences)) ? ConvertToList<WebReference>(dict[nameof(Profile.WebReferences)], ConvertToWebReference!) : new List<WebReference>(),
+                MobilityInfo = dict.ContainsKey(nameof(Profile.MobilityInfo)) ? ConvertToType<Mobility>(dict[nameof(Profile.MobilityInfo)], ConvertToMobilityInfo!)  : null,
+                LeadershipSkills = dict.ContainsKey(nameof(Profile.LeadershipSkills)) ? ConvertToType<LeadershipSkills>(dict[nameof(Profile.LeadershipSkills)], ConvertToLeaderShipSkills!) : null,
             };
 
             return profile;
@@ -488,6 +490,7 @@ namespace Apollo.Api
                     WorkingTimeModel = dict.ContainsKey(nameof(CareerInfo.WorkingTimeModel)) ? ConvertToObject<WorkingTimeModel>(dict[nameof(CareerInfo.WorkingTimeModel)]) : null,
                     CareerType = dict.ContainsKey(nameof(CareerInfo.CareerType)) ? ConvertToObject<CareerType>(dict[nameof(CareerInfo.CareerType)]) : null,
                     ServiceType = dict.ContainsKey(nameof(CareerInfo.ServiceType)) ? ConvertToObject<ServiceType>(dict[nameof(CareerInfo.ServiceType)]) : null,
+                    Job = dict.ContainsKey(nameof(CareerInfo.Job)) ? ConvertToOccupation(dict[nameof(CareerInfo.Job)]) : null,
                 };
 
                 return careerInfo;
@@ -547,17 +550,89 @@ namespace Apollo.Api
                 throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.EducationInfos)}");
         }
 
+
+
         /// <summary>
-        /// Converts an object, typically an ExpandoObject, to a nullable LanguageSkill instance.
+        /// Converts an object, typically an ExpandoObject, to a nullable Occupation instance.
         /// </summary>
         /// <param name="item">The object to be converted.</param>
         /// <returns>
-        /// A LanguageSkill instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// An Occupation instance with properties populated from the input object, or null if the input is null or an empty string.
         /// </returns>
         /// <exception cref="ArgumentException">
-        /// Thrown when the input type is not supported or does not match the expected structure for LanguageSkill.
+        /// Thrown when the input type is not supported or does not match the expected structure for Occupation.
         /// </exception>
-        private static LanguageSkill? ConvertToLanguageSkills(object item)
+        private static Occupation? ConvertToOccupation(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var occupation = new Occupation
+                {
+                    UniqueIdentifier = dict.ContainsKey(nameof(Occupation.UniqueIdentifier)) ? (string)dict[nameof(Occupation.UniqueIdentifier)] : null,
+                    OccupationUri = dict.ContainsKey(nameof(Occupation.OccupationUri)) ? (string)dict[nameof(Occupation.OccupationUri)] : null,
+                    ClassificationCode = dict.ContainsKey(nameof(Occupation.ClassificationCode)) ? (string)dict[nameof(Occupation.ClassificationCode)] : null,
+                    Identifier = dict.ContainsKey(nameof(Occupation.Identifier)) ? (string)dict[nameof(Occupation.Identifier)] : null,
+                    Concept = dict.ContainsKey(nameof(Occupation.Concept)) ? (string)dict[nameof(Occupation.Concept)] : null,
+                    RegulatoryAspect = dict.ContainsKey(nameof(Occupation.RegulatoryAspect)) ? (string)dict[nameof(Occupation.RegulatoryAspect)] : String.Empty,
+                    HasApprenticeShip = dict.ContainsKey(nameof(Occupation.HasApprenticeShip)) && (bool)dict[nameof(Occupation.HasApprenticeShip)],
+                    IsUniversityOccupation = dict.ContainsKey(nameof(Occupation.IsUniversityOccupation)) && (bool)dict[nameof(Occupation.IsUniversityOccupation)],
+                    IsUniversityDegree = dict.ContainsKey(nameof(Occupation.IsUniversityDegree)) && (bool)dict[nameof(Occupation.IsUniversityDegree)],
+                    PreferedTerm = dict.ContainsKey(nameof(Occupation.PreferedTerm)) && dict[nameof(Occupation.PreferedTerm)] != null ? ((List<object>)dict[nameof(Occupation.PreferedTerm)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    NonePreferedTerm = dict.ContainsKey(nameof(Occupation.NonePreferedTerm)) && dict[nameof(Occupation.NonePreferedTerm)] != null ? ((List<object>)dict[nameof(Occupation.NonePreferedTerm)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    TaxonomyInfo = dict.ContainsKey(nameof(Occupation.TaxonomyInfo)) ? (Taxonomy)dict[nameof(Occupation.TaxonomyInfo)] : default,
+                    TaxonomieVersion = dict.ContainsKey(nameof(Occupation.TaxonomieVersion)) ? (string)dict[nameof(Occupation.TaxonomieVersion)] : String.Empty,
+                    CultureString = dict.ContainsKey(nameof(Occupation.CultureString)) ? (string)dict[nameof(Occupation.CultureString)] : null,
+                    Description = dict.ContainsKey(nameof(Occupation.Description)) ? (string)dict[nameof(Occupation.Description)] : null,
+
+                    BroaderConcepts = dict.ContainsKey(nameof(Occupation.BroaderConcepts)) && dict[nameof(Occupation.BroaderConcepts)] != null ? ((List<object>)dict[nameof(Occupation.BroaderConcepts)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    NarrowerConcepts = dict.ContainsKey(nameof(Occupation.NarrowerConcepts)) && dict[nameof(Occupation.NarrowerConcepts)] != null ? ((List<object>)dict[nameof(Occupation.NarrowerConcepts)]).Select(x => x.ToString()).ToList() : new List<string?>(),
+                    RelatedConcepts = dict.ContainsKey(nameof(Occupation.RelatedConcepts)) && dict[nameof(Occupation.RelatedConcepts)] != null ? ((List<object>)dict[nameof(Occupation.RelatedConcepts)]).Select(x => x.ToString()).ToList() : new List<string?>(),
+                    Skills = dict.ContainsKey(nameof(Occupation.Skills)) && dict[nameof(Occupation.Skills)] != null ? ((List<object>)dict[nameof(Occupation.Skills)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    EssentialSkills = dict.ContainsKey(nameof(Occupation.EssentialSkills)) && dict[nameof(Occupation.EssentialSkills)] != null ? ((List<object>)dict[nameof(Occupation.EssentialSkills)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    OptionalSkills = dict.ContainsKey(nameof(Occupation.OptionalSkills)) && dict[nameof(Occupation.OptionalSkills)] != null ? ((List<object>)dict[nameof(Occupation.OptionalSkills)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    EssentialKnowledge = dict.ContainsKey(nameof(Occupation.EssentialKnowledge)) && dict[nameof(Occupation.EssentialKnowledge)] != null ? ((List<object>)dict[nameof(Occupation.EssentialKnowledge)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    OptionalKnowledge = dict.ContainsKey(nameof(Occupation.OptionalKnowledge)) && dict[nameof(Occupation.OptionalKnowledge)] != null ? ((List<object>)dict[nameof(Occupation.OptionalKnowledge)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    Documents = dict.ContainsKey(nameof(Occupation.Documents)) && dict[nameof(Occupation.Documents)] != null ? ((List<object>)dict[nameof(Occupation.Documents)]).Select(x => x.ToString()).ToList()! : new List<string>(),
+                    OccupationGroup = dict.ContainsKey(nameof(Occupation.OccupationGroup)) && dict[nameof(Occupation.OccupationGroup)] != null ? ((IDictionary<string, object>)dict[nameof(Occupation.OccupationGroup)]).ToDictionary(kv => kv.Key, kv => kv.Value.ToString()!) : new Dictionary<string, string>(),
+                    DkzApprenticeship = dict.ContainsKey(nameof(Occupation.DkzApprenticeship)) && dict[nameof(Occupation.DkzApprenticeship)] !=null ? (bool)dict[nameof(Occupation.DkzApprenticeship)] : false,
+
+                    QualifiedProfessional = dict.ContainsKey(nameof(Occupation.QualifiedProfessional)) && (bool)dict[nameof(Occupation.QualifiedProfessional)],
+                    NeedsUniversityDegree = dict.ContainsKey(nameof(Occupation.NeedsUniversityDegree)) && (bool)dict[nameof(Occupation.NeedsUniversityDegree)],
+                    IsMilitaryApprenticeship = dict.ContainsKey(nameof(Occupation.IsMilitaryApprenticeship)) && (bool)dict[nameof(Occupation.IsMilitaryApprenticeship)],
+                    IsGovernmentApprenticeship = dict.ContainsKey(nameof(Occupation.IsGovernmentApprenticeship)) && (bool)dict[nameof(Occupation.IsGovernmentApprenticeship)],
+                    ValidFrom = dict.ContainsKey(nameof(Occupation.ValidFrom)) ? (DateTime?)dict[nameof(Occupation.ValidFrom)] : null,
+                    ValidTill = dict.ContainsKey(nameof(Occupation.ValidTill)) ? (DateTime?)dict[nameof(Occupation.ValidTill)] : null
+                };
+
+                return occupation;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+            {
+                throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Occupation)}");
+            }
+
+        }
+
+
+
+            /// <summary>
+            /// Converts an object, typically an ExpandoObject, to a nullable LanguageSkill instance.
+            /// </summary>
+            /// <param name="item">The object to be converted.</param>
+            /// <returns>
+            /// A LanguageSkill instance with properties populated from the input object, or null if the input is null or an empty string.
+            /// </returns>
+            /// <exception cref="ArgumentException">
+            /// Thrown when the input type is not supported or does not match the expected structure for LanguageSkill.
+            /// </exception>
+            private static LanguageSkill? ConvertToLanguageSkills(object item)
         {
             if (item is ExpandoObject expando)
             {
@@ -676,6 +751,12 @@ namespace Apollo.Api
                 var mobilityInfo = new Mobility
                 {
                     WillingToTravel = dict.ContainsKey(nameof(Mobility.WillingToTravel)) ? ConvertToObject<Willing>(dict[nameof(Mobility.WillingToTravel)]) : null,
+                    DriverLicenses = dict.ContainsKey(nameof(Mobility.DriverLicenses)) && dict[nameof(Mobility.DriverLicenses)] != null
+                                        ? ((IEnumerable<object>)dict[nameof(Mobility.DriverLicenses)]!)
+                                            .Select(item => ConvertToObject<DriversLicense>(item))
+                                            .Cast<DriversLicense>()
+                                            .ToList()
+                                        : null,
                     HasVehicle = dict.ContainsKey(nameof(Mobility.HasVehicle)) ? (bool)dict[nameof(Mobility.HasVehicle)] : false,
                 };
 
@@ -725,6 +806,54 @@ namespace Apollo.Api
             else
                 // Handle other cases or throw an exception
                 throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.LeadershipSkills)}");
+        }
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable Contact instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A Contact instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for Contact.
+        /// </exception>
+        private static Contact? ConvertToContact(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var contact = new Contact
+                {
+                    Id = dict.ContainsKey(nameof(Contact.Id)) ? (string)dict[nameof(Contact.Id)] : null,
+                    Firstname = dict.ContainsKey(nameof(Contact.Firstname)) ? (string)dict[nameof(Contact.Firstname)] : null,
+                    Surname = dict.ContainsKey(nameof(Contact.Surname)) ? (string)dict[nameof(Contact.Surname)] : null,
+                    Mail = dict.ContainsKey(nameof(Contact.Mail)) ? (string)dict[nameof(Contact.Mail)] : null,
+                    Phone = dict.ContainsKey(nameof(Contact.Phone)) ? (string)dict[nameof(Contact.Phone)] : null,
+                    Organization = dict.ContainsKey(nameof(Contact.Organization)) ? (string)dict[nameof(Contact.Organization)] : null,
+                    Address = dict.ContainsKey(nameof(Contact.Address)) ? (string)dict[nameof(Contact.Address)] : null,
+                    City = dict.ContainsKey(nameof(Contact.City)) ? (string)dict[nameof(Contact.City)] : null,
+                    ZipCode = dict.ContainsKey(nameof(Contact.ZipCode)) ? (string)dict[nameof(Contact.ZipCode)] : null,
+                    Region = dict.ContainsKey(nameof(Contact.Region)) ? (string)dict[nameof(Contact.Region)] : null,
+                    Country = dict.ContainsKey(nameof(Contact.Country)) ? (string)dict[nameof(Contact.Country)] : null,
+                    EAppointmentUrl = (dict.ContainsKey(nameof(Contact.EAppointmentUrl)) && dict[nameof(Contact.EAppointmentUrl)] != null) ? new Uri((string)dict[nameof(Contact.EAppointmentUrl)]) : null,
+                    ContactType = dict.ContainsKey(nameof(Contact.ContactType)) ? ConvertToObject<ContactType>(dict[nameof(Contact.ContactType)]) : null,
+                };
+
+                return contact;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+            // Handle other cases or throw an exception
+            {
+                throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Contact)}");
+            }
         }
 
         /// <summary>
