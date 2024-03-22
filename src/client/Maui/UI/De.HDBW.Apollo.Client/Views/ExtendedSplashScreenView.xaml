@@ -9,7 +9,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}" Padding="0">
     <Grid RowDefinitions="auto, *, auto, auto">
-        <Label Margin="24,16,24,8" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resource.ExtendedSplashScreenView_Welcome}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
+        <Label Margin="24,16,24,8" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Welcome}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" />
         <CarouselView Grid.Row="1" ItemsSource="{Binding Instructions}"
                 IndicatorView="indicatorView"
                 VerticalOptions="Fill"
@@ -30,6 +30,6 @@
                        SelectedIndicatorColor="{StaticResource Primary}"
                        HorizontalOptions="Center"
                        Margin="24,8"/>
-        <Button Grid.Row="3" VerticalOptions="End" Text="{x:Static strings:Resource.Global_StartNow}" Command="{Binding SkipCommand}" Margin="24,0,24,16"/>
+        <Button Grid.Row="3" VerticalOptions="End" Text="{x:Static strings:Resources.Global_StartNow}" Command="{Binding SkipCommand}" Margin="24,0,24,16"/>
     </Grid>
 </ContentPage>

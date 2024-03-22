@@ -7,6 +7,7 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.ApplicationModel;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -126,7 +127,15 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    await NavigationService.NavigateAsnc(route, worker.Token);
+                    switch (route)
+                    {
+                        case Routes.FeedbackView:
+                            await Browser.Default.OpenAsync(Resources.Strings.Resources.FeedbackUrl, BrowserLaunchMode.SystemPreferred);
+                            break;
+                        default:
+                            await NavigationService.NavigateAsnc(route, worker.Token);
+                            break;
+                    }
                 }
                 catch (OperationCanceledException)
                 {

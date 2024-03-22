@@ -44,7 +44,7 @@ namespace De.HDBW.Apollo.Data.Repositories
             {
                 var mapping = connection.GetMapping<TU>();
                 var minId = connection.ExecuteScalar<long>($"Select Min(Id) FROM [{mapping.TableName}]");
-                var lowestId = Math.Min(minId-1, -1);
+                var lowestId = Math.Min(minId - 1, -1);
                 foreach (var item in items)
                 {
                     item.Id = lowestId;
