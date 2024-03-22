@@ -377,16 +377,32 @@ namespace Apollo.Api
                     throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.");
                 }
 
+
+
                 foreach (var training in trainings)
                 {
                     if (string.IsNullOrEmpty(training.Id))
                     {
                         // Generate a new ID for new training
                         training.Id = CreateTrainingId();
+                        training.CreatedAt = DateTime.UtcNow;
+
+                        //
+                        //Currently it is not possible to ger information of logged in User performs creating
+                        // We keep it for future
+                        //TO:DO:
+                        //training.CreatedBy = "Apollo";
                     }
 
                     // Add the ID to the list regardless of whether it's new or existing
                     ids.Add(training.Id);
+                    training.ChangedAt = DateTime.UtcNow;
+
+                    //
+                    //Currently it is not possible to get information of logged in User who perfroms updating
+                    // We keep it for future
+                    // TO:DO:
+                    //training.ChangedBy = "Apollo";
 
                     // Convert the training object to ExpandoObject
                     var expandoTraining = Convertor.Convert(training);
