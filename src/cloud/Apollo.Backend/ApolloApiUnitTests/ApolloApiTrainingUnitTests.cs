@@ -371,8 +371,8 @@ namespace Apollo.Api.UnitTests
     ""priceDescription"": ""<string>"",
     ""accessibilityAvailable"": true,
     ""tags"": [
-      ""<string>"",
-      ""<string>""
+      ""<string>""      ""<string>"",
+
     ],
     ""categories"": [
       ""<string>"",
