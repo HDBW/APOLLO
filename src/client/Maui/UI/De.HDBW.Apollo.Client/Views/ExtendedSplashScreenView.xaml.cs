@@ -72,6 +72,5 @@ public partial class ExtendedSplashScreenView
 
         var diff = height - heightSum;
         PART_Animation.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-
     }
 }

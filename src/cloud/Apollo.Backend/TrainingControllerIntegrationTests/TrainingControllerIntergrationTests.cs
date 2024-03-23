@@ -641,29 +641,13 @@ namespace Apollo.RestService.IntergrationTests
         }
 
 
-        /// <summary>
-        /// Cleanup method to delete test data after each test.
-        /// </summary>
-        [TestCleanup]
-        public async Task CleanUp()
-        {
-            var httpClient = Helpers.GetHttpClient();
-
-            //foreach (var testTraining in _testTrainings)
-            //{
-            //    await httpClient.DeleteAsync($"{_cTrainingController}/{testTraining.Id}");
-            //}
-        }
-
-
         ///// <summary>
         ///// Initialization method to insert test data before each test.
         ///// </summary>
         [TestInitialize]
         public async Task InitTest()
         {
-            //await CleanUp();
-            // await InsertTestTrainings();
+         
         }
 
 
@@ -705,31 +689,36 @@ namespace Apollo.RestService.IntergrationTests
 
             var httpClient = Helpers.GetHttpClient();
 
-            foreach (var testTraining in _testTrainings)
+            try
             {
-                // GET the training by ID and verify the response is successful
-                var response = await httpClient.GetAsync($"{_cTrainingController}/{testTraining.Id}");
-                Assert.IsTrue(response.IsSuccessStatusCode);
-
-                // Deserialize the response content to a Training object
-                var trainingJson = await response.Content.ReadAsStringAsync();
-
-
-                //var training = JsonSerializer.Deserialize<Training>(trainingJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ;
-
-                var trainingWrapper = JsonSerializer.Deserialize<TrainingWrapper>(trainingJson, new JsonSerializerOptions
+                foreach (var testTraining in _testTrainings)
                 {
-                    PropertyNameCaseInsensitive = true
-                });
+                    // GET the training by ID and verify the response is successful
+                    var response = await httpClient.GetAsync($"{_cTrainingController}/{testTraining.Id}");
+                    Assert.IsTrue(response.IsSuccessStatusCode);
 
-                //var training = trainingWrapper?.Training;
-                // Perform necessary assertions on the retrieved training object
-                Assert.IsNotNull(trainingWrapper);
-                Assert.AreEqual(testTraining.Id, trainingWrapper.training.Id);
-                // Add more assertions as necessary to verify the training details
+                    // Deserialize the response content to a Training object
+                    var trainingJson = await response.Content.ReadAsStringAsync();
+
+                    var trainingWrapper = JsonSerializer.Deserialize<TrainingWrapper>(trainingJson, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                    // Perform necessary assertions on the retrieved training object
+                    Assert.IsNotNull(trainingWrapper);
+                    Assert.AreEqual(testTraining.Id, trainingWrapper.training.Id);
+                    // Add more assertions as necessary to verify the training details
+                }
             }
-
-            // Assert content as needed
+            finally
+            {
+                // Cleanup: Delete the test trainings
+                foreach (var testTraining in _testTrainings)
+                {
+                    await httpClient.DeleteAsync($"{_cTrainingController}/{testTraining.Id}");
+                }
+            }
         }
 
 
@@ -741,8 +730,9 @@ namespace Apollo.RestService.IntergrationTests
         {
             var httpClient = Helpers.GetHttpClient();
 
-           
-           var query = new Query
+            await InsertTestTrainings();
+
+            var query = new Query
             {
                 Fields = new List<string> { "TrainingName" },
                 Filter = new Filter
@@ -777,6 +767,16 @@ namespace Apollo.RestService.IntergrationTests
             //Perform assertions
             Assert.IsNotNull(trainingsResponse);
             Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "Open AI"));
+
+            var trainingIds = trainingsResponse.Trainings.Select(t => t.Id).ToList();
+
+            // Cleanup: Delete the inserted trainings
+            foreach (var id in trainingIds)
+            {
+                var deleteResponse = await httpClient.DeleteAsync($"{_cTrainingController}/{id}");
+                Assert.IsTrue(deleteResponse.IsSuccessStatusCode, $"Cleanup failed for training ID {id}");
+            }
+
         }
 
 
@@ -788,45 +788,46 @@ namespace Apollo.RestService.IntergrationTests
         {
             var httpClient = Helpers.GetHttpClient();
 
-            
-            var requestObj = new
+            // Insert test trainings first to ensure they are in the system.
+            await InsertTestTrainings();
+
+            // Assuming we're updating the first training from the inserted test trainings for simplicity.
+            var trainingToUpdate = _testTrainings.First();
+
+            // Update details of the training for demonstration purposes.
+            trainingToUpdate.TrainingName = "Updated Training Name";
+            trainingToUpdate.Description = "Updated Description";
+
+            // Wrap the training object for the API request.
+            var updateRequestObj = new
             {
-                Training = _testTrainings[0],
-                Filter = new { } // Including a dummy filter because its required by API
+                Training = trainingToUpdate,
+                Filter = new { } 
             };
 
-            // Serializing the request object to JSON for creation
-            var createRequestJson = JsonSerializer.Serialize(requestObj);
-            HttpContent createContent = new StringContent(createRequestJson, Encoding.UTF8, "application/json");
-
-            // PUT to the CreateOrUpdate endpoint for creation
-            var createResponse = await httpClient.PutAsync($"{_cTrainingController}", createContent);
-            Assert.IsTrue(createResponse.IsSuccessStatusCode, "Creation of the training failed.");
-
-            // Logging response for debugging
-            var createResponseContent = await createResponse.Content.ReadAsStringAsync();
-            Console.WriteLine($"Create Response Content: {createResponseContent}");
-
-            
-            requestObj.Training.TrainingName = "Updated Training Name";
-            requestObj.Training.Description = "Updated description";
-           
-
-            // Serializing the modified request object to JSON for update
-            var updateRequestJson = JsonSerializer.Serialize(requestObj);
+            // Serializing the request object to JSON for update.
+            var updateRequestJson = JsonSerializer.Serialize(updateRequestObj);
             HttpContent updateContent = new StringContent(updateRequestJson, Encoding.UTF8, "application/json");
 
-            // PUT to the CreateOrUpdate endpoint for update
+            // Use PUT to update the training, assuming the endpoint differentiates create vs update based on the request method.
             var updateResponse = await httpClient.PutAsync($"{_cTrainingController}", updateContent);
             Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Update of the training failed.");
 
-            // Logging response for debugging
+            // Logging response for debugging.
             var updateResponseContent = await updateResponse.Content.ReadAsStringAsync();
             Console.WriteLine($"Update Response Content: {updateResponseContent}");
 
+            // Deserialize the response to check the update was successful, if applicable.
+            // Example: var updatedTraining = JsonSerializer.Deserialize<Training>(updateResponseContent);
+
+            // Optionally, confirm the training was updated by querying or directly fetching it, and perform assertions as necessary.
+
+            // Cleanup: Delete the inserted/updated training at the end of the test.
+            foreach (var training in _testTrainings)
+            {
+                await httpClient.DeleteAsync($"{_cTrainingController}/{training.Id}");
+            }
         }
-
-
 
         private class TrainingWrapper
         {

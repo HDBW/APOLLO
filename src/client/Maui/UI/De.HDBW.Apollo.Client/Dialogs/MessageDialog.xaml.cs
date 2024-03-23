@@ -12,8 +12,9 @@ public partial class MessageDialog
         var view = FindByName("Part_Root") as View;
         if (view != null && Shell.Current != null)
         {
-           view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
-           view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
+            view.MaximumWidthRequest = Shell.Current.CurrentPage.Width - 16;
+            view.MaximumHeightRequest = Shell.Current.CurrentPage.Height - 16;
+            Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
         }
 
         BindingContext = model;

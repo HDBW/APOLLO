@@ -6,7 +6,7 @@
              xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              x:DataType="viewModels:AssessmentResultViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             Title="{x:Static strings:Resource.AssessmentResultView_Title}"
+             Title="{x:Static strings:Resources.AssessmentResultView_Title}"
              Shell.FlyoutBehavior="Disabled">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior />
@@ -56,11 +56,11 @@
     </ContentPage.Resources>
     <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto">
         <Image Margin="0,0,0,8" Source="resultdeco.png"/>
-        <Label Margin="0,0,0,8" Grid.Row="1" Text="{x:Static strings:Resource.AssessmentResultView_Headline}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
-        <Label Margin="0,0,0,8" Grid.Row="2" Text="{x:Static strings:Resource.AssessmentResultView_Description}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
+        <Label Margin="0,0,0,8" Grid.Row="1" Text="{x:Static strings:Resources.AssessmentResultView_Headline}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
+        <Label Margin="0,0,0,8" Grid.Row="2" Text="{x:Static strings:Resources.AssessmentResultView_Description}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
         <ProgressBar Margin="0,0,0,8" Grid.Row="3" Progress="{Binding Score}" />
-        <Label IsVisible="{Binding HasInteractions}" Grid.Row="4" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationHeadline}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
-        <Label IsVisible="{Binding HasInteractions}" Margin="0,0,0,8" Grid.Row="5" Text="{x:Static strings:Resource.AssessmentResultView_RecommendationDescription}" Style="{StaticResource NotoSerif16}" LineBreakMode="WordWrap"/>
+        <Label IsVisible="{Binding HasInteractions}" Grid.Row="4" Text="{x:Static strings:Resources.AssessmentResultView_RecommendationHeadline}" Style="{StaticResource Noto12}" TextColor="{StaticResource Primary}" LineBreakMode="WordWrap"/>
+        <Label IsVisible="{Binding HasInteractions}" Margin="0,0,0,8" Grid.Row="5" Text="{x:Static strings:Resources.AssessmentResultView_RecommendationDescription}" Style="{StaticResource NotoSerif16}" LineBreakMode="WordWrap"/>
         <CollectionView IsVisible="{Binding HasInteractions}"
                         Grid.Row="6"
                         ItemsSource="{Binding Interactions}"
@@ -69,7 +69,7 @@
                 <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="16" VerticalItemSpacing="16" SnapPointsType="None" />
             </CollectionView.ItemsLayout>
         </CollectionView>
-        <Button Grid.Row="7" Margin="0,8,0,16" Command="{Binding ConfirmCommand}" Text="{x:Static strings:Resource.AssessmentResultView_CloseAssessment}" />
+        <Button Grid.Row="7" Margin="0,8,0,16" Command="{Binding ConfirmCommand}" Text="{x:Static strings:Resources.AssessmentResultView_CloseAssessment}" />
     </Grid>
 </ContentPage>
 

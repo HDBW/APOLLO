@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace apolloapiunittests
+namespace Apollo.Api.UnitTests
 {
 
     /// <summary>

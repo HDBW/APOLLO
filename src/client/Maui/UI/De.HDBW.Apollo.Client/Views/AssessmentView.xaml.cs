@@ -61,7 +61,6 @@ public partial class AssessmentView
             behaviour.ClearValue(BackButtonBehavior.CommandProperty);
             behaviour.BindingContext = null;
             Shell.SetBackButtonBehavior(this, null);
-
         }
         finally
         {
@@ -72,7 +71,6 @@ public partial class AssessmentView
     protected override void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
-
 
         var grid = Content as Grid;
         if (grid == null)
@@ -108,6 +106,5 @@ public partial class AssessmentView
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-
     }
 }

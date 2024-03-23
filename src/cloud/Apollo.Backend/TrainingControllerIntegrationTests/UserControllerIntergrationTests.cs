@@ -46,7 +46,7 @@ namespace Apollo.RestService.IntergrationTests
         [TestInitialize]
         public async Task InitTest()
         {
-            //await CleanUp();
+            await CleanUp();
             //await InsertTestUsers();
         }
 
@@ -199,7 +199,7 @@ namespace Apollo.RestService.IntergrationTests
         {
             var httpClient = Helpers.GetHttpClient();
 
-            // Assuming _testUsers[0] is the user you want to create/update
+            
             var requestObj = new
             {
                 User = _testUsers[0],
@@ -210,7 +210,7 @@ namespace Apollo.RestService.IntergrationTests
             var createRequestJson = JsonSerializer.Serialize(requestObj);
             HttpContent createContent = new StringContent(createRequestJson, Encoding.UTF8, "application/json");
 
-            // POST to the CreateOrUpdate endpoint for creation
+            // PUT to the CreateOrUpdate endpoint for creation
             var createResponse = await httpClient.PutAsync($"{_cUserController}", createContent);
             Assert.IsTrue(createResponse.IsSuccessStatusCode, "Creation of the user failed.");
 
@@ -226,7 +226,7 @@ namespace Apollo.RestService.IntergrationTests
             var updateRequestJson = JsonSerializer.Serialize(requestObj);
             HttpContent updateContent = new StringContent(updateRequestJson, Encoding.UTF8, "application/json");
 
-            // POST to the CreateOrUpdate endpoint for update
+            // PUT to the CreateOrUpdate endpoint for update
             var updateResponse = await httpClient.PutAsync($"{_cUserController}", updateContent);
             Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Update of the user failed.");
 

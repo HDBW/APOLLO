@@ -22,14 +22,14 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resource {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("De.HDBW.Apollo.Client.Resources.Strings.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("De.HDBW.Apollo.Client.Resources.Strings.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -439,7 +439,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vorraussetzungen.
+        ///   Looks up a localized string similar to Voraussetzungen.
         /// </summary>
         public static string CourseView_PreRequisites {
             get {
@@ -547,20 +547,11 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Senden.
+        ///   Looks up a localized string similar to https://forms.office.com/e/cmES4qec8q.
         /// </summary>
-        public static string FeedbackView_Submit {
+        public static string FeedbackUrl {
             get {
-                return ResourceManager.GetString("FeedbackView_Submit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feedback.
-        /// </summary>
-        public static string FeedbackView_Title {
-            get {
-                return ResourceManager.GetString("FeedbackView_Title", resourceCulture);
+                return ResourceManager.GetString("FeedbackUrl", resourceCulture);
             }
         }
         

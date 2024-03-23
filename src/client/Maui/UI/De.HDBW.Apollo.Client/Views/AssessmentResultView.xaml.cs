@@ -87,6 +87,5 @@ public partial class AssessmentResultView : ContentPage
 
         var diff = height - heightSum;
         PART_ScrollHost.MaximumHeightRequest = diff <= 0 ? double.PositiveInfinity : diff;
-
     }
 }

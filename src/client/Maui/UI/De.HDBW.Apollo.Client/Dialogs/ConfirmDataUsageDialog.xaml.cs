@@ -16,6 +16,7 @@ public partial class ConfirmDataUsageDialog
         {
             view.MaximumWidthRequest = page.Width - 16;
             view.MaximumHeightRequest = page.Height - 16;
+            Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
         }
 
         BindingContext = model;

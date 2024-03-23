@@ -11,7 +11,7 @@ public class Mobility
 
     // Mobility_DriverLicenses_filtered.txt
     // Mehrfachselection
-    public List<DriversLicense> DriverLicenses { get; set; }
+    public List<DriversLicense>? DriverLicenses { get; set; }
 
     public bool HasVehicle { get; set; }
 }

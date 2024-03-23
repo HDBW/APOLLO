@@ -185,7 +185,7 @@ namespace Apollo.Service.Controllers
             {
                 // Log and return an empty list in case of an error.
                 _logger.LogError($"{nameof(InsertTrainingsAsync)} failed: {ex.Message}");
-                return new List<string>();
+                throw;
             }
         }
 
