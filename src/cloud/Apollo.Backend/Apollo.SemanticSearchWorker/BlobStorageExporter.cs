@@ -13,24 +13,40 @@ using Azure.Storage.Blobs;
 
 namespace Apollo.SemanticSearchWorker
 {
+    /// <summary>
+    /// Exports the given Apollo entity into the CSV file compatible with daenet Semantc Search.
+    /// </summary>
     internal class BlobStorageExporter
     {
         private ApolloApi _api;
         private string _entityName;
+        private string _blobConnStr;
 
-        public BlobStorageExporter(ApolloApi api, string entity)
+        /// <summary>
+        /// Creates the instance of the BlobStorageExporter.
+        /// </summary>
+        /// <param name="api">The Apollo API used to return list of exporting entity instances from the backend.</param>
+        /// <param name="entity">The entity to be exported: Training, User, Profile, etc..</param>
+        /// <param name="blobConnStr">The conneciton string to the blob storage used to persist exported CSV file.</param>
+        public BlobStorageExporter(ApolloApi api, string entity, string blobConnStr)
         {
             _api = api;
             _entityName = entity;
+            _blobConnStr = blobConnStr;
         }
 
+
+        /// <summary>
+        /// Perfomrs the long-running export operation.
+        /// </summary>
+        /// <returns></returns>
         public async Task ExportAsync()
         {
             TrainingFormatter formatter = new TrainingFormatter();
 
             int currentPosition = 0;
 
-            Query query = CreateQuery(currentPosition);
+            Query query = CreateQuery();
 
             BlobContainerClient containerClient = GetContainerClient();
 
@@ -55,11 +71,16 @@ namespace Apollo.SemanticSearchWorker
 
                     if (result.Count == 0)
                         break;
+                    else
+                    {
+                        currentPosition += result.Count;
+                        query.Skip = currentPosition;
+                    }
                 }
             }
         }
 
-        private static Query CreateQuery(int currentPosition)
+        private static Query CreateQuery()
         {
             Query query = new Query()
             {
@@ -79,53 +100,22 @@ namespace Apollo.SemanticSearchWorker
                     }
                 },
 
-                Skip = currentPosition,
+                Skip = 0,
                 Top = 1000,
             };
             return query;
         }
 
-        private static async Task UploadToStreamAsync(string blobName, StreamReader sr)
-        {
-            BlobContainerClient containerClient = GetContainerClient();
-
-            await containerClient.CreateIfNotExistsAsync();
-
-            BlockBlobClient blockBlobClient = containerClient.GetBlockBlobClient(blobName);
-
-            using (Stream stream = await blockBlobClient.OpenWriteAsync(true))
-            {
-                while (true)
-                {
-                    string? line = await sr.ReadLineAsync();
-                    if (line != null)
-                    {
-                        stream.Write(Encoding.UTF8.GetBytes(line));
-                    }
-                    else
-                        break;
-                }
-            }
-        }
-
 
         /// <summary>
-        /// Creates the API from configuration.
+        /// Creates the BlobCLient API instance.
         /// </summary>
-        /// <param name="cfg"></param>
         /// <returns></returns>
-        private static BlobContainerClient GetContainerClient()
+        private BlobContainerClient GetContainerClient()
         {
-            string? blobConnStr = _cfg["blobConnStr"];
-
-            if (blobConnStr == null)
-                throw new ArgumentException("The connection string of the blob storage with the write permission must be specified in the configuration. I.e:as argument  '--blobConnStr=...' or as environment variable 'blobConnStr=...'");
-
-            BlobContainerClient containerClient = new BlobContainerClient(blobConnStr, "export");
+            BlobContainerClient containerClient = new BlobContainerClient(_blobConnStr, "export");
 
             return containerClient;
         }
-
-
     }
 }

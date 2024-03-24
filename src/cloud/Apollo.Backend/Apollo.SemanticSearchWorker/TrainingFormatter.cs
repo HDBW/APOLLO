@@ -17,28 +17,20 @@ namespace Apollo.SemanticSearchWorker
         /// </summary>
         /// <param name="training"></param>
         /// <returns></returns>
-        public IList<string> FormatObject(object instance) 
+        public IList<string> FormatObject(object instance)
         {
             Training? training = instance as Training;
-            if (training != null)
+            if (training == null)
                 throw new ArgumentNullException(nameof(training));
 
             List<string> list = new List<string>();
 
-            if (training is Training)
-            {
-                t = training as Training;
-
-                if (t != null)
-                {
-                    list.Add($"{t?.Id}|{t?.Id}|{t?.TrainingName}|{t?.SubTitle}");
-                    list.Add($"{t?.Id}|{t?.Id}|{t?.TrainingName}|{t?.ShortDescription}");
-                    list.Add($"{t?.Id}|{t?.Id}|{t?.TrainingName}|{t?.Description}");
-                    list.Add($"{t?.Id}|{t?.Id}|{t?.TrainingName}|{t?.TrainingName}");
-                }
-            }
+            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.SubTitle}");
+            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.ShortDescription}");
+            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.Description}");
+            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.TrainingName}");
 
             return list;
-        } 
+        }
     }
 }

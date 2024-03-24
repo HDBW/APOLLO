@@ -34,14 +34,20 @@ namespace Apollo.SemanticSearchWorker
 
             ApolloApi api = GetApi();
 
-            string? entity = _cfg["entity"];
+            string? entity = _cfg!["entity"];
             if (entity == null)
                 throw new ArgumentException("The entity name must be specified in the configuration. I.e:as argument  '--entity=training' or as environment variable 'entity=training'");
 
-            var exp = new BlobStorageExporter(api, entity);
+            string? blobConnStr = _cfg["blobConnStr"];
+            if (blobConnStr == null)
+                throw new ArgumentException("The connection string of the blob storage with the write permission must be specified in the configuration. I.e:as argument  '--blobConnStr=...' or as environment variable 'blobConnStr=...'");
+
+            var exp = new BlobStorageExporter(api, entity, blobConnStr);
 
             // Starts the long running operation.
             await exp.ExportAsync();
+
+            Console.WriteLine("Exporter completed.");
         }
 
 
