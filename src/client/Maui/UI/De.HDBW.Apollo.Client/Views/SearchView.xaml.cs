@@ -3,7 +3,8 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
-using De.HDBW.Apollo.Client.Contracts;
+using CommunityToolkit.Mvvm.Messaging;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Views
@@ -47,6 +48,7 @@ namespace De.HDBW.Apollo.Client.Views
 
         protected override void OnDisappearing()
         {
+            WeakReferenceMessenger.Default.Unregister<FlyoutStateChangedMessage>(this);
             PART_Collection.PropertyChanged -= OnPropertyChanged;
             base.OnDisappearing();
         }
@@ -56,6 +58,13 @@ namespace De.HDBW.Apollo.Client.Views
             base.OnAppearing();
             Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(200), PART_SearchHandler.Close);
             PART_Collection.PropertyChanged += OnPropertyChanged;
+            WeakReferenceMessenger.Default.Register<FlyoutStateChangedMessage>(this, OnFlyoutStateChangedMessage);
+        }
+
+        private void OnFlyoutStateChangedMessage(object recipient, FlyoutStateChangedMessage message)
+        {
+            PART_SearchHandler.Close();
+            PART_SearchHandler.Unfocus();
         }
 
         private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
