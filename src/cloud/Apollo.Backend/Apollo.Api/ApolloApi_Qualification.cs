@@ -7,6 +7,7 @@ using Amazon.Runtime.Internal.Util;
 using Apollo.Common.Entities;
 using Microsoft.Extensions.Logging;
 using ZstdSharp.Unsafe;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Apollo.Api.ErrorCodes;
 
 namespace Apollo.Api
@@ -64,7 +65,7 @@ namespace Apollo.Api
                 }
 
                 var res = await _dal.IsExistAsync<Profile>(GetCollectionName<Profile>(), profile.Id);
-                if (res == false)
+                if (!res)
                     throw new ApolloApiException(ProfileErrors.CreateOrUpdateProfileUserDoesNotExistError, $"The user {userId} does not exist");
 
                 await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile) });
@@ -73,16 +74,18 @@ namespace Apollo.Api
 
                 return ids;
             }
-            catch (ApolloApiException)
+            catch (ApolloApiException ex)
             {
-                //todo. Logging not implemented
+                // Use ErrorCode to distinguish between different errors
+                var errorMessage = $"ApolloApiException with ErrorCode {ex.ErrorCode} in {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}";
+                // Log the error with detailed context information
+                _logger?.LogError(ex, errorMessage);
                 throw;
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}");
-
                 // For other exceptions, throw an ApolloApiException with a general error code and message
+                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.ProfileErrors.CreateOrUpdateProfileError, "An error occurred while creating or updating profiles.", ex);
             }
         }

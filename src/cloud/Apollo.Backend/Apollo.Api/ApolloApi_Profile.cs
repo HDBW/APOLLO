@@ -155,12 +155,11 @@ namespace Apollo.Api
                 {
                     existingProfile = _dal.GetByIdAsync<Profile>(ApolloApi.GetCollectionName<Profile>(), profile.Id).Result;
 
-                    if(existingProfile == null)
+                    if (existingProfile == null)
                         throw new ApolloApiException(ErrorCodes.ProfileErrors.ListItemNotfound,
                             $"Profile with ID {profile.Id} not found!");
                 }
 
-                //
                 //Set ID for different items in a List in case empty or null
                 EnsureIds<CareerInfo>(profile!, profile?.CareerInfos, existingProfile?.CareerInfos);
                 EnsureIds<EducationInfo>(profile!, profile?.EducationInfos, existingProfile?.EducationInfos);
@@ -175,10 +174,11 @@ namespace Apollo.Api
 
                 return profile?.Id!;
             }
-            catch (ApolloApiException)
+            catch (ApolloApiException ex)
             {
-                //todo. Logging not implemented
-                throw;
+                // Implement missing logging for ApolloApiException
+                _logger?.LogError(ex, $"ApolloApiException with ErrorCode {ex.ErrorCode} in {nameof(CreateOrUpdateProfileAsync)}: {ex.Message}");
+                throw; // Rethrow the caught exception to maintain the original stack trace.
             }
             catch (Exception ex)
             {
