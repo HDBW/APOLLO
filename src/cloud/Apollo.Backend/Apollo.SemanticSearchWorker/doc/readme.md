@@ -56,6 +56,7 @@ To run the exporter:
 ```
 
 **Purpose**
+
 Converts Training Instances:
 
  - The formatter takes an instance of the Training class and converts it into a list of strings. Each string contains specific pieces of information about the training, formatted in a way that is useful for the system's needs.
