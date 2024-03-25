@@ -244,9 +244,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                     ? new List<InteractionEntry>()
                     : result.Select(x => InteractionEntry.Import(x.Title, x, (x) => { return Task.CompletedTask; }, (x) => { return true; })).ToList();
 
-                if (!items.Any() && !string.IsNullOrWhiteSpace(searchtext))
+                if (!string.IsNullOrWhiteSpace(searchtext) && !items.Any(x => searchtext.Equals(x.Text, StringComparison.InvariantCultureIgnoreCase)))
                 {
-                    items.Add(InteractionEntry.Import(searchtext, new Occupation() { TaxonomyInfo = Taxonomy.Unknown, PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
+                    items.Insert(0, InteractionEntry.Import(searchtext, new Occupation() { TaxonomyInfo = Taxonomy.Unknown, PreferedTerm = new List<string>() { searchtext } }, (x) => { return Task.CompletedTask; }, (x) => { return true; }));
                 }
 
                 token.Value.ThrowIfCancellationRequested();
