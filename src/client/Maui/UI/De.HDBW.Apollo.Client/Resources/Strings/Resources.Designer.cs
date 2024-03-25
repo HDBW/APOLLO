@@ -61,6 +61,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Termin auf Anfrage.
+        /// </summary>
+        public static string AppointmentOnRequest {
+            get {
+                return ResourceManager.GetString("AppointmentOnRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dauer.
         /// </summary>
         public static string AppointmentsView_Duration {
@@ -1674,6 +1683,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to auf Anfrage.
+        /// </summary>
+        public static string Global_OnRequest {
+            get {
+                return ResourceManager.GetString("Global_OnRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buchen.
         /// </summary>
         public static string Global_OpenBooking {
@@ -1710,7 +1728,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to auf Anfrage.
+        ///   Looks up a localized string similar to Preis auf Anfrage.
         /// </summary>
         public static string Global_PriceOnRequest {
             get {
@@ -2096,6 +2114,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finanzierungsoptionen verfügbar.
+        /// </summary>
+        public static string HasLoans {
+            get {
+                return ResourceManager.GetString("HasLoans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trifft garnicht zu.
         /// </summary>
         public static string IntegerInput_Negative {
@@ -2425,6 +2452,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MobilityEditView_Willing {
             get {
                 return ResourceManager.GetString("MobilityEditView_Willing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminauswahl möglich.
+        /// </summary>
+        public static string MultipleAppointments {
+            get {
+                return ResourceManager.GetString("MultipleAppointments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mehrere Standorte.
+        /// </summary>
+        public static string MultipleLocations {
+            get {
+                return ResourceManager.GetString("MultipleLocations", resourceCulture);
             }
         }
         

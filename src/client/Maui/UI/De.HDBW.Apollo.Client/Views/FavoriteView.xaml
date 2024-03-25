@@ -14,37 +14,6 @@
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <DataTemplate x:Key="SearchInteractionEntryWithImage" x:DataType="interactionModels:SearchInteractionEntry">
-            <ContentView>
-                <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
-                    </Border.GestureRecognizers>
-                    <Grid RowDefinitions="44, *, auto, 76" Padding="0" ColumnDefinitions="*, 40">
-                        <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="StartAndExpand" VerticalOptions="Start" Padding="16,8">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8,0,0,8" />
-                            </Border.StrokeShape>
-                            <HorizontalStackLayout>
-                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
-                                <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
-                            </HorizontalStackLayout>
-                        </Border>
-
-                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" />
-                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
-                        <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8" HeightRequest="76">
-                            <controls:SvgImage Source="{x:Binding ImageData}" HeightRequest="60" VerticalOptions="Fill" />
-                            <Label Grid.Column="1" InputTransparent="True" VerticalOptions="Center" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
-                        </Grid>
-                    </Grid>
-                </Border>
-            </ContentView>
-        </DataTemplate>
-
         <DataTemplate x:Key="SearchInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">
             <ContentView>
                 <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4">
@@ -64,26 +33,19 @@
                                 <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
                             </HorizontalStackLayout>
                         </Border>
-
                         <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Grid.Row="1" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Padding="16,8" />
-                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0" />
-                        <Grid ColumnDefinitions="*,*"  Grid.ColumnSpan="2"  Grid.Row="3" Margin="16,8">
-                            <Label Grid.Column="1" InputTransparent="True" VerticalOptions="Center" Grid.ColumnSpan="2" HorizontalTextAlignment="End" Text="{x:Binding Info, Mode=OneTime}" LineBreakMode="TailTruncation" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" />
-                        </Grid>
+                        <Label InputTransparent="True" Grid.ColumnSpan="2" Text="{x:Binding Subline, Mode=OneTime}" TextType="Html" LineBreakMode="TailTruncation" MaxLines="3" Grid.Row="2" Style="{StaticResource Noto12}" Padding="16,0,16,8" IsVisible="{x:Binding HasSubline}"/>
+                        <Label Grid.ColumnSpan="2" Grid.Row="3" Margin="16,8,16,16" InputTransparent="True" Text="{x:Binding Info, Mode=OneTime}" Style="{StaticResource Noto12}" />
                     </Grid>
                 </Border>
             </ContentView>
         </DataTemplate>
-
-        <selector:SearchInteractionEntryTemplateSelector x:Key="SearchInteractionEntryTemplateSelector"
-                                                         DefaultTemplate="{StaticResource SearchInteractionEntry}"
-                                                         ImageTemplate="{StaticResource SearchInteractionEntryWithImage}" />
     </ContentPage.Resources>
     <Grid x:Name="PART_Root">
         <CollectionView
             x:Name="PART_Collection"
             ItemsSource="{x:Binding FavoriteItems}"
-            ItemTemplate="{StaticResource SearchInteractionEntryTemplateSelector}"
+            ItemTemplate="{StaticResource SearchInteractionEntry}"
             SelectionMode="None"
             Grid.Row="1">
                 <CollectionView.ItemsLayout>
