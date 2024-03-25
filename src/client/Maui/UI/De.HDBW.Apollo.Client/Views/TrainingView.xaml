@@ -266,7 +266,7 @@
         </CollectionView>
         <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" HeightRequest="76">
             <Grid ColumnDefinitions="*, Auto" Margin="24,16">
-                <Label Text="{x:Binding Price}" Style="{StaticResource NotoSerif24Bold}" VerticalOptions="Center" Margin="0,0,8,0"/>
+                <Label Text="{x:Binding Price}" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" VerticalOptions="Center" Margin="0,0,8,0" />
                 <Button Grid.Column="1" Command="{x:Binding OpenProductCommand}" Text="{x:Static strings:Resources.TrainingView_OpenProvider}" IsVisible="{x:Binding HasProductUrl}"/>
             </Grid>
         </Border>

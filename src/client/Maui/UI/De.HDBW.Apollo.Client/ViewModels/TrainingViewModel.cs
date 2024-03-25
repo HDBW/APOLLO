@@ -10,7 +10,6 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Training;
 using De.HDBW.Apollo.Data.Helper;
-using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -398,8 +397,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             _training = training;
             ProductUrl = _training?.ProductUrl;
-            var price = _training?.Price ?? 0;
-            Price = price == -1d ? Resources.Strings.Resources.Global_PriceOnRequest : $"{price:0.##} €";
+            var price = _training?.Price ?? -1d;
+            Price = price == -1d ? Resources.Strings.Resources.Global_OnRequest : price == 0 ? Resources.Strings.Resources.Global_PriceFreeOfCharge : $"{price:0.##} €";
             IsFavorite = isFavorite;
             foreach (var section in sections)
             {

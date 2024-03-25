@@ -1475,7 +1475,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Anmelden</value>
   </data>
   <data name="Global_PriceOnRequest" xml:space="preserve">
-    <value>auf Anfrage</value>
+    <value>Preis auf Anfrage</value>
   </data>
   <data name="Global_PriceFreeOfCharge" xml:space="preserve">
     <value>Kostenlos</value>
@@ -1485,5 +1485,20 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="SettingsView_Licenses" xml:space="preserve">
     <value>Lizenzen</value>
+  </data>
+  <data name="AppointmentOnRequest" xml:space="preserve">
+    <value>Termin auf Anfrage</value>
+  </data>
+  <data name="Global_OnRequest" xml:space="preserve">
+    <value>auf Anfrage</value>
+  </data>
+  <data name="HasLoans" xml:space="preserve">
+    <value>Finanzierungsoptionen verfügbar</value>
+  </data>
+  <data name="MultipleAppointments" xml:space="preserve">
+    <value>Terminauswahl möglich</value>
+  </data>
+  <data name="MultipleLocations" xml:space="preserve">
+    <value>mehrere Standorte</value>
   </data>
 </root>
