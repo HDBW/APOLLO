@@ -27,5 +27,9 @@
     <ProjectReference Include="..\Apollo.Api\Apollo.Api.csproj" />
     <ProjectReference Include="..\Apollo.Service.Common\Apollo.Common.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="doc\" />
+  </ItemGroup>
   
 </Project>
