@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>De.HDBW.Apollo.DeviceTestRunner</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -18,14 +17,15 @@
     <ApplicationVersion>1</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <UserSecretsId>b756dce9-037f-46f7-b93b-05c2ff8d3330</UserSecretsId>
     <DefineConstants>DEVICEBUILD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\UI\De.HDBW.Apollo.Client\Helper\ProfileExtensions.cs" Link="Client\ProfileExtensions.cs" />
+  </ItemGroup>
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -37,9 +37,9 @@
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.7" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
@@ -47,4 +47,6 @@
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj" />
   </ItemGroup>
   <Import Project="..\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.projitems" Label="Shared" />
+  <Import Project="..\De.HDBW.Apollo.Data.Tests\De.HDBW.Apollo.Data.Tests.projitems" Label="Shared" />
+  <Import Project="..\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests\De.HDBW.Apollo.Client.Tests.projitems" Label="Shared" />
 </Project>

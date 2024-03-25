@@ -1,1 +1,1 @@
-open $(xcrun simctl get_app_container booted De.HDBW.Apollo.Client data) 
+open $(xcrun simctl get_app_container booted de.hdbw.apollo.client data) 

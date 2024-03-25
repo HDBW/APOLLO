@@ -1,0 +1,105 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.CareerInfo.VoluntaryServiceView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:cdp="clr-namespace:FedericoNembrini.Maui.CustomDatePicker;assembly=MauiCustomDatePicker"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors"
+             x:DataType="viewModels:VoluntaryServiceViewModel"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             Title="{x:Binding Title}"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" />
+    </Shell.BackButtonBehavior>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource FormContent}">
+            <Label Text="{x:Static strings:Resources.Global_Description}" Style="{StaticResource Noto14SemiBold}"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_OccupationName}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Description" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
+
+            <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_OccupationName" Text="{x:Binding OccupationName, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_NameOfInstitution}"/>
+            </Border>
+
+            <Label Text="{x:Static strings:Resources.Global_ServiceType}" Style="{StaticResource Noto14SemiBold}"  Margin="0,20,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto" >
+                    <Picker ItemsSource="{x:Binding VoluntaryServiceTypes}"
+                            ItemDisplayBinding="{x:Binding Text}"
+                            x:Name="PART_VoluntaryServiceType"
+                            SelectedItem="{x:Binding SelectedVoluntaryServiceType, Mode=TwoWay}"/>
+                    
+                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_VoluntaryServiceType}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    
+                </Grid>
+            </Border>
+
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto">
+                    <cdp:NullableDatePicker HorizontalOptions="Fill"
+                                IsClearButtonVisible="False"
+                                VerticalOptions="Center"
+                                x:Name="PART_Start"
+                                NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                    <ImageButton Source="calendar.png" Grid.Column="1">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </Grid>
+            </Border>
+
+            <Label Text="{x:Static strings:Resources.Global_End}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Grid ColumnDefinitions="*, auto, auto">
+                    <cdp:NullableDatePicker HorizontalOptions="Fill"
+                                        IsClearButtonVisible="False"
+                                        VerticalOptions="Center"
+                                        x:Name="PART_End"
+                                        NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
+                    <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" />
+                    <ImageButton Source="calendar.png" Grid.Column="2">
+                        <ImageButton.Behaviors>
+                            <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    
+                </Grid>
+            </Border>
+
+            <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
+            </Border>
+            
+            <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
+            </Border>
+            
+            <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Border Style="{StaticResource InputBorderStyle}">
+                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" />
+            </Border>
+             
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

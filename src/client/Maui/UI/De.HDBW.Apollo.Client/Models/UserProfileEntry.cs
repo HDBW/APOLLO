@@ -2,7 +2,6 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using De.HDBW.Apollo.Client.Helper;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace De.HDBW.Apollo.Client.Models
@@ -21,17 +20,15 @@ namespace De.HDBW.Apollo.Client.Models
         [ObservableProperty]
         private string? _goal;
 
-        private UserProfileItem _userProfile;
+        private User _userProfile;
 
-        private UserProfileEntry(UserProfileItem userProfile)
+        private UserProfileEntry(User userProfile)
         {
             ArgumentNullException.ThrowIfNull(userProfile);
 
             _userProfile = userProfile;
-            FirstName = userProfile.FirstName;
-            LastName = userProfile.LastName;
-            ImagePath = userProfile.Image?.ToUniformedName();
-            Goal = userProfile.Goal;
+            FirstName = userProfile.Name;
+            Goal = string.Empty;
             OnPropertyChanged(nameof(DisplayName));
         }
 
@@ -50,11 +47,11 @@ namespace De.HDBW.Apollo.Client.Models
         {
             get
             {
-                return _userProfile.Id;
+                return 0;
             }
         }
 
-        public static UserProfileEntry Import(UserProfileItem userProfile)
+        public static UserProfileEntry Import(User userProfile)
         {
             return new UserProfileEntry(userProfile);
         }

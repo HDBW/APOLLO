@@ -17,6 +17,12 @@ namespace De.HDBW.Apollo.Client.Helper
                 return null;
             }
 
+            switch (Path.GetExtension(imageName).ToLower())
+            {
+                case ".svg":
+                    return null;
+            }
+
             return string.IsNullOrWhiteSpace(imageName) ? null : imageName;
         }
     }

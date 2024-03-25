@@ -1,0 +1,61 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Training.LoansView"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Training"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:trainingsModels="clr-namespace:De.HDBW.Apollo.Client.Models.Training"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             x:DataType="viewModels:LoansViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             Title="{x:Static strings:Resources.LoansView_Title}"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
+            <Border StrokeThickness="0">
+                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
+                    <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InteractiveLineItemTemplate" x:DataType="trainingsModels:InteractiveLineItem">
+            <Border StrokeThickness="0">
+                <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5" Background="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding InteractCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <selector:LineItemTemplateSelector x:Key="LineItemTemplateSelector"
+                                    DefaultTemplate="{StaticResource LineItemTemplate}"
+                                    InteractiveLineItemTemplate="{StaticResource InteractiveLineItemTemplate}" />
+    </ContentPage.Resources>
+    <Grid>
+        <CollectionView ItemsSource="{x:Binding Sections}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="trainingsModels:LoanItem">
+                    <Border StrokeThickness="0">
+                        <Grid RowDefinitions="auto, auto, auto" Margin="24,0">
+                            <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
+                            <Label Grid.Row="1" Text="{x:Binding Description}" Style="{StaticResource Noto16}" Margin="0,0,0,8"/>
+                            <Border Grid.Row="2" Style="{StaticResource FrameBorder}" >
+                                <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8" BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

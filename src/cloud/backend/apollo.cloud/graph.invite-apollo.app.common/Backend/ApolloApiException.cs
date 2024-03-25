@@ -2,10 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System;
-using Newtonsoft.Json;
-using ZstdSharp.Unsafe;
+using System.Text.Json.Serialization;
 
-namespace Apollo.Api
+namespace Invite.Apollo.App.Graph.Common.Backend.Api
 {
     /// <summary>
     /// Custom Exception with the error code.
@@ -23,7 +22,7 @@ namespace Apollo.Api
         }
 
         [JsonConstructor()]
-        public ApolloApiException(int errorCode, string message, Exception ex) : base(message, ex)
+        public ApolloApiException(int errorCode, string message, Exception? ex = null) : base(message, ex)
         {
             ErrorCode = errorCode;
         }

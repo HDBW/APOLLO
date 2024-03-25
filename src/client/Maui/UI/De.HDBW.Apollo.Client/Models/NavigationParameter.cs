@@ -12,5 +12,11 @@ namespace De.HDBW.Apollo.Client.Models
         Result,
 
         Data,
+
+        Type,
+
+        SavedState,
+
+        Title,
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.Serialization;
 using Invite.Apollo.App.Graph.Common.Models.ContentManagement;
 using Invite.Apollo.App.Graph.Common.Models.Course.Enums;

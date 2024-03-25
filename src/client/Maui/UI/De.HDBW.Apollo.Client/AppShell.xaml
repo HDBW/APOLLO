@@ -1,30 +1,37 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
+﻿<Shell
     x:Class="De.HDBW.Apollo.Client.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:De.HDBW.Apollo.Client.Views"
+    xmlns:profileViews="clr-namespace:De.HDBW.Apollo.Client.Views.Profile"
     xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+    xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
     xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
     xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
     x:DataType="viewModels:AppShellViewModel"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    ios:Page.UseSafeArea="True"
     Shell.FlyoutBehavior="Flyout"
+    FlyoutIsPresented="{x:Binding IsFlyoutPresented, Mode=TwoWay}" 
     FlyoutBackground="{StaticResource Background}"
     Shell.MenuItemTemplate="{StaticResource MenuItemTemplateSelector}"
     >
     <Shell.Resources>
         <ResourceDictionary>
+
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            
             <DataTemplate x:Key="DefaultTemplate" x:DataType="BaseShellItem">
                 <Grid ColumnDefinitions="auto,*" Padding="24,8">
-                    <Image Source="{Binding Icon}"
+                    <Image Source="{x:Binding Icon}"
                            HeightRequest="24"
                            VerticalOptions="Center"
                            Margin="8,0"/>
                     <Label Grid.Column="1"
                            VerticalOptions="Center"
-                           Text="{Binding Title}"
+                           Text="{x:Binding Title}"
                            Style="{StaticResource Noto16}"
                            TextColor="{StaticResource Primary}" />
                 </Grid>
@@ -33,13 +40,13 @@
             <DataTemplate x:Key="TemplateWithSeperator" x:DataType="BaseShellItem">
                 <Grid ColumnDefinitions="auto,*" RowDefinitions="1,*" Padding="24,8">
                     <Rectangle Grid.ColumnSpan="2" BackgroundColor="{StaticResource Primary}" />
-                    <Image Source="{Binding Icon}"
+                    <Image Source="{x:Binding Icon}"
                            Grid.Row="1"
                            VerticalOptions="Center"
                            Margin="8,0"
                            HeightRequest="24" />
                     <Label Grid.Column="1"
-                           Text="{Binding Title}"
+                           Text="{x:Binding Title}"
                            Style="{StaticResource Noto16}"
                            VerticalOptions="Center"
                            TextColor="{StaticResource Primary}"
@@ -53,37 +60,38 @@
         </ResourceDictionary>
     </Shell.Resources>
     <Shell.FlyoutHeader>
-        <Grid ColumnDefinitions="32,10, *" RowDefinitions="auto, auto" Padding="24,8">
-            <HorizontalStackLayout Grid.ColumnSpan="3" Margin="0,8,0,8" HorizontalOptions="Start" >
+         <Frame Margin="0" BackgroundColor="Transparent" BorderColor="Transparent" >
+            <HorizontalStackLayout Padding="8,12,8,0">
                 <Image Source="apollo.png" HeightRequest="24" MaximumWidthRequest="101" Aspect="AspectFit"/>
             </HorizontalStackLayout>
-
-            <Image Source="{Binding UserProfile.ImagePath}" Grid.Row="1" WidthRequest="32" HeightRequest="32" Aspect="AspectFill">
-                <Image.Clip>
-                    <EllipseGeometry RadiusX="16" RadiusY="16" Center="16,16"/>
-                </Image.Clip>
-            </Image>
-            <StackLayout Grid.Column="2" Grid.Row="1" >
-                <Label Text="{Binding UserProfile.DisplayName}" Style="{StaticResource Noto16}" FontAttributes="Bold" Grid.ColumnSpan="2"/>
-                <Label Text="{Binding UserProfile.Goal}" Style="{StaticResource Noto12}" Grid.Row="1" Grid.Column="1" Padding="8,0,0,0"/>
-            </StackLayout>
-        </Grid>
+        </Frame>
     </Shell.FlyoutHeader>
-    <Shell.FlyoutFooter>
-        <Grid RowDefinitions="auto, auto, auto" Padding="24, 8, 24, 16">
-            <Label Grid.Row="0" Text="{x:Static strings:Resources.MainNavigation_BetaTitle}" Style="{StaticResource Noto12}" FontAttributes="Bold"/>
-            <Label Grid.Row="1" Text="{x:Static strings:Resources.MainNavigation_BetaDescription}" Style="{StaticResource Noto12}" Margin="0,0,0,16"/>
-            <Button x:Name="FeedBackButton" Padding="8,0" ImageSource="send.png" Grid.Row="2" Text="{x:Static strings:Resources.MainNavigation_Feedback}" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.FeedbackView}" />
-        </Grid>
+    <Shell.FlyoutFooter >
+        <Frame Margin="0" BackgroundColor="Transparent" BorderColor="Transparent">
+            <VerticalStackLayout >
+                <Label Text="{x:Static strings:Resources.MainNavigation_BetaTitle}" Style="{StaticResource Noto12}" FontAttributes="Bold"/>
+                <Label Text="{x:Static strings:Resources.MainNavigation_BetaDescription}" Style="{StaticResource Noto12}"/>
+                <Button Text="{x:Static strings:Resources.MainNavigation_Feedback}"  Margin="0,16,0,0" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.FeedbackView}" />
+            </VerticalStackLayout>
+        </Frame>
     </Shell.FlyoutFooter>
-    <MenuItem IconImageSource="user.png" Text="{x:Static strings:Resources.MainNavigation_ChangeUseCase}" StyleClass="MenuItemLayoutStyle" Command="{Binding ChangeUseCaseCommand}"/>
-    <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
-    <!--<MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SkillsAndBadges}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CertificatesAndDegrees}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_LearningPath}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CoursesFavorites}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_CVGenerator}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_ViewTutorial}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />
-    <MenuItem IconImageSource="untitled.png" Text="{x:Static strings:Resources.MainNavigation_SettingsAndFilter}" StyleClass="MenuItemLayoutStyle" Command="{Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.EmptyView}" />-->
-    <ShellContent FlyoutItemIsVisible="False" ContentTemplate="{DataTemplate views:StartView}" />
+    <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
+    <TabBar x:Name="PART_Tabs">
+        <Tab Title="{x:Static strings:Resources.SearchView_Title}"
+             Icon="search.png">
+            <ShellContent ContentTemplate="{DataTemplate views:SearchView}" />
+        </Tab>
+        <Tab Title="{x:Static strings:Resources.ProfileView_Title}"
+            Icon="profile.png">
+            <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" IsVisible="{x:Binding IsRegistered}"/>
+        </Tab>
+        <Tab Title="{x:Static strings:Resources.FavoriteView_Title}"
+            Icon="favorite.png">
+            <ShellContent ContentTemplate="{DataTemplate views:FavoriteView}" IsVisible="{x:Binding IsRegistered}"/>
+        </Tab>
+        <Tab Title="{x:Static strings:Resources.RegisterView_Title}"
+            Icon="login.png">
+            <ShellContent ContentTemplate="{DataTemplate views:RegisterView}" IsVisible="{x:Binding IsRegistered, Converter={StaticResource InvertedBoolConverter}}"/>
+        </Tab>
+    </TabBar>
 </Shell>

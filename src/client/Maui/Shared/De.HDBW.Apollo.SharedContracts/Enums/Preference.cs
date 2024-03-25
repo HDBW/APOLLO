@@ -7,12 +7,14 @@ namespace De.HDBW.Apollo.SharedContracts.Enums
     {
         Unknown,
 
-        IsFirstTime,
+        ConfirmedDataUsage,
 
         DontShowAgain,
 
         AllowTelemetry,
 
         ShowedSkipDialog,
+
+        RegisteredUserId,
     }
 }

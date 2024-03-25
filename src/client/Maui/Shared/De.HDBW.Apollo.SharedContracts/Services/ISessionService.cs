@@ -2,14 +2,19 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.SharedContracts.Enums;
+using Microsoft.Identity.Client;
 
 namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface ISessionService
     {
-        public UseCase? UseCase { get; }
+        UseCase? UseCase { get; }
 
         bool HasRegisteredUser { get; }
+
+        AccountId? AccountId { get; }
+
+        string? UniqueId { get; }
 
         bool ChangedUseCase { get; }
 
@@ -23,7 +28,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         IEnumerable<(long Id, Type Type)> GetFavorites();
 
-        void UpdateRegisteredUser(bool hasRegisteredUser);
+        void UpdateRegisteredUser(string? uniqueId, AccountId? accountId);
 
         void UpdateUseCase(UseCase? useCase);
     }

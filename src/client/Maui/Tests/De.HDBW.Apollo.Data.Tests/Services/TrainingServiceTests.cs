@@ -1,10 +1,10 @@
-﻿using Apollo.Api;
-using Apollo.Common.Entities;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
 using De.HDBW.Apollo.Data.Services;
-using Invite.Apollo.App.Graph.Common.Models;
-using Invite.Apollo.App.Graph.Common.Models.Course;
+using Invite.Apollo.App.Graph.Common.Backend.Api;
+using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -25,8 +25,8 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(TokenSource!.Token))
             {
                 cts.Cancel();
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, cts.Token));
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetTrainingAsync(1, cts.Token));
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, null, null, null, cts.Token));
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", cts.Token));
             }
         }
 
@@ -35,10 +35,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            CourseItem? training = null;
+            Training? training = null;
             try
             {
-                training = await Service.GetTrainingAsync(1, TokenSource!.Token).ConfigureAwait(false);
+                training = await Service.GetAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -47,7 +47,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
 
             Assert.NotNull(training?.Id);
-            Assert.Equal(1, training!.Id);
+            Assert.Equal("1", training!.Id);
 
             // var courseItem = training.ToCourseItem();
             // Assert.NotNull(courseItem);
@@ -67,10 +67,10 @@ namespace De.HDBW.Apollo.Data.Tests.Services
         {
             Assert.NotNull(TokenSource);
             Assert.NotNull(Service);
-            IEnumerable<CourseItem>? trainings = null;
+            IEnumerable<Training>? trainings = null;
             try
             {
-                trainings = await Service.SearchTrainingsAsync(null, TokenSource!.Token).ConfigureAwait(false);
+                trainings = await Service.SearchTrainingsAsync(null, null, null, null, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -80,6 +80,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
             Assert.NotNull(trainings);
             Assert.Equal(2, trainings!.Count());
+
             // var courseItems = trainings.Select(f => f.ToCourseItem());
             // var courseAppointments = trainings.Select(f => f.ToCourseAppointment());
             // var eduProviderItems = trainings.Select(f => f.ToEduProviderItems());
@@ -96,12 +97,13 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 new FieldExpression()
                 {
-                    FieldName = "trainingName",
+                    FieldName = nameof(Training.TrainingName),
                     Argument = new List<object>()
                     {
-                        "TestName",
-                        "TestName-2",
+                        "t",
                     },
+
+                    Operator = QueryOperator.Contains,
                 },
             };
 
@@ -109,10 +111,19 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             {
                 Fields = fields,
             };
-            IEnumerable<CourseItem>? trainings = null;
+
+            var visibleFields = new List<string>()
+            {
+                nameof(Training.Id),
+                nameof(Training.TrainingName),
+                nameof(Training.ShortDescription),
+                nameof(Training.Image),
+            };
+
+            IEnumerable<Training>? trainings = null;
             try
             {
-                trainings = await Service.SearchTrainingsAsync(filter, TokenSource!.Token);
+                trainings = await Service.SearchTrainingsAsync(filter, visibleFields, null, null, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -121,7 +132,520 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             }
 
             Assert.NotNull(trainings);
-            Assert.Equal(2, trainings!.Count());
+            foreach (var training in trainings!)
+            {
+                Assert.False(string.IsNullOrEmpty(training.TrainingName));
+                Assert.False(string.IsNullOrEmpty(training.ShortDescription));
+            }
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByNameWithContainsOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.TrainingName),
+                    Argument = new List<object>()
+                    {
+                        "te",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            var trainings = await FilterTrainings(fields);
+            Assert.NotNull(trainings);
+            Assert.NotEmpty(trainings!);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByNameWithEqualsOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            string trainingName = "Item 2";
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.TrainingName),
+                    Argument = new List<object>()
+                    {
+                        trainingName,
+                    },
+
+                    Operator = QueryOperator.Equals,
+                },
+            };
+
+            var trainings = await FilterTrainings(fields);
+            Assert.NotNull(trainings);
+            Assert.Empty(trainings!.Where(x => !x.TrainingName.Equals(trainingName)));
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByIdWithEqualsOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                        "SER01",
+                    },
+
+                    Operator = QueryOperator.Equals,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByMultipleFieldsAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.ProviderId),
+                    Argument = new List<object>()
+                    {
+                        "h",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                        "SER01",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByMultipleFieldsWithOrOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                        "2",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                        "SER01",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields, true);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByMultipleFieldsWithOrOperatorAndDifferentQueryOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                        "2",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                        "SER01",
+                    },
+
+                    Operator = QueryOperator.Equals,
+                },
+            };
+
+            var trainings = await FilterTrainings(fields, true);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByIdAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                        "2",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByTrainingTypeAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.TrainingType),
+                    Argument = new List<object>()
+                    {
+                        "Hybrid",
+                        "TrainingType",
+                    },
+
+                    Operator = QueryOperator.In,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByProviderIdAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.ProviderId),
+                    Argument = new List<object>()
+                    {
+                        "h",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByDescriptionAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Description),
+                    Argument = new List<object>()
+                    {
+                        "a",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByShortDescriptionAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.ShortDescription),
+                    Argument = new List<object>()
+                    {
+                        "o",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByImageAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Image),
+                    Argument = new List<object>()
+                    {
+                        "image",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByTrainingProviderNameWithContainsOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = $"{nameof(Training.TrainingProvider)}.{nameof(Training.TrainingProvider.Name)}",
+                    Argument = new List<object>()
+                    {
+                        "h",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields, true);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByCourseProviderNameAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = $"{nameof(Training.CourseProvider)}.{nameof(Training.CourseProvider.Name)}",
+                    Argument = new List<object>()
+                    {
+                        "n",
+                    },
+
+                    Operator = QueryOperator.Contains,
+                },
+            };
+
+            await FilterTrainings(fields, true);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByUnpublishingDateWithGreaterThanQueryOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.UnpublishingDate),
+                    Argument = new List<object>()
+                    {
+                        DateTime.Now.AddMonths(-1),
+                    },
+
+                    Operator = QueryOperator.GreaterThan,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByUnpublishingDateWithGreaterThanEqualToQueryOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.UnpublishingDate),
+                    Argument = new List<object>()
+                    {
+                        DateTime.Now.AddMonths(-1),
+                    },
+
+                    Operator = QueryOperator.GreaterThanEqualTo,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByUnpublishingDateWithBetweenQueryOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+            var startDate = DateTime.Now.AddYears(-1);
+            var endDate = DateTime.Now.AddYears(2);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.UnpublishingDate),
+                    Argument = new List<object>()
+                    {
+                        startDate,
+                    },
+
+                    Operator = QueryOperator.GreaterThanEqualTo,
+                },
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.UnpublishingDate),
+                    Argument = new List<object>()
+                    {
+                        endDate,
+                    },
+
+                    Operator = QueryOperator.LessThanEqualTo,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByPriceWithGreaterThanEqualToQueryOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Price),
+                    Argument = new List<object>()
+                    {
+                        925,
+                    },
+
+                    Operator = QueryOperator.GreaterThanEqualTo,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByPriceAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Price),
+                    Argument = new List<object>()
+                    {
+                        925,
+                    },
+
+                    Operator = QueryOperator.GreaterThan,
+                },
+            };
+
+            await FilterTrainings(fields);
+        }
+
+        [Fact]
+        public async Task FilterTrainingsByIdWithInQueryOperatorAsyncTest()
+        {
+            Assert.NotNull(TokenSource);
+            Assert.NotNull(Service);
+
+            var fields = new List<FieldExpression>()
+            {
+                new FieldExpression()
+                {
+                    FieldName = nameof(Training.Id),
+                    Argument = new List<object>()
+                    {
+                       "Training-E5E2A9B2F805467C990842CE83C97657",
+                       "Training-EB0316FB98B84496A9B14C2BB33355C9",
+                    },
+
+                    Operator = QueryOperator.In,
+                },
+            };
+
+            await FilterTrainings(fields);
         }
 
         protected override TrainingService SetupService(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
@@ -135,6 +659,32 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
         protected override void SetupAdditionalServices(string apiKey, string baseUri, ILogger<TrainingService> logger, HttpMessageHandler httpClientHandler)
         {
+        }
+
+        private async Task<IEnumerable<Training>?> FilterTrainings(List<FieldExpression> fields, bool isOrOperator = false)
+        {
+            IEnumerable<Training>? trainings = null;
+
+            var filter = new Filter()
+            {
+                IsOrOperator = isOrOperator,
+                Fields = fields,
+            };
+
+            try
+            {
+                trainings = await Service.SearchTrainingsAsync(filter, null, null, null, TokenSource!.Token);
+            }
+            catch (ApolloApiException ex)
+            {
+                // Not existing ids return errorcode 101;
+                Assert.NotEqual(ErrorCodes.TrainingErrors.QueryTrainingsError, ex.ErrorCode);
+            }
+
+            Assert.NotNull(trainings);
+            Assert.NotEmpty(trainings);
+
+            return trainings;
         }
     }
 }

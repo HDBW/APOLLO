@@ -2,10 +2,12 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 using Microsoft.Extensions.Logging;
 
@@ -14,21 +16,52 @@ namespace De.HDBW.Apollo.Client.ViewModels
     public partial class AppShellViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new UserProfileItem());
+        private UserProfileEntry? _userProfile = UserProfileEntry.Import(new User());
+
+        private bool _isFlyoutPresented;
 
         public AppShellViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            IUserProfileItemRepository userProfileItemRepository,
-            ILogger<StartViewModel> logger)
+            ILogger<StartViewModel> logger,
+            ISessionService sessionService,
+            IUserRepository userRepository)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
-            ArgumentNullException.ThrowIfNull(userProfileItemRepository);
-            UserProfileItemRepository = userProfileItemRepository;
+            ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(userRepository);
+            SessionService = sessionService;
+            UserRepository = userRepository;
         }
 
-        private IUserProfileItemRepository UserProfileItemRepository { get; }
+        public bool IsRegistered
+        {
+            get
+            {
+                return SessionService?.HasRegisteredUser ?? false;
+            }
+        }
+
+        public bool IsFlyoutPresented
+        {
+            get
+            {
+                return _isFlyoutPresented;
+            }
+
+            set
+            {
+                if (SetProperty(ref _isFlyoutPresented, value))
+                {
+                    WeakReferenceMessenger.Default.Send(new FlyoutStateChangedMessage(IsFlyoutPresented));
+                }
+            }
+        }
+
+        private ISessionService SessionService { get; }
+
+        private IUserRepository UserRepository { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -36,8 +69,8 @@ namespace De.HDBW.Apollo.Client.ViewModels
             {
                 try
                 {
-                    var user = await UserProfileItemRepository.GetItemByIdAsync(1, worker.Token).ConfigureAwait(false);
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user), worker.Token);
+                    var user = await UserRepository.GetItemAsync(worker.Token).ConfigureAwait(false);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(user), worker.Token).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -50,44 +83,10 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanChangeUseCase), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
-        private async Task ChangeUseCase(CancellationToken token)
+        private void LoadonUIThread(User? user)
         {
-            using (var work = ScheduleWork(token))
-            {
-                try
-                {
-                    var parameters = new NavigationParameters();
-                    parameters.Add(NavigationParameter.Data, true);
-                    await NavigationService.PushToRootAsnc(Routes.UseCaseSelectionView, token, parameters);
-                }
-                catch (OperationCanceledException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType().Name}.");
-                }
-                catch (ObjectDisposedException)
-                {
-                    Logger?.LogDebug($"Canceled {nameof(ChangeUseCase)} in {GetType().Name}.");
-                }
-                catch (Exception ex)
-                {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(ChangeUseCase)} in {GetType().Name}.");
-                }
-                finally
-                {
-                    UnscheduleWork(work);
-                }
-            }
-        }
-
-        private bool CanChangeUseCase()
-        {
-            return !IsBusy;
-        }
-
-        private void LoadonUIThread(UserProfileItem? user)
-        {
-            UserProfile = UserProfileEntry.Import(user ?? new UserProfileItem());
+            UserProfile = UserProfileEntry.Import(user ?? new User());
+            OnPropertyChanged(nameof(IsRegistered));
         }
     }
 }

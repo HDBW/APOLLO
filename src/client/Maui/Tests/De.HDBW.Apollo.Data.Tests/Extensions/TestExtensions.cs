@@ -31,9 +31,9 @@ namespace De.HDBW.Apollo.Data.Tests.Extensions
                 It.IsAny<LogLevel>(),
                 It.IsAny<EventId>(),
                 It.IsAny<It.IsAnyType>(),
-                It.IsAny<Exception?>(),
+                It.IsAny<Exception>(),
                 It.IsAny<Func<It.IsAnyType, Exception?, string>>()))
-                .Callback<LogLevel, EventId, object, Exception?, Delegate>((
+                .Callback<LogLevel, EventId, object, Exception, Delegate>((
                      logLevel,
                      eventId,
                      state,

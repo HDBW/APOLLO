@@ -1,18 +1,24 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.Concurrent;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.ApplicationModel;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
-    public abstract partial class BaseViewModel : ObservableObject, IQueryAttributable
+    public abstract partial class BaseViewModel : ObservableValidator, IQueryAttributable, IDataErrorInfo
     {
+        [ObservableProperty]
+        private string? _error;
+
         public BaseViewModel(
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -51,15 +57,34 @@ namespace De.HDBW.Apollo.Client.ViewModels
             get { return Shell.Current; }
         }
 
-        private Dictionary<string, CancellationTokenSource> Workers { get; } = new Dictionary<string, CancellationTokenSource>();
+        private ConcurrentDictionary<string, CancellationTokenSource> Workers { get; } = new ConcurrentDictionary<string, CancellationTokenSource>();
 
-        public virtual Task OnNavigatedToAsync() => Task.CompletedTask;
+        [IndexerName("Item")]
+        public string this[string columnName]
+        {
+            get
+            {
+                return GetErrors(columnName)?.FirstOrDefault()?.ErrorMessage ?? string.Empty;
+            }
+        }
 
-        public virtual Task OnNavigatingFromAsync(bool isForwardNavigation) => Task.CompletedTask;
+        public virtual Task OnNavigatedToAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public virtual Task OnNavigatingFromAsync() => Task.CompletedTask;
 
         public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             OnPrepare(NavigationParameters.FromQueryDictionary(query));
+        }
+
+        protected async Task ShowErrorAsync(string message, CancellationToken token)
+        {
+            var parameters = new NavigationParameters();
+            parameters.AddValue(NavigationParameter.Data, message);
+            await DialogService.ShowPopupAsync<ErrorDialog, NavigationParameters, NavigationParameters>(parameters, token).ConfigureAwait(false);
         }
 
         protected virtual void OnPrepare(NavigationParameters navigationParameters)
@@ -81,10 +106,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             CancellationTokenSource scope;
             if (Workers.ContainsKey(workerName))
             {
-                scope = Workers[workerName];
-                Workers.Remove(workerName);
-                scope.Cancel();
-                scope.Dispose();
+                if (Workers.Remove(workerName, out CancellationTokenSource? currentscope))
+                {
+                    scope = currentscope;
+                    scope.Cancel();
+                    scope.Dispose();
+                }
+            }
+
+            if (token?.IsCancellationRequested ?? false)
+            {
             }
 
             if (token == null)
@@ -96,8 +127,13 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 scope = CancellationTokenSource.CreateLinkedTokenSource(token.Value);
             }
 
-            Workers.Add(workerName, scope);
+            Workers.TryAdd(workerName, scope);
             DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
+            if (token?.IsCancellationRequested ?? false)
+            {
+                scope.Cancel();
+            }
+
             return scope;
         }
 
@@ -109,8 +145,26 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 return;
             }
 
-            Workers.Remove(kv.Key);
+            Workers.Remove(kv.Key, out CancellationTokenSource? token);
             worker.Dispose();
+            DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
+        }
+
+        protected void UnscheduleAllWork()
+        {
+            var existingWorkers = Workers.ToList();
+            foreach (var kv in existingWorkers)
+            {
+                if (string.IsNullOrWhiteSpace(kv.Key))
+                {
+                    return;
+                }
+
+                Workers.Remove(kv.Key, out CancellationTokenSource? token);
+                token?.Cancel();
+                token?.Dispose();
+            }
+
             DispatcherService.BeginInvokeOnMainThread(SignalWorkerChanged);
         }
 
@@ -119,9 +173,55 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return DispatcherService.SafeExecuteOnMainThreadAsync(methodeToExecute, Logger, token);
         }
 
-        [CommunityToolkit.Mvvm.Input.RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
+        protected async Task OpenUrlAsync(string url, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (!await Launcher.TryOpenAsync(url))
+                    {
+                        Logger?.LogWarning($"Unabled to open url {url} in {GetType().Name}.");
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        [RelayCommand]
+        private void Validate(string propertyName)
+        {
+            ValidateAllProperties();
+            Error = HasErrors ? string.Join(Environment.NewLine, GetErrors().Select(e => e.ErrorMessage)) : string.Empty;
+            if (string.IsNullOrWhiteSpace(propertyName))
+            {
+                OnPropertyChanged(string.Empty);
+            }
+            else
+            {
+                OnPropertyChanged($"Item[{propertyName}]");
+            }
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateToRoute), FlowExceptionsToTaskScheduler = false, IncludeCancelCommand = false)]
         private async Task NavigateToRoute(string route, CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(NavigateToRouteCommand)} in {GetType().Name}.");
             token.ThrowIfCancellationRequested();
             using (var worker = ScheduleWork(token))
             {
@@ -133,7 +233,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                             await Browser.Default.OpenAsync(Resources.Strings.Resources.FeedbackUrl, BrowserLaunchMode.SystemPreferred);
                             break;
                         default:
-                            await NavigationService.NavigateAsnc(route, worker.Token);
+                            await NavigationService.NavigateAsync(route, worker.Token);
                             break;
                     }
                 }

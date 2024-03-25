@@ -6,16 +6,18 @@ using De.HDBW.Apollo.Data.Tests.Extensions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace De.HDBW.Apollo.Data.Tests.Services;
-public class PreferenceServiceTests : IDisposable
+public class PreferenceServiceTests : AbstractTest, IDisposable
 {
     private Dictionary<string, object> _storage = new Dictionary<string, object>();
     private ILogger<PreferenceService> _logger;
 
-    public PreferenceServiceTests()
+    public PreferenceServiceTests(ITestOutputHelper outputHelper)
+        : base(outputHelper)
     {
-        _logger = this.SetupLogger<PreferenceService>();
+        _logger = this.SetupLogger<PreferenceService>(OutputHelper);
     }
 
     public void Dispose()
@@ -92,12 +94,12 @@ public class PreferenceServiceTests : IDisposable
         var mock = new Mock<IPreferences>();
         if (throwException)
         {
-            mock.Setup(m => m.Get<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string?>())).Returns((string s, object d, string? x) => { throw new NotSupportedException(); });
-            mock.Setup(m => m.Set<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string?>())).Callback((string s, object d, string? x) => { throw new NotSupportedException(); });
+            mock.Setup(m => m.Get<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string>())).Returns((string s, object d, string x) => { throw new NotSupportedException(); });
+            mock.Setup(m => m.Set<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string>())).Callback((string s, object d, string x) => { throw new NotSupportedException(); });
         }
         else
         {
-            mock.Setup(m => m.Get<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string?>())).Returns((string key, object defaultValue, string? sharedName) =>
+            mock.Setup(m => m.Get<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string>())).Returns((string key, object defaultValue, string sharedName) =>
             {
                 if (_storage.ContainsKey(key))
                 {
@@ -109,7 +111,7 @@ public class PreferenceServiceTests : IDisposable
                 }
             });
 
-            mock.Setup(m => m.Set<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string?>())).Callback((string key, object value, string? sharedName) =>
+            mock.Setup(m => m.Set<It.IsAnyType>(It.IsAny<string>(), It.IsAny<It.IsAnyType>(), It.IsAny<string>())).Callback((string key, object value, string sharedName) =>
             {
                 if (_storage.ContainsKey(key))
                 {

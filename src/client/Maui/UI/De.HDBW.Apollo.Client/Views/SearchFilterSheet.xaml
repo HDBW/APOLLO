@@ -1,0 +1,112 @@
+﻿<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+            xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+            x:Class="De.HDBW.Apollo.Client.Views.SearchFilterSheet"
+            xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+            IsCancelable="True"
+            BackgroundColor="{StaticResource Neutral500}"
+            ios:Page.UseSafeArea="true"
+            HasHandle="True"
+            HasBackdrop="True"
+            CornerRadius="16"
+            Shown="OnShown"
+            xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
+            xmlns:editorViewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
+            xmlns:editors="clr-namespace:De.HDBW.Apollo.Client.Views.PropertyEditor"
+            xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
+            xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+            x:DataType="viewModels:SearchFilterSheetViewModel"
+            xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+            Padding="0,20">
+    <the49:BottomSheet.Detents>
+        <the49:RatioDetent x:Name="PART_Detent" Ratio="0.7" />
+    </the49:BottomSheet.Detents>
+    <Grid RowDefinitions="auto,*,auto,auto">
+        <Grid.Resources>
+            <DataTemplate x:Key="DefaultEditorTemplate">
+            </DataTemplate>
+
+            <DataTemplate x:Key="StringPropertyEditorTemplate" x:DataType="editorViewModels:StringPropertyEditor">
+                <editors:DefaultStringPropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="BooleanPropertyEditorTemplate" x:DataType="editorViewModels:BooleanPropertyEditor">
+                <editors:DefaultBooleanPropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="PickerPropertyEditorTemplate" x:DataType="editorViewModels:PickerPropertyEditor">
+                <editors:DefaultPickerPropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="DatePropertyEditorTemplate" x:DataType="editorViewModels:DatePropertyEditor">
+                <editors:DefaultDatePropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="DateRangePropertyEditorTemplate" x:DataType="editorViewModels:DateRangePropertyEditor">
+                <editors:DefaultDateRangePropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="DecimalRangePropertyEditorTemplate" x:DataType="editorViewModels:DecimalRangePropertyEditor">
+                <editors:DefaultDecimalRangePropertyEditor />
+            </DataTemplate>
+
+            <DataTemplate x:Key="ListPropertyEditorTemplate" x:DataType="editorViewModels:ListPropertyEditor">
+                <editors:DefaultListPropertyEditor />
+            </DataTemplate>
+
+            <selector:EditorTemplateSelector x:Key="EditorTemplateSelector"
+                                             DefaultEditorTemplate="{StaticResource DefaultEditorTemplate}"
+                                             StringPropertyEditorTemplate="{StaticResource StringPropertyEditorTemplate}"
+                                             BooleanPropertyEditorTemplate="{StaticResource BooleanPropertyEditorTemplate}"
+                                             PickerPropertyEditorTemplate="{StaticResource PickerPropertyEditorTemplate}"
+                                             DatePropertyEditorTemplate="{StaticResource DatePropertyEditorTemplate}"
+                                             DecimalRangePropertyEditorTemplate="{StaticResource DecimalRangePropertyEditorTemplate}"
+                                             DateRangePropertyEditorTemplate="{StaticResource DateRangePropertyEditorTemplate}"
+                                             ListPropertyEditorTemplate="{StaticResource ListPropertyEditorTemplate}"/>
+            
+        </Grid.Resources>
+        
+        <Grid HorizontalOptions="FillAndExpand" Padding="20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="{Static strings:Resources.Global_SearchFilterSheet_Title}" Style="{StaticResource Noto20Bold}"/>
+            
+            <ImageButton Grid.Column="1"
+                Command="{x:Binding CloseCommand}"
+                HeightRequest="24"
+                WidthRequest="24"
+                Source="close.png"
+                HorizontalOptions="End" />
+
+        </Grid>
+
+        <ScrollView VerticalOptions="FillAndExpand"
+                    Grid.Row="1"
+                    Padding="24,12">
+            <VerticalStackLayout
+                Spacing="8"
+                BindableLayout.ItemsSource="{Binding EditorList}"
+                BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}"/>
+        </ScrollView>
+
+        <Border Grid.Row="2" Grid.RowSpan="2" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}"/>
+
+        <Button
+            Style="{StaticResource BorderButton}"
+            Text="{Static strings:Resources.Global_SearchFilterSheet_ResetFilter}"
+            Command="{x:Binding ResetFilterCommand}"
+            Grid.Row="2"
+            Margin="20,16,20,8"/>
+
+        <Button
+            Text="{Static strings:Resources.Global_SearchFilterSheet_ApplyFilter}"
+            Command="{x:Binding ApplyFilterCommand}"
+            Grid.Row="3"
+            Margin="20,0,20,16"/>
+    </Grid>
+
+</the49:BottomSheet>

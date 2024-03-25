@@ -3,30 +3,31 @@
 
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client.Dialogs;
-
-public partial class ConfirmDataUsageDialog
+namespace De.HDBW.Apollo.Client.Dialogs
 {
-    public ConfirmDataUsageDialog(ConfirmDataUsageDialogViewModel model)
+    public partial class ConfirmDataUsageDialog
     {
-        InitializeComponent();
-        var view = FindByName("Part_Root") as View;
-        var page = Shell.Current ?? Application.Current?.MainPage;
-        if (view != null && page != null)
+        public ConfirmDataUsageDialog(ConfirmDataUsageDialogViewModel model)
         {
-            view.MaximumWidthRequest = page.Width - 16;
-            view.MaximumHeightRequest = page.Height - 16;
-            Size = new Size(view.MaximumWidthRequest, view.MinimumHeightRequest);
+            InitializeComponent();
+            BindingContext = model;
         }
 
-        BindingContext = model;
-    }
-
-    public ConfirmDataUsageDialogViewModel? ViewModel
-    {
-        get
+        public ConfirmDataUsageDialogViewModel? ViewModel
         {
-            return BindingContext as ConfirmDataUsageDialogViewModel;
+            get
+            {
+                return BindingContext as ConfirmDataUsageDialogViewModel;
+            }
+        }
+
+        private void OnPointerReleased(object sender, PointerEventArgs e)
+        {
+            var position = e.GetPosition(PART_Root) ?? Point.Zero;
+            if (!PART_Root.Frame.Contains(position))
+            {
+                ViewModel?.CancelCommand?.Execute(null);
+            }
         }
     }
 }

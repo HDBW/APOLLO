@@ -11,12 +11,14 @@ namespace De.HDBW.Apollo.Data
 {
     public class DataBaseConnectionProvider : IDataBaseConnectionProvider
     {
-        public DataBaseConnectionProvider(string dbFilePath, SQLiteOpenFlags flags, ILogger<DataBaseConnectionProvider>? logger)
+        public DataBaseConnectionProvider(string dbFilePath, SQLiteOpenFlags flags, ILogger<DataBaseConnectionProvider>? logger, IEnumerable<Type> additionalEntities)
         {
             Connection = new SQLiteAsyncConnection(dbFilePath, flags);
             var entityType = typeof(IEntity);
             Logger = logger;
-            Entities = Assembly.GetAssembly(typeof(BaseItem))?.GetTypes().Where(t => t.IsPublic && t.IsClass && t != typeof(BaseItem) && entityType.IsAssignableFrom(t)).ToList() ?? new List<Type>();
+            var entities = Assembly.GetAssembly(typeof(BaseItem))?.GetTypes().Where(t => t.IsPublic && t.IsClass && t != typeof(BaseItem) && entityType.IsAssignableFrom(t)).ToList() ?? new List<Type>();
+            entities.AddRange(additionalEntities);
+            Entities = entities;
         }
 
         private SQLiteAsyncConnection Connection { get; }

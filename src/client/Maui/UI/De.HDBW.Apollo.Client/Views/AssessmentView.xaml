@@ -9,9 +9,8 @@
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:AssessmentViewModel"
-             IsBusy="{Binding IsBusy}"
-             Shell.FlyoutBehavior="Disabled"
-             Padding="0">
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding CancelCommand}" />
     </Shell.BackButtonBehavior>

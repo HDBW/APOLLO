@@ -3,20 +3,22 @@
 
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client;
-public partial class AppShell : Shell
+namespace De.HDBW.Apollo.Client
 {
-    public AppShell(AppShellViewModel model)
+    public partial class AppShell : Shell
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public AppShellViewModel? ViewModel
-    {
-        get
+        public AppShell(AppShellViewModel model)
         {
-            return BindingContext as AppShellViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public AppShellViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as AppShellViewModel;
+            }
         }
     }
 }

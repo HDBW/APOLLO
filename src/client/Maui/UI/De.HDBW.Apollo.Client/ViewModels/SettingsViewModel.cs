@@ -2,11 +2,14 @@
 // The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.SharedContracts.Enums;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
@@ -18,13 +21,36 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDialogService dialogService,
             IAuthService authService,
             ISessionService sessionService,
+            IServiceProvider serviceProvider,
+            IUserService userService,
+            IProfileService profileService,
+            IUnregisterUserService unregisterUserService,
+            IApolloListService apolloListService,
+            IPreferenceService preferenceService,
+            IUserRepository userRepository,
+            IFavoriteRepository favoriteRepository,
             ILogger<SettingsViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(authService);
             ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(userService);
+            ArgumentNullException.ThrowIfNull(profileService);
+            ArgumentNullException.ThrowIfNull(unregisterUserService);
+            ArgumentNullException.ThrowIfNull(apolloListService);
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(userRepository);
+            ArgumentNullException.ThrowIfNull(favoriteRepository);
             AuthService = authService;
             SessionService = sessionService;
+            ServiceProvider = serviceProvider;
+            UserService = userService;
+            ProfileService = profileService;
+            UnregisterUserService = unregisterUserService;
+            ApolloListService = apolloListService;
+            PreferenceService = preferenceService;
+            UserRepository = userRepository;
+            FavoriteRepository = favoriteRepository;
         }
 
         public bool HasRegisterdUser
@@ -37,18 +63,78 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IAuthService AuthService { get; }
 
+        private IUserService UserService { get; }
+
+        private IProfileService ProfileService { get; }
+
+        private IUnregisterUserService UnregisterUserService { get; }
+
+        private IApolloListService ApolloListService { get; }
+
         private ISessionService SessionService { get; }
+
+        private IServiceProvider ServiceProvider { get; }
+
+        private IPreferenceService PreferenceService { get; }
+
+        private IUserRepository UserRepository { get; }
+
+        private IFavoriteRepository FavoriteRepository { get; }
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            OpenPrivacyCommand?.NotifyCanExecuteChanged();
+            OpenMailCommand?.NotifyCanExecuteChanged();
+            OpenLicensesCommand?.NotifyCanExecuteChanged();
+            OpenImprintCommand?.NotifyCanExecuteChanged();
+        }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanUnRegister))]
         private async Task UnRegister(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(unRegisterCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
-                    await AuthService.LogoutAsync(worker.Token);
-                    var authentication = await AuthService.AcquireTokenSilent(worker.Token);
-                    SessionService.UpdateRegisteredUser(authentication?.Account != null);
+                    if (SessionService.HasRegisteredUser)
+                    {
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Data, Resources.Strings.Resources.ConfirmUnRegisterUserDialog_Message);
+                        parameters.AddValue(NavigationParameter.Title, Resources.Strings.Resources.ConfirmUnRegisterUserDialog_Title);
+                        var result = await DialogService.ShowPopupAsync<ConfirmCancelDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+
+                        if (result?.GetValue<bool?>(NavigationParameter.Result) != false)
+                        {
+                            return;
+                        }
+
+                        var userId = PreferenceService.GetValue<string?>(Preference.RegisteredUserId, null);
+                        var uniqueId = SessionService.UniqueId;
+                        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(uniqueId))
+                        {
+                            throw new NotSupportedException("Tokens not set.");
+                        }
+
+                        if (!await UnregisterUserService.DeleteAsync(userId, uniqueId, worker.Token))
+                        {
+                            Logger?.LogWarning($"User deletion unsuccessful while unregistering user in {GetType().Name}.");
+                            throw new NotSupportedException("Unable to delete User.");
+                        }
+                    }
+
+                    await AuthService.LogoutAsync(CancellationToken.None);
+                    var authentication = await AuthService.AcquireTokenSilent(CancellationToken.None);
+                    if (authentication == null)
+                    {
+                        await UserRepository.DeleteUserAsync(CancellationToken.None).ConfigureAwait(false);
+                        await FavoriteRepository.DeleteFavoritesAsync(CancellationToken.None).ConfigureAwait(false);
+                        this.UpdateAuthorizationHeader(ServiceProvider, null);
+                        SessionService.UpdateRegisteredUser(authentication?.UniqueId, authentication?.Account?.HomeAccountId);
+                        PreferenceService.Delete();
+                        await NavigationService.RestartAsync(false, CancellationToken.None);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -68,7 +154,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
                 finally
                 {
-                    OnPropertyChanged(nameof(HasRegisterdUser));
+                    await ExecuteOnUIThreadAsync(() => { OnPropertyChanged(nameof(HasRegisterdUser)); }, CancellationToken.None);
                     UnscheduleWork(worker);
                 }
             }
@@ -82,6 +168,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenTerms))]
         private Task OpenTerms(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenTermsCommand)} in {GetType().Name}.");
             return OpenUrlAsync(Resources.Strings.Resources.SettingsView_TermsUri, token);
         }
 
@@ -93,6 +180,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenPrivacy))]
         private Task OpenPrivacy(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenPrivacyCommand)} in {GetType().Name}.");
             return OpenUrlAsync(Resources.Strings.Resources.SettingsView_PrivacyUri, token);
         }
 
@@ -104,6 +192,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenImprint))]
         private Task OpenImprint(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenImprintCommand)} in {GetType().Name}.");
             return OpenUrlAsync(Resources.Strings.Resources.SettingsView_ImprintUri, token);
         }
 
@@ -115,6 +204,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenMail))]
         private async Task OpenMail(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenMailCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -160,34 +250,39 @@ namespace De.HDBW.Apollo.Client.ViewModels
             return !IsBusy;
         }
 
-        private async Task OpenUrlAsync(string url, CancellationToken token)
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenLicenses))]
+
+        private async Task OpenLicenses(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenLicensesCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
-                    if (!await Launcher.TryOpenAsync(url))
-                    {
-                        Logger?.LogWarning($"Unabled to open url {url} in {GetType().Name}.");
-                    }
+                    await NavigationService.NavigateAsync(Routes.LicensesView, worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OpenLicenses)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(OpenLicenses)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenUrlAsync)} in {GetType().Name}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenLicenses)} in {GetType().Name}.");
                 }
                 finally
                 {
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        private bool CanOpenLicenses()
+        {
+            return !IsBusy;
         }
     }
 }

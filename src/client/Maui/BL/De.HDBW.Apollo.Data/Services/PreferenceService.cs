@@ -5,6 +5,7 @@ using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Storage;
+using static SQLite.SQLite3;
 
 namespace De.HDBW.Apollo.Data.Services
 {
@@ -53,6 +54,25 @@ namespace De.HDBW.Apollo.Data.Services
             }
 
             return result is TU ? (TU)result : defaultValue;
+        }
+
+        public bool Delete()
+        {
+            var result = false;
+            try
+            {
+                if (Preferences != null)
+                {
+                    Preferences.Clear();
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while Delete in {GetType().Name}.");
+            }
+
+            return result;
         }
     }
 }

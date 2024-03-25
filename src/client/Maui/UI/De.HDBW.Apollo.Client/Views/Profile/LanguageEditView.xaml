@@ -1,0 +1,70 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Profile.LanguageEditView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Profile"
+             xmlns:generic="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
+             x:DataType="viewModels:LanguageEditViewModel"
+             Title="{x:Static strings:Resources.LanguageEditView_Title}"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="DefaultContactTemplate" x:DataType="models:LanguageEntry">
+            <ContentView Style="{StaticResource ContentViewListContent}">
+                <SwipeView Threshold="100" Margin="0,0,0,2">
+                    <SwipeView.RightItems>
+                        <SwipeItems Mode="Reveal">
+                            <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image WidthRequest="32" HeightRequest="32" Source="deletelight.png" />
+                                    <Label Text="{x:Static strings:Resources.Global_Delete}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource White}"/>
+                                </VerticalStackLayout>
+                            </SwipeItemView>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Border Style="{StaticResource BorderListContent}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding EditCommand}"  />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*, auto">
+                            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding AllLines, Mode=OneWay}" Grid.Row="1" Margin="0,0,8,0">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="generic:StringValue">
+                                        <Grid ColumnDefinitions="auto, *">
+                                            <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" />
+                                            <Label Margin="8,0,0,0" Grid.Column="1" Text="{x:Binding Data, Mode=OneWay}" HorizontalTextAlignment="End" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                            <Image Grid.Column="1" WidthRequest="16" HeightRequest="16" Source="arrow_16x16_right.png"/>
+                        </Grid>
+                    </Border>
+                </SwipeView>
+            </ContentView>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*, auto">
+        <CollectionView ItemsSource="{x:Binding Items}"
+                 x:Name="PART_List"
+                 SelectionMode="None"
+                 ItemTemplate="{StaticResource DefaultContactTemplate}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <ContentView VerticalOptions="Fill">
+                    <Grid Style="{StaticResource GridContentView}" RowDefinitions="auto, *">
+                        <Label Grid.Row="0" Text="{x:Static strings:Resources.LanguageEditView_Subline}" Margin="0,24" Style="{StaticResource Noto16Centered}"/>
+                        <Image Grid.Row="1" Source="emptyscreenimage.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                    </Grid>
+                </ContentView>
+            </CollectionView.EmptyView>
+        </CollectionView>
+        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" />
+        <Button Grid.Row="1" Text="{x:Static strings:Resources.LanguageEditView_ButtonTxt}" Command="{x:Binding AddCommand}" Margin="24,16"/>
+    </Grid>
+</ContentPage>

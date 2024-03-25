@@ -7,7 +7,7 @@ namespace De.HDBW.Apollo.Client.Converter
 {
     public class IntEqualToBooleanConverter : IValueConverter
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null || value == BindableProperty.UnsetValue)
             {
@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Client.Converter
             return currentIndex == index;
         }
 
-        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null || value == BindableProperty.UnsetValue)
             {
