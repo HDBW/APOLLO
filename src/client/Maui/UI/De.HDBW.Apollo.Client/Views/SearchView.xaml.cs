@@ -7,88 +7,89 @@ using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.ViewModels;
 
-namespace De.HDBW.Apollo.Client.Views;
-
-public partial class SearchView
+namespace De.HDBW.Apollo.Client.Views
 {
-    public SearchView(SearchViewModel model)
+    public partial class SearchView
     {
-        InitializeComponent();
-        BindingContext = model;
-        if (PART_SearchHandler.QueryIcon != null)
+        public SearchView(SearchViewModel model)
         {
-            PART_SearchHandler.QueryIcon.Parent = this;
+            InitializeComponent();
+            BindingContext = model;
+            if (PART_SearchHandler.QueryIcon != null)
+            {
+                PART_SearchHandler.QueryIcon.Parent = this;
+            }
+
+            if (PART_SearchHandler.ClearIcon != null)
+            {
+                PART_SearchHandler.ClearIcon.Parent = this;
+            }
         }
 
-        if (PART_SearchHandler.ClearIcon != null)
+        public SearchView()
         {
-            PART_SearchHandler.ClearIcon.Parent = this;
+            InitializeComponent();
         }
-    }
 
-    public SearchView()
-    {
-        InitializeComponent();
-    }
-
-    ~SearchView()
-    {
+        ~SearchView()
+        {
 #if DEBUG
-        Debug.WriteLine($"~{GetType()}");
+            Debug.WriteLine($"~{GetType()}");
 #endif
-    }
-
-    public SearchViewModel? ViewModel
-    {
-        get
-        {
-            return BindingContext as SearchViewModel;
         }
-    }
 
-    protected override void OnDisappearing()
-    {
-        WeakReferenceMessenger.Default.Unregister<FlyoutStateChangedMessage>(this);
-        PART_Collection.PropertyChanged -= OnPropertyChanged;
-        base.OnDisappearing();
-    }
+        public SearchViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as SearchViewModel;
+            }
+        }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(200), PART_SearchHandler.Close);
-        PART_Collection.PropertyChanged += OnPropertyChanged;
-        WeakReferenceMessenger.Default.Register<FlyoutStateChangedMessage>(this, OnFlyoutStateChangedMessage);
-    }
+        protected override void OnDisappearing()
+        {
+            WeakReferenceMessenger.Default.Unregister<FlyoutStateChangedMessage>(this);
+            PART_Collection.PropertyChanged -= OnPropertyChanged;
+            base.OnDisappearing();
+        }
 
-    private void OnFlyoutStateChangedMessage(object recipient, FlyoutStateChangedMessage message)
-    {
-        PART_SearchHandler.Close();
-        PART_SearchHandler.Unfocus();
-    }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(200), PART_SearchHandler.Close);
+            PART_Collection.PropertyChanged += OnPropertyChanged;
+            WeakReferenceMessenger.Default.Register<FlyoutStateChangedMessage>(this, OnFlyoutStateChangedMessage);
+        }
 
-    private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
-    {
-        if (OperatingSystem.IsAndroid())
+        private void OnFlyoutStateChangedMessage(object recipient, FlyoutStateChangedMessage message)
         {
             PART_SearchHandler.Close();
+            PART_SearchHandler.Unfocus();
         }
-    }
 
-    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName?.Equals(nameof(CollectionView.ItemsSource)) != true)
+        private void HandleScrolled(object sender, ItemsViewScrolledEventArgs e)
         {
-            return;
+            if (OperatingSystem.IsAndroid())
+            {
+                PART_SearchHandler.Close();
+            }
         }
 
-        var collectionView = sender as CollectionView;
-
-        if (collectionView == null)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            return;
-        }
+            if (e.PropertyName?.Equals(nameof(CollectionView.ItemsSource)) != true)
+            {
+                return;
+            }
 
-        collectionView.ScrollTo(0, animate: false);
+            var collectionView = sender as CollectionView;
+
+            if (collectionView == null)
+            {
+                return;
+            }
+
+            collectionView.ScrollTo(0, animate: false);
+        }
     }
 }
