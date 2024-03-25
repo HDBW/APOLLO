@@ -27,7 +27,7 @@
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True" />
+            <Label Text="{x:Binding [Description]}" Style="{StaticResource ValidationErrorLabel}" />
 
             <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">

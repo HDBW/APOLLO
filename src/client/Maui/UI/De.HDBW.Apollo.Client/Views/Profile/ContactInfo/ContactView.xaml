@@ -43,7 +43,7 @@
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Address]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
+            <Label Text="{x:Binding [Address]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_ZipCode}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
@@ -53,7 +53,7 @@
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [ZipCode]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
+            <Label Text="{x:Binding [ZipCode]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
@@ -63,7 +63,7 @@
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [City]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
+            <Label Text="{x:Binding [City]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_Region}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
@@ -83,7 +83,7 @@
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Email]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
+            <Label Text="{x:Binding [Email]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_Phone}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
@@ -93,7 +93,7 @@
                     </Entry.Behaviors>
                 </Entry>
             </Border>
-            <Label Text="{x:Binding [Phone]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
+            <Label Text="{x:Binding [Phone]}" Style="{StaticResource ValidationErrorLabel}"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

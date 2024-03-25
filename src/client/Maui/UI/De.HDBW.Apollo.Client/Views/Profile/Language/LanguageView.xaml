@@ -33,7 +33,7 @@
                     <Image Grid.Column="1" Source="longlist.png" />
                 </Grid>
             </Border>
-            <Label Text="{x:Binding [LanguageName]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
+            <Label Text="{x:Binding [LanguageName]}" Style="{StaticResource ValidationErrorLabel}"/>
 
             <Label Text="{x:Static strings:Resources.Global_LanguageNiveau}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
@@ -53,7 +53,7 @@
                     </ImageButton>
                 </Grid>
             </Border>
-            <Label Text="{x:Binding [SelectedLanguageNiveau]}" Style="{StaticResource ValidationErrorLabel}" AutomationProperties.ExcludedWithChildren="True"/>
+            <Label Text="{x:Binding [SelectedLanguageNiveau]}" Style="{StaticResource ValidationErrorLabel}"/>
 
         </VerticalStackLayout>
     </ScrollView>
