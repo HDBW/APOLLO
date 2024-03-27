@@ -10,6 +10,7 @@ namespace Apollo.SemanticSearchWorker
     /// </summary>
     internal class TrainingFormatter : IEntityFormatter
     {
+        private string _cDelimiter = ";";
         Training? t = new Training();
 
         /// <summary>
@@ -25,10 +26,10 @@ namespace Apollo.SemanticSearchWorker
 
             List<string> list = new List<string>();
 
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.SubTitle}");
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.ShortDescription}");
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.Description}");
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.TrainingName}");
+            list.Add($"{training?.Id}{_cDelimiter}{training?.Id}{_cDelimiter}{training?.TrainingName}{_cDelimiter}{training?.SubTitle?.Replace(_cDelimiter, " ")}");
+            list.Add($"{training?.Id}{_cDelimiter}{training?.Id}{_cDelimiter}{training?.TrainingName}{_cDelimiter}{training?.ShortDescription?.Replace(_cDelimiter, " ")}");
+            list.Add($"{training?.Id}{_cDelimiter}{training?.Id}{_cDelimiter}{training?.TrainingName}{_cDelimiter}{training?.Description?.Replace(_cDelimiter, " ")}");
+            list.Add($"{training?.Id}{_cDelimiter}{training?.Id}{_cDelimiter}{training?.TrainingName}{_cDelimiter}{training?.TrainingName?.Replace(_cDelimiter, " ")}");
 
             return list;
         }
