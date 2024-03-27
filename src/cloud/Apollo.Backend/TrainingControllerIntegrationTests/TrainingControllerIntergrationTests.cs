@@ -27,70 +27,64 @@ namespace Apollo.RestService.IntergrationTests
         private const string _cTrainingController = "Training";
 
         Training[] _testTrainings = new Training[]
-   {
-        new Training(){
-                    Id = "IT01",
-                    ProviderId = "intergrationtest",
-                    TrainingName = "Open AI",
-                    Loans = new List<Loans>(
-                        new Loans[]
-                        {
-                            new Loans() { Id = "L01", Name = "Loan 1" },
-                            new Loans() { Id = "L02", Name = "Loan 2" }
-                        }),
-                    Appointment = new List<Appointment>(
-
-                        new Appointment[]
-                        {
-                            new Appointment(){
-                                AppointmentUrl = null,
-                                AppointmentType = "In-person",
-                                AppointmentDescription = "Introduction session",
-                                AppointmentLocation = null,
-                                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
-                                EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
-                                DurationDescription = "2 hours",
-                                //Duration = TimeSpan.Zero,
-                                Occurences = null,
-                                IsGuaranteed = true,
-                                TrainingMode = TrainingMode.Offline,
-                                //TimeInvestAttendee = TimeSpan.MinValue,
-                                TimeModel = TrainingTimeModel.Unknown,
-                                OccurenceNoteOnTime = "Weekly",
-                                ExecutionDuration = "2",
-                                ExecutionDurationUnit = "UE",
-                                ExecutionDurationDescription = "Weekly",
-                                LessonType = "Practical",
-                                BookingUrl = null
-                            },
-                            new Appointment(){
-                                AppointmentUrl = null,
-                                AppointmentType = "In-person",
-                                AppointmentDescription = "Introduction session",
-                                AppointmentLocation = null,
-                                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
-                                EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
-                                DurationDescription = "2 hours",
-                                //Duration = TimeSpan.MaxValue,
-                                Occurences = null,
-                                IsGuaranteed = true,
-                                TrainingMode = TrainingMode.Offline,
-                                //TimeInvestAttendee = TimeSpan.MinValue,
-                                TimeModel = TrainingTimeModel.Unknown,
-                                OccurenceNoteOnTime = "Weekly",
-                                ExecutionDuration = "2",
-                                ExecutionDurationUnit = "UE",
-                                ExecutionDurationDescription = "Weekly",
-                                LessonType = "Practical",
-                                BookingUrl = null
-                            },
-
-                        }
-                        ),
-                 },
-         };
-
-
+{
+    new Training()
+    {
+        Id = "IT01",
+        ProviderId = "integrationtest",
+        ExternalTrainingId = "EXT01",
+        TrainingType = "Online",
+        TrainingName = "Open AI",
+        Description = "Introduction to Open AI",
+        ShortDescription = "Open AI course",
+        Image = new Uri("http://example.com/image.jpg"),
+        SubTitle = "A brief introduction",
+        Content = new List<string>() { "Module 1", "Module 2" },
+        BenefitList = new List<string>() { "Understanding AI", "Practical applications" },
+        Certificate = new List<string>() { "Certificate of Completion" },
+        Prerequisites = new List<string>() { "Basic programming knowledge" },
+        Loans = new List<Loans>()
+        {
+            new Loans()
+            {
+                Id = "L01",
+                Name = "Loan 1",
+                Description = "Loan 1 description"
+            },
+            new Loans()
+            {
+                Id = "L02",
+                Name = "Loan 2",
+                Description = "Loan 2 description"
+            }
+        },
+        Appointment = new List<Appointment>()
+        {
+            new Appointment()
+            {
+                Id = "A01",
+                AppointmentType = "In-person",
+                AppointmentDescription = "Introduction session",
+                StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
+                EndDate = DateTime.Parse("2024-01-24T10:30:00.000Z"),
+                DurationDescription = "2 hours",
+                Occurences = new List<Occurence>()
+                {
+                    new Occurence()
+                    {
+                        Id = "O01",
+                        StartDate = DateTime.Parse("2024-01-17T10:30:00.000Z"),
+                        EndDate = DateTime.Parse("2024-01-17T12:30:00.000Z"),
+                        Description = "First occurrence"
+                    }
+                },
+                IsGuaranteed = true,
+                TrainingMode = TrainingMode.Offline
+            }
+        },
+        // Fill in other required properties as needed
+    }
+};
 
 
         ///// <summary>
@@ -676,6 +670,7 @@ namespace Apollo.RestService.IntergrationTests
             Assert.AreEqual(_testTrainings.Length, insertedIds.Count, "The number of inserted trainings should match the input.");
 
         }
+
 
 
         /// <summary>

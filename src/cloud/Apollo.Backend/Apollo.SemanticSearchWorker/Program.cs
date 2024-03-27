@@ -20,6 +20,7 @@ namespace Apollo.SemanticSearchWorker
     internal class Program
     {
         private static IConfigurationRoot? _cfg;
+        private static ILogger<Program>? _logger;
 
         /// <summary>
         /// Starts from the configuration provided as arguments or environment variables.
@@ -28,26 +29,51 @@ namespace Apollo.SemanticSearchWorker
         /// <returns></returns>
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Exporter started..");
-
             InitializeConfiguration(args);
 
-            ApolloApi api = GetApi();
 
-            string? entity = _cfg!["entity"];
-            if (entity == null)
-                throw new ArgumentException("The entity name must be specified in the configuration. I.e:as argument  '--entity=training' or as environment variable 'entity=training'");
+            // Configure logging
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddConsole() // Log to console
+                    .SetMinimumLevel(LogLevel.Debug); 
+            });
 
-            string? blobConnStr = _cfg["blobConnStr"];
-            if (blobConnStr == null)
-                throw new ArgumentException("The connection string of the blob storage with the write permission must be specified in the configuration. I.e:as argument  '--blobConnStr=...' or as environment variable 'blobConnStr=...'");
+            _logger = loggerFactory.CreateLogger<Program>();
 
-            var exp = new BlobStorageExporter(api, entity, blobConnStr);
+            _logger.LogDebug("Exporter started..");
 
-            // Starts the long running operation.
-            await exp.ExportAsync();
+            try
+            {
+                ApolloApi api = GetApi();
 
-            Console.WriteLine("Exporter completed.");
+                string? entity = _cfg!["entity"];
+                if (entity == null)
+                {
+                    throw new ArgumentException("The entity name must be specified in the configuration. I.e:as argument  '--entity=training' or as environment variable 'entity=training'");
+                }
+
+                string? blobConnStr = _cfg["blobConnStr"];
+                if (blobConnStr == null)
+                {
+                    throw new ArgumentException("The connection string of the blob storage with the write permission must be specified in the configuration. I.e:as argument  '--blobConnStr=...' or as environment variable 'blobConnStr=...'");
+                }
+
+                var exporterLogger = loggerFactory.CreateLogger<BlobStorageExporter>();
+
+                // Initialize the exporter with the required parameters
+                var exp = new BlobStorageExporter(api, entity, blobConnStr, exporterLogger);
+
+                // Starts the long running operation.
+                await exp.ExportAsync();
+
+                _logger.LogDebug("Exporter completed.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred during the export process.");
+            }
         }
 
 

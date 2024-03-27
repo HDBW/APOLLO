@@ -123,7 +123,7 @@ namespace Apollo.Api
             var validFieldNames = new List<string>
             {
                 // Fields of User class
-                "ObjectId", "IdentityProvider", "Upn", "Email", "Name", "ContactInfos", "Birthdate", "Disabilities", "Profile",
+                "ObjectId", "IdentityProvicer", "Upn", "Email", "Name", "ContactInfos", "Birthdate", "Disabilities", "Profile",
                 // Fields of Training class
                 "ProviderId", "ExternalTrainingId", "TrainingType", "TrainingName", "Image", "SubTitle", "Description",
                 "ShortDescription", "Content", "BenefitList", "Certificate", "Prerequisites", "Loans", "TrainingProvider",
