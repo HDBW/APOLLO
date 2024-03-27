@@ -27,9 +27,9 @@ namespace Apollo.RestService.IntergrationTests
 
         User[] _testUsers = new User[]
         {
-            new User { Id = "IT01", ObjectId = "ObjectID1", Upn = "upn1@example.com", Email = "user1@example.com", Name = "Test User1", IdentityProvider = "Provider1", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1990, 1, 1), Disabilities = false, Profile = new Profile() },
-            new User { Id = "IT02", ObjectId = "ObjectID2", Upn = "upn2@example.com", Email = "user2@example.com", Name = "Test User2", IdentityProvider = "Provider2", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1991, 2, 2), Disabilities = true, Profile = new Profile() },
-            new User { Id = "IT03", ObjectId = "ObjectID3", Upn = "upn3@example.com", Email = "user3@example.com", Name = "Test User3", IdentityProvider = "Provider3", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1992, 3, 3), Disabilities = false, Profile = new Profile() }
+            new User { Id = "IT01", ObjectId = "ObjectID1", Upn = "upn1@example.com", Email = "user1@example.com", Name = "Test User1", IdentityProvicer = "Provider1", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1990, 1, 1), Disabilities = false, Profile = new Profile() },
+            new User { Id = "IT02", ObjectId = "ObjectID2", Upn = "upn2@example.com", Email = "user2@example.com", Name = "Test User2", IdentityProvicer = "Provider2", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1991, 2, 2), Disabilities = true, Profile = new Profile() },
+            new User { Id = "IT03", ObjectId = "ObjectID3", Upn = "upn3@example.com", Email = "user3@example.com", Name = "Test User3", IdentityProvicer = "Provider3", ContactInfos = new List<Contact>(), Birthdate = new DateTime(1992, 3, 3), Disabilities = false, Profile = new Profile() }
         };
 
 
