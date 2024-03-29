@@ -16,7 +16,7 @@ using Amazon.Runtime.Internal.Util;
 namespace Apollo.SemanticSearchWorker
 {
     /// <summary>
-    /// Exports the given Apollo entity into the CSV file compatible with daenet Semantc Search.
+    /// Exports the given Apollo entity into the CSV file compatible with daenet Semantic Search.
     /// </summary>
     internal class BlobStorageExporter
     {
