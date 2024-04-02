@@ -43,10 +43,7 @@ namespace Apollo.SemanticSearchWorker
             _logger = loggerFactory.CreateLogger<Program>();
 
             _logger.LogDebug("Exporter started..");
-            _logger.LogDebug($"Entity: {_cfg["entity"]}");
-            _logger.LogDebug($"MongoConnStr: {_cfg["mongoConnStr"]}");
-            _logger.LogDebug($"BlobConnStr: {_cfg["blobConnStr"]}");
-
+            
             try
             {
                 ApolloApi api = GetApi();
