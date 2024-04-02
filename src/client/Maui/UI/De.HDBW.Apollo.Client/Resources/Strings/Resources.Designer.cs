@@ -1368,6 +1368,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link zu den Kursdetails.
+        /// </summary>
+        public static string Global_Alttext_KursDetails {
+            get {
+                return ResourceManager.GetString("Global_Alttext_KursDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link öffnet Nutzungsbedingungen in einem neuen Fenster.
         /// </summary>
         public static string Global_Alttext_LinkAGB {

@@ -98,7 +98,7 @@
                         <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand, Mode=OneTime}" />
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*, auto">
-                        <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0" SemanticProperties.Hint="geschlossen"/>
+                        <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0" />
                         <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">

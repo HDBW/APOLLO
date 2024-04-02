@@ -1519,4 +1519,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="Global_Alttext_OpenKursDetails" xml:space="preserve">
     <value>Taste öffnet Details des Kurses</value>
   </data>
+  <data name="Global_Alttext_KursDetails" xml:space="preserve">
+    <value>Link zu den Kursdetails</value>
+  </data>
 </root>
