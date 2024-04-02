@@ -33,7 +33,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{85C53BB8-54B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.RestService.IntergrationTests", "TrainingControllerIntegrationTests\Apollo.RestService.IntergrationTests.csproj", "{2D0E6575-49CE-4701-A9A7-21850D48BB22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.SemanticSearchWorker", "Apollo.SemanticSearchWorker\Apollo.SemanticSearchWorker.csproj", "{814A8CAE-06D6-4BD3-87C1-6634D14F28AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.SemanticSearchWorker", "Apollo.SemanticSearchWorker\Apollo.SemanticSearchWorker.csproj", "{814A8CAE-06D6-4BD3-87C1-6634D14F28AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{BF095622-914E-42B6-A362-7C98A7BD7C3C}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
