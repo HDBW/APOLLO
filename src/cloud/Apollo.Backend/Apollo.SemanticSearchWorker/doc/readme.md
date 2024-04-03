@@ -65,6 +65,7 @@ To run the container passing argumant example
 docker run -d -p 8081:80 --name apollosearchworker2 -e MongoConnStr="Replace with Connection string" -e BlobConnStr="Replace with Connection string" -e entity="training" apollosemanticsearchworker
 ```
  ## Formatters
+Formatters formet the responsed data from server before start of stream write operation for CSV in BlobStorage
 
 ```sh
     /// <summary>
