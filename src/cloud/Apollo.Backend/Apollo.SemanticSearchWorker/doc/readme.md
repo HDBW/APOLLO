@@ -6,6 +6,9 @@ This README.md provides a concise yet comprehensive guide to understanding and u
 
 The Apollo Semantic Search Worker is a tool designed to export Apollo entities (such as Training, User, Profile, etc.) into a CSV file that is compatible with Daenet Semantic Search.
 
+## Architecture View For CSV File Exporter
+![image](https://github.com/HDBW/APOLLO/assets/2386584/01676025-19ec-475a-bbf2-ecbf97ef3f89)
+
 
 
 ## How it works
@@ -16,12 +19,51 @@ Logging is implemented throughout the process to provide insightful information 
 
 ## Running Exporter
 
-To run the exporter:
+To run the exporter using console:
 
- 1.  Specify the entity you wish to export by setting the entity argument or environment variable
- 2.  Run the exporter using the command line or by triggering it in your preferred development environment.
+ 1.  After Building whole project repo Debug-> Start debugging will run the project.
+ 2.  Specify the entity you wish to export by setting the entity argument or environment variable
+ 3.  To configure command-line arguments in Visual Studio, follow these steps:
+        1. Right-click on your project in Solution Explorer and select "Properties".
+        2. Navigate to the "Debug" tab.
+        3. In the "Application arguments" field, enter the desired command-line arguments for your application.
+           For example, if your project file is named "Apollo.SemanticSearchWorker.csproj" and you want to pass "--entity=training" as a 
+           command-line argument, you would enter ".\Apollo.SemanticSearchWorker.csproj --entity=training" into this field.
+
+ 4.  But By default all necessary environment variable is setup already.
+ 5.  To configure environment variables in Visual Studio, follow these steps:
+        1. Open your project in Visual Studio.
+        2. Go to the "Debug" menu.
+        3. Select "Project Properties..." (replace "Project" with the name of your project, for example, "Apollo.SemanticSearchWorker").
+        4. In the project properties window, navigate to the "Debug" tab.
+        5. Under the "Environment variables" section, you'll find a list of environment variables available to your application during 
+           debugging.
+        6. Here, you can add, edit, or remove environment variables as needed.
+
+ 6.  Run the exporter using the command line or by triggering it in your preferred development environment.
 
 
+# Running Exporter in Docker Image
+To run the exporter using Docker: 
+
+## Prerequisites
+Before running the Docker commands, make sure you have Docker installed on your machine. You can download and install Docker from [here](https://www.docker.com/get-started).
+
+## Building the Docker Image
+
+Navigate to the "Apollo.Backend" directory using the command prompt or terminal:
+
+```
+cd C:\Repos\APOLLO\src\cloud\Apollo.Backend
+```
+Build the Docker image using the following command:
+```
+docker build -t apollosemanticsearchworker
+```
+To run the container passing argumant example
+```
+docker run -d -p 8081:80 --name apollosearchworker2 -e MongoConnStr="Replace with Connection string" -e BlobConnStr="Replace with Connection string" -e entity="training" apollosemanticsearchworker
+```
  ## Formatters
 
 ```sh
