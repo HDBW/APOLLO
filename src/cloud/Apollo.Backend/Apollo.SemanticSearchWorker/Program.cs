@@ -43,7 +43,7 @@ namespace Apollo.SemanticSearchWorker
             _logger = loggerFactory.CreateLogger<Program>();
 
             _logger.LogDebug("Exporter started..");
-
+            
             try
             {
                 ApolloApi api = GetApi();
