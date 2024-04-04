@@ -34,7 +34,7 @@ To run the exporter using console:
  5.  To configure environment variables in Visual Studio, follow these steps:
         1. Open your project in Visual Studio.
         2. Go to the "Debug" menu.
-        3. Select "Project Properties..." (replace "Project" with the name of your project, for example, "Apollo.SemanticSearchWorker").
+        3. Select "Project Properties..." (replace "Project" with the name of project, in our case it is, "Apollo.SemanticSearchWorker").
         4. In the project properties window, navigate to the "Debug" tab.
         5. Under the "Environment variables" section, you'll find a list of environment variables available to your application during 
            debugging.
