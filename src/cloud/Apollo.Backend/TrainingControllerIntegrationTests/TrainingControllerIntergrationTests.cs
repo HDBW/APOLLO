@@ -87,546 +87,546 @@ namespace Apollo.RestService.IntergrationTests
 };
 
 
-        ///// <summary>
-        ///// The instance of the training with all properties.
-        ///// </summary>
-        //private string _complexTrainingJson = @"[
-        //  {
-        //    ""id"": ""IT01"",
-        //    ""providerId"": ""intergrationtest"",
-        //    ""trainingName"": ""Training01"",
-        //    ""description"": ""Description of Training 01"",
-        //    ""shortDescription"": ""Short Description of 01"",
-        //    ""trainingType"": ""Type of Training for Training 01"",
-        //    ""content"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""benefitList"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""certificate"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""prerequisites"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""loans"": [
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""name"": ""<string>"",
-        //        ""description"": ""<string>"",
-        //        ""url"": ""<uri>"",
-        //        ""loanContact"": {
-        //          ""id"": ""<string>"",
-        //          ""surname"": ""<string>"",
-        //          ""mail"": ""<string>"",
-        //          ""phone"": ""<string>"",
-        //          ""organization"": ""<string>"",
-        //          ""address"": ""<string>"",
-        //          ""city"": ""<string>"",
-        //          ""zipCode"": ""<string>"",
-        //          ""eAppointmentUrl"": ""<uri>""
-        //        }
-        //      },
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""name"": ""<string>"",
-        //        ""description"": ""<string>"",
-        //        ""url"": ""<uri>"",
-        //        ""loanContact"": {
-        //          ""id"": ""<string>"",
-        //          ""surname"": ""<string>"",
-        //          ""mail"": ""<string>"",
-        //          ""phone"": ""<string>"",
-        //          ""organization"": ""<string>"",
-        //          ""address"": ""<string>"",
-        //          ""city"": ""<string>"",
-        //          ""zipCode"": ""<string>"",
-        //          ""eAppointmentUrl"": ""<uri>""
-        //        }
-        //      }
-        //    ],
-        //    ""trainingProvider"": {
-        //      ""id"": ""<string>"",
-        //      ""name"": ""<string>"",
-        //      ""description"": ""<string>"",
-        //      ""url"": ""<uri>"",
-        //      ""contact"": {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""<string>"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      ""image"": ""<uri>""
-        //    },
-        //    ""courseProvider"": {
-        //      ""id"": ""<string>"",
-        //      ""name"": ""<string>"",
-        //      ""description"": ""<string>"",
-        //      ""url"": ""<uri>"",
-        //      ""contact"": {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""<string>"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      ""image"": ""<uri>""
-        //    },
-        //    ""appointments"": {
-        //      ""id"": ""<string>"",
-        //      ""appointment"": ""<uri>"",
-        //      ""appointmentType"": ""<string>"",
-        //      ""appointmentDescription"": ""<string>"",
-        //      ""appointmentLocation"": {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""<string>"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      ""startDate"": ""<dateTime>"",
-        //      ""endDate"": ""<dateTime>"",
-        //      ""durationDescription"": ""<string>"",
-        //      ""duration"": {
-        //        ""ticks"": ""<long>"",
-        //        ""days"": ""<integer>"",
-        //        ""hours"": ""<integer>"",
-        //        ""milliseconds"": ""<integer>"",
-        //        ""microseconds"": ""<integer>"",
-        //        ""nanoseconds"": ""<integer>"",
-        //        ""minutes"": ""<integer>"",
-        //        ""seconds"": ""<integer>"",
-        //        ""totalDays"": ""<double>"",
-        //        ""totalHours"": ""<double>"",
-        //        ""totalMilliseconds"": ""<double>"",
-        //        ""totalMicroseconds"": ""<double>"",
-        //        ""totalNanoseconds"": ""<double>"",
-        //        ""totalMinutes"": ""<double>"",
-        //        ""totalSeconds"": ""<double>""
-        //      },
-        //      ""occurences"": [
-        //        {
-        //          ""correlationId"": ""<string>"",
-        //          ""id"": ""<string>"",
-        //          ""startDate"": ""<dateTime>"",
-        //          ""endDate"": ""<dateTime>"",
-        //          ""duration"": {
-        //            ""ticks"": ""<long>"",
-        //            ""days"": ""<integer>"",
-        //            ""hours"": ""<integer>"",
-        //            ""milliseconds"": ""<integer>"",
-        //            ""microseconds"": ""<integer>"",
-        //            ""nanoseconds"": ""<integer>"",
-        //            ""minutes"": ""<integer>"",
-        //            ""seconds"": ""<integer>"",
-        //            ""totalDays"": ""<double>"",
-        //            ""totalHours"": ""<double>"",
-        //            ""totalMilliseconds"": ""<double>"",
-        //            ""totalMicroseconds"": ""<double>"",
-        //            ""totalNanoseconds"": ""<double>"",
-        //            ""totalMinutes"": ""<double>"",
-        //            ""totalSeconds"": ""<double>""
-        //          },
-        //          ""description"": ""<string>"",
-        //          ""location"": {
-        //            ""id"": ""<string>"",
-        //            ""surname"": ""<string>"",
-        //            ""mail"": ""<string>"",
-        //            ""phone"": ""<string>"",
-        //            ""organization"": ""<string>"",
-        //            ""address"": ""<string>"",
-        //            ""city"": ""<string>"",
-        //            ""zipCode"": ""<string>"",
-        //            ""eAppointmentUrl"": ""<uri>""
-        //          }
-        //        },
-        //        {
-        //          ""correlationId"": ""<string>"",
-        //          ""id"": ""<string>"",
-        //          ""startDate"": ""<dateTime>"",
-        //          ""endDate"": ""<dateTime>"",
-        //          ""duration"": {
-        //            ""ticks"": ""<long>"",
-        //            ""days"": ""<integer>"",
-        //            ""hours"": ""<integer>"",
-        //            ""milliseconds"": ""<integer>"",
-        //            ""microseconds"": ""<integer>"",
-        //            ""nanoseconds"": ""<integer>"",
-        //            ""minutes"": ""<integer>"",
-        //            ""seconds"": ""<integer>"",
-        //            ""totalDays"": ""<double>"",
-        //            ""totalHours"": ""<double>"",
-        //            ""totalMilliseconds"": ""<double>"",
-        //            ""totalMicroseconds"": ""<double>"",
-        //            ""totalNanoseconds"": ""<double>"",
-        //            ""totalMinutes"": ""<double>"",
-        //            ""totalSeconds"": ""<double>""
-        //          },
-        //          ""description"": ""<string>"",
-        //          ""location"": {
-        //            ""id"": ""<string>"",
-        //            ""surname"": ""<string>"",
-        //            ""mail"": ""<string>"",
-        //            ""phone"": ""<string>"",
-        //            ""organization"": ""<string>"",
-        //            ""address"": ""<string>"",
-        //            ""city"": ""<string>"",
-        //            ""zipCode"": ""<string>"",
-        //            ""eAppointmentUrl"": ""<uri>""
-        //          }
-        //        }
-        //      ],
-        //      ""isGuaranteed"": ""<boolean>"",
-        //      ""trainingType"": {},
-        //      ""timeInvestAttendee"": {
-        //        ""ticks"": ""<long>"",
-        //        ""days"": ""<integer>"",
-        //        ""hours"": ""<integer>"",
-        //        ""milliseconds"": ""<integer>"",
-        //        ""microseconds"": ""<integer>"",
-        //        ""nanoseconds"": ""<integer>"",
-        //        ""minutes"": ""<integer>"",
-        //        ""seconds"": ""<integer>"",
-        //        ""totalDays"": ""<double>"",
-        //        ""totalHours"": ""<double>"",
-        //        ""totalMilliseconds"": ""<double>"",
-        //        ""totalMicroseconds"": ""<double>"",
-        //        ""totalNanoseconds"": ""<double>"",
-        //        ""totalMinutes"": ""<double>"",
-        //        ""totalSeconds"": ""<double>""
-        //      },
-        //      ""timeModel"": ""<string>""
-        //    },
-        //    ""productUrl"": ""<uri>"",
-        //    ""contacts"": [
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""magna_acb"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""<string>"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      }
-        //    ],
-        //    ""trainingType"": ""<string>"",
-        //    ""individualStartDate"": ""2024-01-24T08:31:23.069596"",
-        //    ""price"": 22.22,
-        //    ""priceDescription"": ""<string>"",
-        //    ""accessibilityAvailable"": true,
-        //    ""tags"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""categories"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""recommendedTrainings"":[],
-        //    ""similarTrainings"":[],
-        //    ""publishingDate"": ""0001-01-01T00:00:00Z"",
-        //    ""unpublishingDate"": ""0001-01-01T00:00:00Z"",
-        //    ""successor"": ""<string>"",
-        //    ""predecessor"": ""<string>""
-        //  },
-        //  {
-        //    ""id"": ""SER05"",
-        //    ""providerId"": ""provider2"",
-        //    ""trainingName"": ""Training T05"",
-        //    ""description"": ""Training T05 Description long"",
-        //    ""shortDescription"": ""Training T05 Description short"",
-        //    ""content"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""benefitList"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""certificate"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""prerequisites"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""loans"": [
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""name"": ""<string>"",
-        //        ""description"": ""<string>"",
-        //        ""url"": ""<uri>"",
-        //        ""loanContact"": {
-        //          ""id"": ""<string>"",
-        //          ""surname"": ""<string>"",
-        //          ""mail"": ""<string>"",
-        //          ""phone"": ""<string>"",
-        //          ""organization"": ""<string>"",
-        //          ""address"": ""<string>"",
-        //          ""city"": ""<string>"",
-        //          ""zipCode"": ""<string>"",
-        //          ""eAppointmentUrl"": ""<uri>""
-        //        }
-        //      },
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""name"": ""<string>"",
-        //        ""description"": ""<string>"",
-        //        ""url"": ""<uri>"",
-        //        ""loanContact"": {
-        //          ""id"": ""<string>"",
-        //          ""surname"": ""<string>"",
-        //          ""mail"": ""<string>"",
-        //          ""phone"": ""<string>"",
-        //          ""organization"": ""<string>"",
-        //          ""address"": ""<string>"",
-        //          ""city"": ""<string>"",
-        //          ""zipCode"": ""<string>"",
-        //          ""eAppointmentUrl"": ""<uri>""
-        //        }
-        //      }
-        //    ],
-        //    ""trainingProvider"": {
-        //      ""id"": ""<string>"",
-        //      ""name"": ""<string>"",
-        //      ""description"": ""<string>"",
-        //      ""url"": ""<uri>"",
-        //      ""contact"": {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""<string>"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      ""image"": ""<uri>""
-        //    },
-        //    ""courseProvider"": {
-        //      ""id"": ""<string>"",
-        //      ""name"": ""<string>"",
-        //      ""description"": ""<string>"",
-        //      ""url"": ""<uri>"",
-        //      ""contact"": {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""<string>"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      ""image"": ""<uri>""
-        //    },
-        //    ""appointments"": {
-        //      ""id"": ""<string>"",
-        //      ""appointment"": ""<uri>"",
-        //      ""appointmentType"": ""<string>"",
-        //      ""appointmentDescription"": ""<string>"",
-        //      ""appointmentLocation"": {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""<string>"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      ""startDate"": ""<dateTime>"",
-        //      ""endDate"": ""<dateTime>"",
-        //      ""durationDescription"": ""<string>"",
-        //      ""duration"": {
-        //        ""ticks"": ""<long>"",
-        //        ""days"": ""<integer>"",
-        //        ""hours"": ""<integer>"",
-        //        ""milliseconds"": ""<integer>"",
-        //        ""microseconds"": ""<integer>"",
-        //        ""nanoseconds"": ""<integer>"",
-        //        ""minutes"": ""<integer>"",
-        //        ""seconds"": ""<integer>"",
-        //        ""totalDays"": ""<double>"",
-        //        ""totalHours"": ""<double>"",
-        //        ""totalMilliseconds"": ""<double>"",
-        //        ""totalMicroseconds"": ""<double>"",
-        //        ""totalNanoseconds"": ""<double>"",
-        //        ""totalMinutes"": ""<double>"",
-        //        ""totalSeconds"": ""<double>""
-        //      },
-        //      ""occurences"": [
-        //        {
-        //          ""correlationId"": ""<string>"",
-        //          ""id"": ""<string>"",
-        //          ""startDate"": ""<dateTime>"",
-        //          ""endDate"": ""<dateTime>"",
-        //          ""duration"": {
-        //            ""ticks"": ""<long>"",
-        //            ""days"": ""<integer>"",
-        //            ""hours"": ""<integer>"",
-        //            ""milliseconds"": ""<integer>"",
-        //            ""microseconds"": ""<integer>"",
-        //            ""nanoseconds"": ""<integer>"",
-        //            ""minutes"": ""<integer>"",
-        //            ""seconds"": ""<integer>"",
-        //            ""totalDays"": ""<double>"",
-        //            ""totalHours"": ""<double>"",
-        //            ""totalMilliseconds"": ""<double>"",
-        //            ""totalMicroseconds"": ""<double>"",
-        //            ""totalNanoseconds"": ""<double>"",
-        //            ""totalMinutes"": ""<double>"",
-        //            ""totalSeconds"": ""<double>""
-        //          },
-        //          ""description"": ""<string>"",
-        //          ""location"": {
-        //            ""id"": ""<string>"",
-        //            ""surname"": ""<string>"",
-        //            ""mail"": ""<string>"",
-        //            ""phone"": ""<string>"",
-        //            ""organization"": ""<string>"",
-        //            ""address"": ""<string>"",
-        //            ""city"": ""<string>"",
-        //            ""zipCode"": ""<string>"",
-        //            ""eAppointmentUrl"": ""<uri>""
-        //          }
-        //        },
-        //        {
-        //          ""correlationId"": ""<string>"",
-        //          ""id"": ""<string>"",
-        //          ""startDate"": ""<dateTime>"",
-        //          ""endDate"": ""<dateTime>"",
-        //          ""duration"": {
-        //            ""ticks"": ""<long>"",
-        //            ""days"": ""<integer>"",
-        //            ""hours"": ""<integer>"",
-        //            ""milliseconds"": ""<integer>"",
-        //            ""microseconds"": ""<integer>"",
-        //            ""nanoseconds"": ""<integer>"",
-        //            ""minutes"": ""<integer>"",
-        //            ""seconds"": ""<integer>"",
-        //            ""totalDays"": ""<double>"",
-        //            ""totalHours"": ""<double>"",
-        //            ""totalMilliseconds"": ""<double>"",
-        //            ""totalMicroseconds"": ""<double>"",
-        //            ""totalNanoseconds"": ""<double>"",
-        //            ""totalMinutes"": ""<double>"",
-        //            ""totalSeconds"": ""<double>""
-        //          },
-        //          ""description"": ""<string>"",
-        //          ""location"": {
-        //            ""id"": ""<string>"",
-        //            ""surname"": ""<string>"",
-        //            ""mail"": ""<string>"",
-        //            ""phone"": ""<string>"",
-        //            ""organization"": ""<string>"",
-        //            ""address"": ""<string>"",
-        //            ""city"": ""<string>"",
-        //            ""zipCode"": ""<string>"",
-        //            ""eAppointmentUrl"": ""<uri>""
-        //          }
-        //        }
-        //      ],
-        //      ""isGuaranteed"": ""<boolean>"",
-        //      ""trainingType"": {},
-        //      ""timeInvestAttendee"": {
-        //        ""ticks"": ""<long>"",
-        //        ""days"": ""<integer>"",
-        //        ""hours"": ""<integer>"",
-        //        ""milliseconds"": ""<integer>"",
-        //        ""microseconds"": ""<integer>"",
-        //        ""nanoseconds"": ""<integer>"",
-        //        ""minutes"": ""<integer>"",
-        //        ""seconds"": ""<integer>"",
-        //        ""totalDays"": ""<double>"",
-        //        ""totalHours"": ""<double>"",
-        //        ""totalMilliseconds"": ""<double>"",
-        //        ""totalMicroseconds"": ""<double>"",
-        //        ""totalNanoseconds"": ""<double>"",
-        //        ""totalMinutes"": ""<double>"",
-        //        ""totalSeconds"": ""<double>""
-        //      },
-        //      ""timeModel"": ""<string>""
-        //    },
-        //    ""productUrl"": ""<uri>"",
-        //    ""contacts"": [
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""magna_acb"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      },
-        //      {
-        //        ""id"": ""<string>"",
-        //        ""surname"": ""<string>"",
-        //        ""mail"": ""<string>"",
-        //        ""phone"": ""<string>"",
-        //        ""organization"": ""<string>"",
-        //        ""address"": ""<string>"",
-        //        ""city"": ""frankfurt"",
-        //        ""zipCode"": ""<string>"",
-        //        ""eAppointmentUrl"": ""<uri>""
-        //      }
-        //    ],
-        //    ""trainingType"": ""<string>"",
-        //    ""individualStartDate"": ""2024-01-24T08:41:29.747129"",
-        //    ""price"": 42.1,
-        //    ""priceDescription"": ""<string>"",
-        //    ""accessibilityAvailable"": false,
-        //    ""tags"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""categories"": [
-        //      ""<string>"",
-        //      ""<string>""
-        //    ],
-        //    ""publishingDate"": ""0001-01-01T00:00:00Z"",
-        //    ""unpublishingDate"": ""0001-01-01T00:00:00Z"",
-        //    ""successor"": ""<string>"",
-        //    ""predecessor"": ""<string>""
-        //  }
-        //]";
+        /// <summary>
+        /// The instance of the training with all properties.
+        /// </summary>
+        private string _complexTrainingJson = @"[
+          {
+            ""id"": ""IT01"",
+            ""providerId"": ""intergrationtest"",
+            ""trainingName"": ""Training01"",
+            ""description"": ""Description of Training 01"",
+            ""shortDescription"": ""Short Description of 01"",
+            ""trainingType"": ""Type of Training for Training 01"",
+            ""content"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""benefitList"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""certificate"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""prerequisites"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""loans"": [
+              {
+                ""id"": ""<string>"",
+                ""name"": ""<string>"",
+                ""description"": ""<string>"",
+                ""url"": ""<uri>"",
+                ""loanContact"": {
+                  ""id"": ""<string>"",
+                  ""surname"": ""<string>"",
+                  ""mail"": ""<string>"",
+                  ""phone"": ""<string>"",
+                  ""organization"": ""<string>"",
+                  ""address"": ""<string>"",
+                  ""city"": ""<string>"",
+                  ""zipCode"": ""<string>"",
+                  ""eAppointmentUrl"": ""<uri>""
+                }
+              },
+              {
+                ""id"": ""<string>"",
+                ""name"": ""<string>"",
+                ""description"": ""<string>"",
+                ""url"": ""<uri>"",
+                ""loanContact"": {
+                  ""id"": ""<string>"",
+                  ""surname"": ""<string>"",
+                  ""mail"": ""<string>"",
+                  ""phone"": ""<string>"",
+                  ""organization"": ""<string>"",
+                  ""address"": ""<string>"",
+                  ""city"": ""<string>"",
+                  ""zipCode"": ""<string>"",
+                  ""eAppointmentUrl"": ""<uri>""
+                }
+              }
+            ],
+            ""trainingProvider"": {
+              ""id"": ""<string>"",
+              ""name"": ""<string>"",
+              ""description"": ""<string>"",
+              ""url"": ""<uri>"",
+              ""contact"": {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""<string>"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              ""image"": ""<uri>""
+            },
+            ""courseProvider"": {
+              ""id"": ""<string>"",
+              ""name"": ""<string>"",
+              ""description"": ""<string>"",
+              ""url"": ""<uri>"",
+              ""contact"": {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""<string>"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              ""image"": ""<uri>""
+            },
+            ""appointments"": {
+              ""id"": ""<string>"",
+              ""appointment"": ""<uri>"",
+              ""appointmentType"": ""<string>"",
+              ""appointmentDescription"": ""<string>"",
+              ""appointmentLocation"": {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""<string>"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              ""startDate"": ""<dateTime>"",
+              ""endDate"": ""<dateTime>"",
+              ""durationDescription"": ""<string>"",
+              ""duration"": {
+                ""ticks"": ""<long>"",
+                ""days"": ""<integer>"",
+                ""hours"": ""<integer>"",
+                ""milliseconds"": ""<integer>"",
+                ""microseconds"": ""<integer>"",
+                ""nanoseconds"": ""<integer>"",
+                ""minutes"": ""<integer>"",
+                ""seconds"": ""<integer>"",
+                ""totalDays"": ""<double>"",
+                ""totalHours"": ""<double>"",
+                ""totalMilliseconds"": ""<double>"",
+                ""totalMicroseconds"": ""<double>"",
+                ""totalNanoseconds"": ""<double>"",
+                ""totalMinutes"": ""<double>"",
+                ""totalSeconds"": ""<double>""
+              },
+              ""occurences"": [
+                {
+                  ""correlationId"": ""<string>"",
+                  ""id"": ""<string>"",
+                  ""startDate"": ""<dateTime>"",
+                  ""endDate"": ""<dateTime>"",
+                  ""duration"": {
+                    ""ticks"": ""<long>"",
+                    ""days"": ""<integer>"",
+                    ""hours"": ""<integer>"",
+                    ""milliseconds"": ""<integer>"",
+                    ""microseconds"": ""<integer>"",
+                    ""nanoseconds"": ""<integer>"",
+                    ""minutes"": ""<integer>"",
+                    ""seconds"": ""<integer>"",
+                    ""totalDays"": ""<double>"",
+                    ""totalHours"": ""<double>"",
+                    ""totalMilliseconds"": ""<double>"",
+                    ""totalMicroseconds"": ""<double>"",
+                    ""totalNanoseconds"": ""<double>"",
+                    ""totalMinutes"": ""<double>"",
+                    ""totalSeconds"": ""<double>""
+                  },
+                  ""description"": ""<string>"",
+                  ""location"": {
+                    ""id"": ""<string>"",
+                    ""surname"": ""<string>"",
+                    ""mail"": ""<string>"",
+                    ""phone"": ""<string>"",
+                    ""organization"": ""<string>"",
+                    ""address"": ""<string>"",
+                    ""city"": ""<string>"",
+                    ""zipCode"": ""<string>"",
+                    ""eAppointmentUrl"": ""<uri>""
+                  }
+                },
+                {
+                  ""correlationId"": ""<string>"",
+                  ""id"": ""<string>"",
+                  ""startDate"": ""<dateTime>"",
+                  ""endDate"": ""<dateTime>"",
+                  ""duration"": {
+                    ""ticks"": ""<long>"",
+                    ""days"": ""<integer>"",
+                    ""hours"": ""<integer>"",
+                    ""milliseconds"": ""<integer>"",
+                    ""microseconds"": ""<integer>"",
+                    ""nanoseconds"": ""<integer>"",
+                    ""minutes"": ""<integer>"",
+                    ""seconds"": ""<integer>"",
+                    ""totalDays"": ""<double>"",
+                    ""totalHours"": ""<double>"",
+                    ""totalMilliseconds"": ""<double>"",
+                    ""totalMicroseconds"": ""<double>"",
+                    ""totalNanoseconds"": ""<double>"",
+                    ""totalMinutes"": ""<double>"",
+                    ""totalSeconds"": ""<double>""
+                  },
+                  ""description"": ""<string>"",
+                  ""location"": {
+                    ""id"": ""<string>"",
+                    ""surname"": ""<string>"",
+                    ""mail"": ""<string>"",
+                    ""phone"": ""<string>"",
+                    ""organization"": ""<string>"",
+                    ""address"": ""<string>"",
+                    ""city"": ""<string>"",
+                    ""zipCode"": ""<string>"",
+                    ""eAppointmentUrl"": ""<uri>""
+                  }
+                }
+              ],
+              ""isGuaranteed"": ""<boolean>"",
+              ""trainingType"": {},
+              ""timeInvestAttendee"": {
+                ""ticks"": ""<long>"",
+                ""days"": ""<integer>"",
+                ""hours"": ""<integer>"",
+                ""milliseconds"": ""<integer>"",
+                ""microseconds"": ""<integer>"",
+                ""nanoseconds"": ""<integer>"",
+                ""minutes"": ""<integer>"",
+                ""seconds"": ""<integer>"",
+                ""totalDays"": ""<double>"",
+                ""totalHours"": ""<double>"",
+                ""totalMilliseconds"": ""<double>"",
+                ""totalMicroseconds"": ""<double>"",
+                ""totalNanoseconds"": ""<double>"",
+                ""totalMinutes"": ""<double>"",
+                ""totalSeconds"": ""<double>""
+              },
+              ""timeModel"": ""<string>""
+            },
+            ""productUrl"": ""<uri>"",
+            ""contacts"": [
+              {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""magna_acb"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""<string>"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              }
+            ],
+            ""trainingType"": ""<string>"",
+            ""individualStartDate"": ""2024-01-24T08:31:23.069596"",
+            ""price"": 22.22,
+            ""priceDescription"": ""<string>"",
+            ""accessibilityAvailable"": true,
+            ""tags"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""categories"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""recommendedTrainings"":[],
+            ""similarTrainings"":[],
+            ""publishingDate"": ""0001-01-01T00:00:00Z"",
+            ""unpublishingDate"": ""0001-01-01T00:00:00Z"",
+            ""successor"": ""<string>"",
+            ""predecessor"": ""<string>""
+          },
+          {
+            ""id"": ""SER05"",
+            ""providerId"": ""provider2"",
+            ""trainingName"": ""Training T05"",
+            ""description"": ""Training T05 Description long"",
+            ""shortDescription"": ""Training T05 Description short"",
+            ""content"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""benefitList"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""certificate"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""prerequisites"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""loans"": [
+              {
+                ""id"": ""<string>"",
+                ""name"": ""<string>"",
+                ""description"": ""<string>"",
+                ""url"": ""<uri>"",
+                ""loanContact"": {
+                  ""id"": ""<string>"",
+                  ""surname"": ""<string>"",
+                  ""mail"": ""<string>"",
+                  ""phone"": ""<string>"",
+                  ""organization"": ""<string>"",
+                  ""address"": ""<string>"",
+                  ""city"": ""<string>"",
+                  ""zipCode"": ""<string>"",
+                  ""eAppointmentUrl"": ""<uri>""
+                }
+              },
+              {
+                ""id"": ""<string>"",
+                ""name"": ""<string>"",
+                ""description"": ""<string>"",
+                ""url"": ""<uri>"",
+                ""loanContact"": {
+                  ""id"": ""<string>"",
+                  ""surname"": ""<string>"",
+                  ""mail"": ""<string>"",
+                  ""phone"": ""<string>"",
+                  ""organization"": ""<string>"",
+                  ""address"": ""<string>"",
+                  ""city"": ""<string>"",
+                  ""zipCode"": ""<string>"",
+                  ""eAppointmentUrl"": ""<uri>""
+                }
+              }
+            ],
+            ""trainingProvider"": {
+              ""id"": ""<string>"",
+              ""name"": ""<string>"",
+              ""description"": ""<string>"",
+              ""url"": ""<uri>"",
+              ""contact"": {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""<string>"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              ""image"": ""<uri>""
+            },
+            ""courseProvider"": {
+              ""id"": ""<string>"",
+              ""name"": ""<string>"",
+              ""description"": ""<string>"",
+              ""url"": ""<uri>"",
+              ""contact"": {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""<string>"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              ""image"": ""<uri>""
+            },
+            ""appointments"": {
+              ""id"": ""<string>"",
+              ""appointment"": ""<uri>"",
+              ""appointmentType"": ""<string>"",
+              ""appointmentDescription"": ""<string>"",
+              ""appointmentLocation"": {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""<string>"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              ""startDate"": ""<dateTime>"",
+              ""endDate"": ""<dateTime>"",
+              ""durationDescription"": ""<string>"",
+              ""duration"": {
+                ""ticks"": ""<long>"",
+                ""days"": ""<integer>"",
+                ""hours"": ""<integer>"",
+                ""milliseconds"": ""<integer>"",
+                ""microseconds"": ""<integer>"",
+                ""nanoseconds"": ""<integer>"",
+                ""minutes"": ""<integer>"",
+                ""seconds"": ""<integer>"",
+                ""totalDays"": ""<double>"",
+                ""totalHours"": ""<double>"",
+                ""totalMilliseconds"": ""<double>"",
+                ""totalMicroseconds"": ""<double>"",
+                ""totalNanoseconds"": ""<double>"",
+                ""totalMinutes"": ""<double>"",
+                ""totalSeconds"": ""<double>""
+              },
+              ""occurences"": [
+                {
+                  ""correlationId"": ""<string>"",
+                  ""id"": ""<string>"",
+                  ""startDate"": ""<dateTime>"",
+                  ""endDate"": ""<dateTime>"",
+                  ""duration"": {
+                    ""ticks"": ""<long>"",
+                    ""days"": ""<integer>"",
+                    ""hours"": ""<integer>"",
+                    ""milliseconds"": ""<integer>"",
+                    ""microseconds"": ""<integer>"",
+                    ""nanoseconds"": ""<integer>"",
+                    ""minutes"": ""<integer>"",
+                    ""seconds"": ""<integer>"",
+                    ""totalDays"": ""<double>"",
+                    ""totalHours"": ""<double>"",
+                    ""totalMilliseconds"": ""<double>"",
+                    ""totalMicroseconds"": ""<double>"",
+                    ""totalNanoseconds"": ""<double>"",
+                    ""totalMinutes"": ""<double>"",
+                    ""totalSeconds"": ""<double>""
+                  },
+                  ""description"": ""<string>"",
+                  ""location"": {
+                    ""id"": ""<string>"",
+                    ""surname"": ""<string>"",
+                    ""mail"": ""<string>"",
+                    ""phone"": ""<string>"",
+                    ""organization"": ""<string>"",
+                    ""address"": ""<string>"",
+                    ""city"": ""<string>"",
+                    ""zipCode"": ""<string>"",
+                    ""eAppointmentUrl"": ""<uri>""
+                  }
+                },
+                {
+                  ""correlationId"": ""<string>"",
+                  ""id"": ""<string>"",
+                  ""startDate"": ""<dateTime>"",
+                  ""endDate"": ""<dateTime>"",
+                  ""duration"": {
+                    ""ticks"": ""<long>"",
+                    ""days"": ""<integer>"",
+                    ""hours"": ""<integer>"",
+                    ""milliseconds"": ""<integer>"",
+                    ""microseconds"": ""<integer>"",
+                    ""nanoseconds"": ""<integer>"",
+                    ""minutes"": ""<integer>"",
+                    ""seconds"": ""<integer>"",
+                    ""totalDays"": ""<double>"",
+                    ""totalHours"": ""<double>"",
+                    ""totalMilliseconds"": ""<double>"",
+                    ""totalMicroseconds"": ""<double>"",
+                    ""totalNanoseconds"": ""<double>"",
+                    ""totalMinutes"": ""<double>"",
+                    ""totalSeconds"": ""<double>""
+                  },
+                  ""description"": ""<string>"",
+                  ""location"": {
+                    ""id"": ""<string>"",
+                    ""surname"": ""<string>"",
+                    ""mail"": ""<string>"",
+                    ""phone"": ""<string>"",
+                    ""organization"": ""<string>"",
+                    ""address"": ""<string>"",
+                    ""city"": ""<string>"",
+                    ""zipCode"": ""<string>"",
+                    ""eAppointmentUrl"": ""<uri>""
+                  }
+                }
+              ],
+              ""isGuaranteed"": ""<boolean>"",
+              ""trainingType"": {},
+              ""timeInvestAttendee"": {
+                ""ticks"": ""<long>"",
+                ""days"": ""<integer>"",
+                ""hours"": ""<integer>"",
+                ""milliseconds"": ""<integer>"",
+                ""microseconds"": ""<integer>"",
+                ""nanoseconds"": ""<integer>"",
+                ""minutes"": ""<integer>"",
+                ""seconds"": ""<integer>"",
+                ""totalDays"": ""<double>"",
+                ""totalHours"": ""<double>"",
+                ""totalMilliseconds"": ""<double>"",
+                ""totalMicroseconds"": ""<double>"",
+                ""totalNanoseconds"": ""<double>"",
+                ""totalMinutes"": ""<double>"",
+                ""totalSeconds"": ""<double>""
+              },
+              ""timeModel"": ""<string>""
+            },
+            ""productUrl"": ""<uri>"",
+            ""contacts"": [
+              {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""magna_acb"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              },
+              {
+                ""id"": ""<string>"",
+                ""surname"": ""<string>"",
+                ""mail"": ""<string>"",
+                ""phone"": ""<string>"",
+                ""organization"": ""<string>"",
+                ""address"": ""<string>"",
+                ""city"": ""frankfurt"",
+                ""zipCode"": ""<string>"",
+                ""eAppointmentUrl"": ""<uri>""
+              }
+            ],
+            ""trainingType"": ""<string>"",
+            ""individualStartDate"": ""2024-01-24T08:41:29.747129"",
+            ""price"": 42.1,
+            ""priceDescription"": ""<string>"",
+            ""accessibilityAvailable"": false,
+            ""tags"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""categories"": [
+              ""<string>"",
+              ""<string>""
+            ],
+            ""publishingDate"": ""0001-01-01T00:00:00Z"",
+            ""unpublishingDate"": ""0001-01-01T00:00:00Z"",
+            ""successor"": ""<string>"",
+            ""predecessor"": ""<string>""
+          }
+        ]";
 
 
         public TrainingControllerIntegrationTests()
