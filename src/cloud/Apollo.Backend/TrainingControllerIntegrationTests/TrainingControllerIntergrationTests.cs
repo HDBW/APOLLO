@@ -672,6 +672,26 @@ namespace Apollo.RestService.IntergrationTests
         }
 
 
+        /// <summary>
+        /// Inserts a list of complex training objects into the system.
+        /// Verifies the successful insertion by checking the response contains the IDs of the inserted trainings.
+        /// </summary>
+        /// <returns>A list of IDs for the inserted training objects.</returns>
+        [TestMethod]
+        public async Task<List<string>> InsertComplexTrainingTest()
+        {
+            var httpClient = Helpers.GetHttpClient();
+            HttpContent content = new StringContent(_complexTrainingJson, Encoding.UTF8, "application/json");
+            var res = await httpClient.PostAsync($"{_cTrainingController}/insert", content);
+            Assert.IsTrue(res.IsSuccessStatusCode);
+
+            var resJson = await res.Content.ReadAsStringAsync();
+            var insertedIds = JsonSerializer.Deserialize<List<string>>(resJson);
+            Assert.IsNotNull(insertedIds, "The response should include IDs of inserted trainings.");
+
+            return insertedIds; 
+        }
+
 
         /// <summary>
         /// Makes sure that the GetTraining endpoint returns a correct training instance.
@@ -713,6 +733,39 @@ namespace Apollo.RestService.IntergrationTests
                 {
                     await httpClient.DeleteAsync($"{_cTrainingController}/{testTraining.Id}");
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Tests the retrieval of complex training objects by their IDs.
+        /// Verifies each training can be fetched successfully and matches the expected data.
+        /// </summary>
+        [TestMethod]
+        public async Task GetComplexTrainingTest()
+        {
+            var complexTrainingIds = await InsertComplexTrainingTest(); 
+            var httpClient = Helpers.GetHttpClient();
+
+            foreach (var complexTrainingId in complexTrainingIds)
+            {
+                var response = await httpClient.GetAsync($"{_cTrainingController}/{complexTrainingId}");
+                Assert.IsTrue(response.IsSuccessStatusCode);
+
+                var trainingJson = await response.Content.ReadAsStringAsync();
+                var trainingWrapper = JsonSerializer.Deserialize<TrainingWrapper>(trainingJson, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                Assert.IsNotNull(trainingWrapper);
+                Assert.AreEqual(complexTrainingId, trainingWrapper.training.Id);
+            }
+
+            // Cleanup
+            foreach (var complexTrainingId in complexTrainingIds)
+            {
+                await httpClient.DeleteAsync($"{_cTrainingController}/{complexTrainingId}");
             }
         }
 
@@ -776,6 +829,70 @@ namespace Apollo.RestService.IntergrationTests
 
 
         /// <summary>
+        /// Queries the database for complex training objects that match specific criteria.
+        /// First, complex trainings are inserted to ensure data is present for querying.
+        /// Then, a query is executed to find trainings with a specific name.
+        /// Verifies that the query response includes the expected trainings.
+        /// </summary>
+        [TestMethod]
+        public async Task QueryComplexTrainingsTest()
+        {
+            var httpClient = Helpers.GetHttpClient();
+
+            // First, insert complex trainings into the database
+            await InsertComplexTrainingTest();
+
+            // Define a query to find trainings with a specific name
+            var query = new Query
+            {
+                Fields = new List<string> { "TrainingName" },
+                Filter = new Filter
+                {
+                    IsOrOperator = false,
+                    Fields = new List<FieldExpression>
+            {
+                new FieldExpression
+                {
+                    FieldName = "TrainingName",
+                    Operator = QueryOperator.Contains,
+                    Argument = new List<object> { "Training T05" } // The name we are querying for
+                }
+            }
+                },
+                RequestCount = true,
+                Top = 200,
+                Skip = 0,
+            };
+
+            var jsonQuery = JsonSerializer.Serialize(query);
+            var queryContent = new StringContent(jsonQuery, Encoding.UTF8, "application/json");
+
+            // Execute the query against the API
+            var queryResponse = await httpClient.PostAsync($"{_cTrainingController}", queryContent);
+            Assert.IsTrue(queryResponse.IsSuccessStatusCode);
+
+            // Deserialize the response
+            var responseJson = await queryResponse.Content.ReadAsStringAsync();
+            var trainingsResponse = JsonSerializer.Deserialize<QueryTrainingsResponse>(responseJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            // Perform assertions
+            Assert.IsNotNull(trainingsResponse);
+            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName.Contains("Training T05")));
+
+            // Extract the IDs of trainings matched by the query for cleanup
+            var trainingIds = trainingsResponse.Trainings.Select(t => t.Id).ToList();
+
+            // Cleanup: Delete the inserted trainings
+            foreach (var id in trainingIds)
+            {
+                var deleteResponse = await httpClient.DeleteAsync($"{_cTrainingController}/{id}");
+                Assert.IsTrue(deleteResponse.IsSuccessStatusCode, $"Cleanup failed for training ID {id}");
+            }
+        }
+
+
+
+        /// <summary>
         /// Creates or updates training instances based on the provided test data and verifies the responses.
         /// </summary>
         [TestMethod]
@@ -823,6 +940,65 @@ namespace Apollo.RestService.IntergrationTests
                 await httpClient.DeleteAsync($"{_cTrainingController}/{training.Id}");
             }
         }
+
+
+        /// <summary>
+        /// Demonstrates creating or updating a complex training object.
+        /// A complex training is first deserialized from JSON, then updated, and finally,
+        /// the updated training is submitted via an API request.
+        /// Verifies the update operation was successful.
+        /// </summary>
+        [TestMethod]
+        public async Task CreateOrUpdateComplexTrainingTest()
+        {
+            var httpClient = Helpers.GetHttpClient();
+
+            // Deserialize the complex training JSON to get a list of trainings
+            var complexTrainings = JsonSerializer.Deserialize<List<Training>>(_complexTrainingJson);
+            Assert.IsNotNull(complexTrainings, "Failed to deserialize complex training JSON.");
+            Assert.IsTrue(complexTrainings.Count > 0, "No complex trainings found in the JSON.");
+
+            // Use the first complex training as an example to update
+            var trainingToUpdate = complexTrainings.First();
+
+            // Update details of the training for demonstration purposes
+            trainingToUpdate.TrainingName = "Updated Complex Training Name";
+            trainingToUpdate.Description = "Updated complex description";
+            trainingToUpdate.ProviderId = "SomeValidProviderId";
+            trainingToUpdate.TrainingType = "Online"; 
+            trainingToUpdate.ShortDescription = "Brief description of the updated training";
+
+            // Wrap the training object for the API request
+            var updateRequestObj = new
+            {
+                Training = trainingToUpdate
+            };
+
+            // Serializing the request object to JSON for update
+            var updateRequestJson = JsonSerializer.Serialize(updateRequestObj);
+            HttpContent updateContent = new StringContent(updateRequestJson, Encoding.UTF8, "application/json");
+
+            // This example uses PUT to demonstrate an update
+            var updateResponse = await httpClient.PutAsync($"{_cTrainingController}", updateContent); // Adjust the endpoint as necessary
+
+            Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Update of the complex training failed. Response StatusCode: " + updateResponse.StatusCode);
+
+            // Cleanup: Delete the inserted/updated training at the end of the test
+            // Ensure you have an endpoint to delete trainings by ID
+            foreach (var training in complexTrainings)
+            {
+                if (!string.IsNullOrEmpty(training.Id)) // Make sure the ID is not null or empty
+                {
+                    var deleteResponse = await httpClient.DeleteAsync($"{_cTrainingController}/{training.Id}");
+                    Assert.IsTrue(deleteResponse.IsSuccessStatusCode, $"Cleanup failed for training ID {training.Id}. Response StatusCode: {deleteResponse.StatusCode}");
+                }
+                else
+                {
+                    Console.WriteLine("Warning: Training ID is null or empty, skipping cleanup for a training.");
+                }
+            }
+        }
+
 
         private class TrainingWrapper
         {
