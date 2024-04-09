@@ -92,7 +92,7 @@ namespace Apollo.RestService.IntergrationTests
         /// </summary>
         private string _complexTrainingJson = @"[
           {
-            ""id"": ""IT01"",
+            ""id"": ""ITCX01"",
             ""providerId"": ""intergrationtest"",
             ""trainingName"": ""Training01"",
             ""description"": ""Description of Training 01"",
@@ -651,25 +651,30 @@ namespace Apollo.RestService.IntergrationTests
         /// and verifies the success of the operation by checking the response status code and the content.
         /// Before and after insertion, it ensures the clean-up of test data to maintain test environment integrity.
         /// </summary>
+        [TestMethod]
         public async Task InsertTestTrainings()
         {
-
             var httpClient = Helpers.GetHttpClient();
 
             var json = JsonSerializer.Serialize(_testTrainings);
+            Console.WriteLine($"Sending InsertTestTrainings request with JSON: {json}");
 
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var res = await httpClient.PostAsync($"{_cTrainingController}/insert", content);
+            HttpResponseMessage res = await httpClient.PostAsync($"{_cTrainingController}/insert", content);
 
-            Assert.IsTrue(res.IsSuccessStatusCode);
-
+            Console.WriteLine($"InsertTestTrainings Response StatusCode: {res.StatusCode}");
             var resjson = await res.Content.ReadAsStringAsync();
+            Console.WriteLine($"InsertTestTrainings Response Body: {resjson}");
+
+            Assert.IsTrue(res.IsSuccessStatusCode, $"Insertion of test trainings failed. StatusCode: {res.StatusCode}, Response: {resjson}");
+
             var insertedIds = JsonSerializer.Deserialize<List<string>>(resjson);
+            Console.WriteLine($"Inserted IDs: {string.Join(", ", insertedIds)}");
             Assert.IsNotNull(insertedIds, "The response should include IDs of inserted trainings.");
             Assert.AreEqual(_testTrainings.Length, insertedIds.Count, "The number of inserted trainings should match the input.");
-
         }
+
 
 
         /// <summary>
@@ -891,7 +896,6 @@ namespace Apollo.RestService.IntergrationTests
         }
 
 
-
         /// <summary>
         /// Creates or updates training instances based on the provided test data and verifies the responses.
         /// </summary>
@@ -903,7 +907,7 @@ namespace Apollo.RestService.IntergrationTests
             // Insert test trainings first to ensure they are in the system.
             await InsertTestTrainings();
 
-            // Assuming we're updating the first training from the inserted test trainings for simplicity.
+            // Assuming we're updating the first training .
             var trainingToUpdate = _testTrainings.First();
 
             // Update details of the training for demonstration purposes.
@@ -921,18 +925,13 @@ namespace Apollo.RestService.IntergrationTests
             var updateRequestJson = JsonSerializer.Serialize(updateRequestObj);
             HttpContent updateContent = new StringContent(updateRequestJson, Encoding.UTF8, "application/json");
 
-            // Use PUT to update the training, assuming the endpoint differentiates create vs update based on the request method.
+            // Use PUT to update the training
             var updateResponse = await httpClient.PutAsync($"{_cTrainingController}", updateContent);
             Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Update of the training failed.");
 
             // Logging response for debugging.
             var updateResponseContent = await updateResponse.Content.ReadAsStringAsync();
             Console.WriteLine($"Update Response Content: {updateResponseContent}");
-
-            // Deserialize the response to check the update was successful, if applicable.
-            // Example: var updatedTraining = JsonSerializer.Deserialize<Training>(updateResponseContent);
-
-            // Optionally, confirm the training was updated by querying or directly fetching it, and perform assertions as necessary.
 
             // Cleanup: Delete the inserted/updated training at the end of the test.
             foreach (var training in _testTrainings)
@@ -953,49 +952,33 @@ namespace Apollo.RestService.IntergrationTests
         {
             var httpClient = Helpers.GetHttpClient();
 
-            // Deserialize the complex training JSON to get a list of trainings
-            var complexTrainings = JsonSerializer.Deserialize<List<Training>>(_complexTrainingJson);
-            Assert.IsNotNull(complexTrainings, "Failed to deserialize complex training JSON.");
-            Assert.IsTrue(complexTrainings.Count > 0, "No complex trainings found in the JSON.");
+            // Step 1: Insert initial complex training data
+            var insertedTrainingIds = await InsertComplexTrainingTest();
 
-            // Use the first complex training as an example to update
-            var trainingToUpdate = complexTrainings.First();
-
-            // Update details of the training for demonstration purposes
-            trainingToUpdate.TrainingName = "Updated Complex Training Name";
-            trainingToUpdate.Description = "Updated complex description";
-            trainingToUpdate.ProviderId = "SomeValidProviderId";
-            trainingToUpdate.TrainingType = "Online"; 
-            trainingToUpdate.ShortDescription = "Brief description of the updated training";
-
-            // Wrap the training object for the API request
-            var updateRequestObj = new
+            // Step 2: Prepare the training update
+            var trainingToUpdate = new Training
             {
-                Training = trainingToUpdate
+                Id = "ITCX01",
+                ProviderId = "intergrationtest",
+                TrainingName = "Updated Training Name",
+                Description = "Updated Description",
             };
 
-            // Serializing the request object to JSON for update
-            var updateRequestJson = JsonSerializer.Serialize(updateRequestObj);
+            // Step 3: Serialize and send the update request
+            var updateRequestJson = JsonSerializer.Serialize(new { Training = trainingToUpdate });
             HttpContent updateContent = new StringContent(updateRequestJson, Encoding.UTF8, "application/json");
+            var updateResponse = await httpClient.PutAsync($"{_cTrainingController}", updateContent);
 
-            // This example uses PUT to demonstrate an update
-            var updateResponse = await httpClient.PutAsync($"{_cTrainingController}", updateContent); // Adjust the endpoint as necessary
+            // Step 4: Assert the update was successful
+            Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Failed to update the training.");
 
-            Assert.IsTrue(updateResponse.IsSuccessStatusCode, "Update of the complex training failed. Response StatusCode: " + updateResponse.StatusCode);
 
-            // Cleanup: Delete the inserted/updated training at the end of the test
-            // Ensure you have an endpoint to delete trainings by ID
-            foreach (var training in complexTrainings)
+            // Step 5: Cleanup - Delete the inserted/updated trainings at the end of the test
+            // This includes both the initially inserted trainings and the one updated by this test
+            foreach (var id in insertedTrainingIds)
             {
-                if (!string.IsNullOrEmpty(training.Id)) // Make sure the ID is not null or empty
-                {
-                    var deleteResponse = await httpClient.DeleteAsync($"{_cTrainingController}/{training.Id}");
-                    Assert.IsTrue(deleteResponse.IsSuccessStatusCode, $"Cleanup failed for training ID {training.Id}. Response StatusCode: {deleteResponse.StatusCode}");
-                }
-                else
-                {
-                    Console.WriteLine("Warning: Training ID is null or empty, skipping cleanup for a training.");
-                }
+                var deleteResponse = await httpClient.DeleteAsync($"{_cTrainingController}/{id}");
+                Assert.IsTrue(deleteResponse.IsSuccessStatusCode, $"Cleanup failed for training ID {id}");
             }
         }
 
