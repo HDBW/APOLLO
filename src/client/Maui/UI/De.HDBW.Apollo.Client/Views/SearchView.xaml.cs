@@ -55,8 +55,9 @@ namespace De.HDBW.Apollo.Client.Views
 
         protected override void OnAppearing()
         {
+            PART_SearchHandler.Close();
+            PART_SearchHandler.Unfocus();
             base.OnAppearing();
-            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(200), PART_SearchHandler.Close);
             PART_Collection.PropertyChanged += OnPropertyChanged;
             WeakReferenceMessenger.Default.Register<FlyoutStateChangedMessage>(this, OnFlyoutStateChangedMessage);
         }
