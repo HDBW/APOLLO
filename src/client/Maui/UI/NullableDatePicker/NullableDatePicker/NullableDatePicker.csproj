@@ -27,6 +27,9 @@
 	</PropertyGroup>
 
 	<!-- Android -->
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />
 		<None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
@@ -51,8 +54,8 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.20" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.20" />
 	</ItemGroup>
 
 </Project>
