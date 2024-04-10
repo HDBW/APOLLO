@@ -165,7 +165,7 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="system:String">
                             <ContentView>
-                                <Label Text="{x:Binding Mode=OneTime}" TextType="Html" Style="{StaticResource Noto14SemiBold}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4"/>
+                                <Label Text="{x:Binding Mode=OneTime}" Style="{StaticResource Noto14SemiBold}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4"/>
                             </ContentView>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
