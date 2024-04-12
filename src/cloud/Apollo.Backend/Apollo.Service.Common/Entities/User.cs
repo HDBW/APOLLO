@@ -61,7 +61,8 @@ namespace Apollo.Common.Entities
 
         /// <summary>
         /// The user profile is the Profile of the User.
+        /// As discussed we would change the User Profile to User ProfileId
         /// </summary>
-        public Profile? Profile { get; set; }
+        public string? Profile { get; set; }
     }
 }

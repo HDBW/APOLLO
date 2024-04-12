@@ -3,6 +3,7 @@
 
 using System.Dynamic;
 using Apollo.Common.Entities;
+using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
@@ -406,8 +407,11 @@ namespace Apollo.Api
                     //training.ChangedBy = "Apollo";
 
                     // Convert the training object to ExpandoObject
-                    var expandoTraining = Convertor.Convert(training);
+                    //TODO: Cleaner HTML Data out
+                    CleanTraining(training);
 
+                    var expandoTraining = Convertor.Convert(training);
+                    
                     // Upsert the training
                     await _dal.UpsertAsync(GetCollectionName<Training>(), new List<ExpandoObject> { expandoTraining });
                 }
@@ -425,6 +429,56 @@ namespace Apollo.Api
                 _logger?.LogError(ex, $"{this.User} failed execution of {nameof(CreateOrUpdateTrainingAsync)}: {ex.Message}");
                 throw new ApolloApiException(ErrorCodes.GeneralErrors.OperationFailed, "An error occurred while processing the request.", ex);
             }
+        }
+
+        private void CleanTraining(Training training)
+        {
+            training.ShortDescription = CleanString(training.ShortDescription);
+            training.Description = CleanString(training.Description);
+
+            if (!string.IsNullOrEmpty(training.PriceDescription))
+            {
+                training.PriceDescription = CleanString(training.PriceDescription);
+            }
+
+            if (!string.IsNullOrEmpty(training.SubTitle))
+            {
+                training.SubTitle = CleanString(training.SubTitle);
+            }
+
+            training.BenefitList
+
+
+            if (training.Content != null)
+            {
+                for (int i = 0; i < training.Content.Count; i++)
+                {
+                    training.Content[i] = CleanString(training.Content[i]);
+                }
+            }
+        }
+
+        private static string CleanString(string str)
+        {
+            str.Replace("\r\n", "<br>").Replace("\n", "<br>").Replace("\r", "<br>").Replace("\t", "&emsp;").Replace("  ", " ").Trim();
+            var doc = new HtmlDocument();
+            doc.LoadHtml(str);
+            var unwantedTags = new string[] { "script", "style", "href", "a", "img", "pre", "div", "h" };
+
+            foreach (var tag in unwantedTags)
+            {
+                var nodes = doc.DocumentNode.DescendantsAndSelf(tag);
+                foreach (var node in nodes.ToList())  // ToList() is necessary because the collection is modified in the loop
+                {
+                    if (node.ParentNode != null)
+                    {
+                        node.ParentNode.RemoveChild(node, keepGrandChildren: true);
+                    }
+                }
+            }
+            // Decode HTML entities
+            string decodedHtml = System.Net.WebUtility.HtmlDecode(doc.DocumentNode.OuterHtml);
+            return decodedHtml.Trim();
         }
 
 
