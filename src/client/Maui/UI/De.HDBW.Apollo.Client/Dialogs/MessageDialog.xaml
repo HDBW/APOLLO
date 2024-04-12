@@ -8,12 +8,12 @@
                x:DataType="viewModels:MessageDialogViewModel">
     <Grid RowDefinitions="*, auto, 20" x:Name="Part_Root">
          <Border StrokeThickness="0" Stroke="{StaticResource Background}">
-            <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}">
+            <VerticalStackLayout Padding="{OnPlatform '0,20', Android='20'}" BackgroundColor="{StaticResource Background}">
                 <Label HorizontalTextAlignment="Center" Text="{Binding Message}" Margin="0,0,0,8" Style="{StaticResource Noto12}"/>
             </VerticalStackLayout>
         </Border>
         <Grid ColumnDefinitions="*,auto,*" Grid.Row="1" Margin="{OnPlatform '0', Android='8'}">
-            <Button Text="{x:Static strings:Resource.Global_Close}" Command="{Binding CancelCommand}" Grid.Column="1"/>
+            <Button Text="{x:Static strings:Resources.Global_Close}" Command="{Binding CancelCommand}" Grid.Column="1"/>
         </Grid>
     </Grid>
 </toolkit:Popup>

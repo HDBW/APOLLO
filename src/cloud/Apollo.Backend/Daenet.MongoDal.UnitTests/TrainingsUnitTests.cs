@@ -410,5 +410,31 @@ namespace Daenet.MongoDal.UnitTests
 
             Assert.IsTrue(res?.Count >= 2, $"Exptected >=2 trainings with loans, but got {countWithLoans}");
         }
+
+
+        /// <summary>
+        /// Tests whether the IsExistAsync method correctly identifies the existence of a specific training in the database.
+        /// This test inserts a predefined training object, verifies that the system acknowledges its presence,
+        /// and then performs cleanup by removing the inserted training.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public async Task IsExistAsyncTest()
+        {
+            var dal = Helpers.GetDal();
+            var testTraining = _testTrainings[0]; 
+
+            // Convert the training to an ExpandoObject and insert
+            await dal.InsertAsync(Helpers.GetCollectionName<Training>(), Convertor.Convert(testTraining));
+
+            // Check if the training exists
+            bool exists = await dal.IsExistAsync<Training>(Helpers.GetCollectionName<Training>(), testTraining.Id);
+
+            Assert.IsTrue(exists);
+
+            // Cleanup
+            await dal.DeleteAsync(Helpers.GetCollectionName<Training>(), testTraining.Id);
+        }
+
     }
 }

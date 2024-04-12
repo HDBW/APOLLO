@@ -299,7 +299,7 @@ namespace Apollo.Api.UnitTests
         /// Tests querying User objects based on specific criteria such as FirstName and LastName.
         /// </summary>
         [TestMethod]
-        // [TestCategory("Prod")]
+        [TestCategory("Prod")]
         public async Task QueryUsersTest()
         {
             var api = Helpers.GetApolloApi();

@@ -20,8 +20,8 @@ namespace TrainingControllerIntegrationTests
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var mongoDBConnectionString = Configuration.GetConnectionString("MongoDalConfig:MongoConnStr");
-            var mongoDatabaseName = Configuration["MongoDalConfig:MongoDatabase"];
+            var mongoDBConnectionString = "mongodb://apollodb-cosmos-hdbw-tst:v2bEMaNmpUuCizvEwhB5FBMONui6F6qJoQgUQ3qljACPHI1wQn1qahMUVhWkb3I6jkOJIs4RXFWPACDbQZM6yw==@apollodb-cosmos-hdbw-tst.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@apollodb-cosmos-hdbw-tst@";
+            var mongoDatabaseName = "apollodb";
 
             // Debugging output (remove this later)
             Console.WriteLine($"MongoDB Connection String: {mongoDBConnectionString}");

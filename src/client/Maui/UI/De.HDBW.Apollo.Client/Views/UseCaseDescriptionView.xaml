@@ -5,8 +5,8 @@
              NavigationPage.HasNavigationBar="True"
              Shell.NavBarIsVisible="True"
              Shell.FlyoutBehavior="Disabled"
-             NavigationPage.BackButtonTitle="{x:Static strings:Resource.Global_Back}"
-             Title="{x:Static strings:Resource.UseCaseDescriptionView_Title}"
+             NavigationPage.BackButtonTitle="{x:Static strings:Resources.Global_Back}"
+             Title="{x:Static strings:Resources.UseCaseDescriptionView_Title}"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{Binding IsBusy}"
@@ -28,14 +28,14 @@
                         <Image Source="{Binding ImagePath}"/>
                     </Border>
                 </Grid>
-                <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Experience}" Style="{StaticResource Noto16}" Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
+                <Label Text="{x:Static strings:Resources.UseCaseDescriptionView_Experience}" Style="{StaticResource Noto16}" Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
                 <Label Text="{Binding Experience}" Style="{StaticResource Noto12}" Margin="0,0,0,24"/>
-                <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Story}" Style="{StaticResource Noto16}"  Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
+                <Label Text="{x:Static strings:Resources.UseCaseDescriptionView_Story}" Style="{StaticResource Noto16}"  Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
                 <Label Text="{Binding Story}" Style="{StaticResource Noto12}" Margin="0,0,0,24" />
-                <Label Text="{x:Static strings:Resource.UseCaseDescriptionView_Goal}" Style="{StaticResource Noto16}"  Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
+                <Label Text="{x:Static strings:Resources.UseCaseDescriptionView_Goal}" Style="{StaticResource Noto16}"  Margin="0,0,0,8" TextColor="{StaticResource Primary900}"/>
                 <Label Text="{Binding Goal}" Style="{StaticResource Noto12}" Margin="0,0,0,24"/>
             </VerticalStackLayout>
         </ScrollView>
-        <Button Margin="24,16" Grid.Row="1" Text="{x:Static strings:Resource.UseCaseDescriptionView_Start}" Command="{Binding CreateUseCaseCommand}" />
+        <Button Margin="24,16" Grid.Row="1" Text="{x:Static strings:Resources.UseCaseDescriptionView_Start}" Command="{Binding CreateUseCaseCommand}" />
     </Grid>
 </ContentPage>

@@ -159,6 +159,10 @@ namespace Apollo.Api
         }
 
 
+        #region Private Methods
+
+
+
         /// <summary>
         /// Validates the configuration properties.
         /// </summary>
@@ -260,6 +264,6 @@ namespace Apollo.Api
         {
             return $"{entityName}-{id}";
         }
-
+        #endregion
     }
 }

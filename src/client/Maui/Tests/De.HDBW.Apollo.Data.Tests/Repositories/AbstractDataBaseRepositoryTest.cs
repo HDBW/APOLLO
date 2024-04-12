@@ -60,8 +60,8 @@ namespace De.HDBW.Apollo.Data.Tests.Repositories
                     Assert.NotNull(instance);
                     instance!.Id = 3;
                     Assert.False(await repository.UpdateItemAsync((TU)instance, cts.Token).ConfigureAwait(false), "Passing instance not in DB resulted in success.");
-
                 }
+
                 // TODO: Add tests for
                 // AddOrUpdateItemsAsync(IEnumerable<TU> items, CancellationToken token);
                 // AddOrUpdateItemAsync(TU item, CancellationToken token);

@@ -14,7 +14,7 @@ namespace Apollo.RestService.IntergrationTests
             var settingsFile = Environment.GetEnvironmentVariable("testsettings");
 
             if (String.IsNullOrEmpty(settingsFile))
-                settingsFile = "testsettings.local.json";
+                settingsFile = "testsettings.m2.json";
 
             var builder = new ConfigurationBuilder()
                .SetBasePath(Directory.GetCurrentDirectory())

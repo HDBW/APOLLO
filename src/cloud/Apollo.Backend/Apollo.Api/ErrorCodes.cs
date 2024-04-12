@@ -61,31 +61,30 @@ namespace Apollo.Api
 
         public static class ProfileErrors
         {
-            //TODO: Change codebase name
-            public const int TrainingCodeBase = 300;
-            public const int GetProfileError = TrainingCodeBase + 1;
-            public const int QueryProfilesError = TrainingCodeBase + 10;
+            public const int ProfileCodeBase = 300;
+            public const int GetProfileError = ProfileCodeBase + 1;
+            public const int QueryProfilesError = ProfileCodeBase + 10;
             //Will update error code in future for other types of Query
-            //public const int QueryProfilesByGoalError = TrainingCodeBase + 30;
-            //public const int QueryProfilesByKeywordError = TrainingCodeBase + 40;
-            //public const int QueryProfilesByMultipleCriteriaError = TrainingCodeBase + 50;
-            //public const int QueryProfilesWithPaginationError = TrainingCodeBase + 60;
-            //public const int QueryProfilesByDateRangeError = TrainingCodeBase + 70;
-            //public const int QueryProfilesByFirstNameError = TrainingCodeBase + 80;
-            //public const int QueryProfilesByLastNameError = TrainingCodeBase + 90;
-            public const int InsertProfileError = TrainingCodeBase + 100;
-            public const int CreateOrUpdateProfileError = TrainingCodeBase + 110;
-            public const int CreateOrUpdateProfileUserDoesNotExistError = TrainingCodeBase + 111;
-            public const int DeleteProfileError = TrainingCodeBase + 120;
-            public const int ProfileNotFound = TrainingCodeBase + 130;
-            public const int ProfileIsNullOrEmpty = TrainingCodeBase + 131;
-            public const int ProfileAlreadyExists = TrainingCodeBase + 140;
-            public const int NoProfilesToDelete = TrainingCodeBase + 150;
-            public const int ListItemNotfound = TrainingCodeBase + 160;
+            //public const int QueryProfilesByGoalError = ProfileCodeBase + 30;
+            //public const int QueryProfilesByKeywordError = ProfileCodeBase + 40;
+            //public const int QueryProfilesByMultipleCriteriaError = ProfileCodeBase + 50;
+            //public const int QueryProfilesWithPaginationError = ProfileCodeBase + 60;
+            //public const int QueryProfilesByDateRangeError = ProfileCodeBase + 70;
+            //public const int QueryProfilesByFirstNameError = ProfileCodeBase + 80;
+            //public const int QueryProfilesByLastNameError = ProfileCodeBase + 90;
+            public const int InsertProfileError = ProfileCodeBase + 100;
+            public const int CreateOrUpdateProfileError = ProfileCodeBase + 110;
+            public const int CreateOrUpdateProfileUserDoesNotExistError = ProfileCodeBase + 111;
+            public const int DeleteProfileError = ProfileCodeBase + 120;
+            public const int ProfileNotFound = ProfileCodeBase + 130;
+            public const int ProfileIsNullOrEmpty = ProfileCodeBase + 131;
+            public const int ProfileAlreadyExists = ProfileCodeBase + 140;
+            public const int NoProfilesToDelete = ProfileCodeBase + 150;
+            public const int ListItemNotfound = ProfileCodeBase + 160;
 
             public static void HandleException(Exception ex)
             {
-                throw new ApolloApiException(TrainingCodeBase, "Profile Error occurred", ex);
+                throw new ApolloApiException(ProfileCodeBase, "Profile Error occurred", ex);
             }
         }
 

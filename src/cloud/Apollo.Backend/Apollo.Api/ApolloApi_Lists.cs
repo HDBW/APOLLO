@@ -205,17 +205,19 @@ namespace Apollo.Api
 
                 return id;
             }
-            catch (ApolloApiException)
+            catch (ApolloApiException ex)
             {
-                //todo. Logging not implemented
+                // Implementing the missing logging for ApolloApiException
+                _logger?.LogError(ex, $"ApolloApiException with ErrorCode {ex.ErrorCode} in {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}");
                 throw;
             }
             catch (Exception ex)
             {
+                // Logging the exception details
                 _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateQualificationAsync)}: {ex.Message}");
 
                 // For other exceptions, throw an ApolloApiException with a general error code and message
-                throw new ApolloApiException(ErrorCodes.ListErrors.CreateOrUpdateListError, "An error occurred while creating or updating profiles.", ex);
+                throw new ApolloApiException(ErrorCodes.ListErrors.CreateOrUpdateListError, "An error occurred while creating or updating the profiles.", ex);
             }
         }
 

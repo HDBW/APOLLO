@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Apollo.SemanticSearchWorker": {
+      "commandName": "Project",
+        "environmentVariables": {
+            "entity": "training",
+            "mongoConnStrM2": "mongodb://apollodb-cosmos-hdbw-m2:MrWACJBlVtdWHqQM88TAsy5Er5BAJXilyBZYv6d67iVNkCav3Xc6ZhA0OYAard6pyJwLWWTxHoF4ACDbHKkYig==@apollodb-cosmos-hdbw-m2.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@apollodb-cosmos-hdbw-m2@",
+            "mongoConnStr": "mongodb://apollodb-cosmos-hdbw-tst:v2bEMaNmpUuCizvEwhB5FBMONui6F6qJoQgUQ3qljACPHI1wQn1qahMUVhWkb3I6jkOJIs4RXFWPACDbQZM6yw==@apollodb-cosmos-hdbw-tst.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@apollodb-cosmos-hdbw-tst@",
+            "blobConnStr": "DefaultEndpointsProtocol=https;AccountName=apollostoragehdbwm2;AccountKey=+AvIAtVLqE2/l+Bz3+/BNRHUZD6ef1ccB+Ia+IMWGftBRw6xrkHQRsqH0ZWF/5XZcHyImVOAEkLu+AStwxrOdA==;EndpointSuffix=core.windows.net"
+        }
+    }
+  }
+}

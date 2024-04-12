@@ -3,6 +3,7 @@
 
 using System.Dynamic;
 using Apollo.Common.Entities;
+using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
@@ -67,18 +68,11 @@ namespace Apollo.Api
             {
                 _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainingsAsync)}");
 
+               // _smartLib.
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-                // Removed. This is not needed. If no results are found, an empty list will be returned.
-                //if (res == null || !res.Any())
-                //{
-                //    // No matching records found, throw a specific exception
-                //    throw new ApolloApiException(ErrorCodes.TrainingErrors.QueryTrainingsError, "No matching records found.");
-                //}
-
-                // Convert results to a list of typed Training objects
-                //var trainings = Convertor.ToEntityList<Training>(res, Convertor.ToTraining);
+                //TODO: Execute Semantic Search
 
                 _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
 
@@ -385,20 +379,39 @@ namespace Apollo.Api
                     throw new ApolloApiException(ErrorCodes.TrainingErrors.CreateOrUpdateTrainingErr, "No training data provided.");
                 }
 
+
+
                 foreach (var training in trainings)
                 {
                     if (string.IsNullOrEmpty(training.Id))
                     {
                         // Generate a new ID for new training
                         training.Id = CreateTrainingId();
+                        training.CreatedAt = DateTime.UtcNow;
+
+                        //
+                        //Currently it is not possible to ger information of logged in User performs creating
+                        // We keep it for future
+                        //TO:DO:
+                        //training.CreatedBy = "Apollo";
                     }
 
                     // Add the ID to the list regardless of whether it's new or existing
                     ids.Add(training.Id);
+                    training.ChangedAt = DateTime.UtcNow;
+
+                    //
+                    //Currently it is not possible to get information of logged in User who perfroms updating
+                    // We keep it for future
+                    // TO:DO:
+                    //training.ChangedBy = "Apollo";
 
                     // Convert the training object to ExpandoObject
-                    var expandoTraining = Convertor.Convert(training);
+                    //TODO: Cleaner HTML Data out
+                    CleanTraining(training);
 
+                    var expandoTraining = Convertor.Convert(training);
+                    
                     // Upsert the training
                     await _dal.UpsertAsync(GetCollectionName<Training>(), new List<ExpandoObject> { expandoTraining });
                 }
@@ -418,12 +431,63 @@ namespace Apollo.Api
             }
         }
 
+        private void CleanTraining(Training training)
+        {
+            training.ShortDescription = CleanString(training.ShortDescription);
+            training.Description = CleanString(training.Description);
+
+            if (!string.IsNullOrEmpty(training.PriceDescription))
+            {
+                training.PriceDescription = CleanString(training.PriceDescription);
+            }
+
+            if (!string.IsNullOrEmpty(training.SubTitle))
+            {
+                training.SubTitle = CleanString(training.SubTitle);
+            }
+
+            training.BenefitList
+
+
+            if (training.Content != null)
+            {
+                for (int i = 0; i < training.Content.Count; i++)
+                {
+                    training.Content[i] = CleanString(training.Content[i]);
+                }
+            }
+        }
+
+        private static string CleanString(string str)
+        {
+            str.Replace("\r\n", "<br>").Replace("\n", "<br>").Replace("\r", "<br>").Replace("\t", "&emsp;").Replace("  ", " ").Trim();
+            var doc = new HtmlDocument();
+            doc.LoadHtml(str);
+            var unwantedTags = new string[] { "script", "style", "href", "a", "img", "pre", "div", "h" };
+
+            foreach (var tag in unwantedTags)
+            {
+                var nodes = doc.DocumentNode.DescendantsAndSelf(tag);
+                foreach (var node in nodes.ToList())  // ToList() is necessary because the collection is modified in the loop
+                {
+                    if (node.ParentNode != null)
+                    {
+                        node.ParentNode.RemoveChild(node, keepGrandChildren: true);
+                    }
+                }
+            }
+            // Decode HTML entities
+            string decodedHtml = System.Net.WebUtility.HtmlDecode(doc.DocumentNode.OuterHtml);
+            return decodedHtml.Trim();
+        }
+
 
         /// <summary>
-        /// Delete Trainings with specified Ids.
+        /// Asynchronously deletes multiple Training instances.
         /// </summary>
-        /// <param name="deletingIds">The list of training identifiers.</param>
-        /// <returns>The numbe rof deleted trainings.</returns>
+        /// <param name="deletingIds">An array of identifiers of the Training instances to delete.</param>
+        /// <returns>A Task that represents the asynchronous operation. The task result contains the number of deleted Training instances.</returns>
+        /// <exception cref="ApolloApiException">Thrown when there is an error during the operation.</exception>
         public virtual async Task<long> DeleteTrainingsAsync(string[] deletingIds)
         {
             try
@@ -443,6 +507,8 @@ namespace Apollo.Api
                 throw new ApolloApiException(ErrorCodes.TrainingErrors.DeleteTrainingErr, "Error while deleting trainings", ex);
             }
         }
+
+        
 
         /// <summary>
         /// Delete All Trainings with a specified Prover Id.
