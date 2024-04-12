@@ -371,8 +371,8 @@ namespace Apollo.Api.UnitTests
     ""priceDescription"": ""<string>"",
     ""accessibilityAvailable"": true,
     ""tags"": [
-      ""<string>""      ""<string>"",
-
+      ""<string>"",
+      ""<string>""
     ],
     ""categories"": [
       ""<string>"",
@@ -657,13 +657,13 @@ namespace Apollo.Api.UnitTests
         {
             var dal = Helpers.GetDal();
 
-            //cleaning complex training
-            List<Training> trainings = JsonConvert.DeserializeObject<List<Training>>(_complexTrainingJson)!;
-            var idsToDelete = trainings.Select(training => training.Id).ToArray();
-            await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(),idsToDelete!, false);
+        //cleaning complex training
+        List<Training> trainings = JsonConvert.DeserializeObject<List<Training>>(_complexTrainingJson)!;
+        var idsToDelete = trainings.Select(training => training.Id).ToArray();
+        await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(), idsToDelete!, false);
 
-            //cleaning test training
-            await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => t.Id).ToArray()!, false);
+        //cleaning test training
+        await dal.DeleteManyAsync(Helpers.GetCollectionName<Training>(), _testTrainings.Select(t => t.Id).ToArray()!, false);
         }
 
         /// <summary>
@@ -952,7 +952,7 @@ namespace Apollo.Api.UnitTests
         [TestCategory("Prod")]
         public async Task InsertComplexTrainingTest()
         {
-            await CleanupTest();
+            //await CleanupTest();
             // Arrange
             var api = Helpers.GetApolloApi();
 

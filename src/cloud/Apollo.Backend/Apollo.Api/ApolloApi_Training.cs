@@ -446,7 +446,15 @@ namespace Apollo.Api
                 training.SubTitle = CleanString(training.SubTitle);
             }
 
-            training.BenefitList
+            //training.BenefitList
+
+            //if (training.BenefitList != null)
+            //{
+            //    for (int j = 0; j < training.BenefitList.Count; j++)
+            //    {
+            //        training.BenefitList[j] = CleanString(training.BenefitList[j]);
+            //    }
+            //}
 
 
             if (training.Content != null)
