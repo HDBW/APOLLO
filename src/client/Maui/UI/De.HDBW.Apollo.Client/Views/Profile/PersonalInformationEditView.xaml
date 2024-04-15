@@ -16,9 +16,9 @@
         <BackButtonBehavior Command="{Binding CancelCommand}" />
     </Shell.BackButtonBehavior>
     <VerticalStackLayout Style="{StaticResource FormContent}">
-        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" Style="{StaticResource Noto14SemiBold}"/>
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_UserName}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
         <Border Style="{StaticResource InputBorderStyle}">
-            <Entry Text="{x:Binding Name, Mode=TwoWay}">
+            <Entry Text="{x:Binding Name, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.PersonalInformationEditView_UserName}" SemanticProperties.Hint="{x:Binding [Name]}">
                 <Entry.Behaviors>
                     <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
                 </Entry.Behaviors>
@@ -26,16 +26,16 @@
         </Border>
         <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
 
-        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+        <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
         <Border Style="{StaticResource InputBorderStyle}">
             <Grid ColumnDefinitions="*, auto, auto">
-                <cdp:NullableDatePicker HorizontalOptions="Fill"
+                <cdp:NullableDatePicker HorizontalOptions="Fill" SemanticProperties.Description="{x:Static strings:Resources.PersonalInformationEditView_Birthdate}" 
                                         VerticalOptions="Center"
                                         IsClearButtonVisible="False"
                                         x:Name="PART_BirthDate"
                                         NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                <ImageButton Source="delete.png" Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" VerticalOptions="Center"/>
-                <ImageButton Source="calendar.png" Grid.Column="2" VerticalOptions="Center">
+                <ImageButton Source="delete.png" Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" VerticalOptions="Center" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
+                <ImageButton Source="calendar.png" Grid.Column="2" VerticalOptions="Center" AutomationProperties.ExcludedWithChildren="True">
                     <ImageButton.Behaviors>
                         <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_BirthDate}" />
                     </ImageButton.Behaviors>
@@ -46,8 +46,8 @@
             <HorizontalStackLayout.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleDisabilitiesCommand}" />
             </HorizontalStackLayout.GestureRecognizers>
-            <CheckBox InputTransparent="True" IsChecked="{x:Binding Disabilities, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" />
-            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="8,0,0,0"/>
+            <CheckBox InputTransparent="True" IsChecked="{x:Binding Disabilities, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" SemanticProperties.Description="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" />
+            <Label Text="{x:Static strings:Resources.PersonalInformationEditView_Handicaps}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="8,0,0,0" AutomationProperties.ExcludedWithChildren="True"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

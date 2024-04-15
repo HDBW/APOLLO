@@ -38,7 +38,7 @@
             <SearchBar Text="{x:Binding SearchText, Mode=TwoWay}"
                    SearchCommand="{x:Binding SearchCommand}"
                    SearchCommandParameter="{x:Binding Text, Source={x:Reference PART_SearchBar}}"
-                   x:Name="PART_SearchBar"/>
+                   x:Name="PART_SearchBar" SemanticProperties.Description="{x:Static strings:Resources.SearchView_Title}"/>
         </Border>
         <CollectionView SelectionMode="Single"
                         Grid.Row="1"

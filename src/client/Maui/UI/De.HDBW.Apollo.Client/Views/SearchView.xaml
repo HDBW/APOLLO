@@ -17,7 +17,10 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="SearchInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">
             <ContentView>
-                <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
+                </ContentView.GestureRecognizers>
+                <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4" SemanticProperties.Hint="{OnPlatform Android={x:Static strings:Resources.Global_Alttext_KursDetails}}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
@@ -36,11 +39,12 @@
                         </Border>
                         <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8"
                              Command="{x:Binding ToggleIsFavoriteCommand}"
-                             IsVisible="{x:Binding CanBeMadeFavorite}"
+                             IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
                              Source="{x:Static models:KnonwIcons.MakeFavorite}" VerticalOptions="Start">
                             <ImageButton.Triggers>
                                 <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
-                                    <Setter Property="Source"  Value="{x:Static models:KnonwIcons.IsFavorite}" />
+                                    <Setter Property="Source" Value="{x:Static models:KnonwIcons.IsFavorite}" />
+                                    <Setter Property="SemanticProperties.Description"  Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
                                 </DataTrigger>
                             </ImageButton.Triggers>
                         </ImageButton>
@@ -82,7 +86,7 @@
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon}" />
+        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon}"/>
     </ContentPage.ToolbarItems>
     <Grid x:Name="PART_Root">
         <CollectionView x:Name="PART_Collection"
@@ -96,7 +100,7 @@
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="Fill">
                     <Grid RowDefinitions="auto, *" Padding="24">
-                        <Label Text="{x:Static strings:Resources.SearchView_Interest}" HorizontalTextAlignment="Center" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}"/>
+                        <Label Text="{x:Static strings:Resources.SearchView_Interest}" HorizontalTextAlignment="Center" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" SemanticProperties.HeadingLevel="Level2"/>
                         <Image Grid.Row="1" Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
                     </Grid>
                 </ContentView>

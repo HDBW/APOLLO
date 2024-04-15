@@ -38,7 +38,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
         private string? _selectionResult;
 
         private CultureInfo? _culture;
-        private List<string> _existingLanguages;
+
+        private List<string>? _existingLanguages;
 
         public LanguageViewModel(
             IDispatcherService dispatcherService,
@@ -198,7 +199,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors
                     _savedState = data;
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.SavedState, data);
-                    var filteredLanguages = string.Join(",", _existingLanguages);
+                    var filteredLanguages = string.Join(",", _existingLanguages ?? new List<string>());
                     parameters.AddValue(NavigationParameter.Data, filteredLanguages);
                     await NavigationService.NavigateAsync(Routes.LanguageSearchView, token, parameters);
                 }

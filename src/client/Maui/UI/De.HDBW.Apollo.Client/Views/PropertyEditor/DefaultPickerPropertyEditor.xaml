@@ -5,20 +5,20 @@
              xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
              x:DataType="viewModels:PickerPropertyEditor">
     <VerticalStackLayout Margin="0,0,0,16">
-        <Label Text="{x:Binding Label}"
+        <Label Text="{x:Binding Label}" AutomationProperties.ExcludedWithChildren="True"
                VerticalOptions="Center"
                HorizontalOptions="Start"
                Style="{StaticResource Noto14SemiBold}"/>
         <Border Style="{StaticResource InputBorderStyle}">
             <Grid ColumnDefinitions="*, auto" >
                 <Picker
-                    x:Name="PART_PickerPropertyEditor"
+                    x:Name="PART_PickerPropertyEditor" SemanticProperties.Description="{x:Binding Label}"
                     ItemsSource="{x:Binding Values}"
                     SelectedItem="{x:Binding Value, Mode=TwoWay}"
                     ItemDisplayBinding="{x:Binding DisplayValue}">
                 </Picker>
 
-                <ImageButton Grid.Column="1" Source="shortlist.png">
+                <ImageButton Grid.Column="1" Source="shortlist.png" AutomationProperties.ExcludedWithChildren="True">
                     <ImageButton.Behaviors>
                         <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_PickerPropertyEditor}" />
                     </ImageButton.Behaviors>

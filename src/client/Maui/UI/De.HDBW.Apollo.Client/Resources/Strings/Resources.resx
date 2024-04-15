@@ -1501,4 +1501,25 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="MultipleLocations" xml:space="preserve">
     <value>mehrere Standorte</value>
   </data>
+  <data name="Global_Alttext_IsFavorite" xml:space="preserve">
+    <value>Aus Favoriten entfernen</value>
+  </data>
+  <data name="Global_Alttext_LinkAGB" xml:space="preserve">
+    <value>Link öffnet Nutzungsbedingungen in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_LinkDSGVO" xml:space="preserve">
+    <value>Link öffnet Datenschutzerklärung in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_LinkImprint" xml:space="preserve">
+    <value>Link öffnet Impressum in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_MakeFavorite" xml:space="preserve">
+    <value>In Favoriten aufnehmen</value>
+  </data>
+  <data name="Global_Alttext_OpenKursDetails" xml:space="preserve">
+    <value>Taste öffnet Details des Kurses</value>
+  </data>
+  <data name="Global_Alttext_KursDetails" xml:space="preserve">
+    <value>Link zu den Kursdetails</value>
+  </data>
 </root>

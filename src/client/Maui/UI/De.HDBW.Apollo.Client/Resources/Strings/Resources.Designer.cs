@@ -1359,6 +1359,69 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aus Favoriten entfernen.
+        /// </summary>
+        public static string Global_Alttext_IsFavorite {
+            get {
+                return ResourceManager.GetString("Global_Alttext_IsFavorite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link zu den Kursdetails.
+        /// </summary>
+        public static string Global_Alttext_KursDetails {
+            get {
+                return ResourceManager.GetString("Global_Alttext_KursDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link öffnet Nutzungsbedingungen in einem neuen Fenster.
+        /// </summary>
+        public static string Global_Alttext_LinkAGB {
+            get {
+                return ResourceManager.GetString("Global_Alttext_LinkAGB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link öffnet Datenschutzerklärung in einem neuen Fenster.
+        /// </summary>
+        public static string Global_Alttext_LinkDSGVO {
+            get {
+                return ResourceManager.GetString("Global_Alttext_LinkDSGVO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link öffnet Impressum in einem neuen Fenster.
+        /// </summary>
+        public static string Global_Alttext_LinkImprint {
+            get {
+                return ResourceManager.GetString("Global_Alttext_LinkImprint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Favoriten aufnehmen.
+        /// </summary>
+        public static string Global_Alttext_MakeFavorite {
+            get {
+                return ResourceManager.GetString("Global_Alttext_MakeFavorite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taste öffnet Details des Kurses.
+        /// </summary>
+        public static string Global_Alttext_OpenKursDetails {
+            get {
+                return ResourceManager.GetString("Global_Alttext_OpenKursDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zurück.
         /// </summary>
         public static string Global_Back {

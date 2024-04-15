@@ -33,7 +33,6 @@ namespace De.HDBW.Apollo.Client.Selector
                 default:
                     return DefaultTemplate;
             }
-
         }
     }
 }

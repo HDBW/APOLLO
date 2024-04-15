@@ -20,9 +20,9 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContent}">
-            <Label Text="{x:Static strings:Resources.Global_Designation}" Style="{StaticResource Noto14SemiBold}"/>
+            <Label Text="{x:Static strings:Resources.Global_Designation}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Name" Text="{x:Binding Name, Mode=TwoWay}" >
+                <Entry x:Name="PART_Name" Text="{x:Binding Name, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Designation}" SemanticProperties.Hint="{x:Binding [Name]}">
                     <Entry.Behaviors>
                         <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="TextChanged" CommandParameter="Name" />
                     </Entry.Behaviors>
@@ -30,16 +30,16 @@
             </Border>
             <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}"/>
 
-            <Label Text="{x:Static strings:Resources.Global_IssueDate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_IssueDate}" Style="{StaticResource Noto14SemiBold}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto,  auto">
-                    <cdp:NullableDatePicker HorizontalOptions="Fill"
+                    <cdp:NullableDatePicker HorizontalOptions="Fill" SemanticProperties.Description="{x:Static strings:Resources.Global_IssueDate}"
                                             IsClearButtonVisible="False"
                                             VerticalOptions="Center"
                                             x:Name="PART_Start"
                                             NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Source="delete.png" Command="{x:Binding ClearStartCommand}" IsVisible="{x:Binding HasStart}" Grid.Column="1" Margin="8,0" />
-                    <ImageButton Source="calendar.png" Grid.Column="2">
+                    <ImageButton Source="delete.png" Command="{x:Binding ClearStartCommand}" IsVisible="{x:Binding HasStart}" Grid.Column="1" Margin="8,0" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
+                    <ImageButton Source="calendar.png" Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
                         </ImageButton.Behaviors>
@@ -47,16 +47,16 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_ExpireDate}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_ExpireDate}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto, auto">
-                    <cdp:NullableDatePicker HorizontalOptions="Fill"
+                    <cdp:NullableDatePicker HorizontalOptions="Fill" SemanticProperties.Description="{x:Static strings:Resources.Global_ExpireDate}"
                                             IsClearButtonVisible="False"
                                             VerticalOptions="Center"
                                             x:Name="PART_End"
                                             NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" />
-                    <ImageButton Source="calendar.png" Grid.Column="2">
+                    <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
+                    <ImageButton Source="calendar.png" Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                         </ImageButton.Behaviors>

@@ -44,7 +44,7 @@
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
                 </Grid>
 
-                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate, Mode=OneTime}" Margin="24,0">
+                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate, Mode=OneTime}" Margin="24,0" >
                     <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Watch}" Margin="0,0,8,0" VerticalOptions="Center"/>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding IndividualStartDate, Mode=OneTime}" TextType="Html" />
                 </Grid>
@@ -82,9 +82,10 @@
         </DataTemplate>
         
         <DataTemplate x:Key="SeperatorItemTemplate" x:DataType="trainingsModels:SeperatorItem">
-            <ContentView HeightRequest="16" />
+            <ContentView HeightRequest="16"/>
         </DataTemplate>
 
+        <!--ToDo: Tom Hint und Description funktionieren hier nicht obwohl gleiche Verwendung wie in ProfileView-->
         <DataTemplate x:Key="ExpandableListItemTemplate" x:DataType="trainingsModels:ExpandableListItem">
             <ContentView>
                 <Border Style="{StaticResource FrameBorder}" Margin="24,0">
@@ -97,7 +98,7 @@
                         <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand, Mode=OneTime}" />
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*, auto">
-                        <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                        <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0" />
                         <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
@@ -165,7 +166,7 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="system:String">
                             <ContentView>
-                                <Label Text="{x:Binding Mode=OneTime}" Style="{StaticResource Noto14SemiBold}" Padding="8,4" Background="{StaticResource Neutral500}" Margin="0,0,4,4"/>
+                                <Label Text="{x:Binding Mode=OneTime}" Style="{StaticResource Noto14SemiBold}" Padding="8,4" Background="{StaticResource Neutral500}" VerticalOptions="Center" Margin="0,0,4,4"/>
                             </ContentView>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>

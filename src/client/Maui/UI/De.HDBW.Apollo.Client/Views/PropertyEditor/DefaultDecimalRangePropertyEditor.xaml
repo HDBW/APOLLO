@@ -7,13 +7,13 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:DecimalRangePropertyEditor">
     <Grid ColumnDefinitions="*, Auto" RowDefinitions="auto, auto, auto, auto, auto" Margin="0,0,0,16">
-        <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" Source="delete.png" HorizontalOptions="End"/>
-        <Label Text="{x:Static strings:Resources.Global_RageStart}" Style="{StaticResource Noto14SemiBold}" Grid.Row="1" />
-        <Label Grid.Row="1" Grid.Column="1" Text="{x:Binding StartValueString, Mode=OneWay}" Style="{StaticResource Noto14}" HorizontalTextAlignment="End" HorizontalOptions="End"/>
-        <Slider x:Name="PART_Min" Grid.Row="2" Margin="0,12" Grid.ColumnSpan="2" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}" Value="{x:Binding StartValue, Mode=TwoWay}" MinimumTrackColor="{StaticResource Primary}" MaximumTrackColor="{OnPlatform Default={StaticResource Primary100}, Android={StaticResource Primary}}" ThumbColor="{StaticResource Primary}"/>
-        <Label Grid.Row="3" Text="{x:Static strings:Resources.Global_RageEnd}" Style="{StaticResource Noto14SemiBold}"/>
-        <Label Grid.Row="3" Grid.Column="1" Text="{x:Binding EndValueString, Mode=OneWay}" Style="{StaticResource Noto14}" HorizontalTextAlignment="End" HorizontalOptions="End"/>
-        <Slider x:Name="PART_Max" Grid.Row="4" Margin="0,12" Grid.ColumnSpan="2" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}" Value="{x:Binding EndValue, Mode=TwoWay}" MinimumTrackColor="{StaticResource Primary}" MaximumTrackColor="{OnPlatform Default={StaticResource Primary100}, Android={StaticResource Primary}}" ThumbColor="{StaticResource Primary}"/>
+        <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center" SemanticProperties.HeadingLevel="Level3"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" Source="delete.png" HorizontalOptions="End" SemanticProperties.Hint="{x:Binding Label}" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
+        <Label Text="{x:Static strings:Resources.Global_RageStart}" AutomationProperties.ExcludedWithChildren="True" Style="{StaticResource Noto14SemiBold}" Grid.Row="1" />
+        <Label AutomationProperties.ExcludedWithChildren="True" Grid.Row="1" Grid.Column="1" Text="{x:Binding StartValueString, Mode=OneWay}" Style="{StaticResource Noto14}" HorizontalTextAlignment="End" HorizontalOptions="End"/>
+        <Slider x:Name="PART_Min" SemanticProperties.Description="{x:Static strings:Resources.Global_RageStart}" SemanticProperties.Hint="{x:Binding StartValueString, Mode=OneWay}" Grid.Row="2" Margin="0,12" Grid.ColumnSpan="2" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}" Value="{x:Binding StartValue, Mode=TwoWay}" MinimumTrackColor="{StaticResource Primary}" MaximumTrackColor="{OnPlatform Default={StaticResource Primary100}, Android={StaticResource Primary}}" ThumbColor="{StaticResource Primary}"/>
+        <Label AutomationProperties.ExcludedWithChildren="True" Grid.Row="3" Text="{x:Static strings:Resources.Global_RageEnd}" Style="{StaticResource Noto14SemiBold}"/>
+        <Label AutomationProperties.ExcludedWithChildren="True" Grid.Row="3" Grid.Column="1" Text="{x:Binding EndValueString, Mode=OneWay}" Style="{StaticResource Noto14}" HorizontalTextAlignment="End" HorizontalOptions="End"/>
+        <Slider x:Name="PART_Max" SemanticProperties.Description="{x:Static strings:Resources.Global_RageEnd}" SemanticProperties.Hint="{x:Binding EndValueString, Mode=OneWay}" Grid.Row="4" Margin="0,12" Grid.ColumnSpan="2" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}" Value="{x:Binding EndValue, Mode=TwoWay}" MinimumTrackColor="{StaticResource Primary}" MaximumTrackColor="{OnPlatform Default={StaticResource Primary100}, Android={StaticResource Primary}}" ThumbColor="{StaticResource Primary}"/>
     </Grid>
 </ContentView>

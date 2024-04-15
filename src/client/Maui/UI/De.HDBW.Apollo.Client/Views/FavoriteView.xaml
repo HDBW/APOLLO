@@ -16,12 +16,15 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="SearchInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">
             <ContentView>
-                <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"/>
+                </ContentView.GestureRecognizers>
+                <Border Style="{StaticResource ShadowBorderStyle}" Margin="24,4" SemanticProperties.Hint="{OnPlatform Android={x:Static strings:Resources.Global_Alttext_KursDetails}}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"  />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}"/>
                     </Border.GestureRecognizers>
                     <Grid RowDefinitions="44, *, auto, auto" Padding="0" ColumnDefinitions="*, 40">
                         <Border InputTransparent="True" IsVisible="{x:Binding HasDecorator, Mode=OneTime}" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="16,8">
@@ -55,7 +58,7 @@
                 <ContentView VerticalOptions="Fill">
                     <Grid RowDefinitions="auto, *" Padding="24,24,24,24">
                         <VerticalStackLayout>
-                            <Label Text="{x:Static strings:Resources.FavoriteView_Subline_EmptyView}" HorizontalTextAlignment="Center" Style="{StaticResource NotoSerif24Bold}" Margin="0,0,0,16" TextColor="{StaticResource Primary}"/>
+                            <Label Text="{x:Static strings:Resources.FavoriteView_Subline_EmptyView}" HorizontalTextAlignment="Center" Style="{StaticResource NotoSerif24Bold}" Margin="0,0,0,16" TextColor="{StaticResource Primary}" SemanticProperties.HeadingLevel="Level2"/>
                             <Label Text="{x:Static strings:Resources.FavoriteView_Description_EmptyView}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}"/>
                         </VerticalStackLayout>
                         <Image Grid.Row="1" Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
