@@ -112,6 +112,8 @@ namespace Daenet.MongoDal
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="collectionName"/> or <paramref name="documents"/> is null.</exception>
         public async Task<UpsertResult> UpsertAsync(string collectionName, ICollection<ExpandoObject> documents, bool isBakendServiceCall = false)
         {
+            //TODO: Create route for training method
+            
             if (documents == null)
                 throw new ArgumentNullException($"Argument {nameof(documents)} cannot be nulL!");
 
