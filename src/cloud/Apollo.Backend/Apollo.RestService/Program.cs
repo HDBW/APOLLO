@@ -19,6 +19,7 @@ using Daenet.EmbeddingSearchApi.Api.Services;
 using Daenet.EmbeddingSearchApi.Api.Convertors;
 using Daenet.EmbeddingSearchApi.Entities;
 using Daenet.EmbeddingSearchApi.Services;
+using Apollo.SmartLib;
 
 namespace Apollo.Service
 {
@@ -27,6 +28,8 @@ namespace Apollo.Service
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            IConfigurationRoot config = RegisterConfigurationBuilder(args);
+
 
             // Add services to the container.
 
@@ -117,12 +120,13 @@ namespace Apollo.Service
                 //options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.KebabCaseUpper;
                 //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
             });
-            
 
             RegisterDaenetMongoDal(builder);
+            RegisterSearchApi(builder,config);
             RegisterApi(builder);
             RegisterApiKey(builder);
-
+            builder.Services.AddScoped<SemanticSearchApi>();
+            //builder.Services.AddScoped<SemanticSearchApi>(provider => { var searchApi = provider.GetRequiredService<ISearchApi>(); return new SemanticSearchApi(searchApi,""); });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -155,6 +159,18 @@ namespace Apollo.Service
         //    {
         //        options.BlobName = "log.txt";
         //    });
+        }
+
+
+        private static IConfigurationRoot RegisterConfigurationBuilder(string[] args)
+        {
+            var builder = new ConfigurationBuilder()
+             .SetBasePath(Directory.GetCurrentDirectory())
+             .AddEnvironmentVariables()
+             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+             .AddCommandLine(args);
+
+            return builder.Build();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

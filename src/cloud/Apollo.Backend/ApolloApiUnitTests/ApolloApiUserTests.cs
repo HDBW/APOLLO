@@ -29,7 +29,7 @@ namespace Apollo.Api.UnitTests
             // Create a mock logger
             var logger = new Mock<ILogger<ApolloApi>>();
 
-            var api = new ApolloApi(Helpers.GetDal(), logger.Object, Helpers.GetAPIConfig());
+            var api = new ApolloApi(Helpers.GetDal(), logger.Object, Helpers.GetAPIConfig(),null);
 
             var user = new User
             {

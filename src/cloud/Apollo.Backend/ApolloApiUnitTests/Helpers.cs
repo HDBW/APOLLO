@@ -29,7 +29,7 @@ namespace Apollo.Api.UnitTests
 
         internal static ApolloApi GetApolloApi()
         {
-            ApolloApi api = new ApolloApi(GetDal(), GetLogger(), GetAPIConfig());
+            ApolloApi api = new ApolloApi(GetDal(), GetLogger(), GetAPIConfig(),null);
             return api;
         }
 

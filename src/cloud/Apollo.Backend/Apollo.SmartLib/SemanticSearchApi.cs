@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Apollo.Common.Entities;
+using Daenet.EmbeddingSearchApi.Interfaces;
 using Daenet.EmbeddingSearchApi.Services;
 
 namespace Apollo.SmartLib
@@ -21,11 +22,11 @@ namespace Apollo.SmartLib
         //BenefitList
         //Prerequisites
 
-        SearchApi _sApi;
+        ISearchApi _sApi;
 
         string _dataSource;
 
-        public SemanticSearchApi(SearchApi semanticSearchApi, string dataSource)
+        public SemanticSearchApi(ISearchApi semanticSearchApi, string dataSource)
         {
             //todo..
         }
