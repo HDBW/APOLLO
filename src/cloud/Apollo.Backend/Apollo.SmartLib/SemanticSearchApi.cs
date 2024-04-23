@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Apollo.Common.Entities;
+using Daenet.EmbeddingSearchApi.Services;
 
 namespace Apollo.SmartLib
 {
@@ -12,9 +13,38 @@ namespace Apollo.SmartLib
     /// </summary>
     public class SemanticSearchApi
     {
-        public async Task IndexTraining(Training training)
-        {
+        //TrainingName
+        //SubTitle
+        //Description
+        //ShortDescription
+        //Content
+        //BenefitList
+        //Prerequisites
 
+        SearchApi _sApi;
+
+        string _dataSource;
+
+        public SemanticSearchApi(SearchApi semanticSearchApi, string dataSource)
+        {
+            //todo..
         }
+
+        public async Task<SearchResult> SearchTrainings(Query query)
+        {
+            throw new NotImplementedException();
+            //_sApi.FindMatchingContentAsync<Training>(query.Filter)
+        }
+    }
+
+    public class SearchResult
+    {
+        public string TrainingId { get; set; }
+
+        public string Property { get; set; }
+
+        public double Similarity { get; set; }
+
+        public string   Text { get; set; }
     }
 }
