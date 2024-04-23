@@ -68,7 +68,7 @@ namespace Apollo.Api
             {
                 _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainingsAsync)}");
 
-                //var semRes = _smartLib.SearchTrainings(query);
+                // var semRes = _smartLib.SearchTrainings(query);
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
@@ -446,7 +446,7 @@ namespace Apollo.Api
                 training.SubTitle = CleanString(training.SubTitle);
             }
 
-            training.BenefitList
+            //training.BenefitList
 
 
             if (training.Content != null)
