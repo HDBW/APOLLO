@@ -13,6 +13,12 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Apollo.RestService;
 using TrainingControllerIntegrationTests;
+using Daenet.EmbeddingSearchApi.Api.Entities;
+using Daenet.EmbeddingSearchApi.Interfaces;
+using Daenet.EmbeddingSearchApi.Api.Services;
+using Daenet.EmbeddingSearchApi.Api.Convertors;
+using Daenet.EmbeddingSearchApi.Entities;
+using Daenet.EmbeddingSearchApi.Services;
 
 namespace Apollo.Service
 {
@@ -207,5 +213,70 @@ namespace Apollo.Service
 
             builder.Services.AddScoped<MongoDataAccessLayer>();
         }
+
+        #region SearchAPI DI Registration
+
+
+        private static void RegisterSearchApi(WebApplicationBuilder builder, IConfigurationRoot configuration)
+        {
+            RegisterEmbeddingIndexDal(builder, configuration);
+
+            builder.Services.AddScoped<IEmbeddingGenerator, AzureOpenAIEmbeddingGenerator>();
+
+            builder.Services.AddSingleton<ISimilarityCalculator, CosineDistanceCalculator>();
+
+            //builder.Services.AddScoped<ISearchService, SearchService>();
+            RegisterTextConvertors(builder);
+
+            builder.Services.AddSingleton<IDocumentSplitter, DocumentSplitter>();
+
+            RegisterCrawlerWorker(builder, configuration);
+
+            builder.Services.AddScoped<ISearchApi, SearchApi>();
+        }
+
+
+        private static void RegisterEmbeddingIndexDal(WebApplicationBuilder builder, IConfigurationRoot configuration)
+        {
+            var qDrantSec = configuration.GetSection("QDrant");
+            QDrantConfig qCfg = new();
+            qDrantSec.Bind(qCfg);
+            builder.Services.AddSingleton<QDrantConfig>(qCfg);
+            builder.Services.AddScoped<IEmbeddingIndexDal, QDrantClient>();
+        }
+
+
+        /// <summary>
+        /// Here we add all supported text convertors.
+        /// </summary>
+        /// <param name="builder"></param>
+        private static void RegisterTextConvertors(WebApplicationBuilder builder)
+        {
+            TextConvertors cvs = new()
+            {
+                Convertors = new List<ITextConvertor>()
+                {
+                        new PdfToTextConvertor() , new WordConvertor()
+                }
+            };
+
+            builder.Services.AddSingleton<TextConvertors>(cvs);
+        }
+
+
+        /// <summary>
+        /// Registers the crawling service, whcih will orchestrate
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="cfg"></param>
+        private static void RegisterCrawlerWorker(WebApplicationBuilder builder, IConfigurationRoot cfg)
+        {
+            var workerConfig = cfg.GetSection("AciWorkerConfig").Get<AciWorkerConfig>();
+
+            builder.Services.AddSingleton<AciWorkerConfig>(sp => workerConfig!);
+
+            builder.Services.AddSingleton<ICrawlerWorker, AciWorker>();
+        }
+        #endregion
     }
 }

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Daenet.ApiKeyAuthenticator" Version="1.1.0" />
+    <PackageReference Include="Daenet.EmbeddingSearchApi" Version="0.1.7-alpha" />
     <PackageReference Include="Google.Protobuf" Version="3.24.4" />
     <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
