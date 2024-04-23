@@ -12,7 +12,7 @@ namespace Apollo.SmartLib
     /// <summary>
     /// API that implements all semantic related functionalities.
     /// </summary>
-    public class SemanticSearchApi
+    public class ApolloSemanticSearchApi
     {
         //TrainingName
         //SubTitle
@@ -26,9 +26,9 @@ namespace Apollo.SmartLib
 
         string _dataSource;
 
-        public SemanticSearchApi(ISearchApi semanticSearchApi, string dataSource)
+        public ApolloSemanticSearchApi(ISearchApi semanticSearchApi)
         {
-            //todo..
+           _sApi = semanticSearchApi;
         }
 
         public async Task<SearchResult> SearchTrainings(Query query)

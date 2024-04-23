@@ -125,7 +125,7 @@ namespace Apollo.Service
             RegisterSearchApi(builder,config);
             RegisterApi(builder);
             RegisterApiKey(builder);
-            builder.Services.AddScoped<SemanticSearchApi>();
+            builder.Services.AddScoped<ApolloSemanticSearchApi>();
             //builder.Services.AddScoped<SemanticSearchApi>(provider => { var searchApi = provider.GetRequiredService<ISearchApi>(); return new SemanticSearchApi(searchApi,""); });
             var app = builder.Build();
 
@@ -235,6 +235,8 @@ namespace Apollo.Service
 
         private static void RegisterSearchApi(WebApplicationBuilder builder, IConfigurationRoot configuration)
         {
+            RegisterAzureOpenAI(builder, configuration);
+
             RegisterEmbeddingIndexDal(builder, configuration);
 
             builder.Services.AddScoped<IEmbeddingGenerator, AzureOpenAIEmbeddingGenerator>();
@@ -251,6 +253,13 @@ namespace Apollo.Service
             builder.Services.AddScoped<ISearchApi, SearchApi>();
         }
 
+        private static void RegisterAzureOpenAI(WebApplicationBuilder builder, IConfigurationRoot configuration)
+        {
+            var sec = configuration.GetSection("OpenAi");
+            AzureOpenAICfg openAICfg = new AzureOpenAICfg();
+            sec.Bind(openAICfg);
+            builder.Services.AddSingleton(openAICfg);
+        }
 
         private static void RegisterEmbeddingIndexDal(WebApplicationBuilder builder, IConfigurationRoot configuration)
         {

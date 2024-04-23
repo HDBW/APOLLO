@@ -32,7 +32,7 @@ namespace Apollo.Api
         private readonly ApolloApiConfig _config;
 
 
-        private readonly SemanticSearchApi _smartLib;
+        private readonly ApolloSemanticSearchApi _smartLib;
 
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Apollo.Api
         /// <param name="logger"></param>
         /// <param name="config"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config, SemanticSearchApi smartLib)
+        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config, ApolloSemanticSearchApi smartLib)
         {
             _dal = dal;
             _logger = logger;
