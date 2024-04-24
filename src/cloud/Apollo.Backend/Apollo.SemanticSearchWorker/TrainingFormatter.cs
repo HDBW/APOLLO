@@ -27,13 +27,13 @@ namespace Apollo.SemanticSearchWorker
 
             List<string> list = new List<string>();
 
-            list.Add($"{training?.Id}{_cDelimiter}/api/teaining/{training?.Id}{_cDelimiter}{training?.TrainingName}/Subtitle{_cDelimiter}{training?.SubTitle?.Replace(_cDelimiter, " ")}");
-            list.Add($"{training?.Id}{_cDelimiter}/api/teaining/{training?.Id}{_cDelimiter}{training?.TrainingName}/ShortDescription{_cDelimiter}{training?.ShortDescription?.Replace(_cDelimiter, " ")}");
-            list.Add($"{training?.Id}{_cDelimiter}/api/teaining/{training?.Id}{_cDelimiter}{training?.TrainingName}/Description{_cDelimiter}{training?.Description?.Replace(_cDelimiter, " ")}");
-            list.Add($"{training?.Id}{_cDelimiter}/api/teaining/{training?.Id}{_cDelimiter}{training?.TrainingName}/TrainingName{_cDelimiter}{training?.TrainingName?.Replace(_cDelimiter, " ")}");
-            list.Add($"{training?.Id}{_cDelimiter}/api/teaining/{training?.Id}{_cDelimiter}{training?.TrainingName}/Content{_cDelimiter}{String.Join(' ', training?.Content?.Select(s => s.Replace(_cDelimiter!, " ")) ?? Enumerable.Empty<string>())}");
-            list.Add($"{training?.Id}{_cDelimiter}/api/teaining/{training?.Id}{_cDelimiter}{training?.TrainingName}/BenefitList{_cDelimiter}{String.Join(' ', training?.BenefitList?.Select(s => s.Replace(_cDelimiter!, " ")) ?? Enumerable.Empty<string>())}");
-            list.Add($"{training?.Id}{_cDelimiter}/api/teaining/{training?.Id}{_cDelimiter}{training?.TrainingName}/Prerequisites{_cDelimiter}{String.Join(' ', training?.Prerequisites?.Select(s => s.Replace(_cDelimiter!, " ")) ?? Enumerable.Empty<string>())}");
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}/Subtitle{_cDelimiter}{training?.SubTitle?.Replace(_cDelimiter, " ")}");
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}/ShortDescription{_cDelimiter}{training?.ShortDescription?.Replace(_cDelimiter, " ")}");
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}/Description{_cDelimiter}{training?.Description?.Replace(_cDelimiter, " ")}");
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}/TrainingName{_cDelimiter}{training?.TrainingName?.Replace(_cDelimiter, " ")}");
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}/Content{_cDelimiter}{String.Join(' ', training?.Content?.Select(s => s.Replace(_cDelimiter!, " ")) ?? Enumerable.Empty<string>())}");
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}/BenefitList{_cDelimiter}{String.Join(' ', training?.BenefitList?.Select(s => s.Replace(_cDelimiter!, " ")) ?? Enumerable.Empty<string>())}");
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}/Prerequisites{_cDelimiter}{String.Join(' ', training?.Prerequisites?.Select(s => s.Replace(_cDelimiter!, " ")) ?? Enumerable.Empty<string>())}");
 
 
             return list;
