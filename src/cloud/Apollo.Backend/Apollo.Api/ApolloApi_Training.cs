@@ -74,22 +74,53 @@ namespace Apollo.Api
                 {
                     var semRes = await _smartLib.SearchTrainingsAsync(query);
 
-                    foreach (var item in semRes)
+                    if (semRes.Any())
                     {
-                        // TODO complete the implementation.
-                        // Return exact trainings by using Query operation by mathcing the training.Id.
-                        //var semTrainings = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+                        // Build a query to fetch all trainings that match the returned IDs
+                        var idFilterFields = semRes.Select(tr => new FieldExpression
+                        {
+                            FieldName = "Id",
+                            Operator = QueryOperator.Equals, 
+                            Argument = new List<object> { tr.TrainingId }
+                        }).ToList();
+
+                        var idQuery = new Apollo.Common.Entities.Query
+                        {
+                            Filter = new Filter
+                            {
+                                IsOrOperator = true,
+                                Fields = idFilterFields
+                            },
+                            Fields = query.Fields, 
+                            Top = query.Top,
+                            Skip = query.Skip,
+                            SortExpression = query.SortExpression
+                        };
+
+                        // Execute the constructed query
+                        var res = await _dal.ExecuteQuery<Training>(
+                            ApolloApi.GetCollectionName<Training>(),
+                            idQuery.Fields,
+                            Convertor.ToDaenetQuery(idQuery.Filter),
+                            idQuery.Top,
+                            idQuery.Skip,
+                            Convertor.ToDaenetSortExpression(idQuery.SortExpression)!);
+
+                        trainings.AddRange(res);
 
                     }
+                    return trainings;
                 }
-                // Execute the query 
-                var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+                else
+                {
+                    // Execute the query 
+                    var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-                //TODO: Execute Semantic Search
+                    _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
 
-                _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
-
-                return res;
+                    return res;
+                }
+              
             }
             catch (ApolloApiException)
             {

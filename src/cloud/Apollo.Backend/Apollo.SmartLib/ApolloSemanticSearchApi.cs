@@ -49,10 +49,12 @@ namespace Apollo.SmartLib
                 {
                     if (prop.FieldName != null && _supportedFields.Contains(prop.FieldName))
                     {
-                        //"TitleValue
-                        //SubTitleValue
-                        //..."
-                        sb.Append(String.Join(',', prop.Argument));
+
+                        // Check if StringBuilder is not empty to append a comma before adding new content
+                        if (sb.Length > 0)
+                            sb.Append(',');
+                        // Check if prop.Argument is not null before appending, otherwise append an empty string
+                        sb.Append(prop.Argument != null ? String.Join(',', prop.Argument) : "");
                     }
                     else
                     {
@@ -61,7 +63,11 @@ namespace Apollo.SmartLib
                     }
                 }
 
-                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, $"{nameof(Training)}s");
+                //
+                //Currently we are using existing context for test
+                //After Amit fix we will replace with Trainings context
+                //var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, $"{nameof(Training)}s");
+                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, "trainingData");
 
                 res = ToSemanticSearchResult(semRes);
 
@@ -80,11 +86,11 @@ namespace Apollo.SmartLib
             {
                 res.Add(new SemanticSearchResult()
                 {
-                    //Property = item.Property,
-                    //Similarity = item.Similarity,
-                    //Text = item.Text,
-                    //TrainingId = item.Id
-                });
+                    Property = item.Title,
+                    Similarity = item.Similarity,
+                    Text = item.SectionText,
+                    TrainingId = item.Url.Substring(item.Url.IndexOf($"{nameof(Training)}"))
+            });
             }
 
             return res;
