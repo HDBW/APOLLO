@@ -66,11 +66,21 @@ namespace Apollo.Api
         {
             try
             {
+                List<Training> trainings = new List<Training>();
+
                 _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainingsAsync)}");
 
                 if (_smartLib != null)
                 {
-                    var semRes = _smartLib.SearchTrainings(query);
+                    var semRes = await _smartLib.SearchTrainingsAsync(query);
+
+                    foreach (var item in semRes)
+                    {
+                        // TODO complete the implementation.
+                        // Return exact trainings by using Query operation by mathcing the training.Id.
+                        //var semTrainings = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+
+                    }
                 }
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
