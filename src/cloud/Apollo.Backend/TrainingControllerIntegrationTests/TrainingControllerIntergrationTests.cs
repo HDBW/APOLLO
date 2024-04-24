@@ -32,7 +32,7 @@ namespace Apollo.RestService.IntergrationTests
 {
     new Training()
     {
-        Id = "T07",  // Ensure this ID is acceptable for new entries or matches existing for updates.
+        Id = "T07",  
         ProviderId = "hdbw-F626FEDE-1A30-4DE0-B17B-9DCB04A654C2",
         ExternalTrainingId = "EXT01",
         TrainingType = "Online",
@@ -781,7 +781,6 @@ namespace Apollo.RestService.IntergrationTests
         /// Inserts a predefined list of training objects into the database for testing purposes.
         /// This method serializes the list of training objects to JSON, sends it to the training insert API endpoint,
         /// and verifies the success of the operation by checking the response status code and the content.
-        /// Before and after insertion, it ensures the clean-up of test data to maintain test environment integrity.
         /// </summary>
         public async Task InsertTestTrainings()
         {
@@ -918,7 +917,7 @@ namespace Apollo.RestService.IntergrationTests
 
             var query = new Query
             {
-                Fields = new List<string> { "TrainingName" },
+                Fields = new List<string> { "ShortDescription" },
                 Filter = new Filter
                 {
                     IsOrOperator = false,
@@ -926,9 +925,9 @@ namespace Apollo.RestService.IntergrationTests
                 {
                     new FieldExpression
                     {
-                        FieldName = "TrainingName",
+                        FieldName = "ShortDescription",
                         Operator = QueryOperator.Contains,
-                        Argument = new List<object> { "Training07" } // The name we are querying for
+                        Argument = new List<object> { "Short Description of T07" }
                     }
                 }
                 },
@@ -950,8 +949,7 @@ namespace Apollo.RestService.IntergrationTests
 
             //Perform assertions
             Assert.IsNotNull(trainingsResponse);
-            //TODO: FIX ERROR RUNNING QUERY ON THE FIRST TIME AND THE TRAINING NOT BEING FOUND
-            //Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.TrainingName == "Training07"));
+            Assert.IsTrue(trainingsResponse.Trainings.Any(t => t.ShortDescription == "Short Description of T07"));
 
             var trainingIds = trainingsResponse.Trainings.Select(t => t.Id).ToList();
 
