@@ -70,6 +70,9 @@ namespace Apollo.Api
 
                 _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainingsAsync)}");
 
+                // Execute the query 
+                var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+
                 if (_smartLib != null)
                 {
                     var semRes = await _smartLib.SearchTrainingsAsync(query);
@@ -77,10 +80,10 @@ namespace Apollo.Api
                     if (semRes.Any())
                     {
                         // Build a query to fetch all trainings that match the returned IDs
-                        var idFilterFields = semRes.Select(tr => new FieldExpression
+                        var fieldExpressions = semRes.Select(tr => new FieldExpression
                         {
                             FieldName = "Id",
-                            Operator = QueryOperator.Equals, 
+                            Operator = QueryOperator.Equals,
                             Argument = new List<object> { tr.TrainingId }
                         }).ToList();
 
@@ -89,16 +92,17 @@ namespace Apollo.Api
                             Filter = new Filter
                             {
                                 IsOrOperator = true,
-                                Fields = idFilterFields
+                                Fields = fieldExpressions
                             },
-                            Fields = query.Fields, 
+
+                            Fields = query.Fields,
                             Top = query.Top,
                             Skip = query.Skip,
                             SortExpression = query.SortExpression
                         };
 
                         // Execute the constructed query
-                        var res = await _dal.ExecuteQuery<Training>(
+                        var res2 = await _dal.ExecuteQuery<Training>(
                             ApolloApi.GetCollectionName<Training>(),
                             idQuery.Fields,
                             Convertor.ToDaenetQuery(idQuery.Filter),
@@ -106,21 +110,17 @@ namespace Apollo.Api
                             idQuery.Skip,
                             Convertor.ToDaenetSortExpression(idQuery.SortExpression)!);
 
-                        trainings.AddRange(res);
+                        trainings.AddRange(res2);
 
                     }
+
                     return trainings;
                 }
-                else
-                {
-                    // Execute the query 
-                    var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
 
-                    _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
+                _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
 
-                    return res;
-                }
-              
+                return res;
+
             }
             catch (ApolloApiException)
             {

@@ -67,7 +67,7 @@ namespace Apollo.SmartLib
                 //Currently we are using existing context for test
                 //After Amit fix we will replace with Trainings context
                 //var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, $"{nameof(Training)}s");
-                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, "trainingData");
+                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, "Trainings");
 
                 res = ToSemanticSearchResult(semRes);
 
