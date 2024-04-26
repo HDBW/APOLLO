@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Dynamic;
+using System.Linq;
 using Apollo.Common.Entities;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
@@ -72,13 +73,16 @@ namespace Apollo.Api
 
                 // Execute the query 
                 var res = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
-
+              
                 if (_smartLib != null)
                 {
                     var semRes = await _smartLib.SearchTrainingsAsync(query);
 
                     if (semRes.Any())
                     {
+                        // Dictionary to store semantic similarity and match ids for quick lookup 
+                        var semanticSimilarityById = semRes.ToDictionary(tr => tr.TrainingId, tr => tr.Similarity);
+
                         // Build a query to fetch all trainings that match the returned IDs
                         var fieldExpressions = semRes.Select(tr => new FieldExpression
                         {
@@ -86,7 +90,6 @@ namespace Apollo.Api
                             Operator = QueryOperator.Equals,
                             Argument = new List<object> { tr.TrainingId }
                         }).ToList();
-
                         var idQuery = new Apollo.Common.Entities.Query
                         {
                             Filter = new Filter
@@ -110,11 +113,33 @@ namespace Apollo.Api
                             idQuery.Skip,
                             Convertor.ToDaenetSortExpression(idQuery.SortExpression)!);
 
-                        trainings.AddRange(res2);
+                        //
+                        // Combine and deduplicate efficiently using DistinctBy (assuming Id is unique)
+                        // Cause The list of returned trainings MUST consist of the list of trainings returned by the normal query
+                        // and then additionally of the list returned by semantic query.
+                        // So, at the end response for Trainings = TrainingsByQuery + Trainings by Semantic Query
+
+                        trainings.AddRange(res);
+                        trainings = trainings.Concat(res2).DistinctBy(t => t.Id).ToList();
+
+                        // Update SemanticSearchSimilarity Score of each training based on matching IDs via semantic search
+                        foreach (var training in trainings)
+                        {
+                            if (semanticSimilarityById.ContainsKey(training.Id!))
+                            {
+                                training.SemanticSearchSimilarity = semanticSimilarityById[training.Id!];
+                            }
+                            else
+                            {
+                                // Handle cases where training from full-text search has no match in semantic search
+                                training.SemanticSearchSimilarity = null;
+                            }
+                        }
 
                     }
 
-                    return trainings;
+                    // Return trainings sorted by descending SemanticSearchSimilarity score
+                    return trainings.OrderByDescending(t => t.SemanticSearchSimilarity).ToList();
                 }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
@@ -136,7 +161,7 @@ namespace Apollo.Api
             }
         }
 
-
+      
 
 
         /// <summary>

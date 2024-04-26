@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Apollo.Common.Entities;
 using Daenet.EmbeddingSearchApi.Interfaces;
 using Daenet.EmbeddingSearchApi.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Apollo.SmartLib
@@ -28,14 +29,36 @@ namespace Apollo.SmartLib
         private readonly ILogger<ApolloSemanticSearchApi> _logger;
 
         private int _topN = 5;
-     
-        public ApolloSemanticSearchApi(ISearchApi semanticSearchApi, ILogger<ApolloSemanticSearchApi> logger)
+
+        private readonly IConfiguration _configuration;
+        private readonly string _context;
+
+
+        public ApolloSemanticSearchApi(ISearchApi semanticSearchApi,
+                                        ILogger<ApolloSemanticSearchApi> logger)
         {
             _sApi = semanticSearchApi;
             _logger = logger;
+
+            // Build configuration
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            _configuration = configurationBuilder.Build();
+
+            _context = _configuration["ApolloSemanticSearchApiConfig:context"]
+                       ?? throw new ApplicationException("Context not found in appsettings.json.");
+
         }
 
+
         private static string[] _supportedFields = new string[] { $"{nameof(Training.TrainingName)}", $"{nameof(Training.SubTitle)}", $"{nameof(Training.Description)}", $"{nameof(Training.ShortDescription)}", $"{nameof(Training.Content)}", $"{nameof(Training.BenefitList)}", $"{nameof(Training.Prerequisites)}" };
+
+
+
+
+
 
         public async Task<List<SemanticSearchResult>> SearchTrainingsAsync(Query query)
         {
@@ -67,7 +90,7 @@ namespace Apollo.SmartLib
                 //Currently we are using existing context for test
                 //After Amit fix we will replace with Trainings context
                 //var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, $"{nameof(Training)}s");
-                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, "Trainings");
+                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, _context);
 
                 res = ToSemanticSearchResult(semRes);
 
@@ -89,13 +112,19 @@ namespace Apollo.SmartLib
                     Property = item.Title,
                     Similarity = item.Similarity,
                     Text = item.SectionText,
-                    TrainingId = item.Url.Substring(item.Url.IndexOf($"{nameof(Training)}"))
+                    TrainingId = item.Url.Substring(item.Url.IndexOf("/api/training/") + "/api/training/".Length)
+
             });
             }
 
             return res;
         }
+
+      
+
     }
+
+   
 
     public class SemanticSearchResult
     {
