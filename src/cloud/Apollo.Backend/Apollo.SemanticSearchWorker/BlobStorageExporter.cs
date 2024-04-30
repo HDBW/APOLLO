@@ -48,6 +48,8 @@ namespace Apollo.SemanticSearchWorker
         {
             _logger.LogInformation($"Starting export for {_entityName}.");
             int totalItemsProcessed = 0;
+            var startTime = DateTime.Now; // Capture start time for duration calculation
+
             try
             {
                 var formatter = new TrainingFormatter();
@@ -59,11 +61,12 @@ namespace Apollo.SemanticSearchWorker
                 using (var stream = await blockBlobClient.OpenWriteAsync(true))
                 {
                     int currentPosition = 0;
-                    
-                    while (true)
+                    bool hasMoreData = true;
+
+                    while (hasMoreData)
                     {
                         var result = await _api.QueryTrainingsAsync(query);
-                        if (result.Count == 0) break;
+                        hasMoreData = result.Count > 0;
 
                         foreach (var training in result)
                         {
@@ -74,6 +77,7 @@ namespace Apollo.SemanticSearchWorker
                                 await stream.WriteAsync(bytes, 0, bytes.Length);
                             }
                             totalItemsProcessed += lines.Count;
+                            _logger.LogDebug($"Exporting {training.Id}: {training.TrainingName}");
                         }
 
                         currentPosition += result.Count;
@@ -82,7 +86,8 @@ namespace Apollo.SemanticSearchWorker
                     }
                 }
 
-                _logger.LogInformation($"Export completed for {_entityName}. Total items exported: {totalItemsProcessed}.");
+                var duration = DateTime.Now - startTime;
+                _logger.LogInformation($"Export completed for {_entityName}. Total items exported: {totalItemsProcessed}. Duration: {duration.TotalSeconds} seconds.");
             }
             catch (Exception ex)
             {
@@ -127,7 +132,7 @@ namespace Apollo.SemanticSearchWorker
         private BlobContainerClient GetContainerClient()
         {
             BlobContainerClient containerClient = new BlobContainerClient(_blobConnStr, "export");
-
+            _logger.LogDebug($"Accessing blob container for export.");
             return containerClient;
         }
     }
