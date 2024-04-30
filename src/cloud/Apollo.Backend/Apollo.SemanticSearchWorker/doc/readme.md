@@ -10,12 +10,55 @@ The Apollo Semantic Search Worker is a tool designed to export Apollo entities (
 ![image](https://github.com/HDBW/APOLLO/assets/2386584/01676025-19ec-475a-bbf2-ecbf97ef3f89)
 
 
-
 ## How it works
 
-The export process is carried out by the **BlobStorageExporter** class, which takes in an Apollo API instance, the entity name to be exported, and a connection string to the blob storage where the exported CSV file is be stored.
+The export process is carried out by the **BlobStorageExporter** class, which takes in an Apollo API instance, the entity name to be exported, and a connection string to the blob storage where the exported CSV file will be stored.
 
-Logging is implemented throughout the process to provide insightful information about the export operation.
+### Enhanced Export Process Description
+S
+**Initialization:** 
+
+The process begins with logging the start of the export for the specified entity (e.g., "training"). This helps in tracking the commencement of the process.
+
+**Query Construction:**
+
+This query specifies the fields to be fetched (like Id, TrainingName, etc.) and any filters necessary to exclude certain records.
+The query is logged to ensure transparency in what data is being requested.
+
+**Blob Storage Preparation:**
+
+Connection to Azure Blob Storage is established, checking and creating the necessary container for the export file if it does not exist.
+
+**Data Fetching and Writing:**
+
+Data is fetched in batches and processed:
+
+- Data retrieval via the Apollo API.
+- Each record is formatted into a CSV string using the appropriate formatter (e.g., TrainingFormatter).
+- Formatted data is directly written to the blob storage, optimizing memory use and handling large datasets efficiently.
+- Progress and batch details are logged to monitor the process and help with troubleshooting.
+
+**Error Handling:**
+
+Throughout the export process, any exceptions are caught and logged with an error message. This includes detailed logging of the exception to help in quick troubleshooting.
+
+### Logging Details
+
+With the updated logging functionalities, users can expect a comprehensive set of logs that provide insights into every stage of the export process. Here’s what users can expect:
+
+**Informational Logs:**
+
+Logs at the start and end of the export provide essential details such as the entity processed, total items exported, and the duration of the process.
+
+**Debug Logs:**
+Detailed logs include:
+
+- The specifics of the executed query, showing fields and filters.
+- Updates on data processing for each batch, indicating the number of items processed and their sequential status.
+
+**Error Logs:**
+
+Errors during the export process are logged with severity levels, detailing the nature of the error, the error message, and the stack trace for diagnostics.
 
 ## Running Exporter
 
@@ -65,18 +108,21 @@ To run the container passing argumant example
 docker run -d -p 8081:80 --name apollosearchworker2 -e MongoConnStr="Replace with Connection string" -e BlobConnStr="Replace with Connection string" -e entity="training" apollosemanticsearchworker
 ```
  ## Formatters
-Formatters formet the responsed data from server before start of stream write operation for CSV in BlobStorage
+Formatters format the responsed data from server before start of stream write operation for CSV in BlobStorage
 
 ```sh
-    /// <summary>
+ /// <summary>
     /// Converts the training instance into the set of strings.
     /// </summary>
     internal class TrainingFormatter : IEntityFormatter
     {
+        private string _cDelimiter = ";";
         Training? t = new Training();
 
         /// <summary>
-        /// Returns Subtitle, TrainingName, ShortDescription and Description of the training.
+        /// Returns:
+        /// Trainings:Subtitle, TrainingName, ShortDescription, Description, Content, BenefitList and Prerequisites.
+        /// The expected format: Id|Url|Title|Text
         /// </summary>
         /// <param name="training"></param>
         /// <returns></returns>
@@ -88,14 +134,19 @@ Formatters formet the responsed data from server before start of stream write op
 
             List<string> list = new List<string>();
 
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.SubTitle}");
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.ShortDescription}");
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.Description}");
-            list.Add($"{training?.Id}|{training?.Id}|{training?.TrainingName}|{training?.TrainingName}");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(training?.SubTitle?.Replace(_cDelimiter, " ").Trim());
+            sb.AppendLine(training?.TrainingName?.Replace(_cDelimiter, " ").Trim());
+            sb.AppendLine(training?.ShortDescription?.Replace(_cDelimiter, " ".Trim()));
+            sb.AppendLine(training?.Description?.Replace(_cDelimiter, " ".Trim()));
+            sb.AppendLine(String.Join(' ', training?.Content?.Select(s => s.Replace(_cDelimiter!, " ".Trim())) ?? Enumerable.Empty<string>()));
+            sb.AppendLine(String.Join(' ', training?.BenefitList?.Select(s => s.Replace(_cDelimiter!, " ").Trim()) ?? Enumerable.Empty<string>()));
+            sb.AppendLine(String.Join(' ', training?.Prerequisites?.Select(s => s.Replace(_cDelimiter!, " ").Trim()) ?? Enumerable.Empty<string>()));
+
+            list.Add($"{training?.Id}{_cDelimiter}/api/training/{training?.Id}{_cDelimiter}{training?.TrainingName}{_cDelimiter}{sb.ToString().Replace("\r", " ").Replace("\n", " ")}");
 
             return list;
         }
-    }
 ```
 
 **Purpose**
@@ -128,57 +179,62 @@ This method transforms the entity instance into a list of strings, where each st
 
 
  ```sh
-Id|Url|Title|Text
+Id;Url;Title;Description
 ```
 
-  Example how it would be done for a different entity:
+Example how it would be done for a different entity:
 
   
  ```sh
- using Apollo.Common.Entities;
+using Apollo.Common.Entities;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Apollo.SemanticSearchWorker
 {
     /// <summary>
-    /// Converts the user instance into the set of strings.
+    /// Converts the user instance into a set of strings formatted for CSV output.
     /// </summary>
     internal class UserFormatter : IEntityFormatter
     {
+        private string _delimiter = ";";
+
         /// <summary>
-        /// Returns ObjectId, IdentityProvider, Email, and Name of the user.
+        /// Formats the user data into a single line per user.
+        /// Expected format: Id|Url|Title|Text
         /// </summary>
-        /// <param name="instance"></param>
-        /// <returns></returns>
+        /// <param name="instance">User instance to format.</param>
+        /// <returns>A list containing a single string for each user, suitable for CSV output.</returns>
         public IList<string> FormatObject(object instance)
         {
             User? user = instance as User;
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
-            List<string> list = new List<string>();
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"{user.ObjectId}{_delimiter}/api/user/{user.ObjectId}{_delimiter}{user.Name}{_delimiter}");
 
-            // Basic info
-            list.Add($"{user.ObjectId}|{user.ObjectId}|{user.IdentityProvider}|{user.Email}|{user.Name}");
+            sb.Append($"{user.IdentityProvider}{_delimiter}{user.Email}");
+            if (user.Birthdate.HasValue)
+                sb.Append($"{_delimiter}{user.Birthdate.Value.ToString("yyyy-MM-dd")}");
+            else
+                sb.Append($"{_delimiter}N/A");
 
-            // Optional info with checks for nullability
-            string birthdate = user.Birthdate.HasValue ? user.Birthdate.Value.ToString("yyyy-MM-dd") : "N/A";
             string disabilities = user.Disabilities.HasValue && user.Disabilities.Value ? "Yes" : "No";
+            sb.Append($"{_delimiter}{disabilities}");
 
-            list.Add($"{user.ObjectId}|{user.ObjectId}|{user.IdentityProvider}|Birthdate|{birthdate}");
-            list.Add($"{user.ObjectId}|{user.ObjectId}|{user.IdentityProvider}|Disabilities|{disabilities}");
-
-            // Assuming contacts could be important, we format them if they exist.
+            // Optionally, add more user attributes as needed.
+            // For instance, format contact information if present.
             if (user.ContactInfos != null && user.ContactInfos.Count > 0)
             {
                 foreach (var contact in user.ContactInfos)
                 {
-                    list.Add($"{user.ObjectId}|{user.ObjectId}|{user.IdentityProvider}|Contact|{contact.Type}: {contact.Value}");
+                    sb.Append($"{_delimiter}{contact.Type}: {contact.Value}");
                 }
             }
 
-            return list;
+            return new List<string> { sb.ToString() };
         }
     }
 }
