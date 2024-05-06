@@ -81,9 +81,7 @@
                 WidthRequest="24"
                 HorizontalOptions="End" >
                 <ImageButton.Source>
-                    <FontImageSource Glyph="&#x005A;"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="#420A98"/>
+                    <FontImageSource Glyph="{StaticResource close}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                 </ImageButton.Source>
             </ImageButton>
 

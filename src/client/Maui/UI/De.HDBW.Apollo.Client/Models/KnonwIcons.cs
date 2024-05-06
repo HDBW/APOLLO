@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string Magnify = "magnify.png";
 
-        public const string Training = "training.png";
+        public const string Training = "\u00a6";
 
         public const string EMail = "mail.png";
 
@@ -19,11 +19,11 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string Location = "location.png";
 
-        public const string ChevronDown = "chevrondown.png";
+        public const string ChevronDown = "\u0044";
 
-        public const string ChevronUp = "chevronup.png";
+        public const string ChevronUp = "\u00af";
 
-        public const string ChevronLink = "chevronlink.png";
+        public const string ChevronLink = "\u0043";
 
         public const string Accessibility = "accessibility.png";
 

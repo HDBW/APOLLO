@@ -30,7 +30,7 @@
 
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x00A3;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_TypeOfSchool}" />
@@ -53,7 +53,7 @@
                     </Picker>
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x00A3;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_SchoolGraduation}" />
@@ -72,7 +72,7 @@
                             SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x00A3;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
@@ -91,7 +91,7 @@
                                 NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x0045;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource calendar}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
@@ -110,12 +110,12 @@
                                 NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x0046;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                     </ImageButton>
                     <ImageButton Grid.Column="2">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x0045;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource calendar}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />

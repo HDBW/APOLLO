@@ -32,7 +32,7 @@
                     </Label>
                     <Image Grid.Column="1">
                         <Image.Source>
-                            <FontImageSource Glyph="&#x0053;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource longlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
                 </Grid>
@@ -52,7 +52,7 @@
                     </Picker>
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x00A3;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_LanguageNiveau}" />

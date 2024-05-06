@@ -19,7 +19,11 @@
                         <SwipeItems Mode="Reveal">
                             <SwipeItemView BackgroundColor="{StaticResource Error}" Command="{x:Binding DeleteCommand}">
                                 <VerticalStackLayout VerticalOptions="Center">
-                                    <Image WidthRequest="32" HeightRequest="32" Source="deletelight.png" />
+                                    <Image WidthRequest="32" HeightRequest="32">
+                                        <Image.Source>
+                                            <FontImageSource Glyph="{StaticResource delete}" FontFamily="ApolloFontIcons" Size="32" Color="{StaticResource White}"/>
+                                        </Image.Source>
+                                    </Image>
                                     <Label Text="{x:Static strings:Resources.Global_Delete}" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource White}"/>
                                 </VerticalStackLayout>
                             </SwipeItemView>
@@ -40,7 +44,11 @@
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </VerticalStackLayout>
-                            <Image Grid.Column="1" WidthRequest="16" HeightRequest="16" Source="arrow_16x16_right.png"/>
+                            <Image Grid.Column="1" WidthRequest="16" HeightRequest="16">
+                                <Image.Source>
+                                    <FontImageSource Glyph="{StaticResource arrow_16x16_right}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                                </Image.Source>
+                            </Image>
                         </Grid>
                     </Border>
                 </SwipeView>

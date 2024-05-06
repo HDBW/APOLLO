@@ -20,9 +20,9 @@
 
                 <ImageButton Grid.Column="1">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="&#x00A3;"
+                        <FontImageSource Glyph="{StaticResource shortlist}"
                          FontFamily="ApolloFontIcons"
-                         Size="24" Color="#420A98"/>
+                         Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
                     <ImageButton.Behaviors>
                         <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_PickerPropertyEditor}" />

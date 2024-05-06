@@ -36,15 +36,13 @@
                     </Border>
                     <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="2" Command="{Binding ToggleIsFavoriteCommand}" VerticalOptions="Start">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="&#x0077;"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="#420A98"/>
+                            <FontImageSource Glyph="{StaticResource nofavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Triggers>
                             <DataTrigger TargetType="ImageButton" Binding="{Binding IsFavorite}" Value="True">
                                 <Setter Property="ImageButton.Source">
                                     <Setter.Value>
-                                        <FontImageSource Glyph="&#x0073;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                                        <FontImageSource Glyph="{StaticResource favorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                     </Setter.Value>
                                 </Setter>
                             </DataTrigger>

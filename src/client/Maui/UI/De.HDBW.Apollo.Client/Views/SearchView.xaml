@@ -92,9 +92,7 @@
             Recent="{x:Binding Recents}"
             ShowsResults="True">
             <local:BindableSearchHandler.QueryIcon>
-                <FontImageSource Glyph="&#x0056;"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="#420A98"/>
+                <FontImageSource Glyph="{StaticResource search}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
             </local:BindableSearchHandler.QueryIcon>
             <!-- <local:BindableSearchHandler.Keyboard>
                  <Keyboard x:FactoryMethod="Create">
