@@ -9,7 +9,11 @@
         </Grid.GestureRecognizers>
         <CheckBox IsChecked="{x:Binding Value, Mode=TwoWay}" HorizontalOptions="Start" InputTransparent="True" Margin="{OnPlatform '0', Android='-6,0,0,0'}"/>
         <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}" Margin="8,0"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24" Source="delete.png" />
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24">
+            <ImageButton.Source>
+                <FontImageSource Glyph="&#x0046;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+            </ImageButton.Source>
+        </ImageButton>
     </Grid>
     
 </ContentView>

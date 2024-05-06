@@ -8,7 +8,13 @@
              x:DataType="viewModels:DecimalRangePropertyEditor">
     <Grid ColumnDefinitions="*, Auto" RowDefinitions="auto, auto, auto, auto, auto" Margin="0,0,0,16">
         <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" Source="delete.png" HorizontalOptions="End"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="End">
+            <ImageButton.Source>
+                <FontImageSource Glyph="&#x0046;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+            </ImageButton.Source>
+        </ImageButton>
         <Label Text="{x:Static strings:Resources.Global_RageStart}" Style="{StaticResource Noto14SemiBold}" Grid.Row="1" />
         <Label Grid.Row="1" Grid.Column="1" Text="{x:Binding StartValueString, Mode=OneWay}" Style="{StaticResource Noto14}" HorizontalTextAlignment="End" HorizontalOptions="End"/>
         <Slider x:Name="PART_Min" Grid.Row="2" Margin="0,12" Grid.ColumnSpan="2" Minimum="{x:Binding MinValue}" Maximum="{x:Binding MaxValue}" Value="{x:Binding StartValue, Mode=TwoWay}" MinimumTrackColor="{StaticResource Primary}" MaximumTrackColor="{OnPlatform Default={StaticResource Primary100}, Android={StaticResource Primary}}" ThumbColor="{StaticResource Primary}"/>

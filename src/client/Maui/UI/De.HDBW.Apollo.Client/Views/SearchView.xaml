@@ -82,7 +82,6 @@
     </ContentPage.Resources>
     <Shell.SearchHandler>
         <local:BindableSearchHandler
-            QueryIcon="magnify.png"
             x:Name="PART_SearchHandler"
             TextColor="{StaticResource Primary}"
             Placeholder="{x:Static strings:Resources.SearchView_Title}" 
@@ -92,7 +91,12 @@
             Suggestions="{x:Binding Suggestions}"
             Recent="{x:Binding Recents}"
             ShowsResults="True">
-          <!-- <local:BindableSearchHandler.Keyboard>
+            <local:BindableSearchHandler.QueryIcon>
+                <FontImageSource Glyph="&#x0056;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+            </local:BindableSearchHandler.QueryIcon>
+            <!-- <local:BindableSearchHandler.Keyboard>
                  <Keyboard x:FactoryMethod="Create">
                     <x:Arguments>
                         <KeyboardFlags>None</KeyboardFlags>

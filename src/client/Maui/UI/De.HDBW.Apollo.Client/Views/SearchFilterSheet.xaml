@@ -74,13 +74,18 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label Text="{Static strings:Resources.Global_SearchFilterSheet_Title}" Style="{StaticResource Noto20Bold}"/>
-            
+
             <ImageButton Grid.Column="1"
                 Command="{x:Binding CloseCommand}"
                 HeightRequest="24"
                 WidthRequest="24"
-                Source="close.png"
-                HorizontalOptions="End" />
+                HorizontalOptions="End" >
+                <ImageButton.Source>
+                    <FontImageSource Glyph="&#x005A;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+                </ImageButton.Source>
+            </ImageButton>
 
         </Grid>
 

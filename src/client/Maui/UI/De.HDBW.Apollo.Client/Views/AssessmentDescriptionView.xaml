@@ -23,7 +23,11 @@
                 <Label Text="{Binding DescriptionText}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
                 <Label Text="{Binding DescriptionDetails}" Style="{StaticResource Noto16}" LineBreakMode="WordWrap"/>
                 <HorizontalStackLayout Spacing="8">
-                    <Image Source="timer.png" WidthRequest="24" HeightRequest="24"/>
+                    <Image WidthRequest="24" HeightRequest="24">
+                        <Image.Source>
+                            <FontImageSource Glyph="&#x00A5;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                        </Image.Source>
+                    </Image>
                     <Label Text="{Binding Duration}" Style="{StaticResource Noto16}"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>

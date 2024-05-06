@@ -7,8 +7,13 @@
              x:DataType="viewModels:ListPropertyEditor">
     <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" Margin="0,0,0,16">
         <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" VerticalOptions="Center" HorizontalOptions="Start"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24"
-                     Source="delete.png" />
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24">
+            <ImageButton.Source>
+                <FontImageSource Glyph="&#x0046;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+            </ImageButton.Source>
+        </ImageButton>
         <ListView
                 Grid.Row="1"
                 Grid.ColumnSpan="2"

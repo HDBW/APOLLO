@@ -17,7 +17,11 @@
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon}" />
-        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
+        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#x00AD;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <DataTemplate x:Key="TrainingsHeaderItemTemplate" x:DataType="trainingsModels:TrainingsHeaderItem">

@@ -10,12 +10,21 @@
              x:DataType="viewModels:DateRangePropertyEditor">
     <Grid ColumnDefinitions="auto, *" RowDefinitions="auto, auto, auto, auto, auto" Margin="0,16">
         <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,8"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" Source="delete.png" HorizontalOptions="End" Margin="0,0,0,8"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="End" Margin="0,0,0,8">
+            <ImageButton.Source>
+                <FontImageSource Glyph="&#x0046;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+            </ImageButton.Source>
+        </ImageButton>
         <Label Text="{x:Static strings:Resources.Global_RageStart}" Style="{StaticResource Noto14SemiBold}" Grid.Row="1" Grid.ColumnSpan="2"/>
         <Border Style="{StaticResource InputBorderStyle}" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,8">
             <Grid ColumnDefinitions="*, auto">
                 <cdp:NullableDatePicker NullableDate="{x:Binding Start, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_Start"/>
-                <ImageButton Source="calendar.png" Grid.Column="1">
+                <ImageButton Grid.Column="1">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x0045;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+                    </ImageButton.Source>
                     <ImageButton.Behaviors>
                         <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
                     </ImageButton.Behaviors>
@@ -26,8 +35,13 @@
         <Border Style="{StaticResource InputBorderStyle}" Grid.Row="4" Grid.ColumnSpan="2">
             <Grid ColumnDefinitions="*, auto">
                 <cdp:NullableDatePicker NullableDate="{x:Binding End, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_End"/>
-                <ImageButton Source="calendar.png" Grid.Column="1">
-                    <ImageButton.Behaviors>
+                <ImageButton Grid.Column="1">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x0045;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+                    </ImageButton.Source>
+                <ImageButton.Behaviors>
                         <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                     </ImageButton.Behaviors>
                 </ImageButton>

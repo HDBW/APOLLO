@@ -43,8 +43,17 @@
                                 VerticalOptions="Center"
                                 x:Name="PART_Start"
                                 NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Source="delete.png" Command="{x:Binding ClearStartCommand}" IsVisible="{x:Binding HasStart}" Grid.Column="1" Margin="8,0" />
-                    <ImageButton Source="calendar.png" Grid.Column="2">
+                    <ImageButton Command="{x:Binding ClearStartCommand}" IsVisible="{x:Binding HasStart}" Grid.Column="1" Margin="8,0">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="&#x0046;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <ImageButton Grid.Column="2">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="&#x0045;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
                         </ImageButton.Behaviors>
@@ -60,8 +69,17 @@
                         VerticalOptions="Center"
                         x:Name="PART_End"
                         NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" />
-                    <ImageButton Source="calendar.png" Grid.Column="2">
+                    <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="&#x0046;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <ImageButton Grid.Column="2">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="&#x0045;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                         </ImageButton.Behaviors>

@@ -35,7 +35,10 @@
                         ItemDisplayBinding="{x:Binding Text}"
                         x:Name="PART_WillingToTravel"
                         SelectedItem="{x:Binding SelectedWillingToTravel, Mode=TwoWay}"/>
-                <ImageButton Grid.Column="1" Source="shortlist.png">
+                <ImageButton Grid.Column="1">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x00A3;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                    </ImageButton.Source>
                     <ImageButton.Behaviors>
                         <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_WillingToTravel}" />
                     </ImageButton.Behaviors>

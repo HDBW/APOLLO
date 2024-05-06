@@ -22,7 +22,13 @@
                 </Grid.GestureRecognizers>
                 <Image Source="{x:Binding ImagePath}" WidthRequest="24" HeightRequest="24" Margin="0,0,8,0"/>
                 <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
-                <Image Grid.Column="2" Source="edit.png"/>
+                <Image Grid.Column="2" >
+                    <Image.Source>
+                        <FontImageSource Glyph="&#x0072;"
+                         FontFamily="ApolloFontIcons"
+                         Size="24" Color="#420A98"/>
+                    </Image.Source>
+                </Image>
             </Grid>
         </DataTemplate>
 

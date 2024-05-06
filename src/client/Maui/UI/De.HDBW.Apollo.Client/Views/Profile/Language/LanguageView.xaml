@@ -30,7 +30,11 @@
                             <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="PropertyChanged" CommandParameter="LanguageName" />
                         </Label.Behaviors>
                     </Label>
-                    <Image Grid.Column="1" Source="longlist.png" />
+                    <Image Grid.Column="1">
+                        <Image.Source>
+                            <FontImageSource Glyph="&#x0053;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                        </Image.Source>
+                    </Image>
                 </Grid>
             </Border>
             <Label Text="{x:Binding [LanguageName]}" Style="{StaticResource ValidationErrorLabel}"/>
@@ -46,7 +50,10 @@
                             <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="SelectedIndexChanged" CommandParameter="SelectedLanguageNiveau" />
                         </Picker.Behaviors>
                     </Picker>
-                    <ImageButton Grid.Column="1" Source="shortlist.png">
+                    <ImageButton Grid.Column="1">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="&#x00A3;" FontFamily="ApolloFontIcons" Size="24" Color="#420A98"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_LanguageNiveau}" />
                         </ImageButton.Behaviors>
