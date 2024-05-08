@@ -42,5 +42,14 @@ namespace Apollo.Common.Entities
         public string Language { get; set; }
 
         public Taxonomy TaxonomyInfo { get; set; }
+
+        public string Name { get; set; }       
+        public string Taxonomy { get; set; }   
+        public string Ver { get; set; }        
+        public string SkillSource { get; set; }    
+        public DateTime FromWhen { get; set; }     
+        public DateTime LastTimeUsed { get; set; } 
+        public string HowOftenUsed { get; set; }  
+        public string HowSkilled { get; set; }
     }
 }
