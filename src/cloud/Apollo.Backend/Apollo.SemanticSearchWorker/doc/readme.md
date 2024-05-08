@@ -15,7 +15,7 @@ The Apollo Semantic Search Worker is a tool designed to export Apollo entities (
 The export process is carried out by the **BlobStorageExporter** class, which takes in an Apollo API instance, the entity name to be exported, and a connection string to the blob storage where the exported CSV file will be stored.
 
 ### Enhanced Export Process Description
-S
+
 **Initialization:** 
 
 The process begins with logging the start of the export for the specified entity (e.g., "training"). This helps in tracking the commencement of the process.
