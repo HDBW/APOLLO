@@ -1,16 +1,12 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
-using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using Amazon.Runtime.Internal.Util;
 using Apollo.Common.Entities;
+using Apollo.SmartLib;
 using Daenet.MongoDal;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
-using MongoDB.Driver;
 
 [assembly: InternalsVisibleTo("Apollo.Api.UnitTests")]
 
@@ -34,6 +30,9 @@ namespace Apollo.Api
         private readonly MongoDataAccessLayer _dal;
 
         private readonly ApolloApiConfig _config;
+
+
+        private readonly ApolloSemanticSearchApi _smartLib;
 
 
         /// <summary>
@@ -62,11 +61,12 @@ namespace Apollo.Api
         /// <param name="logger"></param>
         /// <param name="config"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config)
+        public ApolloApi(MongoDataAccessLayer dal, ILogger<ApolloApi> logger, ApolloApiConfig config, ApolloSemanticSearchApi smartLib)
         {
             _dal = dal;
             _logger = logger;
             _config = config;
+            _smartLib = smartLib;
             //// Validate the logger. 
             //if (logger == null)
             //{

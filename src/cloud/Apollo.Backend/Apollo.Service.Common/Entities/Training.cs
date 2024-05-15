@@ -155,6 +155,12 @@ namespace Apollo.Common.Entities
         //[BsonElement("Predecessor")]
         public string? Predecessor { get; set; }
 
+        /// <summary>
+        ///  null data means training is from full text search
+        ///  any percentage data means training is from semantic search
+        /// </summary>
+        public double? SemanticSearchSimilarity { get; set; }
+
         #endregion
 
         #region Client Specific Properties

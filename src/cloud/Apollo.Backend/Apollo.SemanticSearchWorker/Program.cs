@@ -98,7 +98,7 @@ namespace Apollo.SemanticSearchWorker
         /// <returns></returns>
         private static ApolloApi GetApi()
         {
-            return new ApolloApi(GetDal(), GetLogger(), GetApolloConfig());
+            return new ApolloApi(GetDal(), GetLogger(), GetApolloConfig(),null);
         }
 
         private static ILogger<ApolloApi> GetLogger()
