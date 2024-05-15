@@ -66,7 +66,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             Subline = subline;
             SublineImagePath = sublineImagePath;
             DecoratorText = decoratorText;
-            DecoratorImagePath = decoratorImagePath?.ToUniformedName();
+            DecoratorImagePath = decoratorImagePath;
             Info = info;
             CanBeMadeFavorite = canBeMadeFavorite;
             IsFavorite = isFavorite;

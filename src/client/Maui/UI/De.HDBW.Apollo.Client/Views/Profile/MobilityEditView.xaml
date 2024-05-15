@@ -20,7 +20,11 @@
                 </VerticalStackLayout.GestureRecognizers>
                 <HorizontalStackLayout Margin="24,0" >
                     <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}"/>
-                    <Image Source="{x:Binding ImagePath}" WidthRequest="24" HeightRequest="24" Margin="8,0"/>
+                    <ImageButton WidthRequest="24" HeightRequest="24" Margin="8,0">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{x:Binding ImagePath}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
                     <Label Text="{x:Binding Text}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="0,12"/>
                 </HorizontalStackLayout>
                 <BoxView HeightRequest="1" Color="{StaticResource Neutral500}" />

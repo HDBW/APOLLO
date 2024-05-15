@@ -16,7 +16,11 @@
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon}"/>
+        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{x:Binding FavoriteIcon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
         <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{StaticResource upload}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -48,7 +52,7 @@
                 </Grid>
 
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable, Mode=OneTime}" Margin="24,0">
-                    <Image HeightRequest="24" Margin="0,0,8,0" VerticalOptions="Center">
+                    <Image HeightRequest="24" WidthRequest="24" Margin="0,0,8,0" VerticalOptions="Center">
                         <Image.Source>
                             <FontImageSource Glyph="{x:Static models:KnonwIcons.Accessibility}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
@@ -205,7 +209,11 @@
 
         <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
             <Grid ColumnDefinitions="32,*" MinimumHeightRequest="34" >
-                <Image VerticalOptions="Center" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                <Image VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}">
+                    <Image.Source>
+                        <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </Image.Source>
+                </Image>
                 <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,7,0,0"/>
             </Grid>
         </DataTemplate>
@@ -215,7 +223,11 @@
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{x:Binding InteractCommand, Mode=OneTime}" />
                 </Grid.GestureRecognizers>
-                <Image VerticalOptions="Center" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon, Mode=OneTime}" />
+                <Image VerticalOptions="Center" InputTransparent="True" HorizontalOptions="Start" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon, Mode=OneTime}">
+                    <Image.Source>
+                        <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </Image.Source>
+                </Image>
                 <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,7,0,0" TextColor="{StaticResource Primary}"/>
             </Grid>
         </DataTemplate>

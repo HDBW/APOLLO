@@ -17,10 +17,10 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
         [ObservableProperty]
         private string? _imagePath;
 
-        protected InteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle, string? imagePath = null)
+        protected InteractionEntry(string? text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle, string? imagePath = null, bool uniformImagePath = true)
         {
             Text = text;
-            ImagePath = imagePath?.ToUniformedName();
+            ImagePath = uniformImagePath ? imagePath?.ToUniformedName() : imagePath;
             _data = data;
             CanNavigateHandle = canNavigateHandle;
             NavigateHandler = navigateHandler;
@@ -48,7 +48,7 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
 
         public static InteractionEntry Import(string text, object? data, Func<InteractionEntry, Task> navigateHandler, Func<InteractionEntry, bool> canNavigateHandle, string? imagePath = null)
         {
-            return new InteractionEntry(text, data, navigateHandler, canNavigateHandle, imagePath);
+            return new InteractionEntry(text, data, navigateHandler, canNavigateHandle, imagePath, false);
         }
 
         protected virtual bool CanNavigate()

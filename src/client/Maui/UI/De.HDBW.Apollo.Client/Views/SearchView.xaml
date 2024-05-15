@@ -30,7 +30,11 @@
                                 <RoundRectangle CornerRadius="8,0,0,8" />
                             </Border.StrokeShape>
                             <HorizontalStackLayout>
-                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                <Image WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                                    <Image.Source>
+                                        <FontImageSource Glyph="{x:Binding DecoratorImagePath}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Neutral0}"/>
+                                    </Image.Source>
+                                </Image>
                                 <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
                             </HorizontalStackLayout>
                         </Border>
@@ -61,7 +65,11 @@
                                 <RoundRectangle CornerRadius="8,0,0,8" />
                             </Border.StrokeShape>
                             <HorizontalStackLayout>
-                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                <Image WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                                    <Image.Source>
+                                        <FontImageSource Glyph="{x:Binding DecoratorImagePath}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Neutral0}"/>
+                                    </Image.Source>
+                                </Image>
                                 <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
                             </HorizontalStackLayout>
                         </Border>
@@ -104,7 +112,11 @@
             <local:BindableSearchHandler.ItemTemplate>
                 <DataTemplate x:DataType="models:SearchSuggestionEntry">
                     <Grid ColumnDefinitions="auto,*" BackgroundColor="{StaticResource White}">
-                        <Image Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Margin="8"/>
+                        <Image WidthRequest="24" HeightRequest="24" Margin="8">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
                         <Label Grid.Column="1" Text="{x:Binding Name}" TextColor="{StaticResource Primary}" Padding="0,8,5,8" VerticalOptions="Center"/>
                     </Grid>
                 </DataTemplate>
@@ -112,7 +124,11 @@
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon}" />
+        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{x:Binding FilterIcon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <Grid x:Name="PART_Root">
         <CollectionView x:Name="PART_Collection"

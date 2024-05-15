@@ -87,7 +87,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return HasFilter ? "filteractive.png" : "filter.png";
+                return HasFilter ? KnonwIcons.FilterActive : KnonwIcons.Filter;
             }
         }
 
