@@ -99,7 +99,7 @@ POST Query contains following properties
 # AI Concept Draft
 
 ## Approach
-The goal: Match the profile to trainings
+The goals: Match the profile to trainings and profile to Job offers
 
 Useful properties engaged in the embedding calculation
 
@@ -159,8 +159,8 @@ If the qualification ihas expired one or more years ago, please remark that the 
 If the user's qualification is between 5 and 10 years remark user as a senior. If it is less than 5 years remark user as a junior. Qualifications with longer than 10 years belong to expert users.
 
 Follow example bellow.
-
 START TEMPLATE
+
 The user has achieved following QUAL_NUMBER qulifications, which we have found in the user's profile:
 
 1. The name of the qualification 1
