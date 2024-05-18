@@ -17,6 +17,16 @@ namespace Apollo.Common.Entities
     public class Skill:ObjectBase
     {
         /// <summary>
+        /// The Id of the user to whom the skill belongs.
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// The Id of the user to whom the skill belongs.
+        /// </summary>
+        public string ProfileId { get; set; }
+
+        /// <summary>
         /// A List in different Cultures for the Lists Title
         /// </summary>
         public ApolloList Title { get; set; }
