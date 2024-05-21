@@ -8,30 +8,29 @@ using System.Text;
 using System.Threading.Tasks;
 using Apollo.Api;
 using Apollo.Common.Entities;
-using Microsoft.Extensions.Logging;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs;
-using Amazon.Runtime.Internal.Util;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Extensions.Logging;
 
-namespace Apollo.SemanticSearchWorker
+namespace Apollo.SemanticSearchExporter
 {
     /// <summary>
-    /// Exports the given Apollo entity into the CSV file compatible with daenet Semantic Search.
+    /// Exports the given Apollo entity into the CSV file compatible with LLM-AI Semantic Search.
     /// </summary>
-    internal class BlobStorageExporter
+    internal class ProfileSkillExporter
     {
         private ApolloApi _api;
         private string _entityName;
         private string _blobConnStr;
-        private readonly ILogger<BlobStorageExporter> _logger;
+        private readonly ILogger<ProfileSkillExporter> _logger;
 
         /// <summary>
-        /// Creates the instance of the BlobStorageExporter.
+        /// Creates the instance of the ProfileSkillExporter.
         /// </summary>
         /// <param name="api">The Apollo API used to return list of exporting entity instances from the backend.</param>
-        /// <param name="entity">The entity to be exported: Training, User, Profile, etc..</param>
-        /// <param name="blobConnStr">The conneciton string to the blob storage used to persist exported CSV file.</param>
-        public BlobStorageExporter(ApolloApi api, string entity, string blobConnStr, ILogger<BlobStorageExporter> logger)
+        /// <param name="entity">The entity to be exported: Skill.</param>
+        /// <param name="blobConnStr">The connection string to the blob storage used to persist exported CSV file.</param>
+        public ProfileSkillExporter(ApolloApi api, string entity, string blobConnStr, ILogger<ProfileSkillExporter> logger)
         {
             _api = api;
             _entityName = entity;
@@ -39,9 +38,8 @@ namespace Apollo.SemanticSearchWorker
             _logger = logger;
         }
 
-
         /// <summary>
-        /// Perfomrs the long-running export operation.
+        /// Performs the long-running export operation.
         /// </summary>
         /// <returns></returns>
         public async Task ExportAsync()
@@ -52,7 +50,7 @@ namespace Apollo.SemanticSearchWorker
 
             try
             {
-                var formatter = new TrainingFormatter();
+                var formatter = new ProfileSkillFormatter();
                 var query = CreateQuery();
                 var containerClient = GetContainerClient();
                 await containerClient.CreateIfNotExistsAsync();
@@ -65,22 +63,33 @@ namespace Apollo.SemanticSearchWorker
 
                     while (hasMoreData)
                     {
-                        var result = await _api.QueryTrainingsAsync(query);
-                        hasMoreData = result.Count > 0;
+                        var profiles = await _api.QueryProfilesAsync(query);
+                        hasMoreData = profiles.Count > 0;
 
-                        foreach (var training in result)
+                        foreach (var profile in profiles)
                         {
-                            var lines = formatter.FormatObject(training);
-                            foreach (var line in lines)
+                            _logger.LogDebug($"Processing profile {profile.Id}");
+                            if (profile.Skills != null && profile.Skills.Count > 0)
                             {
-                                var bytes = Encoding.UTF8.GetBytes(line + Environment.NewLine);
-                                await stream.WriteAsync(bytes, 0, bytes.Length);
+                                foreach (var skill in profile.Skills)
+                                {
+                                    var lines = formatter.FormatObject(skill, profile.Id);
+                                    foreach (var line in lines)
+                                    {
+                                        var bytes = Encoding.UTF8.GetBytes(line + Environment.NewLine);
+                                        await stream.WriteAsync(bytes, 0, bytes.Length);
+                                    }
+                                    totalItemsProcessed += lines.Count;
+                                    _logger.LogDebug($"Exporting skill {skill.Id}: {skill.Title?.Items?.FirstOrDefault()?.Value}");
+                                }
                             }
-                            totalItemsProcessed += lines.Count;
-                            _logger.LogDebug($"Exporting {training.Id}: {training.TrainingName}");
+                            else
+                            {
+                                _logger.LogDebug($"No skills found for profile {profile.Id}");
+                            }
                         }
 
-                        currentPosition += result.Count;
+                        currentPosition += profiles.Count;
                         query.Skip = currentPosition;
                         _logger.LogDebug($"Processed {totalItemsProcessed} items. Moving to next batch starting from position {currentPosition}.");
                     }
@@ -96,12 +105,15 @@ namespace Apollo.SemanticSearchWorker
             }
         }
 
-
         private Query CreateQuery()
         {
             Query query = new Query()
             {
-                Fields = new List<string> { "Id", "TrainingName", "Subtitle", "Description", "ShortDescription" },
+                Fields = new List<string>
+                {
+                    "Id",
+                    "Skills"
+                },
 
                 Filter = new Filter
                 {
@@ -111,22 +123,20 @@ namespace Apollo.SemanticSearchWorker
                         {
                             FieldName = "id",
                             Operator = QueryOperator.NotEquals,
-                            Argument = new string[]{ "UaT01" }
+                            Argument = new string[]{ "InvalidId" }
                         }
-                        // Add other FieldExpressions as needed for additional conditions
                     }
                 },
 
                 Skip = 0,
                 Top = 1000,
             };
-            _logger.LogInformation($"Creating query for {_entityName} with fields: {string.Join(", ", query.Fields)} and filter on ID not equals to 'UaT01'. Skipping: {query.Skip}, Taking: {query.Top}");
+            _logger.LogInformation($"Creating query for {_entityName} with fields: {string.Join(", ", query.Fields)} and filter on ID not equals to 'InvalidId'. Skipping: {query.Skip}, Taking: {query.Top}");
             return query;
         }
 
-
         /// <summary>
-        /// Creates the BlobCLient API instance.
+        /// Creates the BlobClient API instance.
         /// </summary>
         /// <returns></returns>
         private BlobContainerClient GetContainerClient()
