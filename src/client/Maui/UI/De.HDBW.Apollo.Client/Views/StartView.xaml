@@ -30,7 +30,11 @@
                 <Grid RowDefinitions="*,auto,auto, auto" Padding="0" ColumnDefinitions="*, 28">
                     <Image Source="{Binding ImagePath, Mode=OneTime}" Aspect="AspectFill" Grid.ColumnSpan="2" InputTransparent="True"/>
                     <Border Loaded="HandleStateChanged" Grid.ColumnSpan="2" InputTransparent="True" Background="{StaticResource DisabledGradientBrush}" StrokeThickness="0">
-                        <Image Source="completed.png" WidthRequest="64" HeightRequest="64"/>
+                        <Image WidthRequest="64" HeightRequest="64">
+                            <Image.Source>
+                                <FontImageSource Glyph="{StaticResource checkmark}" FontFamily="ApolloFontIcons" Size="64" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
                     </Border>
                     <Border InputTransparent="True" IsVisible="{Binding HasDecorator, Mode=OneTime}" BackgroundColor="{Binding EntityType, Converter={StaticResource EntityTypeToColorConverter}, Mode=OneTime}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start" Padding="8,4">
                         <Border.StrokeShape>
@@ -38,10 +42,17 @@
                         </Border.StrokeShape>
                         <Label Text="{Binding DecoratorText}" LineBreakMode="TailTruncation"/>
                     </Border>
-                    <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="2" Command="{Binding ToggleIsFavoriteCommand}" Source="staroutline.png" VerticalOptions="Start">
+                    <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="2" Command="{Binding ToggleIsFavoriteCommand}" VerticalOptions="Start">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource nofavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
                         <ImageButton.Triggers>
                             <DataTrigger TargetType="ImageButton" Binding="{Binding IsFavorite}" Value="True">
-                                <Setter Property="Source"  Value="star.png" />
+                                <Setter Property="Source">
+                                    <Setter.Value>
+                                        <FontImageSource Glyph="{StaticResource favorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                    </Setter.Value>
+                                </Setter>
                             </DataTrigger>
                         </ImageButton.Triggers>
                     </ImageButton>
@@ -121,7 +132,11 @@
                     ColumnCount="2"/>
 
                 <Grid IsVisible="{Binding HasNoInteractions}" RowDefinitions="*,auto, auto" RowSpacing="8" HeightRequest="240" Grid.Row="3">
-                    <Image Source="stardashed.png" />
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource Glyph="{StaticResource favorite}" FontFamily="ApolloFontIcons" Size="32" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                     <Label Text="{x:Static strings:Resources.StartView_NoFavoritesTitle}" Style="{StaticResource Noto12}" LineBreakMode="WordWrap" VerticalOptions="Center" FontAttributes="Bold" Grid.Row="1"/>
                     <Label Text="{x:Static strings:Resources.StartView_NoFavoritesDescription}" VerticalOptions="Center" Grid.Row="2" LineBreakMode="WordWrap"/>
                 </Grid>

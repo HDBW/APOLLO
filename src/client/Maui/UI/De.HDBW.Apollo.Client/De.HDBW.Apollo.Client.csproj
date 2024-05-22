@@ -34,7 +34,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <UseInterpreter>true</UseInterpreter>
   </PropertyGroup>
-  
+   
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7EEE1" />
@@ -51,22 +51,8 @@
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_icon_tint.xml" />
     <None Remove="Platforms\Android\Resources\color\m3_checkbox_button_tint.xml" />
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
-    <None Remove="Resources\Images\accessibility.svg" />
-    <None Remove="Resources\Images\add.svg" />
-    <None Remove="Resources\Images\calendar.svg" />
-    <None Remove="Resources\Images\calender.svg" />
-    <None Remove="Resources\Images\checkmark.svg" />
-    <None Remove="Resources\Images\chevronback.svg" />
-    <None Remove="Resources\Images\chevrondown.svg" />
-    <None Remove="Resources\Images\chevronlink.svg" />
-    <None Remove="Resources\Images\chevronup.svg" />
-    <None Remove="Resources\Images\completed.svg" />
-    <None Remove="Resources\Images\delete.svg" />
-    <None Remove="Resources\Images\deletelight.svg" />
-    <None Remove="Resources\Images\edit.svg" />
+    <None Remove="Resources\Fonts\ApolloFontIcons.ttf" />
     <None Remove="Resources\Images\emptysearchdeco.svg" />
-    <None Remove="Resources\Images\filter.svg" />
-    <None Remove="Resources\Images\filteractive.svg" />
     <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />
@@ -76,73 +62,21 @@
     <None Remove="Resources\Images\Icon_ProfileWebReference.svg" />
     <None Remove="Resources\Images\Icon_ProfilLicensInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfilQualificationInfo.svg" />
-    <None Remove="Resources\Images\isfavorite.svg" />
-    <None Remove="Resources\Images\location.svg" />
-    <None Remove="Resources\Images\longlist.svg" />
-    <None Remove="Resources\Images\makefavorite.svg" />
-    <None Remove="Resources\Images\phone.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
     <None Remove="Resources\Images\placeholdertest.svg" />
-    <None Remove="Resources\Images\profile.svg" />
-    <None Remove="Resources\Images\provider.svg" />
     <None Remove="Resources\Images\resultdeco.svg" />
-    <None Remove="Resources\Images\search.svg" />
-    <None Remove="Resources\Images\searchclear.svg" />
-    <None Remove="Resources\Images\share.svg" />
-    <None Remove="Resources\Images\shortlist.svg" />
     <None Remove="Resources\Images\splashdeco.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\splashdeco2.svg" />
-    <None Remove="Resources\Images\training.svg" />
     <None Remove="Resources\Images\usecase4deco.svg" />
-    <None Remove="Resources\Images\user1.svg" />
     <None Remove="Resources\Images\apollo.svg" />
     <None Remove="Resources\Images\fallback.png" />
-    <None Remove="Resources\Images\info.svg" />
-    <None Remove="Resources\Images\lieferschein.png" />
-    <None Remove="Resources\Images\mail.svg" />
     <None Remove="Resources\Images\registrationdeco.svg" />
-    <None Remove="Resources\Images\send.svg" />
-    <None Remove="Resources\Images\settings.svg" />
-    <None Remove="Resources\Images\sk34a02_karton_eingerissen.png" />
-    <None Remove="Resources\Images\sk34b01_sicherheitshinweis_schuhe.png" />
-    <None Remove="Resources\Images\sk34b02_pfuetze_gabelstapler.png" />
-    <None Remove="Resources\Images\sk34b03_hubwagen_a1.png" />
-    <None Remove="Resources\Images\sk34b03_hubwagen_d1.png" />
-    <None Remove="Resources\Images\sk34b03_hubwagen_d2.png" />
-    <None Remove="Resources\Images\sk34b03_hubwagen_d3.png" />
-    <None Remove="Resources\Images\sk34b04_zeichen_zerbrechlich.png" />
-    <None Remove="Resources\Images\sk34c01_keine_hitze.png" />
-    <None Remove="Resources\Images\sk34c01_nicht_rollen.png" />
-    <None Remove="Resources\Images\sk34c01_nicht_stapeln.png" />
-    <None Remove="Resources\Images\sk34c01_waren_aufrecht.png" />
-    <None Remove="Resources\Images\sk34c03_regaltraeger_zeichnung.png" />
-    <None Remove="Resources\Images\sk34d03_regalbezeichnung.png" />
-    <None Remove="Resources\Images\sk34e01_folie.png" />
-    <None Remove="Resources\Images\sk34e01_luftpolsterfolie.png" />
-    <None Remove="Resources\Images\sk34e01_pappkarton.png" />
-    <None Remove="Resources\Images\sk34e01_zeitung.png" />
-    <None Remove="Resources\Images\sk34e03_folie.png" />
-    <None Remove="Resources\Images\sk34e03_spannband.png" />
-    <None Remove="Resources\Images\sk34e03_spanngurt.png" />
-    <None Remove="Resources\Images\sk34e03_tape.png" />
-    <None Remove="Resources\Images\sk34f04_karte.png" />
-    <None Remove="Resources\Images\sk34g01_nettobedarfsrechnung.png" />
-    <None Remove="Resources\Images\sk34g03_vergleichsmatrix.png" />
-    <None Remove="Resources\Images\star.svg" />
-    <None Remove="Resources\Images\stardashed.svg" />
-    <None Remove="Resources\Images\staroutline.svg" />
-    <None Remove="Resources\Images\timer.svg" />
     <None Remove="Resources\Images\usecase1deco.svg" />
     <None Remove="Resources\Images\usecase1detail.svg" />
     <None Remove="Resources\Images\usecase2deco.svg" />
     <None Remove="Resources\Images\usecase3deco.svg" />
-    <None Remove="Resources\Images\user.svg" />
-    <None Remove="Resources\Images\user2.svg" />
-    <None Remove="Resources\Images\user3.svg" />
-    <None Remove="Resources\Images\watch.svg" />
-    <None Remove="Resources\Images\web.svg" />
     <None Remove="Resources\Raw\LICENSE" />
   </ItemGroup>
   <ItemGroup>
