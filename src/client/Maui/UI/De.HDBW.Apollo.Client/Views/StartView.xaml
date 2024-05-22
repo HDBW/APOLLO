@@ -32,7 +32,7 @@
                     <Border Loaded="HandleStateChanged" Grid.ColumnSpan="2" InputTransparent="True" Background="{StaticResource DisabledGradientBrush}" StrokeThickness="0">
                         <Image WidthRequest="64" HeightRequest="64">
                             <Image.Source>
-                                <FontImageSource Glyph="{StaticResource checkmark}" FontFamily="ApolloFontIcons" Size="64" Color="{StaticResource Primary}"/>
+                                <FontImageSource Glyph="{StaticResource Checkmark}" FontFamily="ApolloFontIcons" Size="64" Color="{StaticResource Primary}"/>
                             </Image.Source>
                         </Image>
                     </Border>
@@ -44,13 +44,13 @@
                     </Border>
                     <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="2" Command="{Binding ToggleIsFavoriteCommand}" VerticalOptions="Start">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource nofavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Nofavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Triggers>
                             <DataTrigger TargetType="ImageButton" Binding="{Binding IsFavorite}" Value="True">
                                 <Setter Property="Source">
                                     <Setter.Value>
-                                        <FontImageSource Glyph="{StaticResource favorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                        <FontImageSource Glyph="{StaticResource Favorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                     </Setter.Value>
                                 </Setter>
                             </DataTrigger>
@@ -134,7 +134,7 @@
                 <Grid IsVisible="{Binding HasNoInteractions}" RowDefinitions="*,auto, auto" RowSpacing="8" HeightRequest="240" Grid.Row="3">
                     <Image>
                         <Image.Source>
-                            <FontImageSource Glyph="{StaticResource favorite}" FontFamily="ApolloFontIcons" Size="32" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Favorite}" FontFamily="ApolloFontIcons" Size="32" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
                     <Label Text="{x:Static strings:Resources.StartView_NoFavoritesTitle}" Style="{StaticResource Noto12}" LineBreakMode="WordWrap" VerticalOptions="Center" FontAttributes="Bold" Grid.Row="1"/>

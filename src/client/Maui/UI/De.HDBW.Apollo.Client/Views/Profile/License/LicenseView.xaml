@@ -40,12 +40,12 @@
                                             NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <ImageButton Command="{x:Binding ClearStartCommand}" IsVisible="{x:Binding HasStart}" Grid.Column="1" Margin="8,0">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                     </ImageButton>
                     <ImageButton Grid.Column="2">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource calendar}"
+                            <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
@@ -66,12 +66,12 @@
                                             NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                     </ImageButton>
                     <ImageButton Grid.Column="2">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource calendar}"
+                            <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>

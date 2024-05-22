@@ -29,7 +29,7 @@
                             SelectedItem="{x:Binding SelectedContactType, Mode=TwoWay}"/>
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_ContactType}" />

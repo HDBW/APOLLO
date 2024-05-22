@@ -20,7 +20,7 @@
                     </HorizontalStackLayout.GestureRecognizers>
                     <Image WidthRequest="24" HeightRequest="24">
                         <Image.Source>
-                            <FontImageSource Glyph="{StaticResource mail}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Mail}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
                     <Label Text="{x:Static strings:Resources.SettingsView_QuestionEmail}" LineBreakMode="WordWrap" MaxLines="2" Style="{StaticResource NotoSerif16}"/>

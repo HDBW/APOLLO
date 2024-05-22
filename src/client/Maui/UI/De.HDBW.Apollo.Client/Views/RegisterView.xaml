@@ -19,19 +19,19 @@
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="{x:Static strings:Resources.RegisterView_Benefits}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,4"/>
             <Image Grid.Column="0" Grid.Row="1" Margin="0,0,8,0">
                 <Image.Source>
-                    <FontImageSource Glyph="{StaticResource checkmark}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    <FontImageSource Glyph="{StaticResource Checkmark}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                 </Image.Source>
             </Image>
             <Label Grid.Column="1" Grid.Row="1" Text="{x:Static strings:Resources.RegisterView_Benefit1}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16}"/>
             <Image Grid.Column="0" Grid.Row="2" Margin="0,0,8,0">
                 <Image.Source>
-                    <FontImageSource Glyph="{StaticResource checkmark}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    <FontImageSource Glyph="{StaticResource Checkmark}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                 </Image.Source>
             </Image>
             <Label Grid.Column="1" Grid.Row="2" Text="{x:Static strings:Resources.RegisterView_Benefit2}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16}"/>
             <Image Grid.Column="0" Grid.Row="3" Margin="0,0,8,0">
                 <Image.Source>
-                    <FontImageSource Glyph="{StaticResource checkmark}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    <FontImageSource Glyph="{StaticResource Checkmark}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                 </Image.Source>
             </Image>
             <Label Grid.Column="1" Grid.Row="3" Text="{x:Static strings:Resources.RegisterView_Benefit3}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto16}"/>

@@ -60,31 +60,31 @@
     </Shell.FlyoutFooter>
     <MenuItem Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}">
         <MenuItem.IconImageSource>
-            <FontImageSource Glyph="{StaticResource settings}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+            <FontImageSource Glyph="{StaticResource Settings}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
         </MenuItem.IconImageSource>
     </MenuItem>
     <TabBar x:Name="PART_Tabs">
         <Tab Title="{x:Static strings:Resources.SearchView_Title}">
             <Tab.Icon>
-                <FontImageSource Glyph="{StaticResource training}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+                <FontImageSource Glyph="{StaticResource Training}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:SearchView}" />
         </Tab>
         <Tab Title="{x:Static strings:Resources.ProfileView_Title}">
             <Tab.Icon>
-                <FontImageSource Glyph="{StaticResource profile}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+                <FontImageSource Glyph="{StaticResource Profile}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
         <Tab Title="{x:Static strings:Resources.FavoriteView_Title}">
             <Tab.Icon>
-                <FontImageSource Glyph="{StaticResource test}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+                <FontImageSource Glyph="{StaticResource Test}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:FavoriteView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
         <Tab Title="{x:Static strings:Resources.RegisterView_Title}">
             <Tab.Icon>
-                <FontImageSource Glyph="{StaticResource login}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+                <FontImageSource Glyph="{StaticResource Login}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:RegisterView}" IsVisible="{x:Binding IsRegistered, Converter={StaticResource InvertedBoolConverter}}"/>
         </Tab>

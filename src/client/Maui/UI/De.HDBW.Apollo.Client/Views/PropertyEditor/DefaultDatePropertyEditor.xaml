@@ -16,7 +16,7 @@
                 <DatePicker Date="{x:Binding Value, Mode=TwoWay}" x:Name="PART_DatePropertyEditor"/>
                 <ImageButton Grid.Column="1">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{StaticResource calendar}"
+                        <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>

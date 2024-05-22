@@ -28,7 +28,7 @@
                 <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
                 <Image Grid.Column="2" >
                     <Image.Source>
-                        <FontImageSource Glyph="{StaticResource edit}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        <FontImageSource Glyph="{StaticResource Edit}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </Image.Source>
                 </Image>
             </Grid>

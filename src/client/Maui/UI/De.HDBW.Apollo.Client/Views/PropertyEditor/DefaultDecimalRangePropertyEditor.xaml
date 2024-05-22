@@ -10,7 +10,7 @@
         <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center"/>
         <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="End">
             <ImageButton.Source>
-                <FontImageSource Glyph="{StaticResource delete}"
+                <FontImageSource Glyph="{StaticResource Delete}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
             </ImageButton.Source>

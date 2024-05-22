@@ -34,7 +34,7 @@
                     <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" Margin="0,0,4,0"/>
                     <Image HeightRequest="24" WidthRequest="24">
                         <Image.Source>
-                            <FontImageSource Glyph="{StaticResource longlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Longlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
                 </Grid>
@@ -50,7 +50,7 @@
 
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_TypeOfSchool}" />
@@ -70,7 +70,7 @@
 
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_UniverityDegree}" />
@@ -90,7 +90,7 @@
 
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
@@ -110,7 +110,7 @@
                                 NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <ImageButton Grid.Column="1">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource calendar}"
+                            <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
@@ -131,12 +131,12 @@
                                 NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                     <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                     </ImageButton>
                     <ImageButton Grid.Column="2">
                         <ImageButton.Source>
-                            <FontImageSource Glyph="{StaticResource calendar}"
+                            <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>

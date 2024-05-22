@@ -36,12 +36,12 @@
                                         NullableDate="{x:Binding BirthDate, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
                 <ImageButton Command="{x:Binding ClearBirthDateCommand}" IsVisible="{x:Binding HasBirthDate}" Grid.Column="1" Margin="8,0" VerticalOptions="Center">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{StaticResource delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
                 </ImageButton>
                 <ImageButton Grid.Column="2" VerticalOptions="Center">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{StaticResource calendar}"
+                        <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>

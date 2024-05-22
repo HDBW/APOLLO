@@ -23,7 +23,7 @@
         </ToolbarItem>
         <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}">
             <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="{StaticResource upload}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                <FontImageSource Glyph="{StaticResource Upload}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>

@@ -12,7 +12,7 @@
         <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,8"/>
         <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="End" Margin="0,0,0,8">
             <ImageButton.Source>
-                <FontImageSource Glyph="{StaticResource delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
             </ImageButton.Source>
         </ImageButton>
         <Label Text="{x:Static strings:Resources.Global_RageStart}" Style="{StaticResource Noto14SemiBold}" Grid.Row="1" Grid.ColumnSpan="2"/>
@@ -21,7 +21,7 @@
                 <cdp:NullableDatePicker NullableDate="{x:Binding Start, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_Start"/>
                 <ImageButton Grid.Column="1">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{StaticResource calendar}"
+                        <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
@@ -37,7 +37,7 @@
                 <cdp:NullableDatePicker NullableDate="{x:Binding End, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_End"/>
                 <ImageButton Grid.Column="1">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{StaticResource calendar}"
+                        <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
                          Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
