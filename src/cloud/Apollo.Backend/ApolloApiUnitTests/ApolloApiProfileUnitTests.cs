@@ -4,6 +4,7 @@
 
 using System.Collections;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading.Channels;
 using Amazon.Runtime.Internal.Transform;
 using Apollo.Api;
@@ -16,6 +17,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using SharpCompress.Common;
+using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 
 namespace Apollo.Api.UnitTests
 {
@@ -377,6 +379,36 @@ namespace Apollo.Api.UnitTests
             // Wait for the producer and all consumers to complete
             await producerTask;
             await Task.WhenAll(consumerTasks);
+        }
+
+        public async Task<OccupationSuggestionResponse?> DoRequestAsync(string searchstring, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            //"http://20.50.240.180:8080"
+            //"http://localhost:8585
+            using (var channel = GrpcChannel.ForAddress("https://occupations.invite-apollo.app/"))
+            {
+                var occupationSuggestionClient = channel.CreateGrpcService<IOccupationSuggestionService>();
+                try
+                {
+                    var request = new OccupationSuggestionRequest { Input = searchstring, CorrelationId = CreateCorrelationId() };
+                    Console.WriteLine("OccupationSuggestion client sending request message:");
+                    Console.WriteLine(JsonSerializer.Serialize(request));
+                    var result = await occupationSuggestionClient.GetOccupationSuggestions(request, token);
+                    Console.WriteLine("Server Response:");
+                    Console.WriteLine(JsonSerializer.Serialize(result));
+                    return result;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    await channel.ShutdownAsync();
+                }
+            }
         }
 
         private Profile MapJsonToProfile(string jsonData)
