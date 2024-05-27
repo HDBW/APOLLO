@@ -315,13 +315,14 @@ namespace Apollo.Api.UnitTests
         public async Task ImportProfilesFromJsonFilesTest()
         {
             int MaxConsumers = 2;
+            //
+            // Json file path for BA data set in your local machine
             var jsonFolderPath = @"C:\Users\MukitKhan\Videos\DATA";
-            var filePath = @"C:\Users\MukitKhan\Documents";
             var api = Helpers.GetApolloApi();
             var jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
 
             // Create a bounded channel with a capacity of 1000
-            var fileChannel = Channel.CreateBounded<string>(new BoundedChannelOptions(5)
+            var fileChannel = Channel.CreateBounded<string>(new BoundedChannelOptions(1000)
             {
                 FullMode = BoundedChannelFullMode.Wait
             });
@@ -356,11 +357,15 @@ namespace Apollo.Api.UnitTests
                             }
 
                             var jsonData = await File.ReadAllTextAsync(jsonFile);
+
+                            //
+                            // Convertion to Apollo Profile from BA Profile
                             var profile = MapJsonToProfile(jsonData);
-                            // var profile =  JsonConvert.DeserializeObject<Profile>(jsonData);
+
+                            //var profile =  JsonConvert.DeserializeObject<Profile>(jsonData);
 
                             var jsonDataSave = JsonConvert.SerializeObject(profile);
-                            File.WriteAllText(filePath, jsonDataSave);
+                            //File.WriteAllText(filePath, jsonDataSave);
 
                             var  result = await api.CreateOrUpdateBAProfileAsync(profile);
 
@@ -394,7 +399,7 @@ namespace Apollo.Api.UnitTests
                 LanguageSkills = jsonObject?.sprachkenntnisse != null ? MapLanguageSkills(jsonObject.sprachkenntnisse) : null,
                 Skills = jsonObject?.kenntnisse != null ? MapSkills(jsonObject.kenntnisse):null,
                 WebReferences = new List<WebReference>{  new WebReference(){
-                Title = "BA DataSet From Json File"
+                Title = "BA-Test"
                     } }
             };
 
@@ -559,52 +564,57 @@ namespace Apollo.Api.UnitTests
         }
 
 
-        private List<Skill> MapSkills(dynamic items)
+        private List<Skill> MapSkills(dynamic kenntnisse)
         {
             var skills = new List<Skill>();
 
-            // Map Verhandlungssicher languages
-            if (items?.ErweiterteKenntnisse != null)
+            // Map Erweiterte Kenntnisse
+            if (kenntnisse?.ErweiterteKenntnisse != null)
             {
-                foreach (var language in items.ErweiterteKenntnisse)
+                foreach (var skill in kenntnisse.ErweiterteKenntnisse)
                 {
                     skills.Add(new Skill
                     {
-                        Title =  language.Value ,
-                        ScopeNote = "ErweiterteKenntnisse"
+                        Title = skill,
+                        ScopeNote = "Erweiterte Kenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
                     });
                 }
             }
 
-            // Map Verhandlungssicher languages
-            if (items?.Grundkenntnisse != null)
+            // Map Grundkenntnisse
+            if (kenntnisse?.Grundkenntnisse != null)
             {
-                foreach (var language in items.Grundkenntnisse)
+                foreach (var skill in kenntnisse.Grundkenntnisse)
                 {
                     skills.Add(new Skill
                     {
-                        Title = language.Value,
-                        ScopeNote = "Grundkenntnisse"
+                        Title = skill,
+                        ScopeNote = "Grundkenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
                     });
                 }
             }
 
-            // Map Verhandlungssicher languages
-            if (items?.Expertenkenntnisse != null)
+            // Map Expertenkenntnisse
+            if (kenntnisse?.Expertenkenntnisse != null)
             {
-                foreach (var language in items.Expertenkenntnisse)
+                foreach (var skill in kenntnisse.Expertenkenntnisse)
                 {
                     skills.Add(new Skill
                     {
-                        Title = language.Value,
-                        ScopeNote = "Expertenkenntnisse"
+                        Title = skill,
+                        ScopeNote = "Expertenkenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
+
                     });
                 }
             }
+
             return skills;
-
-
         }
+
+
 
         string? GetCultureName(string language)
         {
