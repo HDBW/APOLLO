@@ -15,7 +15,7 @@ namespace Apollo.Common.Entities
 
         // Qualification_Description_filtered.txt
         // FreiText
-        public string Name { get; set; }
+        public string? Name { get; set; }
         
         public string? Description { get; set; }
 

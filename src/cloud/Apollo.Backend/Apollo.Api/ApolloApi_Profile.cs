@@ -235,6 +235,61 @@ namespace Apollo.Api
         }
 
 
+
+
+        /// <summary>
+        /// Creates or Updates the new BA Profile instance from JSON data.
+        /// </summary>
+        /// <param name="profile">It will Map data for ApolloProfile from BA Json file.</param>
+        public virtual async Task<string> CreateOrUpdateBAProfileAsync(Profile profile)
+        {
+            try
+            {
+                List<string> ids = new List<string>();
+
+                _logger?.LogTrace($"Entered {nameof(CreateOrUpdateBAProfileAsync)}");
+
+                Profile? existingProfile = null;
+
+                if (String.IsNullOrEmpty(profile.Id))
+                {
+                    ///
+                    /// Patric & Lars Both agree that to create MOC user for BA Dataset save for Profile
+                    /// As they both agree there is no dependency on client side for that
+                    string mocUserId = CreateUserId();
+                    profile.Id = CreateProfileId(mocUserId);
+                }
+
+                //Set ID for different items in a List in case empty or null
+                EnsureIds<CareerInfo>(profile!, profile?.CareerInfos, existingProfile?.CareerInfos);
+                EnsureIds<EducationInfo>(profile!, profile?.EducationInfos, existingProfile?.EducationInfos);
+                EnsureIds<Qualification>(profile!, profile?.Qualifications, existingProfile?.Qualifications);
+                EnsureIds<LanguageSkill>(profile!, profile?.LanguageSkills, existingProfile?.LanguageSkills);
+                EnsureIds<WebReference>(profile!, profile?.WebReferences, existingProfile?.WebReferences);
+               
+
+                await _dal.UpsertAsync(GetCollectionName<Profile>(), new List<ExpandoObject> { Convertor.Convert(profile!) });
+
+                _logger?.LogTrace($"Completed {nameof(CreateOrUpdateProfileAsync)}");
+
+                return profile?.Id!;
+            }
+            catch (ApolloApiException ex)
+            {
+                // Implement missing logging for ApolloApiException
+                _logger?.LogError(ex, $"ApolloApiException with ErrorCode {ex.ErrorCode} in {nameof(CreateOrUpdateBAProfileAsync)}: {ex.Message}");
+                throw; // Rethrow the caught exception to maintain the original stack trace.
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Failed execution of {nameof(CreateOrUpdateBAProfileAsync)}: {ex.Message}");
+
+                // For other exceptions, throw an ApolloApiException with a general error code and message
+                throw new ApolloApiException(ErrorCodes.ProfileErrors.CreateOrUpdateProfileError, "An error occurred while creating or updating profiles.", ex);
+            }
+        }
+
+
         /// <summary>
         /// Generic method to ensure that objects in a list have unique IDs.
         /// </summary>

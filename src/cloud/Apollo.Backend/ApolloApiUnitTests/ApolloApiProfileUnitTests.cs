@@ -3,6 +3,9 @@
 
 
 using System.Collections;
+using System.Globalization;
+using System.Threading.Channels;
+using Amazon.Runtime.Internal.Transform;
 using Apollo.Api;
 using Apollo.Api.UnitTests;
 using Apollo.Common.Entities;
@@ -11,6 +14,8 @@ using Daenet.MongoDal.Entitties;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using SharpCompress.Common;
 
 namespace Apollo.Api.UnitTests
 {
@@ -301,5 +306,487 @@ namespace Apollo.Api.UnitTests
             // Act: Attempt to retrieve a non-existent profile
             await api.GetProfileAsync(nonExistentProfileId);
         }
+
+
+        /// <summary>
+        /// Test method to import profiles from JSON files using producer/consumer pattern.
+        /// </summary>
+        [TestMethod]
+        public async Task ImportProfilesFromJsonFilesTest()
+        {
+            int MaxConsumers = 2;
+            var jsonFolderPath = @"C:\Users\MukitKhan\Videos\DATA";
+            var filePath = @"C:\Users\MukitKhan\Documents";
+            var api = Helpers.GetApolloApi();
+            var jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
+
+            // Create a bounded channel with a capacity of 1000
+            var fileChannel = Channel.CreateBounded<string>(new BoundedChannelOptions(5)
+            {
+                FullMode = BoundedChannelFullMode.Wait
+            });
+
+            var consumerTasks = new List<Task>();
+
+            // Producer Task: Writes file paths to the channel
+            var producerTask = Task.Run(async () =>
+            {
+                foreach (var jsonFile in jsonFiles)
+                {
+                    await fileChannel.Writer.WriteAsync(jsonFile);
+                }
+                fileChannel.Writer.Complete();
+            });
+
+            // Consumer Tasks: Read file paths from the channel and process them
+            for (int i = 0; i < MaxConsumers; i++)
+            {
+                consumerTasks.Add(Task.Run(async () =>
+                {
+                    await foreach (var jsonFile in fileChannel.Reader.ReadAllAsync())
+                    {
+                        try
+                        {
+                            var fileInfo = new FileInfo(jsonFile);
+                            if (fileInfo.Length <= 1024)
+                            {
+                                // Log or handle small file scenario as needed
+                                Console.WriteLine($"File {jsonFile} is smaller than 1024 bytes and will be skipped.");
+                                continue;
+                            }
+
+                            var jsonData = await File.ReadAllTextAsync(jsonFile);
+                            var profile = MapJsonToProfile(jsonData);
+                            // var profile =  JsonConvert.DeserializeObject<Profile>(jsonData);
+
+                            var jsonDataSave = JsonConvert.SerializeObject(profile);
+                            File.WriteAllText(filePath, jsonDataSave);
+
+                            var  result = await api.CreateOrUpdateBAProfileAsync(profile);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log the error
+                            Console.WriteLine($"Error processing file {jsonFile}: {ex}");
+                        }
+                    }
+                }));
+            }
+
+            // Wait for the producer and all consumers to complete
+            await producerTask;
+            await Task.WhenAll(consumerTasks);
+        }
+
+        private Profile MapJsonToProfile(string jsonData)
+        {
+            dynamic? jsonObject = JsonConvert.DeserializeObject(jsonData);
+
+            var apolloProfile = new Profile
+            {
+                Id = null,
+                CareerInfos = jsonObject?.werdegang != null ? MapCareerInfo((IEnumerable<dynamic>)jsonObject.werdegang) : null,
+                Occupations = jsonObject?.berufe != null ? MapOccupation((IEnumerable<dynamic>)jsonObject.berufe) : null,
+                EducationInfos = jsonObject?.bildung != null ? MapEducationInfo((IEnumerable<dynamic>)jsonObject.bildung) : null,
+                Qualifications = jsonObject?.qualifikationen != null ? MapQualification((IEnumerable<dynamic>)jsonObject.qualifikationen) : null,
+                MobilityInfo = jsonObject?.mobilitaet != null ? MapMobilityInfo(jsonObject.mobilitaet) : null,
+                LanguageSkills = jsonObject?.sprachkenntnisse != null ? MapLanguageSkills(jsonObject.sprachkenntnisse) : null,
+                Skills = jsonObject?.kenntnisse != null ? MapSkills(jsonObject.kenntnisse):null,
+                WebReferences = new List<WebReference>{  new WebReference(){
+                Title = "BA DataSet From Json File"
+                    } }
+            };
+
+            return apolloProfile;
+        }
+
+        private List<CareerInfo> MapCareerInfo(IEnumerable<dynamic> items)
+        {
+            return items.Select(item => new CareerInfo
+            {
+                Description = item?.berufsbezeichnung,
+                Start = item?.Von,
+                End = item?.EndDate,
+                Job = new Occupation()
+                {
+                    Description = item?.berufsbezeichnung,
+                    UniqueIdentifier = null,
+                    OccupationUri = null,
+                    ClassificationCode = item?.lebenslaufart,
+                    Identifier = item?.lebenslaufartenKategorie,
+                    Concept = null,
+                    RegulatoryAspect = "",
+                    HasApprenticeShip = false,
+                    IsUniversityOccupation = false,
+                    IsUniversityDegree = true,
+                    PreferedTerm = [],
+                    NonePreferedTerm = [ ],
+                    TaxonomyInfo = Taxonomy.Unknown,
+                    TaxonomieVersion= "",
+                    CultureString = "de-DE",
+                    BroaderConcepts =  [ ],
+                    NarrowerConcepts = [ ],
+                    RelatedConcepts = [ ],
+                    Skills = [ ],
+                    EssentialSkills = [ ],
+                    OptionalSkills = [ ],
+                    EssentialKnowledge = [ ],
+                    OptionalKnowledge = [ ],
+                    Documents = [],
+                    OccupationGroup = { },
+                    DkzApprenticeship =true,
+                    QualifiedProfessional = true,
+                    NeedsUniversityDegree = true,
+                    IsMilitaryApprenticeship = false,
+                    IsGovernmentApprenticeship = false,
+                    //ValidFrom = item?.Von,
+                    //ValidTill = item?.EndDate,
+                }
+            }).ToList();
+        }
+
+        private List<Occupation> MapOccupation(IEnumerable<dynamic> items)
+        {
+            var data = items.Select(item => new Occupation
+            {
+                Description = item.ToString()
+            }).ToList();
+            return data;
+        }
+
+
+        private List<EducationInfo> MapEducationInfo(IEnumerable<dynamic> items)
+        {
+            var data = items.Select(item => new EducationInfo
+            {
+                Start = item?.von,
+                End = item?.bis,
+                Country = item?.land,
+                Description = item?.beschreibung,
+                ProfessionalTitle = new Occupation
+                {
+                    Description = item?.berufsbezeichnung
+                },
+                CompletionState = item?.istAbgeschlossen != null ?  new CompletionState { ListItemId = 1, Value = item.istAbgeschlossen }: null, 
+                Graduation = item?.schulAbschluss != null ? new SchoolGraduation { ListItemId = 1, Value = item.schulAbschluss }: null, 
+                UniversityDegree = item?.hochSchulAbschluss !=null ? new UniversityDegree { ListItemId = 1, Value = item.hochSchulAbschluss }: null,
+                TypeOfSchool =  item?.schulart != null ? new TypeOfSchool { ListItemId =1 , Value = item.schulart } : null,
+                NameOfInstitution = item?.nameArtEinrichtung,
+                City = item?.ort,
+                Recognition = item?.anerkennungAbschluss!=null ? new RecognitionType { ListItemId = 1, Value = item.anerkennungAbschluss }: null
+            }).ToList();
+
+            return data;
+        }
+
+        private List<Qualification> MapQualification(IEnumerable<dynamic> items)
+        {
+            var data =  items.Select(item => new Qualification
+            {
+                Name =  item?.qualifikationsName,
+                Description = item?.beschreibung, 
+                IssueDate = item?.ausstellDatum, 
+                ExpirationDate = item?.ablaufDatum,
+                IssuingAuthority = null
+            }).ToList();
+            return data;
+        }
+
+
+        private Mobility MapMobilityInfo(dynamic item)
+        {
+            var data = new Mobility
+            {
+                WillingToTravel = item?.reisebereitschaft!=null ? new Willing { ListItemId = 1, Value = item.reisebereitschaft }:null,
+                DriverLicenses = item?.DriversLicense != null ? new List<DriversLicense>{new DriversLicense { ListItemId = 1, Value = item.fuehrerscheine }}:null,
+                HasVehicle = item?.fahrzeugVorhanden 
+            };
+            return data;
+        }
+
+
+        private List<LanguageSkill> MapLanguageSkills(dynamic sprachkenntnisse)
+        {
+           
+            var languageSkills = new List<LanguageSkill>();
+            int listItemIdCounter = 1;
+
+            // Map Verhandlungssicher languages
+            if (sprachkenntnisse?.Verhandlungssicher != null)
+            {
+                foreach (var language in sprachkenntnisse.Verhandlungssicher)
+                {
+                    var p = language.Value;
+                    languageSkills.Add(new LanguageSkill
+                    {
+                        Name = language.Value,
+                        Code = GetCultureName(language.Value),
+                        Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Verhandlungssicher" },
+                    });
+                }
+            }
+
+            // Map Erweiterte Kenntnisse languages
+            if (sprachkenntnisse?.ErweiterteKenntnisse != null)
+            {
+                foreach (var language in sprachkenntnisse.ErweiterteKenntnisse)
+                {
+                    languageSkills.Add(new LanguageSkill
+                    {
+                        Name = language.Value,
+                        Code = GetCultureName(language.Value),
+                        Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Erweiterte Kenntnisse" },
+                    });
+                }
+            }
+
+            // Map Grundkenntnisse languages
+            if (sprachkenntnisse?.Grundkenntnisse != null)
+            {
+                foreach (var language in sprachkenntnisse.Grundkenntnisse)
+                {
+                    languageSkills.Add(new LanguageSkill
+                    {
+                        Name = language.Value,
+                        Code = GetCultureName(language.Value),
+                        Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Grundkenntnisse" },
+                    });
+                }
+            }
+
+            return languageSkills;
+        }
+
+
+        private List<Skill> MapSkills(dynamic items)
+        {
+            var skills = new List<Skill>();
+
+            // Map Verhandlungssicher languages
+            if (items?.ErweiterteKenntnisse != null)
+            {
+                foreach (var language in items.ErweiterteKenntnisse)
+                {
+                    skills.Add(new Skill
+                    {
+                        Title =  language.Value ,
+                        ScopeNote = "ErweiterteKenntnisse"
+                    });
+                }
+            }
+
+            // Map Verhandlungssicher languages
+            if (items?.Grundkenntnisse != null)
+            {
+                foreach (var language in items.Grundkenntnisse)
+                {
+                    skills.Add(new Skill
+                    {
+                        Title = language.Value,
+                        ScopeNote = "Grundkenntnisse"
+                    });
+                }
+            }
+
+            // Map Verhandlungssicher languages
+            if (items?.Expertenkenntnisse != null)
+            {
+                foreach (var language in items.Expertenkenntnisse)
+                {
+                    skills.Add(new Skill
+                    {
+                        Title = language.Value,
+                        ScopeNote = "Expertenkenntnisse"
+                    });
+                }
+            }
+            return skills;
+
+
+        }
+
+        string? GetCultureName(string language)
+        {
+            string? isoCode = GetISOCode(language);
+            CultureInfo? cultureInfo = isoCode!=null ? GetCultureInfoFromISOCode(isoCode) : null;
+            return cultureInfo?.Name;
+
+        }
+
+        CultureInfo? GetCultureInfoFromISOCode(string isoCode)
+        {
+            try
+            {
+                return CultureInfo.GetCultureInfoByIetfLanguageTag(isoCode);
+            }
+            catch (CultureNotFoundException)
+            {
+                return null;
+            }
+        }
+
+        string? GetISOCode(string languageName)
+        {
+            if (languageCodesIso6392.ContainsKey(languageName.ToLower()))
+            {
+                return languageCodesIso6392[languageName.ToLower()];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        Dictionary<string, string> languageCodesIso6392 = new Dictionary<string, string>
+        {
+            {"afrikaans", "afr"},
+            {"akan/twi (westafrika)", "aka"},
+            {"akzent", "deu"},
+            {"albanisch", "alb"},
+            {"amharisch (äthiopien)", "amh"},
+            {"arabisch", "ara"},
+            {"aramäisch/syrisch", "arc"},
+            {"armenisch", "arm"},
+            {"aserbaidschanisch", "aze"},
+            {"bambara (westafrika, mali)", "bam"},
+            {"bengali", "ben"},
+            {"berberisch (tamazight)", "ber"},
+            {"birmanisch", "bur"},
+            {"bosnisch", "bos"},
+            {"bulgarisch", "bul"},
+            {"chinesisch", "chi"},
+            {"deutsch", "deu"},
+            // German dialects
+            {"deutscher dialekt (alemannisch/schweizerdeutsch)", "gsw"},
+            {"deutscher dialekt (allgäuisch)", "deu"},
+            {"deutscher dialekt (badisch)", "deu"},
+            {"deutscher dialekt (bayerisch)", "deu"},
+            {"deutscher dialekt (bergisch)", "deu"},
+            {"deutscher dialekt (berlinerisch)", "deu"},
+            {"deutscher dialekt (böhmisch)", "deu"},
+            {"deutscher dialekt (elsässisch)", "deu"},
+            {"deutscher dialekt (erzgebirgisch)", "deu"},
+            {"deutscher dialekt (fränkisch)", "deu"},
+            {"deutscher dialekt (hallenser)", "deu"},
+            {"deutscher dialekt (hamburgisch)", "deu"},
+            {"deutscher dialekt (harzer)", "deu"},
+            {"deutscher dialekt (hessisch)", "deu"},
+            {"deutscher dialekt (hochdeutsch)",  "deu"},
+            {"deutscher dialekt (jiddisch)",  "deu"},
+            {"deutscher dialekt (koelsch)",  "deu"},
+            {"deutscher dialekt (kärtnerisch)",  "deu"},
+            {"deutscher dialekt (lausitzer)",  "deu"},
+            {"deutscher dialekt (magdeburger)",  "deu"},
+            {"deutscher dialekt (mannheimer)",  "deu"},
+            {"deutscher dialekt (mecklenburgisch)",  "deu"},
+            {"deutscher dialekt (norddeutsch)",  "deu"},
+            {"deutscher dialekt (ostpreußisch)",  "deu"},
+            {"deutscher dialekt (pfälzisch)", "deu"},
+            {"deutscher dialekt (plattdeutsch)", "nds"},
+            {"deutscher dialekt (pommerisch)", "pom"},
+            {"deutscher dialekt (rheinisch)", "ksh"},
+            {"deutscher dialekt (ruhrgebiet)", "ksh"},
+            {"deutscher dialekt (saarländisch)", "sli"},
+            {"deutscher dialekt (schlesisch)", "sli"},
+            {"deutscher dialekt (schwäbisch)", "swg"},
+            {"deutscher dialekt (steirisch)", "slv"},
+            {"deutscher dialekt (sächsisch)", "sxu"},
+            {"deutscher dialekt (thüringisch)", "gmh"},
+            {"deutscher dialekt (tirolerisch)", "bar"},
+            {"deutscher dialekt (vogtländisch)", "gmh"},
+            {"deutscher dialekt (westfälisch)", "ksh"},
+            {"deutscher dialekt (wienerisch)", "bar"},
+            {"deutscher dialekt (österreich)", "bar"},
+            {"dänisch", "dan"},
+            {"englisch", "eng"},
+            {"englisch (amerikanisches englisch)", "ena"},
+            {"englisch (technisches englisch)", "eng"},
+            {"englisch (wirtschafts-, businessenglisch)", "eng"},
+            {"esperanto", "epo"},
+            {"estnisch", "est"},
+            {"filipino (tagalog)", "fil"},
+            {"finnisch", "fin"},
+            {"französisch", "fre"},
+            {"friesisch", "fry"},
+            {"färöisch", "fao"},
+            {"gebärdensprache/unterstützte kommunikation (uk)", "sgn"},
+            {"georgisch", "geo"},
+            {"griechisch", "gre"},
+            {"gujarati", "guj"},
+            {"gälisch/irisch", "gla"},
+            {"hausa (westafrika)", "hau"},
+            {"hebräisch", "heb"},
+            {"hindi", "hin"},
+            {"hochdeutsch (dialektfrei)", "ger"},
+            {"igbo", "ibo"},
+            {"indonesisch", "ind"},
+            {"isländisch", "ice"},
+            {"italienisch", "ita"},
+            {"jamaika-kreolisch (patois)", "jam"},
+            {"japanisch", "jpn"},
+            {"jiddisch", "yid"},
+            {"kambodschanisch (khmer)", "khm"},
+            {"kasachisch", "kaz"},
+            {"katalanisch", "cat"},
+            {"kirgisisch", "kir"},
+            {"koreanisch", "kor"},
+            {"kroatisch", "hrv"},
+            {"kurdisch", "kur"},
+            {"laotisch", "lao"},
+            {"latein", "lat"},
+            {"lettisch", "lav"},
+            {"letzeburgisch (luxemburg)", "ltz"},
+            {"litauisch", "lit"},
+            {"malayalam", "mal"},
+            {"malaysisch", "may"},
+            {"marathi", "mar"},
+            {"mazedonisch", "mac"}, 
+            {"mongolisch", "mon"},
+            {"nepalesisch", "nep"},
+            {"niederdeutsch/plattdeutsch", "nds"},
+            {"niederländisch/flämisch", "dut"},
+            {"norwegisch", "nor"},
+            {"oromo", "orm"},
+            {"pakistanisch/urdu", "urd"},
+            {"paschtu/paschto/pashto (afghanistan)", "pus"},
+            {"persisch/dari/farsi", "per"},
+            {"polnisch", "pol"},
+            {"portugiesisch", "por"},
+            {"punjabi", "pan"},
+            {"rechtschreib- und grammatiksicherheit (deutsch)", "de"},
+            {"romani", "rom"},
+            {"rumänisch", "rum"},
+            {"russisch", "rus"},
+            {"schwedisch", "swe"},
+            {"serbisch", "srp"},
+            {"singhalesisch", "sin"},
+            {"slowakisch", "slo"},
+            {"slowenisch", "slv"},
+            {"somali", "som"},
+            {"sorbisch/wendisch", "wen"},
+            {"spanisch", "spa"},
+            {"suaheli (ostafrika)", "swa"},
+            {"tadschikisch", "tgk"},
+            {"taiwanisch", "tai"},
+            {"tamil", "tam"},
+            {"telugu", "tel"},
+            {"thai", "tha"},
+            {"tibetisch", "tib"},
+            {"tigrinja (eritrea)", "tir"},
+            {"tschechisch", "cze"},
+            {"tschetschenisch", "che"},
+            {"türkisch", "tur"},
+            {"uigurisch", "uig"},
+            {"ukrainisch", "ukr"},
+            {"ungarisch", "hun"},
+            {"usbekisch", "uzb"},
+            {"vietnamesisch", "vie"},
+            {"weißrussisch", "bel"},
+            {"yoruba (westafrika)", "yor"}
+        };
+
+
     }
+
 }

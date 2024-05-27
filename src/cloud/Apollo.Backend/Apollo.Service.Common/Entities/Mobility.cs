@@ -13,5 +13,5 @@ public class Mobility
     // Mehrfachselection
     public List<DriversLicense>? DriverLicenses { get; set; }
 
-    public bool HasVehicle { get; set; }
+    public bool? HasVehicle { get; set; }
 }

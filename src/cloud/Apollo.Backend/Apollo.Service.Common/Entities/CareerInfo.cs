@@ -13,7 +13,7 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Start date of the Experience
         /// </summary>
-        public DateTime Start { get; set; }
+        public DateTime? Start { get; set; }
 
         /// <summary>
         /// End date of the Experience
