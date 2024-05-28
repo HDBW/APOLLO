@@ -19,12 +19,13 @@
                         <FontImageSource Glyph="{StaticResource Calendar}"
                                          FontFamily="ApolloFontIcons"
                                          Size="24" Color="{StaticResource Primary}"/>
-                        <ImageButton.Behaviors>
+                    </ImageButton.Source>
+                    <ImageButton.Behaviors>
                         <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_DatePropertyEditor}" />
                     </ImageButton.Behaviors>
                 </ImageButton>
             </Grid>
         </Border>
     </VerticalStackLayout>
-    
+
 </ContentView>
