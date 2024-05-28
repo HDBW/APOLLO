@@ -34,7 +34,7 @@
                             <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="PropertyChanged" CommandParameter="LanguageName" />
                         </Label.Behaviors>
                     </Label>
-                    <Image Grid.Column="1">
+                    <Image Grid.Column="1" HeightRequest="24" WidthRequest="24">
                         <Image.Source>
                             <FontImageSource Glyph="{StaticResource Longlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
