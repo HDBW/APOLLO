@@ -22,7 +22,7 @@ jobs:
     name: Deploy Android
     steps:
       - name: Download Android artefacts
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v4
         with:
           github_token: ${{secrets.GITNUGET}}
           workflow: android.yml
@@ -44,7 +44,7 @@ jobs:
       name: Deploy IOs
       steps:
       - name: Download iOS artefacts
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v4
         with:
           github_token: ${{secrets.GITNUGET}}
           workflow: ios.yml

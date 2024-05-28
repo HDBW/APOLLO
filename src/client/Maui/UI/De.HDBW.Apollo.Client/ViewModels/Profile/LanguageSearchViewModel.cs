@@ -33,7 +33,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         private NavigationParameters? _parameters;
 
         private CancellationTokenSource? _cts;
-        private List<string> _filteredLanguages;
+
+        private List<string>? _filteredLanguages;
 
         public LanguageSearchViewModel(
             IDispatcherService dispatcherService,
@@ -96,7 +97,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                             continue;
                         }
 
-                        if (_filteredLanguages.Contains(cultur.Name))
+                        if (_filteredLanguages != null && _filteredLanguages.Contains(cultur.Name))
                         {
                             continue;
                         }

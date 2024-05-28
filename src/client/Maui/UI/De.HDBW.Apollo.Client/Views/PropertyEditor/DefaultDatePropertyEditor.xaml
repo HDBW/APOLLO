@@ -14,13 +14,12 @@
         <Border Style="{StaticResource InputBorderStyle}">
             <Grid ColumnDefinitions="*, auto">
                 <DatePicker Date="{x:Binding Value, Mode=TwoWay}" x:Name="PART_DatePropertyEditor"/>
-                <ImageButton Grid.Column="1">
+                <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{StaticResource Calendar}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
-                    </ImageButton.Source>
-                    <ImageButton.Behaviors>
+                                         FontFamily="ApolloFontIcons"
+                                         Size="24" Color="{StaticResource Primary}"/>
+                        <ImageButton.Behaviors>
                         <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_DatePropertyEditor}" />
                     </ImageButton.Behaviors>
                 </ImageButton>

@@ -10,15 +10,15 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              IsBusy="{x:Binding IsBusy}" Padding="0">
     <Grid RowDefinitions="auto, auto, *, *">
-        <Label Margin="24,32,24,16" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Welcome}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" />
-        <Label Margin="24,32,24,16" Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Text}" Style="{StaticResource Noto16}" />
+        <Label Margin="24,32,24,16" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Welcome}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" SemanticProperties.HeadingLevel="Level1"/>
+        <Label Margin="24,32,24,16" Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Text}" Style="{StaticResource Noto16}"/>
         <Image Source="splashdeco.png" Grid.Row="2" />
         
         <Border Grid.Row="1" Grid.RowSpan="3" VerticalOptions="EndAndExpand" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
             <VerticalStackLayout>
                 <HorizontalStackLayout Margin="24,16,24,16">
-                    <CheckBox x:Name="PART_DSGVO" VerticalOptions="Center" IsChecked="{x:Binding ConfirmedDSGVO, Mode=TwoWay}"/>
-                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" >
+                    <CheckBox x:Name="PART_DSGVO" VerticalOptions="Center" IsChecked="{x:Binding ConfirmedDSGVO, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.ExtendedSplashScreenView_DSGVO}" SemanticProperties.Hint="{x:Static strings:Resources.ExtendedSplashScreenView_DSGVOText}"/>
+                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center"  SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_LinkDSGVO}">
                          <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{x:Binding OpenPrivacyCommand}" />
                          </Label.GestureRecognizers>
@@ -33,8 +33,8 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Margin="24,0,24,16" IsVisible="{x:Binding IsChecked, Source={x:Reference PART_DSGVO}}">
-                    <CheckBox x:Name="PART_AllowContact" VerticalOptions="Center"  IsChecked="{x:Binding ConfirmedDataUsage, Mode=TwoWay}"/>
-                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" LineBreakMode="WordWrap">
+                    <CheckBox x:Name="PART_AllowContact" VerticalOptions="Center"  IsChecked="{x:Binding ConfirmedDataUsage, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.ExtendedSplashScreenView_AGB}" SemanticProperties.Hint="{x:Static strings:Resources.ExtendedSplashScreenView_AGBText}"/>
+                    <Label Margin="16,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" LineBreakMode="WordWrap"  SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_LinkAGB}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{x:Binding OpenDataUsageDialogCommand}" />
                         </Label.GestureRecognizers>

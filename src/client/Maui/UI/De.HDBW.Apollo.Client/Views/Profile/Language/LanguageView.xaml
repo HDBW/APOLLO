@@ -19,13 +19,13 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContent}">
-            <Label Text="{x:Static strings:Resources.Global_Language}"/>
+            <Label Text="{x:Static strings:Resources.Global_Language}" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding SearchLanguageCommand}"  />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding SearchLanguageCommand}"/>
                     </Grid.GestureRecognizers>
-                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding LanguageName}" VerticalOptions="Center">
+                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding LanguageName}" SemanticProperties.Description="{x:Static strings:Resources.Global_Language}" SemanticProperties.Hint="{x:Binding [LanguageName]}" VerticalOptions="Center">
                         <Label.Behaviors>
                             <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="PropertyChanged" CommandParameter="LanguageName" />
                         </Label.Behaviors>
@@ -38,19 +38,19 @@
                 </Grid>
             </Border>
             <Label Text="{x:Binding [LanguageName]}" Style="{StaticResource ValidationErrorLabel}"/>
-            
-            <Label Text="{x:Static strings:Resources.Global_LanguageNiveau}" Margin="0,2,0,0"/>
+
+            <Label Text="{x:Static strings:Resources.Global_LanguageNiveau}" Margin="0,2,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
-                    <Picker ItemsSource="{x:Binding LanguageNiveaus}"
-                            ItemDisplayBinding="{x:Binding Text}"
+                    <Picker ItemsSource="{x:Binding LanguageNiveaus}" SemanticProperties.Description="{x:Static strings:Resources.Global_LanguageNiveau}"
+                            ItemDisplayBinding="{x:Binding Text}" SemanticProperties.Hint="{x:Binding [SelectedLanguageNiveau]}"
                             x:Name="PART_LanguageNiveau"
                             SelectedItem="{x:Binding SelectedLanguageNiveau, Mode=TwoWay}">
                         <Picker.Behaviors>
                             <toolkit:EventToCommandBehavior Command="{x:Binding ValidateCommand}" EventName="SelectedIndexChanged" CommandParameter="SelectedLanguageNiveau" />
                         </Picker.Behaviors>
                     </Picker>
-                    <ImageButton Grid.Column="1">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>

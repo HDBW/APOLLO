@@ -15,7 +15,7 @@
         <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
-        <Label Grid.Row="0" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.RegistrationView_Title}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="24,32,24,0" />
+        <Label Grid.Row="0" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.RegistrationView_Title}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="24,32,24,0" SemanticProperties.HeadingLevel="Level1"/>
         <Label Grid.Row="1" Text="{x:Static strings:Resources.RegistrationView_Description}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}" Margin="24,16,24,32"/>
         <CarouselView Grid.Row="2"
                       ItemsSource="{x:Binding Instructions}"

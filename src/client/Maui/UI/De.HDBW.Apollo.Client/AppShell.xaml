@@ -43,20 +43,16 @@
         </ResourceDictionary>
     </Shell.Resources>
     <Shell.FlyoutHeader>
-         <Frame Margin="0" BackgroundColor="Transparent" BorderColor="Transparent" >
-            <HorizontalStackLayout Padding="8,12,8,0">
-                <Image Source="apollo.png" HeightRequest="24" MaximumWidthRequest="101" Aspect="AspectFit"/>
-            </HorizontalStackLayout>
-        </Frame>
+        <HorizontalStackLayout Padding="8,12,8,0"  Margin="24">
+            <Image Source="apollo.png" HeightRequest="24" MaximumWidthRequest="101" Aspect="AspectFit"/>
+        </HorizontalStackLayout>
     </Shell.FlyoutHeader>
     <Shell.FlyoutFooter >
-        <Frame Margin="0" BackgroundColor="Transparent" BorderColor="Transparent">
-            <VerticalStackLayout >
+            <VerticalStackLayout Margin="24">
                 <Label Text="{x:Static strings:Resources.MainNavigation_BetaTitle}" Style="{StaticResource Noto12}" FontAttributes="Bold"/>
                 <Label Text="{x:Static strings:Resources.MainNavigation_BetaDescription}" Style="{StaticResource Noto12}"/>
                 <Button Text="{x:Static strings:Resources.MainNavigation_Feedback}"  Margin="0,16,0,0" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.FeedbackView}" />
             </VerticalStackLayout>
-        </Frame>
     </Shell.FlyoutFooter>
     <MenuItem Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}">
         <MenuItem.IconImageSource>

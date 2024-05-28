@@ -5,9 +5,9 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
              x:DataType="viewModels:StringPropertyEditor">
     <VerticalStackLayout Margin="0,0,0,16">
-        <Label Text="{x:Binding Label}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto14SemiBold}"/>
+        <Label Text="{x:Binding Label}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
         <Border Style="{StaticResource InputBorderStyle}">
-            <Entry Text="{x:Binding Value, Mode=TwoWay}" ClearButtonVisibility="WhileEditing" MaxLength="255" Unfocused="HandleUnfocused"/>
+            <Entry Text="{x:Binding Value, Mode=TwoWay}" SemanticProperties.Description="{x:Binding Label}" ClearButtonVisibility="WhileEditing" MaxLength="255" Unfocused="HandleUnfocused"/>
         </Border>
     </VerticalStackLayout>
 </ContentView>

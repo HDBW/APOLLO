@@ -9,10 +9,10 @@
              Title="{x:Static strings:Resources.SettingsView_Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
-    <Grid RowDefinitions="*, auto, auto" ColumnDefinitions="*, *" Padding="0,0,0,16">
-        <ScrollView Padding="24,0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
+    <Grid RowDefinitions="*, auto, auto, auto, auto" Padding="0,0,0,16">
+        <ScrollView Padding="24,0" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
             <VerticalStackLayout Spacing="8">
-                <Label Text="{x:Static strings:Resources.SettingsView_Questions}" Style="{StaticResource NotoSerif24}" TextColor="{StaticResource Primary}"/>
+                <Label Text="{x:Static strings:Resources.SettingsView_Questions}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" SemanticProperties.HeadingLevel="Level2"/>
                 <Label Text="{x:Static strings:Resources.SettingsView_QuestionDescription}" Style="{StaticResource NotoSerif16}" TextColor="{StaticResource TextColor}"/>
                 <HorizontalStackLayout BackgroundColor="Transparent" Spacing="8">
                     <HorizontalStackLayout.GestureRecognizers>
@@ -28,10 +28,10 @@
                 <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{x:Binding UnRegisterCommand}" Margin="0,24,0,0"/>
             </VerticalStackLayout>
         </ScrollView>
-        <Button Grid.Column="0" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Terms}" Command="{x:Binding OpenTermsCommand}"/>
-        <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Privacy}" Command="{x:Binding OpenPrivacyCommand}"/>
-        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Imprint}" Command="{x:Binding OpenImprintCommand}"/>
-        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Licenses}" Command="{x:Binding OpenLicensesCommand}"/>
+        <Button Grid.Row="1" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Terms}" Command="{x:Binding OpenTermsCommand}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_LinkAGB}"/>
+        <Button Grid.Row="2" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Privacy}" Command="{x:Binding OpenPrivacyCommand}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_LinkDSGVO}"/>
+        <Button Grid.Row="3" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Imprint}" Command="{x:Binding OpenImprintCommand}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_LinkImprint}"/>
+        <Button Grid.Row="4" Style="{StaticResource SoftButton}" Text="{x:Static strings:Resources.SettingsView_Licenses}" Command="{x:Binding OpenLicensesCommand}"/>
     </Grid>
    
 </ContentPage>
