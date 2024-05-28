@@ -16,11 +16,8 @@
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="{x:Binding FavoriteIcon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
+        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}" />
+
         <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{StaticResource Upload}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>

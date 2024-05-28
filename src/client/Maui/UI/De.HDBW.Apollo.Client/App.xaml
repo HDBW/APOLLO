@@ -12,8 +12,11 @@
                 <ResourceDictionary Source="Resources/Styles/Icons.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
             <converter:SingleItemListConverter x:Key="SingleItemListConverter" />
-            
+
+            <converter:UnicodeToImageFontsourceConvert x:Key="UnicodeToImageFontsourceConvert" FontFamily="ApolloFontIcons" Color="{StaticResource Primary}" Size="24"/>
+
             <Style x:Key="DefaultPageStyle" TargetType="ContentPage">
                 <Setter Property="Padding" Value="0" />
                 <!-- In order to get Icons in TitleBar on ios in Primary color -->
