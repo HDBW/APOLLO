@@ -38,7 +38,7 @@
                                 VerticalOptions="Center"
                                 x:Name="PART_Start"
                                 NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Grid.Column="1">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Calendar}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
