@@ -16,21 +16,21 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="ProfileInteractionTemplate" x:DataType="interactionModels:InteractionEntry">
-            <Grid ColumnDefinitions="Auto,*,Auto" Style="{StaticResource ProfileInteraction}">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
-                </Grid.GestureRecognizers>
-                <Image WidthRequest="24" HeightRequest="24" Margin="0,0,8,0">
-                    <Image.Source>
-                        <FontImageSource Glyph="{x:Binding ImagePath}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
-                    </Image.Source>
-                </Image>
-                <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
-                <Image Grid.Column="2" >
-                    <Image.Source>
-                        <FontImageSource Glyph="{StaticResource Edit}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
-                    </Image.Source>
-                </Image>
+                <Grid ColumnDefinitions="Auto,*,Auto" Style="{StaticResource ProfileInteraction}" >
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Image WidthRequest="24" HeightRequest="24" Margin="0,0,8,0">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Binding ImagePath}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
+                    <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" SemanticProperties.Hint="bearbeiten"/>
+                    <Image Grid.Column="2">
+                        <Image.Source>
+                            <FontImageSource Glyph="{StaticResource Edit}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
             </Grid>
         </DataTemplate>
 
@@ -48,7 +48,7 @@
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
                     <VerticalStackLayout>
-                        <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}"/>
+                        <Label Text="{x:Binding Headline}" Style="{StaticResource Noto16SemiBold}" />
                         <Grid ColumnDefinitions="Auto, *">
                             <Label Text="{x:Binding ProgressDisplayText}" Style="{StaticResource Noto12Bold}" VerticalOptions="Center" Margin="0,0,8,0" TextColor="{StaticResource Primary}"/>
                             <ProgressBar Grid.Column="1" Progress="{x:Binding Progress}" VerticalOptions="Center"/>
@@ -66,7 +66,7 @@
                                                 <FontImageSource Glyph="{x:Binding ImagePath}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                             </Image.Source>
                                         </Image>
-                                        <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center"/>
+                                        <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

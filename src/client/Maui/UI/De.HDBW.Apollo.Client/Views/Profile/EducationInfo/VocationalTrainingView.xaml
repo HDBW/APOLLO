@@ -20,18 +20,18 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContent}">
-            <Label Text="{x:Static strings:Resources.Global_Graduation}" Style="{StaticResource Noto14SemiBold}"/>
+            <Label Text="{x:Static strings:Resources.Global_Graduation}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" />
+                <Entry x:Name="PART_Description" Text="{x:Binding Description, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Graduation}"/>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_Occupation}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchOccupationCommand}"  />
                     </Grid.GestureRecognizers>
-                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" Margin="0,0,4,0"/>
+                    <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" SemanticProperties.Description="{x:Static strings:Resources.Global_Occupation}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" Margin="0,0,4,0"/>
                     <Image HeightRequest="24" WidthRequest="24">
                         <Image.Source>
                             <FontImageSource Glyph="{StaticResource Longlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -40,15 +40,15 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_TypeOfSchool}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_TypeOfSchool}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
-                    <Picker ItemsSource="{x:Binding TypeOfSchools}"
+                    <Picker ItemsSource="{x:Binding TypeOfSchools}" SemanticProperties.Description="{x:Static strings:Resources.Global_TypeOfSchool}"
                             ItemDisplayBinding="{x:Binding Text}"
                             x:Name="PART_TypeOfSchool"
                             SelectedItem="{x:Binding SelectedTypeOfSchool, Mode=TwoWay}"/>
 
-                    <ImageButton Grid.Column="1">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
@@ -56,19 +56,19 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_TypeOfSchool}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_UniversityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_UniversityDegree}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
-                    <Picker ItemsSource="{x:Binding UniverityDegrees}"
+                    <Picker ItemsSource="{x:Binding UniverityDegrees}" SemanticProperties.Description="{x:Static strings:Resources.Global_UniversityDegree}"
                             ItemDisplayBinding="{x:Binding Text}"
                             x:Name="PART_UniverityDegree"
                             SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>
 
-                    <ImageButton Grid.Column="1">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
@@ -76,19 +76,19 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_UniverityDegree}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_CompletionState}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_CompletionState}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto" >
-                    <Picker ItemsSource="{x:Binding CompletionStates}"
+                    <Picker ItemsSource="{x:Binding CompletionStates}" SemanticProperties.Description="{x:Static strings:Resources.Global_CompletionState}"
                             ItemDisplayBinding="{x:Binding Text}"
                             x:Name="PART_CompletionState"
                             SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
 
-                    <ImageButton Grid.Column="1">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
@@ -96,19 +96,19 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_Start}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
-                    <cdp:NullableDatePicker HorizontalOptions="Fill"
+                    <cdp:NullableDatePicker HorizontalOptions="Fill" SemanticProperties.Description="{x:Static strings:Resources.Global_Start}"
                                 IsClearButtonVisible="False"
                                 VerticalOptions="Center"
                                 x:Name="PART_Start"
                                 NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Grid.Column="1">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Calendar}"
                          FontFamily="ApolloFontIcons"
@@ -121,24 +121,23 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_End}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_End}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto, auto">
-                    <cdp:NullableDatePicker HorizontalOptions="Fill"
+                    <cdp:NullableDatePicker HorizontalOptions="Fill" SemanticProperties.Description="{x:Static strings:Resources.Global_End}"
                                 IsClearButtonVisible="False"
                                 VerticalOptions="Center"
                                 x:Name="PART_End"
                                 NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0">
+                    <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                     </ImageButton>
-                    <ImageButton Grid.Column="2">
+                    <ImageButton Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Calendar}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
+                                             Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
@@ -147,21 +146,21 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+            <Label Text="{x:Static strings:Resources.Global_NameOfInstitution}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
+                <Entry x:Name="PART_NameOfInstitution" Text="{x:Binding NameOfInstitution, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_NameOfInstitution}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_City}"/>
             </Border>
-            
-            <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+
+            <Label Text="{x:Static strings:Resources.Global_City}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
+                <Entry x:Name="PART_City" Text="{x:Binding City, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_City}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Country}"/>
             </Border>
-            
-            <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0"/>
+
+            <Label Text="{x:Static strings:Resources.Global_Country}" Style="{StaticResource Noto14SemiBold}" Margin="0,20,0,0" AutomationProperties.ExcludedWithChildren="True"/>
             <Border Style="{StaticResource InputBorderStyle}">
-                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Description}"/>
+                <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Country}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Description}"/>
             </Border>
-            
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -128,7 +128,7 @@
         <DataTemplate x:Key="SeperatorItemTemplate" x:DataType="trainingsModels:SeperatorItem">
             <ContentView HeightRequest="16" />
         </DataTemplate>
-        
+
         <selector:AppointmentItemTemplateSelector x:Key="AppointmentItemTemplateSelector"
                                                   LineItemTemplate ="{StaticResource LineItemTemplate}"
                                                   HeaderItemTemplate ="{StaticResource HeaderItemTemplate}"

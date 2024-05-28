@@ -1,10 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Models;
@@ -13,14 +13,13 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
+using ContactModel = Invite.Apollo.App.Graph.Common.Models.Contact;
 using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {
     public partial class FavoriteViewModel : BaseViewModel
     {
-        private readonly ConcurrentDictionary<Uri, List<IProvideImageData>> _loadingCache = new ConcurrentDictionary<Uri, List<IProvideImageData>>();
-
         [ObservableProperty]
         private ObservableCollection<SearchSuggestionEntry> _suggestions = new ObservableCollection<SearchSuggestionEntry>();
 
@@ -29,9 +28,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<SearchInteractionEntry> _favoriteItems = new ObservableCollection<SearchInteractionEntry>();
-
-        private CancellationTokenSource? _loadingCts;
-        private List<Task>? _loadingTask;
 
         private List<TrainingModel> _trainings = new List<TrainingModel>();
 
@@ -79,14 +75,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     filter.IsOrOperator = true;
                     var interactions = await SearchTrainingsAsync(filter, worker.Token).ConfigureAwait(false);
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(interactions), worker.Token).ConfigureAwait(false);
-                    _loadingCts?.Cancel();
-                    _loadingCts = new CancellationTokenSource();
-                    _loadingTask = new List<Task>();
-                    var loadingToken = _loadingCts.Token;
-                    foreach (var url in _loadingCache.Keys.ToList())
-                    {
-                        _loadingTask.Add(ImageCacheService.DownloadAsync(url, loadingToken).ContinueWith(OnApplyImageData));
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -130,37 +118,6 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        private async void OnApplyImageData(Task<(Uri Uri, string? Data)> task)
-        {
-            var result = task.Result;
-            _loadingTask?.Remove(task);
-            if (!(_loadingTask?.Any() ?? false))
-            {
-                _loadingCache.Clear();
-                _loadingCts?.Dispose();
-                _loadingCts = null;
-            }
-
-            if (string.IsNullOrWhiteSpace(result.Data))
-            {
-                return;
-            }
-
-            if (!_loadingCache.TryGetValue(result.Uri, out List<IProvideImageData>? entries))
-            {
-                return;
-            }
-
-            await ExecuteOnUIThreadAsync(
-                () =>
-                {
-                    foreach (var entry in entries)
-                    {
-                        entry.ImageData = result.Data;
-                    }
-                }, CancellationToken.None);
-        }
-
         private async Task<IEnumerable<SearchInteractionEntry>> SearchTrainingsAsync(Filter filter, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
@@ -171,11 +128,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     nameof(TrainingModel.TrainingType),
                     nameof(TrainingModel.ShortDescription),
                     nameof(TrainingModel.ProviderId),
+                    $"{nameof(TrainingModel.Appointment)}.{nameof(Appointment.AppointmentLocation)}.{nameof(ContactModel.City)}",
+                    $"{nameof(TrainingModel.Appointment)}.{nameof(Appointment.Occurences)}.{nameof(Occurence.Location)}.{nameof(ContactModel.City)}",
                     KnownFilters.PriceFieldName,
                     $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Name)}",
-                    $"{nameof(TrainingModel.TrainingProvider)}.{nameof(EduProvider.Image)}",
                     $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Name)}",
-                    $"{nameof(TrainingModel.CourseProvider)}.{nameof(EduProvider.Image)}",
                     KnownFilters.LoansFieldName,
                     KnownFilters.IndividualStartDateFieldName,
                     KnownFilters.AccessibilityAvailableFieldName,
@@ -198,21 +155,11 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private IEnumerable<SearchInteractionEntry> CreateTrainingResults(IEnumerable<TrainingModel> items)
         {
-            _loadingCache.Clear();
-            _loadingCts?.Cancel();
-            _loadingCts = null;
-            _loadingTask = null;
             var trainings = new List<SearchInteractionEntry>();
 
             foreach (var item in items)
             {
-                var parts = new List<string>();
-                {
-                    parts.Add(item.TrainingName);
-                    parts.Add(item.ShortDescription);
-                }
-
-                var text = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
+                var text = item.TrainingName;
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
                 var decoratorImagePath = KnonwIcons.Training;
@@ -227,31 +174,83 @@ namespace De.HDBW.Apollo.Client.ViewModels
                     eduProvider = item.CourseProvider;
                 }
 
-                var subline = eduProvider?.Name ?? Resources.Strings.Resources.Global_UnknownProvider;
-                var sublineImagePath = eduProvider?.Image?.OriginalString;
+                var subline = string.IsNullOrWhiteSpace(item.ShortDescription) || text == item.ShortDescription ? null : item.ShortDescription;
                 var price = item.Price ?? -1d;
-                var info = price == -1d ? Resources.Strings.Resources.Global_PriceOnRequest : price == 0 ? Resources.Strings.Resources.Global_PriceFreeOfCharge : $"{price:0.##} €";
+                var infoParts = new List<string>();
+                infoParts.Add(price == -1d ? Resources.Strings.Resources.Global_PriceOnRequest : price == 0 ? Resources.Strings.Resources.Global_PriceFreeOfCharge : $"{price:0.##} €");
+                infoParts.Add(Environment.NewLine);
+                var needsSpace = true;
+                if (item.Loans?.Any() ?? false)
+                {
+                    infoParts.Add(Resources.Strings.Resources.HasLoans);
+                    infoParts.Add(Environment.NewLine);
+                }
+
+                var startDates = new List<DateTime>();
+                var locations = new List<string>();
+                foreach (var appointment in item.Appointment ?? new List<Appointment>())
+                {
+                    if (!string.IsNullOrWhiteSpace(appointment.AppointmentLocation?.City))
+                    {
+                        locations.Add(appointment.AppointmentLocation.City);
+                    }
+
+                    startDates.Add(appointment.StartDate);
+                    foreach (var occurence in appointment.Occurences)
+                    {
+                        if (!string.IsNullOrWhiteSpace(occurence.Location?.City))
+                        {
+                            locations.Add(occurence.Location.City);
+                        }
+
+                        startDates.Add(occurence.StartDate);
+                    }
+                }
+
+                startDates = startDates.Distinct().ToList();
+                locations = locations.Distinct().ToList();
+                if (needsSpace)
+                {
+                    infoParts.Add(Environment.NewLine);
+                    needsSpace = false;
+                }
+
+                if (startDates.Any())
+                {
+                    infoParts.Add(startDates.Count == 1 ? startDates.First().ToLongDateFormatStringWithoutDay() : Resources.Strings.Resources.MultipleAppointments);
+                    infoParts.Add(Environment.NewLine);
+                }
+                else
+                {
+                    infoParts.Add(Resources.Strings.Resources.AppointmentOnRequest);
+                    infoParts.Add(Environment.NewLine);
+                }
+
+                if (locations.Any())
+                {
+                    infoParts.Add(locations.Count == 1 ? locations.First() : Resources.Strings.Resources.MultipleLocations);
+                    infoParts.Add(Environment.NewLine);
+                }
+
+                needsSpace = true;
+                if (!string.IsNullOrWhiteSpace(eduProvider?.Name))
+                {
+                    if (needsSpace)
+                    {
+                        infoParts.Add(Environment.NewLine);
+                        needsSpace = false;
+                    }
+
+                    infoParts.Add(eduProvider.Name);
+                }
+
+                var info = string.Join(string.Empty, infoParts);
 
                 var parameters = new NavigationParameters();
                 parameters.AddValue(NavigationParameter.Id, item.Id);
                 var data = new NavigationData(Routes.TrainingView, parameters);
 
-                var interaction = SearchInteractionEntry.Import(text, subline, sublineImagePath, decoratorText, decoratorImagePath, info, data, true, true, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
-                if (eduProvider?.Image != null && eduProvider.Image.IsWellFormedOriginalString())
-                {
-                    if (!_loadingCache.Keys.Any(x => x.OriginalString == eduProvider.Image.OriginalString))
-                    {
-                        if (!_loadingCache.TryAdd(eduProvider.Image, new List<IProvideImageData>() { interaction }))
-                        {
-                            _loadingCache[eduProvider.Image].Add(interaction);
-                        }
-                    }
-                    else
-                    {
-                        _loadingCache[eduProvider.Image].Add(interaction);
-                    }
-                }
-
+                var interaction = SearchInteractionEntry.Import(text, subline, null, decoratorText, decoratorImagePath, info, data, true, true, HandleToggleIsFavorite, CanHandleToggleIsFavorite, HandleInteract, CanHandleInteract);
                 trainings.Add(interaction);
             }
 

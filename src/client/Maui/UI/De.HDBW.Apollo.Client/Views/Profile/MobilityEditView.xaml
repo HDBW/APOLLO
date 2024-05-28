@@ -19,27 +19,27 @@
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionStateCommand}" />
                 </VerticalStackLayout.GestureRecognizers>
                 <HorizontalStackLayout Margin="24,0" >
-                    <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}"/>
-                    <ImageButton WidthRequest="24" HeightRequest="24" Margin="8,0">
-                        <ImageButton.Source>
+                    <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}" SemanticProperties.Description="{x:Binding Text}"/>
+                    <Image WidthRequest="24" HeightRequest="24" Margin="8,0">
+                        <Image.Source>
                             <FontImageSource Glyph="{x:Binding ImagePath}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                    <Label Text="{x:Binding Text}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="0,12"/>
+                        </Image.Source>
+                    </Image>
+                     <Label Text="{x:Binding Text}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="0,12" AutomationProperties.ExcludedWithChildren="True"/>
                 </HorizontalStackLayout>
                 <BoxView HeightRequest="1" Color="{StaticResource Neutral500}" />
             </VerticalStackLayout>
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto, Auto,Auto, Auto, *">
-        <Label Text="{x:Static strings:Resources.MobilityEditView_Willing}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" />
+        <Label Text="{x:Static strings:Resources.MobilityEditView_Willing}" Style="{StaticResource Noto14SemiBold}" Margin="24,0" AutomationProperties.ExcludedWithChildren="True"/>
         <Border Grid.Row="1" Margin="24,0" Style="{StaticResource InputBorderStyle}">
             <Grid ColumnDefinitions="*, auto" >
-                <Picker ItemsSource="{x:Binding WillingsToTravel}"
+                <Picker ItemsSource="{x:Binding WillingsToTravel}" SemanticProperties.Description="{x:Static strings:Resources.MobilityEditView_Willing}"
                         ItemDisplayBinding="{x:Binding Text}"
                         x:Name="PART_WillingToTravel"
                         SelectedItem="{x:Binding SelectedWillingToTravel, Mode=TwoWay}"/>
-                <ImageButton Grid.Column="1">
+                <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
@@ -54,8 +54,8 @@
             <HorizontalStackLayout.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleHasVehicleCommand}" />
             </HorizontalStackLayout.GestureRecognizers>
-            <CheckBox InputTransparent="True" IsChecked="{x:Binding HasVehicle, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" />
-            <Label Text="{x:Static strings:Resources.MobilityEditView_Vehicle}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="8,0,0,0"/>
+            <CheckBox InputTransparent="True" IsChecked="{x:Binding HasVehicle, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" SemanticProperties.Description="{x:Static strings:Resources.MobilityEditView_Vehicle}"/>
+            <Label Text="{x:Static strings:Resources.MobilityEditView_Vehicle}" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" Margin="8,0,0,0" AutomationProperties.ExcludedWithChildren="True"/>
         </HorizontalStackLayout>
 
 

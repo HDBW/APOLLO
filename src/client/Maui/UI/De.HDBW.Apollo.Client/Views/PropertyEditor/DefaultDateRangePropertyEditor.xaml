@@ -9,21 +9,21 @@
              xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
              x:DataType="viewModels:DateRangePropertyEditor">
     <Grid ColumnDefinitions="auto, *" RowDefinitions="auto, auto, auto, auto, auto" Margin="0,16">
-        <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,8"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="End" Margin="0,0,0,8">
+        <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,8" SemanticProperties.HeadingLevel="Level3"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="End" Margin="0,0,0,8" SemanticProperties.Hint="{x:Binding Label}" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}">
             <ImageButton.Source>
                 <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
             </ImageButton.Source>
         </ImageButton>
-        <Label Text="{x:Static strings:Resources.Global_RageStart}" Style="{StaticResource Noto14SemiBold}" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label Text="{x:Static strings:Resources.Global_RageStart}" Style="{StaticResource Noto14SemiBold}" Grid.Row="1" Grid.ColumnSpan="2" AutomationProperties.ExcludedWithChildren="True"/>
         <Border Style="{StaticResource InputBorderStyle}" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,8">
             <Grid ColumnDefinitions="*, auto">
-                <cdp:NullableDatePicker NullableDate="{x:Binding Start, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_Start"/>
-                <ImageButton Grid.Column="1">
+                <cdp:NullableDatePicker NullableDate="{x:Binding Start, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_Start" SemanticProperties.Description="{x:Static strings:Resources.Global_RageStart}"/>
+                <ImageButton Grid.Column="1"  AutomationProperties.ExcludedWithChildren="True">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{StaticResource Calendar}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
+                                         FontFamily="ApolloFontIcons"
+                                         Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
                     <ImageButton.Behaviors>
                         <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
@@ -31,17 +31,17 @@
                 </ImageButton>
             </Grid>
         </Border>
-        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{x:Static strings:Resources.Global_RageEnd}" Style="{StaticResource Noto14SemiBold}"/>
+        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="{x:Static strings:Resources.Global_RageEnd}" Style="{StaticResource Noto14SemiBold}" AutomationProperties.ExcludedWithChildren="True"/>
         <Border Style="{StaticResource InputBorderStyle}" Grid.Row="4" Grid.ColumnSpan="2">
             <Grid ColumnDefinitions="*, auto">
-                <cdp:NullableDatePicker NullableDate="{x:Binding End, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_End"/>
-                <ImageButton Grid.Column="1">
+                <cdp:NullableDatePicker NullableDate="{x:Binding End, Mode=TwoWay}" HorizontalOptions="Fill" x:Name="PART_End" SemanticProperties.Description="{x:Static strings:Resources.Global_RageEnd}"/>
+                <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{StaticResource Calendar}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
+                                         FontFamily="ApolloFontIcons"
+                                         Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
-                <ImageButton.Behaviors>
+                    <ImageButton.Behaviors>
                         <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                     </ImageButton.Behaviors>
                 </ImageButton>

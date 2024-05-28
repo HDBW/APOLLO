@@ -1475,7 +1475,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Anmelden</value>
   </data>
   <data name="Global_PriceOnRequest" xml:space="preserve">
-    <value>auf Anfrage</value>
+    <value>Preis auf Anfrage</value>
   </data>
   <data name="Global_PriceFreeOfCharge" xml:space="preserve">
     <value>Kostenlos</value>
@@ -1485,5 +1485,41 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="SettingsView_Licenses" xml:space="preserve">
     <value>Lizenzen</value>
+  </data>
+  <data name="AppointmentOnRequest" xml:space="preserve">
+    <value>Termin auf Anfrage</value>
+  </data>
+  <data name="Global_OnRequest" xml:space="preserve">
+    <value>auf Anfrage</value>
+  </data>
+  <data name="HasLoans" xml:space="preserve">
+    <value>Finanzierungsoptionen verfügbar</value>
+  </data>
+  <data name="MultipleAppointments" xml:space="preserve">
+    <value>Terminauswahl möglich</value>
+  </data>
+  <data name="MultipleLocations" xml:space="preserve">
+    <value>mehrere Standorte</value>
+  </data>
+  <data name="Global_Alttext_IsFavorite" xml:space="preserve">
+    <value>Aus Favoriten entfernen</value>
+  </data>
+  <data name="Global_Alttext_LinkAGB" xml:space="preserve">
+    <value>Link öffnet Nutzungsbedingungen in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_LinkDSGVO" xml:space="preserve">
+    <value>Link öffnet Datenschutzerklärung in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_LinkImprint" xml:space="preserve">
+    <value>Link öffnet Impressum in einem neuen Fenster</value>
+  </data>
+  <data name="Global_Alttext_MakeFavorite" xml:space="preserve">
+    <value>In Favoriten aufnehmen</value>
+  </data>
+  <data name="Global_Alttext_OpenKursDetails" xml:space="preserve">
+    <value>Taste öffnet Details des Kurses</value>
+  </data>
+  <data name="Global_Alttext_KursDetails" xml:space="preserve">
+    <value>Link zu den Kursdetails</value>
   </data>
 </root>

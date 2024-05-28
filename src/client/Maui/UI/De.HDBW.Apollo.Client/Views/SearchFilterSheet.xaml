@@ -73,13 +73,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="{Static strings:Resources.Global_SearchFilterSheet_Title}" Style="{StaticResource Noto20Bold}"/>
-
+            <Label Text="{Static strings:Resources.Global_SearchFilterSheet_Title}" Style="{StaticResource Noto20Bold}" SemanticProperties.HeadingLevel="Level2"/>
+            
             <ImageButton Grid.Column="1"
                 Command="{x:Binding CloseCommand}"
                 HeightRequest="24"
                 WidthRequest="24"
-                HorizontalOptions="End" >
+                HorizontalOptions="End"
+                SemanticProperties.Description="{x:Static strings:Resources.Global_Close}">
                 <ImageButton.Source>
                     <FontImageSource Glyph="{StaticResource Close}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                 </ImageButton.Source>

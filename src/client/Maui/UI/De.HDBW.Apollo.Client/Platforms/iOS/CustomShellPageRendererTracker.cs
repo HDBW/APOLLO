@@ -15,7 +15,7 @@ namespace De.HDBW.Apollo.Client.Platforms
     public class CustomShellPageRendererTracker : ShellPageRendererTracker
     {
         private WeakReference<UISearchController>? _searchController = null;
-        private IShellContext _context;
+        private IShellContext? _context;
 
         public CustomShellPageRendererTracker(IShellContext context)
             : base(context)
@@ -66,6 +66,22 @@ namespace De.HDBW.Apollo.Client.Platforms
             base.Dispose(disposing);
         }
 
+        protected override void OnPageSet(Page oldPage, Page newPage)
+        {
+            base.OnPageSet(oldPage, newPage);
+            var preventBackSwipe = newPage as IPreventBackSwipe ?? newPage?.BindingContext as IPreventBackSwipe;
+            var renderen = _context?.CurrentShellItemRenderer as ShellItemRenderer;
+            var navigationController = renderen?.SelectedViewController as UINavigationController;
+            if (navigationController != null && preventBackSwipe != null)
+            {
+                navigationController.InteractivePopGestureRecognizer.Enabled = false;
+            }
+            else if (navigationController != null)
+            {
+                navigationController.InteractivePopGestureRecognizer.Enabled = true;
+            }
+        }
+
         private void OnHideSearchSuggestions(object recipient, HideSearchSuggestionsMessage message)
         {
             if (!(_searchController?.TryGetTarget(out UISearchController? controller) ?? false) || controller == null)
@@ -103,22 +119,6 @@ namespace De.HDBW.Apollo.Client.Platforms
                     doneButton,
                 };
                 searchBar.InputAccessoryView = toolbar;
-            }
-        }
-
-        protected override void OnPageSet(Page oldPage, Page newPage)
-        {
-            base.OnPageSet(oldPage, newPage);
-            var preventBackSwipe = newPage as IPreventBackSwipe ?? newPage?.BindingContext as IPreventBackSwipe;
-            var renderen = _context?.CurrentShellItemRenderer as ShellItemRenderer;
-            var navigationController = renderen?.SelectedViewController as UINavigationController;
-            if (navigationController != null && preventBackSwipe != null)
-            {
-                navigationController.InteractivePopGestureRecognizer.Enabled = false;
-            }
-            else if (navigationController != null)
-            {
-                navigationController.InteractivePopGestureRecognizer.Enabled = true;
             }
         }
     }

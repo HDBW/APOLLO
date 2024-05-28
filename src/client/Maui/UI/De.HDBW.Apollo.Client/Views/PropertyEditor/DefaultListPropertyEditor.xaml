@@ -4,14 +4,15 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.PropertyEditor"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              x:DataType="viewModels:ListPropertyEditor">
     <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" Margin="0,0,0,16">
-        <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" VerticalOptions="Center" HorizontalOptions="Start"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24">
+        <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" VerticalOptions="Center" HorizontalOptions="Start" SemanticProperties.HeadingLevel="Level3"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}" SemanticProperties.Hint="{x:Binding Label}" >
             <ImageButton.Source>
                 <FontImageSource Glyph="{StaticResource Delete}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
+                                 FontFamily="ApolloFontIcons"
+                                 Size="24" Color="{StaticResource Primary}"/>
             </ImageButton.Source>
         </ImageButton>
         <ListView
@@ -27,8 +28,8 @@
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand}" />
                             </Grid.GestureRecognizers>
-                            <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}" VerticalOptions="Center" Margin="{OnPlatform '0', Android='-6,0,0,0'}"/>
-                            <Label Grid.Column="1" Text="{x:Binding DisplayValue}" Margin="8,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center"/>
+                            <CheckBox InputTransparent="True" IsChecked="{x:Binding IsSelected, Mode=TwoWay}" VerticalOptions="Center" Margin="{OnPlatform '0', Android='-6,0,0,0'}" SemanticProperties.Description="{x:Binding DisplayValue}"/>
+                            <Label Grid.Column="1" Text="{x:Binding DisplayValue}" Margin="8,0,0,0" Style="{StaticResource Noto14Primary}" VerticalOptions="Center" AutomationProperties.ExcludedWithChildren="True"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
