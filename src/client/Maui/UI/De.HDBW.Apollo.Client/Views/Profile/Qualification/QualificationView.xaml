@@ -51,8 +51,8 @@
                     <ImageButton Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Calendar}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
+                                             FontFamily="ApolloFontIcons"
+                                             Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
@@ -77,14 +77,14 @@
                     <ImageButton Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Calendar}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
+                                             FontFamily="ApolloFontIcons"
+                                             Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
         </VerticalStackLayout>
