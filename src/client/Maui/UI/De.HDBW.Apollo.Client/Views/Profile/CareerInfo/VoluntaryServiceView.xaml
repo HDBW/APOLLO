@@ -50,7 +50,7 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_VoluntaryServiceType}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
@@ -94,7 +94,7 @@
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
@@ -112,7 +112,7 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Country}"/>
             </Border>
-             
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

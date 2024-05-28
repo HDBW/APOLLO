@@ -36,7 +36,7 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_TypeOfSchool}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 

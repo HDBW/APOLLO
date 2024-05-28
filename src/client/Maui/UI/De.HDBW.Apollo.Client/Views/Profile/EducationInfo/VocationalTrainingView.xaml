@@ -56,7 +56,7 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_TypeOfSchool}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
@@ -76,7 +76,7 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_UniverityDegree}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
@@ -96,7 +96,7 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
@@ -137,8 +137,7 @@
                     <ImageButton Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
                         <ImageButton.Source>
                             <FontImageSource Glyph="{StaticResource Calendar}"
-                         FontFamily="ApolloFontIcons"
-                         Size="24" Color="{StaticResource Primary}"/>
+                                             Size="24" Color="{StaticResource Primary}"/>
                         </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
@@ -161,7 +160,7 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Country}" ReturnType="Next" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PART_Description}"/>
             </Border>
-            
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

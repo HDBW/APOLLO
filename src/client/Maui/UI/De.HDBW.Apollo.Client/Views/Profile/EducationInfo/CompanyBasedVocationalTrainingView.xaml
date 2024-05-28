@@ -55,7 +55,7 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_SchoolGraduation}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
             <Label Text="{x:Binding [SelectedSchoolGraduation]}" Style="{StaticResource ValidationErrorLabel}" />
@@ -76,7 +76,7 @@
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    
+
                 </Grid>
             </Border>
 
@@ -143,7 +143,7 @@
         <Picker ItemsSource="{x:Binding UniverityDegrees}"
                 ItemDisplayBinding="{x:Binding Text}"
                 SelectedItem="{x:Binding SelectedUniverityDegree, Mode=TwoWay}"/>-->
-           
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

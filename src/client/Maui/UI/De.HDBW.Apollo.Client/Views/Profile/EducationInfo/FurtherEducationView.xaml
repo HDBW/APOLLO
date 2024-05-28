@@ -106,7 +106,7 @@
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Country}"/>
             </Border>
 
-            
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
