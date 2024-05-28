@@ -124,11 +124,7 @@
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="{x:Binding FilterIcon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
+        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}"/>
     </ContentPage.ToolbarItems>
     <Grid x:Name="PART_Root">
         <CollectionView x:Name="PART_Collection"
