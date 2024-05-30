@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Text.Unicode;
 using Apollo.Api;
+using Apollo.SemanticSearchExporter;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Daenet.MongoDal;
@@ -60,13 +61,15 @@ namespace Apollo.SemanticSearchWorker
                     throw new ArgumentException("The connection string of the blob storage with the write permission must be specified in the configuration. I.e:as argument  '--blobConnStr=...' or as environment variable 'blobConnStr=...'");
                 }
 
-                var exporterLogger = loggerFactory.CreateLogger<BlobStorageExporter>();
+                // Export Profile Skills
+                var profileSkillExporterLogger = loggerFactory.CreateLogger<ProfileSkillExporter>();
+                var profileSkillExporter = new ProfileSkillExporter(api, "profileSkill", blobConnStr, profileSkillExporterLogger);
+                await profileSkillExporter.ExportAsync();
 
-                // Initialize the exporter with the required parameters
-                var exp = new BlobStorageExporter(api, entity, blobConnStr, exporterLogger);
-
-                // Starts the long running operation.
-                await exp.ExportAsync();
+                // Export Training Entity
+                var entityExporterLogger = loggerFactory.CreateLogger<BlobStorageExporter>();
+                var entityExporter = new BlobStorageExporter(api, entity, blobConnStr, entityExporterLogger);
+                await entityExporter.ExportAsync();
 
                 _logger.LogDebug("Exporter completed.");
             }
