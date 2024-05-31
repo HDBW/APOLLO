@@ -14,32 +14,32 @@ namespace Apollo.Common.Entities
     /// It is only the entry point for a taxonomy. It has no information about the graph complexity behind it other then the concept it relates to. 
     /// </summary>
     [DataContract]
-    public class Skill:ObjectBase
+    public class Skill : ObjectBase
     {
         /// <summary>
         /// The Id of the user to whom the skill belongs.
         /// </summary>
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         /// <summary>
         /// The Id of the user to whom the skill belongs.
         /// </summary>
-        public string ProfileId { get; set; }
+        public string? ProfileId { get; set; }
 
         /// <summary>
         /// A List in different Cultures for the Lists Title
         /// </summary>
-        public string? Title { get; set; }
+        public ApolloList Title { get; set; } = new ApolloList() { ItemType = nameof(Skill.Title) };
 
         /// <summary>
         /// A List of descriptions for the different cultures
         /// </summary>
-        public string? Description { get; set; }
+        public ApolloList Description { get; set; } = new ApolloList() { ItemType = nameof(Skill.Description) };
 
         /// <summary>
         /// This is a list of synonyms for the title in different cultures
         /// </summary>
-        public List<string>? AlternativeLabels { get; set; }
+        public ApolloList AlternativeLabels { get; set; } = new ApolloList() { ItemType = nameof(Skill.AlternativeLabels) };
 
         /// <summary>
         /// A List of Occupations this Skill is essential for

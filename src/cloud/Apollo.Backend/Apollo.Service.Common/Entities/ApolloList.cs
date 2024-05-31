@@ -32,7 +32,7 @@ namespace Apollo.Common.Entities
 
         /// <summary>
         /// Specifies the type  of the item like Qualification, Skill, etc.
-        /// Also used as a partition key
+        /// Also used as a partition key.
         /// </summary>
         public required string ItemType { get; set; }
 

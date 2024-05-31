@@ -72,7 +72,7 @@ namespace Apollo.Api
                 _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainingsAsync)}");
 
                 // Get trainings by full text search query.
-                var res1 = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+                var res1 = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression)!);
               
                 if (_smartLib != null)
                 {

@@ -51,8 +51,6 @@ namespace Apollo.Service.Controllers
                 var profile = await _api.GetProfileAsync(id);
 
                 _logger.LogTrace("Leave {method}", nameof(GetProfile));
-
-                
                 
                 // Return the retrieved profile as a response.
                 return new GetProfileResponse { Profile =  profile };

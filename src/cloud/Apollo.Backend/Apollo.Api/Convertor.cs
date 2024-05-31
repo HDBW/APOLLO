@@ -828,15 +828,15 @@ namespace Apollo.Api
             {
                 IDictionary<string, object> dict = expando as IDictionary<string, object>;
 
-                var skills = new Skill
+                var skill = new Skill
                 {
                     Id = dict.ContainsKey(nameof(Skill.Id)) ? (string?)dict[nameof(Skill.Id)] : null,
-                    Title = dict.ContainsKey(nameof(Skill.Title)) ? (string?)dict[nameof(Skill.Title)] : null,
-                    Description = dict.ContainsKey(nameof(Skill.Description)) ? (string?)dict[nameof(Skill.Description)] : null,
+                    Title = dict.ContainsKey(nameof(Skill.Title)) ? (ApolloList)dict[nameof(Skill.Title)] : new ApolloList() { ItemType = nameof(Skill.Title) },
+                    Description = dict.ContainsKey(nameof(Skill.Description)) ? (ApolloList)dict[nameof(Skill.Description)] : new ApolloList() { ItemType = nameof(Skill.Description) },
                     ///To.Do. map all others here 
                 };
 
-                return skills;
+                return skill;
             }
 
             if (item is null || (item is string str && string.IsNullOrEmpty(str)))

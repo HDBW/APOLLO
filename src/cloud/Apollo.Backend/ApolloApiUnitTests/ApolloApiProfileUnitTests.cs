@@ -17,7 +17,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using SharpCompress.Common;
-using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
+//using Invite.Apollo.App.Graph.Common.Models.Taxonomy;
 
 namespace Apollo.Api.UnitTests
 {
@@ -320,7 +320,7 @@ namespace Apollo.Api.UnitTests
             //
             // Json file path for BA data set in your local machine
             var jsonFolderPath = @"C:\Users\MukitKhan\Videos\DATA";
-            var api = Helpers.GetApolloApi();
+           
             var jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
 
             // Create a bounded channel with a capacity of 1000
@@ -346,6 +346,8 @@ namespace Apollo.Api.UnitTests
             {
                 consumerTasks.Add(Task.Run(async () =>
                 {
+                    var api = Helpers.GetApolloApi();
+
                     await foreach (var jsonFile in fileChannel.Reader.ReadAllAsync())
                     {
                         try
@@ -386,35 +388,35 @@ namespace Apollo.Api.UnitTests
             await Task.WhenAll(consumerTasks);
         }
 
-        public async Task<OccupationSuggestionResponse?> DoRequestAsync(string searchstring, CancellationToken token)
-        {
-            token.ThrowIfCancellationRequested();
-            //"http://20.50.240.180:8080"
-            //"http://localhost:8585
-            using (var channel = GrpcChannel.ForAddress("https://occupations.invite-apollo.app/"))
-            {
-                var occupationSuggestionClient = channel.CreateGrpcService<IOccupationSuggestionService>();
-                try
-                {
-                    var request = new OccupationSuggestionRequest { Input = searchstring, CorrelationId = CreateCorrelationId() };
-                    Console.WriteLine("OccupationSuggestion client sending request message:");
-                    Console.WriteLine(JsonSerializer.Serialize(request));
-                    var result = await occupationSuggestionClient.GetOccupationSuggestions(request, token);
-                    Console.WriteLine("Server Response:");
-                    Console.WriteLine(JsonSerializer.Serialize(result));
-                    return result;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-                finally
-                {
-                    await channel.ShutdownAsync();
-                }
-            }
-        }
+        //public async Task<OccupationSuggestionResponse?> DoRequestAsync(string searchstring, CancellationToken token)
+        //{
+        //    token.ThrowIfCancellationRequested();
+        //    //"http://20.50.240.180:8080"
+        //    //"http://localhost:8585
+        //    using (var channel = GrpcChannel.ForAddress("https://occupations.invite-apollo.app/"))
+        //    {
+        //        var occupationSuggestionClient = channel.CreateGrpcService<IOccupationSuggestionService>();
+        //        try
+        //        {
+        //            var request = new OccupationSuggestionRequest { Input = searchstring, CorrelationId = CreateCorrelationId() };
+        //            Console.WriteLine("OccupationSuggestion client sending request message:");
+        //            Console.WriteLine(JsonSerializer.Serialize(request));
+        //            var result = await occupationSuggestionClient.GetOccupationSuggestions(request, token);
+        //            Console.WriteLine("Server Response:");
+        //            Console.WriteLine(JsonSerializer.Serialize(result));
+        //            return result;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e);
+        //            throw;
+        //        }
+        //        finally
+        //        {
+        //            await channel.ShutdownAsync();
+        //        }
+        //    }
+        //}
 
         private Profile MapJsonToProfile(string jsonData)
         {

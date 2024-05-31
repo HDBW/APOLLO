@@ -293,7 +293,7 @@ namespace Daenet.MongoDal
             return result.DeletedCount;
         }
 
-        internal async Task<IAsyncCursor<BsonDocument>> ExecuteQueryInternal(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        internal async Task<IAsyncCursor<BsonDocument>> ExecuteQueryInternal(string collectionName, ICollection<string>? fields, Query query, int top, int skip, SortExpression? sortExpression = null, DateTime? dateTime = null)
         {
             if (skip < 0)
                 skip = 0;
@@ -373,7 +373,7 @@ namespace Daenet.MongoDal
         /// <param name="sortExpression"></param>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public async Task<IList<T>> ExecuteQuery<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression sortExpression = null, DateTime? dateTime = null)
+        public async Task<IList<T>> ExecuteQuery<T>(string collectionName, ICollection<string>? fields, /*string partitionKey,*/ Query query, int top, int skip, SortExpression? sortExpression = null, DateTime? dateTime = null)
         {
             var documents = await ExecuteQueryInternal(collectionName, fields, query, top, skip, sortExpression, dateTime);
 
