@@ -43,7 +43,7 @@ namespace Apollo.Common.Entities
         public SortExpression? SortExpression { get; set; }
 
         /// <summary>
-        /// Enables or disable sthe semantic search. Default value is TRUE.
+        /// Enables or disables the semantic search. The default value is TRUE.
         /// </summary>
         public bool UseSemanticSearch { get; set; } = true;
     }
