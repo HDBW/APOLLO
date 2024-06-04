@@ -64,6 +64,8 @@ namespace Apollo.SemanticSearchExporter
                     while (hasMoreData)
                     {
                         var profiles = await _api.QueryProfilesAsync(query);
+                        _logger.LogInformation($"Fetched {profiles.Count} profiles.");
+
                         hasMoreData = profiles.Count > 0;
 
                         foreach (var profile in profiles)
@@ -71,6 +73,7 @@ namespace Apollo.SemanticSearchExporter
                             _logger.LogDebug($"Processing profile {profile.Id}");
                             if (profile.Skills != null && profile.Skills.Count > 0)
                             {
+                                _logger.LogInformation($"Profile {profile.Id} has {profile.Skills.Count} skills.");
                                 foreach (var skill in profile.Skills)
                                 {
                                     var lines = formatter.FormatObject(skill, profile.Id);
@@ -104,6 +107,7 @@ namespace Apollo.SemanticSearchExporter
                 throw;
             }
         }
+
 
         private Query CreateQuery()
         {
