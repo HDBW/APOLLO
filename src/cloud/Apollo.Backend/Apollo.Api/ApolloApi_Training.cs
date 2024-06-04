@@ -67,15 +67,15 @@ namespace Apollo.Api
         {
             try
             {
-                List<Training> trainings = new List<Training>();
-
                 _logger?.LogTrace($"{this.User} entered {nameof(QueryTrainingsAsync)}");
 
                 // Get trainings by full text search query.
-                var res1 = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression));
+                var nonSemanticResult = await _dal.ExecuteQuery<Training>(ApolloApi.GetCollectionName<Training>(), query.Fields, Convertor.ToDaenetQuery(query.Filter), query.Top, query.Skip, Convertor.ToDaenetSortExpression(query.SortExpression)!);
               
-                if (_smartLib != null)
+                if (_smartLib != null && query.UseSemanticSearch)
                 {
+                    List<Training> semanticPlusNonSemanticResult = new List<Training>();
+
                     var semRes = await _smartLib.SearchTrainingsAsync(query);
 
                     if (semRes.Any())
@@ -106,7 +106,7 @@ namespace Apollo.Api
                         };
 
                         // Get trainings for give training IDs obtained by the semantic search query.
-                        var res2 = await _dal.ExecuteQuery<Training>(
+                        var semanticResult = await _dal.ExecuteQuery<Training>(
                             ApolloApi.GetCollectionName<Training>(),
                             idQuery.Fields,
                             Convertor.ToDaenetQuery(idQuery.Filter),
@@ -120,11 +120,11 @@ namespace Apollo.Api
                         // and then additionally of the list returned by semantic query.
                         // So, at the end response for Trainings = TrainingsByQuery + Trainings by Semantic Query
 
-                        trainings.AddRange(res1);
-                        trainings = trainings.Concat(res2).DistinctBy(t => t.Id).ToList();
+                        semanticPlusNonSemanticResult.AddRange(nonSemanticResult);
+                        semanticPlusNonSemanticResult = semanticPlusNonSemanticResult.Concat(semanticResult).DistinctBy(t => t.Id).ToList();
 
                         // Update SemanticSearchSimilarity Score of each training based on matching IDs via semantic search
-                        foreach (var training in trainings)
+                        foreach (var training in semanticPlusNonSemanticResult)
                         {
                             if (semanticSimilarityById.ContainsKey(training.Id!))
                             {
@@ -140,12 +140,12 @@ namespace Apollo.Api
                     }
 
                     // Return trainings sorted by descending SemanticSearchSimilarity score
-                    return trainings.OrderByDescending(t => t.SemanticSearchSimilarity).ToList();
+                    return semanticPlusNonSemanticResult.OrderByDescending(t => t.SemanticSearchSimilarity).ToList();
                 }
 
                 _logger?.LogTrace($"{this.User} completed {nameof(QueryTrainingsAsync)}");
 
-                return res1;
+                return nonSemanticResult;
 
             }
             catch (ApolloApiException)

@@ -456,6 +456,9 @@ namespace Apollo.Api
                 WebReferences = dict.ContainsKey(nameof(Profile.WebReferences)) ? ConvertToList<WebReference>(dict[nameof(Profile.WebReferences)], ConvertToWebReference!) : new List<WebReference>(),
                 MobilityInfo = dict.ContainsKey(nameof(Profile.MobilityInfo)) ? ConvertToType<Mobility>(dict[nameof(Profile.MobilityInfo)], ConvertToMobilityInfo!)  : null,
                 LeadershipSkills = dict.ContainsKey(nameof(Profile.LeadershipSkills)) ? ConvertToType<LeadershipSkills>(dict[nameof(Profile.LeadershipSkills)], ConvertToLeaderShipSkills!) : null,
+                Skills = dict.ContainsKey(nameof(Profile.Skills)) ? ConvertToList<Skill>(dict[nameof(Profile.Skills)], ConvertToSkills!) : null,
+                Occupations = dict.ContainsKey(nameof(Profile.Occupations)) ? ConvertToList<Occupation>(dict[nameof(Profile.Occupations)], ConvertToOccupation!) : null,
+
             };
 
             return profile;
@@ -806,6 +809,43 @@ namespace Apollo.Api
             else
                 // Handle other cases or throw an exception
                 throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.LeadershipSkills)}");
+        }
+
+
+        /// <summary>
+        /// Converts an object, typically an ExpandoObject, to a nullable Skills instance.
+        /// </summary>
+        /// <param name="item">The object to be converted.</param>
+        /// <returns>
+        /// A Skills instance with properties populated from the input object, or null if the input is null or an empty string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input type is not supported or does not match the expected structure for Skills.
+        /// </exception>
+        private static Skill? ConvertToSkills(object item)
+        {
+            if (item is ExpandoObject expando)
+            {
+                IDictionary<string, object> dict = expando as IDictionary<string, object>;
+
+                var skill = new Skill
+                {
+                    Id = dict.ContainsKey(nameof(Skill.Id)) ? (string?)dict[nameof(Skill.Id)] : null,
+                    Title = dict.ContainsKey(nameof(Skill.Title)) ? (ApolloList)dict[nameof(Skill.Title)] : new ApolloList() { ItemType = nameof(Skill.Title) },
+                    Description = dict.ContainsKey(nameof(Skill.Description)) ? (ApolloList)dict[nameof(Skill.Description)] : new ApolloList() { ItemType = nameof(Skill.Description) },
+                    ///To.Do. map all others here 
+                };
+
+                return skill;
+            }
+
+            if (item is null || (item is string str && string.IsNullOrEmpty(str)))
+            {
+                return null;
+            }
+            else
+                // Handle other cases or throw an exception
+                throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.Skills)}");
         }
 
         /// <summary>

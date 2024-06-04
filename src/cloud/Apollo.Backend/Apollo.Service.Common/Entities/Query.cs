@@ -40,6 +40,11 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// Specify the order of the return items by the specified field.
         /// </summary>
-        public SortExpression? SortExpression { get; set; } 
+        public SortExpression? SortExpression { get; set; }
+
+        /// <summary>
+        /// Enables or disables the semantic search. The default value is TRUE.
+        /// </summary>
+        public bool UseSemanticSearch { get; set; } = true;
     }
 }

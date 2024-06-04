@@ -75,13 +75,13 @@ namespace Apollo.Common.Entities
         /// The prefered term is the term that is used in the Taxonomie. For example the prefered term for the occupation "baker" is "Bäcker/in".
         /// UI Query related
         /// </summary>
-        public List<string> PreferedTerm { get; set; }
+        public List<string>? PreferedTerm { get; set; }
 
         /// <summary>
         /// This is a list of terms that are commonly used in a region or language but are not the prefered term.
         /// For example "Bäckergeselle" is a common term for a "baker" in Germany but not the prefered term.
         /// </summary>
-        public List<string> NonePreferedTerm { get; set; } = new();
+        public List<string>? NonePreferedTerm { get; set; } = new();
 
         /// <summary>
         /// Related Taxonomy

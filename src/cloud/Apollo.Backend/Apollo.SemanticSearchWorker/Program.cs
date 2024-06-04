@@ -32,7 +32,6 @@ namespace Apollo.SemanticSearchWorker
         {
             InitializeConfiguration(args);
 
-
             // Configure logging
             using var loggerFactory = LoggerFactory.Create(builder =>
             {

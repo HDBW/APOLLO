@@ -24,4 +24,10 @@
     <ProjectReference Include="..\Daenet.MongoDal\Daenet.MongoDal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestFiles\TestProfile1.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
