@@ -17,6 +17,11 @@ namespace Apollo.Common.Entities
     public class Skill : ObjectBase
     {
         /// <summary>
+        /// The local skill index inside the list of skils inside profile
+        /// </summary>
+        public int SkillId { get; set; }
+
+        /// <summary>
         /// The Id of the user to whom the skill belongs.
         /// </summary>
         public string? UserId { get; set; }
