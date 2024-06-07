@@ -36,11 +36,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.SemanticSearchExporter", "Apollo.SemanticSearchWorker\Apollo.SemanticSearchExporter.csproj", "{814A8CAE-06D6-4BD3-87C1-6634D14F28AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{BF095622-914E-42B6-A362-7C98A7BD7C3C}"
-	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
-	EndProjectSection
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "semanticsearchdb", "semanticsearchdb\semanticsearchdb.sqlproj", "{EB1447AD-7FF0-4BBC-8C77-9B4662012BED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,12 +91,6 @@ Global
 		{814A8CAE-06D6-4BD3-87C1-6634D14F28AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{814A8CAE-06D6-4BD3-87C1-6634D14F28AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{814A8CAE-06D6-4BD3-87C1-6634D14F28AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB1447AD-7FF0-4BBC-8C77-9B4662012BED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB1447AD-7FF0-4BBC-8C77-9B4662012BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB1447AD-7FF0-4BBC-8C77-9B4662012BED}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{EB1447AD-7FF0-4BBC-8C77-9B4662012BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB1447AD-7FF0-4BBC-8C77-9B4662012BED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB1447AD-7FF0-4BBC-8C77-9B4662012BED}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
