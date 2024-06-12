@@ -93,6 +93,7 @@ namespace De.HDBW.Apollo.Client
                     fonts.AddFont("NotoSans-Bold.ttf", "NotoSansBold");
                     fonts.AddFont("NotoSerif-Regular.ttf", "NotoSerifRegular");
                     fonts.AddFont("NotoSerif-Bold.ttf", "NotoSerifBold");
+                    fonts.AddFont("ApolloFontIcons.ttf", "ApolloFontIcons");
                 })
             .UseBottomSheet();
             builder.ConfigureMauiHandlers(SetupHandlers);

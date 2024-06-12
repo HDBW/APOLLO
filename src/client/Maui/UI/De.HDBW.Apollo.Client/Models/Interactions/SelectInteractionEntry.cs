@@ -20,8 +20,8 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             Func<SelectInteractionEntry, Task> selectHandler,
             Func<SelectInteractionEntry, bool> canSelectHandler,
             Action<SelectInteractionEntry> selectedChangedHandler,
-            string? imagePath = null)
-            : base(text, data, navigateHandler, canNavigateHandle, imagePath)
+            string? imagePath = null, bool uniformImagePath = true)
+            : base(text, data, navigateHandler, canNavigateHandle, imagePath, uniformImagePath)
         {
             SelectHandler = selectHandler;
             CanSelectHandler = canSelectHandler;
@@ -44,9 +44,10 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             Func<SelectInteractionEntry, Task> selectHandler,
             Func<SelectInteractionEntry, bool> canSelectHandler,
             Action<SelectInteractionEntry> selectedChangedHandler,
-            string? imagePath = null)
+            string? imagePath = null,
+            bool uniformImagePath = true)
         {
-            return new SelectInteractionEntry(text, data, isSelected, navigateHandler, canNavigateHandle, selectHandler, canSelectHandler, selectedChangedHandler, imagePath);
+            return new SelectInteractionEntry(text, data, isSelected, navigateHandler, canNavigateHandle, selectHandler, canSelectHandler, selectedChangedHandler, imagePath, uniformImagePath);
         }
 
         partial void OnIsSelectedChanged(bool value)

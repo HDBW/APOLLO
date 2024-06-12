@@ -16,7 +16,11 @@
         <BackButtonBehavior Command="{Binding CancelCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
+        <ToolbarItem Command="{x:Binding DeleteCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContent}">
@@ -37,7 +41,10 @@
                             ItemDisplayBinding="{x:Binding Text}"
                             x:Name="PART_CompletionState"
                             SelectedItem="{x:Binding SelectedCompletionState, Mode=TwoWay}"/>
-                    <ImageButton Grid.Column="1" Source="shortlist.png" AutomationProperties.ExcludedWithChildren="True">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_CompletionState}" />
                         </ImageButton.Behaviors>
@@ -53,7 +60,10 @@
                                 VerticalOptions="Center"
                                 x:Name="PART_Start"
                                 NullableDate="{x:Binding Start, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Source="calendar.png" Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Calendar}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_Start}" />
                         </ImageButton.Behaviors>
@@ -69,8 +79,15 @@
                                 VerticalOptions="Center"
                                 x:Name="PART_End"
                                 NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
-                    <ImageButton Source="calendar.png" Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
+                    <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <ImageButton Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Calendar}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                         </ImageButton.Behaviors>
@@ -93,7 +110,7 @@
                 <Entry x:Name="PART_Country" Text="{x:Binding Country, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.Global_Country}"/>
             </Border>
 
-            
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

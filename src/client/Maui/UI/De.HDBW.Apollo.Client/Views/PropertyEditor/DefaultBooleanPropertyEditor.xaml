@@ -10,7 +10,11 @@
         </Grid.GestureRecognizers>
         <CheckBox IsChecked="{x:Binding Value, Mode=TwoWay}" HorizontalOptions="Start" InputTransparent="True" Margin="{OnPlatform '0', Android='-6,0,0,0'}" SemanticProperties.Description="{x:Binding Label}"/>
         <Label Grid.Column="1" Text="{x:Binding Label}" VerticalOptions="Center" Style="{StaticResource Noto14Primary}" Margin="8,0" AutomationProperties.ExcludedWithChildren="True"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24" Source="delete.png" SemanticProperties.Hint="{x:Binding Label}" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="2" WidthRequest="24" HeightRequest="24" SemanticProperties.Hint="{x:Binding Label}" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}">
+            <ImageButton.Source>
+                <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </ImageButton.Source>
+        </ImageButton>
     </Grid>
-    
+
 </ContentView>

@@ -18,7 +18,11 @@
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding OpenMailCommand}" />
                     </HorizontalStackLayout.GestureRecognizers>
-                    <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.EMail}" />
+                    <Image WidthRequest="24" HeightRequest="24">
+                        <Image.Source>
+                            <FontImageSource Glyph="{StaticResource Mail}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                     <Label Text="{x:Static strings:Resources.SettingsView_QuestionEmail}" LineBreakMode="WordWrap" MaxLines="2" Style="{StaticResource NotoSerif16}"/>
                 </HorizontalStackLayout>
                 <Button Text="{x:Static strings:Resources.Global_UnRegisterUser}" Command="{x:Binding UnRegisterCommand}" Margin="0,24,0,0"/>

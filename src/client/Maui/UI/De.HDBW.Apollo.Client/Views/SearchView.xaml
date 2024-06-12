@@ -33,17 +33,28 @@
                                 <RoundRectangle CornerRadius="8,0,0,8" />
                             </Border.StrokeShape>
                             <HorizontalStackLayout>
-                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                <Image WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                                    <Image.Source>
+                                        <FontImageSource Glyph="{x:Binding DecoratorImagePath}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Neutral0}"/>
+                                    </Image.Source>
+                                </Image>
                                 <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
                             </HorizontalStackLayout>
                         </Border>
                         <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8"
                              Command="{x:Binding ToggleIsFavoriteCommand}"
                              IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
-                             Source="{x:Static models:KnonwIcons.MakeFavorite}" VerticalOptions="Start">
+                             VerticalOptions="Start">
+                             <ImageButton.Source>
+                                <FontImageSource Glyph="{x:Static models:KnonwIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            </ImageButton.Source>
                             <ImageButton.Triggers>
                                 <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
-                                    <Setter Property="Source" Value="{x:Static models:KnonwIcons.IsFavorite}" />
+                                    <Setter Property="Source">
+                                        <Setter.Value>
+                                             <FontImageSource Glyph="{x:Static models:KnonwIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                        </Setter.Value>
+                                    </Setter>
                                     <Setter Property="SemanticProperties.Description"  Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
                                 </DataTrigger>
                             </ImageButton.Triggers>
@@ -58,7 +69,6 @@
     </ContentPage.Resources>
     <Shell.SearchHandler>
         <local:BindableSearchHandler
-            QueryIcon="magnify.png"
             x:Name="PART_SearchHandler"
             TextColor="{StaticResource Primary}"
             Placeholder="{x:Static strings:Resources.SearchView_Title}" 
@@ -68,7 +78,10 @@
             Suggestions="{x:Binding Suggestions}"
             Recent="{x:Binding Recents}"
             ShowsResults="True">
-          <!-- <local:BindableSearchHandler.Keyboard>
+            <local:BindableSearchHandler.QueryIcon>
+                <FontImageSource Glyph="{StaticResource Search}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </local:BindableSearchHandler.QueryIcon>
+            <!-- <local:BindableSearchHandler.Keyboard>
                  <Keyboard x:FactoryMethod="Create">
                     <x:Arguments>
                         <KeyboardFlags>None</KeyboardFlags>
@@ -78,7 +91,11 @@
             <local:BindableSearchHandler.ItemTemplate>
                 <DataTemplate x:DataType="models:SearchSuggestionEntry">
                     <Grid ColumnDefinitions="auto,*" BackgroundColor="{StaticResource White}">
-                        <Image Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Margin="8"/>
+                        <Image WidthRequest="24" HeightRequest="24" Margin="8">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
                         <Label Grid.Column="1" Text="{x:Binding Name}" TextColor="{StaticResource Primary}" Padding="0,8,5,8" VerticalOptions="Center"/>
                     </Grid>
                 </DataTemplate>
@@ -86,7 +103,7 @@
         </local:BindableSearchHandler>
     </Shell.SearchHandler>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon}"/>
+        <ToolbarItem Command="{x:Binding OpenFilterSheetCommand}" IconImageSource="{x:Binding FilterIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}"/>
     </ContentPage.ToolbarItems>
     <Grid x:Name="PART_Root">
         <CollectionView x:Name="PART_Collection"

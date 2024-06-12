@@ -20,10 +20,18 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
                     </Grid.GestureRecognizers>
-                    <Image Source="{x:Binding ImagePath}" WidthRequest="24" HeightRequest="24" Margin="0,0,8,0"/>
+                    <Image WidthRequest="24" HeightRequest="24" Margin="0,0,8,0">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Binding ImagePath}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                     <Label Grid.Column="1" Text="{x:Binding Text}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" SemanticProperties.Hint="bearbeiten"/>
-                    <Image Grid.Column="2" Source="edit.png"/>
-                </Grid>
+                    <Image Grid.Column="2">
+                        <Image.Source>
+                            <FontImageSource Glyph="{StaticResource Edit}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="StringValueTemplate" x:DataType="genericModels:StringValue">
@@ -53,7 +61,11 @@
                                         <HorizontalStackLayout.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding NavigateCommand}" />
                                         </HorizontalStackLayout.GestureRecognizers>
-                                        <Image Source="{x:Binding ImagePath}" WidthRequest="20" HeightRequest="20" Margin="0,4,8,4"/>
+                                        <Image WidthRequest="20" HeightRequest="20" Margin="0,4,8,4">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="{x:Binding ImagePath}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            </Image.Source>
+                                        </Image>
                                         <Label Text="{x:Binding Text}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                 </DataTemplate>

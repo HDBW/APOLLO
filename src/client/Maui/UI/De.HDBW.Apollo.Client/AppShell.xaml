@@ -25,33 +25,16 @@
             
             <DataTemplate x:Key="DefaultTemplate" x:DataType="BaseShellItem">
                 <Grid ColumnDefinitions="auto,*" Padding="24,8">
-                    <Image Source="{x:Binding Icon}"
-                           HeightRequest="24"
-                           VerticalOptions="Center"
-                           Margin="8,0"/>
-                    <Label Grid.Column="1"
-                           VerticalOptions="Center"
-                           Text="{x:Binding Title}"
-                           Style="{StaticResource Noto16}"
-                           TextColor="{StaticResource Primary}" />
+                    <Image HeightRequest="24" VerticalOptions="Center" Margin="8,0" Source="{x:Binding Icon}"/>
+                    <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding Title}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" />
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="TemplateWithSeperator" x:DataType="BaseShellItem">
                 <Grid ColumnDefinitions="auto,*" RowDefinitions="1,*" Padding="24,8">
                     <Rectangle Grid.ColumnSpan="2" BackgroundColor="{StaticResource Primary}" />
-                    <Image Source="{x:Binding Icon}"
-                           Grid.Row="1"
-                           VerticalOptions="Center"
-                           Margin="8,0"
-                           HeightRequest="24" />
-                    <Label Grid.Column="1"
-                           Text="{x:Binding Title}"
-                           Style="{StaticResource Noto16}"
-                           VerticalOptions="Center"
-                           TextColor="{StaticResource Primary}"
-                           Grid.Row="1"
-                           />
+                    <Image Source="{x:Binding Icon}" Grid.Row="1" VerticalOptions="Center" Margin="8,0" HeightRequest="24"/>
+                    <Label Grid.Column="1" Text="{x:Binding Title}" Style="{StaticResource Noto16}" VerticalOptions="Center" TextColor="{StaticResource Primary}" Grid.Row="1" />
                 </Grid>
             </DataTemplate>
             <selector:MenuItemTemplateSelector x:Key="MenuItemTemplateSelector" 
@@ -71,22 +54,34 @@
                 <Button Text="{x:Static strings:Resources.MainNavigation_Feedback}"  Margin="0,16,0,0" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.FeedbackView}" />
             </VerticalStackLayout>
     </Shell.FlyoutFooter>
-    <MenuItem IconImageSource="settings.png" Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}"/>
+    <MenuItem Text="{x:Static strings:Resources.MainNavigation_Settings}" StyleClass="MenuItemLayoutStyle" Command="{x:Binding NavigateToRouteCommand}" CommandParameter="{x:Static models:Routes.SettingsView}">
+        <MenuItem.IconImageSource>
+            <FontImageSource Glyph="{StaticResource Settings}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+        </MenuItem.IconImageSource>
+    </MenuItem>
     <TabBar x:Name="PART_Tabs">
-        <Tab Title="{x:Static strings:Resources.SearchView_Title}"
-             Icon="search.png">
+        <Tab Title="{x:Static strings:Resources.SearchView_Title}">
+            <Tab.Icon>
+                <FontImageSource Glyph="{StaticResource Training}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:SearchView}" />
         </Tab>
-        <Tab Title="{x:Static strings:Resources.ProfileView_Title}"
-            Icon="profile.png">
+        <Tab Title="{x:Static strings:Resources.ProfileView_Title}">
+            <Tab.Icon>
+                <FontImageSource Glyph="{StaticResource Profile}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
-        <Tab Title="{x:Static strings:Resources.FavoriteView_Title}"
-            Icon="favorite.png">
+        <Tab Title="{x:Static strings:Resources.FavoriteView_Title}">
+            <Tab.Icon>
+                <FontImageSource Glyph="{StaticResource Test}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:FavoriteView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
-        <Tab Title="{x:Static strings:Resources.RegisterView_Title}"
-            Icon="login.png">
+        <Tab Title="{x:Static strings:Resources.RegisterView_Title}">
+            <Tab.Icon>
+                <FontImageSource Glyph="{StaticResource Login}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:RegisterView}" IsVisible="{x:Binding IsRegistered, Converter={StaticResource InvertedBoolConverter}}"/>
         </Tab>
     </TabBar>

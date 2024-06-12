@@ -187,7 +187,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
         {
             var name = Enum.GetName(license);
             var textName = $"DriversLicense_{name}";
-            var imageName = $"driverslicense{name!.ToLower()}.png";
             return SelectInteractionEntry.Import(
                 Resources.Strings.Resources.ResourceManager.GetString(textName),
                 license,
@@ -197,7 +196,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 OnToggleSelection,
                 CanToggleSelection,
                 OnISelectedChanged,
-                imageName);
+                license.ToFontIcon(),
+                false);
         }
     }
 }

@@ -32,7 +32,11 @@
                                 <RoundRectangle CornerRadius="8,0,0,8" />
                             </Border.StrokeShape>
                             <HorizontalStackLayout>
-                                <Image WidthRequest="16" HeightRequest="16" Source="{x:Binding DecoratorImagePath}" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                <Image WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                                    <Image.Source>
+                                        <FontImageSource Glyph="{x:Binding DecoratorImagePath}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                                    </Image.Source>
+                                </Image>
                                 <Label Text="{x:Binding DecoratorText, Mode=OneTime}" TextColor="{StaticResource White}" LineBreakMode="TailTruncation" Style="{StaticResource Noto14SemiBold}"/>
                             </HorizontalStackLayout>
                         </Border>

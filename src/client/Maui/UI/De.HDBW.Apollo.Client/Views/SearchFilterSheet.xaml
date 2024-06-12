@@ -79,9 +79,12 @@
                 Command="{x:Binding CloseCommand}"
                 HeightRequest="24"
                 WidthRequest="24"
-                Source="close.png"
                 HorizontalOptions="End"
-                SemanticProperties.Description="{x:Static strings:Resources.Global_Close}"/>
+                SemanticProperties.Description="{x:Static strings:Resources.Global_Close}">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="{StaticResource Close}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                </ImageButton.Source>
+            </ImageButton>
 
         </Grid>
 

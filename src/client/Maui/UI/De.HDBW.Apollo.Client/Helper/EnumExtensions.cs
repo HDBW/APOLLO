@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Client.Models;
 using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace De.HDBW.Apollo.Client.Helper
@@ -320,6 +321,80 @@ namespace De.HDBW.Apollo.Client.Helper
                     return Resources.Strings.Resources.Willing_No;
                 case Willing.Partly:
                     return Resources.Strings.Resources.Willing_Partly;
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string ToFontIcon(this DriversLicense enumValue)
+        {
+            switch (enumValue)
+            {
+                case DriversLicense.B:
+                    return KnonwIcons.DriversLicenseB;
+                case DriversLicense.BE:
+                    return KnonwIcons.DriversLicenseBE;
+                case DriversLicense.Forklift:
+                    return KnonwIcons.DriversLicenseForklift;
+                case DriversLicense.C1E:
+                    return KnonwIcons.DriversLicenseC1E;
+                case DriversLicense.C1:
+                    return KnonwIcons.DriversLicenseC1;
+                case DriversLicense.L:
+                    return KnonwIcons.DriversLicenseL;
+                case DriversLicense.AM:
+                    return KnonwIcons.DriversLicenseAM;
+                case DriversLicense.A:
+                    return KnonwIcons.DriversLicenseA;
+                case DriversLicense.CE:
+                    return KnonwIcons.DriversLicenseCE;
+                case DriversLicense.C:
+                    return KnonwIcons.DriversLicenseC;
+                case DriversLicense.A1:
+                    return KnonwIcons.DriversLicenseA1;
+                case DriversLicense.B96:
+                    return KnonwIcons.DriversLicenseB96;
+                case DriversLicense.T:
+                    return KnonwIcons.DriversLicenseT;
+                case DriversLicense.A2:
+                    return KnonwIcons.DriversLicenseA2;
+                case DriversLicense.Moped:
+                    return KnonwIcons.DriversLicenseMoped;
+                case DriversLicense.Drivercard:
+                    return KnonwIcons.DriversLicenseDrivercard;
+                case DriversLicense.PassengerTransport:
+                    return KnonwIcons.DriversLicensePassengerTransport;
+                case DriversLicense.D:
+                    return KnonwIcons.DriversLicenseD;
+                case DriversLicense.InstructorBE:
+                    return KnonwIcons.DriversLicenseInstructorBE;
+                case DriversLicense.ConstructionMachines:
+                    return KnonwIcons.DriversLicenseConstructionMachines;
+                case DriversLicense.DE:
+                    return KnonwIcons.DriversLicenseDE;
+                case DriversLicense.D1:
+                    return KnonwIcons.DriversLicenseD1;
+                case DriversLicense.D1E:
+                    return KnonwIcons.DriversLicenseD1E;
+                case DriversLicense.InstructorA:
+                    return KnonwIcons.DriversLicenseInstructorA;
+                case DriversLicense.InstructorCE:
+                    return KnonwIcons.DriversLicenseInstructorCE;
+                case DriversLicense.TrailerDriving:
+                    return KnonwIcons.DriversLicenseTrailerDriving;
+                case DriversLicense.InstructorDE:
+                    return KnonwIcons.DriversLicenseInstructorDE;
+                case DriversLicense.Class1:
+                    return KnonwIcons.DriversLicenseClass1;
+                case DriversLicense.Class3:
+                    return KnonwIcons.DriversLicenseClass2;
+                case DriversLicense.Class2:
+                    return KnonwIcons.DriversLicenseClass3;
+                case DriversLicense.InstructorASF:
+                    return KnonwIcons.DriversLicenseInstructorASF;
+                case DriversLicense.InstructorASP:
+                    return KnonwIcons.DriversLicenseInstructorASP;
+
                 default:
                     return string.Empty;
             }

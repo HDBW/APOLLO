@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <x:String x:Key="ArrowRight">&#x0043;</x:String>
+    <x:String x:Key="Calendar">&#x0045;</x:String>
+    <x:String x:Key="Close">&#x005a;</x:String>
+    <x:String x:Key="Edit">&#x0072;</x:String>
+    <x:String x:Key="Favorite">&#x0073;</x:String>    
+    <x:String x:Key="Login">&#x0075;</x:String>
+    <x:String x:Key="Longlist">&#x0053;</x:String>
+    <x:String x:Key="Nofavorite">&#x0077;</x:String>
+    <x:String x:Key="Profile">&#x0079;</x:String>
+    <x:String x:Key="Search">&#x0056;</x:String>
+    <x:String x:Key="Settings">&#x00a2;</x:String>
+    <x:String x:Key="Shortlist">&#x00a3;</x:String>
+    <x:String x:Key="Test">&#x00a4;</x:String>
+    <x:String x:Key="Timer">&#x00a5;</x:String>
+    <x:String x:Key="Training">&#x00a6;</x:String>
+    <x:String x:Key="Upload">&#x00b3;</x:String>
+    <x:String x:Key="Delete">&#x0046;</x:String>
+    <x:String x:Key="Checkmark">&#x00b0;</x:String>
+    
+</ResourceDictionary>

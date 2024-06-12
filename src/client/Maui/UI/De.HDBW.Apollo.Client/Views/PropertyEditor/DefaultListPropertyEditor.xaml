@@ -8,8 +8,13 @@
              x:DataType="viewModels:ListPropertyEditor">
     <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" Margin="0,0,0,16">
         <Label Text="{x:Binding Label}" Style="{StaticResource Noto16SemiBold}" VerticalOptions="Center" HorizontalOptions="Start" SemanticProperties.HeadingLevel="Level3"/>
-        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24"
-                     Source="delete.png" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}" SemanticProperties.Hint="{x:Binding Label}" />
+        <ImageButton Command="{x:Binding ClearCommand}" Grid.Column="1" WidthRequest="24" HeightRequest="24" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}" SemanticProperties.Hint="{x:Binding Label}" >
+            <ImageButton.Source>
+                <FontImageSource Glyph="{StaticResource Delete}"
+                                 FontFamily="ApolloFontIcons"
+                                 Size="24" Color="{StaticResource Primary}"/>
+            </ImageButton.Source>
+        </ImageButton>
         <ListView
                 Grid.Row="1"
                 Grid.ColumnSpan="2"

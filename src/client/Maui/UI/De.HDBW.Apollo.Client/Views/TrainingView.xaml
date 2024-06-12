@@ -16,8 +16,13 @@
         <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon}" />
-        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}" IconImageSource="share.png" />
+        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}" />
+
+        <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ShareProductCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{StaticResource Upload}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <DataTemplate x:Key="TrainingsHeaderItemTemplate" x:DataType="trainingsModels:TrainingsHeaderItem">
@@ -33,19 +38,31 @@
                             <RoundRectangle CornerRadius="0,8,0,0" />
                         </Border.StrokeShape>
                         <HorizontalStackLayout>
-                            <Image WidthRequest="16" HeightRequest="16" Source="{x:Static models:KnonwIcons.Training}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                            <Image WidthRequest="16" HeightRequest="16" Margin="0,0,8,0" VerticalOptions="Center">
+                                <Image.Source>
+                                    <FontImageSource Glyph="{x:Static models:KnonwIcons.Training}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Neutral0}"/>
+                                </Image.Source>
+                            </Image>
                             <Label Text="{x:Binding TrainingType, Mode=OneTime}" TextType="Html" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
                         </HorizontalStackLayout>
                     </Border>
                 </Grid>
 
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable, Mode=OneTime}" Margin="24,0">
-                    <Image HeightRequest="24" Source="{x:Static models:KnonwIcons.Accessibility}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                    <Image HeightRequest="24" WidthRequest="24" Margin="0,0,8,0" VerticalOptions="Center">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Static models:KnonwIcons.Accessibility}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
                 </Grid>
 
-                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate, Mode=OneTime}" Margin="24,0" >
-                    <Image WidthRequest="24" HeightRequest="24" Source="{x:Static models:KnonwIcons.Watch}" Margin="0,0,8,0" VerticalOptions="Center"/>
+                <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate, Mode=OneTime}" Margin="24,0">
+                    <Image WidthRequest="24" HeightRequest="24" Margin="0,0,8,0" VerticalOptions="Center">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Static models:KnonwIcons.Watch}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding IndividualStartDate, Mode=OneTime}" TextType="Html" />
                 </Grid>
             </VerticalStackLayout>
@@ -98,11 +115,18 @@
                         <TapGestureRecognizer Command="{x:Binding ToggleExpandStateCommand, Mode=OneTime}" />
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*, auto">
-                        <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0" />
-                        <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                        <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
+                        <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            </Image.Source>
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
-                                    <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
+                                    <Setter Property="Source">
+                                        <Setter.Value>
+                                            <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                        </Setter.Value>
+                                    </Setter>
                                 </DataTrigger>
                             </Image.Triggers>
                         </Image>
@@ -124,10 +148,17 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*, auto">
                         <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                        <Image Source="{x:Static models:KnonwIcons.ChevronDown}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                        <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            </Image.Source>
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
-                                    <Setter Property="Source" Value="{x:Static models:KnonwIcons.ChevronUp}" />
+                                    <Setter Property="Source">
+                                        <Setter.Value>
+                                            <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                        </Setter.Value>
+                                    </Setter>
                                     <!-- Multiple Setter elements are allowed -->
                                 </DataTrigger>
                             </Image.Triggers>
@@ -174,10 +205,13 @@
             </VerticalStackLayout>
         </DataTemplate>
 
-
         <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
             <Grid ColumnDefinitions="32,*" MinimumHeightRequest="34" >
-                <Image VerticalOptions="Center" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                <Image VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}">
+                    <Image.Source>
+                        <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </Image.Source>
+                </Image>
                 <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,7,0,0"/>
             </Grid>
         </DataTemplate>
@@ -187,7 +221,11 @@
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{x:Binding InteractCommand, Mode=OneTime}" />
                 </Grid.GestureRecognizers>
-                <Image VerticalOptions="Center" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon, Mode=OneTime}" />
+                <Image VerticalOptions="Center" InputTransparent="True" HorizontalOptions="Start" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon, Mode=OneTime}">
+                    <Image.Source>
+                        <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </Image.Source>
+                </Image>
                 <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" Margin="0,7,0,0" TextColor="{StaticResource Primary}"/>
             </Grid>
         </DataTemplate>
@@ -234,7 +272,11 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*, auto">
                         <Label Text="{x:Binding Text, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
-                        <Image Grid.Column="1" Source="{x:Static models:KnonwIcons.ChevronLink}" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="End" />
+                        <Image Grid.Column="1" WidthRequest="16" HeightRequest="16" VerticalOptions="Center" HorizontalOptions="End" Margin="4">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronLink}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
                     </Grid>
                 </Border>
             </ContentView>

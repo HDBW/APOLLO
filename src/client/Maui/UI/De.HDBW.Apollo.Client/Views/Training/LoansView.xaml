@@ -16,7 +16,11 @@
         <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">
             <Border StrokeThickness="0">
                 <Grid ColumnDefinitions="32,*" MinimumHeightRequest="24" Margin="0,5">
-                    <Image VerticalOptions="Start" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Image VerticalOptions="Start" HorizontalOptions="Start" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                     <Label VerticalOptions="Start" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0"/>
                 </Grid>
             </Border>
@@ -28,7 +32,11 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding InteractCommand}" />
                     </Grid.GestureRecognizers>
-                    <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" Source="{x:Binding Icon}" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}" />
+                    <Image VerticalOptions="Start" InputTransparent="True" HorizontalOptions="Start" WidthRequest="24" HeightRequest="24" Aspect="Fill" IsVisible="{x:Binding HasIcon}">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                     <Label VerticalOptions="Start" InputTransparent="True" Grid.Column="1" Text="{x:Binding Text}" TextType="Html" Margin="0,2,0,0" TextColor="{StaticResource Primary}"/>
                 </Grid>
             </Border>

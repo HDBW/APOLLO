@@ -15,7 +15,11 @@
         <BackButtonBehavior Command="{Binding CancelCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="delete" Command="{x:Binding DeleteCommand}"/>
+        <ToolbarItem Command="{x:Binding DeleteCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContent}">
@@ -26,7 +30,10 @@
                             ItemDisplayBinding="{x:Binding Text}"
                             x:Name="PART_ServiceType"
                             SelectedItem="{x:Binding SelectedServiceType, Mode=TwoWay}"/>
-                    <ImageButton Grid.Column="1" Source="shortlist.png" AutomationProperties.ExcludedWithChildren="True">
+                    <ImageButton Grid.Column="1" AutomationProperties.ExcludedWithChildren="True">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Shortlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowPickerBehavior PickerControl="{x:Reference PART_ServiceType}" />
                         </ImageButton.Behaviors>
@@ -68,8 +75,15 @@
                                         VerticalOptions="Center"
                                         x:Name="PART_End"
                                         NullableDate="{x:Binding End, Mode=TwoWay}" ios:DatePicker.UpdateMode="WhenFinished"/>
-                    <ImageButton Source="delete.png" Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}"/>
-                    <ImageButton Source="calendar.png" Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
+                    <ImageButton Command="{x:Binding ClearEndCommand}" IsVisible="{x:Binding HasEnd}" Grid.Column="1" Margin="8,0" SemanticProperties.Description="{x:Static strings:Resources.Global_Delete}">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <ImageButton Grid.Column="2" AutomationProperties.ExcludedWithChildren="True">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Calendar}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
                         <ImageButton.Behaviors>
                             <behaviours:ShowDatePickerBehavior PickerControl="{x:Reference PART_End}" />
                         </ImageButton.Behaviors>
@@ -84,7 +98,11 @@
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchOccupationCommand}"  />
                     </Grid.GestureRecognizers>
                     <Label Grid.Column="0" Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" SemanticProperties.Description="{x:Static strings:Resources.Global_Occupation}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" Margin="0,0,4,0"/>
-                    <Image Grid.Column="1" Source="longlist.png"  HeightRequest="24" WidthRequest="24"/>
+                    <Image Grid.Column="1" HeightRequest="24" WidthRequest="24">
+                        <Image.Source>
+                            <FontImageSource Glyph="{StaticResource Longlist}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
                 </Grid>
             </Border>
 
