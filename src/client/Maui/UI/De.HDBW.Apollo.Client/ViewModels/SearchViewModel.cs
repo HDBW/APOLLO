@@ -356,7 +356,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         KnownFilters.OccurenceEndDateFieldName,
                     };
 
-            var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, token);
+            var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, true,token);
             items = items ?? new List<TrainingModel>();
             _trainings = items.ToList();
             _customFilter = null;
