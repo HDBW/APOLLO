@@ -17,16 +17,16 @@ namespace De.HDBW.Apollo.Data.Services
 
         public async Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, int? skip, int? top, CancellationToken token)
         {
-           var results = await SearchTrainingsAsync(filter, null, skip, top, token);
+           var results = await SearchTrainingsAsync(filter, null, skip, top, true, token);
            return results ?? Array.Empty<Training>();
         }
 
-        public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string>? visibleFields, int? skip, int? top, CancellationToken token)
+        public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string>? visibleFields, int? skip, int? top, bool useSemanticSearch, CancellationToken token)
         {
             filter = filter ?? new Filter() { Fields = new List<FieldExpression>() };
             var sortExpression = new SortExpression() { FieldName = nameof(Training.TrainingName), Order = SortOrder.Descending };
             visibleFields = visibleFields ?? new List<string>() { nameof(Training.Id), nameof(Training.TrainingName) };
-            var response = await GetTrainingsInternalAsync(filter, sortExpression, visibleFields, skip, top, token).ConfigureAwait(false);
+            var response = await GetTrainingsInternalAsync(filter, sortExpression, visibleFields, skip, top, useSemanticSearch, token).ConfigureAwait(false);
             return response ?? Array.Empty<Training>();
         }
 
@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Data.Services
             return response;
         }
 
-        private async Task<IEnumerable<Training>?> GetTrainingsInternalAsync(Filter filter, SortExpression sortExpression, List<string> visibleFields, int? skip, int? top, CancellationToken token)
+        private async Task<IEnumerable<Training>?> GetTrainingsInternalAsync(Filter filter, SortExpression sortExpression, List<string> visibleFields, int? skip, int? top, bool useSemanticSearch, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
 
@@ -44,6 +44,7 @@ namespace De.HDBW.Apollo.Data.Services
             visibleFields = visibleFields?.Distinct().ToList() ?? new List<string>();
 
             var query = new QueryTrainingsRequest();
+            query.UseSemanticSearch = useSemanticSearch;
             query.Filter = filter;
             query.SortExpression = sortExpression;
             query.Fields = visibleFields;

@@ -10,7 +10,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
     {
         Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, int? skip, int? top, CancellationToken token);
 
-        Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string> visibleFields, int? skip, int? top, CancellationToken token);
+        Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string> visibleFields, int? skip, int? top, bool useSemanticSearch, CancellationToken token);
 
         Task<Training?> GetAsync(string id, CancellationToken token);
     }
