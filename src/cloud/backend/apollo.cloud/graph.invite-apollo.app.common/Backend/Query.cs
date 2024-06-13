@@ -37,5 +37,10 @@ namespace Invite.Apollo.App.Graph.Common.Backend.Api
         /// Specify the order of the return items by the specified field.
         /// </summary>
         public SortExpression? SortExpression { get; set; }
+
+        /// <summary>
+        /// Enables or disables the semantic search. The default value is True.
+        /// </summary>
+        public bool UseSemanticSearch { get; set; } = true;
     }
 }
