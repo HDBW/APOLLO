@@ -86,13 +86,13 @@ To run the exporter using console:
  6.  Run the exporter using the command line or by triggering it in your preferred development environment.
 
 
-# Running Exporter in Docker Image
-To run the exporter using Docker: 
+# Exporter 
+
 
 ## Prerequisites
 Before running the Docker commands, make sure you have Docker installed on your machine. You can download and install Docker from [here](https://www.docker.com/get-started).
 
-## Building the Docker Image
+## Building docker image and running the container :
 
 Navigate to the "Apollo.Backend" directory using the command prompt or terminal:
 
@@ -107,6 +107,28 @@ To run the container passing argumant example
 ```
 docker run -d -p 8081:80 --name apollosearchworker2 -e MongoConnStr="Replace with Connection string" -e BlobConnStr="Replace with Connection string" -e entity="training" apollosemanticsearchworker
 ```
+
+
+To start Docker with an image from an Azure Container Registry (ACR), follow these steps:
+
+ 1.  Login into Azure
+   ```
+   az login
+   ```
+ 2.  Log in to Azure Container Registry:
+   ```
+   az acr login --name apolloexporterregistrym2
+   ```
+ 3.  Pull the image from ACR:
+   ```
+   docker pull apolloexporterregistrym2.azurecr.io/exporter:latest
+   ```
+  4.  Run the Docker Container::
+   ```
+   docker run -d --name exporter-container apolloexporterregistrym2.azurecr.io/exporter:latest
+   ```
+
+
  ## Formatters
 Formatters format the responsed data from server before start of stream write operation for CSV in BlobStorage
 
