@@ -16,7 +16,7 @@
     Shell.FlyoutBehavior="Flyout"
     FlyoutIsPresented="{x:Binding IsFlyoutPresented, Mode=TwoWay}" 
     FlyoutBackground="{StaticResource Background}"
-    Shell.MenuItemTemplate="{StaticResource MenuItemTemplateSelector}"
+    Shell.MenuItemTemplate="{StaticResource DefaultTemplate}"
     >
     <Shell.Resources>
         <ResourceDictionary>
@@ -30,16 +30,6 @@
                 </Grid>
             </DataTemplate>
 
-            <DataTemplate x:Key="TemplateWithSeperator" x:DataType="BaseShellItem">
-                <Grid ColumnDefinitions="auto,*" RowDefinitions="1,*" Padding="24,8">
-                    <Rectangle Grid.ColumnSpan="2" BackgroundColor="{StaticResource Primary}" />
-                    <Image Source="{x:Binding Icon}" Grid.Row="1" VerticalOptions="Center" Margin="8,0" HeightRequest="24"/>
-                    <Label Grid.Column="1" Text="{x:Binding Title}" Style="{StaticResource Noto16}" VerticalOptions="Center" TextColor="{StaticResource Primary}" Grid.Row="1" />
-                </Grid>
-            </DataTemplate>
-            <selector:MenuItemTemplateSelector x:Key="MenuItemTemplateSelector" 
-                                               DefaultTemplate="{StaticResource DefaultTemplate}"
-                                               TemplateWithSeperator="{StaticResource TemplateWithSeperator}"/>
         </ResourceDictionary>
     </Shell.Resources>
     <Shell.FlyoutHeader>

@@ -2222,51 +2222,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zeugnisse und Abschlüsse.
-        /// </summary>
-        public static string MainNavigation_CertificatesAndDegrees {
-            get {
-                return ResourceManager.GetString("MainNavigation_CertificatesAndDegrees", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Szenario wechseln.
-        /// </summary>
-        public static string MainNavigation_ChangeUseCase {
-            get {
-                return ResourceManager.GetString("MainNavigation_ChangeUseCase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to gemerkte Kurse.
-        /// </summary>
-        public static string MainNavigation_CoursesFavorites {
-            get {
-                return ResourceManager.GetString("MainNavigation_CoursesFavorites", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to CV Generator.
-        /// </summary>
-        public static string MainNavigation_CVGenerator {
-            get {
-                return ResourceManager.GetString("MainNavigation_CVGenerator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profil bearbeiten.
-        /// </summary>
-        public static string MainNavigation_EditProfile {
-            get {
-                return ResourceManager.GetString("MainNavigation_EditProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Feedback senden.
         /// </summary>
         public static string MainNavigation_Feedback {
@@ -2276,56 +2231,11 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Interessenfelder.
-        /// </summary>
-        public static string MainNavigation_FieldsOfInterest {
-            get {
-                return ResourceManager.GetString("MainNavigation_FieldsOfInterest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lernpfad.
-        /// </summary>
-        public static string MainNavigation_LearningPath {
-            get {
-                return ResourceManager.GetString("MainNavigation_LearningPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Einstellungen.
         /// </summary>
         public static string MainNavigation_Settings {
             get {
                 return ResourceManager.GetString("MainNavigation_Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Einstellungen &amp; Filter.
-        /// </summary>
-        public static string MainNavigation_SettingsAndFilter {
-            get {
-                return ResourceManager.GetString("MainNavigation_SettingsAndFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Skills &amp; Badges.
-        /// </summary>
-        public static string MainNavigation_SkillsAndBadges {
-            get {
-                return ResourceManager.GetString("MainNavigation_SkillsAndBadges", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tutorial anzeigen.
-        /// </summary>
-        public static string MainNavigation_ViewTutorial {
-            get {
-                return ResourceManager.GetString("MainNavigation_ViewTutorial", resourceCulture);
             }
         }
         
@@ -3083,124 +2993,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string SkipQuestionDialog_Title {
             get {
                 return ResourceManager.GetString("SkipQuestionDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usecase ändern.
-        /// </summary>
-        public static string StartView_ChangeUseCase {
-            get {
-                return ResourceManager.GetString("StartView_ChangeUseCase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mein Ziel.
-        /// </summary>
-        public static string StartView_Goal {
-            get {
-                return ResourceManager.GetString("StartView_Goal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sobald du Inhalte favorisierst werden sie hier erscheinen..
-        /// </summary>
-        public static string StartView_NoFavoritesDescription {
-            get {
-                return ResourceManager.GetString("StartView_NoFavoritesDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast noch keine Favoriten gesetzt.
-        /// </summary>
-        public static string StartView_NoFavoritesTitle {
-            get {
-                return ResourceManager.GetString("StartView_NoFavoritesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erreiche deine Ziele.
-        /// </summary>
-        public static string StartViewModel_FavoritesHeadline {
-            get {
-                return ResourceManager.GetString("StartViewModel_FavoritesHeadline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deine Favoriten.
-        /// </summary>
-        public static string StartViewModel_FavoritesSubline {
-            get {
-                return ResourceManager.GetString("StartViewModel_FavoritesSubline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Entdecke dein Karrierepotential
-        ///(Ist-Stand bekannt – Inspiration).
-        /// </summary>
-        public static string StartViewModel_InteractionCareer {
-            get {
-                return ResourceManager.GetString("StartViewModel_InteractionCareer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sobald du Inhalte favorisierst werden sie hier erscheinen..
-        /// </summary>
-        public static string StartViewModel_NoFavoritesText {
-            get {
-                return ResourceManager.GetString("StartViewModel_NoFavoritesText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast noch keine Favoriten gesetzt.
-        /// </summary>
-        public static string StartViewModel_NoFavoritesTitle {
-            get {
-                return ResourceManager.GetString("StartViewModel_NoFavoritesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Empfohlene Inhalte.
-        /// </summary>
-        public static string StartViewModel_RecomondationsSubline {
-            get {
-                return ResourceManager.GetString("StartViewModel_RecomondationsSubline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erhöhe deine Jobchancen.
-        /// </summary>
-        public static string StartViewModel_UseCaseA_RecomondationsHeadline {
-            get {
-                return ResourceManager.GetString("StartViewModel_UseCaseA_RecomondationsHeadline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lerne neue Fähigkeiten.
-        /// </summary>
-        public static string StartViewModel_UseCaseB_RecomondationsHeadline {
-            get {
-                return ResourceManager.GetString("StartViewModel_UseCaseB_RecomondationsHeadline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Beschleunige deinen Aufstieg.
-        /// </summary>
-        public static string StartViewModel_UseCaseC_RecomondationsHeadline {
-            get {
-                return ResourceManager.GetString("StartViewModel_UseCaseC_RecomondationsHeadline", resourceCulture);
             }
         }
         

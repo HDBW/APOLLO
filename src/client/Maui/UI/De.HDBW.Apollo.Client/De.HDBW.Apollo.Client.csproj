@@ -71,14 +71,9 @@
     <None Remove="Resources\Images\splashdeco.svg" />
     <None Remove="Resources\Images\splashdeco1.svg" />
     <None Remove="Resources\Images\splashdeco2.svg" />
-    <None Remove="Resources\Images\usecase4deco.svg" />
     <None Remove="Resources\Images\apollo.svg" />
     <None Remove="Resources\Images\fallback.png" />
     <None Remove="Resources\Images\registrationdeco.svg" />
-    <None Remove="Resources\Images\usecase1deco.svg" />
-    <None Remove="Resources\Images\usecase1detail.svg" />
-    <None Remove="Resources\Images\usecase2deco.svg" />
-    <None Remove="Resources\Images\usecase3deco.svg" />
     <None Remove="Resources\Raw\LICENSE" />
   </ItemGroup>
   <ItemGroup>

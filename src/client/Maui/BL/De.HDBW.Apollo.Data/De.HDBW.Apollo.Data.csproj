@@ -7,15 +7,7 @@
     <UseMauiEssentials>true</UseMauiEssentials>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="SampleData\Usecase1.bin" />
-    <None Remove="SampleData\Usecase2.bin" />
-    <None Remove="SampleData\Usecase3.bin" />
     <None Remove="sqlite-net-pcl" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="SampleData\Usecase1.bin" />
-    <EmbeddedResource Include="SampleData\Usecase2.bin" />
-    <EmbeddedResource Include="SampleData\Usecase3.bin" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj">
