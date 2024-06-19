@@ -1,7 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Identity.Client;
 
@@ -23,10 +22,6 @@ namespace De.HDBW.Apollo.Data.Services
 
         public string? UniqueId { get; private set; }
 
-        public UseCase? UseCase { get; private set; }
-
-        public bool ChangedUseCase { get; private set; }
-
         public void AddFavorite(long id, Type type)
         {
             RemoveFavorite(id, type);
@@ -36,11 +31,6 @@ namespace De.HDBW.Apollo.Data.Services
         public void ClearFavorites()
         {
             _favorites.Clear();
-        }
-
-        public void ConfirmedUseCaseChanged()
-        {
-            ChangedUseCase = false;
         }
 
         public IEnumerable<(long Id, Type Type)> GetFavorites()
@@ -61,12 +51,6 @@ namespace De.HDBW.Apollo.Data.Services
         {
             AccountId = accountId;
             UniqueId = uniqueId;
-        }
-
-        public void UpdateUseCase(UseCase? useCase)
-        {
-            UseCase = useCase;
-            ChangedUseCase = true;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         public static QualificationEntry Import(Qualification data, Func<AbstractProfileEntry<Qualification>, Task> editHandle, Func<AbstractProfileEntry<Qualification>, bool> canEditHandle, Func<AbstractProfileEntry<Qualification>, Task> deleteHandle, Func<AbstractProfileEntry<Qualification>, bool> canDeleteHandle)
         {
-            return new QualificationEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
+            return new QualificationEntry(data, editHandle, canEditHandle, deleteHandle, canDeleteHandle);
         }
 
         protected override ObservableCollection<StringValue> GetAllLines(Qualification data)

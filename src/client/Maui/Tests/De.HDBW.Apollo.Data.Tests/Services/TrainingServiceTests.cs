@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(TokenSource!.Token))
             {
                 cts.Cancel();
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, null, null, null, cts.Token));
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.SearchTrainingsAsync(null, null, null, null, false, cts.Token));
                 await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Service.GetAsync("Training-EB0316FB98B84496A9B14C2BB33355C9", cts.Token));
             }
         }
@@ -70,7 +70,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             IEnumerable<Training>? trainings = null;
             try
             {
-                trainings = await Service.SearchTrainingsAsync(null, null, null, null, TokenSource!.Token);
+                trainings = await Service.SearchTrainingsAsync(null, null, null, null, false, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -123,7 +123,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             IEnumerable<Training>? trainings = null;
             try
             {
-                trainings = await Service.SearchTrainingsAsync(filter, visibleFields, null, null, TokenSource!.Token);
+                trainings = await Service.SearchTrainingsAsync(filter, visibleFields, null, null, false, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {
@@ -673,7 +673,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
 
             try
             {
-                trainings = await Service.SearchTrainingsAsync(filter, null, null, null, TokenSource!.Token);
+                trainings = await Service.SearchTrainingsAsync(filter, null, null, null, false, TokenSource!.Token);
             }
             catch (ApolloApiException ex)
             {

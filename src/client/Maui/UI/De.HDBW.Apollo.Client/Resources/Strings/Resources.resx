@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AssessmentDescriptionView_OnlyOnce" xml:space="preserve">
-    <value>*Kann nur einmalig ausgeführt werden</value>
-  </data>
-  <data name="AssessmentDescriptionView_Title" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="AssessmentItem_DecoratorText" xml:space="preserve">
-    <value>Test</value>
-  </data>
   <data name="CourseTagType_Admission" xml:space="preserve">
     <value>Zulassung</value>
   </data>
@@ -229,121 +220,6 @@
   <data name="StartView_Goal" xml:space="preserve">
     <value>Mein Ziel</value>
   </data>
-  <data name="UseCaseDescriptionView_AgeFormat" xml:space="preserve">
-    <value>Alter: {0}</value>
-  </data>
-  <data name="UseCaseDescriptionView_Experience" xml:space="preserve">
-    <value>Erfahrung</value>
-  </data>
-  <data name="UseCaseDescriptionView_Goal" xml:space="preserve">
-    <value>Ziel</value>
-  </data>
-  <data name="UseCaseDescriptionView_LocationFormat" xml:space="preserve">
-    <value>Ort: {0}</value>
-  </data>
-  <data name="UseCaseDescriptionView_Start" xml:space="preserve">
-    <value>Szenario starten</value>
-  </data>
-  <data name="UseCaseDescriptionView_Story" xml:space="preserve">
-    <value>Story</value>
-  </data>
-  <data name="UseCaseDescriptionView_Title" xml:space="preserve">
-    <value>Dein Szenario</value>
-  </data>
-  <data name="UseCaseDetail_A_Age" xml:space="preserve">
-    <value>31</value>
-  </data>
-  <data name="UseCaseDetail_A_Experience" xml:space="preserve">
-    <value>4 Jahre Lager und Kommissionierung
-1 Jahr Einzelhandel im Lebensmittelbereich</value>
-  </data>
-  <data name="UseCaseDetail_A_Goal" xml:space="preserve">
-    <value>Job im Bereich Lager
-Langfristig stabilere Arbeitsbedingungen</value>
-  </data>
-  <data name="UseCaseDetail_A_Location" xml:space="preserve">
-    <value>Ludwigsburg</value>
-  </data>
-  <data name="UseCaseDetail_A_Story" xml:space="preserve">
-    <value>Du hast in den letzten vier Jahren in einem großen Versandlager gearbeitet. Deine Aufgabe war es, Waren aus dem Lager für Lieferaufträge zusammenzustellen. Vorher hast du eine Ausbildung im Einzelhandel angefangen, jedoch abgebrochen. Dein Unternehmen hat beschlossen, den Standort zu schließen. Du bist auf der Suche nach einem neuen Job im Bereich Lager.</value>
-  </data>
-  <data name="UseCaseDetail_B_Age" xml:space="preserve">
-    <value>42</value>
-  </data>
-  <data name="UseCaseDetail_B_Experience" xml:space="preserve">
-    <value>3 Jahre Ausbildung Kauffrau im Einzelhandel
-19 Jahre Erfahrung im Einzelhandel</value>
-  </data>
-  <data name="UseCaseDetail_B_Goal" xml:space="preserve">
-    <value>Weiterbildung im Bereich E-Commerce
-Anschlussfähig bleiben und neue Bereiche entdecken</value>
-  </data>
-  <data name="UseCaseDetail_B_Location" xml:space="preserve">
-    <value>München</value>
-  </data>
-  <data name="UseCaseDetail_B_Story" xml:space="preserve">
-    <value>Du arbeitest seit 22 Jahren im Einzelhandel. Dein Betrieb hat in den letzten Jahren neben dem Geschäft vor Ort auch den Online-Handel weiter ausgebaut. Um anschlussfähig zu bleiben, möchtest du dich im Bereich E-Commerce weiterbilden.</value>
-  </data>
-  <data name="UseCaseDetail_C_Age" xml:space="preserve">
-    <value>36</value>
-  </data>
-  <data name="UseCaseDetail_C_Experience" xml:space="preserve">
-    <value>3 Jahre Ausbildung Fachinformatikerin
-1 Jahr Weiterbildung IHK Techniker IT
-10 Jahre Erfahrung Systemintegration</value>
-  </data>
-  <data name="UseCaseDetail_C_Goal" xml:space="preserve">
-    <value>Berufliche Weiterentwicklung
-Weiterbildung zur IT Projektleiterin</value>
-  </data>
-  <data name="UseCaseDetail_C_Location" xml:space="preserve">
-    <value>Augsburg</value>
-  </data>
-  <data name="UseCaseDetail_C_Story" xml:space="preserve">
-    <value>Du hast zehn Jahre Erfahrung als Fachinformatikerin. Neben deiner Arbeit hast du verschiedene Möglichkeiten wahrgenommen, um dich weiterzubilden und auf dem Laufenden zu bleiben. Nun willst du den nächsten Schritt in deiner Karriere gehen. Du bist auf der Suche nach einer Qualifizierung, um eine Führungsposition zu übernehmen.</value>
-  </data>
-  <data name="UseCaseSelectionView_Choose" xml:space="preserve">
-    <value>Wähle Deinen Testbereich</value>
-  </data>
-  <data name="UseCaseSelectionView_ChooseDescription" xml:space="preserve">
-    <value>APOLLO befindet sich noch in der Testphase. Deine Teilnahme hilft uns die App weiterzuentwickeln.</value>
-  </data>
-  <data name="UseCase_A_Description" xml:space="preserve">
-    <value>Du möchtest dich auf einen sicheren Job vorbereiten</value>
-  </data>
-  <data name="UseCase_A_Name" xml:space="preserve">
-    <value>Fit für den Job</value>
-  </data>
-  <data name="UseCase_B_Description" xml:space="preserve">
-    <value>Du möchtest neue Fähigkeiten erwerben</value>
-  </data>
-  <data name="UseCase_B_Name" xml:space="preserve">
-    <value>Weiterbildung</value>
-  </data>
-  <data name="UseCase_C_Description" xml:space="preserve">
-    <value>Du möchtest in deinem Job Karriere machen</value>
-  </data>
-  <data name="UseCase_C_Name" xml:space="preserve">
-    <value>Karriereaufstieg</value>
-  </data>
-  <data name="AssessmentResultView_Title" xml:space="preserve">
-    <value>Auswertung</value>
-  </data>
-  <data name="AssessmentResultView_CloseAssessment" xml:space="preserve">
-    <value>Beenden</value>
-  </data>
-  <data name="CancelAssessmentDialog_Title" xml:space="preserve">
-    <value>Bist du dir sicher, dass du den Test beenden möchtest?</value>
-  </data>
-  <data name="CancelAssessmentDialog_Message" xml:space="preserve">
-    <value>Tests sind nur einmalig durchführbar und können nicht wiederholt werden.</value>
-  </data>
-  <data name="CancelAssessmentDialog_Cancel" xml:space="preserve">
-    <value>Fortfahren</value>
-  </data>
-  <data name="CancelAssessmentDialog_Continue" xml:space="preserve">
-    <value>Test beenden</value>
-  </data>
   <data name="SkipQuestionDialog_Title" xml:space="preserve">
     <value>Bist du dir sicher, dass du diese Frage überspringen möchtest?</value>
   </data>
@@ -401,15 +277,6 @@ Weiterbildung zur IT Projektleiterin</value>
   </data>
   <data name="StartViewModel_FavoritesHeadline" xml:space="preserve">
     <value>Erreiche deine Ziele</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Skill_Start" xml:space="preserve">
-    <value>Test starten*</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_SoftSkill_Start" xml:space="preserve">
-    <value>Test starten*</value>
-  </data>
-  <data name="AssessmentDescriptionViewModel_Survey_Start" xml:space="preserve">
-    <value>Umfrage starten*</value>
   </data>
   <data name="Global_DurationFormat" xml:space="preserve">
     <value>{0} Minuten</value>
@@ -474,21 +341,6 @@ Weiterbildung zur IT Projektleiterin</value>
   <data name="OccurrenceType_PartTime" xml:space="preserve">
     <value>Teilzeit</value>
   </data>
-  <data name="AssessmentType_Cloze" xml:space="preserve">
-    <value>Lückentext</value>
-  </data>
-  <data name="AssessmentType_ExperienceAssessment" xml:space="preserve">
-    <value>Erfahrungen</value>
-  </data>
-  <data name="AssessmentType_SkillAssessment" xml:space="preserve">
-    <value>Test</value>
-  </data>
-  <data name="AssessmentType_SoftSkillAssessment" xml:space="preserve">
-    <value>Selbsttest</value>
-  </data>
-  <data name="AssessmentType_Survey" xml:space="preserve">
-    <value>Umfrage</value>
-  </data>
   <data name="TrainingsView_Title" xml:space="preserve">
     <value>Kurs</value>
   </data>
@@ -518,26 +370,8 @@ APOLLO geht sorgsam mit Deinen Daten um und verwendet diese ausschließlich zur 
   <data name="ConfirmDataUsageDialog_Continue" xml:space="preserve">
     <value>Okay</value>
   </data>
-  <data name="AssessmentResultView_Description" xml:space="preserve">
-    <value>Im Rahmen der Testversion zeigen wir dir hier dein vorläufiges Ergebnis. Wie du im Vergleich zu anderen abschneidest, erfährst du in der finalen Version der App!</value>
-  </data>
-  <data name="AssessmentResultView_Headline" xml:space="preserve">
-    <value>Deine Analyse</value>
-  </data>
-  <data name="AssessmentResultView_RecommendationHeadline" xml:space="preserve">
-    <value>Lerne neue Fähigkeiten</value>
-  </data>
-  <data name="AssessmentResultView_RecommendationDescription" xml:space="preserve">
-    <value>Empfohlene Inhalte</value>
-  </data>
   <data name="OccurrenceType_FullTimeAndPartTime" xml:space="preserve">
     <value>Voll- und Teilzeit</value>
-  </data>
-  <data name="UseCase_D_Description" xml:space="preserve">
-    <value>Finde passende Kurse für deine Interessen</value>
-  </data>
-  <data name="UseCase_D_Name" xml:space="preserve">
-    <value>Suche</value>
   </data>
   <data name="ProfileView_Title" xml:space="preserve">
     <value>Dein Profil</value>
@@ -1521,5 +1355,17 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="Global_Alttext_KursDetails" xml:space="preserve">
     <value>Link zu den Kursdetails</value>
+  </data>
+  <data name="CancelAssessmentDialog_Cancel" xml:space="preserve">
+    <value>Fortfahren</value>
+  </data>
+  <data name="CancelAssessmentDialog_Continue" xml:space="preserve">
+    <value>Test beenden</value>
+  </data>
+  <data name="CancelAssessmentDialog_Message" xml:space="preserve">
+    <value>Tests sind nur einmalig durchführbar und können nicht wiederholt werden.</value>
+  </data>
+  <data name="CancelAssessmentDialog_Title" xml:space="preserve">
+    <value>Bist du dir sicher, dass du den Test beenden möchtest?</value>
   </data>
 </root>

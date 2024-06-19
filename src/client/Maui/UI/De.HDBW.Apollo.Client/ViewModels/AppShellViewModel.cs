@@ -24,7 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
-            ILogger<StartViewModel> logger,
+            ILogger<AppShellViewModel> logger,
             ISessionService sessionService,
             IUserRepository userRepository)
             : base(dispatcherService, navigationService, dialogService, logger)

@@ -236,12 +236,10 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.UniqueId, authenticationResult?.Account.HomeAccountId));
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<ISheetService, SheetService>();
-            services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
             services.AddSingleton<IFeedbackService, FeedbackService>();
             services.AddSingleton<IMessenger, WeakReferenceMessenger>();
             services.AddSingleton<INetworkService, NetworkService>();
             services.AddSingleton<ITouchService, TouchService>();
-            services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
 
             var occupationSearchUrl = userSecretsService["OccupationSearchAPIURL"] ?? string.Empty;
             services.AddSingleton<IOccupationService>((serviceProvider) =>
@@ -295,17 +293,6 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupRepositories(IServiceCollection services)
         {
-            services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
-            services.AddSingleton<IAssessmentScoreRepository, AssessmentScoreRepository>();
-            services.AddSingleton<IAssessmentCategoryRepository, AssessmentCategoryRepository>();
-            services.AddSingleton<IAssessmentCategoryResultRepository, AssessmentCategoryResultRepository>();
-            services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
-            services.AddSingleton<IAnswerItemResultRepository, AnswerItemResultRepository>();
-            services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
-            services.AddSingleton<IQuestionMetaDataRelationRepository, QuestionMetaDataRelationRepository>();
-            services.AddSingleton<IAnswerMetaDataRelationRepository, AnswerMetaDataRelationRepository>();
-            services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
-            services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
             services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
             services.AddSingleton<ICourseContactRepository, CourseContactRepository>();
             services.AddSingleton<ICourseAppointmentRepository, CourseAppointmentRepository>();
@@ -330,9 +317,6 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<AppShell>();
             services.AddTransient<AppShellViewModel>();
 
-            services.AddTransient<StartView>();
-            services.AddTransient<StartViewModel>();
-
             services.AddTransient<ExtendedSplashScreenView>();
             services.AddTransient<ExtendedSplashScreenViewModel>();
 
@@ -344,12 +328,6 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<PickUserNameView>();
             services.AddTransient<PickUserNameViewModel>();
-
-            services.AddTransient<UseCaseDescriptionView>();
-            services.AddTransient<UseCaseDescriptionViewModel>();
-
-            services.AddTransient<UseCaseSelectionView>();
-            services.AddTransient<UseCaseSelectionViewModel>();
 
             services.AddTransient<CancelAssessmentDialog>();
             services.AddTransient<CancelAssessmentDialogViewModel>();
@@ -372,15 +350,6 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<EmptyView>();
             services.AddTransient<EmptyViewModel>();
-
-            services.AddTransient<AssessmentView>();
-            services.AddTransient<AssessmentViewModel>();
-
-            services.AddTransient<AssessmentResultView>();
-            services.AddTransient<AssessmentResultViewModel>();
-
-            services.AddTransient<AssessmentDescriptionView>();
-            services.AddTransient<AssessmentDescriptionViewModel>();
 
             services.AddTransient<SettingsView>();
             services.AddTransient<SettingsViewModel>();
@@ -495,12 +464,6 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.Shell, typeof(AppShell));
             Routing.RegisterRoute(Routes.RegistrationView, typeof(RegistrationView));
             Routing.RegisterRoute(Routes.PickUserNameView, typeof(PickUserNameView));
-            Routing.RegisterRoute(Routes.UseCaseDescriptionView, typeof(UseCaseDescriptionView));
-            Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
-            Routing.RegisterRoute(Routes.StartView, typeof(StartView));
-            Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
-            Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
-            Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
             Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
             Routing.RegisterRoute(Routes.LicensesView, typeof(LicensesView));
 
@@ -621,4 +584,4 @@ namespace De.HDBW.Apollo.Client
 #endif
         }
     }
-    }
+}

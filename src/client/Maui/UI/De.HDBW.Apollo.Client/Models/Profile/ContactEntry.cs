@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         public static ContactEntry Import(Contact data, Func<AbstractProfileEntry<Contact>, Task> editHandle, Func<AbstractProfileEntry<Contact>, bool> canEditHandle, Func<AbstractProfileEntry<Contact>, Task> deleteHandle, Func<AbstractProfileEntry<Contact>, bool> canDeleteHandle)
         {
-            return new ContactEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
+            return new ContactEntry(data, editHandle, canEditHandle, deleteHandle, canDeleteHandle);
         }
 
         protected override ObservableCollection<StringValue> GetAllLines(Contact data)

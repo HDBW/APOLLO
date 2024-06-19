@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Client.Models
         {
             get
             {
-               return _isRecent;
+                return _isRecent;
             }
 
             set

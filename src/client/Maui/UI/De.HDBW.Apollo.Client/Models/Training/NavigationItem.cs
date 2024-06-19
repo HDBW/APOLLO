@@ -44,7 +44,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
             return CanNavigateHander?.Invoke(this) ?? false;
         }
 
-        [RelayCommand(CanExecute = nameof(CanNavigate), AllowConcurrentExecutions =false)]
+        [RelayCommand(CanExecute = nameof(CanNavigate), AllowConcurrentExecutions = false)]
         private Task Navigate(CancellationToken token)
         {
             return NavigateHander?.Invoke(this, token) ?? Task.CompletedTask;

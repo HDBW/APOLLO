@@ -11,8 +11,6 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string ExtendedSplashScreenView = "/ExtendedSplashScreenView";
 
-        public const string StartView = "/StartView";
-
         public const string SearchView = "/SearchView";
 
         public const string FavoriteView = "/FavoriteView";
@@ -22,16 +20,6 @@ namespace De.HDBW.Apollo.Client.Models
         public const string RegistrationView = "/RegistrationView";
 
         public const string PickUserNameView = "/PickUserNameView";
-
-        public const string UseCaseDescriptionView = "/UseCaseDescriptionView";
-
-        public const string UseCaseSelectionView = "/UseCaseSelectionView";
-
-        public const string AssessmentView = "/AssessmentView";
-
-        public const string AssessmentResultView = "/AssessmentResultView";
-
-        public const string AssessmentDescriptionView = "/AssessmentDescriptionView";
 
         public const string TrainingView = "/TrainingView";
 

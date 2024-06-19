@@ -24,7 +24,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         public static LanguageEntry Import(Language data, Func<AbstractProfileEntry<Language>, Task> editHandle, Func<AbstractProfileEntry<Language>, bool> canEditHandle, Func<AbstractProfileEntry<Language>, Task> deleteHandle, Func<AbstractProfileEntry<Language>, bool> canDeleteHandle)
         {
-            return new LanguageEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
+            return new LanguageEntry(data, editHandle, canEditHandle, deleteHandle, canDeleteHandle);
         }
 
         protected override ObservableCollection<StringValue> GetAllLines(Language data)

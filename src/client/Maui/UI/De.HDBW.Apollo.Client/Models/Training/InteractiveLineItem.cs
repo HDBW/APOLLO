@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
             return CanExecuteHander?.Invoke(Text) ?? false;
         }
 
-        [RelayCommand(CanExecute = nameof(CanInteract), AllowConcurrentExecutions =false)]
+        [RelayCommand(CanExecute = nameof(CanInteract), AllowConcurrentExecutions = false)]
         private Task Interact(CancellationToken token)
         {
             return ExecuteHander?.Invoke(Text, token) ?? Task.CompletedTask;

@@ -65,7 +65,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
 
         protected override void RemoveItemFromUser(User user, AbstractProfileEntry<Contact> entry)
         {
-             user.ContactInfos.Remove(entry.Export());
+            user.ContactInfos.Remove(entry.Export());
         }
     }
 }
