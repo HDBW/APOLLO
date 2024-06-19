@@ -86,18 +86,18 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
     <PackageReference Include="Serilog" Version="4.0.0" />
     <PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
-    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
-    <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
     <PackageReference Include="Svg.Skia" Version="1.0.0.18" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.6" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.1" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.1" />
     <PackageReference Include="The49.Maui.BottomSheet" Version="8.0.3" />
   </ItemGroup>

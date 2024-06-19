@@ -16,7 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.40" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.60" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
     <PackageReference Include="Google.Protobuf" Version="3.27.1" />
     <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.71" />
