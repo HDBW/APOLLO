@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,10 @@ namespace Apollo.SmartLib
         private int _topN = 5;
 
         private readonly IConfiguration _configuration;
+
         private readonly string _context;
+
+        private static string[] _supportedFields = new string[] { $"{nameof(Training.TrainingName)}", $"{nameof(Training.SubTitle)}", $"{nameof(Training.Description)}", $"{nameof(Training.ShortDescription)}", $"{nameof(Training.Content)}", $"{nameof(Training.BenefitList)}", $"{nameof(Training.Prerequisites)}" };
 
 
         public ApolloSemanticSearchApi(ISearchApi semanticSearchApi,
@@ -52,13 +56,6 @@ namespace Apollo.SmartLib
                        ?? throw new ApplicationException("Context not found in appsettings.json.");
 
         }
-
-
-        private static string[] _supportedFields = new string[] { $"{nameof(Training.TrainingName)}", $"{nameof(Training.SubTitle)}", $"{nameof(Training.Description)}", $"{nameof(Training.ShortDescription)}", $"{nameof(Training.Content)}", $"{nameof(Training.BenefitList)}", $"{nameof(Training.Prerequisites)}" };
-
-
-
-
 
 
         public async Task<List<SemanticSearchResult>> SearchTrainingsAsync(Query query)
