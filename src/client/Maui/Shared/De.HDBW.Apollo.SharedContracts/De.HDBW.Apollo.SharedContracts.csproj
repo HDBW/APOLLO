@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.71" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.72" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
   </ItemGroup>

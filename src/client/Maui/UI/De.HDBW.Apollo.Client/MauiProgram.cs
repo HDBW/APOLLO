@@ -10,6 +10,7 @@ using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
+using De.HDBW.Apollo.Client.ViewModels.Assessments;
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors;
@@ -20,6 +21,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
 using De.HDBW.Apollo.Client.ViewModels.Training;
 using De.HDBW.Apollo.Client.Views;
+using De.HDBW.Apollo.Client.Views.Assessments;
 using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
 using De.HDBW.Apollo.Client.Views.Profile.EducationInfo;
@@ -247,6 +249,8 @@ namespace De.HDBW.Apollo.Client
                 return new OccupationService(occupationSearchUrl, serviceProvider.GetService<ILogger<OccupationService>>());
             });
 
+            services.AddSingleton<IAssessmentService, AssessmentService>();
+
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
@@ -293,12 +297,6 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupRepositories(IServiceCollection services)
         {
-            services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
-            services.AddSingleton<ICourseContactRepository, CourseContactRepository>();
-            services.AddSingleton<ICourseAppointmentRepository, CourseAppointmentRepository>();
-            services.AddSingleton<ICourseContactRelationRepository, CourseContactRelationRepository>();
-            services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
-            services.AddSingleton<ICategoryRecomendationItemRepository, CategoryRecomendationItemRepository>();
             services.AddSingleton<IUserRepository>((serviceProvider) =>
             {
                 return new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"User_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<UserRepository>>());
@@ -456,6 +454,9 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<SearchFilterSheet>();
             services.AddTransient<SearchFilterSheetViewModel>();
+
+            services.AddTransient<AssessmentFeedView>();
+            services.AddTransient<AssessmentFeedViewModel>();
         }
 
         private static void SetupRoutes()
