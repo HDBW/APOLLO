@@ -60,7 +60,7 @@
             <Tab.Icon>
                 <FontImageSource Glyph="{StaticResource Test}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:SearchView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:AssessmentFeedView}" />
         </Tab>
         <Tab Title="{x:Static strings:Resources.ProfileView_Title}">
             <Tab.Icon>

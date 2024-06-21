@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Assessments
@@ -19,13 +20,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
         public AssessmentFeedViewModel(
+            IAssessmentService assessmentService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<AssessmentFeedViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(assessmentService);
+            AssessmentService = assessmentService;
         }
+
+        private IAssessmentService AssessmentService { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -34,6 +40,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
+                    var assessmentTiles = AssessmentService.GetTilesAsync(worker.Token).ConfigureAwait(false);
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(sections), worker.Token);
                 }

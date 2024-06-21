@@ -21,7 +21,6 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
 using De.HDBW.Apollo.Client.ViewModels.Training;
 using De.HDBW.Apollo.Client.Views;
-using De.HDBW.Apollo.Client.Views.Assessments;
 using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
 using De.HDBW.Apollo.Client.Views.Profile.EducationInfo;

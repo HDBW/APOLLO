@@ -1,24 +1,24 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Client.ViewModels;
+using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
-namespace De.HDBW.Apollo.Client.Views.Assessments;
+namespace De.HDBW.Apollo.Client.Views;
 
 [XamlCompilation(XamlCompilationOptions.Skip)]
 public partial class AssessmentFeedView : ContentPage
 {
-    public AssessmentFeedView(AssessmentFeedView model)
+    public AssessmentFeedView(AssessmentFeedViewModel model)
     {
         InitializeComponent();
         BindingContext = model;
     }
 
-    public AssessmentFeedView? ViewModel
+    public AssessmentFeedViewModel? ViewModel
     {
         get
         {
-            return BindingContext as AssessmentFeedView;
+            return BindingContext as AssessmentFeedViewModel;
         }
     }
 }
