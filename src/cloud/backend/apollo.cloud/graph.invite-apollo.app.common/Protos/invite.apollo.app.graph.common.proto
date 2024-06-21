@@ -1,0 +1,201 @@
+syntax = "proto3";
+
+option csharp_namespace = "Invite.Apollo.App.Graph.Common.Models.Assessments";
+import "google/api/annotations.proto";
+import "google/protobuf/wrappers.proto";
+
+package shared;
+
+// this enum defines the different assessment types
+enum AssessmentType {
+    UNKNOWN = 0;
+    SK = 1;
+    EA = 2;
+    SO = 3;
+    GL = 4;
+    BE = 5;
+}
+
+// this enum defines the different assessment score quantities
+  enum AssessmentScoreQuantity {
+    Undefined = 0;
+    Over = 1;
+    Median = 2;
+    Under = 3;
+}  
+
+message AssessmentsRequest {
+  // Name to say hello to.
+  string CorrelationId = 1;
+}
+
+message AssessmentsResponse {
+  // Name to say hello to.
+  string CorrelationId = 1;
+
+  repeated Assessment assessments = 2;
+}
+
+message Assessment {
+  // The uniqe Identifier of the Assessment
+  int64 Id = 1;
+  
+  // The Title of the Assessment
+  string Title = 2;
+  
+  string Subtitle = 3;
+  // The Description of the Assessment
+  string Description = 4;
+  // The Language of the Assessment
+  string Language = 5;
+  // The Estimate Duration how long it takes to do the assessment
+  int32 EstimateDuration = 6;
+  // Indicates whetere this assessment is doable by a registered user only
+  bool MemberOnly = 7;
+  // The Version of the assessment
+  string Ticks = 8;
+  // Indicates if the assessment is repeatable after a certain amount of time if null or 0 it can be done immediately
+  google.protobuf.Int32Value Repeatable = 9;
+
+  // Indicates the type of Assessment
+  AssessmentType Type = 10;
+  
+  // Incdicates the Languages a assessment is available in
+  repeated string Languages = 11;
+  
+  //Indidcates if the Assessment is Deleted
+  bool Deleted = 12;
+  
+  //Grouping of the Assessment
+  google.protobuf.StringValue Grouping = 13;
+
+  //Because Favorites suck!
+  google.protobuf.StringValue ModuleId = 14;
+}
+
+message AssessmentInstructionRequest {
+  string CorrelationId = 1;
+  google.protobuf.Int64Value Ids = 2;
+  string Language = 3;
+}
+
+message AssessmentInstructionResponse{
+  
+}
+
+// The request message containing the user's name.
+message AssessmentTileRequest {
+  // Name to say hello to.
+  string CorrelationId = 1;
+  // The Id of the Assessment you are looking for this field is optional
+  repeated google.protobuf.Int64Value Ids = 2;
+}
+
+// The response message containing the greetings.
+message AssessmentTilesResponse {
+  // A list of Assessments
+  repeated AssessmentTile assessments = 1;
+  // The Clients Session Id
+  string CorrelationId = 2;
+}
+
+// The Assessment aka Booklet
+message AssessmentTile {
+  // The uniqe Identifier of the Assessment
+  int64 Id = 1;
+  
+  // The Title of the Assessment
+  string Title = 2;
+  
+  string Subtitle = 3;
+  // The Description of the Assessment
+  string Description = 4;
+  // The Language of the Assessment
+  string Language = 5;
+  // The Estimate Duration how long it takes to do the assessment
+  int32 EstimateDuration = 6;
+  // Indicates whetere this assessment is doable by a registered user only
+  bool MemberOnly = 7;
+  // The Version of the assessment
+  string Ticks = 8;
+  // Indicates if the assessment is repeatable after a certain amount of time if null or 0 it can be done immediately
+  google.protobuf.Int32Value Repeatable = 9;
+  
+  // Indicates the type of Assessment
+  AssessmentType Type = 10;
+  
+  // Incdicates the Languages a assessment is available in
+  repeated string Languages = 11;
+  
+  //Indidcates if the Assessment is Deleted
+  bool Deleted = 12;
+  
+  //Grouping of the Assessment
+  google.protobuf.StringValue Grouping = 13;
+
+  //Because Favorites suck!
+  google.protobuf.StringValue ModuleId = 14;
+}
+
+message AssessmentScore {
+  google.protobuf.StringValue ProfileId = 1;
+  google.protobuf.StringValue AssessmentId = 2;
+  google.protobuf.StringValue ModuleId = 3;
+  google.protobuf.DoubleValue Result = 5;
+  string Segment = 6;
+  AssessmentScoreQuantity Quantity = 7;
+
+  //it only applies to SO 
+  google.protobuf.StringValue ResultDescription = 8;
+}
+
+message ModulesRequest {
+  int64 AssessmentId = 1;
+  string Language = 2;
+}
+
+message ModulesResponse {
+  repeated Module modules = 1;
+  string CorrelationId = 2;
+}
+
+message ModuleRequest{
+  string ModuleId = 1;
+  string CorrelationId = 2;
+}
+
+message ModuleResponse {
+  Module module = 1;
+  string CorrelationId = 2;
+}
+
+message Module {
+  
+}
+
+
+message AssessmentSession {
+  //SessionID
+  //Assessment
+  //Modules
+  //LIST ITEMS
+}
+
+message Answer {
+  //ProfilId
+  //SessionId
+  //AssesmentId
+  //ModuleId
+  //ItemId
+  //double answer score case SO selected Index
+}
+    
+message RawModule {
+    //ModuleId
+    //repeated Raw Data
+}
+    
+message RawData {
+        
+}
+
