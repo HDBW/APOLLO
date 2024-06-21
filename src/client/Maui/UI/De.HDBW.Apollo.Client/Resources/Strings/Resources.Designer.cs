@@ -160,6 +160,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string AssessmentFeedView_Title {
+            get {
+                return ResourceManager.GetString("AssessmentFeedView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fortfahren.
         /// </summary>
         public static string CancelAssessmentDialog_Cancel {
