@@ -11,6 +11,7 @@ enum AssessmentType {
     UNKNOWN = 0;
     SK = 1;
     EA = 2;
+    // Softskill
     SO = 3;
     GL = 4;
     BE = 5;
@@ -70,7 +71,7 @@ message Assessment {
   google.protobuf.StringValue Grouping = 13;
 
   //Because Favorites suck!
-  google.protobuf.StringValue ModuleId = 14;
+  repeated google.protobuf.StringValue ModuleIds = 14;
 }
 
 message AssessmentInstructionRequest {
@@ -102,7 +103,7 @@ message AssessmentTilesResponse {
 // The Assessment aka Booklet
 message AssessmentTile {
   // The uniqe Identifier of the Assessment
-  int64 Id = 1;
+  string AssessmentId = 1;
   
   // The Title of the Assessment
   string Title = 2;
@@ -134,7 +135,9 @@ message AssessmentTile {
   google.protobuf.StringValue Grouping = 13;
 
   //Because Favorites suck!
-  google.protobuf.StringValue ModuleId = 14;
+  repeated google.protobuf.StringValue ModuleIds = 14;
+
+  repeated AssessmentScore AssessmentScores = 15;
 }
 
 message AssessmentScore {
