@@ -831,9 +831,21 @@ namespace Apollo.Api
                 var skill = new Skill
                 {
                     Id = dict.ContainsKey(nameof(Skill.Id)) ? (string?)dict[nameof(Skill.Id)] : null,
-                    Title = dict.ContainsKey(nameof(Skill.Title)) ? (ApolloList)dict[nameof(Skill.Title)] : new ApolloList() { ItemType = nameof(Skill.Title) },
-                    Description = dict.ContainsKey(nameof(Skill.Description)) ? (ApolloList)dict[nameof(Skill.Description)] : new ApolloList() { ItemType = nameof(Skill.Description) },
-                    ///To.Do. map all others here 
+                    Title = dict.ContainsKey(nameof(Skill.Title)) ? ToApolloList((ExpandoObject)dict[nameof(Skill.Title)]) : new ApolloList() { ItemType = nameof(Skill.Title) },
+                    Description = dict.ContainsKey(nameof(Skill.Description)) ? ToApolloList((ExpandoObject)dict[nameof(Skill.Description)]) : new ApolloList() { ItemType = nameof(Skill.Description) },
+                    AlternativeLabels = dict.ContainsKey(nameof(Skill.AlternativeLabels)) ? ToApolloList((ExpandoObject)dict[nameof(Skill.AlternativeLabels)]) : new ApolloList() { ItemType = nameof(Skill.AlternativeLabels) },
+                    IsEssentialForOccupationsID = dict.ContainsKey(nameof(Skill.IsEssentialForOccupationsID)) ? (List<string>?)dict[nameof(Skill.IsEssentialForOccupationsID)] : null,
+                    IsOptionalForOccupationsID = dict.ContainsKey(nameof(Skill.IsOptionalForOccupationsID)) ? (List<string>?)dict[nameof(Skill.IsOptionalForOccupationsID)] : null,
+                    SkillUri = dict.ContainsKey(nameof(Skill.SkillUri)) ? new Uri((string)dict[nameof(Skill.SkillUri)]) : null,
+                    Version = dict.ContainsKey(nameof(Skill.Version)) ? (string?)dict[nameof(Skill.Version)] : null,
+                    ScopeNote = dict.ContainsKey(nameof(Skill.ScopeNote)) ? (string?)dict[nameof(Skill.ScopeNote)] : null,
+                    TaxonomyInfo = dict.ContainsKey(nameof(Skill.TaxonomyInfo)) ? (Taxonomy?)dict[nameof(Skill.TaxonomyInfo)] : null,
+                    SkillSource = dict.ContainsKey(nameof(Skill.SkillSource)) ? (string?)dict[nameof(Skill.SkillSource)] : null,
+                    FromWhen = dict.ContainsKey(nameof(Skill.FromWhen)) ? (DateTime?)dict[nameof(Skill.FromWhen)] : null,
+                    LastTimeUsed = dict.ContainsKey(nameof(Skill.LastTimeUsed)) ? (DateTime?)dict[nameof(Skill.LastTimeUsed)] : null,
+                    HowOftenUsed = dict.ContainsKey(nameof(Skill.HowOftenUsed)) ? (string?)dict[nameof(Skill.HowOftenUsed)] : null,
+                    Level = dict.ContainsKey(nameof(Skill.Level)) ? dict[nameof(Skill.Level)] : null,
+                    Culture = dict.ContainsKey(nameof(Skill.Culture)) ? (string?)dict[nameof(Skill.Culture)] : null
                 };
 
                 return skill;
@@ -844,9 +856,12 @@ namespace Apollo.Api
                 return null;
             }
             else
+            {
                 // Handle other cases or throw an exception
                 throw new ArgumentException($"Unsupported type: {item.GetType()} for property name: {nameof(Profile.Skills)}");
+            }
         }
+
 
         /// <summary>
         /// Converts an object, typically an ExpandoObject, to a nullable Contact instance.
@@ -1029,6 +1044,7 @@ namespace Apollo.Api
                 {
                     ListItemId = dict.ContainsKey("ListItemId") ? (int)dict["ListItemId"] : throw new ApolloApiException(-1, $"The ListItem in the ApolloList has no {nameof(ApolloListItem.ListItemId)} identifier."),
                     Lng = dict.ContainsKey("Lng") ? (string)dict["Lng"] : "",
+                    Description = dict.ContainsKey("Description") ? (string)dict["Description"] : "",
                     Value = dict.ContainsKey("Value") ? (string)dict["Value"] : ""
                 });
             }
