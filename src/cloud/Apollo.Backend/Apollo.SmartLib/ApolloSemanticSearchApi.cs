@@ -14,7 +14,8 @@ using Microsoft.Extensions.Logging;
 namespace Apollo.SmartLib
 {
     /// <summary>
-    /// API that implements all semantic related functionalities.
+    /// Provides semantic search functionality to enhance the search capabilities of the Apollo application.
+    /// This API utilizes embedding-based search to fetch semantically relevant training content based on user queries.
     /// </summary>
     public class ApolloSemanticSearchApi
     {
@@ -39,6 +40,11 @@ namespace Apollo.SmartLib
         private static string[] _supportedFields = new string[] { $"{nameof(Training.TrainingName)}", $"{nameof(Training.SubTitle)}", $"{nameof(Training.Description)}", $"{nameof(Training.ShortDescription)}", $"{nameof(Training.Content)}", $"{nameof(Training.BenefitList)}", $"{nameof(Training.Prerequisites)}" };
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApolloSemanticSearchApi"/> class.
+        /// </summary>
+        /// <param name="semanticSearchApi">The semantic search API for processing queries.</param>
+        /// <param name="logger">The logger for recording events and errors.</param>
         public ApolloSemanticSearchApi(ISearchApi semanticSearchApi,
                                         ILogger<ApolloSemanticSearchApi> logger)
         {
@@ -58,6 +64,11 @@ namespace Apollo.SmartLib
         }
 
 
+        /// <summary>
+        /// Performs a semantic search on training materials based on the provided query.
+        /// </summary>
+        /// <param name="query">The search query containing fields and filter criteria for the search.</param>
+        /// <returns>A task that represents the asynchronous operation and contains the list of search results.</returns>
         public async Task<List<SemanticSearchResult>> SearchTrainingsAsync(Query query)
         {
             List<SemanticSearchResult> res = new List<SemanticSearchResult>();
@@ -99,6 +110,12 @@ namespace Apollo.SmartLib
 
         }
 
+
+        /// <summary>
+        /// Converts search results from the semantic API into a format that can be utilized by the Apollo application.
+        /// </summary>
+        /// <param name="semRes">The search results from the semantic search API.</param>
+        /// <returns>A list of formatted semantic search results.</returns>
         private List<SemanticSearchResult> ToSemanticSearchResult(List<Daenet.EmbeddingSearchApi.Entities.MatchResult> semRes)
         {
             List<SemanticSearchResult> res = new List<SemanticSearchResult>();
@@ -117,7 +134,6 @@ namespace Apollo.SmartLib
 
             return res;
         }
-
 
 
         // User Profiles:
@@ -157,7 +173,12 @@ namespace Apollo.SmartLib
         //Invoke Model extract Skills?
         //=> Test some Skill Extractions
 
-        // Method to extract skills from a Training object
+
+        /// <summary>
+        /// Extracts a list of skills from a Training object by analyzing its text content.
+        /// </summary>
+        /// <param name="training">The Training object from which to extract skills.</param>
+        /// <returns>A list of extracted skills as strings.</returns>
         public List<string> ExtractSkills(Training training)
         {
             // Initialize list to store extracted skills
@@ -179,7 +200,12 @@ namespace Apollo.SmartLib
             return extractedSkills;
         }
 
-        // Method to concatenate a list of strings into a single string
+
+        /// <summary>
+        /// Concatenates a list of strings into a single string separated by commas.
+        /// </summary>
+        /// <param name="list">The list of strings to concatenate.</param>
+        /// <returns>A concatenated string with elements separated by commas.</returns>
         private string ConcatenateList(List<string>? list)
         {
             if (list == null || list.Count == 0)
@@ -194,7 +220,12 @@ namespace Apollo.SmartLib
             return concatenatedText.ToString();
         }
 
-        // Method to append non-null and non-empty strings to a StringBuilder
+
+        /// <summary>
+        /// Appends a non-null and non-empty string to a StringBuilder, adding a comma as a separator.
+        /// </summary>
+        /// <param name="stringBuilder">The StringBuilder to which the text will be appended.</param>
+        /// <param name="text">The text to append.</param>
         private void AppendIfNotNullOrEmpty(StringBuilder stringBuilder, string? text)
         {
             if (!string.IsNullOrEmpty(text))
@@ -204,7 +235,12 @@ namespace Apollo.SmartLib
             }
         }
 
-        // Method to extract skills from text using a StringBuilder
+
+        /// <summary>
+        /// Extracts skills from a flattened text string by splitting the text into words and filtering out non-skills.
+        /// </summary>
+        /// <param name="text">The StringBuilder containing the text from which skills are extracted.</param>
+        /// <returns>A list of skills extracted from the text.</returns>
         private List<string> ExtractSkillsFromText(StringBuilder text)
         {
            
@@ -230,7 +266,9 @@ namespace Apollo.SmartLib
     }
 
 
-
+    /// <summary>
+    /// Represents the results of a semantic search operation, detailing the matching training along with its relevance.
+    /// </summary>
     public class SemanticSearchResult
     {
         public string TrainingId { get; set; }
