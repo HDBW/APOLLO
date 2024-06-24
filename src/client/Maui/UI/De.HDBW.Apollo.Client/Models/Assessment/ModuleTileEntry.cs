@@ -13,7 +13,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private readonly Func<ModuleTileEntry, bool> _canInteractHandler;
         private readonly Func<ModuleTileEntry, CancellationToken, Task> _toggleFavoriteHandler;
         private readonly Func<ModuleTileEntry, bool> _canToggleFavoriteHandler;
-        private AssessmentTile _data;
+        private ModuleTile _data;
 
         [ObservableProperty]
         private bool _isFavorite;
@@ -65,19 +65,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public bool IsMemberOnly
-        {
-            get
-            {
-                return _data.MemberOnly;
-            }
-        }
-
         public bool CanBeMadeFavorite
         {
             get
             {
-                return (_data.ModuleIds?.Count ?? 0) == 1;
+                return true;
             }
         }
 
@@ -101,21 +93,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             get
             {
-                switch (Type)
-                {
-                    case AssessmentType.Sk:
-                        return Resources.Strings.Resources.AssessmentTypeSk;
-                    case AssessmentType.Ea:
-                        return Resources.Strings.Resources.AssessmentTypeEa;
-                    case AssessmentType.So:
-                        return Resources.Strings.Resources.AssessmentTypeSo;
-                    case AssessmentType.Gl:
-                        return Resources.Strings.Resources.AssessmentTypeGl;
-                    case AssessmentType.Be:
-                        return Resources.Strings.Resources.AssessmentTypeBe;
-                    default:
-                        return string.Empty;
-                }
+                return _data.Title;
             }
         }
 
