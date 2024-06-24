@@ -85,7 +85,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return HasFilter ? KnonwIcons.FilterActive : KnonwIcons.Filter;
+                return HasFilter ? KnownIcons.FilterActive : KnownIcons.Filter;
             }
         }
 
@@ -416,7 +416,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
-                var decoratorImagePath = KnonwIcons.Training;
+                var decoratorImagePath = KnownIcons.Training;
 
                 EduProvider? eduProvider = null;
                 if (!string.IsNullOrWhiteSpace(item.TrainingProvider?.Name))

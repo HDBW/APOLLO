@@ -3,7 +3,7 @@
 
 namespace De.HDBW.Apollo.Client.Models
 {
-    public static class KnonwIcons
+    public static class KnownIcons
     {
         public const string History = "\u0051";
 
@@ -120,5 +120,15 @@ namespace De.HDBW.Apollo.Client.Models
         public const string FilterActive = "\u00b1";
 
         public const string Filter = "\u0050";
+
+        public const string SkillAssessment = "\u0050";
+
+        public const string ExperienceAssessment = "\u0050";
+
+        public const string SoftSkillAssessment = "\u0050";
+
+        public const string LanguageAssessment = "\u0050";
+
+        public const string DiscoverAssessment = "\u0050";
     }
 }

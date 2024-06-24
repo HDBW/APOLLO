@@ -32,7 +32,7 @@ namespace De.HDBW.Apollo.Client.Models.Training
             parts = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             if (parts.Any())
             {
-                Items.Add(LineItem.Import(KnonwIcons.Contact, string.Join(" ", parts)));
+                Items.Add(LineItem.Import(KnownIcons.Contact, string.Join(" ", parts)));
             }
 
             if (!string.IsNullOrWhiteSpace(contact.Organization))
@@ -49,17 +49,17 @@ namespace De.HDBW.Apollo.Client.Models.Training
             parts = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             if (parts.Any())
             {
-                Items.Add(LineItem.Import(KnonwIcons.Location, string.Join(" ", parts)));
+                Items.Add(LineItem.Import(KnownIcons.Location, string.Join(" ", parts)));
             }
 
             if (!string.IsNullOrWhiteSpace(contact.Mail))
             {
-                Items.Add(InteractiveLineItem.Import(KnonwIcons.EMail, contact.Mail, openMailHandler, canOpenMailHandler));
+                Items.Add(InteractiveLineItem.Import(KnownIcons.EMail, contact.Mail, openMailHandler, canOpenMailHandler));
             }
 
             if (!string.IsNullOrWhiteSpace(contact.Phone))
             {
-                Items.Add(InteractiveLineItem.Import(KnonwIcons.Phone, contact.Phone, openDailerHandler, canOpenDailerHandler));
+                Items.Add(InteractiveLineItem.Import(KnownIcons.Phone, contact.Phone, openDailerHandler, canOpenDailerHandler));
             }
         }
 

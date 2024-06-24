@@ -87,13 +87,13 @@
                         <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" />
                         <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1" Margin="8,0,0,0" IsVisible="{Binding CanExpand}">
                             <Image.Source>
-                                <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                             </Image.Source>
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
                                     <Setter Property="Source">
                                         <Setter.Value>
-                                            <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                         </Setter.Value>
                                     </Setter>
                                     <!-- Multiple Setter elements are allowed -->

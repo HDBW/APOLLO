@@ -5,10 +5,11 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
-             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
-             xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              xmlns:genericModels="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
@@ -16,15 +17,120 @@
              Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:DataType="viewModels:AssessmentFeedViewModel" Command="{x:Binding OpenFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
-        <selector:AssessmentSectionTemplateSelector x:Key="AssessmentSectionTemplateSelector" />
+
+        <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
+            <Label Text="{x:Binding Text, Mode=OneWay}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="SublineTextTemplate" x:DataType="assessmentModels:SublineTextEntry">
+            <Label Text="{x:Binding Text, Mode=OneWay}" />
+        </DataTemplate>
+        
+        <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
+            <Label Text="{x:Binding Text, Mode=OneWay}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="SkillAssessmentTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
+            <StackLayout>
+                <controls:SegmentSvgImage x:Name="PART_Image" HeightRequest="240"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" />
+                <Label Text="{x:Static strings:Resources.Global_Overview}" />
+            </StackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="IsMemberOnlyTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
+            <Border>
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Image WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Binding DecoratorImagePath}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{x:Binding Title, Mode=OneWay}" />
+                    </HorizontalStackLayout>
+                    <Label Text="{x:Binding Text, Mode=OneWay}" />
+                    <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8"
+                         Command="{x:Binding ToggleIsFavoriteCommand}"
+                         IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
+                         VerticalOptions="Start">   
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
+                        <ImageButton.Triggers>
+                            <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
+                                <Setter Property="Source">
+                                    <Setter.Value>
+                                        <FontImageSource Glyph="{x:Static models:KnownIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="SemanticProperties.Description"  Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+                    <HorizontalStackLayout>
+                        <Image WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                            <Image.Source>
+                                <FontImageSource Glyph="{StaticResource Lock}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{x:Static strings:Resources.Global_RegisterNow}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TileTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
+            <Border>
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Image WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Binding DecoratorImagePath}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{x:Binding Title, Mode=OneWay}" />
+                    </HorizontalStackLayout>
+                    <ImageButton Grid.Column="1" WidthRequest="24" HeightRequest="24" Margin="8"
+                                 Command="{x:Binding ToggleIsFavoriteCommand}"
+                                 IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
+                                 VerticalOptions="Start">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
+                        <ImageButton.Triggers>
+                            <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
+                                <Setter Property="Source">
+                                    <Setter.Value>
+                                        <FontImageSource Glyph="{x:Static models:KnownIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="SemanticProperties.Description"  Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+                    <Label Text="{x:Binding Text, Mode=OneWay}" />
+                    <Label Text="{x:Static strings:Resources.Global_TestNow}" />
+                </VerticalStackLayout>
+            </Border>
+        </DataTemplate>
+
+        <selector:AssessmentSectionTemplateSelector x:Key="AssessmentSectionTemplateSelector"
+                                                    HeadlineTextTemplate="{StaticResource HeadlineTextTemplate}"
+                                                    SublineTextTemplate="{StaticResource SublineTextTemplate}"
+                                                    TextTemplate="{StaticResource TextTemplate}"
+                                                    SkillAssessmentTemplate="{StaticResource SkillAssessmentTemplate}"
+                                                    IsMemberOnlyTemplate="{StaticResource IsMemberOnlyTemplate}"
+                                                    TileTemplate ="{StaticResource TileTemplate}"/>
     </ContentPage.Resources>
-    <VerticalStackLayout>
-        <CollectionView ItemsSource="{x:Binding Sections}"
-                ItemsLayout="VerticalList"
-                ItemTemplate="{StaticResource AssessmentSectionTemplateSelector}"
-                >
-            
-        </CollectionView>
-    </VerticalStackLayout>
+
+    <CollectionView ItemsSource="{x:Binding Sections}"
+            ItemsLayout="VerticalList"
+            ItemTemplate="{StaticResource AssessmentSectionTemplateSelector}"
+            >
+    </CollectionView>
 </ContentPage>

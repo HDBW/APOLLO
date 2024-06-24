@@ -1301,4 +1301,34 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="AssessmentFeedView_Title" xml:space="preserve">
     <value>Test</value>
   </data>
+  <data name="AssessmentFeed_Subline" xml:space="preserve">
+    <value>Lerne deine Stärken kennen und entdecke passende Berufsfelder!</value>
+  </data>
+  <data name="AssessmentFeed_Title" xml:space="preserve">
+    <value>Teste deine Fähigkeiten</value>
+  </data>
+  <data name="AssessmentTypeBe" xml:space="preserve">
+    <value>Persönliche Fähigkeiten</value>
+  </data>
+  <data name="AssessmentTypeEa" xml:space="preserve">
+    <value>Experience Assessment</value>
+  </data>
+  <data name="AssessmentTypeGl" xml:space="preserve">
+    <value>Sprachen</value>
+  </data>
+  <data name="AssessmentTypeSk" xml:space="preserve">
+    <value>Skill-Assesment</value>
+  </data>
+  <data name="AssessmentTypeSo" xml:space="preserve">
+    <value>Soft Skills</value>
+  </data>
+  <data name="Global_Overview" xml:space="preserve">
+    <value>Zur Übersicht</value>
+  </data>
+  <data name="Global_RegisterNow" xml:space="preserve">
+    <value>Jetzt anmelden</value>
+  </data>
+  <data name="Global_TestNow" xml:space="preserve">
+    <value>Jetzt testen</value>
+  </data>
 </root>

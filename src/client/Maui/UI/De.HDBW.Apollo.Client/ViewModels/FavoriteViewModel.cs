@@ -162,7 +162,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var text = item.TrainingName;
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
-                var decoratorImagePath = KnonwIcons.Training;
+                var decoratorImagePath = KnownIcons.Training;
 
                 EduProvider? eduProvider = null;
                 if (!string.IsNullOrWhiteSpace(item.TrainingProvider?.Name))

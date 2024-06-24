@@ -1,14 +1,12 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
 
@@ -31,6 +29,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             AssessmentService = assessmentService;
         }
 
+        public string FavoriteIcon
+        {
+            get
+            {
+                return KnownIcons.IsFavorite;
+            }
+        }
+
         private IAssessmentService AssessmentService { get; }
 
         public override async Task OnNavigatedToAsync()
@@ -40,7 +46,26 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
-                    var assessmentTiles = AssessmentService.GetTilesAsync(worker.Token).ConfigureAwait(false);
+                    var assessmentTiles = await AssessmentService.GetAssessmentTilesAsync(worker.Token).ConfigureAwait(false);
+                    var tiles = assessmentTiles.GroupBy(x => x.Grouping).OrderBy(x => x.Key);
+                    foreach (var tile in tiles)
+                    {
+                        if (string.IsNullOrWhiteSpace(tile.Key))
+                        {
+                            sections.Add(HeadlineTextEntry.Import(Resources.Strings.Resources.AssessmentFeed_Title));
+                            sections.Add(SublineTextEntry.Import(Resources.Strings.Resources.AssessmentFeed_Subline));
+                        }
+                        else
+                        {
+                            sections.Add(TextEntry.Import(tile.Key));
+                        }
+
+                        foreach (var item in tile.ToList())
+                        {
+                            sections.Add(AssessmentTileEntry.Import(item));
+                        }
+                    }
+
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(sections), worker.Token);
                 }
@@ -67,5 +92,25 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             Sections = new ObservableCollection<ObservableObject>(sections);
         }
+
+        private bool CanOpenFavorite()
+        {
+            return !IsBusy;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFavorite))]
+        private async Task OpenFavorite(CancellationToken token)
+        {
+            try
+            {
+                Logger.LogInformation($"Invoked {nameof(OpenFavorite)} in {GetType().Name}.");
+                token.ThrowIfCancellationRequested();
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(OpenFavorite)} in {GetType().Name}.");
+            }
+        }
+
     }
 }

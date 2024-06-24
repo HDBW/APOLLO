@@ -3,22 +3,23 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
-namespace De.HDBW.Apollo.Client.Views;
-
-[XamlCompilation(XamlCompilationOptions.Skip)]
-public partial class AssessmentFeedView : ContentPage
+namespace De.HDBW.Apollo.Client.Views
 {
-    public AssessmentFeedView(AssessmentFeedViewModel model)
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class AssessmentFeedView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public AssessmentFeedViewModel? ViewModel
-    {
-        get
+        public AssessmentFeedView(AssessmentFeedViewModel model)
         {
-            return BindingContext as AssessmentFeedViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public AssessmentFeedViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as AssessmentFeedViewModel;
+            }
         }
     }
 }

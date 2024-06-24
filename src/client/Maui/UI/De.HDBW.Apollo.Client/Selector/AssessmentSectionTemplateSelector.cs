@@ -1,15 +1,52 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Client.Models.Assessment;
+using Invite.Apollo.App.Graph.Common.Models.Assessments;
+
 namespace De.HDBW.Apollo.Client.Selector
 {
     public class AssessmentSectionTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate? HeadlineTextTemplate { get; set; }
+
+        public DataTemplate? SublineTextTemplate { get; set; }
+
+        public DataTemplate? TextTemplate { get; set; }
+
+        public DataTemplate? SkillAssessmentTemplate { get; set; }
+
+        public DataTemplate? IsMemberOnlyTemplate { get; set; }
+
+        public DataTemplate? TileTemplate { get; set; }
+
         public DataTemplate DefaultTemplate { get; } = new DataTemplate();
 
-        protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
+        protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
         {
-            return DefaultTemplate;
+            switch (item)
+            {
+                case HeadlineTextEntry _:
+                    return HeadlineTextTemplate;
+                case SublineTextEntry _:
+                    return SublineTextTemplate;
+                case TextEntry _:
+                    return TextTemplate;
+                case AssessmentTileEntry tile:
+                    if (tile.Type == AssessmentType.So)
+                    {
+                        return SkillAssessmentTemplate;
+                    }
+
+                    if (tile.IsMemberOnly)
+                    {
+                        return IsMemberOnlyTemplate;
+                    }
+
+                    return TileTemplate;
+                default:
+                    return DefaultTemplate;
+            }
         }
     }
 }

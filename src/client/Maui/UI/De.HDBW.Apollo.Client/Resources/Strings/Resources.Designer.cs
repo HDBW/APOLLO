@@ -160,11 +160,74 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lerne deine Stärken kennen und entdecke passende Berufsfelder!.
+        /// </summary>
+        public static string AssessmentFeed_Subline {
+            get {
+                return ResourceManager.GetString("AssessmentFeed_Subline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teste deine Fähigkeiten.
+        /// </summary>
+        public static string AssessmentFeed_Title {
+            get {
+                return ResourceManager.GetString("AssessmentFeed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Test.
         /// </summary>
         public static string AssessmentFeedView_Title {
             get {
                 return ResourceManager.GetString("AssessmentFeedView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persönliche Fähigkeiten.
+        /// </summary>
+        public static string AssessmentTypeBe {
+            get {
+                return ResourceManager.GetString("AssessmentTypeBe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Experience Assessment.
+        /// </summary>
+        public static string AssessmentTypeEa {
+            get {
+                return ResourceManager.GetString("AssessmentTypeEa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprachen.
+        /// </summary>
+        public static string AssessmentTypeGl {
+            get {
+                return ResourceManager.GetString("AssessmentTypeGl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skill-Assesment.
+        /// </summary>
+        public static string AssessmentTypeSk {
+            get {
+                return ResourceManager.GetString("AssessmentTypeSk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soft Skills.
+        /// </summary>
+        public static string AssessmentTypeSo {
+            get {
+                return ResourceManager.GetString("AssessmentTypeSo", resourceCulture);
             }
         }
         
@@ -1620,6 +1683,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zur Übersicht.
+        /// </summary>
+        public static string Global_Overview {
+            get {
+                return ResourceManager.GetString("Global_Overview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telefon.
         /// </summary>
         public static string Global_Phone {
@@ -1697,6 +1769,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_Region {
             get {
                 return ResourceManager.GetString("Global_Region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt anmelden.
+        /// </summary>
+        public static string Global_RegisterNow {
+            get {
+                return ResourceManager.GetString("Global_RegisterNow", resourceCulture);
             }
         }
         
@@ -1805,6 +1886,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string Global_TargetAudience {
             get {
                 return ResourceManager.GetString("Global_TargetAudience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jetzt testen.
+        /// </summary>
+        public static string Global_TestNow {
+            get {
+                return ResourceManager.GetString("Global_TestNow", resourceCulture);
             }
         }
         

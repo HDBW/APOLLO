@@ -7,6 +7,6 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface IAssessmentService
     {
-        Task<IEnumerable<AssessmentTile>> GetTilesAsync(CancellationToken token);
+        Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(CancellationToken token);
     }
 }

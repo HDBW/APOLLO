@@ -1,0 +1,19 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace De.HDBW.Apollo.Client.Models
+{
+    public partial class TestResultEntry : ObservableObject
+    {
+        [ObservableProperty]
+        private string _text;
+
+        [ObservableProperty]
+        private double _score;
+
+        public TestResultEntry(string text, double score)
+        {
+            Text = text;
+            Score = score;
+        }
+    }
+}

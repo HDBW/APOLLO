@@ -42,9 +42,9 @@ namespace De.HDBW.Apollo.Client.Models
                 switch (IsRecent)
                 {
                     case false:
-                        return KnonwIcons.Magnify;
+                        return KnownIcons.Magnify;
                     default:
-                        return KnonwIcons.History;
+                        return KnownIcons.History;
                 }
             }
         }

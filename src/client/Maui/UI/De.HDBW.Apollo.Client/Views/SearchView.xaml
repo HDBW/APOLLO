@@ -46,13 +46,13 @@
                              IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
                              VerticalOptions="Start">
                              <ImageButton.Source>
-                                <FontImageSource Glyph="{x:Static models:KnonwIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                             </ImageButton.Source>
                             <ImageButton.Triggers>
                                 <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
                                     <Setter Property="Source">
                                         <Setter.Value>
-                                             <FontImageSource Glyph="{x:Static models:KnonwIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            <FontImageSource Glyph="{x:Static models:KnownIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                         </Setter.Value>
                                     </Setter>
                                     <Setter Property="SemanticProperties.Description"  Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
