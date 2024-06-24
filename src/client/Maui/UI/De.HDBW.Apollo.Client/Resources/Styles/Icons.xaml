@@ -20,6 +20,6 @@
     <x:String x:Key="Upload">&#x00b3;</x:String>
     <x:String x:Key="Delete">&#x0046;</x:String>
     <x:String x:Key="Checkmark">&#x00b0;</x:String>
-    <x:String x:Key="Lock">&#x00b0;</x:String>
+    <x:String x:Key="Lock">&#x00b9;</x:String>
     
 </ResourceDictionary>

@@ -121,14 +121,16 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string Filter = "\u0050";
 
-        public const string SkillAssessment = "\u0050";
+        public const string SkillAssessment = "\u00bb";
 
-        public const string ExperienceAssessment = "\u0050";
+        public const string ExperienceAssessment = "\u00ba";
 
-        public const string SoftSkillAssessment = "\u0050";
+        public const string SoftSkillAssessment = "\u00be";
 
-        public const string LanguageAssessment = "\u0050";
+        public const string LanguageAssessment = "\u0042";
 
-        public const string DiscoverAssessment = "\u0050";
+        public const string DiscoverAssessment = "\u00b8";
+
+        public const string Favorites = "\u00b7";
     }
 }

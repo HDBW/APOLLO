@@ -630,7 +630,18 @@
         </Setter>
         <Setter Property="Shadow">
             <Setter.Value>
-                <Shadow Brush="{StaticResource Black}" Offset="0,0" Opacity="0.2" Radius="{OnPlatform '4', Android='8'}"/>
+                <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="InputBorderHeaderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8,0,0,8" />
             </Setter.Value>
         </Setter>
     </Style>

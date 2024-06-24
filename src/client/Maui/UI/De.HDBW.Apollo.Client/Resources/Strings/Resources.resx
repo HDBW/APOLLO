@@ -1311,13 +1311,13 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Persönliche Fähigkeiten</value>
   </data>
   <data name="AssessmentTypeEa" xml:space="preserve">
-    <value>Experience Assessment</value>
+    <value>Berufserfahrung</value>
   </data>
   <data name="AssessmentTypeGl" xml:space="preserve">
     <value>Sprachen</value>
   </data>
   <data name="AssessmentTypeSk" xml:space="preserve">
-    <value>Skill-Assesment</value>
+    <value>Berufliche Fähigkeiten</value>
   </data>
   <data name="AssessmentTypeSo" xml:space="preserve">
     <value>Soft Skills</value>
