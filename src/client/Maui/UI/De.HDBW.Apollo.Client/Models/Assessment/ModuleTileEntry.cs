@@ -1,34 +1,32 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-// (c) Licensed to the HDBW under one or more agreements.
-// The HDBW licenses this file to you under the MIT license.
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class AssessmentTileEntry : ObservableObject
+    public partial class ModuleTileEntry : ObservableObject
     {
-        private readonly Func<AssessmentTileEntry, CancellationToken, Task> _interactHandler;
-        private readonly Func<AssessmentTileEntry, bool> _canInteractHandler;
-        private readonly Func<AssessmentTileEntry, CancellationToken, Task> _toggleFavoriteHandler;
-        private readonly Func<AssessmentTileEntry, bool> _canToggleFavoriteHandler;
+        private readonly Func<ModuleTileEntry, CancellationToken, Task> _interactHandler;
+        private readonly Func<ModuleTileEntry, bool> _canInteractHandler;
+        private readonly Func<ModuleTileEntry, CancellationToken, Task> _toggleFavoriteHandler;
+        private readonly Func<ModuleTileEntry, bool> _canToggleFavoriteHandler;
         private AssessmentTile _data;
 
         [ObservableProperty]
         private bool _isFavorite;
 
-        private AssessmentTileEntry(
-            AssessmentTile data,
+        private ModuleTileEntry(
+            ModuleTile data,
             string? route,
             NavigationParameters? parameters,
             bool isFavorite,
-            Func<AssessmentTileEntry, CancellationToken, Task> interactHandler,
-            Func<AssessmentTileEntry, bool> canInteractHandler,
-            Func<AssessmentTileEntry, CancellationToken, Task> toggleFavoriteHandler,
-            Func<AssessmentTileEntry, bool> canToggleFavoriteHandler)
+            Func<ModuleTileEntry, CancellationToken, Task> interactHandler,
+            Func<ModuleTileEntry, bool> canInteractHandler,
+            Func<ModuleTileEntry, CancellationToken, Task> toggleFavoriteHandler,
+            Func<ModuleTileEntry, bool> canToggleFavoriteHandler)
         {
             ArgumentNullException.ThrowIfNull(data);
             _data = data;
@@ -91,11 +89,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public IEnumerable<string> ModuleIds
+        public string ModuleId
         {
             get
             {
-                return _data.ModuleIds?.ToList() ?? new List<string>();
+                return _data.ModuleId;
             }
         }
 
@@ -137,17 +135,17 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public static AssessmentTileEntry Import(
-            AssessmentTile data,
+        public static ModuleTileEntry Import(
+            ModuleTile data,
             string? route,
             NavigationParameters? parameters,
             bool isFavorite,
-            Func<AssessmentTileEntry, CancellationToken, Task> interactHandler,
-            Func<AssessmentTileEntry, bool> canInteractHandler,
-            Func<AssessmentTileEntry, CancellationToken, Task> toggleFavoriteHandler,
-            Func<AssessmentTileEntry, bool> canToggleFavoriteHandler)
+            Func<ModuleTileEntry, CancellationToken, Task> interactHandler,
+            Func<ModuleTileEntry, bool> canInteractHandler,
+            Func<ModuleTileEntry, CancellationToken, Task> toggleFavoriteHandler,
+            Func<ModuleTileEntry, bool> canToggleFavoriteHandler)
         {
-            return new AssessmentTileEntry(
+            return new ModuleTileEntry(
                 data,
                 route,
                 parameters,

@@ -8,6 +8,7 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Assessments
@@ -62,7 +63,29 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                         foreach (var item in tile.ToList())
                         {
-                            sections.Add(AssessmentTileEntry.Import(item));
+                            string? route = null;
+                            NavigationParameters? parameters = null;
+                            bool isFavorite = false;
+                            switch (item.Type)
+                            {
+                                case AssessmentType.Sk:
+                                    break;
+                                case AssessmentType.Ea:
+                                    break;
+                                case AssessmentType.So:
+                                    route = Routes.ModuleOverView;
+                                    parameters = new NavigationParameters()
+                                    {
+                                        { NavigationParameter.Data, string.Join(";", item.ModuleIds) },
+                                    };
+                                    break;
+                                case AssessmentType.Gl:
+                                    break;
+                                case AssessmentType.Be:
+                                    break;
+                            }
+
+                            sections.Add(AssessmentTileEntry.Import(item, route, parameters, isFavorite, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
                         }
                     }
 
@@ -80,6 +103,79 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            var interactiveSections = Sections.OfType<AssessmentTileEntry>().ToList();
+            foreach (var interactiveSection in interactiveSections)
+            {
+                interactiveSection.RefreshCommands();
+            }
+        }
+
+        private bool CanToggleFavorite(AssessmentTileEntry tile)
+        {
+            return !IsBusy && (tile?.ModuleIds?.Count() ?? 0) == 1;
+        }
+
+        private async Task ToggleFavorite(AssessmentTileEntry tile, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ToggleFavorite)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ToggleFavorite)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(ToggleFavorite)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanInteract(AssessmentTileEntry tile)
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(tile?.Route);
+        }
+
+        private async Task Interact(AssessmentTileEntry tile, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(tile.Route!, worker.Token, tile.Parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Interact)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Interact)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(Interact)} in {GetType().Name}.");
                 }
                 finally
                 {

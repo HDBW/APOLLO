@@ -14,9 +14,11 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:AssessmentFeedViewModel"
-             Title="{x:Binding Title}"
+             Title="{x:Static strings:Resources.AssessmentFeedView_Title}"
              IsBusy="{x:Binding IsBusy}"
-             Style="{StaticResource DefaultPageStyle}">
+             Style="{StaticResource DefaultPageStyle}"
+             Shell.TabBarIsVisible="True"
+             Shell.FlyoutBehavior="Flyout">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:DataType="viewModels:AssessmentFeedViewModel" Command="{x:Binding OpenFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}" />
     </ContentPage.ToolbarItems>
@@ -42,11 +44,15 @@
 
         <DataTemplate x:Key="SkillAssessmentTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
             <Grid Padding="8" Margin="0,0,0,0">
-                <Border Style="{StaticResource InputBorderStyle}"/>
-                <StackLayout Margin="16">
-                    <controls:SegmentSvgImage x:Name="PART_Image" HeightRequest="240" HorizontalOptions="Center" Margin="0,0,0,16"/>
-                    <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
-                    <Label Text="{x:Static strings:Resources.Global_Overview}" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+                <Border Style="{StaticResource InputBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding InteractCommand}" NumberOfTapsRequired="1"/>
+                    </Border.GestureRecognizers>
+                </Border>
+                <StackLayout Margin="16" InputTransparent="True">
+                    <controls:SegmentSvgImage InputTransparent="True" x:Name="PART_Image" HeightRequest="240" HorizontalOptions="Center" Margin="0,0,0,16"/>
+                    <Label Text="{x:Binding Text, Mode=OneWay}" InputTransparent="True" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
+                    <Label Text="{x:Static strings:Resources.Global_Overview}" InputTransparent="True" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
                 </StackLayout>
             </Grid>
         </DataTemplate>
@@ -65,9 +71,9 @@
                     </HorizontalStackLayout>
                 </Border>
                 <ImageButton Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="10"
-              Command="{x:Binding ToggleIsFavoriteCommand}"
-              IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
-              VerticalOptions="Start">
+                             Command="{x:Binding ToggleIsFavoriteCommand}"
+                             IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
+                             VerticalOptions="Start">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
