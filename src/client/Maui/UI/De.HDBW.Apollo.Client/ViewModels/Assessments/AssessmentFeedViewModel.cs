@@ -111,6 +111,5 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 Logger?.LogError(ex, $"Unknown error while {nameof(OpenFavorite)} in {GetType().Name}.");
             }
         }
-
     }
 }

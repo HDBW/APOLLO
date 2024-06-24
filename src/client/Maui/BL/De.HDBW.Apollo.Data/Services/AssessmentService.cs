@@ -27,7 +27,7 @@ namespace GrpcClient.Service
             {
                 AssessmentId = so.AssessmentId,
                 ModuleId = so.ModuleIds[0],
-                Result= 50,
+                Result = 50,
                 Quantity = AssessmentScoreQuantity.Median,
             });
             so.AssessmentScores.Add(new AssessmentScore()

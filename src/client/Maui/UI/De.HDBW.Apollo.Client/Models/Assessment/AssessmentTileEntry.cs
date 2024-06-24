@@ -95,6 +95,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public static AssessmentTileEntry Import(AssessmentTile data)
+        {
+            return new AssessmentTileEntry(data);
+        }
+
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]
         private Task ToggleIsFavorite()
         {
@@ -104,11 +109,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private bool CanToggleIsFavorite()
         {
             return false;
-        }
-
-        public static AssessmentTileEntry Import(AssessmentTile data)
-        {
-            return new AssessmentTileEntry(data);
         }
     }
 }

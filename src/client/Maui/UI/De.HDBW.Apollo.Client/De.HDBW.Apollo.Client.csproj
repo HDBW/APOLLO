@@ -122,6 +122,9 @@
     <MauiXaml Update="FlyoutMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Assessments\ModuleOverView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\FavoriteView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -273,6 +276,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\Assessments\ModuleOverView.xaml.cs">
+      <DependentUpon>ModuleOverView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\LicensesView.xaml.cs">
       <DependentUpon>LicensesView.xaml</DependentUpon>
     </Compile>
@@ -319,9 +325,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Assessments\" />
   </ItemGroup>
 
 </Project>

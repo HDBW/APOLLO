@@ -21,6 +21,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
 using De.HDBW.Apollo.Client.ViewModels.Training;
 using De.HDBW.Apollo.Client.Views;
+using De.HDBW.Apollo.Client.Views.Assessments;
 using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
 using De.HDBW.Apollo.Client.Views.Profile.EducationInfo;
@@ -456,6 +457,8 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<AssessmentFeedView>();
             services.AddTransient<AssessmentFeedViewModel>();
+            services.AddTransient<ModuleOverView>();
+            services.AddTransient<ModuleOverViewModel>();
         }
 
         private static void SetupRoutes()
@@ -509,6 +512,8 @@ namespace De.HDBW.Apollo.Client
 
             Routing.RegisterRoute(Routes.SearchView, typeof(SearchView));
             Routing.RegisterRoute(Routes.SearchFilterSheet, typeof(SearchFilterSheet));
+
+            Routing.RegisterRoute(Routes.ModuleOverView, typeof(ModuleOverView));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

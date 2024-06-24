@@ -1,4 +1,7 @@
-﻿using De.HDBW.Apollo.Client.Models;
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using De.HDBW.Apollo.Client.Models;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
@@ -173,7 +176,6 @@ namespace De.HDBW.Apollo.Client.Controls
                     // {
                     //    canvas.DrawLine(line.p0, line.p1, paint);
                     // }
-
                     paint.StrokeWidth = 5;
                     paint.Color = new SKColor(233, 210, 177);
                     paint.PathEffect = SKPathEffect.CreateDash(new float[2] { 50f, 10f }, -25f);
