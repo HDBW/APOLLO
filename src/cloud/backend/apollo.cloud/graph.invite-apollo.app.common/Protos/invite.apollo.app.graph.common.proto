@@ -140,6 +140,48 @@ message AssessmentTile {
   repeated AssessmentScore AssessmentScores = 15;
 }
 
+// The request message containing the user's name.
+message ModuleTilesRequest {
+  // Name to say hello to.
+  string CorrelationId = 1;
+  // The Ids of the ModuleTiles you are looking for
+  repeated google.protobuf.Int64Value Ids = 2;
+}
+
+// The response message containing the greetings.
+message ModuleTilesResponse {
+  // A list of Modules
+  repeated ModuleTile modules = 1;
+  // The Clients Session Id
+  string CorrelationId = 2;
+}
+
+// The Assessment aka Item
+message ModuleTile {
+  // The uniqe Identifier of the Assessment
+  string AssessmentId = 1;
+  
+  // The Title of the Assessment
+  string Title = 2;
+
+  // The Version of the assessment
+  string Ticks = 3;
+
+  // Indicates if the assessment is repeatable after a certain amount of time if null or 0 it can be done immediately
+  google.protobuf.Int32Value Repeatable = 4;
+  
+  // Indicates the type of Assessment
+  AssessmentType Type = 5;
+  
+  //Indidcates if the Module is Deleted
+  bool Deleted = 6;
+
+  //Because Favorites suck!
+  google.protobuf.StringValue ModuleId = 7;
+
+  repeated AssessmentScore AssessmentScores = 8;
+}
+
 message AssessmentScore {
   google.protobuf.StringValue ProfileId = 1;
   google.protobuf.StringValue AssessmentId = 2;
@@ -153,8 +195,9 @@ message AssessmentScore {
 }
 
 message ModulesRequest {
-  int64 AssessmentId = 1;
-  string Language = 2;
+  repeated google.protobuf.StringValue AssessmentIds = 1;
+  repeated google.protobuf.StringValue ModuleIds = 2;
+  string Language = 3;
 }
 
 message ModulesResponse {
@@ -163,12 +206,13 @@ message ModulesResponse {
 }
 
 message ModuleRequest{
-  string ModuleId = 1;
-  string CorrelationId = 2;
+  string AssessmentId = 1;
+  string ModuleId = 2;
+  string CorrelationId = 3;
 }
 
 message ModuleResponse {
-  Module module = 1;
+  Module Module = 1;
   string CorrelationId = 2;
 }
 
@@ -195,7 +239,7 @@ message Answer {
     
 message RawModule {
     //ModuleId
-    //repeated Raw Data
+    //repeated string 
 }
     
 message RawData {
