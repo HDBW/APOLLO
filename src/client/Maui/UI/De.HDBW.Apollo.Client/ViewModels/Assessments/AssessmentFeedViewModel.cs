@@ -33,7 +33,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             get
             {
-                return KnownIcons.IsFavorite;
+                return KnownIcons.Favorites;
             }
         }
 

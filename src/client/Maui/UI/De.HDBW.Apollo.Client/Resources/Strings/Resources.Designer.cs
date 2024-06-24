@@ -196,7 +196,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Experience Assessment.
+        ///   Looks up a localized string similar to Berufserfahrung.
         /// </summary>
         public static string AssessmentTypeEa {
             get {
@@ -214,7 +214,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skill-Assesment.
+        ///   Looks up a localized string similar to Berufliche Fähigkeiten.
         /// </summary>
         public static string AssessmentTypeSk {
             get {
