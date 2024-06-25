@@ -111,5 +111,31 @@ namespace GrpcClient.Service
                 sa2,
             };
         }
+
+        private Dictionary<string, string> _titles = new Dictionary<string, string>()
+        {
+            {"fbffa07b-7c3a-4c94-9e41-55579b6e2d4a", "Selbsteinschätzung zu typischem kognitiven Verhalten" },
+            {"ec0d7bb5-b8aa-49f9-91b0-7e3e3edf8ca9", "Selbstmanagementkompetenzen" },
+            {"0c6d1762-1709-49db-bb21-754770e4ef13", "Soziale und Kommunikative Kompetenzen" },
+            {"2b86e91f-66f1-4fb0-a9ac-924e4131370d", "Umsetzungskompetenzen" },
+            {"f72d0d89-b2fb-453a-b0f1-0bd0187d1f05", "Digitale Grundkompetenzen" },
+        };
+
+        public async Task<IEnumerable<ModuleTile>> GetModuleTilesAsync(IEnumerable<string> moduleIds, CancellationToken token)
+        {
+            var result = new List<ModuleTile>();
+            foreach (var moduleId in moduleIds)
+            {
+                result.Add(new ModuleTile()
+                {
+                    Deleted = false,
+                    Type = AssessmentType.So,
+                    ModuleId = moduleId,
+                    Title = _titles[moduleId],
+                });
+            }
+
+            return result;
+        }
     }
 }

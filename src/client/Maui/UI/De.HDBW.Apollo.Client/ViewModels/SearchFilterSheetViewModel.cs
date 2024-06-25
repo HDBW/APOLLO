@@ -16,7 +16,6 @@ using De.HDBW.Apollo.Data.Helper;
 using Invite.Apollo.App.Graph.Common.Backend.Api;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
-using TrainingModel = Invite.Apollo.App.Graph.Common.Models.Trainings.Training;
 
 namespace De.HDBW.Apollo.Client.ViewModels
 {

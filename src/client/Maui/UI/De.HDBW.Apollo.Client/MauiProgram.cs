@@ -1,7 +1,6 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.ComponentModel;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
@@ -31,7 +30,6 @@ using De.HDBW.Apollo.Client.Views.Profile.Qualification;
 using De.HDBW.Apollo.Client.Views.Profile.WebReference;
 using De.HDBW.Apollo.Client.Views.Training;
 using De.HDBW.Apollo.Data;
-using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;

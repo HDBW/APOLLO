@@ -93,7 +93,21 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             get
             {
-                return _data.Title;
+                switch (Type)
+                {
+                    case AssessmentType.Sk:
+                        return Resources.Strings.Resources.AssessmentTypeSk;
+                    case AssessmentType.Ea:
+                        return Resources.Strings.Resources.AssessmentTypeEa;
+                    case AssessmentType.So:
+                        return Resources.Strings.Resources.AssessmentTypeSo;
+                    case AssessmentType.Gl:
+                        return Resources.Strings.Resources.AssessmentTypeGl;
+                    case AssessmentType.Be:
+                        return Resources.Strings.Resources.AssessmentTypeBe;
+                    default:
+                        return string.Empty;
+                }
             }
         }
 
