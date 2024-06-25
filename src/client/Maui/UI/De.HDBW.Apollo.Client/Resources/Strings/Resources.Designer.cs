@@ -9,6 +9,8 @@
 //------------------------------------------------------------------------------
 
 namespace De.HDBW.Apollo.Client.Resources.Strings {
+    using System;
+    
     
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -230,7 +232,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Soft Skills.
+        ///   Looks up a localized string similar to Persönliche Fähigkeiten.
         /// </summary>
         public static string AssessmentTypeSo {
             get {
@@ -2378,6 +2380,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MobilityEditView_Willing {
             get {
                 return ResourceManager.GetString("MobilityEditView_Willing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner persönlichen Fähigkeiten teilnehmen..
+        /// </summary>
+        public static string ModuleOverViewModel_Description {
+            get {
+                return ResourceManager.GetString("ModuleOverViewModel_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deine persönlichen Fähigkeiten.
+        /// </summary>
+        public static string ModuleOverViewModel_Title {
+            get {
+                return ResourceManager.GetString("ModuleOverViewModel_Title", resourceCulture);
             }
         }
         

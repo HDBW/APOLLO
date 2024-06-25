@@ -46,7 +46,7 @@
                             </VerticalStackLayout>
                             <Image Grid.Column="1" WidthRequest="16" HeightRequest="16" >
                                 <Image.Source>
-                                    <FontImageSource Glyph="{StaticResource ArrowRight}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                                    <FontImageSource Glyph="{StaticResource ArrowRight16}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
                                 </Image.Source>
                             </Image>
                         </Grid>

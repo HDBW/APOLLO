@@ -70,7 +70,7 @@
                         <Label Text="{x:Binding Title, Mode=OneWay}" TextColor="{StaticResource TextColor}" VerticalOptions="Center" Style="{StaticResource Noto12}"/>
                     </HorizontalStackLayout>
                 </Border>
-                <ImageButton Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="10"
+                <ImageButton Grid.Column="1" WidthRequest="48" HeightRequest="48" Padding="12"
                              Command="{x:Binding ToggleIsFavoriteCommand}"
                              IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
                              VerticalOptions="Start">
