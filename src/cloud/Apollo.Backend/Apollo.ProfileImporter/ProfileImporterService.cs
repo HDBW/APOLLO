@@ -11,6 +11,7 @@ using System.Dynamic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Channels;
+using System.Diagnostics;
 
 
 namespace Apollo.ProfileImporter
@@ -95,12 +96,18 @@ namespace Apollo.ProfileImporter
             });
 
             var consumerTasks = new List<Task>();
+            int processedCount = 0;
+            int skippedCount = 0;
+            object lockObj = new object();
+
+            var stopwatch = Stopwatch.StartNew();
 
             var producerTask = Task.Run(async () =>
             {
                 await foreach (var blobItem in blobItems)
                 {
                     await fileChannel.Writer.WriteAsync(blobItem);
+                    _logger.LogInformation($"Enqueued blob: {blobItem.Name} for processing.");
                 }
                 fileChannel.Writer.Complete();
             });
@@ -113,17 +120,25 @@ namespace Apollo.ProfileImporter
                     {
                         try
                         {
+                            _logger.LogInformation($"Starting to process blob: {blobItem.Name}");
+
                             var blobClient = containerClient.GetBlobClient(blobItem.Name);
                             var blobProperties = await blobClient.GetPropertiesAsync();
 
                             if (blobProperties.Value.ContentLength <= 1024)
                             {
                                 _logger.LogWarning($"Blob {blobItem.Name} is smaller than 1024 bytes and will be skipped.");
+                                lock (lockObj)
+                                {
+                                    skippedCount++;
+                                }
                                 continue;
                             }
 
                             var downloadResponse = await blobClient.DownloadContentAsync();
                             var jsonData = downloadResponse.Value.Content.ToString();
+
+                            _logger.LogInformation($"Downloaded blob: {blobItem.Name} successfully. Size: {blobProperties.Value.ContentLength} bytes");
 
                             var profile = MapJsonToProfile(jsonData);
 
@@ -131,7 +146,12 @@ namespace Apollo.ProfileImporter
 
                             var result = await _api.CreateOrUpdateBAProfileAsync(profile);
 
-                            _logger.LogInformation($"Profile {profile.Id} imported successfully.");
+                            _logger.LogInformation($"Profile {profile.Id} imported successfully from blob: {blobItem.Name}");
+
+                            lock (lockObj)
+                            {
+                                processedCount++;
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -143,8 +163,12 @@ namespace Apollo.ProfileImporter
 
             await producerTask;
             await Task.WhenAll(consumerTasks);
-        }
 
+            stopwatch.Stop();
+            var elapsedTime = stopwatch.Elapsed;
+
+            _logger.LogInformation($"Import of profiles completed. Total processed: {processedCount}, Total skipped: {skippedCount}, Total time taken: {elapsedTime}");
+        }
 
 
         // <summary>
