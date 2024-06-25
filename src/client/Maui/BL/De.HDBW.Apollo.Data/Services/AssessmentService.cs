@@ -133,6 +133,11 @@ namespace GrpcClient.Service
             };
         }
 
+        public async Task<object> GetModuleInstructionAsync(string moduleId, CancellationToken token)
+        {
+            return null;
+        }
+
         public async Task<IEnumerable<ModuleTile>> GetModuleTilesAsync(IEnumerable<string> moduleIds, CancellationToken token)
         {
             var result = new List<ModuleTile>();

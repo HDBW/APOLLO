@@ -4,7 +4,9 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.SharedContracts.Services;
+using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Assessments
@@ -13,6 +15,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
     {
         [ObservableProperty]
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
+
+        [ObservableProperty]
+        private string? _title;
+
+        private string? _moduleId;
+        private AssessmentType _assessmentType;
 
         public ModuleDetailViewModel(
             IAssessmentService assessmentService,
@@ -35,7 +43,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
-                    var instruction = await AssessmentService.GetModuleInstructionAsync(_moduleId,worker.Token).ConfigureAwait(false);
+                    if (!string.IsNullOrWhiteSpace(_moduleId))
+                    {
+                        var instruction = await AssessmentService.GetModuleInstructionAsync(_moduleId, worker.Token).ConfigureAwait(false);
+                    }
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections), worker.Token);
                 }
@@ -55,6 +66,39 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 {
                     UnscheduleWork(worker);
                 }
+            }
+        }
+
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            base.OnPrepare(navigationParameters);
+            if (navigationParameters.TryGetValue(NavigationParameter.Data, out object? moduleId))
+            {
+                _moduleId = moduleId.ToString();
+            }
+
+            if (navigationParameters.TryGetValue(NavigationParameter.Type, out object? type) && Enum.TryParse(typeof(AssessmentType), type?.ToString(), true, out object? enumValue))
+            {
+                _assessmentType = (AssessmentType)enumValue;
+            }
+
+            switch (_assessmentType)
+            {
+                case AssessmentType.Sk:
+                    Title = Resources.Strings.Resources.AssessmentTypeSk;
+                    break;
+                case AssessmentType.Ea:
+                    Title = Resources.Strings.Resources.AssessmentTypeEa;
+                    break;
+                case AssessmentType.So:
+                    Title = Resources.Strings.Resources.AssessmentTypeSo;
+                    break;
+                case AssessmentType.Gl:
+                    Title = Resources.Strings.Resources.AssessmentTypeGl;
+                    break;
+                case AssessmentType.Be:
+                    Title = Resources.Strings.Resources.AssessmentTypeBe;
+                    break;
             }
         }
 

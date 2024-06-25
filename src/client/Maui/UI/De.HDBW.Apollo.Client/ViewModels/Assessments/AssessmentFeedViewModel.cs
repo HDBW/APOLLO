@@ -99,7 +99,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 route = Routes.ModuleDetailView;
                                 parameters = new NavigationParameters()
                                     {
-                                        { NavigationParameter.Data, string.Join(";", item.ModuleIds.First()) },
+                                        { NavigationParameter.Data, item.ModuleIds.First() },
                                         { NavigationParameter.Type, item.Type.ToString() },
                                     };
                             }

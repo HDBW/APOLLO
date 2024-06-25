@@ -43,6 +43,22 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public NavigationParameters? Parameters { get; }
 
+        public bool NeedsUser
+        {
+            get
+            {
+                return _data.MemberOnly;
+            }
+        }
+
+        public bool CanStart
+        {
+            get
+            {
+                return (_data.Repeatable ?? 0) == 0;
+            }
+        }
+
         public string? DecoratorImagePath
         {
             get
