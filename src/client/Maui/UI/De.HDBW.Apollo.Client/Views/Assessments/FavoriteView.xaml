@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="De.HDBW.Apollo.Client.Views.Assessments.ModuleOverView"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.FavoriteView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
@@ -12,12 +12,12 @@
              xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             x:DataType="viewModels:ModuleOverViewModel"
-             Title="{x:Binding Title}"
+             x:DataType="viewModels:FavoriteViewModel"
+             Title="{x:Static strings:Resources.FavoriteView_Headline}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <DataTemplate x:Key="ModuleTemplate" x:DataType="assessmentModels:ModuleTileEntry">
+        <DataTemplate x:Key="ModuleTileTemplate" x:DataType="assessmentModels:ModuleTileEntry">
             <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="8">
                 <Border Style="{StaticResource InputBorderStyle}" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
                 <Border Style="{StaticResource InputBorderHeaderStyle}" Grid.Column="0" HorizontalOptions="Start">
@@ -31,9 +31,9 @@
                     </HorizontalStackLayout>
                 </Border>
                 <ImageButton Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="10" HorizontalOptions="End"
-                         Command="{x:Binding ToggleIsFavoriteCommand}"
-                         IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
-                         VerticalOptions="Start">
+                      Command="{x:Binding ToggleIsFavoriteCommand}"
+                      IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
+                      VerticalOptions="Start">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
@@ -53,39 +53,27 @@
             </Grid>
         </DataTemplate>
     </ContentPage.Resources>
-    <ScrollView>
-        <VerticalStackLayout>
-            <Label
-                Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center"
-                HorizontalOptions="Center" />
-            <Label
-                Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center"
-                HorizontalOptions="Center" />
-            <Grid ColumnDefinitions="Auto,*,Auto"
-              RowDefinitions="Auto, Auto">
-                <ImageButton Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center"/>
-                <Label
-                    Grid.Column="1" Grid.Row="0"
-                    Text="Welcome to .NET MAUI!"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center" />
-                <Label
-                    Grid.Column="1" Grid.Row="1"
-                    Text="Welcome to .NET MAUI!"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center" />
-                <ImageButton Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center"/>
-            </Grid>
-            <controls:SegmentSvgImage
-                InputTransparent="True"
-                x:Name="PART_Image"
-                HeightRequest="280"
-                HorizontalOptions="Center"/>
-            <VerticalStackLayout
-                BindableLayout.ItemsSource="{Binding Modules}"
-                BindableLayout.ItemTemplate="{StaticResource ModuleTemplate}"/>
-        </VerticalStackLayout>
-    </ScrollView>
+    <Grid x:Name="PART_Root">
+        <CollectionView
+            x:Name="PART_Collection"
+            ItemsSource="{x:Binding FavoriteItems}"
+            ItemTemplate="{StaticResource ModuleTileTemplate}"
+            SelectionMode="None"
+            Grid.Row="1">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <ContentView VerticalOptions="Fill">
+                    <Grid RowDefinitions="auto, *" Padding="24,24,24,24">
+                        <VerticalStackLayout>
+                            <Label Text="{x:Static strings:Resources.FavoriteView_Subline_EmptyView}" HorizontalTextAlignment="Center" Style="{StaticResource NotoSerif24Bold}" Margin="0,0,0,16" TextColor="{StaticResource Primary}" SemanticProperties.HeadingLevel="Level2"/>
+                            <Label Text="{x:Static strings:Resources.FavoriteView_Description_EmptyView}" HorizontalTextAlignment="Center" Style="{StaticResource Noto16}"/>
+                        </VerticalStackLayout>
+                        <Image Grid.Row="1" Source="emptysearchdeco.png" Aspect="AspectFit" VerticalOptions="Fill"/>
+                    </Grid>
+                </ContentView>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
 </ContentPage>

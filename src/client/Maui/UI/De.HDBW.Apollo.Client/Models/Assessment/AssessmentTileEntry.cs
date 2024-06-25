@@ -67,6 +67,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public bool HasDecoratorImage
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(DecoratorImagePath);
+            }
+        }
+
         public bool IsMemberOnly
         {
             get

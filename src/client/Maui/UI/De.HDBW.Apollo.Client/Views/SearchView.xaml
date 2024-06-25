@@ -55,7 +55,7 @@
                                             <FontImageSource Glyph="{x:Static models:KnownIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                         </Setter.Value>
                                     </Setter>
-                                    <Setter Property="SemanticProperties.Description"  Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
+                                    <Setter Property="SemanticProperties.Description" Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
                                 </DataTrigger>
                             </ImageButton.Triggers>
                         </ImageButton>

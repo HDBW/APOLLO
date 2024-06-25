@@ -352,8 +352,8 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<LicensesView>();
             services.AddTransient<LicensesViewModel>();
 
-            services.AddTransient<FavoriteView>();
-            services.AddTransient<FavoriteViewModel>();
+            services.AddTransient<Views.FavoriteView>();
+            services.AddTransient<ViewModels.FavoriteViewModel>();
 
             // Training
             services.AddTransient<TrainingView>();
@@ -457,6 +457,8 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<AssessmentFeedViewModel>();
             services.AddTransient<ModuleOverView>();
             services.AddTransient<ModuleOverViewModel>();
+            services.AddTransient<Views.Assessments.FavoriteView>();
+            services.AddTransient<ViewModels.Assessments.FavoriteViewModel>();
         }
 
         private static void SetupRoutes()
@@ -512,6 +514,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.SearchFilterSheet, typeof(SearchFilterSheet));
 
             Routing.RegisterRoute(Routes.ModuleOverView, typeof(ModuleOverView));
+            Routing.RegisterRoute(Routes.AssessmentFavorites, typeof(Views.Assessments.FavoriteView));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

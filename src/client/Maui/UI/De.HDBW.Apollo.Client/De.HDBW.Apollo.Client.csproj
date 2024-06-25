@@ -122,6 +122,9 @@
     <MauiXaml Update="FlyoutMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Assessments\FavoriteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Assessments\ModuleOverView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
