@@ -178,6 +178,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to gesperrt.
+        /// </summary>
+        public static string AssessmentFeedView_Locked {
+            get {
+                return ResourceManager.GetString("AssessmentFeedView_Locked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Test.
         /// </summary>
         public static string AssessmentFeedView_Title {
