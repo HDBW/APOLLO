@@ -27,7 +27,7 @@ namespace Apollo.ProfileImporter
         private readonly ApolloApi _api;
         private readonly ILogger<ProfileImporterService> _logger;
         private readonly IConfiguration _configuration;
-
+         
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileImporterService"/> class.
@@ -100,7 +100,7 @@ namespace Apollo.ProfileImporter
             int skippedCount = 0;
             object lockObj = new object();
 
-            var stopwatch = Stopwatch.StartNew();
+            var startTime = DateTime.Now; // Capture start time for duration calculation
 
             var producerTask = Task.Run(async () =>
             {
@@ -164,8 +164,8 @@ namespace Apollo.ProfileImporter
             await producerTask;
             await Task.WhenAll(consumerTasks);
 
-            stopwatch.Stop();
-            var elapsedTime = stopwatch.Elapsed;
+            var endTime = DateTime.Now; // Capture end time
+            var elapsedTime = endTime - startTime; // Calculate the duration
 
             _logger.LogInformation($"Import of profiles completed. Total processed: {processedCount}, Total skipped: {skippedCount}, Total time taken: {elapsedTime}");
         }
