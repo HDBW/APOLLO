@@ -2,12 +2,10 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
-using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
-using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -24,6 +22,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         public FavoriteViewModel(
             IFavoriteRepository favoriteRepository,
             IAssessmentService assessmentService,
+            IPreferenceService preferenceService,
             ISessionService sessionService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -33,13 +32,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             ArgumentNullException.ThrowIfNull(favoriteRepository);
             ArgumentNullException.ThrowIfNull(assessmentService);
+            ArgumentNullException.ThrowIfNull(preferenceService);
             ArgumentNullException.ThrowIfNull(sessionService);
             FavoriteRepository = favoriteRepository;
             AssessmentService = assessmentService;
+            PreferenceService = preferenceService;
             SessionService = sessionService;
         }
 
         private IAssessmentService AssessmentService { get; }
+
+        private IPreferenceService PreferenceService { get; }
 
         private ISessionService SessionService { get; }
 
@@ -65,7 +68,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         var route = Routes.ModuleDetailView;
                         var parameters = new NavigationParameters()
                                     {
-                                        { NavigationParameter.Data, moduleTile.ModuleId },
+                                        { NavigationParameter.Id, moduleTile.ModuleId },
                                         { NavigationParameter.Type, moduleTile.Type.ToString() },
                                     };
 

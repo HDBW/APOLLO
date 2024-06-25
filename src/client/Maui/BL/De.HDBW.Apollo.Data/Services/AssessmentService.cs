@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
+using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace GrpcClient.Service
 {
@@ -133,9 +134,32 @@ namespace GrpcClient.Service
             };
         }
 
-        public async Task<object> GetModuleInstructionAsync(string moduleId, CancellationToken token)
+        public async Task<Module> GetModuleAsync(string moduleId, string? language, CancellationToken token)
         {
-            return null;
+            var data = _titles[moduleId];
+            var lang = language ?? "de-DE";
+            var module = new Module()
+            {
+                Title = $"Module Title {lang}",
+                Subtitle = $"Module Subtitle {lang}",
+                Description = $"Module Description {lang}",
+                Language = language,
+                Type = data.Type,
+                EstimateDuration = TimeSpan.FromMinutes(5).Minutes,
+            };
+
+            module.Languages.Add("de-DE");
+            module.Languages.Add("ar-arb");
+            module.Languages.Add("bg-BG");
+            module.Languages.Add("de-DE");
+            module.Languages.Add("en-US");
+            module.Languages.Add("fr-FR");
+            module.Languages.Add("ro-RO");
+            module.Languages.Add("ru-RU");
+            module.Languages.Add("tr-TR");
+            module.Languages.Add("uk-UA");
+
+            return module;
         }
 
         public async Task<IEnumerable<ModuleTile>> GetModuleTilesAsync(IEnumerable<string> moduleIds, CancellationToken token)

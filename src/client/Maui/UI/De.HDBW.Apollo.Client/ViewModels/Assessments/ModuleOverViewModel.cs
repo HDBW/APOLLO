@@ -28,6 +28,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         public ModuleOverViewModel(
             IAssessmentService assessmentService,
             IFavoriteRepository favoriteRepository,
+            IPreferenceService preferenceService,
+            ISessionService sessionService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -36,13 +38,22 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             ArgumentNullException.ThrowIfNull(assessmentService);
             ArgumentNullException.ThrowIfNull(favoriteRepository);
+            ArgumentNullException.ThrowIfNull(preferenceService);
+            ArgumentNullException.ThrowIfNull(sessionService);
+
             AssessmentService = assessmentService;
             FavoriteRepository = favoriteRepository;
+            PreferenceService = preferenceService;
+            SessionService = sessionService;
         }
 
         private IAssessmentService AssessmentService { get; }
 
         private IFavoriteRepository FavoriteRepository { get; }
+
+        private IPreferenceService PreferenceService { get; }
+
+        private ISessionService SessionService { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -53,7 +64,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     var sections = new List<ObservableObject>();
                     var moduleTiles = await AssessmentService.GetModuleTilesAsync(_moduleIds ?? new List<string>(), worker.Token).ConfigureAwait(false);
                     var favorites = await FavoriteRepository.GetItemsByTypeAsync(nameof(ModuleTile), worker.Token).ConfigureAwait(false) ?? new List<Favorite>();
-                    var modules = moduleTiles.Select((x) => ModuleTileEntry.Import(x, null, null, favorites.Any(f => f.Id == x.ModuleId), Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
+                    var modules = new List<ModuleTileEntry>();
+                    foreach (var moduleTile in moduleTiles)
+                    {
+                        var route = Routes.ModuleDetailView;
+                        var parameters = new NavigationParameters()
+                                    {
+                                        { NavigationParameter.Id, moduleTile.ModuleId },
+                                        { NavigationParameter.Type, moduleTile.Type.ToString() },
+                                    };
+
+                        modules.Add(ModuleTileEntry.Import(moduleTile, route, parameters, favorites.Any(f => f.Id == moduleTile.ModuleId), Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
+                    }
+
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(modules), worker.Token);
                 }
@@ -178,6 +201,38 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             return !IsBusy;
         }
 
-        private async Task Interact(ModuleTileEntry entry, CancellationToken token) => throw new NotImplementedException();
+        private async Task Interact(ModuleTileEntry tile, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (tile.NeedsUser && !SessionService.HasRegisteredUser)
+                    {
+                        var confirmedDataUsage = PreferenceService.GetValue<bool>(SharedContracts.Enums.Preference.ConfirmedDataUsage, false);
+                        await NavigationService.RestartAsync(confirmedDataUsage, CancellationToken.None);
+                        return;
+                    }
+
+                    await NavigationService.NavigateAsync(tile.Route!, worker.Token, tile.Parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Interact)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Interact)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(Interact)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
     }
 }

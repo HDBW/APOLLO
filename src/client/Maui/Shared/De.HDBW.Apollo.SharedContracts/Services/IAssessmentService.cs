@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
     {
         Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(CancellationToken token);
 
-        Task<object> GetModuleInstructionAsync(string moduleId, CancellationToken token);
+        Task<Module> GetModuleAsync(string moduleId, string? language, CancellationToken token);
 
         Task<IEnumerable<ModuleTile>> GetModuleTilesAsync(IEnumerable<string> moduleIds, CancellationToken token);
     }

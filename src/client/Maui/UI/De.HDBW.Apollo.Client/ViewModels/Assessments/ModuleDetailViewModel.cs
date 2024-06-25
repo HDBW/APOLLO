@@ -2,9 +2,11 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
+using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
@@ -21,6 +23,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private string? _moduleId;
         private AssessmentType _assessmentType;
+        private string? _language;
 
         public ModuleDetailViewModel(
             IAssessmentService assessmentService,
@@ -43,9 +46,32 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
+                    Module? module = null;
                     if (!string.IsNullOrWhiteSpace(_moduleId))
                     {
-                        var instruction = await AssessmentService.GetModuleInstructionAsync(_moduleId, worker.Token).ConfigureAwait(false);
+                        module = await AssessmentService.GetModuleAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
+                    }
+
+                    if (module != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(module.Title))
+                        {
+                            sections.Add(HeadlineTextEntry.Import(module.Title));
+                        }
+
+                        switch (module.Type)
+                        {
+                            case AssessmentType.Gl:
+                                sections.Add(ProviderDecoEntry.Import());
+                                break;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(module.Description))
+                        {
+                            sections.Add(TextEntry.Import(module.Description));
+                        }
+
+                        sections.Add(IconTextEntry.Import("", ""));
                     }
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections), worker.Token);
@@ -72,7 +98,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             base.OnPrepare(navigationParameters);
-            if (navigationParameters.TryGetValue(NavigationParameter.Data, out object? moduleId))
+            if (navigationParameters.TryGetValue(NavigationParameter.Id, out object? moduleId))
             {
                 _moduleId = moduleId.ToString();
             }
@@ -81,6 +107,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 _assessmentType = (AssessmentType)enumValue;
             }
+
+            if (navigationParameters.TryGetValue(NavigationParameter.Data, out object? lang))
+            {
+                _language = lang.ToString();
+            }
+
+            _language = _language ?? "de-DE";
 
             switch (_assessmentType)
             {
