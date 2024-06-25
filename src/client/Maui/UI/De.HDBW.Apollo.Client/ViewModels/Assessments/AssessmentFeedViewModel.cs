@@ -7,6 +7,8 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.SharedContracts.Models;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
@@ -20,6 +22,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         public AssessmentFeedViewModel(
             IAssessmentService assessmentService,
+            IFavoriteRepository favoriteRepository,
+            ISessionService sessionService,
+            IPreferenceService preferenceService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -27,7 +32,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(assessmentService);
+            ArgumentNullException.ThrowIfNull(favoriteRepository);
+            ArgumentNullException.ThrowIfNull(sessionService);
+            ArgumentNullException.ThrowIfNull(preferenceService);
+
+            PreferenceService = preferenceService;
             AssessmentService = assessmentService;
+            FavoriteRepository = favoriteRepository;
+            SessionService = sessionService;
         }
 
         public string FavoriteIcon
@@ -38,7 +50,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
+        private IPreferenceService PreferenceService { get; }
+
         private IAssessmentService AssessmentService { get; }
+
+        private IFavoriteRepository FavoriteRepository { get; }
+
+        private ISessionService SessionService { get; }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -48,6 +66,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 {
                     var sections = new List<ObservableObject>();
                     var assessmentTiles = await AssessmentService.GetAssessmentTilesAsync(worker.Token).ConfigureAwait(false);
+                    var favorites = await FavoriteRepository.GetItemsByTypeAsync(nameof(ModuleTile), worker.Token).ConfigureAwait(false) ?? new List<Favorite>();
                     var tiles = assessmentTiles.GroupBy(x => x.Grouping).OrderBy(x => x.Key);
                     foreach (var tile in tiles)
                     {
@@ -65,25 +84,24 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         {
                             string? route = null;
                             NavigationParameters? parameters = null;
-                            bool isFavorite = false;
-                            switch (item.Type)
+                            bool isFavorite = item.ModuleIds.Count == 1 && favorites.Any(f => item.ModuleIds.Contains(f.Id));
+                            if (item.ModuleIds.Count > 1)
                             {
-                                case AssessmentType.Sk:
-                                    break;
-                                case AssessmentType.Ea:
-                                    break;
-                                case AssessmentType.So:
-                                    route = Routes.ModuleOverView;
-                                    parameters = new NavigationParameters()
+                                route = Routes.ModuleOverView;
+                                parameters = new NavigationParameters()
                                     {
                                         { NavigationParameter.Data, string.Join(";", item.ModuleIds) },
-                                        { NavigationParameter.Type, AssessmentType.So.ToString()},
+                                        { NavigationParameter.Type, item.Type.ToString() },
                                     };
-                                    break;
-                                case AssessmentType.Gl:
-                                    break;
-                                case AssessmentType.Be:
-                                    break;
+                            }
+                            else
+                            {
+                                route = Routes.ModuleDetailView;
+                                parameters = new NavigationParameters()
+                                    {
+                                        { NavigationParameter.Data, string.Join(";", item.ModuleIds.First()) },
+                                        { NavigationParameter.Type, item.Type.ToString() },
+                                    };
                             }
 
                             sections.Add(AssessmentTileEntry.Import(item, route, parameters, isFavorite, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
@@ -129,10 +147,22 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private async Task ToggleFavorite(AssessmentTileEntry tile, CancellationToken token)
         {
+            bool result = false;
             using (var worker = ScheduleWork(token))
             {
                 try
                 {
+                    var id = tile.ModuleIds.First();
+                    var type = nameof(ModuleTile);
+
+                    if (tile.IsFavorite)
+                    {
+                        result = await FavoriteRepository.SaveAsync(new Favorite(id, type), token).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        result = await FavoriteRepository.DeleteFavoriteAsync(id, type, token).ConfigureAwait(false);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -148,6 +178,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 }
                 finally
                 {
+                    if (!result)
+                    {
+                        await ExecuteOnUIThreadAsync(() => { tile.IsFavorite = !tile.IsFavorite; }, CancellationToken.None).ConfigureAwait(false);
+                    }
+
                     UnscheduleWork(worker);
                 }
             }
@@ -164,6 +199,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
+                    if (tile.NeedsUser && !SessionService.HasRegisteredUser)
+                    {
+                        var confirmedDataUsage = PreferenceService.GetValue<bool>(SharedContracts.Enums.Preference.ConfirmedDataUsage, false);
+                        await NavigationService.RestartAsync(confirmedDataUsage, CancellationToken.None);
+                        return;
+                    }
+
                     await NavigationService.NavigateAsync(tile.Route!, worker.Token, tile.Parameters);
                 }
                 catch (OperationCanceledException)
@@ -198,14 +240,28 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFavorite))]
         private async Task OpenFavorite(CancellationToken token)
         {
-            try
+            using (var worker = ScheduleWork(token))
             {
-                Logger.LogInformation($"Invoked {nameof(OpenFavorite)} in {GetType().Name}.");
-                token.ThrowIfCancellationRequested();
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error while {nameof(OpenFavorite)} in {GetType().Name}.");
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.AssessmentFavoriteView, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Interact)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Interact)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(Interact)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
             }
         }
     }

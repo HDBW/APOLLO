@@ -36,19 +36,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             ISessionService sessionService,
-            ISheetService sheetService,
             ITrainingService trainingService,
-            ISearchHistoryRepository searchHistoryRepository,
             IImageCacheService imageCacheService,
             IFavoriteRepository favoriteRepository,
-            ILogger<RegistrationViewModel> logger)
+            ILogger<FavoriteViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(sessionService);
-            ArgumentNullException.ThrowIfNull(sheetService);
             ArgumentNullException.ThrowIfNull(trainingService);
-            ArgumentNullException.ThrowIfNull(searchHistoryRepository);
             ArgumentNullException.ThrowIfNull(imageCacheService);
+            ArgumentNullException.ThrowIfNull(favoriteRepository);
             SessionService = sessionService;
             TrainingService = trainingService;
             ImageCacheService = imageCacheService;

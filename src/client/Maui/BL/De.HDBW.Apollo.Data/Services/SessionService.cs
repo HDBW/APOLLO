@@ -25,7 +25,7 @@ namespace De.HDBW.Apollo.Data.Services
         public void AddFavorite(long id, Type type)
         {
             RemoveFavorite(id, type);
-            _favorites.Add(new (id, type));
+            _favorites.Add(new(id, type));
         }
 
         public void ClearFavorites()

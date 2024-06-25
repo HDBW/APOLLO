@@ -214,15 +214,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(EditPersonalInformations)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType().Name}.");
                 }
                 catch (ObjectDisposedException)
                 {
-                    Logger?.LogDebug($"Canceled {nameof(EditPersonalInformations)} in {GetType().Name}.");
+                    Logger?.LogDebug($"Canceled {nameof(Register)} in {GetType().Name}.");
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError(ex, $"Unknown error in {nameof(EditPersonalInformations)} in {GetType().Name}.");
+                    Logger?.LogError(ex, $"Unknown error in {nameof(Register)} in {GetType().Name}.");
                 }
                 finally
                 {

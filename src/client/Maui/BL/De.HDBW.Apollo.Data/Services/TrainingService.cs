@@ -17,8 +17,8 @@ namespace De.HDBW.Apollo.Data.Services
 
         public async Task<IEnumerable<Training>> SearchSuggesionsAsync(Filter? filter, int? skip, int? top, CancellationToken token)
         {
-           var results = await SearchTrainingsAsync(filter, null, skip, top, true, token);
-           return results ?? Array.Empty<Training>();
+            var results = await SearchTrainingsAsync(filter, null, skip, top, true, token);
+            return results ?? Array.Empty<Training>();
         }
 
         public async Task<IEnumerable<Training>> SearchTrainingsAsync(Filter? filter, List<string>? visibleFields, int? skip, int? top, bool useSemanticSearch, CancellationToken token)

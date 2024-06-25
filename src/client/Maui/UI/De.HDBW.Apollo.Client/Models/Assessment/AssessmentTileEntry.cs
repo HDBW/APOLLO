@@ -75,6 +75,22 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public bool NeedsUser
+        {
+            get
+            {
+                return _data.MemberOnly;
+            }
+        }
+
+        public bool CanStart
+        {
+            get
+            {
+                return (_data.Repeatable ?? 0) == 0;
+            }
+        }
+
         public bool IsMemberOnly
         {
             get
@@ -175,6 +191,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]
         private Task ToggleIsFavorite(CancellationToken token)
         {
+            IsFavorite = !IsFavorite;
             return _toggleFavoriteHandler?.Invoke(this, token) ?? Task.CompletedTask;
         }
 

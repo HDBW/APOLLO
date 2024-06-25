@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.ModuleDetailView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewModels:ModuleDetailViewModel"
+             Title="{x:Binding Title}"
+             IsBusy="{x:Binding IsBusy}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+
+        <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="8,24,8,16" SemanticProperties.HeadingLevel="Level1"/>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SublineTextTemplate" x:DataType="assessmentModels:SublineTextEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="8,0,8,16"/>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" Margin="8,24,8,8" SemanticProperties.HeadingLevel="Level2"/>
+            </Border>
+        </DataTemplate>
+
+
+        <selector:AssessmentSectionTemplateSelector x:Key="AssessmentDetailSectionTemplateSelector"
+                                                    HeadlineTextTemplate="{StaticResource HeadlineTextTemplate}"
+                                                    SublineTextTemplate="{StaticResource SublineTextTemplate}"
+                                                    TextTemplate="{StaticResource TextTemplate}"/>
+    </ContentPage.Resources>
+    
+    <Grid RowDefinitions="*, Auto">
+        <CollectionView ItemsSource="{x:Binding Sections}"
+        ItemsLayout="VerticalList"
+        ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}" Margin="16,0,16,16"/>
+        <Button Grid.Row="1" />
+    </Grid>
+    
+</ContentPage>

@@ -165,6 +165,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleIsFavorite))]
         private Task ToggleIsFavorite(CancellationToken token)
         {
+            IsFavorite = !IsFavorite;
             return _toggleFavoriteHandler?.Invoke(this, token) ?? Task.CompletedTask;
         }
 

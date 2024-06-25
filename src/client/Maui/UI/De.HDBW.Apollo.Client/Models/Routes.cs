@@ -77,6 +77,7 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string AssessmentFeedView = "/AssessmentFeedView";
         public const string ModuleOverView = "/ModuleOverView";
-        public const string AssessmentFavorites = "/AssessmentFavorites";
+        public const string AssessmentFavoriteView = "/AssessmentFavoriteView";
+        public const string ModuleDetailView = "/ModuleDetailView";
     }
 }
