@@ -30,7 +30,7 @@
                         <Label Text="{x:Binding Title, Mode=OneWay}" TextColor="{StaticResource Neutral0}" VerticalOptions="Center" Style="{StaticResource Noto12}"/>
                     </HorizontalStackLayout>
                 </Border>
-                <ImageButton Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="10" HorizontalOptions="End"
+                <ImageButton Grid.Column="1" WidthRequest="48" HeightRequest="48" Padding="12" HorizontalOptions="End"
                          Command="{x:Binding ToggleIsFavoriteCommand}"
                          IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
                          VerticalOptions="Start">
@@ -54,36 +54,38 @@
         </DataTemplate>
     </ContentPage.Resources>
     <ScrollView>
-        <VerticalStackLayout>
-            <Label
-                Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center"
-                HorizontalOptions="Center" />
-            <Label
-                Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center"
-                HorizontalOptions="Center" />
-            <Grid ColumnDefinitions="Auto,*,Auto"
+        <VerticalStackLayout Padding="16,0,16,24">
+            <Label Text="{x:Static strings:Resources.ModuleOverViewModel_Title}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="8,24,8,16" SemanticProperties.HeadingLevel="Level1"/>
+            <Label Text="{x:Static strings:Resources.ModuleOverViewModel_Description}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="8,0,8,26"/>
+            <Grid ColumnDefinitions="Auto,*,Auto" Margin="8,0,8,16"
               RowDefinitions="Auto, Auto">
-                <ImageButton Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center"/>
+                <ImageButton Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HeightRequest="44" WidthRequest="44" Padding="10" SemanticProperties.Description="{x:Static strings:Resources.Global_Back}">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{StaticResource ArrowLeft}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </ImageButton.Source>
+                </ImageButton>
                 <Label
-                    Grid.Column="1" Grid.Row="0"
-                    Text="Welcome to .NET MAUI!"
+                    Grid.Column="1" Grid.Row="0" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16SemiBold}"
+                    Text="Kategorie ??"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
                 <Label
-                    Grid.Column="1" Grid.Row="1"
-                    Text="Welcome to .NET MAUI!"
+                    Grid.Column="1" Grid.Row="1" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"
+                    Text="Status ??"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
-                <ImageButton Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center"/>
+                <ImageButton Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HeightRequest="48" WidthRequest="48" Padding="12" SemanticProperties.Description="{x:Static strings:Resources.Global_Next}">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{StaticResource ArrowRight}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </ImageButton.Source>
+                </ImageButton>
             </Grid>
-            <controls:SegmentSvgImage
+            <controls:SegmentSvgImage Margin="8,0,8,24"
                 InputTransparent="True"
                 x:Name="PART_Image"
                 HeightRequest="280"
                 HorizontalOptions="Center"/>
-            <VerticalStackLayout
+            <VerticalStackLayout Margin="0"
                 BindableLayout.ItemsSource="{Binding Modules}"
                 BindableLayout.ItemTemplate="{StaticResource ModuleTemplate}"/>
         </VerticalStackLayout>

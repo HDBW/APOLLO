@@ -1320,7 +1320,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Berufliche Fähigkeiten</value>
   </data>
   <data name="AssessmentTypeSo" xml:space="preserve">
-    <value>Soft Skills</value>
+    <value>Persönliche Fähigkeiten</value>
   </data>
   <data name="Global_Overview" xml:space="preserve">
     <value>Zur Übersicht</value>
@@ -1333,5 +1333,11 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   </data>
   <data name="AssessmentFeedView_Locked" xml:space="preserve">
     <value>gesperrt</value>
+  </data>
+  <data name="ModuleOverViewModel_Title" xml:space="preserve">
+    <value>Deine persönlichen Fähigkeiten</value>
+  </data>
+  <data name="ModuleOverViewModel_Description" xml:space="preserve">
+    <value>Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner persönlichen Fähigkeiten teilnehmen.</value>
   </data>
 </root>
