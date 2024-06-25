@@ -1331,4 +1331,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="Global_TestNow" xml:space="preserve">
     <value>Jetzt testen</value>
   </data>
+  <data name="AssessmentFeedView_Locked" xml:space="preserve">
+    <value>gesperrt</value>
+  </data>
 </root>
