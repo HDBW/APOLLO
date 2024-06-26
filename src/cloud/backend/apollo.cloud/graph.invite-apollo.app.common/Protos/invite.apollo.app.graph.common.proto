@@ -38,40 +38,28 @@ message AssessmentsResponse {
 }
 
 message Assessment {
-  // The uniqe Identifier of the Assessment
+  // The uniqe Identifier of the assessment
   int64 Id = 1;
   
+  // The Id of the assessment
+  string AssessmentId = 2;
+
   // The Title of the Assessment
-  string Title = 2;
+  string Title = 3;
   
-  string Subtitle = 3;
-  // The Description of the Assessment
-  string Description = 4;
-  // The Language of the Assessment
-  string Language = 5;
-  // The Estimate Duration how long it takes to do the assessment
-  int32 EstimateDuration = 6;
   // Indicates whetere this assessment is doable by a registered user only
-  bool MemberOnly = 7;
-  // The Version of the assessment
-  string Ticks = 8;
-  // Indicates if the assessment is repeatable after a certain amount of time if null or 0 it can be done immediately
-  google.protobuf.Int32Value Repeatable = 9;
+  bool MemberOnly = 4;
 
   // Indicates the type of Assessment
-  AssessmentType Type = 10;
-  
-  // Incdicates the Languages a assessment is available in
-  repeated string Languages = 11;
+  AssessmentType Type = 5;
   
   //Indidcates if the Assessment is Deleted
-  bool Deleted = 12;
-  
-  //Grouping of the Assessment
-  google.protobuf.StringValue Grouping = 13;
+  bool Deleted = 6;
 
-  //Because Favorites suck!
-  repeated google.protobuf.StringValue ModuleIds = 14;
+    // The Id of the job
+  google.protobuf.Int32Value JobId = 7;
+
+  string Version = 8;
 }
 
 // The request message containing the user's name.
@@ -211,46 +199,83 @@ message ModuleResponse {
 }
 
 message Module {
+// The uniqe Identifier of the assessment
+  int64 Id = 1;
+
   // The uniqe Identifier of the Assessment
-  string AssessmentId = 1;
+  string AssessmentId = 2;
   
   // The Title of the module
-  string Title = 2;
+  string Title = 3;
   
   // The Subtitle of the module
-  string Subtitle = 3;
+  string Subtitle = 4;
 
   // The Description of the module
-  string Description = 4;
+  string Description = 5;
 
   // The Language of the module
-  string Language = 5;
+  string Language = 6;
 
   // The Estimate Duration how long it takes to do the module
-  int32 EstimateDuration = 6;
+  int32 EstimateDuration = 7;
 
   // Indicates whetere this module is doable by a registered user only
-  bool MemberOnly = 7;
+  bool MemberOnly = 8;
 
   // The Version of the module
-  string Ticks = 8;
+  string Version = 9;
 
   // Indicates if the module is repeatable after a certain amount of time if null or 0 it can be done immediately
-  google.protobuf.Int32Value Repeatable = 9;
+  google.protobuf.Int32Value Repeatable = 10;
 
   // Indicates the type of Assessment
-  AssessmentType Type = 10;
+  AssessmentType Type = 11;
   
   // Incdicates the Languages a assessment is available in
-  repeated string Languages = 11;
+  repeated string Languages = 12;
   
   //Indidcates if the module is deleted
-  bool Deleted = 12;
+  bool Deleted = 13;
 
   //Because Favorites suck!
-  google.protobuf.StringValue ModuleId = 13;
+  google.protobuf.StringValue ModuleId = 14;
 }
 
+message Job {
+  // The uniqe Identifier of the job
+  int64 Id = 1;
+
+    // The Id of the job
+  int64 JobId = 2;
+
+  string Title = 3;
+
+  string Version = 4;
+}
+
+message RawData {
+  // The uniqe Identifier of the job
+  int64 Id = 1;
+
+    // The Id of the assesment
+  string AssesmentId = 2;
+  
+    // The Id of the module
+  string ModuleId = 3;
+  
+    // The Id of the raw data
+  string RawDataId = 4;
+
+  string Data = 5;
+
+  string Version = 6;
+  
+  string Language = 7;
+
+  //Indidcates if the module is deleted
+  bool Deleted = 8;
+}
 
 message AssessmentSession {
   //SessionID
@@ -271,9 +296,5 @@ message Answer {
 message RawModule {
     //ModuleId
     //repeated string 
-}
-    
-message RawData {
-        
 }
 
