@@ -1340,4 +1340,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="ModuleOverViewModel_Description" xml:space="preserve">
     <value>Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner persönlichen Fähigkeiten teilnehmen.</value>
   </data>
+  <data name="FavoriteView_Assessments_Headline" xml:space="preserve">
+    <value>Meine Tests</value>
+  </data>
 </root>
