@@ -13,7 +13,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:FavoriteViewModel"
-             Title="{x:Static strings:Resources.FavoriteView_Headline}"
+             Title="{x:Static strings:Resources.FavoriteView_Assessments_Headline}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
@@ -30,7 +30,7 @@
                         <Label Text="{x:Binding Title, Mode=OneWay}" TextColor="{StaticResource Neutral0}" VerticalOptions="Center" Style="{StaticResource Noto12}"/>
                     </HorizontalStackLayout>
                 </Border>
-                <ImageButton Grid.Column="1" WidthRequest="44" HeightRequest="44" Padding="10" HorizontalOptions="End"
+                <ImageButton Grid.Column="1" WidthRequest="48" HeightRequest="44" Padding="10" HorizontalOptions="End"
                       Command="{x:Binding ToggleIsFavoriteCommand}"
                       IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
                       VerticalOptions="Start">
@@ -54,14 +54,14 @@
         </DataTemplate>
     </ContentPage.Resources>
     <Grid x:Name="PART_Root">
-        <CollectionView
+        <CollectionView  Margin="16,0,16,16"
             x:Name="PART_Collection"
             ItemsSource="{x:Binding FavoriteItems}"
             ItemTemplate="{StaticResource ModuleTileTemplate}"
             SelectionMode="None"
             Grid.Row="1">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+                <LinearItemsLayout Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
             <CollectionView.EmptyView>
                 <ContentView VerticalOptions="Fill">

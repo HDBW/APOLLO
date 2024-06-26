@@ -1080,6 +1080,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meine Tests.
+        /// </summary>
+        public static string FavoriteView_Assessments_Headline {
+            get {
+                return ResourceManager.GetString("FavoriteView_Assessments_Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schau Dich um und merke Dir, was Dir gefällt. Nutze dafür das Favoriten-Icon..
         /// </summary>
         public static string FavoriteView_Description_EmptyView {
