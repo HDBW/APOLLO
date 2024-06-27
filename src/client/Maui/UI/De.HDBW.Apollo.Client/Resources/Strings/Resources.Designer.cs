@@ -2393,6 +2393,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Minuten.
+        /// </summary>
+        public static string ModuleDetailView_Minutes {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} دقيقة.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_ar {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} минути.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_bg_BG {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} minutes.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_en_US {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} minutes.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_fr_FR {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} minute.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_ro_RO {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} минут.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_ru_RU {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} dakika.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_tr_TR {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} хвилин.
+        /// </summary>
+        public static string ModuleDetailView_Minutes_uk_UA {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_Minutes_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner persönlichen Fähigkeiten teilnehmen..
         /// </summary>
         public static string ModuleOverViewModel_Description {

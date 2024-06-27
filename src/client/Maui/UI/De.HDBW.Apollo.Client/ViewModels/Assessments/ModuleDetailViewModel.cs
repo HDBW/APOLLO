@@ -54,9 +54,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                     if (module != null)
                     {
-                        if (!string.IsNullOrWhiteSpace(module.Title))
+                        if (!string.IsNullOrWhiteSpace(module.Subtitle))
                         {
-                            sections.Add(HeadlineTextEntry.Import(module.Title));
+                            sections.Add(HeadlineTextEntry.Import(module.Subtitle));
                         }
 
                         switch (module.Type)
@@ -71,7 +71,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             sections.Add(TextEntry.Import(module.Description));
                         }
 
-                        sections.Add(IconTextEntry.Import("", ""));
+                        var format = Resources.Strings.Resources.ResourceManager.GetString($"ModuleDetailView_Minutes_{_language}") ?? Resources.Strings.Resources.ModuleDetailView_Minutes;
+                        sections.Add(IconTextEntry.Import(KnownIcons.Watch, string.Format(format, module.EstimateDuration)));
                     }
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections), worker.Token);

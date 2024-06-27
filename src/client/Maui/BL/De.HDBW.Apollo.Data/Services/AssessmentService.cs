@@ -2,42 +2,26 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile;
 
 namespace GrpcClient.Service
 {
     public class AssessmentService : De.HDBW.Apollo.SharedContracts.Services.IAssessmentService
     {
-        private readonly Dictionary<string, (string Title, AssessmentType Type)> _titles = new Dictionary<string, (string Title, AssessmentType Type)>()
-        {
-            { "fbffa07b-7c3a-4c94-9e41-55579b6e2d4a", ("Selbsteinschätzung zu typischem kognitiven Verhalten", AssessmentType.So) },
-            { "ec0d7bb5-b8aa-49f9-91b0-7e3e3edf8ca9", ("Selbstmanagementkompetenzen", AssessmentType.So) },
-            { "0c6d1762-1709-49db-bb21-754770e4ef13", ("Soziale und Kommunikative Kompetenzen", AssessmentType.So) },
-            { "2b86e91f-66f1-4fb0-a9ac-924e4131370d", ("Umsetzungskompetenzen", AssessmentType.So) },
-            { "f72d0d89-b2fb-453a-b0f1-0bd0187d1f05", ("Digitale Grundkompetenzen", AssessmentType.So) },
-            { "bc5b65f5-5c00-4345-a781-211b69534239", ("Deutsch", AssessmentType.Gl) },
-            { "f03d6c0f-af50-4582-aeb2-9bddbbf8a8db", ("Hochbaufacharbeiter:in", AssessmentType.Sk) },
-            { "25324ec2-1f36-485b-ae69-56e985ccbb7b", ("Fachkraft im Gastgewerbe", AssessmentType.Sk) },
-            { "26894d0d-c670-4eed-a57d-ac95033966d5", ("Koch / Köchin", AssessmentType.Sk) },
-            { "42495073-3715-4d80-8b00-cd761956d1c4", ("Berufe entdecken", AssessmentType.Be) },
-        };
+        private SampleDataContext _data;
+        private readonly string? _defaultLanguage = "de-DE";
 
-        public async Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(CancellationToken token)
+        public AssessmentService()
+        {
+            _data = new SampleDataContext();
+        }
+
+        public Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
+            var assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.So)!;
+            var modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+            var so = Create(assessment, modules, string.Empty);
 
-            var so = new AssessmentTile()
-            {
-                Deleted = false,
-                Type = AssessmentType.So,
-                Grouping = string.Empty,
-            };
-            so.AssessmentId = Guid.Empty.ToString();
-            so.ModuleIds.Add("fbffa07b-7c3a-4c94-9e41-55579b6e2d4a");
-            so.ModuleIds.Add("ec0d7bb5-b8aa-49f9-91b0-7e3e3edf8ca9");
-            so.ModuleIds.Add("0c6d1762-1709-49db-bb21-754770e4ef13");
-            so.ModuleIds.Add("2b86e91f-66f1-4fb0-a9ac-924e4131370d");
-            so.ModuleIds.Add("f72d0d89-b2fb-453a-b0f1-0bd0187d1f05");
             so.AssessmentScores.Add(new AssessmentScore()
             {
                 AssessmentId = so.AssessmentId,
@@ -45,6 +29,7 @@ namespace GrpcClient.Service
                 Result = 50,
                 Quantity = AssessmentScoreQuantity.Median,
             });
+
             so.AssessmentScores.Add(new AssessmentScore()
             {
                 AssessmentId = so.AssessmentId,
@@ -74,109 +59,88 @@ namespace GrpcClient.Service
                 Quantity = AssessmentScoreQuantity.Median,
             });
 
-            var data = _titles["bc5b65f5-5c00-4345-a781-211b69534239"];
-            var gl = new AssessmentTile()
-            {
-                Type = data.Type,
-                Title = data.Title,
-                Grouping = string.Empty,
-            };
-            gl.ModuleIds.Add("bc5b65f5-5c00-4345-a781-211b69534239");
+            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Gl)!;
+            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+            AssessmentTile gl = Create(assessment, modules, string.Empty);
 
-            data = _titles["42495073-3715-4d80-8b00-cd761956d1c4"];
-            var be = new AssessmentTile()
-            {
-                Type = data.Type,
-                Title = data.Title,
-                Grouping = string.Empty,
-            };
+            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Be)!;
+            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+            var be = Create(assessment, modules, string.Empty);
 
-            be.ModuleIds.Add("42495073-3715-4d80-8b00-cd761956d1c4");
+            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Sk)!;
+            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+            var sa = Create(assessment, modules, "Teste dein Wissen");
 
-            data = _titles["f03d6c0f-af50-4582-aeb2-9bddbbf8a8db"];
-            var sa = new AssessmentTile()
-            {
-                Type = data.Type,
-                Title = data.Title,
-                Grouping = "Teste dein Wissen",
-                MemberOnly = true,
-            };
-            sa.ModuleIds.Add("f03d6c0f-af50-4582-aeb2-9bddbbf8a8db");
+            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Ea)!;
+            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+            var sa1 = Create(assessment, modules, "Teste dein Wissen");
 
-            data = _titles["25324ec2-1f36-485b-ae69-56e985ccbb7b"];
-            var sa1 = new AssessmentTile()
-            {
-                Type = data.Type,
-                Title = data.Title,
-                Grouping = "Teste dein Wissen",
-                MemberOnly = false,
-            };
-            sa1.ModuleIds.Add("25324ec2-1f36-485b-ae69-56e985ccbb7b");
-
-            data = _titles["26894d0d-c670-4eed-a57d-ac95033966d5"];
-            var sa2 = new AssessmentTile()
-            {
-                Type = data.Type,
-                Title = data.Title,
-                Grouping = "Teste dein Wissen",
-                MemberOnly = true,
-            };
-            sa2.ModuleIds.Add("26894d0d-c670-4eed-a57d-ac95033966d5");
-
-            return new List<AssessmentTile>()
+            return Task.FromResult<IEnumerable<AssessmentTile>>(new List<AssessmentTile>()
             {
                 so,
                 gl,
                 be,
                 sa,
                 sa1,
-                sa2,
-            };
+            });
         }
 
-        public async Task<Module> GetModuleAsync(string moduleId, string? language, CancellationToken token)
+        public Task<Module> GetModuleAsync(string moduleId, string? language, CancellationToken token)
         {
-            var data = _titles[moduleId];
-            var lang = language ?? "de-DE";
+            var lang = language ?? _defaultLanguage;
+            var modules = _data.Modules.Where(x => moduleId == x.ModuleId);
+            var requestedModule = modules.First(x => x.Language == language);
             var module = new Module()
             {
-                Title = $"Module Title {lang}",
-                Subtitle = $"Module Subtitle {lang}",
-                Description = $"Module Description {lang}",
-                Language = language,
-                Type = data.Type,
-                EstimateDuration = TimeSpan.FromMinutes(5).Minutes,
+                Title = requestedModule.Title,
+                Subtitle = requestedModule.Subtitle,
+                Description = requestedModule.Description,
+                Language = requestedModule.Language,
+                Type = requestedModule.Type,
+                EstimateDuration = requestedModule.EstimateDuration,
+                ModuleId = moduleId,
             };
 
-            module.Languages.Add("de-DE");
-            module.Languages.Add("ar-arb");
-            module.Languages.Add("bg-BG");
-            module.Languages.Add("de-DE");
-            module.Languages.Add("en-US");
-            module.Languages.Add("fr-FR");
-            module.Languages.Add("ro-RO");
-            module.Languages.Add("ru-RU");
-            module.Languages.Add("tr-TR");
-            module.Languages.Add("uk-UA");
-
-            return module;
+            module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
+            return Task.FromResult(module);
         }
 
-        public async Task<IEnumerable<ModuleTile>> GetModuleTilesAsync(IEnumerable<string> moduleIds, CancellationToken token)
+        public Task<IEnumerable<ModuleTile>> GetModuleTilesAsync(IEnumerable<string> moduleIds, CancellationToken token)
         {
             var result = new List<ModuleTile>();
-            foreach (var moduleId in moduleIds)
+            var modules = _data.Modules.Where(x => moduleIds.Contains(x.ModuleId) && x.Language == _defaultLanguage);
+
+            foreach (var module in modules)
             {
                 result.Add(new ModuleTile()
                 {
-                    Deleted = false,
-                    Type = _titles[moduleId].Type,
-                    ModuleId = moduleId,
-                    Title = _titles[moduleId].Title,
+                    Deleted = module.Deleted,
+                    Type = module.Type,
+                    ModuleId = module.ModuleId,
+                    Title = module.Title,
                 });
             }
 
-            return result;
+            return Task.FromResult<IEnumerable<ModuleTile>>(result);
         }
+
+        private static AssessmentTile Create(Assessment assessment, IEnumerable<Module> modules, string grouping)
+        {
+            var tile = new AssessmentTile()
+            {
+                Deleted = assessment.Deleted,
+                Type = assessment.Type,
+                Title = assessment.Title,
+                Grouping = grouping,
+            };
+
+            foreach (var module in modules)
+            {
+                tile.ModuleIds.Add(module.ModuleId);
+            }
+
+            return tile;
+        }
+
     }
 }

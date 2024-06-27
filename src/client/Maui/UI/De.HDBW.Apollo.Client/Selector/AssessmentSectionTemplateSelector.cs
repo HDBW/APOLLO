@@ -8,6 +8,8 @@ namespace De.HDBW.Apollo.Client.Selector
 {
     public class AssessmentSectionTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate? IconTextTemplate { get; set; }
+
         public DataTemplate? HeadlineTextTemplate { get; set; }
 
         public DataTemplate? SublineTextTemplate { get; set; }
@@ -26,6 +28,8 @@ namespace De.HDBW.Apollo.Client.Selector
         {
             switch (item)
             {
+                case IconTextEntry _:
+                    return IconTextTemplate;
                 case HeadlineTextEntry _:
                     return HeadlineTextTemplate;
                 case SublineTextEntry _:

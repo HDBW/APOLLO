@@ -1343,4 +1343,31 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="FavoriteView_Assessments_Headline" xml:space="preserve">
     <value>Meine Tests</value>
   </data>
+  <data name="ModuleDetailView_Minutes" xml:space="preserve">
+    <value>{0} Minuten</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_ar" xml:space="preserve">
+    <value>{0} دقيقة</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_bg-BG" xml:space="preserve">
+    <value>{0} минути</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_en-US" xml:space="preserve">
+    <value>{0} minutes</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_fr-FR" xml:space="preserve">
+    <value>{0} minutes</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_ro-RO" xml:space="preserve">
+    <value>{0} minute</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_ru-RU" xml:space="preserve">
+    <value>{0} минут</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_tr-TR" xml:space="preserve">
+    <value>{0} dakika</value>
+  </data>
+  <data name="ModuleDetailView_Minutes_uk-UA" xml:space="preserve">
+    <value>{0} хвилин</value>
+  </data>
 </root>

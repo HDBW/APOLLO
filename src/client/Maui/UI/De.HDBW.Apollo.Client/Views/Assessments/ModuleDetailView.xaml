@@ -36,11 +36,22 @@
             </Border>
         </DataTemplate>
 
+        <DataTemplate x:Key="IconTextTemplate" x:DataType="assessmentModels:IconTextEntry">
+            <Grid ColumnDefinitions="auto, *">
+                <Image WidthRequest="24" HeightRequest="24" >
+                    <Image.Source>
+                        <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </Image.Source>
+                </Image>
+                <Label Grid.Column="1" Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" Margin="8,24,8,8" SemanticProperties.HeadingLevel="Level2"/>
+            </Grid>
+        </DataTemplate>
 
         <selector:AssessmentSectionTemplateSelector x:Key="AssessmentDetailSectionTemplateSelector"
                                                     HeadlineTextTemplate="{StaticResource HeadlineTextTemplate}"
                                                     SublineTextTemplate="{StaticResource SublineTextTemplate}"
-                                                    TextTemplate="{StaticResource TextTemplate}"/>
+                                                    TextTemplate="{StaticResource TextTemplate}"
+                                                    IconTextTemplate="{StaticResource IconTextTemplate}"/>
     </ContentPage.Resources>
     
     <Grid RowDefinitions="*, Auto">
