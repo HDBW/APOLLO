@@ -57,7 +57,7 @@ message Assessment {
   bool Deleted = 6;
 
     // The Id of the job
-  google.protobuf.Int32Value JobId = 7;
+  google.protobuf.Int64Value JobId = 7;
 
   string Version = 8;
 }
@@ -199,7 +199,7 @@ message ModuleResponse {
 }
 
 message Module {
-// The uniqe Identifier of the assessment
+  // The uniqe Identifier of the assessment
   int64 Id = 1;
 
   // The uniqe Identifier of the Assessment
@@ -240,18 +240,21 @@ message Module {
 
   //Because Favorites suck!
   google.protobuf.StringValue ModuleId = 14;
+  
+  google.protobuf.Int64Value JobId = 15;
 }
 
 message Job {
   // The uniqe Identifier of the job
   int64 Id = 1;
 
-    // The Id of the job
-  int64 JobId = 2;
+  string Title = 2;
+  
+  string Kldb = 3;
 
-  string Title = 3;
+  string EscoId = 4;
 
-  string Version = 4;
+  string Version = 5;
 }
 
 message RawData {
@@ -266,6 +269,8 @@ message RawData {
   
     // The Id of the raw data
   string RawDataId = 4;
+  
+  google.protobuf.Int64Value JobId = 15;
 
   string Data = 5;
 
