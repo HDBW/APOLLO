@@ -4,7 +4,10 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -20,6 +23,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         [ObservableProperty]
         private string? _title;
+
+        [ObservableProperty]
+        private bool _hasLanguageSelection;
 
         private string? _moduleId;
         private AssessmentType _assessmentType;
@@ -75,7 +81,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         sections.Add(IconTextEntry.Import(KnownIcons.Watch, string.Format(format, module.EstimateDuration)));
                     }
 
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections), worker.Token);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, (module?.Languages?.Count ?? 0) > 1), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -136,9 +142,28 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        private void LoadonUIThread(List<ObservableObject> sections)
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            OpenLanguageSelectionCommand?.NotifyCanExecuteChanged();
+        }
+
+        private void LoadonUIThread(List<ObservableObject> sections, bool hasLanguageSelection)
         {
             Sections = new ObservableCollection<ObservableObject>(sections);
+            HasLanguageSelection = hasLanguageSelection;
+            WeakReferenceMessenger.Default.Send(new UpdateToolbarMessage());
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenLanguageSelection))]
+        private async Task OpenLanguageSelection(CancellationToken token)
+        {
+
+        }
+
+        private bool CanOpenLanguageSelection()
+        {
+            return !IsBusy;
         }
     }
 }

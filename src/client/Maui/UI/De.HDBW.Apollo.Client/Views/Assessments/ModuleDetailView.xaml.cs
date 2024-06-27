@@ -1,6 +1,10 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
 namespace De.HDBW.Apollo.Client.Views.Assessments;
@@ -12,6 +16,7 @@ public partial class ModuleDetailView : ContentPage
     {
         InitializeComponent();
         BindingContext = model;
+        WeakReferenceMessenger.Default.Register<UpdateToolbarMessage>(this, RefreshToolbarItems);
     }
 
     public ModuleDetailViewModel? ViewModel
@@ -19,6 +24,29 @@ public partial class ModuleDetailView : ContentPage
         get
         {
             return BindingContext as ModuleDetailViewModel;
+        }
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        RefreshToolbarItems(this, new UpdateToolbarMessage());
+    }
+
+    private void RefreshToolbarItems(object recipient, UpdateToolbarMessage message)
+    {
+        SetToolbarItemVisibility(PART_SwitchLanguage, ViewModel?.HasLanguageSelection ?? false);
+    }
+
+    private void SetToolbarItemVisibility(ToolbarItem toolbarItem, bool value)
+    {
+        if (value && !ToolbarItems.Contains(toolbarItem))
+        {
+            ToolbarItems.Add(toolbarItem);
+        }
+        else if (!value)
+        {
+            ToolbarItems.Remove(toolbarItem);
         }
     }
 }

@@ -16,6 +16,14 @@
              Title="{x:Binding Title}"
              IsBusy="{x:Binding IsBusy}"
              Style="{StaticResource DefaultPageStyle}">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="PART_SwitchLanguage" x:DataType="viewModels:ModuleDetailViewModel" Command="{x:Binding OpenLanguageSelectionCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
 
         <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
