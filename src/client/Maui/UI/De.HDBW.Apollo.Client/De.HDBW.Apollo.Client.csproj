@@ -55,6 +55,7 @@
     <None Remove="Platforms\Android\Resources\values\styles.xml" />
     <None Remove="Resources\Fonts\ApolloFontIcons.ttf" />
     <None Remove="Resources\Images\emptysearchdeco.svg" />
+    <None Remove="Resources\Images\germantest.png" />
     <None Remove="Resources\Images\Icon_ProfilContactInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileCareerInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfileEducationInfo.svg" />
@@ -64,6 +65,7 @@
     <None Remove="Resources\Images\Icon_ProfileWebReference.svg" />
     <None Remove="Resources\Images\Icon_ProfilLicensInfo.svg" />
     <None Remove="Resources\Images\Icon_ProfilQualificationInfo.svg" />
+    <None Remove="Resources\Images\logo_goethe_institut.svg" />
     <None Remove="Resources\Images\placeholdercontinuingeducation.svg" />
     <None Remove="Resources\Images\placeholderinfoevent.svg" />
     <None Remove="Resources\Images\placeholdertest.svg" />
@@ -123,6 +125,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Assessments\FavoriteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Assessments\LanguageSelectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Assessments\ModuleDetailView.xaml">

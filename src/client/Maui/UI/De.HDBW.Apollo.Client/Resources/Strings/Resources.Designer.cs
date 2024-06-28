@@ -241,6 +241,60 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Test fortsetzen.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestContinue {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test wiederholen.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestRepeat {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestRepeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test zurücksetzen.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestReset {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ergebnis anzeigen.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestResult {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test starten.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erneut testen in {} Tagen.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestTimeTestAgain {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestTimeTestAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fortfahren.
         /// </summary>
         public static string CancelAssessmentDialog_Cancel {
@@ -2258,6 +2312,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sprachenauswahl.
+        /// </summary>
+        public static string LanguageSelectionView_Title {
+            get {
+                return ResourceManager.GetString("LanguageSelectionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sprachkenntnis.
         /// </summary>
         public static string LanguageView_Title {
@@ -2389,6 +2452,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string MobilityEditView_Willing {
             get {
                 return ResourceManager.GetString("MobilityEditView_Willing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Goethe-Institut e.V..
+        /// </summary>
+        public static string ModuleDetailView_GoetheInstitut {
+            get {
+                return ResourceManager.GetString("ModuleDetailView_GoetheInstitut", resourceCulture);
             }
         }
         
@@ -3335,6 +3407,33 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TrainingView_OpenProvider {
             get {
                 return ResourceManager.GetString("TrainingView_OpenProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Beruf {}.
+        /// </summary>
+        public static string TxtAssesmentsSkillsStartTitle {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {} von 30 Fragen beantwortet.
+        /// </summary>
+        public static string TxtAssesmentsStartTestAnsweredQuestions {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsStartTestAnsweredQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {} Minuten.
+        /// </summary>
+        public static string TxtAssesmentsStartTestTime {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsStartTestTime", resourceCulture);
             }
         }
         

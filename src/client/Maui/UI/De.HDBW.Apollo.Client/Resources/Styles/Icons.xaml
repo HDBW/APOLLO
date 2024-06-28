@@ -23,5 +23,7 @@
     <x:String x:Key="Lock">&#x00b9;</x:String>
     <x:String x:Key="ArrowRight">&#x00b6;</x:String>
     <x:String x:Key="ArrowLeft">&#x00b5;</x:String>
+    <x:String x:Key="Repeat">&#x00BC;</x:String>
+    <x:String x:Key="Language">&#x0042;</x:String>
     
 </ResourceDictionary>

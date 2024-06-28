@@ -20,7 +20,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="PART_SwitchLanguage" x:DataType="viewModels:ModuleDetailViewModel" Command="{x:Binding OpenLanguageSelectionCommand}">
             <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="{StaticResource Delete}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                <FontImageSource Glyph="{StaticResource Language}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
@@ -28,30 +28,62 @@
 
         <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
             <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="8,24,8,16" SemanticProperties.HeadingLevel="Level1"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,24" SemanticProperties.HeadingLevel="Level1"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="SublineTextTemplate" x:DataType="assessmentModels:SublineTextEntry">
             <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="8,0,8,16"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,0,0,24"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
             <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" Margin="8,24,8,8" SemanticProperties.HeadingLevel="Level2"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"  Margin="0,0,0,24"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="IconTextTemplate" x:DataType="assessmentModels:IconTextEntry">
-            <Grid ColumnDefinitions="auto, *">
-                <Image WidthRequest="24" HeightRequest="24" >
+            <Grid ColumnDefinitions="auto, *" Margin="0,0,0,24">
+                <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center">
                     <Image.Source>
                         <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </Image.Source>
                 </Image>
-                <Label Grid.Column="1" Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" Margin="8,24,8,8" SemanticProperties.HeadingLevel="Level2"/>
+                <Label Grid.Column="1" Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" VerticalOptions="Center" Margin="8,0,0,0"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="GermanLanguageImageTemplate">
+            <VerticalStackLayout>
+                <HorizontalStackLayout Margin="0,0,0,24">
+                    <Image HeightRequest="36" WidthRequest="75" Source="logo_goethe_institut.png" Margin="0,0,8,0"/>
+                    <Label Text="{x:Static strings:Resources.ModuleDetailView_GoetheInstitut}" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <Image Source="germantest.png" Margin="0,0,0,24"/>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TestPausedTemplate">
+            <VerticalStackLayout>
+                <Label Text="{x:Static strings:Resources.TxtAssesmentsStartTestAnsweredQuestions}" Margin="0,0,0,8"/>
+                <ProgressBar Progress="0.5" Margin="0,0,0,16"/>
+                <Button Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestContinue}"/>
+                <Button Style="{StaticResource BorderButton}" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestResult}" Margin="0,0,0,24"/>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TestRepeatTemplate">
+            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+                <Image Grid.Column="0" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" Margin="0,0,8,8">
+                    <Image.Source>
+                        <FontImageSource Glyph="{StaticResource Repeat}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </Image.Source>
+                </Image>
+                <Label Grid.Column="1" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestTimeTestAgain}" Margin="0,0,0,8" VerticalOptions="Center"/>
+                <Button Grid.ColumnSpan="2" Grid.Row="1" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestRepeat}" Margin="0,0,0,16"/>
+                <Button Style="{StaticResource BorderButton}" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestReset}" Margin="0,0,0,24"/>
             </Grid>
         </DataTemplate>
 
@@ -61,12 +93,14 @@
                                                     TextTemplate="{StaticResource TextTemplate}"
                                                     IconTextTemplate="{StaticResource IconTextTemplate}"/>
     </ContentPage.Resources>
-    
-    <Grid RowDefinitions="*, Auto">
-        <CollectionView ItemsSource="{x:Binding Sections}"
+
+    <Grid RowDefinitions="*, Auto">        
+        <CollectionView ItemsSource="{x:Binding Sections}" Grid.Row="0"
         ItemsLayout="VerticalList"
-        ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}" Margin="16,0,16,16"/>
-        <Button Grid.Row="1" />
+        ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}" Margin="24,24,24,0"/>
+        <Border Grid.Row="1" VerticalOptions="EndAndExpand" Background="{StaticResource Neutral100}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+                <Button Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestStart}" Margin="24,16"/>
+        </Border>
     </Grid>
     
 </ContentPage>

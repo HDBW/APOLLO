@@ -1370,4 +1370,47 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="ModuleDetailView_Minutes_uk-UA" xml:space="preserve">
     <value>{0} хвилин</value>
   </data>
+  <data name="BtnTxtAssesmentsStartTestContinue" xml:space="preserve">
+    <value>Test fortsetzen</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestRepeat" xml:space="preserve">
+    <value>Test wiederholen</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestReset" xml:space="preserve">
+    <value>Test zurücksetzen</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestResult" xml:space="preserve">
+    <value>Ergebnis anzeigen</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart" xml:space="preserve">
+    <value>Test starten</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestTimeTestAgain" xml:space="preserve">
+    <value>Erneut testen in {} Tagen</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="LanguageSelectionView_Title" xml:space="preserve">
+    <value>Sprachenauswahl</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="ModuleDetailView_GoetheInstitut" xml:space="preserve">
+    <value>Goethe-Institut e.V.</value>
+  </data>
+  <data name="TxtAssesmentsSkillsStartTitle" xml:space="preserve">
+    <value>Test Beruf {}</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="TxtAssesmentsStartTestAnsweredQuestions" xml:space="preserve">
+    <value>{} von 30 Fragen beantwortet</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="TxtAssesmentsStartTestTime" xml:space="preserve">
+    <value>{} Minuten</value>
+    <comment>Translate</comment>
+  </data>
 </root>
