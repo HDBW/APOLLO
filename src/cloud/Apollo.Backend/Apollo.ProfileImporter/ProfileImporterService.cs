@@ -77,6 +77,9 @@ namespace Apollo.ProfileImporter
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
 
+
+        // NOTE: METHOD CHANGED FOR ONLY FIRST 5 Blobs FOR TESTING FUNCTIONALITY
+
         /// <summary>
         /// Handles the actual import of profiles from Azure Blob Storage by setting up a producer-consumer scenario
         /// where blobs are read and processed by multiple consumer tasks.
@@ -101,13 +104,16 @@ namespace Apollo.ProfileImporter
             object lockObj = new object();
 
             var startTime = DateTime.Now; // Capture start time for duration calculation
+            int blobCount = 0;
 
             var producerTask = Task.Run(async () =>
             {
                 await foreach (var blobItem in blobItems)
                 {
+                    if (blobCount >= 5) break; // Process only the first 5 blobs
                     await fileChannel.Writer.WriteAsync(blobItem);
                     _logger.LogInformation($"Enqueued blob: {blobItem.Name} for processing.");
+                    blobCount++;
                 }
                 fileChannel.Writer.Complete();
             });
@@ -142,11 +148,7 @@ namespace Apollo.ProfileImporter
 
                             var profile = MapJsonToProfile(jsonData);
 
-                            var jsonDataSave = System.Text.Json.JsonSerializer.Serialize(profile);
-
-                            var result = await _api.CreateOrUpdateBAProfileAsync(profile);
-
-                            _logger.LogInformation($"Profile {profile.Id} imported successfully from blob: {blobItem.Name}");
+                            _logger.LogInformation($"Profile object mapped: {System.Text.Json.JsonSerializer.Serialize(profile)}");
 
                             lock (lockObj)
                             {
@@ -178,285 +180,262 @@ namespace Apollo.ProfileImporter
         /// <returns>The mapped Profile object.</returns>
         private Profile MapJsonToProfile(string jsonData)
         {
-            dynamic? jsonObject = JsonConvert.DeserializeObject(jsonData);
+            dynamic jsonObject = JsonConvert.DeserializeObject(jsonData);
 
             var apolloProfile = new Profile
             {
                 Id = null,
-                CareerInfos = jsonObject?.werdegang != null ? MapCareerInfo((IEnumerable<dynamic>)jsonObject.werdegang) : null,
-                Occupations = jsonObject?.berufe != null ? MapOccupation((IEnumerable<dynamic>)jsonObject.berufe) : null,
-                EducationInfos = jsonObject?.bildung != null ? MapEducationInfo((IEnumerable<dynamic>)jsonObject.bildung) : null,
-                Qualifications = jsonObject?.qualifikationen != null ? MapQualification((IEnumerable<dynamic>)jsonObject.qualifikationen) : null,
-                MobilityInfo = jsonObject?.mobilitaet != null ? MapMobilityInfo(jsonObject.mobilitaet) : null,
-                LanguageSkills = jsonObject?.sprachkenntnisse != null ? MapLanguageSkills(jsonObject.sprachkenntnisse) : null,
-                Skills = jsonObject?.kenntnisse != null ? MapSkills(jsonObject.kenntnisse) : null,
+                CareerInfos = jsonObject?.bewerber != null ? MapCareerInfo(jsonObject.bewerber) : new List<CareerInfo>(),
+                Occupations = jsonObject?.bewerber != null ? MapOccupation(jsonObject.bewerber) : new List<Occupation>(),
+                EducationInfos = jsonObject?.bewerber != null ? MapEducationInfo(jsonObject.bewerber) : new List<EducationInfo>(),
+                Qualifications = jsonObject?.bewerber != null ? MapQualification(jsonObject.bewerber) : new List<Qualification>(),
+                MobilityInfo = jsonObject?.bewerber != null ? MapMobilityInfo(jsonObject.bewerber) : new Mobility(),
+                LanguageSkills = jsonObject?.bewerber != null ? MapLanguageSkills(jsonObject.bewerber) : new List<LanguageSkill>(),
+                Skills = jsonObject?.bewerber != null ? MapSkills(jsonObject.bewerber) : new List<Skill>(),
                 WebReferences = new List<WebReference> { new WebReference { Title = "BA-Test" } }
             };
 
             return apolloProfile;
         }
 
-
-        /// <summary>
-        /// Maps JSON data to a list of CareerInfo objects.
-        /// Each CareerInfo is extracted from dynamic JSON objects representing various career details.
-        /// </summary>
-        /// <param name="items">Dynamic JSON objects representing career data.</param>
-        /// <returns>A list of CareerInfo objects populated with the data from the JSON objects.</returns>
-        private List<CareerInfo> MapCareerInfo(IEnumerable<dynamic> items)
+        private List<CareerInfo> MapCareerInfo(IEnumerable<dynamic> bewerbers)
         {
-            return items.Select(item => new CareerInfo
+            var careerInfos = new List<CareerInfo>();
+
+            foreach (var bewerber in bewerbers)
             {
-                Description = item?.berufsbezeichnung,
-                Start = item?.Von,
-                End = item?.EndDate,
-                Job = new Occupation()
+                if (bewerber?.werdegang != null)
                 {
-                    Description = item?.berufsbezeichnung,
-                    UniqueIdentifier = null,
-                    OccupationUri = null,
-                    ClassificationCode = item?.lebenslaufart,
-                    Identifier = item?.lebenslaufartenKategorie,
-                    Concept = null,
-                    RegulatoryAspect = "",
-                    HasApprenticeShip = false,
-                    IsUniversityOccupation = false,
-                    IsUniversityDegree = true,
-                    PreferedTerm = [],
-                    NonePreferedTerm = [],
-                    TaxonomyInfo = Taxonomy.Unknown,
-                    TaxonomieVersion = "",
-                    CultureString = "de-DE",
-                    BroaderConcepts = [],
-                    NarrowerConcepts = [],
-                    RelatedConcepts = [],
-                    Skills = [],
-                    EssentialSkills = [],
-                    OptionalSkills = [],
-                    EssentialKnowledge = [],
-                    OptionalKnowledge = [],
-                    Documents = [],
-                    OccupationGroup = { },
-                    DkzApprenticeship = true,
-                    QualifiedProfessional = true,
-                    NeedsUniversityDegree = true,
-                    IsMilitaryApprenticeship = false,
-                    IsGovernmentApprenticeship = false,
-                    //ValidFrom = item?.Von,
-                    //ValidTill = item?.EndDate,
+                    foreach (var item in bewerber.werdegang)
+                    {
+                        careerInfos.Add(new CareerInfo
+                        {
+                            Description = item?.berufsbezeichnung,
+                            Start = item?.Von,
+                            End = item?.EndDate,
+                            Job = new Occupation()
+                            {
+                                Description = item?.berufsbezeichnung,
+                            }
+                        });
+                    }
                 }
-            }).ToList();
+            }
+
+            return careerInfos;
         }
 
-
-        /// <summary>
-        /// Maps JSON data to a list of Occupation objects.
-        /// This method processes dynamic JSON objects that describe occupation details.
-        /// </summary>
-        /// <param name="items">Dynamic JSON objects representing occupation data.</param>
-        /// <returns>A list of Occupation objects created from the JSON data.</returns>
-        private List<Occupation> MapOccupation(IEnumerable<dynamic> items)
+        private List<Occupation> MapOccupation(IEnumerable<dynamic> bewerbers)
         {
-            var data = items.Select(item => new Occupation
-            {
-                Description = item.ToString()
-            }).ToList();
-            return data;
-        }
+            var occupations = new List<Occupation>();
 
-
-        /// <summary>
-        /// Maps JSON data to a list of EducationInfo objects.
-        /// Each EducationInfo is derived from dynamic JSON objects that detail educational backgrounds.
-        /// </summary>
-        /// <param name="items">Dynamic JSON objects representing education data.</param>
-        /// <returns>A list of EducationInfo objects populated from the JSON data.</returns>
-        private List<EducationInfo> MapEducationInfo(IEnumerable<dynamic> items)
-        {
-            var data = items.Select(item => new EducationInfo
+            foreach (var bewerber in bewerbers)
             {
-                Start = item?.von,
-                End = item?.bis,
-                Country = item?.land,
-                Description = item?.beschreibung,
-                ProfessionalTitle = new Occupation
+                if (bewerber?.berufe != null)
                 {
-                    Description = item?.berufsbezeichnung
-                },
-                CompletionState = item?.istAbgeschlossen != null ? new CompletionState { ListItemId = 1, Value = item.istAbgeschlossen } : null,
-                Graduation = item?.schulAbschluss != null ? new SchoolGraduation { ListItemId = 1, Value = item.schulAbschluss } : null,
-                UniversityDegree = item?.hochSchulAbschluss != null ? new UniversityDegree { ListItemId = 1, Value = item.hochSchulAbschluss } : null,
-                TypeOfSchool = item?.schulart != null ? new TypeOfSchool { ListItemId = 1, Value = item.schulart } : null,
-                NameOfInstitution = item?.nameArtEinrichtung,
-                City = item?.ort,
-                Recognition = item?.anerkennungAbschluss != null ? new RecognitionType { ListItemId = 1, Value = item.anerkennungAbschluss } : null
-            }).ToList();
+                    foreach (var item in bewerber.berufe)
+                    {
+                        occupations.Add(new Occupation
+                        {
+                            Description = item.ToString()
+                        });
+                    }
+                }
+            }
 
-            return data;
+            return occupations;
         }
 
-
-        /// <summary>
-        /// Maps JSON data to a list of Qualification objects.
-        /// Each Qualification object is created based on dynamic JSON data detailing specific qualifications.
-        /// </summary>
-        /// <param name="items">Dynamic JSON objects representing qualification data.</param>
-        /// <returns>A list of Qualification objects created from the JSON data.</returns>
-        private List<Qualification> MapQualification(IEnumerable<dynamic> items)
+        private List<EducationInfo> MapEducationInfo(IEnumerable<dynamic> bewerbers)
         {
-            var data = items.Select(item => new Qualification
+            var educationInfos = new List<EducationInfo>();
+
+            foreach (var bewerber in bewerbers)
             {
-                Name = item?.qualifikationsName,
-                Description = item?.beschreibung,
-                IssueDate = item?.ausstellDatum,
-                ExpirationDate = item?.ablaufDatum,
-                IssuingAuthority = null
-            }).ToList();
-            return data;
+                if (bewerber?.bildung != null)
+                {
+                    foreach (var item in bewerber.bildung)
+                    {
+                        educationInfos.Add(new EducationInfo
+                        {
+                            Start = item?.von,
+                            End = item?.bis,
+                            Country = item?.land,
+                            Description = item?.beschreibung,
+                            ProfessionalTitle = new Occupation
+                            {
+                                Description = item?.berufsbezeichnung
+                            },
+                            CompletionState = item?.istAbgeschlossen != null ? new CompletionState { ListItemId = 1, Value = item.istAbgeschlossen } : null,
+                            Graduation = item?.schulAbschluss != null ? new SchoolGraduation { ListItemId = 1, Value = item.schulAbschluss } : null,
+                            UniversityDegree = item?.hochSchulAbschluss != null ? new UniversityDegree { ListItemId = 1, Value = item.hochSchulAbschluss } : null,
+                            TypeOfSchool = item?.schulart != null ? new TypeOfSchool { ListItemId = 1, Value = item.schulart } : null,
+                            NameOfInstitution = item?.nameArtEinrichtung,
+                            City = item?.ort,
+                            Recognition = item?.anerkennungAbschluss != null ? new RecognitionType { ListItemId = 1, Value = item.anerkennungAbschluss } : null
+                        });
+                    }
+                }
+            }
+
+            return educationInfos;
         }
 
-
-        /// <summary>
-        /// Maps JSON data to a Mobility object.
-        /// This method processes dynamic JSON objects to extract mobility information, including willingness to travel and driver licenses.
-        /// </summary>
-        /// <param name="item">A dynamic JSON object representing mobility information.</param>
-        /// <returns>A Mobility object populated from the JSON data.</returns>
-        private Mobility MapMobilityInfo(dynamic item)
+        private List<Qualification> MapQualification(IEnumerable<dynamic> bewerbers)
         {
-            var data = new Mobility
+            var qualifications = new List<Qualification>();
+
+            foreach (var bewerber in bewerbers)
             {
-                WillingToTravel = item?.reisebereitschaft != null ? new Willing { ListItemId = 1, Value = item.reisebereitschaft } : null,
-                DriverLicenses = item?.DriversLicense != null ? new List<DriversLicense> { new DriversLicense { ListItemId = 1, Value = item.fuehrerscheine } } : null,
-                HasVehicle = item?.fahrzeugVorhanden
-            };
-            return data;
+                if (bewerber?.qualifikationen != null)
+                {
+                    foreach (var item in bewerber.qualifikationen)
+                    {
+                        qualifications.Add(new Qualification
+                        {
+                            Name = item?.qualifikationsName,
+                            Description = item?.beschreibung,
+                            IssueDate = item?.ausstellDatum,
+                            ExpirationDate = item?.ablaufDatum,
+                            IssuingAuthority = null
+                        });
+                    }
+                }
+            }
+
+            return qualifications;
         }
 
-
-        /// <summary>
-        /// Maps JSON data to a list of LanguageSkill objects.
-        /// Processes dynamic JSON arrays to extract language skill levels and names from the profile data.
-        /// </summary>
-        /// <param name="sprachkenntnisse">Dynamic JSON object containing language skill data.</param>
-        /// <returns>A list of LanguageSkill objects populated based on the JSON data.</returns>
-        private List<LanguageSkill> MapLanguageSkills(dynamic sprachkenntnisse)
+        private Mobility MapMobilityInfo(IEnumerable<dynamic> bewerbers)
         {
+            var mobility = new Mobility();
 
+            foreach (var bewerber in bewerbers)
+            {
+                if (bewerber?.mobilitaet != null)
+                {
+                    mobility = new Mobility
+                    {
+                        WillingToTravel = bewerber.mobilitaet?.reisebereitschaft != null ? new Willing { ListItemId = 1, Value = bewerber.mobilitaet.reisebereitschaft } : null,
+                        DriverLicenses = bewerber.mobilitaet?.DriversLicense != null ? new List<DriversLicense> { new DriversLicense { ListItemId = 1, Value = bewerber.mobilitaet.fuehrerscheine } } : null,
+                        HasVehicle = bewerber.mobilitaet?.fahrzeugVorhanden
+                    };
+                }
+            }
+
+            return mobility;
+        }
+
+        private List<LanguageSkill> MapLanguageSkills(IEnumerable<dynamic> bewerbers)
+        {
             var languageSkills = new List<LanguageSkill>();
             int listItemIdCounter = 1;
 
-            // Map Verhandlungssicher languages
-            if (sprachkenntnisse?.Verhandlungssicher != null)
+            foreach (var bewerber in bewerbers)
             {
-                foreach (var language in sprachkenntnisse.Verhandlungssicher)
+                // Map Verhandlungssicher languages
+                if (bewerber?.sprachkenntnisse?.Verhandlungssicher != null)
                 {
-                    var p = language.Value;
-                    languageSkills.Add(new LanguageSkill
+                    foreach (var language in bewerber.sprachkenntnisse.Verhandlungssicher)
                     {
-                        Name = language.Value,
-                        Code = GetCultureName(language.Value),
-                        Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Verhandlungssicher" },
-                    });
+                        languageSkills.Add(new LanguageSkill
+                        {
+                            Name = language.Value,
+                            Code = GetCultureName(language.Value),
+                            Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Verhandlungssicher" },
+                        });
+                    }
                 }
-            }
 
-            // Map Erweiterte Kenntnisse languages
-            if (sprachkenntnisse?.ErweiterteKenntnisse != null)
-            {
-                foreach (var language in sprachkenntnisse.ErweiterteKenntnisse)
+                // Map Erweiterte Kenntnisse languages
+                if (bewerber?.sprachkenntnisse?.ErweiterteKenntnisse != null)
                 {
-                    languageSkills.Add(new LanguageSkill
+                    foreach (var language in bewerber.sprachkenntnisse.ErweiterteKenntnisse)
                     {
-                        Name = language.Value,
-                        Code = GetCultureName(language.Value),
-                        Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Erweiterte Kenntnisse" },
-                    });
+                        languageSkills.Add(new LanguageSkill
+                        {
+                            Name = language.Value,
+                            Code = GetCultureName(language.Value),
+                            Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Erweiterte Kenntnisse" },
+                        });
+                    }
                 }
-            }
 
-            // Map Grundkenntnisse languages
-            if (sprachkenntnisse?.Grundkenntnisse != null)
-            {
-                foreach (var language in sprachkenntnisse.Grundkenntnisse)
+                // Map Grundkenntnisse languages
+                if (bewerber?.sprachkenntnisse?.Grundkenntnisse != null)
                 {
-                    languageSkills.Add(new LanguageSkill
+                    foreach (var language in bewerber.sprachkenntnisse.Grundkenntnisse)
                     {
-                        Name = language.Value,
-                        Code = GetCultureName(language.Value),
-                        Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Grundkenntnisse" },
-                    });
+                        languageSkills.Add(new LanguageSkill
+                        {
+                            Name = language.Value,
+                            Code = GetCultureName(language.Value),
+                            Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Grundkenntnisse" },
+                        });
+                    }
                 }
             }
 
             return languageSkills;
         }
 
-
-        /// <summary>
-        /// Maps JSON data to a list of Skill objects.
-        /// Extracts skills from dynamic JSON arrays detailing various competencies and expertise levels.
-        /// </summary>
-        /// <param name="kenntnisse">Dynamic JSON object containing detailed skills information.</param>
-        /// <returns>A list of Skill objects created from the JSON data.</returns>
-        private List<Skill> MapSkills(dynamic kenntnisse)
+        private List<Skill> MapSkills(IEnumerable<dynamic> bewerbers)
         {
             var skills = new List<Skill>();
 
-            // Map Erweiterte Kenntnisse
-            if (kenntnisse?.ErweiterteKenntnisse != null)
+            foreach (var bewerber in bewerbers)
             {
-                foreach (var skill in kenntnisse.ErweiterteKenntnisse)
+                // Map Erweiterte Kenntnisse
+                if (bewerber?.kenntnisse?.ErweiterteKenntnisse != null)
                 {
-                    skills.Add(new Skill
+                    foreach (var skill in bewerber.kenntnisse.ErweiterteKenntnisse)
                     {
-                        Title = skill,
-                        ScopeNote = "Erweiterte Kenntnisse",
-                        TaxonomyInfo = Taxonomy.Unknown
-                    });
+                        skills.Add(new Skill
+                        {
+                            Title = skill,
+                            ScopeNote = "Erweiterte Kenntnisse",
+                            TaxonomyInfo = Taxonomy.Unknown
+                        });
+                    }
                 }
-            }
 
-            // Map Grundkenntnisse
-            if (kenntnisse?.Grundkenntnisse != null)
-            {
-                foreach (var skill in kenntnisse.Grundkenntnisse)
+                // Map Grundkenntnisse
+                if (bewerber?.kenntnisse?.Grundkenntnisse != null)
                 {
-                    skills.Add(new Skill
+                    foreach (var skill in bewerber.kenntnisse.Grundkenntnisse)
                     {
-                        Title = skill,
-                        ScopeNote = "Grundkenntnisse",
-                        TaxonomyInfo = Taxonomy.Unknown
-                    });
+                        skills.Add(new Skill
+                        {
+                            Title = skill,
+                            ScopeNote = "Grundkenntnisse",
+                            TaxonomyInfo = Taxonomy.Unknown
+                        });
+                    }
                 }
-            }
 
-            // Map Expertenkenntnisse
-            if (kenntnisse?.Expertenkenntnisse != null)
-            {
-                foreach (var skill in kenntnisse.Expertenkenntnisse)
+                // Map Expertenkenntnisse
+                if (bewerber?.kenntnisse?.Expertenkenntnisse != null)
                 {
-                    skills.Add(new Skill
+                    foreach (var skill in bewerber.kenntnisse.Expertenkenntnisse)
                     {
-                        Title = skill,
-                        ScopeNote = "Expertenkenntnisse",
-                        TaxonomyInfo = Taxonomy.Unknown
-
-                    });
+                        skills.Add(new Skill
+                        {
+                            Title = skill,
+                            ScopeNote = "Expertenkenntnisse",
+                            TaxonomyInfo = Taxonomy.Unknown
+                        });
+                    }
                 }
             }
 
             return skills;
         }
 
-
-
         string? GetCultureName(string language)
         {
             string? isoCode = GetISOCode(language);
             CultureInfo? cultureInfo = isoCode != null ? GetCultureInfoFromISOCode(isoCode) : null;
             return cultureInfo?.Name;
-
         }
 
         CultureInfo? GetCultureInfoFromISOCode(string isoCode)
