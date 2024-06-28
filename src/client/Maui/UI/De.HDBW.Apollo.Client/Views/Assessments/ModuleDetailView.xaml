@@ -13,8 +13,9 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:ModuleDetailViewModel"
-             Title="{x:Binding Title}"
-             IsBusy="{x:Binding IsBusy}"
+             Title="{x:Binding Title, Mode=OneWay}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     
     <ContentPage.ToolbarItems>
@@ -55,7 +56,7 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="GermanLanguageImageTemplate">
+        <DataTemplate x:Key="ProviderDecoTemplate" x:DataType="assessmentModels:ProviderDecoEntry">
             <VerticalStackLayout>
                 <HorizontalStackLayout Margin="0,0,0,24">
                     <Image HeightRequest="36" WidthRequest="75" Source="logo_goethe_institut.png" Margin="0,0,8,0"/>
@@ -65,7 +66,7 @@
             </VerticalStackLayout>
         </DataTemplate>
 
-        <DataTemplate x:Key="TestPausedTemplate">
+        <DataTemplate x:Key="ContinueSessionTemplate" x:DataType="assessmentModels:TestSessionEntry">
             <VerticalStackLayout>
                 <Label Text="{x:Static strings:Resources.TxtAssesmentsStartTestAnsweredQuestions}" Margin="0,0,0,8"/>
                 <ProgressBar Progress="0.5" Margin="0,0,0,16"/>
@@ -74,7 +75,7 @@
             </VerticalStackLayout>
         </DataTemplate>
 
-        <DataTemplate x:Key="TestRepeatTemplate">
+        <DataTemplate x:Key="RepeatSessionTemplate" x:DataType="assessmentModels:TestSessionEntry">
             <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
                 <Image Grid.Column="0" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" Margin="0,0,8,8">
                     <Image.Source>
@@ -91,15 +92,18 @@
                                                     HeadlineTextTemplate="{StaticResource HeadlineTextTemplate}"
                                                     SublineTextTemplate="{StaticResource SublineTextTemplate}"
                                                     TextTemplate="{StaticResource TextTemplate}"
-                                                    IconTextTemplate="{StaticResource IconTextTemplate}"/>
+                                                    IconTextTemplate="{StaticResource IconTextTemplate}"
+                                                    ProviderDecoTemplate="{StaticResource ProviderDecoTemplate}"/>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto">        
-        <CollectionView ItemsSource="{x:Binding Sections}" Grid.Row="0"
-        ItemsLayout="VerticalList"
-        ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}" Margin="24,24,24,0"/>
-        <Border Grid.Row="1" VerticalOptions="EndAndExpand" Background="{StaticResource Neutral100}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
-                <Button Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestStart}" Margin="24,16"/>
+        <CollectionView
+            ItemsSource="{x:Binding Sections}" Grid.Row="0"
+            ItemsLayout="VerticalList"
+            ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}"
+            Margin="24,24,24,0"/>
+        <Border IsVisible="{x:Binding CanStartTest}" Grid.Row="1" VerticalOptions="EndAndExpand" Background="{StaticResource Neutral100}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+            <Button Text="{x:Binding [BtnTxtAssesmentsStartTestStart]}" Margin="24,16"/>
         </Border>
     </Grid>
     

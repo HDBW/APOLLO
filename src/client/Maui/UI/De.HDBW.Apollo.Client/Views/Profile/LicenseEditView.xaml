@@ -8,7 +8,7 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Profile"
              xmlns:generic="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
              x:DataType="viewModels:LicenseEditViewModel"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Title="{x:Static strings:Resources.LicenseEditView_Title}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>

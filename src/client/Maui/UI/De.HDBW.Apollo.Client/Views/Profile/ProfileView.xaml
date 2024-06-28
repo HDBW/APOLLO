@@ -9,7 +9,7 @@
              xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:genericModels="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
              x:DataType="viewModels:ProfileViewModel"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              x:Name="PART_Root"
              Shell.TabBarIsVisible="True"
              Shell.FlyoutBehavior="Flyout"

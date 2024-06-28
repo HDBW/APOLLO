@@ -3,6 +3,7 @@
 
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -27,6 +28,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [ObservableProperty]
         private bool _hasLanguageSelection;
 
+        [ObservableProperty]
+        private bool _canStartTest;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FlowDirection))]
+        private CultureInfo _culture = new CultureInfo("de-DE");
+
         private string? _moduleId;
         private AssessmentType _assessmentType;
         private string? _language;
@@ -43,7 +51,21 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             AssessmentService = assessmentService;
         }
 
+        public FlowDirection FlowDirection { get { return Culture?.TextInfo.IsRightToLeft ?? false ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; } }
+
         private IAssessmentService AssessmentService { get; }
+
+        private List<string> SupportedLanaguages { get; set; } = new List<string>();
+
+        [IndexerName("Item")]
+        public new string this[string key]
+        {
+            get
+            {
+                var localizedResource = string.IsNullOrWhiteSpace(_language) ? null : Resources.Strings.Resources.ResourceManager.GetString($"{key}_{_language}");
+                return localizedResource ?? Resources.Strings.Resources.ResourceManager.GetString(key) ?? string.Empty;
+            }
+        }
 
         public override async Task OnNavigatedToAsync()
         {
@@ -77,11 +99,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             sections.Add(TextEntry.Import(module.Description));
                         }
 
-                        var format = Resources.Strings.Resources.ResourceManager.GetString($"ModuleDetailView_Minutes_{_language}") ?? Resources.Strings.Resources.ModuleDetailView_Minutes;
+                        var format = this["ModuleDetailView_Minutes"];
                         sections.Add(IconTextEntry.Import(KnownIcons.Watch, string.Format(format, module.EstimateDuration)));
                     }
 
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, (module?.Languages?.Count ?? 0) > 1), worker.Token);
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, module?.Languages?.Select(x => x)), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -105,23 +127,21 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             base.OnPrepare(navigationParameters);
-            if (navigationParameters.TryGetValue(NavigationParameter.Id, out object? moduleId))
-            {
-                _moduleId = moduleId.ToString();
-            }
+            _moduleId = navigationParameters.GetValue<string?>(NavigationParameter.Id);
 
             if (navigationParameters.TryGetValue(NavigationParameter.Type, out object? type) && Enum.TryParse(typeof(AssessmentType), type?.ToString(), true, out object? enumValue))
             {
                 _assessmentType = (AssessmentType)enumValue;
             }
 
-            if (navigationParameters.TryGetValue(NavigationParameter.Data, out object? lang))
+            _language = navigationParameters.GetValue<string?>(NavigationParameter.Data) ?? "de-DE";
+            if (navigationParameters.ContainsKey(NavigationParameter.Type))
             {
-                _language = lang.ToString();
+                _language = navigationParameters.GetValue<string?>(NavigationParameter.Result) ?? _language;
             }
 
-            _language = _language ?? "de-DE";
-
+            Culture = new CultureInfo(_language);
+            OnPropertyChanged(string.Empty);
             switch (_assessmentType)
             {
                 case AssessmentType.Sk:
@@ -148,22 +168,50 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             OpenLanguageSelectionCommand?.NotifyCanExecuteChanged();
         }
 
-        private void LoadonUIThread(List<ObservableObject> sections, bool hasLanguageSelection)
+        private void LoadonUIThread(List<ObservableObject> sections, IEnumerable<string> supportedLanaguages)
         {
             Sections = new ObservableCollection<ObservableObject>(sections);
-            HasLanguageSelection = hasLanguageSelection;
+            SupportedLanaguages = supportedLanaguages?.ToList() ?? new List<string>();
+            HasLanguageSelection = SupportedLanaguages.Count > 1;
+            CanStartTest = !Sections.Any(x => x is TestSessionEntry);
             WeakReferenceMessenger.Default.Send(new UpdateToolbarMessage());
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenLanguageSelection))]
         private async Task OpenLanguageSelection(CancellationToken token)
         {
-
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var parameters = new NavigationParameters();
+                    parameters.AddValue(NavigationParameter.Id, _moduleId);
+                    parameters.AddValue(NavigationParameter.Data, _language);
+                    parameters.AddValue(NavigationParameter.Result, string.Join(";", SupportedLanaguages));
+                    await NavigationService.NavigateAsync(Routes.LanguageSelectionView!, worker.Token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenLanguageSelection)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenLanguageSelection)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OpenLanguageSelection)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
         private bool CanOpenLanguageSelection()
         {
-            return !IsBusy;
+            return !IsBusy && HasLanguageSelection;
         }
     }
 }

@@ -7,10 +7,10 @@
              xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
              x:DataType="viewModels:MobilityEditViewModel"
              Title="{x:Static strings:Resources.MobilityEditView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding CancelCommand}" />
+        <BackButtonBehavior Command="{x:Binding CancelCommand, Mode=OneWay}" />
     </Shell.BackButtonBehavior>
     <ContentPage.Resources>
         <DataTemplate x:Key="DriverLicenseTemplate"  x:DataType="models:SelectInteractionEntry">

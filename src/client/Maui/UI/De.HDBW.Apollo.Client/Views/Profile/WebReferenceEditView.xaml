@@ -9,7 +9,7 @@
              xmlns:generic="clr-namespace:De.HDBW.Apollo.Client.Models.Generic"
              x:DataType="viewModels:WebReferenceEditViewModel"
              Title="{x:Static strings:Resources.WebReferenceEditView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="DefaultContactTemplate" x:DataType="models:WebReferenceEntry">

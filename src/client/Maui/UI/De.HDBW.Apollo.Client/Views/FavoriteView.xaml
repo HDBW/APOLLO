@@ -11,7 +11,7 @@
              Shell.FlyoutBehavior="Flyout"
              Title="{x:Static strings:Resources.FavoriteView_Headline}"
              x:DataType="viewModels:FavoriteViewModel"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="SearchInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">

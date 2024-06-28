@@ -102,11 +102,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             base.OnPrepare(navigationParameters);
-            if (navigationParameters.TryGetValue(NavigationParameter.Data, out object? moduleIds))
-            {
-                var idString = moduleIds.ToString() ?? string.Empty;
-                _moduleIds = idString.Split(';');
-            }
+            _moduleIds = navigationParameters.GetValue<string?>(NavigationParameter.Data)?.Split(';') ?? Array.Empty<string>();
 
             if (navigationParameters.TryGetValue(NavigationParameter.Type, out object? type) && Enum.TryParse(typeof(AssessmentType), type?.ToString(), true, out object? enumValue))
             {

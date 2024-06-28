@@ -10,7 +10,7 @@
              x:DataType="viewModels:AppointmentsViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.AppointmentsView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
 
@@ -85,7 +85,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*, auto" MinimumHeightRequest="24">
                         <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" />
-                        <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1" Margin="8,0,0,0" IsVisible="{Binding CanExpand}">
+                        <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1" Margin="8,0,0,0" IsVisible="{x:Binding CanExpand}">
                             <Image.Source>
                                 <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                             </Image.Source>

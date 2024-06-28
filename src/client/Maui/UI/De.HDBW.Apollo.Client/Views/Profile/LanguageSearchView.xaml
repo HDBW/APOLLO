@@ -7,7 +7,7 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:LanguageSearchViewModel"
              Title="{x:Static strings:Resources.LanguageSearchView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="DefaultInteractionEntry" x:DataType="models:InteractionEntry">

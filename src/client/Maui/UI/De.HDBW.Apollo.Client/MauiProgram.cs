@@ -461,6 +461,8 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<ViewModels.Assessments.FavoriteViewModel>();
             services.AddTransient<ModuleDetailView>();
             services.AddTransient<ModuleDetailViewModel>();
+            services.AddTransient<LanguageSelectionView>();
+            services.AddTransient<LanguageSelectionViewModel>();
         }
 
         private static void SetupRoutes()
@@ -518,6 +520,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.ModuleOverView, typeof(ModuleOverView));
             Routing.RegisterRoute(Routes.AssessmentFavoriteView, typeof(Views.Assessments.FavoriteView));
             Routing.RegisterRoute(Routes.ModuleDetailView, typeof(ModuleDetailView));
+            Routing.RegisterRoute(Routes.LanguageSelectionView, typeof(LanguageSelectionView));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

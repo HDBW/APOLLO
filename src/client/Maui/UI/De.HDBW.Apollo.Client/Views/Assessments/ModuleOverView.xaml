@@ -13,8 +13,8 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:ModuleOverViewModel"
-             Title="{x:Binding Title}"
-             IsBusy="{x:Binding IsBusy}"
+             Title="{x:Binding Title, Mode=OneWay}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="ModuleTemplate" x:DataType="assessmentModels:ModuleTileEntry">
@@ -90,7 +90,7 @@
                 HeightRequest="280"
                 HorizontalOptions="Center"/>
             <VerticalStackLayout Margin="0"
-                BindableLayout.ItemsSource="{Binding Modules}"
+                BindableLayout.ItemsSource="{x:Binding Modules}"
                 BindableLayout.ItemTemplate="{StaticResource ModuleTemplate}"/>
         </VerticalStackLayout>
     </ScrollView>

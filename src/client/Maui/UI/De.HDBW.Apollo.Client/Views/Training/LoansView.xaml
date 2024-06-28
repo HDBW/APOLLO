@@ -10,7 +10,7 @@
              x:DataType="viewModels:LoansViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.LoansView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="LineItemTemplate" x:DataType="trainingsModels:LineItem">

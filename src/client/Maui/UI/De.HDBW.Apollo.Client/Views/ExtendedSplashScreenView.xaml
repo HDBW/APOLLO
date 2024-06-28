@@ -8,7 +8,7 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              x:DataType="viewModels:ExtendedSplashScreenViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             IsBusy="{x:Binding IsBusy}" Padding="0">
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}" Padding="0">
     <Grid RowDefinitions="auto, auto, *, *">
         <Label Margin="24,32,24,16" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Welcome}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" SemanticProperties.HeadingLevel="Level1"/>
         <Label Margin="24,32,24,16" Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Text}" Style="{StaticResource Noto16}"/>

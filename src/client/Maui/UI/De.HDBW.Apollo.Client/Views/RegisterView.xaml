@@ -6,7 +6,7 @@
              xmlns:trainingsModels="clr-namespace:De.HDBW.Apollo.Client.Models.Training"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title=""
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Shell.TabBarIsVisible="True"
              Shell.FlyoutBehavior="Flyout"
              x:DataType="viewModels:RegisterViewModel"

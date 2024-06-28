@@ -9,11 +9,11 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:StudyViewModel"
-             Title="{x:Binding Title}"
-             IsBusy="{x:Binding IsBusy}"
+             Title="{x:Binding Title, Mode=OneWay}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding CancelCommand}" />
+        <BackButtonBehavior Command="{x:Binding CancelCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{x:Binding DeleteCommand}">

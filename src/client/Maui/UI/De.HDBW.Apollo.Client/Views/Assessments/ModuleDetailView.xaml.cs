@@ -1,9 +1,7 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
@@ -43,6 +41,7 @@ public partial class ModuleDetailView : ContentPage
         if (value && !ToolbarItems.Contains(toolbarItem))
         {
             ToolbarItems.Add(toolbarItem);
+            toolbarItem.Command = ViewModel?.OpenLanguageSelectionCommand;
         }
         else if (!value)
         {

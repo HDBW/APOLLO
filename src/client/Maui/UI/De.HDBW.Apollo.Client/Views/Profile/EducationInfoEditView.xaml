@@ -9,7 +9,7 @@
              xmlns:system="clr-namespace:System;assembly=netstandard"
              Title="{x:Static strings:Resources.EducationInfoEditView_Title}"
              x:DataType="viewModels:EducationInfoEditViewModel"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
 

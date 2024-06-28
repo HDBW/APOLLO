@@ -9,11 +9,11 @@
              xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.TrainingsView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              x:DataType="viewModels:TrainingViewModel"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
+        <BackButtonBehavior Command="{x:Binding NavigateBackCommand, Mode=OneWay}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}" />
@@ -29,7 +29,7 @@
             <VerticalStackLayout Spacing="16">
                 <VerticalStackLayout Margin="24,0">
                     <Label Text="{x:Binding TrainingName, Mode=OneTime}" TextType="Html" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
-                    <Label Text="{x:Binding SubTitle, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16SemiBold}" IsVisible="{Binding HasSubTitle}"/>
+                    <Label Text="{x:Binding SubTitle, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16SemiBold}" IsVisible="{x:Binding HasSubTitle}"/>
                 </VerticalStackLayout>
                 <Grid>
                     <Image Source="{x:Binding ImagePath, Mode=OneTime}" MaximumHeightRequest="200" Aspect="AspectFill" IsVisible="{x:Binding HasImage}"/>

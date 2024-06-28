@@ -10,10 +10,10 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:ContactViewModel"
              Title="{x:Static strings:Resources.ContactView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding CancelCommand}" />
+        <BackButtonBehavior Command="{x:Binding CancelCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{x:Binding DeleteCommand}">

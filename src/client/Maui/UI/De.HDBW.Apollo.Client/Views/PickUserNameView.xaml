@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:PickUserNameViewModel"
              Title="{x:Static strings:Resources.PickUserNameView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*, Auto">
         <VerticalStackLayout Style="{StaticResource FormContent}" VerticalOptions="Start">

@@ -13,7 +13,7 @@
              Shell.FlyoutBehavior="Flyout"
              Style="{StaticResource DefaultPageStyle}"
              Title="{x:Static strings:Resources.SearchView_Title}"
-             IsBusy="{x:Binding IsBusy}">
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}">
     <ContentPage.Resources>
         <DataTemplate x:Key="SearchInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">
             <ContentView>
