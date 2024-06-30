@@ -306,6 +306,7 @@ namespace De.HDBW.Apollo.Client
             });
 
             services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
+            services.AddSingleton<ILocalAssessmentSessionRepository, LocalAssessmentSessionRepository>();
         }
 
         private static void SetupViewsAndViewModels(IServiceCollection services)

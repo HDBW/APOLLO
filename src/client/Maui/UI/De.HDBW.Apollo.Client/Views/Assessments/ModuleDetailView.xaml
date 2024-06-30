@@ -93,7 +93,9 @@
                                                     SublineTextTemplate="{StaticResource SublineTextTemplate}"
                                                     TextTemplate="{StaticResource TextTemplate}"
                                                     IconTextTemplate="{StaticResource IconTextTemplate}"
-                                                    ProviderDecoTemplate="{StaticResource ProviderDecoTemplate}"/>
+                                                    ProviderDecoTemplate="{StaticResource ProviderDecoTemplate}"
+                                                    ContinueSessionTemplate="{StaticResource ContinueSessionTemplate}"
+                                                    RepeatSessionTemplate="{StaticResource RepeatSessionTemplate}"/>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto">        

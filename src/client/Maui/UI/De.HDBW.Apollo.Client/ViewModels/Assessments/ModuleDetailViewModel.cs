@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,6 +12,9 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.Data.Repositories;
+using De.HDBW.Apollo.SharedContracts.Models;
+using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
@@ -29,6 +33,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private bool _hasLanguageSelection;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(StartAssessmentCommand))]
         private bool _canStartTest;
 
         [ObservableProperty]
@@ -36,11 +41,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private CultureInfo _culture = new CultureInfo("de-DE");
 
         private string? _moduleId;
+
+        private string? _assessmentId;
+
         private AssessmentType _assessmentType;
         private string? _language;
 
         public ModuleDetailViewModel(
             IAssessmentService assessmentService,
+            ILocalAssessmentSessionRepository localAssessmentSessionRepository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -48,12 +57,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(assessmentService);
+            ArgumentNullException.ThrowIfNull(localAssessmentSessionRepository);
             AssessmentService = assessmentService;
+            LocalAssessmentSessionRepository = localAssessmentSessionRepository;
         }
 
-        public FlowDirection FlowDirection { get { return Culture?.TextInfo.IsRightToLeft ?? false ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; } }
+        public FlowDirection FlowDirection
+        {
+            get { return Culture?.TextInfo.IsRightToLeft ?? false ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; }
+        }
 
         private IAssessmentService AssessmentService { get; }
+
+        private ILocalAssessmentSessionRepository LocalAssessmentSessionRepository { get; }
 
         private List<string> SupportedLanaguages { get; set; } = new List<string>();
 
@@ -80,6 +96,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         module = await AssessmentService.GetModuleAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
                     }
 
+                    _assessmentId = module?.AssessmentId;
                     if (module != null)
                     {
                         if (!string.IsNullOrWhiteSpace(module.Subtitle))
@@ -99,11 +116,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             sections.Add(TextEntry.Import(module.Description));
                         }
 
+                        //TODO: Add Sesssion
+                        if ((module.Repeatable ?? 0) > 0)
+                        {
+                            sections.Add(SessionStateEntry.Import(module.Repeatable));
+                        }
+
                         var format = this["ModuleDetailView_Minutes"];
                         sections.Add(IconTextEntry.Import(KnownIcons.Watch, string.Format(format, module.EstimateDuration)));
                     }
 
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, module?.Languages?.Select(x => x)), worker.Token);
+                    var languages = module?.Languages?.Select(x => x) ?? new List<string>();
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, languages), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -166,9 +190,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             base.RefreshCommands();
             OpenLanguageSelectionCommand?.NotifyCanExecuteChanged();
+            StartAssessmentCommand?.NotifyCanExecuteChanged();
+            Sections.OfType<SessionStateEntry>().FirstOrDefault()?.RefreshCommands();
         }
 
-        private void LoadonUIThread(List<ObservableObject> sections, IEnumerable<string> supportedLanaguages)
+        private void LoadonUIThread(
+            List<ObservableObject> sections,
+            IEnumerable<string> supportedLanaguages)
         {
             Sections = new ObservableCollection<ObservableObject>(sections);
             SupportedLanaguages = supportedLanaguages?.ToList() ?? new List<string>();
@@ -212,6 +240,82 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private bool CanOpenLanguageSelection()
         {
             return !IsBusy && HasLanguageSelection;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanStartAssessment))]
+        private async Task StartAssessment(CancellationToken token)
+        {
+            using (var worker = ScheduleWork())
+            {
+                LocalAssessmentSession? localSession = null;
+                try
+                {
+                    AssessmentSession session = await AssessmentService.CreateSessionAsync(_moduleId, worker.Token).ConfigureAwait(false);
+                    if (session?.RawDatas == null)
+                    {
+                        Logger?.LogError($"Unable to create session while {nameof(StartAssessment)} in {GetType().Name}.");
+                        return;
+                    }
+
+                    var questionIds = session?.RawDatas?.Select(x => x.RawDataId).ToList() ?? new List<string>();
+                    var sessionId = session.Id;
+                    localSession = new LocalAssessmentSession()
+                    {
+                        SessionId = sessionId,
+                        ModuleId = _moduleId!,
+                        QuestionOrder = string.Join(";", questionIds),
+                    };
+
+                    if (!await LocalAssessmentSessionRepository.AddItemAsync(localSession, worker.Token).ConfigureAwait(false))
+                    {
+                        Logger?.LogError($"Unable to create local session {nameof(StartAssessment)} in {GetType().Name}.");
+                        return;
+                    }
+
+                    RawData rawData = session.RawDatas.Firs();
+                    var type = JsonConverter.P darawData.R
+                    var parameters = new NavigationParameters();
+                    parameters.AddValue(NavigationParameter.Id, _moduleId);
+                    parameters.AddValue(NavigationParameter.Data, sessionId);
+                    var route = string.Empty;
+                    switch (_assessmentType)
+                    {
+                        case AssessmentType.Sk:
+                            break;
+                        case AssessmentType.Ea:
+                            break;
+                        case AssessmentType.So:
+                            break;
+                        case AssessmentType.Gl:
+                            break;
+                        case AssessmentType.Be:
+                            break;
+                    }
+
+                    await NavigationService.NavigateAsync(Routes.LanguageSelectionView!, worker.Token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(StartAssessment)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(StartAssessment)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(StartAssessment)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanStartAssessment()
+        {
+            return !IsBusy && CanStartTest && !string.IsNullOrWhiteSpace(_moduleId) && !string.IsNullOrWhiteSpace(_assessmentId);
         }
     }
 }

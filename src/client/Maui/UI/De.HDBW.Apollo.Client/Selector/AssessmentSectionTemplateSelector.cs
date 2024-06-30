@@ -8,6 +8,10 @@ namespace De.HDBW.Apollo.Client.Selector
 {
     public class AssessmentSectionTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate? ContinueSessionTemplate { get; set; }
+
+        public DataTemplate? RepeatSessionTemplate { get; set; }
+
         public DataTemplate? ProviderDecoTemplate { get; set; }
 
         public DataTemplate? IconTextTemplate { get; set; }
@@ -30,6 +34,8 @@ namespace De.HDBW.Apollo.Client.Selector
         {
             switch (item)
             {
+                case SessionStateEntry session:
+                    return session.CanContinue ? ContinueSessionTemplate : RepeatSessionTemplate;
                 case ProviderDecoEntry _:
                     return ProviderDecoTemplate;
                 case IconTextEntry _:

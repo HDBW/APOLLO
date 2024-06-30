@@ -1390,8 +1390,39 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Test starten</value>
     <comment>Translate</comment>
   </data>
+  <data name="BtnTxtAssesmentsStartTestStart_ar" xml:space="preserve">
+    <value>ابدأ الاختبار</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart_bg-BG" xml:space="preserve">
+    <value>Започнете теста</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart_en-US" xml:space="preserve">
+    <value>Start test</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart_fr-FR" xml:space="preserve">
+    <value>Démarrer le test</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart_ro-RO" xml:space="preserve">
+    <value>Începeți testul</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart_ru-RU" xml:space="preserve">
+    <value>Начать тест</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart_tr-TR" xml:space="preserve">
+    <value>Testi başlat</value>
+    <comment>Translate</comment>
+  </data>
+  <data name="BtnTxtAssesmentsStartTestStart_uk-UA" xml:space="preserve">
+    <value>Почати тест</value>
+  </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain" xml:space="preserve">
-    <value>Erneut testen in {} Tagen</value>
+    <value>Erneut testen in {0} Tagen</value>
     <comment>Translate</comment>
   </data>
   <data name="LanguageSelectionView_Title" xml:space="preserve">

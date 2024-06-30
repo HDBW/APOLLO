@@ -286,7 +286,79 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erneut testen in {} Tagen.
+        ///   Looks up a localized string similar to ابدأ الاختبار.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_ar {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Започнете теста.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_bg_BG {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start test.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_en_US {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Démarrer le test.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_fr_FR {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Începeți testul.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_ro_RO {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Начать тест.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_ru_RU {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testi başlat.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_tr_TR {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Почати тест.
+        /// </summary>
+        public static string BtnTxtAssesmentsStartTestStart_uk_UA {
+            get {
+                return ResourceManager.GetString("BtnTxtAssesmentsStartTestStart_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erneut testen in {0} Tagen.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain {
             get {
