@@ -15,6 +15,6 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         Task<IEnumerable<ModuleTile>> GetModuleTilesAsync(IEnumerable<string> moduleIds, CancellationToken token);
 
-        Task<AssessmentSession> GetSessionAsync(object sessionId, string? language, CancellationToken token);
+        Task<AssessmentSession> GetSessionAsync(string sessionId, string? language, CancellationToken token);
     }
 }

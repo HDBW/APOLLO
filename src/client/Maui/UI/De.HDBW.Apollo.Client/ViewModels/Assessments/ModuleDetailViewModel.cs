@@ -272,25 +272,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         return;
                     }
 
-                    RawData rawData = session.RawDatas.Firs();
+                    RawData rawData = session.RawDatas.First();
                     var type = JsonConverter.P darawData.R
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.Id, _moduleId);
                     parameters.AddValue(NavigationParameter.Data, sessionId);
                     var route = string.Empty;
-                    switch (_assessmentType)
-                    {
-                        case AssessmentType.Sk:
-                            break;
-                        case AssessmentType.Ea:
-                            break;
-                        case AssessmentType.So:
-                            break;
-                        case AssessmentType.Gl:
-                            break;
-                        case AssessmentType.Be:
-                            break;
-                    }
+                    
 
                     await NavigationService.NavigateAsync(Routes.LanguageSelectionView!, worker.Token, parameters);
                 }

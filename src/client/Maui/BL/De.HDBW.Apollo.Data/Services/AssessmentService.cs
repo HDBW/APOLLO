@@ -142,5 +142,8 @@ namespace GrpcClient.Service
             return tile;
         }
 
+        public Task<AssessmentSession> CreateSessionAsync(string? moduleId, CancellationToken token) => throw new NotImplementedException();
+
+        public Task<AssessmentSession> GetSessionAsync(object sessionId, string? language, CancellationToken token) => throw new NotImplementedException();
     }
 }
