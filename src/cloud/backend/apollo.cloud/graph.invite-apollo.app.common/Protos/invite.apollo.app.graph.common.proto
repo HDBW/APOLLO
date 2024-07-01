@@ -283,23 +283,28 @@ message RawData {
 }
 
 message AssessmentSession {
-  //SessionID
-  //Assessment
-  //Modules
-  //LIST ITEMS
+  
+  int64 Id = 1;
+    
+  string SessionId = 2;
+
+      // The Id of the assesment
+  string AssesmentId = 3;
+  
+    // The Id of the module
+  string ModuleId = 4;
+
+  repeated RawData RawDatas = 5;
+  
+  string CurrentRawdata = 6;
 }
 
 message Answer {
-  //ProfilId
-  //SessionId
-  //AssesmentId
-  //ModuleId
-  //ItemId
-  //double answer score case SO selected Index
-}
-    
-message RawModule {
-    //ModuleId
-    //repeated string 
+  
+  string SessionId = 1;
+
+  string RawDataId = 2;
+
+  double Score = 3;
 }
 
