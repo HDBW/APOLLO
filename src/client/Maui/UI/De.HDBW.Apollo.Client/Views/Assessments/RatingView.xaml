@@ -14,26 +14,25 @@
             <VerticalStackLayout>
                 <Label Text="{x:Binding Text, Mode=OneTime}" Margin="0,0,0,12"/>
                 <Grid ColumnDefinitions="*,*,*,*,*,*" Margin="0,0,0,8">
-                    <RadioButton Grid.Column="0" HorizontalOptions="Start"/>
-                    <RadioButton Grid.Column="1" HorizontalOptions="Center"/>
-                    <RadioButton Grid.Column="2" HorizontalOptions="Center"/>
-                    <RadioButton Grid.Column="3" HorizontalOptions="Center"/>
-                    <RadioButton Grid.Column="4" HorizontalOptions="Center"/>
-                    <RadioButton Grid.Column="5" HorizontalOptions="End"/>
+                    <RadioButton Grid.Column="0" HorizontalOptions="Start" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingNotApply], Source={x:Reference PART_Root}, Mode=OneTime}"/>
+                    <RadioButton Grid.Column="1" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRating20], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                    <RadioButton Grid.Column="2" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRating40], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                    <RadioButton Grid.Column="3" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRating60], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                    <RadioButton Grid.Column="4" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRating80], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                    <RadioButton Grid.Column="5" HorizontalOptions="End" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingApply], Source={x:Reference PART_Root}, Mode=OneTime}"/>
                 </Grid>
                 <Grid ColumnDefinitions="auto,*,auto">
-                    <Label Text="{x:Binding BindingContext[TxtAssesmentsRatingNotApply], Source={x:Reference PART_Root}, Mode=OneTime}"/>
-                    <Label Grid.Column="2" Text="{x:Binding BindingContext[TxtAssesmentsRatingApply], Source={x:Reference PART_Root}, Mode=OneTime}"/>
+                    <Label Text="{x:Binding BindingContext[TxtAssesmentsRatingNotApply], Source={x:Reference PART_Root}, Mode=OneTime}" AutomationProperties.IsInAccessibleTree="False"/>
+                    <Label Grid.Column="2" Text="{x:Binding BindingContext[TxtAssesmentsRatingApply], Source={x:Reference PART_Root}, Mode=OneTime}" AutomationProperties.IsInAccessibleTree="False"/>
                 </Grid>
             </VerticalStackLayout>
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
         <ScrollView >
-            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding MultipleQuestions, Mode=OneWay}" 
+            <VerticalStackLayout Spacing="24" BindableLayout.ItemsSource="{x:Binding MultipleQuestions, Mode=OneWay}" 
                                  BindableLayout.ItemTemplate="{StaticResource RatingEntryTemplate}"
-                                 Padding="24">
-            </VerticalStackLayout>
+                                 Padding="24"/>
         </ScrollView>
         <Border Grid.Row="1" Padding="24,16">
             <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>

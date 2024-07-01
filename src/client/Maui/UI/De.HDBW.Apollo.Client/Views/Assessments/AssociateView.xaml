@@ -11,7 +11,7 @@
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
     <ContentPage.Resources>
         <DataTemplate x:Key="AssociateTextEntry" x:DataType="models:AssociateTextEntry">
-            <Border FlexLayout.Basis="50%" Margin="4,0,4,8" MinimumHeightRequest="44" Padding="12">
+            <Border Margin="4,0,4,8" Padding="12">
                 <Grid ColumnDefinitions="auto, *" AutomationProperties.IsInAccessibleTree="True">
                     <Label InputTransparent="True" Text="{x:Binding DisplayIndex, Mode=OneWay}" TextColor="{StaticResource Primary}" Grid.Column="0" Margin="0,0,8,0" VerticalOptions="Start"/>
                     <Label InputTransparent="True" Text="{x:Binding Label, Mode=OneTime}" Grid.Column="1" VerticalTextAlignment="Start"/>
@@ -54,7 +54,7 @@
                     <Label Text="{x:Binding Question, Mode=OneWay}" Margin="4,0,4,24"/>
                     <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,4"/>
                     <Label Text="{x:Binding BindingContext[TxtAssesmentsAssociateDescription], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="4,0,4,4"/>
-                    <FlexLayout Wrap="Wrap" x:Name="PART_Texts" Margin="0,0,0,12" BindableLayout.ItemsSource="{x:Binding SourceTexts, Mode=OneWay}" BindableLayout.ItemTemplate="{StaticResource AssociateTextEntry}"/>
+                    <CollectionView x:Name="PART_Texts" Margin="0,0,0,12"  ItemTemplate="{StaticResource AssociateTextEntry}" ItemsSource="{x:Binding SourceTexts, Mode=OneWay}" ItemsLayout="VerticalGrid, 2"/>
                     <FlexLayout Wrap="Wrap" x:Name="PART_Imges" Margin="0,0,0,12" BindableLayout.ItemsSource="{x:Binding TargetImages, Mode=OneWay}" BindableLayout.ItemTemplate="{StaticResource AssociateImage}"/>
                 </VerticalStackLayout>
                 <Grid ColumnDefinitions="*,Auto" Margin="4,0" Grid.Row="1" >
