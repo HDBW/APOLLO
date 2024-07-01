@@ -8,8 +8,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Associate : AbstractQuestion
     {
-        public Associate(RawData data, string itemId, string compancyId, string bookletId, CultureInfo cultureInfo)
-            : base(data, itemId, compancyId, bookletId, cultureInfo)
+        public Associate(RawData data, CultureInfo cultureInfo)
+            : base(data, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             SourceTexts = new List<string>() { data.secdistractor1, data.secdistractor2, data.secdistractor3, data.secdistractor4 }.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();

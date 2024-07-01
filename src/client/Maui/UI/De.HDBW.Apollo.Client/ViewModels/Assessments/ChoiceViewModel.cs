@@ -14,12 +14,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
     {
         public ChoiceViewModel(
             IAssessmentService service,
+            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<ChoiceViewModel> logger)
-            : base(service, repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository, repository, dispatcherService, navigationService, dialogService, logger)
         {
         }
 

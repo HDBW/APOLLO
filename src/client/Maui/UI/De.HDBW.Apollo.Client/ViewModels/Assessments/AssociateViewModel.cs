@@ -15,12 +15,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
     {
         public AssociateViewModel(
             IAssessmentService service,
+            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<AssociateViewModel> logger)
-            : base(service, repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository, repository, dispatcherService, navigationService, dialogService, logger)
         {
         }
 

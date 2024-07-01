@@ -8,17 +8,12 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public abstract class AbstractQuestion
     {
-        protected AbstractQuestion(RawData data, string itemId, string compancyId, string bookletId, CultureInfo culture)
+        protected AbstractQuestion(RawData data, CultureInfo culture)
         {
             ArgumentNullException.ThrowIfNull(data);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(itemId);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(compancyId);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(bookletId);
+            ArgumentNullException.ThrowIfNull(culture);
             Culture = culture;
             IsRTL = Culture.TextInfo.IsRightToLeft;
-            ItemId = itemId.Trim();
-            CompancyId = compancyId.Trim();
-            BookletId = bookletId.Trim();
             Data = data;
             var parts = data.stemm.ToTextAndQuestion(culture);
             Text = parts.Text;
@@ -28,12 +23,6 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public bool IsRTL { get; }
 
         public CultureInfo Culture { get; }
-
-        public string ItemId { get; }
-
-        public string CompancyId { get; }
-
-        public string BookletId { get; }
 
         public string? Instruction
         {

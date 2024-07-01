@@ -7,8 +7,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Sort : AbstractQuestion
     {
-        public Sort(RawData data, string itemId, string compancyId, string bookletId, CultureInfo cultureInfo)
-            : base(data, itemId, compancyId, bookletId, cultureInfo)
+        public Sort(RawData data, CultureInfo cultureInfo)
+            : base(data, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             SortTexts = new List<string>() { data.primdistractor1, data.primdistractor2, data.primdistractor3, data.primdistractor4 }.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();

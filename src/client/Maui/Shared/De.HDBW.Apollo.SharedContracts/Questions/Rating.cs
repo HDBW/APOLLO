@@ -7,8 +7,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Rating : AbstractQuestion
     {
-        public Rating(RawData data, string itemId, string compancyId, string bookletId, CultureInfo cultureInfo)
-            : base(data, itemId, compancyId, bookletId, cultureInfo)
+        public Rating(RawData data, CultureInfo cultureInfo)
+            : base(data, cultureInfo)
         {
             NumberOfChoices = int.Parse(Data.noprimary, CultureInfo.InvariantCulture);
             CreateAditionalData(1, Data.rating_credit1);

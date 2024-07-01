@@ -8,8 +8,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Binary : AbstractQuestion
     {
-        public Binary(RawData data, string itemId, string compancyId, string bookletId, CultureInfo cultureInfo)
-            : base(data, itemId, compancyId, bookletId, cultureInfo)
+        public Binary(RawData data, CultureInfo cultureInfo)
+            : base(data, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             CreateAditionalData(data.binary_credit1, data.binary_credit2);

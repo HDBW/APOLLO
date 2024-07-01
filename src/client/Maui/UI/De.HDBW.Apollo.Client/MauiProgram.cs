@@ -45,6 +45,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Microsoft.Maui.Controls.Handlers.Items;
 using Microsoft.Maui.Handlers;
 using Serilog;
 using Serilog.Configuration;
@@ -548,27 +549,17 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.ModuleDetailView, typeof(ModuleDetailView));
             Routing.RegisterRoute(Routes.LanguageSelectionView, typeof(LanguageSelectionView));
 
-            Routing.RegisterRoute(Routes.InitalAssociateView, typeof(AssociateView));
             Routing.RegisterRoute(Routes.AssociateView, typeof(AssociateView));
-            Routing.RegisterRoute(Routes.InitialBinaryView, typeof(BinaryView));
             Routing.RegisterRoute(Routes.BinaryView, typeof(BinaryView));
-            Routing.RegisterRoute(Routes.InitialChoiceView, typeof(ChoiceView));
             Routing.RegisterRoute(Routes.ChoiceView, typeof(ChoiceView));
-            Routing.RegisterRoute(Routes.InitialClozeView, typeof(ClozeView));
             Routing.RegisterRoute(Routes.ClozeView, typeof(ClozeView));
-            Routing.RegisterRoute(Routes.InitialEaconditionView, typeof(EaconditionView));
             Routing.RegisterRoute(Routes.EaconditionView, typeof(EaconditionView));
-            Routing.RegisterRoute(Routes.InitialEaconditionFilteredView, typeof(EaconditionFilteredView));
             Routing.RegisterRoute(Routes.EaconditionFilteredView, typeof(EaconditionFilteredView));
-            Routing.RegisterRoute(Routes.InitialEaconditionDetailView, typeof(EaconditionDetailView));
             Routing.RegisterRoute(Routes.EaconditionDetailView, typeof(EaconditionDetailView));
-            Routing.RegisterRoute(Routes.InitialEafrequencyView, typeof(EafrequencyView));
             Routing.RegisterRoute(Routes.EafrequencyView, typeof(EafrequencyView));
-            Routing.RegisterRoute(Routes.InitialImagemapView, typeof(ImagemapView));
             Routing.RegisterRoute(Routes.ImagemapView, typeof(ImagemapView));
-            Routing.RegisterRoute(Routes.InitialRatingView, typeof(RatingView));
+            Routing.RegisterRoute(Routes.ImagemapView, typeof(ImagemapView));
             Routing.RegisterRoute(Routes.RatingView, typeof(RatingView));
-            Routing.RegisterRoute(Routes.InitialSortView, typeof(SortView));
             Routing.RegisterRoute(Routes.SortView, typeof(SortView));
 
             // TBD
@@ -618,7 +609,6 @@ namespace De.HDBW.Apollo.Client
                 handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
             });
-
             Microsoft.Maui.Handlers.ButtonHandler.Mapper.AppendToMapping("Text", (handler, view) =>
             {
 #if IOS
@@ -637,6 +627,7 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
+            handlers.AddHandler<ReorderableItemsView, ReorderableItemsViewHandler<ReorderableItemsView>>();
 #if IOS
             handlers.AddHandler(typeof(SearchBar), typeof(De.HDBW.Apollo.Client.Platforms.iOS.CustomSearchbarHandler));
             handlers.AddHandler<Shell, Platforms.CustomShellHandler>();

@@ -25,5 +25,9 @@
     <x:String x:Key="ArrowLeft">&#x00b5;</x:String>
     <x:String x:Key="Repeat">&#x00BC;</x:String>
     <x:String x:Key="Language">&#x0042;</x:String>
-    
+    <x:String x:Key="Reset">&#x00B4;</x:String>
+    <x:String x:Key="Play">&#x00AC;</x:String>
+    <x:String x:Key="Pause">&#x00AB;</x:String>
+    <x:String x:Key="Drag">&#x00A9;</x:String>
+
 </ResourceDictionary>

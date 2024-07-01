@@ -6,6 +6,7 @@ using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Enums;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -24,12 +25,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         public EaconditionViewModel(
             IAssessmentService service,
+            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<EaconditionViewModel> logger)
-            : base(service, repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository,repository, dispatcherService, navigationService, dialogService, logger)
         {
         }
 
@@ -45,24 +47,42 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private DrillDownMode DrillDownMode { get; set; }
 
-        protected async override Task LoadDataAsync()
+        public async override Task OnNavigatedToAsync()
         {
-            var items = new List<Eacondition>();
-
-            await base.LoadDataAsync();
-
-            if (DrillDownMode == DrillDownMode.Detail)
+            using (var worker = ScheduleWork())
             {
-                return;
+                try
+                {
+                    if (DrillDownMode == DrillDownMode.Detail)
+                    {
+                        return;
+                    }
+
+                    //items = FilterIds.Count() == 0
+                    //    ? Questions?.Where(x => x.BookletId == "21e800e3-14c8-49d3-a066-edc77dd8cbd7").ToList()
+                    //    : Questions?.Where(x => FilterIds.Contains(x.ItemId)).ToList();
+
+                    //items = items ?? new List<Eacondition>();
+
+                    //CurrentChoices = new ObservableCollection<SelectableEaconditionEntry>(items.Select(i => CreateSelectableEntry(i)));
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
             }
-
-            items = FilterIds.Count() == 0
-                ? Questions?.Where(x => x.BookletId == "21e800e3-14c8-49d3-a066-edc77dd8cbd7").ToList()
-                : Questions?.Where(x => FilterIds.Contains(x.ItemId)).ToList();
-
-            items = items ?? new List<Eacondition>();
-
-            CurrentChoices = new ObservableCollection<SelectableEaconditionEntry>(items.Select(i => CreateSelectableEntry(i)));
         }
 
         protected override EaconditionEntry CreateEntry(Eacondition data)
@@ -108,18 +128,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        protected override void ParseQuery(IDictionary<string, object> query)
+        protected override void OnPrepare(NavigationParameters navigationParameters)
         {
-            if (query.ContainsKey(nameof(FilterIds)))
-            {
-                FilterIds = query[nameof(FilterIds)]?.ToString()?.Split(";").ToList() ?? new List<string>();
-            }
+            //if (query.ContainsKey(nameof(FilterIds)))
+            //{
+            //    FilterIds = query[nameof(FilterIds)]?.ToString()?.Split(";").ToList() ?? new List<string>();
+            //}
 
-            DrillDownMode = query.ContainsKey(nameof(DrillDownMode))
-                ? Enum.Parse<DrillDownMode>(query[nameof(DrillDownMode)]?.ToString() ?? nameof(DrillDownMode.Unknown))
-                : DrillDownMode.Unknown;
-
-            base.ParseQuery(query);
+            //DrillDownMode = query.ContainsKey(nameof(DrillDownMode))
+            //    ? Enum.Parse<DrillDownMode>(query[nameof(DrillDownMode)]?.ToString() ?? nameof(DrillDownMode.Unknown))
+            //    : DrillDownMode.Unknown;
         }
 
         protected async override Task Navigate(CancellationToken cancellationToken)
