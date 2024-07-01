@@ -4,7 +4,6 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -12,7 +11,7 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
-using De.HDBW.Apollo.Data.Repositories;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -50,6 +49,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         public ModuleDetailViewModel(
             IAssessmentService assessmentService,
             ILocalAssessmentSessionRepository localAssessmentSessionRepository,
+            IRawDataCacheRepository rawDataCacheRepository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -58,8 +58,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             ArgumentNullException.ThrowIfNull(assessmentService);
             ArgumentNullException.ThrowIfNull(localAssessmentSessionRepository);
+            ArgumentNullException.ThrowIfNull(rawDataCacheRepository);
             AssessmentService = assessmentService;
             LocalAssessmentSessionRepository = localAssessmentSessionRepository;
+            RawDataCacheRepository = rawDataCacheRepository;
         }
 
         public FlowDirection FlowDirection
@@ -70,6 +72,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private IAssessmentService AssessmentService { get; }
 
         private ILocalAssessmentSessionRepository LocalAssessmentSessionRepository { get; }
+
+        private IRawDataCacheRepository RawDataCacheRepository { get; }
 
         private List<string> SupportedLanaguages { get; set; } = new List<string>();
 
@@ -250,18 +254,20 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 LocalAssessmentSession? localSession = null;
                 try
                 {
-                    AssessmentSession session = await AssessmentService.CreateSessionAsync(_moduleId, worker.Token).ConfigureAwait(false);
-                    if (session?.RawDatas == null)
+                    var session = await AssessmentService.CreateSessionAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
+                    if (session == null || session.RawDatas == null)
                     {
                         Logger?.LogError($"Unable to create session while {nameof(StartAssessment)} in {GetType().Name}.");
                         return;
                     }
 
-                    var questionIds = session?.RawDatas?.Select(x => x.RawDataId).ToList() ?? new List<string>();
-                    var sessionId = session.Id;
+                    var questionIds = session.RawDatas.Select(x => x.RawDataId).ToList();
+                    var sessionId = session.SessionId;
+                    var assessmentId = session.AssesmentId;
                     localSession = new LocalAssessmentSession()
                     {
                         SessionId = sessionId,
+                        AssessmentId = assessmentId,
                         ModuleId = _moduleId!,
                         QuestionOrder = string.Join(";", questionIds),
                     };
@@ -272,15 +278,48 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         return;
                     }
 
-                    RawData rawData = session.RawDatas.First();
-                    var type = JsonConverter.P darawData.R
+                    var items = new List<CachedRawData>();
+                    for (var i = 1; i <= session.RawDatas.Count; i++)
+                    {
+                        var data = session.RawDatas[i - 1];
+                        items.Add(new CachedRawData() { Id = i, SessionId = session.SessionId, AssesmentId = data.AssesmentId, ModuleId = data.ModuleId, Data = data.Data });
+                    }
+
+                    await RawDataCacheRepository.ResetItemsAsync(items, worker.Token).ConfigureAwait(false);
+                    var rawData = session.RawDatas.First(x => x.RawDataId == session.CurrentRawdata).ToRawData();
+                    string? route = null;
+                    switch (rawData?.type)
+                    {
+                        case SharedContracts.Enums.QuestionType.EACONDITIONS:
+                            break;
+                        case SharedContracts.Enums.QuestionType.CHOICE:
+                            break;
+                        case SharedContracts.Enums.QuestionType.SORT:
+                            break;
+                        case SharedContracts.Enums.QuestionType.ASSOCIATE:
+                            break;
+                        case SharedContracts.Enums.QuestionType.IMAGEMAP:
+                            break;
+                        case SharedContracts.Enums.QuestionType.EAFREQUENCY:
+                            break;
+                        case SharedContracts.Enums.QuestionType.RATING:
+                            break;
+                        case SharedContracts.Enums.QuestionType.BINARY:
+                            break;
+                        case SharedContracts.Enums.QuestionType.CLOZE:
+                            break;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(route))
+                    {
+                        return;
+                    }
+
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.Id, _moduleId);
                     parameters.AddValue(NavigationParameter.Data, sessionId);
-                    var route = string.Empty;
-                    
 
-                    await NavigationService.NavigateAsync(Routes.LanguageSelectionView!, worker.Token, parameters);
+                    await NavigationService.NavigateAsync(route, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)
                 {

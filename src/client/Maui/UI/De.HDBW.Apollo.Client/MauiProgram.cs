@@ -173,6 +173,8 @@ namespace De.HDBW.Apollo.Client
             var localEntities = new List<Type>()
             {
                 typeof(SearchHistory),
+                typeof(CachedRawData),
+                typeof(LocalAssessmentSession),
             };
             builder.Services.AddSingleton<IDataBaseConnectionProvider>(new DataBaseConnectionProvider(dbFilePath, flags, IocServiceHelper.ServiceProvider?.GetService<ILogger<DataBaseConnectionProvider>>(), localEntities));
         }
@@ -307,6 +309,7 @@ namespace De.HDBW.Apollo.Client
 
             services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
             services.AddSingleton<ILocalAssessmentSessionRepository, LocalAssessmentSessionRepository>();
+            services.AddSingleton<IRawDataCacheRepository, RawDataCacheRepository>();
         }
 
         private static void SetupViewsAndViewModels(IServiceCollection services)
