@@ -158,7 +158,7 @@ namespace GrpcClient.Service
                 session.SessionId = Guid.NewGuid().ToString();
                 session.ModuleId = moduleId;
                 session.RawDatas.AddRange(_data.RawDatas.Where(x => x.ModuleId == moduleId && x.Language == language));
-                session.CurrentRawdata = session.RawDatas.First().RawDataId;TypeAddedEventArgs caching and 
+                session.CurrentRawdata = session.RawDatas.First().RawDataId;
             }
             catch (Exception ex)
             {
