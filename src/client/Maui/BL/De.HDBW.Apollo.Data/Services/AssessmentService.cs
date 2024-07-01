@@ -2,18 +2,24 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
+using Microsoft.Extensions.Logging;
+using ProtoBuf.Meta;
 
 namespace GrpcClient.Service
 {
     public class AssessmentService : De.HDBW.Apollo.SharedContracts.Services.IAssessmentService
     {
-        private SampleDataContext _data;
         private readonly string? _defaultLanguage = "de-DE";
+        private SampleDataContext _data;
 
-        public AssessmentService()
+        public AssessmentService(ILogger<AssessmentService> logger)
         {
+            ArgumentNullException.ThrowIfNull(logger);
+            Logger = logger;
             _data = new SampleDataContext();
         }
+
+        private ILogger Logger { get; }
 
         public Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(CancellationToken token)
         {
@@ -99,6 +105,7 @@ namespace GrpcClient.Service
                 Type = requestedModule.Type,
                 EstimateDuration = requestedModule.EstimateDuration,
                 ModuleId = moduleId,
+                AssessmentId = requestedModule.AssessmentId,
             };
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
@@ -142,8 +149,26 @@ namespace GrpcClient.Service
             return tile;
         }
 
-        public Task<AssessmentSession> CreateSessionAsync(string? moduleId, CancellationToken token) => throw new NotImplementedException();
+        public Task<AssessmentSession?> CreateSessionAsync(string? moduleId, string? language, CancellationToken token)
+        {
+            AssessmentSession? session;
+            try
+            {
+                session = new AssessmentSession();
+                session.SessionId = Guid.NewGuid().ToString();
+                session.ModuleId = moduleId;
+                session.RawDatas.AddRange(_data.RawDatas.Where(x => x.ModuleId == moduleId && x.Language == language));
+                session.CurrentRawdata = session.RawDatas.First().RawDataId;TypeAddedEventArgs caching and 
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, $"Unknown error in {nameof(CreateSessionAsync)} in {GetType().Name}.");
+                session = null;
+            }
 
-        public Task<AssessmentSession> GetSessionAsync(object sessionId, string? language, CancellationToken token) => throw new NotImplementedException();
+            return Task.FromResult<AssessmentSession?>(session);
+        }
+
+        public Task<AssessmentSession?> GetSessionAsync(string sessionId, string? language, CancellationToken token) => throw new NotImplementedException();
     }
 }

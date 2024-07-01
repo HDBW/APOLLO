@@ -28,5 +28,10 @@ namespace De.HDBW.Apollo.SharedContracts.Helper
             Options.Converters.Add(new QuestionTypeConverter());
             Options.Converters.Add(new ShapeTypeConverter());
         }
+
+        public static RawData? ToRawData(this Invite.Apollo.App.Graph.Common.Models.Assessments.RawData data)
+        {
+            return JsonSerializer.Deserialize<RawData>(data.Data, Options);
+        }
     }
 }
