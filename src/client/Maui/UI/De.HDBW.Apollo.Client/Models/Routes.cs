@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.SharedContracts.Questions;
+
 namespace De.HDBW.Apollo.Client.Models
 {
     public static class Routes
@@ -80,5 +82,28 @@ namespace De.HDBW.Apollo.Client.Models
         public const string AssessmentFavoriteView = "/AssessmentFavoriteView";
         public const string ModuleDetailView = "/ModuleDetailView";
         public const string LanguageSelectionView = "/LanguageSelectionView";
+
+        public const string InitalAssociateView = "AssociateView";
+        public const string AssociateView = "/AssociateView";
+        public const string InitialBinaryView = "BinaryView";
+        public const string BinaryView = "/BinaryView";
+        public const string InitialChoiceView = "ChoiceView";
+        public const string ChoiceView = "/ChoiceView";
+        public const string InitialClozeView = "ClozeView";
+        public const string ClozeView = "/ClozeView";
+        public const string InitialEaconditionView = "EaconditionView";
+        public const string EaconditionView = "/EaconditionView";
+        public const string InitialEaconditionFilteredView = "EaconditionFilteredView";
+        public const string EaconditionFilteredView = "/EaconditionFilteredView";
+        public const string InitialEaconditionDetailView = "EaconditionDetailView";
+        public const string EaconditionDetailView = "/EaconditionDetailView";
+        public const string InitialEafrequencyView = "EafrequencyView";
+        public const string EafrequencyView = "/EafrequencyView";
+        public const string InitialImagemapView = "ImagemapView";
+        public const string ImagemapView = "/ImagemapView";
+        public const string InitialRatingView = "RatingView";
+        public const string RatingView = "/RatingView";
+        public const string InitialSortView = "SortView";
+        public const string SortView = "/SortView";
     }
 }

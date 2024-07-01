@@ -3,22 +3,23 @@
 
 using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
-namespace De.HDBW.Apollo.Client.Views.Assessments;
-
-[XamlCompilation(XamlCompilationOptions.Skip)]
-public partial class LanguageSelectionView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Assessments
 {
-    public LanguageSelectionView(LanguageSelectionViewModel model)
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class LanguageSelectionView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-    }
-
-    public LanguageSelectionViewModel? ViewModel
-    {
-        get
+        public LanguageSelectionView(LanguageSelectionViewModel model)
         {
-            return BindingContext as LanguageSelectionViewModel;
+            InitializeComponent();
+            BindingContext = model;
+        }
+
+        public LanguageSelectionViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as LanguageSelectionViewModel;
+            }
         }
     }
 }

@@ -5,47 +5,48 @@ using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
-namespace De.HDBW.Apollo.Client.Views.Assessments;
-
-[XamlCompilation(XamlCompilationOptions.Skip)]
-public partial class ModuleDetailView : ContentPage
+namespace De.HDBW.Apollo.Client.Views.Assessments
 {
-    public ModuleDetailView(ModuleDetailViewModel model)
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class ModuleDetailView : ContentPage
     {
-        InitializeComponent();
-        BindingContext = model;
-        WeakReferenceMessenger.Default.Register<UpdateToolbarMessage>(this, RefreshToolbarItems);
-    }
-
-    public ModuleDetailViewModel? ViewModel
-    {
-        get
+        public ModuleDetailView(ModuleDetailViewModel model)
         {
-            return BindingContext as ModuleDetailViewModel;
+            InitializeComponent();
+            BindingContext = model;
+            WeakReferenceMessenger.Default.Register<UpdateToolbarMessage>(this, RefreshToolbarItems);
         }
-    }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        RefreshToolbarItems(this, new UpdateToolbarMessage());
-    }
-
-    private void RefreshToolbarItems(object recipient, UpdateToolbarMessage message)
-    {
-        SetToolbarItemVisibility(PART_SwitchLanguage, ViewModel?.HasLanguageSelection ?? false);
-    }
-
-    private void SetToolbarItemVisibility(ToolbarItem toolbarItem, bool value)
-    {
-        if (value && !ToolbarItems.Contains(toolbarItem))
+        public ModuleDetailViewModel? ViewModel
         {
-            ToolbarItems.Add(toolbarItem);
-            toolbarItem.Command = ViewModel?.OpenLanguageSelectionCommand;
+            get
+            {
+                return BindingContext as ModuleDetailViewModel;
+            }
         }
-        else if (!value)
+
+        protected override void OnAppearing()
         {
-            ToolbarItems.Remove(toolbarItem);
+            base.OnAppearing();
+            RefreshToolbarItems(this, new UpdateToolbarMessage());
+        }
+
+        private void RefreshToolbarItems(object recipient, UpdateToolbarMessage message)
+        {
+            SetToolbarItemVisibility(PART_SwitchLanguage, ViewModel?.HasLanguageSelection ?? false);
+        }
+
+        private void SetToolbarItemVisibility(ToolbarItem toolbarItem, bool value)
+        {
+            if (value && !ToolbarItems.Contains(toolbarItem))
+            {
+                ToolbarItems.Add(toolbarItem);
+                toolbarItem.Command = ViewModel?.OpenLanguageSelectionCommand;
+            }
+            else if (!value)
+            {
+                ToolbarItems.Remove(toolbarItem);
+            }
         }
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.EaconditionFilteredView"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="Red"
+             Title="EaconditionView"
+             x:DataType="viewModel:EaconditionViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="SelectableEaconditionEntry" x:DataType="models:SelectableEaconditionEntry">
+            <Border Margin="0,0,0,16" StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
+                </Border.GestureRecognizers>
+                <Grid>
+                    <Image Source="{x:Binding Image.AbsolutePath, Mode=OneTime, FallbackValue={x:Null}}" Aspect="AspectFill" HeightRequest="204"/>
+                    <Border Padding="12,8,8,4" BackgroundColor="White" HorizontalOptions="Start" VerticalOptions="Start">
+                        <Label InputTransparent="True" Text="{x:Binding Bezeichnung, Mode=OneTime}"/>
+                    </Border>
+                    <Rectangle Stroke="White" StrokeThickness="8"/>
+                    <Rectangle Stroke="Black" StrokeThickness="4">
+                        <Rectangle.Triggers>
+                            <DataTrigger TargetType="Rectangle" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                                <Setter Property="Stroke" Value="Red"/>
+                            </DataTrigger>
+                        </Rectangle.Triggers>
+                    </Rectangle>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto, *, Auto">
+        <Label Text="{x:Binding [TxtAssesmentsEaConditionFilteredInstruction], Mode=OneWay}" Margin="4,0" />
+        <CollectionView 
+            Grid.Row="1" 
+            Margin="20,24"
+            ItemTemplate="{StaticResource SelectableEaconditionEntry}"
+            ItemsSource="{x:Binding CurrentChoices, Mode=OneWay}" />
+
+        <Border Grid.Row="2" Padding="24,16">
+            <VerticalStackLayout>
+                <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

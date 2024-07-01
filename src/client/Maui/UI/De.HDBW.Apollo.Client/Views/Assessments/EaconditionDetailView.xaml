@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.EaconditionDetailView"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="Red"
+             Title="EaconditionView"
+             x:DataType="viewModel:EaconditionViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+    
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView BindingContext="{x:Binding Question, Mode=OneWay}">
+            <VerticalStackLayout x:DataType="models:EaconditionEntry" Padding="24">
+                <Image Source="{x:Binding Image.AbsolutePath, Mode=OneWay, FallbackValue={x:Null}}" HeightRequest="204"/>
+                <Label Text="Deine passende Berufskategorie"/>
+                <Label Text="{x:Binding Bezeichnung}"/>
+                <Label Text="{x:Binding Infotext }"/>
+                <Label Text="Vorraussetzungen"/>
+                <Label Text="{x:Binding Voraussetzungen}"/>
+                <Label Text="Beispielberufe"/>
+                <Label Text="{x:Binding Beispielberufe}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" Padding="24,16">
+            <VerticalStackLayout>
+                <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

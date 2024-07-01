@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
@@ -287,28 +288,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                     await RawDataCacheRepository.ResetItemsAsync(items, worker.Token).ConfigureAwait(false);
                     var rawData = session.RawDatas.First(x => x.RawDataId == session.CurrentRawdata).ToRawData();
-                    string? route = null;
-                    switch (rawData?.type)
-                    {
-                        case SharedContracts.Enums.QuestionType.EACONDITIONS:
-                            break;
-                        case SharedContracts.Enums.QuestionType.CHOICE:
-                            break;
-                        case SharedContracts.Enums.QuestionType.SORT:
-                            break;
-                        case SharedContracts.Enums.QuestionType.ASSOCIATE:
-                            break;
-                        case SharedContracts.Enums.QuestionType.IMAGEMAP:
-                            break;
-                        case SharedContracts.Enums.QuestionType.EAFREQUENCY:
-                            break;
-                        case SharedContracts.Enums.QuestionType.RATING:
-                            break;
-                        case SharedContracts.Enums.QuestionType.BINARY:
-                            break;
-                        case SharedContracts.Enums.QuestionType.CLOZE:
-                            break;
-                    }
+                    string? route = rawData?.type.ToRoute();
 
                     if (string.IsNullOrWhiteSpace(route))
                     {
@@ -318,7 +298,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.Id, _moduleId);
                     parameters.AddValue(NavigationParameter.Data, sessionId);
-
                     await NavigationService.NavigateAsync(route, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)

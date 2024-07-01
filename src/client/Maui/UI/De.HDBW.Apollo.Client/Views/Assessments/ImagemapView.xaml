@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:blModels="clr-namespace:De.HDBW.Apollo.SharedContracts.Models;assembly=De.HDBW.Apollo.SharedContracts"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.ImagemapView"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="Red"
+             Title="ImagemapView"
+             x:DataType="viewModel:ImagemapViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="Shape" x:DataType="blModels:Shape">
+            <RadioButton AbsoluteLayout.LayoutBounds="30, 25" />
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
+        <ScrollView>
+            <VerticalStackLayout Padding="24" x:DataType="models:ImagemapEntry" BindingContext="{x:Binding Question, Mode=OneWay}" >
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="0,0,0,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                <Label Text="{x:Binding Question, Mode=OneWay}" Margin="0,0,0,24"/>
+                <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="0,0,0,8"/>
+                <Grid>
+                    <Image Source="{x:Binding Image.AbsolutePath}" Aspect="AspectFit" HeightRequest="272"/>
+                    <AbsoluteLayout BindableLayout.ItemsSource="{x:Binding Shapes}" BindableLayout.ItemTemplate="{StaticResource Shape}" x:Name="PART_Shape"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Border Grid.Row="1" Padding="24,16">
+            <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
+        </Border>
+    </Grid>
+</ContentPage>

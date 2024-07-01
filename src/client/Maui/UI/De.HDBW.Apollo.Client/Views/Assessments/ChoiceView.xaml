@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.ChoiceView"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="Red"
+             Title="ChoiceView"
+             x:DataType="viewModel:ChoiceViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ChoiceEntryImage" x:DataType="models:SelectableImageEntry">
+            <Border FlexLayout.Basis="50%" Margin="4" StrokeThickness="0" HeightRequest="132" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsAssociateImageAnswer], Source={x:Reference PART_Root}, Mode=OneWay}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
+                </Border.GestureRecognizers>
+                <Grid>
+                    <Image Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="132"/>
+                    <Grid IsVisible="Collapse">
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        <Rectangle Stroke="White" StrokeThickness="8"/>
+                        <Rectangle Stroke="{StaticResource Primary}" StrokeThickness="4"/>
+                    </Grid>
+                </Grid>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                        <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                    </DataTrigger>
+                </Border.Triggers>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ChoiceEntryText" x:DataType="models:SelectableTextEntry">
+            <Border Grid.Column="1" Padding="12" Margin="0,0,0,8" StrokeThickness="4" Stroke="Transparent">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
+                </Border.GestureRecognizers>
+                <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneTime}"/>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                        <Setter Property="Stroke" Value="{StaticResource Primary}"/>
+                        <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                    </DataTrigger>
+                </Border.Triggers>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ZoomableImage" x:DataType="models:ZoomableImageEntry">
+            <Grid RowDefinitions="auto, auto" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsChoiceViewZoom], Source={x:Reference PART_Root}, Mode=OneWay}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ZoomCommand, Mode=OneTime}"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Image HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Start" Margin="12">
+                        <Image.Source>
+                            <FontImageSource Glyph="{StaticResource Search}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
+                    <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
+                </HorizontalStackLayout>               
+                <Image Grid.Row="1" Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="272"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PageableImages" x:DataType="models:PageableImagesEntry">
+            <Grid RowDefinitions="auto, auto">
+                <Grid RowDefinitions="auto, 272">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ZoomCommand, Mode=OneTime}"/>
+                    </Grid.GestureRecognizers>
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Image HeightRequest="24" WidthRequest="24" Margin="12">
+                            <Image.Source>
+                                <FontImageSource Glyph="{StaticResource Search}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
+                        <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
+                    </HorizontalStackLayout>
+                    <CarouselView Grid.Row="1" ItemsSource="{x:Binding Images, Mode=OneWay}" IndicatorView="indicatorView" x:Name="PART_QuestionImages">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="models:ImageEntry">
+                                <Image Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="272"/>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </Grid>
+                <IndicatorView Grid.Row="2" x:Name="indicatorView" Margin="0,16,0,0" HorizontalOptions="Center"/>
+            </Grid>
+        </DataTemplate>
+
+        <selector:QuestionImagesTemplateSelector x:Key="QuestionImagesTemplateSelector" 
+                                                  PageableImagesTemplate="{StaticResource PageableImages}"
+                                                  ZoomableImageTemplate="{StaticResource ZoomableImage}"/>
+
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" x:DataType="models:ChoiceEntry" BindingContext="{x:Binding Question, Mode=OneWay}">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}"/>
+                <StackLayout Margin="4,0,4,0"
+                             IsVisible="{x:Binding HasQuestionImageView, Mode=OneWay}"
+                             BindableLayout.ItemsSource="{x:Binding QuestionImageView, Mode=OneWay}"
+                             BindableLayout.ItemTemplateSelector="{x:StaticResource QuestionImagesTemplateSelector}">
+                </StackLayout>
+                <Label Text="{x:Binding Question, Mode=OneWay}" Margin="4,24,4,24"/>
+                <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,8"/>
+                <FlexLayout x:Name="PART_ImageChoice" Margin="0,0,0,0" BindableLayout.ItemsSource="{x:Binding AnswerImages, Mode=OneWay}" BindableLayout.ItemTemplate="{StaticResource ChoiceEntryImage}" Wrap="Wrap" IsVisible="True" />
+                <StackLayout x:Name="PART_TextChoice" Margin="4,0,4,4" BindableLayout.ItemsSource="{x:Binding AnswerTexts, Mode=OneWay}" BindableLayout.ItemTemplate="{StaticResource ChoiceEntryText}" IsVisible="True" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <Border Grid.Row="1" Padding="24,16">
+            <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
+        </Border>
+    </Grid>
+</ContentPage>

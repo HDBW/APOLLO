@@ -1,0 +1,65 @@
+﻿// (c) Licensed to the HDBW under one or more agreements.
+// The HDBW licenses this file to you under the MIT license.
+
+using CommunityToolkit.Mvvm.Input;
+using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.SharedContracts.Questions;
+using De.HDBW.Apollo.SharedContracts.Repositories;
+using De.HDBW.Apollo.SharedContracts.Services;
+using Microsoft.Extensions.Logging;
+
+namespace De.HDBW.Apollo.Client.ViewModels.Assessments
+{
+    public partial class AssociateViewModel : AbstractQuestionViewModel<Associate, AssociateEntry>
+    {
+        public AssociateViewModel(
+            IAssessmentService service,
+            IRawDataCacheRepository repository,
+            IDispatcherService dispatcherService,
+            INavigationService navigationService,
+            IDialogService dialogService,
+            ILogger<AssociateViewModel> logger)
+            : base(service, repository, dispatcherService, navigationService, dialogService, logger)
+        {
+        }
+
+        protected override AssociateEntry CreateEntry(Associate data)
+        {
+            return AssociateEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(AssociateEntry)]);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanReset))]
+        public Task Reset(CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (Question == null)
+                {
+                    return Task.CompletedTask;
+                }
+
+                foreach (var item in Question.TargetImages)
+                {
+                    item.AssociatedIndex = null;
+                }
+            }
+            catch (OperationCanceledException ex)
+            {
+            }
+            catch (ObjectDisposedException ex)
+            {
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private bool CanReset()
+        {
+            return true;
+        }
+    }
+}

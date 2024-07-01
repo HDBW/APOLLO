@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.ClozeView"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="Red"
+             Title="ClozeView"
+             x:DataType="viewModel:ClozeViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView BindingContext="{x:Binding Question, Mode=OneWay}" >
+            <VerticalStackLayout x:DataType="models:ClozeEntry" Padding="24">
+                <Label Text="{x:Binding Text}" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <Border Grid.Row="1" Padding="24,16">
+            <Button Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
+        </Border>
+    </Grid>
+</ContentPage>

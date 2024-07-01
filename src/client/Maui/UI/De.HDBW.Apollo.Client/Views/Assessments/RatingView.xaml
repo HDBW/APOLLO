@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.RatingView"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="Red"
+             Title="RatingView"
+             x:DataType="viewModel:RatingViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="RatingEntryTemplate" x:DataType="models:RatingEntry" >
+            <VerticalStackLayout>
+                <Label Text="{x:Binding Text, Mode=OneTime}" Margin="0,0,0,12"/>
+                <Grid ColumnDefinitions="*,*,*,*,*,*" Margin="0,0,0,8">
+                    <RadioButton Grid.Column="0" HorizontalOptions="Start"/>
+                    <RadioButton Grid.Column="1" HorizontalOptions="Center"/>
+                    <RadioButton Grid.Column="2" HorizontalOptions="Center"/>
+                    <RadioButton Grid.Column="3" HorizontalOptions="Center"/>
+                    <RadioButton Grid.Column="4" HorizontalOptions="Center"/>
+                    <RadioButton Grid.Column="5" HorizontalOptions="End"/>
+                </Grid>
+                <Grid ColumnDefinitions="auto,*,auto">
+                    <Label Text="{x:Binding BindingContext[TxtAssesmentsRatingNotApply], Source={x:Reference PART_Root}, Mode=OneTime}"/>
+                    <Label Grid.Column="2" Text="{x:Binding BindingContext[TxtAssesmentsRatingApply], Source={x:Reference PART_Root}, Mode=OneTime}"/>
+                </Grid>
+            </VerticalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
+        <ScrollView >
+            <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding MultipleQuestions, Mode=OneWay}" 
+                                 BindableLayout.ItemTemplate="{StaticResource RatingEntryTemplate}"
+                                 Padding="24">
+            </VerticalStackLayout>
+        </ScrollView>
+        <Border Grid.Row="1" Padding="24,16">
+            <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
+        </Border>
+    </Grid>
+</ContentPage>

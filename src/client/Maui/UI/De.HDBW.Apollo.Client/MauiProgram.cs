@@ -35,6 +35,7 @@ using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Models;
+using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using FedericoNembrini.Maui.CustomDatePicker;
@@ -467,6 +468,27 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<ModuleDetailViewModel>();
             services.AddTransient<LanguageSelectionView>();
             services.AddTransient<LanguageSelectionViewModel>();
+
+            services.AddTransient<AssociateViewModel>();
+            services.AddTransient<AssociateView>();
+            services.AddTransient<BinaryViewModel>();
+            services.AddTransient<BinaryView>();
+            services.AddTransient<ChoiceViewModel>();
+            services.AddTransient<ChoiceView>();
+            services.AddTransient<ClozeViewModel>();
+            services.AddTransient<ClozeView>();
+            services.AddTransient<EaconditionViewModel>();
+            services.AddTransient<EaconditionView>();
+            services.AddTransient<EaconditionFilteredView>();
+            services.AddTransient<EaconditionDetailView>();
+            services.AddTransient<EafrequencyViewModel>();
+            services.AddTransient<EafrequencyView>();
+            services.AddTransient<ImagemapViewModel>();
+            services.AddTransient<ImagemapView>();
+            services.AddTransient<RatingViewModel>();
+            services.AddTransient<RatingView>();
+            services.AddTransient<SortViewModel>();
+            services.AddTransient<SortView>();
         }
 
         private static void SetupRoutes()
@@ -525,6 +547,29 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.AssessmentFavoriteView, typeof(Views.Assessments.FavoriteView));
             Routing.RegisterRoute(Routes.ModuleDetailView, typeof(ModuleDetailView));
             Routing.RegisterRoute(Routes.LanguageSelectionView, typeof(LanguageSelectionView));
+
+            Routing.RegisterRoute(Routes.InitalAssociateView, typeof(AssociateView));
+            Routing.RegisterRoute(Routes.AssociateView, typeof(AssociateView));
+            Routing.RegisterRoute(Routes.InitialBinaryView, typeof(BinaryView));
+            Routing.RegisterRoute(Routes.BinaryView, typeof(BinaryView));
+            Routing.RegisterRoute(Routes.InitialChoiceView, typeof(ChoiceView));
+            Routing.RegisterRoute(Routes.ChoiceView, typeof(ChoiceView));
+            Routing.RegisterRoute(Routes.InitialClozeView, typeof(ClozeView));
+            Routing.RegisterRoute(Routes.ClozeView, typeof(ClozeView));
+            Routing.RegisterRoute(Routes.InitialEaconditionView, typeof(EaconditionView));
+            Routing.RegisterRoute(Routes.EaconditionView, typeof(EaconditionView));
+            Routing.RegisterRoute(Routes.InitialEaconditionFilteredView, typeof(EaconditionFilteredView));
+            Routing.RegisterRoute(Routes.EaconditionFilteredView, typeof(EaconditionFilteredView));
+            Routing.RegisterRoute(Routes.InitialEaconditionDetailView, typeof(EaconditionDetailView));
+            Routing.RegisterRoute(Routes.EaconditionDetailView, typeof(EaconditionDetailView));
+            Routing.RegisterRoute(Routes.InitialEafrequencyView, typeof(EafrequencyView));
+            Routing.RegisterRoute(Routes.EafrequencyView, typeof(EafrequencyView));
+            Routing.RegisterRoute(Routes.InitialImagemapView, typeof(ImagemapView));
+            Routing.RegisterRoute(Routes.ImagemapView, typeof(ImagemapView));
+            Routing.RegisterRoute(Routes.InitialRatingView, typeof(RatingView));
+            Routing.RegisterRoute(Routes.RatingView, typeof(RatingView));
+            Routing.RegisterRoute(Routes.InitialSortView, typeof(SortView));
+            Routing.RegisterRoute(Routes.SortView, typeof(SortView));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
