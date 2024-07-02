@@ -5,7 +5,6 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.BinaryView"
-             Shell.NavBarIsVisible="True"
              Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
              x:DataType="viewModel:BinaryViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"

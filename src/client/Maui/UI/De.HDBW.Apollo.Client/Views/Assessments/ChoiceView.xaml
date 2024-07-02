@@ -6,7 +6,6 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ChoiceView"
-             Shell.NavBarIsVisible="True"
              Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
              x:DataType="viewModel:ChoiceViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"

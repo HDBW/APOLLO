@@ -4,11 +4,11 @@
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.SortView"
-             Shell.NavBarIsVisible="True"
              Shell.BackgroundColor="Red"
              Title="SortView"
              x:DataType="viewModel:SortViewModel"
-             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="SortItemEntry" x:DataType="models:DraggableEntry">
             <Grid ColumnDefinitions="auto, *" Margin="0,0,0,8">

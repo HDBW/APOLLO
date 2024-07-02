@@ -4,11 +4,11 @@
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.AssociateView"
-             Shell.NavBarIsVisible="True"
              Shell.BackgroundColor="Red"
              Title="AssociateView"
              x:DataType="viewModel:AssociateViewModel"
-             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="AssociateTextEntry" x:DataType="models:AssociateTextEntry">
             <Border Margin="4,0,4,8" Padding="12">

@@ -5,11 +5,11 @@
              xmlns:hwv="clr-namespace:HybridWebView;assembly=HybridWebView"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ClozeView"
-             Shell.NavBarIsVisible="True"
              Shell.BackgroundColor="Red"
              Title="ClozeView"
              x:DataType="viewModel:ClozeViewModel"
-             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*,Auto">
         <Border StrokeThickness="0" Padding="24" >
             <hwv:HybridWebView x:Name="PART_WebView" 

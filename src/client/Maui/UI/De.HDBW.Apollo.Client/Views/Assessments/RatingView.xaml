@@ -4,11 +4,11 @@
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.RatingView"
-             Shell.NavBarIsVisible="True"
              Shell.BackgroundColor="Red"
              Title="RatingView"
              x:DataType="viewModel:RatingViewModel"
-             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="RatingEntryTemplate" x:DataType="models:RatingEntry" >
             <VerticalStackLayout>
