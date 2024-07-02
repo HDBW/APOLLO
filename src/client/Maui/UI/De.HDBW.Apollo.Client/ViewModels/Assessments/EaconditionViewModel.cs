@@ -96,7 +96,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     }
 
                     var filteredItems = FilterIds.Count() == 0
-                        ? cachedDatas.Where(x => x.Data != null && x.Data.Contains($"{nameof(RawData.reliant)}")).ToList()
+                        ? cachedDatas.Where(x => x.Data != null && x.Data.Contains($"{nameof(Reliants.reliant_0)}")).ToList()
                         : cachedDatas.Where(x => x.RawDataId != null && FilterIds.Contains(x.RawDataId)).ToList();
 
                     var questions = new List<SelectableEaconditionEntry>();
