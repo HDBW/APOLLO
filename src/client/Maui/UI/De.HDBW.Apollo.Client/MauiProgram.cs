@@ -391,6 +391,8 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<SelectOptionDialog>();
             services.AddTransient<SelectOptionDialogViewModel>();
 
+            services.AddTransient<ImageZoomDialog>();
+
             services.AddTransient<EmptyView>();
             services.AddTransient<EmptyViewModel>();
 

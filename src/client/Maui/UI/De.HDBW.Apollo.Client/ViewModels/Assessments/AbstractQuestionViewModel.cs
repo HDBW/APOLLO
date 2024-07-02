@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Dialogs;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
@@ -281,13 +282,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        protected void OnZoomImage(ZoomableImageEntry entry)
+        protected async void OnZoomImage(ZoomableImageEntry entry)
         {
             if (IsBusy)
             {
                 return;
             }
 
+            var parameters = new NavigationParameters();
+            parameters.AddValue(NavigationParameter.Data, entry.AbsolutePath);
+            await DialogService.ShowPopupAsync<ImageZoomDialog, NavigationParameters, NavigationParameters>(parameters, CancellationToken.None).ConfigureAwait(false);
         }
 
         private void LoadonUIThread(List<TU> questions, TV? question, int offset, int count)

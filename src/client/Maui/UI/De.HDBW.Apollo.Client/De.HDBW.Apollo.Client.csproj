@@ -120,6 +120,9 @@
     <MauiXaml Update="Dialogs\ErrorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Dialogs\ImageZoomDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Dialogs\SelectOptionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
