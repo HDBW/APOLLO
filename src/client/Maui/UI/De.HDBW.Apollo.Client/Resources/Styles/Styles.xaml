@@ -441,12 +441,43 @@
         </Grid>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="RadioButtonLikeButtonTemplate">
+        <Grid Padding="8">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter TargetName="BG" Property="BackgroundColor" Value="{StaticResource Primary100}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter TargetName="BG" Property="Border.Stroke" Value="{StaticResource Primary}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked" />
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="BG" BackgroundColor="{StaticResource Neutral0}" StrokeThickness="2" Stroke="{StaticResource Neutral0}">
+                <Border.Shadow>
+                        <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
+                </Border.Shadow>
+                <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" VerticalOptions="Fill" Margin="8" HorizontalOptions="Center"/>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
     <Style TargetType="RadioButton">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColor}}" />
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
-
+    
     <Style TargetType="RefreshView">
         <Setter Property="RefreshColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
     </Style>
@@ -606,6 +637,8 @@
     </Style>
 
     <Style x:Key="FooterStyle" TargetType="Border">
+        <Setter Property="Border.StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Neutral100}" />
         <Setter Property="Shadow">
             <Setter.Value>
                 <Shadow Brush="{StaticResource Black}" Offset="{OnPlatform '0,-4', Android='0,0'}" Radius="{OnPlatform '4', Android='0'}" Opacity="0.2"/>

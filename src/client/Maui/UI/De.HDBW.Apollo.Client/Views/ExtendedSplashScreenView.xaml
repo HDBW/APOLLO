@@ -14,7 +14,7 @@
         <Label Margin="24,32,24,16" Grid.Row="1" HorizontalTextAlignment="Center" Text="{x:Static strings:Resources.ExtendedSplashScreenView_Text}" Style="{StaticResource Noto16}"/>
         <Image Source="splashdeco.png" Grid.Row="2" />
         
-        <Border Grid.Row="1" Grid.RowSpan="3" VerticalOptions="EndAndExpand" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+        <Border Grid.Row="1" Grid.RowSpan="3" VerticalOptions="EndAndExpand" Style="{StaticResource FooterStyle}">
             <VerticalStackLayout>
                 <HorizontalStackLayout Margin="24,16,24,16">
                     <CheckBox x:Name="PART_DSGVO" VerticalOptions="Center" IsChecked="{x:Binding ConfirmedDSGVO, Mode=TwoWay}" SemanticProperties.Description="{x:Static strings:Resources.ExtendedSplashScreenView_DSGVO}" SemanticProperties.Hint="{x:Static strings:Resources.ExtendedSplashScreenView_DSGVOText}"/>

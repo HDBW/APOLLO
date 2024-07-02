@@ -72,7 +72,7 @@
                 </ContentView>
             </CollectionView.EmptyView>
         </CollectionView>
-        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" />
+        <Border Grid.Row="1" Style="{StaticResource FooterStyle}" />
         <Button Grid.Row="1" Text="{x:Static strings:Resources.ContactInfoEditView_ButtonTxt}" Command="{x:Binding AddCommand}" Margin="24,16"/>        
     </Grid>
 </ContentPage>
