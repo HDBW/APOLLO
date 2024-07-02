@@ -85,8 +85,12 @@
                         </Image.Source>
                     </Image>
                     <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
-                </HorizontalStackLayout>               
-                <Image Grid.Row="1" Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="272"/>
+                </HorizontalStackLayout>
+                <Image Grid.Row="1" Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="272">
+                    <Image.Shadow>
+                        <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
+                    </Image.Shadow>
+                </Image>
             </Grid>
         </DataTemplate>
 
