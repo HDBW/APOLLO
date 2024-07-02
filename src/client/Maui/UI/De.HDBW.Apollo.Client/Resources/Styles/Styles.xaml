@@ -651,6 +651,21 @@
         </Setter>
     </Style>
 
+    <Style x:Key="PictureEntryBorderStyle" TargetType="Border">
+        <Setter Property="Border.StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Neutral0}" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="InputBorderStyle" TargetType="Border">
         <Setter Property="Padding" Value="16,0" />
         <Setter Property="MinimumHeightRequest" Value="46" />
