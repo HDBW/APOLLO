@@ -24,9 +24,9 @@ namespace De.HDBW.Apollo.Client.Helper
 
         /// <summary>
         /// Called from JS.
+        /// </summary>
         /// <param name="id">The id of the input.</param>
         /// <param name="value">The current value of the input.</param>
-        /// </summary>
         public async void SetValue(string id, string value)
         {
             await _dispatcher.DispatchAsync(() =>
@@ -37,8 +37,8 @@ namespace De.HDBW.Apollo.Client.Helper
 
         /// <summary>
         /// Called from JS.
-        /// <param name="id">The id of the input.</param>
         /// </summary>
+        /// <param name="id">The id of the input.</param>
         public async void RemovedFocused(string id)
         {
             var sheet = _sheet;
