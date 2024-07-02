@@ -10,6 +10,7 @@ using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts;
 using De.HDBW.Apollo.SharedContracts.Helper;
+using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -75,34 +76,89 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         return;
                     }
 
+                    switch (DrillDownMode)
+                    {
+                        case DrillDownMode.Unknown:
+                        case DrillDownMode.Filtered:
+                            if (!string.IsNullOrWhiteSpace(Session.CurrentRawDataId))
+                            {
+                                Session.CurrentRawDataId = null;
+                                if (!await SessionRepository.UpdateItemAsync(Session, worker.Token).ConfigureAwait(false))
+                                {
+                                    Logger.LogError($"Unabele to update session while {OnNavigatedToAsync} in {GetType().Name}.");
+                                    return;
+                                }
+                            }
+
+                            break;
+                    }
+
+                    if (CurrentChoices.Any())
+                    {
+                        return;
+                    }
+
                     var offset = 0;
                     RawDataIds = Session.RawDataOrder.Split(";").ToList();
                     var count = RawDataIds.Count;
                     if (DrillDownMode == DrillDownMode.Detail)
                     {
                         var rawdataId = Session.CurrentRawDataId;
+                        if (string.IsNullOrWhiteSpace(rawdataId))
+                        {
+                            Logger.LogError($"Session not valid in DrillDownMode.Detail while {OnNavigatedToAsync} in {GetType().Name}.");
+                            return;
+                        }
+
                         var cachedData = await RawDataCacheRepository.GetItemAsync(SessionId, rawdataId, worker.Token).ConfigureAwait(false);
-                        var question = CreateEntry(QuestionFactory.Create<Eacondition>(cachedData.ToRawData()!, cachedData.RawDataId, cachedData.ModuleId, cachedData.AssesmentId, Culture));
+                        var rawData = cachedData?.ToRawData();
+                        if (cachedData == null ||
+                            rawData == null ||
+                            string.IsNullOrWhiteSpace(cachedData.RawDataId) ||
+                            string.IsNullOrWhiteSpace(cachedData.ModuleId) ||
+                            string.IsNullOrWhiteSpace(cachedData.AssesmentId))
+                        {
+                            Logger.LogError($"Rawdate invalid in DrillDownMode.Detail while {OnNavigatedToAsync} in {GetType().Name}.");
+                            return;
+                        }
+
+                        var question = CreateEntry(QuestionFactory.Create<Eacondition>(rawData, cachedData.RawDataId, cachedData.ModuleId, cachedData.AssesmentId, Culture));
                         await ExecuteOnUIThreadAsync(() => LoadonUIThread(new List<SelectableEaconditionEntry>(), question, offset, count), worker.Token);
                         return;
                     }
 
-                    Session.CurrentRawDataId = null;
-                    var cachedDatas = await RawDataCacheRepository.GetItemsAsync(SessionId, RawDataIds, worker.Token).ConfigureAwait(false);
-                    if (cachedDatas == null)
+                    IEnumerable<CachedRawData>? cachedDatas = null;
+                    switch (FilterIds.Count())
                     {
-                        Logger.LogError($"No cached rawdata found in {OnNavigatedToAsync} in {GetType().Name}.");
+                        case 0:
+                            cachedDatas = await RawDataCacheRepository.GetItemsAsync(SessionId, FilterIds.Count() == 0 ? RawDataIds : FilterIds, worker.Token).ConfigureAwait(false);
+                            cachedDatas = cachedDatas?.Where(x => x.Data != null && x.Data.Contains($"{nameof(Reliants.reliant_0)}"));
+                            break;
+                        default:
+                            cachedDatas = await RawDataCacheRepository.GetItemsAsync(SessionId, FilterIds, worker.Token).ConfigureAwait(false);
+                            break;
+                    }
+
+                    if (!(cachedDatas?.Any() ?? false))
+                    {
+                        Logger.LogError($"No cached rawdata found while {OnNavigatedToAsync} in {GetType().Name}.");
                         return;
                     }
 
-                    var filteredItems = FilterIds.Count() == 0
-                        ? cachedDatas.Where(x => x.Data != null && x.Data.Contains($"{nameof(Reliants.reliant_0)}")).ToList()
-                        : cachedDatas.Where(x => x.RawDataId != null && FilterIds.Contains(x.RawDataId)).ToList();
-
                     var questions = new List<SelectableEaconditionEntry>();
-                    foreach (var filteredItem in filteredItems)
+                    foreach (var filteredItem in cachedDatas)
                     {
-                        questions.Add(CreateSelectableEntry(QuestionFactory.Create<Eacondition>(filteredItem.ToRawData()!, filteredItem.RawDataId, filteredItem.ModuleId, filteredItem.AssesmentId, Culture)));
+                        var rawData = filteredItem.ToRawData();
+                        if (rawData == null ||
+                            string.IsNullOrWhiteSpace(filteredItem.RawDataId) ||
+                            string.IsNullOrWhiteSpace(filteredItem.ModuleId) ||
+                            string.IsNullOrWhiteSpace(filteredItem.AssesmentId))
+                        {
+                            Logger.LogWarning($"Found rawdate with invalid ids while {OnNavigatedToAsync} in {GetType().Name}.");
+                            continue;
+                        }
+
+                        questions.Add(CreateSelectableEntry(QuestionFactory.Create<Eacondition>(rawData, filteredItem.RawDataId, filteredItem.ModuleId, filteredItem.AssesmentId, Culture)));
                     }
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(questions, null, offset, count), worker.Token);
@@ -174,7 +230,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         { NavigationParameter.Language, Language },
                     };
 
-                        var filterIds = SelectedChoices.SelectMany(x => x.Links.Select(l => l.id));
+                        var filterIds = SelectedChoices.SelectMany(x => x.Links.Select(l => l.id)).ToList();
+                        if (!filterIds.Any() && DrillDownMode == DrillDownMode.Unknown)
+                        {
+                            Logger?.LogError($"Selection did not contain any link while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                            return;
+                        }
+
                         parameter.Add(NavigationParameter.Filter, string.Join(";", filterIds));
                         var route = string.Empty;
                         switch (DrillDownMode)
@@ -241,7 +303,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
 
             OnPropertyChanged(nameof(SelectedChoicesCount));
-            if (DrillDownMode == DrillDownMode.Filtered)
+            if (DrillDownMode == DrillDownMode.Filtered && SelectedChoices.Count > 0)
             {
                 NavigateCommand.Execute(null);
             }

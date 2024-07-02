@@ -13,5 +13,13 @@ namespace De.HDBW.Apollo.Client.Views.Assessments
             InitializeComponent();
             BindingContext = viewModel;
         }
+
+        public RatingViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as RatingViewModel;
+            }
+        }
     }
 }

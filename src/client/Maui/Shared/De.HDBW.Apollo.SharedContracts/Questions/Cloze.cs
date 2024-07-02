@@ -25,10 +25,17 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
             CreateAditionalData(2, id2, id2Scores, data.cloze_credit2);
             CreateAditionalData(3, id3, id3Scores, data.cloze_credit3);
             CreateAditionalData(4, id4, id4Scores, data.cloze_credit4);
-            ClozeHtml = new ClozeHtml(RawCloze ?? string.Empty, InputModes, new Dictionary<int, string>()).TransformText();
+            var cloze = new ClozeHtml(RawCloze ?? string.Empty, InputModes, new Dictionary<int, string>());
+            ClozeHtml = cloze.TransformText();
+            Ids = cloze.Ids;
+            Tokens = cloze.Tokens;
         }
 
         public string ClozeHtml { get; }
+
+        public IList<string> Ids { get; }
+
+        public IList<string> Tokens { get; }
 
         public string? RawCloze
         {

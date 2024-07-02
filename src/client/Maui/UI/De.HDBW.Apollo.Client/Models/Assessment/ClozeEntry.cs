@@ -11,10 +11,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private string? _clozeHtml;
 
+        [ObservableProperty]
+        private IList<string> _ids;
+
         private ClozeEntry(Cloze data)
             : base(data)
         {
             ClozeHtml = data.ClozeHtml;
+            Ids = data.Ids;
         }
 
         public static ClozeEntry Import(Cloze data)

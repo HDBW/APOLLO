@@ -35,7 +35,6 @@ using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Models;
-using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using FedericoNembrini.Maui.CustomDatePicker;
@@ -55,6 +54,11 @@ using Serilog.Sinks.ApplicationInsights;
 using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using The49.Maui.BottomSheet;
+#if ANDROID
+using De.HDBW.Apollo.Client.Platforms;
+#else
+using HybridWebView;
+#endif
 
 namespace De.HDBW.Apollo.Client
 {
@@ -629,10 +633,12 @@ namespace De.HDBW.Apollo.Client
         {
             handlers.AddHandler<ReorderableItemsView, ReorderableItemsViewHandler<ReorderableItemsView>>();
 #if IOS
-            handlers.AddHandler(typeof(SearchBar), typeof(De.HDBW.Apollo.Client.Platforms.iOS.CustomSearchbarHandler));
+            handlers.AddHandler(typeof(SearchBar), typeof(Platforms.iOS.CustomSearchbarHandler));
             handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
+            handlers.AddHandler<HybridWebView.HybridWebView, HybridWebViewHandler>();
 #elif ANDROID
             handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
+            handlers.AddHandler<HybridWebView.HybridWebView, CustomWebViewHandler>();
 #endif
         }
     }
