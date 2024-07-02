@@ -3420,4 +3420,8 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <value>Dein Ergebnis</value>
     <comment>Deutschtest-GL</comment>
   </data>
+  <data name="TxtAssesmentsTitleQuestions" xml:space="preserve">
+    <value>Frage {0}/30</value>
+    <comment>Translate New</comment>
+  </data>
 </root>
