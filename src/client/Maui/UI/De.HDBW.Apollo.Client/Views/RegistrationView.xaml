@@ -37,7 +37,7 @@
         <IndicatorView Grid.Row="3"
                x:Name="indicatorView"
                Margin="24,16,24,10"/>
-        <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+        <Border Grid.Row="4" Style="{StaticResource FooterStyle}">
             <VerticalStackLayout Margin="24,16">
                 <Button Margin="0,0,0,8" Text="{x:Static strings:Resources.Global_ContinueAsGuest}" Style="{StaticResource BorderButton}" Command="{x:Binding SkipCommand}"/>
                 <Button Text="{x:Static strings:Resources.Global_RegisterUser}" Command="{x:Binding RegisterCommand}" IsVisible="{x:Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>

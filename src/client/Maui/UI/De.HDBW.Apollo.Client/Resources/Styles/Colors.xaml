@@ -14,7 +14,7 @@
     <Color x:Key="Neutral700">#967E5C</Color>
     <Color x:Key="Neutral800">#64533B</Color>
     <Color x:Key="Neutral900">#403320</Color>
-    <Color x:Key="Background">#F7EEE1</Color>
+    <Color x:Key="Background">#F4E8D7</Color>
     <Color x:Key="Surface">#E9D2B1</Color>
     <Color x:Key="TextColor">#1D1D1D</Color>
     <Color x:Key="Primary050">#E8E2F3</Color>

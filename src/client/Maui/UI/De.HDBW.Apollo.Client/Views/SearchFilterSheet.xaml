@@ -97,7 +97,7 @@
                 BindableLayout.ItemTemplateSelector="{StaticResource EditorTemplateSelector}"/>
         </ScrollView>
 
-        <Border Grid.Row="2" Grid.RowSpan="2" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}"/>
+        <Border Grid.Row="2" Grid.RowSpan="2" Style="{StaticResource FooterStyle}"/>
 
         <Button
             Style="{StaticResource BorderButton}"

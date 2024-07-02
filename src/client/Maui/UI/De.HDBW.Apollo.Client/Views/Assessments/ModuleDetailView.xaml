@@ -104,7 +104,7 @@
             ItemsLayout="VerticalList"
             ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}"
             Margin="24,24,24,0"/>
-        <Border IsVisible="{x:Binding CanStartTest}" Grid.Row="1" VerticalOptions="EndAndExpand" Background="{StaticResource Neutral100}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+        <Border IsVisible="{x:Binding CanStartTest}" Grid.Row="1" VerticalOptions="EndAndExpand" Style="{StaticResource FooterStyle}">
             <Button Text="{x:Binding [BtnTxtAssesmentsStartTestStart]}" Command="{x:Binding StartAssessmentCommand}" Margin="24,16"/>
         </Border>
     </Grid>

@@ -2,13 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.Assessments.ViewModel"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.EafrequencyView"
              Shell.NavBarIsVisible="True"
-             Shell.BackgroundColor="Red"
-             Title="EafrequencyView"
+             Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
              x:DataType="viewModel:EafrequencyViewModel"
-             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*,Auto">
         <Grid RowDefinitions="*,Auto">
             <ScrollView>
@@ -20,20 +21,35 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
-                    <Label Text="{x:Binding Text, Mode=OneWay}" Margin="0,0,0,24"/>
-                    <Label Text="{x:Binding Question, Mode=OneWay}" Margin="0,0,0,24"/>
-                    <Label Text="{x:Binding Situation, Mode=OneWay}"/>
+                    <Label Text="{x:Binding Question, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,24,0,8"/>
+                    <Label Text="{x:Binding Situation, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
                 </VerticalStackLayout>
             </ScrollView>
-            <Border Grid.Row="1" Padding="24,16">
+            <Border Grid.Row="1" Padding="16,16" Style="{StaticResource FooterStyle}">
                 <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="auto,auto,auto" >
-                    <Label Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Binding [TxtAssesmentsEafrequencyInstruction], Mode=OneWay}" Margin="0,0,0,16"/>
-                    <RadioButton Content="0" Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" SemanticProperties.Description="{x:Binding [TxtAssesmentsEafrequencyNever], Mode=OneWay}"/>
-                    <RadioButton Content="1-9" Grid.Column="1" Grid.Row="1" Margin="0,0,8,0"/>
-                    <RadioButton Content="10-49" Grid.Column="2" Grid.Row="1" Margin="0,0,8,0"/>
-                    <RadioButton Content="50+" Grid.Column="3" Grid.Row="1" SemanticProperties.Description="{x:Binding [TxtAssesmentsEafrequencyOften], Mode=OneWay}" SemanticProperties.Hint="50+"/>
-                    <Label x:Name="LblTxtNvr" Text="{x:Binding [TxtAssesmentsEafrequencyNever], Mode=OneWay}" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" Margin="0,16,4,0" AutomationProperties.IsInAccessibleTree="False"/>
-                    <Label x:Name="LblTxtOvtn" Text="{x:Binding [TxtAssesmentsEafrequencyOften], Mode=OneWay}" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="2" HorizontalOptions="End" Margin="4,16,0,0"  AutomationProperties.IsInAccessibleTree="False"/>
+                    <Label Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Binding [TxtAssesmentsEafrequencyInstruction], Mode=OneWay}" Margin="8,0,8,8" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                    <RadioButton Grid.Column="0" Grid.Row="1" SemanticProperties.Description="{x:Binding [TxtAssesmentsEafrequencyNever], Mode=OneWay}" ControlTemplate="{StaticResource RadioButtonLikeButtonTemplate}">
+                        <RadioButton.Content>
+                            <Label Text="0" HorizontalOptions="Center" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                        </RadioButton.Content>
+                    </RadioButton>
+                    <RadioButton Grid.Column="1" Grid.Row="1" ControlTemplate="{StaticResource RadioButtonLikeButtonTemplate}">
+                        <RadioButton.Content>
+                            <Label Text="1-9" HorizontalOptions="Center" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                        </RadioButton.Content>
+                    </RadioButton>
+                    <RadioButton Grid.Column="2" Grid.Row="1" ControlTemplate="{StaticResource RadioButtonLikeButtonTemplate}">
+                        <RadioButton.Content>
+                            <Label Text="10-49" HorizontalOptions="Center" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                        </RadioButton.Content>
+                    </RadioButton>
+                    <RadioButton Grid.Column="3" Grid.Row="1" SemanticProperties.Description="{x:Binding [TxtAssesmentsEafrequencyOften], Mode=OneWay}" SemanticProperties.Hint="50+"  ControlTemplate="{StaticResource RadioButtonLikeButtonTemplate}">
+                        <RadioButton.Content>
+                            <Label Text="50+" HorizontalOptions="Center" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                        </RadioButton.Content>
+                    </RadioButton>
+                    <Label x:Name="LblTxtNvr" Text="{x:Binding [TxtAssesmentsEafrequencyNever], Mode=OneWay}" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start" Margin="8,8,4,0" AutomationProperties.IsInAccessibleTree="False" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
+                    <Label x:Name="LblTxtOvtn" Text="{x:Binding [TxtAssesmentsEafrequencyOften], Mode=OneWay}" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="2" HorizontalOptions="End" Margin="4,8,8,0"  AutomationProperties.IsInAccessibleTree="False" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
                 </Grid>
             </Border>
         </Grid>

@@ -11,39 +11,39 @@
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
     <ContentPage.Resources>
         <DataTemplate x:Key="SelectableEaconditionEntry" x:DataType="models:SelectableEaconditionEntry">
-            <Border Margin="0,0,0,16" StrokeThickness="0">
+            <Border Margin="0,0,0,16" StrokeThickness="0" SemanticProperties.Description="{x:Binding Bezeichnung, Mode=OneTime}">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
                 </Border.GestureRecognizers>
                 <Grid>
                     <Image Source="{x:Binding Image.AbsolutePath, Mode=OneTime, FallbackValue={x:Null}}" Aspect="AspectFill" HeightRequest="204"/>
-                    <Border Padding="12,8,8,4" BackgroundColor="White" HorizontalOptions="Start" VerticalOptions="Start">
+                    <Border Padding="12,8,8,4" BackgroundColor="White" HorizontalOptions="Start" VerticalOptions="Start" StrokeThickness="0">
                         <Label InputTransparent="True" Text="{x:Binding Bezeichnung, Mode=OneTime}"/>
                     </Border>
-                    <Rectangle Stroke="White" StrokeThickness="8"/>
-                    <Rectangle Stroke="Black" StrokeThickness="4">
-                        <Rectangle.Triggers>
-                            <DataTrigger TargetType="Rectangle" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
-                                <Setter Property="Stroke" Value="Red"/>
+                    <Grid IsVisible="Collapse">
+                        <Rectangle Stroke="White" StrokeThickness="8"/>
+                        <Rectangle Stroke="{StaticResource Primary}" StrokeThickness="4"/>
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                                <Setter Property="IsVisible" Value="Visible"/>
                             </DataTrigger>
-                        </Rectangle.Triggers>
-                    </Rectangle>
+                        </Grid.Triggers>
+                    </Grid>
                 </Grid>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                        <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                    </DataTrigger>
+                </Border.Triggers>
             </Border>
         </DataTemplate>
     </ContentPage.Resources>
-    <Grid RowDefinitions="Auto, *, Auto">
-        <Label Text="{x:Binding [TxtAssesmentsEaConditionFilteredInstruction], Mode=OneWay}" Margin="4,0" />
+    <Grid RowDefinitions="Auto, *" x:Name="PART_Root">
+        <Label Text="{x:Binding [TxtAssesmentsEaConditionFilteredInstruction], Mode=OneWay}" Margin="24,24,24,0" />
         <CollectionView 
             Grid.Row="1" 
-            Margin="20,24"
+            Margin="24"
             ItemTemplate="{StaticResource SelectableEaconditionEntry}"
             ItemsSource="{x:Binding CurrentChoices, Mode=OneWay}" />
-
-        <Border Grid.Row="2" Padding="24,16">
-            <VerticalStackLayout>
-                <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
-            </VerticalStackLayout>
-        </Border>
     </Grid>
 </ContentPage>

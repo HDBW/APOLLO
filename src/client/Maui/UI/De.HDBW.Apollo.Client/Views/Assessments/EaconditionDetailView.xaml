@@ -9,25 +9,18 @@
              Title="EaconditionView"
              x:DataType="viewModel:EaconditionViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
-    
-    <Grid RowDefinitions="*, Auto">
+    <Grid x:Name="PART_Root">
         <ScrollView BindingContext="{x:Binding Question, Mode=OneWay}">
             <VerticalStackLayout x:DataType="models:EaconditionEntry" Padding="24">
-                <Image Source="{x:Binding Image.AbsolutePath, Mode=OneWay, FallbackValue={x:Null}}" HeightRequest="204"/>
-                <Label Text="Deine passende Berufskategorie"/>
-                <Label Text="{x:Binding Bezeichnung}"/>
-                <Label Text="{x:Binding Infotext }"/>
-                <Label Text="Vorraussetzungen"/>
-                <Label Text="{x:Binding Voraussetzungen}"/>
-                <Label Text="Beispielberufe"/>
+                <Image Source="{x:Binding Image.AbsolutePath, Mode=OneWay, FallbackValue={x:Null}}" HeightRequest="204" Margin="0,0,0,24" Aspect="AspectFill"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionSuitingCategory], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,0,8"/>
+                <Label Text="{x:Binding Bezeichnung}" Margin="0,0,0,24"/>
+                <Label Text="{x:Binding Infotext }" Margin="0,0,0,24"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionConditions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,0,8"/>
+                <Label Text="{x:Binding Voraussetzungen}" Margin="0,0,0,24"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionExampleProfessions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,0,8"/>
                 <Label Text="{x:Binding Beispielberufe}"/>
             </VerticalStackLayout>
         </ScrollView>
-
-        <Border Grid.Row="2" Padding="24,16">
-            <VerticalStackLayout>
-                <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
-            </VerticalStackLayout>
-        </Border>
     </Grid>
 </ContentPage>
