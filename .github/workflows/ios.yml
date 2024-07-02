@@ -51,6 +51,7 @@ jobs:
         dotnet user-secrets set "SwaggerAPIURL" "${{secrets.SWAGGERENDPOINTURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "OccupationSearchAPIURL" "${{secrets.OCCUPATIONSEARCHAPIURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "UnRegisteUserEndpointURL" "${{secrets.UNREGISTERUSERENDPOINTURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "MediaAssetStorage" "${{secrets.MEDIAASSETSTORAGE}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
     - name: Install the Apple certificate and provisioning profile
       env:
         BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
