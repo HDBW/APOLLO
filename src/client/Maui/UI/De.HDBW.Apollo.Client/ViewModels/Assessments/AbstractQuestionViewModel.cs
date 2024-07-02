@@ -167,14 +167,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     var count = RawDataIds.Count;
                     var questions = new List<TU>();
                     var cachedData = await RawDataCacheRepository.GetItemAsync(SessionId, rawdataId, worker.Token).ConfigureAwait(false);
-                    if (cachedData == null)
+                    if (cachedData == null ||
+                        string.IsNullOrWhiteSpace(cachedData.RawDataId) ||
+                        string.IsNullOrWhiteSpace(cachedData.ModuleId) ||
+                        string.IsNullOrWhiteSpace(cachedData.AssesmentId))
                     {
                         Logger.LogError($"No cached rawdata found in {OnNavigatedToAsync} in {GetType().Name}.");
                         return;
                     }
 
                     var rawData = cachedData.ToRawData();
-                    var question = CreateEntry(QuestionFactory.Create<TU>(rawData!, Culture));
+                    var question = CreateEntry(QuestionFactory.Create<TU>(rawData!, cachedData.RawDataId, cachedData.ModuleId, cachedData.AssesmentId, Culture));
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(questions, question, offset, count), worker.Token);
                 }
                 catch (OperationCanceledException)

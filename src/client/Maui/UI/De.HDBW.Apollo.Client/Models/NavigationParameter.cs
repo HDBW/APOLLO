@@ -20,5 +20,8 @@ namespace De.HDBW.Apollo.Client.Models
         Title,
 
         Language,
+
+        Filter,
+
     }
 }

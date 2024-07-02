@@ -8,6 +8,8 @@ using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.SharedContracts;
+using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -31,7 +33,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<EaconditionViewModel> logger)
-            : base(service, sessionRepository,repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository, repository, dispatcherService, navigationService, dialogService, logger)
         {
         }
 
@@ -53,18 +55,57 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
-                    if (DrillDownMode == DrillDownMode.Detail)
+                    if (string.IsNullOrWhiteSpace(SessionId))
                     {
+                        Logger.LogError($"Session not present in {OnNavigatedToAsync} in {GetType().Name}.");
                         return;
                     }
 
-                    //items = FilterIds.Count() == 0
-                    //    ? Questions?.Where(x => x.BookletId == "21e800e3-14c8-49d3-a066-edc77dd8cbd7").ToList()
-                    //    : Questions?.Where(x => FilterIds.Contains(x.ItemId)).ToList();
+                    Session = await SessionRepository.GetItemBySessionIdAsync(SessionId, worker.Token).ConfigureAwait(false);
+                    if (Session == null)
+                    {
+                        Logger.LogError($"Session not found in {OnNavigatedToAsync} in {GetType().Name}.");
+                        return;
+                    }
 
-                    //items = items ?? new List<Eacondition>();
+                    if (string.IsNullOrWhiteSpace(Session.RawDataOrder) ||
+                        string.IsNullOrWhiteSpace(Session.ModuleId))
+                    {
+                        Logger.LogError($"Session not valid in {OnNavigatedToAsync} in {GetType().Name}.");
+                        return;
+                    }
 
-                    //CurrentChoices = new ObservableCollection<SelectableEaconditionEntry>(items.Select(i => CreateSelectableEntry(i)));
+                    var offset = 0;
+                    RawDataIds = Session.RawDataOrder.Split(";").ToList();
+                    var count = RawDataIds.Count;
+                    if (DrillDownMode == DrillDownMode.Detail)
+                    {
+                        var rawdataId = Session.CurrentRawDataId;
+                        var cachedData = await RawDataCacheRepository.GetItemAsync(SessionId, rawdataId, worker.Token).ConfigureAwait(false);
+                        var question = CreateEntry(QuestionFactory.Create<Eacondition>(cachedData.ToRawData()!, cachedData.RawDataId, cachedData.ModuleId, cachedData.AssesmentId, Culture));
+                        await ExecuteOnUIThreadAsync(() => LoadonUIThread(new List<SelectableEaconditionEntry>(), question, offset, count), worker.Token);
+                        return;
+                    }
+
+                    Session.CurrentRawDataId = null;
+                    var cachedDatas = await RawDataCacheRepository.GetItemsAsync(SessionId, RawDataIds, worker.Token).ConfigureAwait(false);
+                    if (cachedDatas == null)
+                    {
+                        Logger.LogError($"No cached rawdata found in {OnNavigatedToAsync} in {GetType().Name}.");
+                        return;
+                    }
+
+                    var filteredItems = FilterIds.Count() == 0
+                        ? cachedDatas.Where(x => x.Data != null && x.Data.Contains($"{nameof(RawData.reliant)}")).ToList()
+                        : cachedDatas.Where(x => x.RawDataId != null && FilterIds.Contains(x.RawDataId)).ToList();
+
+                    var questions = new List<SelectableEaconditionEntry>();
+                    foreach (var filteredItem in filteredItems)
+                    {
+                        questions.Add(CreateSelectableEntry(QuestionFactory.Create<Eacondition>(filteredItem.ToRawData()!, filteredItem.RawDataId, filteredItem.ModuleId, filteredItem.AssesmentId, Culture)));
+                    }
+
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(questions, null, offset, count), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -88,6 +129,93 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override EaconditionEntry CreateEntry(Eacondition data)
         {
             return EaconditionEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(EaconditionEntry)]);
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if (e.PropertyName == string.Empty)
+            {
+                OnPropertyChanged(nameof(SelectedChoicesCount));
+            }
+        }
+
+        protected override void OnPrepare(NavigationParameters navigationParameters)
+        {
+            base.OnPrepare(navigationParameters);
+            FilterIds = navigationParameters.GetValue<string?>(NavigationParameter.Filter)?.ToString()?.Split(";").ToList() ?? new List<string>();
+            DrillDownMode = Enum.Parse<DrillDownMode>(navigationParameters.GetValue<string?>(NavigationParameter.Type)?.ToString() ?? nameof(DrillDownMode.Unknown));
+        }
+
+        protected async override Task Navigate(CancellationToken cancellationToken)
+        {
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    if (DrillDownMode == DrillDownMode.Detail)
+                    {
+                        await Shell.Current.GoToAsync(new ShellNavigationState(".."), true);
+                    }
+                    else
+                    {
+                        if (string.IsNullOrWhiteSpace(ModuleId) ||
+                           string.IsNullOrWhiteSpace(SessionId) ||
+                           string.IsNullOrWhiteSpace(Language) ||
+                           Session == null)
+                        {
+                            return;
+                        }
+
+                        var parameter = new NavigationParameters()
+                    {
+                        { NavigationParameter.Id, ModuleId },
+                        { NavigationParameter.Data, SessionId },
+                        { NavigationParameter.Language, Language },
+                    };
+
+                        var filterIds = SelectedChoices.SelectMany(x => x.Links.Select(l => l.id));
+                        parameter.Add(NavigationParameter.Filter, string.Join(";", filterIds));
+                        var route = string.Empty;
+                        switch (DrillDownMode)
+                        {
+                            case DrillDownMode.Unknown:
+                                route = Routes.EaconditionFilteredView;
+                                parameter.Add(NavigationParameter.Type, DrillDownMode.Filtered.ToString());
+                                break;
+                            case DrillDownMode.Filtered:
+                                route = Routes.EaconditionDetailView;
+                                parameter.Add(NavigationParameter.Type, DrillDownMode.Detail.ToString());
+                                var item = SelectedChoices[0];
+                                if (item != null)
+                                {
+                                    Session.CurrentRawDataId = item.Export().RawDataId;
+                                    await SessionRepository.UpdateItemAsync(Session, worker.Token).ConfigureAwait(false);
+                                }
+
+                                break;
+                        }
+
+                        await NavigationService.NavigateAsync(route, worker.Token, parameter);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Navigate)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(Navigate)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(Navigate)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
         private SelectableEaconditionEntry CreateSelectableEntry(Eacondition data)
@@ -119,69 +247,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        private void LoadonUIThread(List<SelectableEaconditionEntry> questions, EaconditionEntry? question, int offset, int count)
         {
-            base.OnPropertyChanged(e);
-            if (e.PropertyName == string.Empty)
-            {
-                OnPropertyChanged(nameof(SelectedChoicesCount));
-            }
-        }
-
-        protected override void OnPrepare(NavigationParameters navigationParameters)
-        {
-            //if (query.ContainsKey(nameof(FilterIds)))
-            //{
-            //    FilterIds = query[nameof(FilterIds)]?.ToString()?.Split(";").ToList() ?? new List<string>();
-            //}
-
-            //DrillDownMode = query.ContainsKey(nameof(DrillDownMode))
-            //    ? Enum.Parse<DrillDownMode>(query[nameof(DrillDownMode)]?.ToString() ?? nameof(DrillDownMode.Unknown))
-            //    : DrillDownMode.Unknown;
-        }
-
-        protected async override Task Navigate(CancellationToken cancellationToken)
-        {
-            try
-            {
-                if (DrillDownMode == DrillDownMode.Detail)
-                {
-                    await Shell.Current.GoToAsync(new ShellNavigationState(".."), true);
-                }
-                else
-                {
-                    var parameter = new Dictionary<string, object>
-                    {
-                        { "Culture", Culture.Name },
-                    };
-
-                    var filterIds = SelectedChoices.SelectMany(x => x.Links.Select(l => l.id));
-                    parameter.Add(nameof(FilterIds), string.Join(";", filterIds));
-                    DrillDownMode nextDrillDownMode = DrillDownMode.Unknown;
-                    switch (DrillDownMode)
-                    {
-                        case DrillDownMode.Unknown:
-                            nextDrillDownMode = DrillDownMode.Filtered;
-                            parameter.Add(nameof(DrillDownMode), nextDrillDownMode.ToString());
-                            break;
-                        case DrillDownMode.Filtered:
-                            nextDrillDownMode = DrillDownMode.Detail;
-                            parameter.Add(nameof(DrillDownMode), nextDrillDownMode.ToString());
-                            var item = SelectedChoices[0].Export() as Eacondition;
-                            if (item != null)
-                            {
-                                parameter.Add("Index", Questions?.ToList().IndexOf(item) ?? 0);
-                            }
-
-                            break;
-                    }
-
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"//{typeof(Eacondition).Name}{nextDrillDownMode}"), true, parameter);
-                }
-            }
-            catch (Exception ex)
-            {
-            }
+            Count = count;
+            Offset = offset;
+            Question = question;
+            CurrentChoices = new ObservableCollection<SelectableEaconditionEntry>(questions);
         }
     }
 }

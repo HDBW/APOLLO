@@ -8,8 +8,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Eafrequency : AbstractQuestion
     {
-        public Eafrequency(RawData data, CultureInfo cultureInfo)
-            : base(data, cultureInfo)
+        public Eafrequency(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
+            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 1 : int.Parse(Data.noprimary, CultureInfo.InvariantCulture);
             Images = new List<Image>() { data.bild1, data.bild2, data.bild3, data.bild4 }.Where(x => x != null).ToList();

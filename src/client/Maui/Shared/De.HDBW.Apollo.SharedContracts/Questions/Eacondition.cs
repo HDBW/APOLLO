@@ -8,8 +8,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Eacondition : AbstractQuestion
     {
-        public Eacondition(RawData data, CultureInfo cultureInfo)
-            : base(data, cultureInfo)
+        public Eacondition(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
+            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 1 : int.Parse(Data.noprimary, CultureInfo.InvariantCulture);
             if (data.reliant != null)

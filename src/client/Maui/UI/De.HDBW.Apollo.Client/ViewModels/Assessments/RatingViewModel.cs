@@ -77,7 +77,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     foreach (var data in cachedDatas)
                     {
                         var rawData = data.ToRawData();
-                        questions.Add(CreateEntry(QuestionFactory.Create<Rating>(rawData!, Culture)));
+                        questions.Add(CreateEntry(QuestionFactory.Create<Rating>(rawData!,data.RawDataId, data.ModuleId, data.AssesmentId, Culture)));
                     }
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(questions, offset, count), worker.Token);

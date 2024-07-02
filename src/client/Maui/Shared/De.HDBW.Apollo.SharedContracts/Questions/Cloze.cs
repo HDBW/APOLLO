@@ -9,8 +9,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Cloze : AbstractQuestion
     {
-        public Cloze(RawData data, CultureInfo cultureInfo)
-            : base(data, cultureInfo)
+        public Cloze(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
+            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             var id1 = new List<string>() { data.cloze_id1_1, data.cloze_id1_2, data.cloze_id1_3, data.cloze_id1_4 };
