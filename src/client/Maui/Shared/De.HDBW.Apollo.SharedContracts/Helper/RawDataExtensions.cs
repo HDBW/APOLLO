@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using De.HDBW.Apollo.SharedContracts.Converters;
+using De.HDBW.Apollo.SharedContracts.Models;
 
 namespace De.HDBW.Apollo.SharedContracts.Helper
 {
@@ -31,6 +32,16 @@ namespace De.HDBW.Apollo.SharedContracts.Helper
 
         public static RawData? ToRawData(this Invite.Apollo.App.Graph.Common.Models.Assessments.RawData data)
         {
+            return JsonSerializer.Deserialize<RawData>(data.Data, Options);
+        }
+
+        public static RawData? ToRawData(this CachedRawData data)
+        {
+            if (data == null || string.IsNullOrWhiteSpace(data.Data))
+            {
+                return null;
+            }
+
             return JsonSerializer.Deserialize<RawData>(data.Data, Options);
         }
     }

@@ -15,5 +15,19 @@ namespace De.HDBW.Apollo.Data.Repositories
             : base(dataBaseConnectionProvider, logger)
         {
         }
+
+        public async Task<CachedRawData> GetItemAsync(string sessionId, string rawdataId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<CachedRawData>().FirstOrDefaultAsync(x => x.SessionId == sessionId && x.RawDataId == rawdataId).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<CachedRawData>> GetItemsAsync(string sessionId, IEnumerable<string> rawdataIds, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<CachedRawData>().Where(x => x.SessionId == sessionId && rawdataIds.Contains(x.RawDataId)).ToListAsync().ConfigureAwait(false);
+        }
     }
 }

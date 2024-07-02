@@ -14,12 +14,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
     {
         public ClozeViewModel(
             IAssessmentService service,
+            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<ClozeViewModel> logger)
-            : base(service, repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository, repository, dispatcherService, navigationService, dialogService, logger)
         {
         }
 

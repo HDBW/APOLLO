@@ -3,23 +3,25 @@
 
 using System.Globalization;
 using De.HDBW.Apollo.SharedContracts.Helper;
+using Invite.Apollo.App.Graph.Common.Models.Assessments;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public abstract class AbstractQuestion
     {
-        protected AbstractQuestion(RawData data, string itemId, string compancyId, string bookletId, CultureInfo culture)
+        protected AbstractQuestion(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo culture)
         {
             ArgumentNullException.ThrowIfNull(data);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(itemId);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(compancyId);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(bookletId);
+            ArgumentNullException.ThrowIfNull(culture);
+            ArgumentNullException.ThrowIfNull(rawDataId);
+            ArgumentNullException.ThrowIfNull(modulId);
+            ArgumentNullException.ThrowIfNull(assessmentId);
             Culture = culture;
             IsRTL = Culture.TextInfo.IsRightToLeft;
-            ItemId = itemId.Trim();
-            CompancyId = compancyId.Trim();
-            BookletId = bookletId.Trim();
             Data = data;
+            RawDataId = rawDataId;
+            ModulId = modulId;
+            AssessmentId = assessmentId;
             var parts = data.stemm.ToTextAndQuestion(culture);
             Text = parts.Text;
             Question = parts.Question;
@@ -29,12 +31,6 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public CultureInfo Culture { get; }
 
-        public string ItemId { get; }
-
-        public string CompancyId { get; }
-
-        public string BookletId { get; }
-
         public string? Instruction
         {
             get { return Data.instruction; }
@@ -43,6 +39,12 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public string? Text { get; }
 
         public string? Question { get; }
+
+        public string RawDataId { get; }
+
+        public string ModulId { get; }
+
+        public string AssessmentId { get; }
 
         protected RawData Data { get; }
 

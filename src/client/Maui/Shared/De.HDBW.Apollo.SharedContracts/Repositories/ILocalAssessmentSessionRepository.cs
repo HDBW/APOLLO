@@ -9,5 +9,6 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         IRepository<LocalAssessmentSession>,
         IDatabaseRepository<LocalAssessmentSession>
     {
+        Task<LocalAssessmentSession?> GetItemBySessionIdAsync(string sessionId, CancellationToken token);
     }
 }

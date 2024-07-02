@@ -270,7 +270,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         SessionId = sessionId,
                         AssessmentId = assessmentId,
                         ModuleId = _moduleId!,
-                        QuestionOrder = string.Join(";", questionIds),
+                        RawDataOrder = string.Join(";", questionIds),
+                        CurrentRawDataId = session.CurrentRawdata,
                     };
 
                     if (!await LocalAssessmentSessionRepository.AddItemAsync(localSession, worker.Token).ConfigureAwait(false))
@@ -283,7 +284,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     for (var i = 1; i <= session.RawDatas.Count; i++)
                     {
                         var data = session.RawDatas[i - 1];
-                        items.Add(new CachedRawData() { Id = i, SessionId = session.SessionId, AssesmentId = data.AssesmentId, ModuleId = data.ModuleId, Data = data.Data });
+                        items.Add(new CachedRawData() { Id = i, RawDataId = data.RawDataId, SessionId = session.SessionId, AssesmentId = data.AssesmentId, ModuleId = data.ModuleId, Data = data.Data });
                     }
 
                     await RawDataCacheRepository.ResetItemsAsync(items, worker.Token).ConfigureAwait(false);
@@ -298,6 +299,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.Id, _moduleId);
                     parameters.AddValue(NavigationParameter.Data, sessionId);
+                    parameters.AddValue(NavigationParameter.Language, _language);
                     await NavigationService.NavigateAsync(route, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)

@@ -1,12 +1,17 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.SharedContracts.Helper;
+using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -19,10 +24,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         where TV : AbstractQuestionEntry
     {
         [ObservableProperty]
+        private int _offset;
+
+        [ObservableProperty]
+        private int _count;
+
+        [ObservableProperty]
         private TV? _question;
 
         [ObservableProperty]
-        private IReadOnlyCollection<TU>? _questions;
+        private ObservableCollection<TU>? _questions;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FlowDirection))]
@@ -30,7 +41,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected AbstractQuestionViewModel(
             IAssessmentService service,
-            IRawDataCacheRepository rawDataCache,
+            ILocalAssessmentSessionRepository sessionRepository,
+            IRawDataCacheRepository rawDataCacheRepository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -38,9 +50,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(service);
-            ArgumentNullException.ThrowIfNull(rawDataCache);
+            ArgumentNullException.ThrowIfNull(sessionRepository);
+            ArgumentNullException.ThrowIfNull(rawDataCacheRepository);
             Service = service;
-            RawDataCache = rawDataCache;
+            SessionRepository = sessionRepository;
+            RawDataCacheRepository = rawDataCacheRepository;
         }
 
         public FlowDirection FlowDirection
@@ -48,11 +62,23 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             get { return Culture?.TextInfo.IsRightToLeft ?? false ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; }
         }
 
+        protected string? ModuleId { get; set; }
+
+        protected string? DessionId { get; set; }
+
+        protected string? Language { get; set; }
+
+        protected string? SessionId { get; set; }
+
+        protected LocalAssessmentSession? Session { get; set; }
+
         protected IAssessmentService Service { get; }
 
-        protected IRawDataCacheRepository RawDataCache { get; }
+        protected List<string>? RawDataIds { get; set; }
 
-        protected int Offset { get; set; }
+        protected ILocalAssessmentSessionRepository SessionRepository { get; }
+
+        protected IRawDataCacheRepository RawDataCacheRepository { get; }
 
         protected string MediaBasePath { get; } = "https://asset.invite-apollo.app/assets/resized/";
 
@@ -99,7 +125,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         };
 
         [IndexerName("Item")]
-        public string this[string key]
+        public new string this[string key]
         {
             get
             {
@@ -108,33 +134,79 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        public async override Task OnNavigatedToAsync()
         {
-            ParseQuery(query);
-            await LoadDataAsync();
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(SessionId))
+                    {
+                        Logger.LogError($"Session not present in {OnNavigatedToAsync} in {GetType().Name}.");
+                        return;
+                    }
+
+                    Session = await SessionRepository.GetItemBySessionIdAsync(SessionId, worker.Token).ConfigureAwait(false);
+                    if (Session == null)
+                    {
+                        Logger.LogError($"Session not found in {OnNavigatedToAsync} in {GetType().Name}.");
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(Session.RawDataOrder) ||
+                        string.IsNullOrWhiteSpace(Session.CurrentRawDataId) ||
+                        string.IsNullOrWhiteSpace(Session.ModuleId))
+                    {
+                        Logger.LogError($"Session not valid in {OnNavigatedToAsync} in {GetType().Name}.");
+                        return;
+                    }
+
+                    var rawdataId = Session.CurrentRawDataId;
+                    RawDataIds = Session.RawDataOrder.Split(";").ToList();
+                    var offset = RawDataIds.IndexOf(rawdataId);
+                    var count = RawDataIds.Count;
+                    var questions = new List<TU>();
+                    var cachedData = await RawDataCacheRepository.GetItemAsync(SessionId, rawdataId, worker.Token).ConfigureAwait(false);
+                    if (cachedData == null ||
+                        string.IsNullOrWhiteSpace(cachedData.RawDataId) ||
+                        string.IsNullOrWhiteSpace(cachedData.ModuleId) ||
+                        string.IsNullOrWhiteSpace(cachedData.AssesmentId))
+                    {
+                        Logger.LogError($"No cached rawdata found in {OnNavigatedToAsync} in {GetType().Name}.");
+                        return;
+                    }
+
+                    var rawData = cachedData.ToRawData();
+                    var question = CreateEntry(QuestionFactory.Create<TU>(rawData!, cachedData.RawDataId, cachedData.ModuleId, cachedData.AssesmentId, Culture));
+                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(questions, question, offset, count), worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
-        protected virtual void ParseQuery(IDictionary<string, object> query)
+        protected override void OnPrepare(NavigationParameters navigationParameters)
         {
-            if (query.ContainsKey("Index"))
-            {
-                Offset = (int)query["Index"];
-            }
-
-            string culture = "de-DE";
-            if (query.ContainsKey(nameof(Culture)))
-            {
-                culture = (string)query[nameof(Culture)];
-            }
-
-            Culture = new CultureInfo(culture);
+            base.OnPrepare(navigationParameters);
+            ModuleId = navigationParameters.GetValue<string>(NavigationParameter.Id);
+            SessionId = navigationParameters.GetValue<string>(NavigationParameter.Data);
+            Language = navigationParameters.GetValue<string>(NavigationParameter.Language) ?? "de-DE";
+            Culture = new CultureInfo(Language);
             OnPropertyChanged(string.Empty);
-        }
-
-        protected virtual async Task LoadDataAsync()
-        {
-            Questions = new List<TU>(); // await Service.GetQuestionsByTypeAsync<TU>(Culture, CancellationToken.None);
-            Question = CreateEntry(Questions.ToList()[Offset]);
         }
 
         protected abstract TV CreateEntry(TU data);
@@ -142,26 +214,70 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false)]
         protected virtual async Task Navigate(CancellationToken cancellationToken)
         {
-            try
+            using (var worker = ScheduleWork())
             {
-                if (Offset == (Questions?.Count - 1 ?? Offset))
+                try
                 {
-                    await Shell.Current.GoToAsync(new ShellNavigationState(".."), true);
-                }
-                else
-                {
-                    var parameter = new Dictionary<string, object>
+                    if (Offset == (Count - 1))
                     {
-                        { "Index", Offset + 1 },
-                        { "Culture", Culture.Name },
-                    };
+                        await Shell.Current.GoToAsync(new ShellNavigationState(".."), true);
+                    }
+                    else
+                    {
+                        if (RawDataIds == null || Session == null || string.IsNullOrWhiteSpace(SessionId))
+                        {
+                            return;
+                        }
 
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"//{typeof(TU).Name}Filtered"), true, parameter);
+                        var nextRawDataId = RawDataIds[Offset + 1];
+                        var cachedData = await RawDataCacheRepository.GetItemAsync(SessionId, nextRawDataId, worker.Token).ConfigureAwait(false);
+                        var rawData = cachedData.ToRawData();
+                        string? route = rawData?.type.ToRoute();
+                        if (string.IsNullOrWhiteSpace(route))
+                        {
+                            return;
+                        }
+
+                        Session.CurrentRawDataId = nextRawDataId;
+                        await SessionRepository.UpdateItemAsync(Session, worker.Token).ConfigureAwait(false);
+                        var stack = Shell.Current.Navigation.NavigationStack.ToArray();
+                        await ExecuteOnUIThreadAsync(
+                        async () =>
+                        {
+                            Shell.Current.Navigation.RemovePage(stack.Last());
+                            var parameters = new NavigationParameters();
+                            parameters.AddValue(NavigationParameter.Id, ModuleId);
+                            parameters.AddValue(NavigationParameter.Data, SessionId);
+                            parameters.AddValue(NavigationParameter.Language, Language);
+                            await NavigationService.NavigateAsync(route, worker.Token, parameters);
+                        }, worker.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
                 }
             }
-            catch (Exception ex)
-            {
-            }
+        }
+
+        private void LoadonUIThread(List<TU> questions, TV? question, int offset, int count)
+        {
+            Offset = offset;
+            Count = count;
+            Questions = new ObservableCollection<TU>(questions);
+            Question = question;
         }
     }
 }

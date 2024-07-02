@@ -14,5 +14,7 @@ namespace De.HDBW.Apollo.SharedContracts.Models
         public string? ModuleId { get; set; }
 
         public string? Data { get; set; }
+
+        public string? RawDataId { get; set; }
     }
 }

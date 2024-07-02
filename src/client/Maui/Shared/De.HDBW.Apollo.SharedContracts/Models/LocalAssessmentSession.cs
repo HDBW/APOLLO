@@ -13,6 +13,8 @@ namespace De.HDBW.Apollo.SharedContracts.Models
 
         public string? AssessmentId { get; set; }
 
-        public string? QuestionOrder { get; set; }
+        public string? RawDataOrder { get; set; }
+
+        public string? CurrentRawDataId { get; set; }
     }
 }

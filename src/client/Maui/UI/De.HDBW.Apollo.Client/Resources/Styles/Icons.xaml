@@ -29,5 +29,5 @@
     <x:String x:Key="Play">&#x00AC;</x:String>
     <x:String x:Key="Pause">&#x00AB;</x:String>
     <x:String x:Key="Drag">&#x00A9;</x:String>
-    
+
 </ResourceDictionary>

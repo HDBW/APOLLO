@@ -4,13 +4,14 @@
 using System.Globalization;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Models;
+using Invite.Apollo.App.Graph.Common.Models.Assessments;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public class Imagemap : AbstractQuestion
     {
-        public Imagemap(RawData data, string itemId, string compancyId, string bookletId, CultureInfo cultureInfo)
-            : base(data, itemId, compancyId, bookletId, cultureInfo)
+        public Imagemap(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
+            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             Shapes = new List<Shape>()
