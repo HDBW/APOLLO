@@ -10,6 +10,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
     public partial class ChoiceEntry : AbstractQuestionEntry
     {
         [ObservableProperty]
+        private AudioEntry? _questionAudio;
+
+        [ObservableProperty]
         private ObservableCollection<SelectableTextEntry> _answerTexts = new ObservableCollection<SelectableTextEntry>();
 
         [ObservableProperty]
@@ -21,21 +24,27 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private ObservableCollection<object> _questionImageView = new ObservableCollection<object>();
 
-        private ChoiceEntry(Choice data, string basePath, int density, Dictionary<string, int> imageSizeConfig)
+        private ChoiceEntry(Choice data, string basePath, int density, Dictionary<string, int> imageSizeConfig, Action<ZoomableImageEntry> zoomImageCallback)
             : base(data)
         {
             ArgumentNullException.ThrowIfNull(basePath);
+            ArgumentNullException.ThrowIfNull(zoomImageCallback);
             QuestionImages = new ObservableCollection<ImageEntry>(data.QuestionImages.Select(x => ImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.QuestionImages)])));
             AnswerImages = new ObservableCollection<SelectableImageEntry>(data.AnswerImages.Select(x => SelectableImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.AnswerImages)])));
             AnswerTexts = new ObservableCollection<SelectableTextEntry>(data.AnswerTexts.Select(x => SelectableTextEntry.Import(x)));
             switch (QuestionImages.Count())
             {
                 case 1:
-                    QuestionImageView.Add(ZoomableImageEntry.Import(QuestionImages[0].Export(), basePath, density, imageSizeConfig[nameof(data.QuestionImages)]));
+                    QuestionImageView.Add(ZoomableImageEntry.Import(QuestionImages[0].Export(), basePath, density, imageSizeConfig[nameof(data.QuestionImages)], zoomImageCallback));
                     break;
                 case 2:
                     QuestionImageView.Add(PageableImagesEntry.Import(QuestionImages));
                     break;
+            }
+
+            if (data.QuestionAudio != null)
+            {
+                QuestionAudio = AudioEntry.Import(data.QuestionAudio, basePath);
             }
 
             OnPropertyChanged(nameof(HasQuestionImageView));
@@ -49,9 +58,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public static ChoiceEntry Import(Choice data, string basePath, int density, Dictionary<string, int> imageSizeConfig)
+        public static ChoiceEntry Import(Choice data, string basePath, int density, Dictionary<string, int> imageSizeConfig, Action<ZoomableImageEntry> zoomImageCallback)
         {
-            return new ChoiceEntry(data, basePath, density, imageSizeConfig);
+            return new ChoiceEntry(data, basePath, density, imageSizeConfig, zoomImageCallback);
         }
     }
 }

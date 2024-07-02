@@ -5,10 +5,6 @@ namespace De.HDBW.Apollo.Client.Messages
 {
     public class SelectionMessage
     {
-        public SelectionMessage()
-        {
-        }
-
         public SelectionMessage(string text)
         {
             Text = text;

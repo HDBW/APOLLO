@@ -30,11 +30,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             IAssessmentService service,
             ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
+            IUserSecretsService userSecretsService,
+            IAudioPlayerService audioPlayerService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<EaconditionViewModel> logger)
-            : base(service, sessionRepository, repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
         }
 
@@ -85,7 +87,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 Session.CurrentRawDataId = null;
                                 if (!await SessionRepository.UpdateItemAsync(Session, worker.Token).ConfigureAwait(false))
                                 {
-                                    Logger.LogError($"Unabele to update session while {OnNavigatedToAsync} in {GetType().Name}.");
+                                    Logger.LogError($"Unabele to update session while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                                     return;
                                 }
                             }
@@ -106,7 +108,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         var rawdataId = Session.CurrentRawDataId;
                         if (string.IsNullOrWhiteSpace(rawdataId))
                         {
-                            Logger.LogError($"Session not valid in DrillDownMode.Detail while {OnNavigatedToAsync} in {GetType().Name}.");
+                            Logger.LogError($"Session not valid in DrillDownMode.Detail while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                             return;
                         }
 
@@ -118,7 +120,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             string.IsNullOrWhiteSpace(cachedData.ModuleId) ||
                             string.IsNullOrWhiteSpace(cachedData.AssesmentId))
                         {
-                            Logger.LogError($"Rawdate invalid in DrillDownMode.Detail while {OnNavigatedToAsync} in {GetType().Name}.");
+                            Logger.LogError($"Rawdate invalid in DrillDownMode.Detail while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                             return;
                         }
 
@@ -141,7 +143,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                     if (!(cachedDatas?.Any() ?? false))
                     {
-                        Logger.LogError($"No cached rawdata found while {OnNavigatedToAsync} in {GetType().Name}.");
+                        Logger.LogError($"No cached rawdata found while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                         return;
                     }
 
@@ -154,7 +156,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             string.IsNullOrWhiteSpace(filteredItem.ModuleId) ||
                             string.IsNullOrWhiteSpace(filteredItem.AssesmentId))
                         {
-                            Logger.LogWarning($"Found rawdate with invalid ids while {OnNavigatedToAsync} in {GetType().Name}.");
+                            Logger.LogWarning($"Found rawdate with invalid ids while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                             continue;
                         }
 

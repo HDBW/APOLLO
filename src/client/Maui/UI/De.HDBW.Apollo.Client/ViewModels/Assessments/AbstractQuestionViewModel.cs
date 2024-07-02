@@ -43,6 +43,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             IAssessmentService service,
             ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository rawDataCacheRepository,
+            IUserSecretsService userSecretsService,
+            IAudioPlayerService audioPlayerService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
@@ -52,9 +54,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             ArgumentNullException.ThrowIfNull(service);
             ArgumentNullException.ThrowIfNull(sessionRepository);
             ArgumentNullException.ThrowIfNull(rawDataCacheRepository);
+            ArgumentNullException.ThrowIfNull(userSecretsService);
+            ArgumentNullException.ThrowIfNull(audioPlayerService);
+
             Service = service;
             SessionRepository = sessionRepository;
             RawDataCacheRepository = rawDataCacheRepository;
+            MediaBasePath = userSecretsService["MediaAssetStorageURL"] ?? string.Empty;
+            AudioPlayerService = audioPlayerService;
         }
 
         public FlowDirection FlowDirection
@@ -80,7 +87,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected IRawDataCacheRepository RawDataCacheRepository { get; }
 
-        protected string MediaBasePath { get; } = "https://asset.invite-apollo.app/assets/resized/";
+        protected string MediaBasePath { get; } = string.Empty;
+
+        protected IAudioPlayerService AudioPlayerService { get; private set; }
 
         protected int Density { get; } = int.Max(1, int.Min((int)DeviceDisplay.MainDisplayInfo.Density, 4));
 
@@ -270,6 +279,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        protected void OnZoomImage(ZoomableImageEntry entry)
+        {
+            if (IsBusy)
+            {
+                return;
+            }
+
         }
 
         private void LoadonUIThread(List<TU> questions, TV? question, int offset, int count)

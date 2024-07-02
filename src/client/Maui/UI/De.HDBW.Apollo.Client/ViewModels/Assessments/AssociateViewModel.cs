@@ -17,11 +17,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             IAssessmentService service,
             ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
+            IUserSecretsService userSecretsService,
+            IAudioPlayerService audioPlayerService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<AssociateViewModel> logger)
-            : base(service, sessionRepository, repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
         }
 
@@ -31,10 +33,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanReset))]
-        public Task Reset(CancellationToken cancellationToken)
+        private Task Reset(CancellationToken cancellationToken)
         {
             try
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 if (Question == null)
                 {
                     return Task.CompletedTask;
@@ -47,12 +50,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
             catch (OperationCanceledException ex)
             {
+                Logger?.LogInformation(ex, $"Canceled {nameof(Reset)} from {GetType().Name}.");
+                throw;
             }
             catch (ObjectDisposedException ex)
             {
+                Logger?.LogInformation(ex, $"Canceled {nameof(Reset)} from {GetType().Name}.");
+                throw;
             }
             catch (Exception ex)
             {
+                Logger?.LogError(ex, $"Unknown error in {nameof(Reset)} from {GetType().Name}.");
             }
 
             return Task.CompletedTask;

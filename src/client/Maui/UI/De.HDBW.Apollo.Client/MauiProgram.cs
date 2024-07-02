@@ -5,7 +5,9 @@ using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
@@ -46,6 +48,8 @@ using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Microsoft.Maui.Controls.Handlers.Items;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.LifecycleEvents;
+using Plugin.Maui.Audio;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -54,6 +58,7 @@ using Serilog.Sinks.ApplicationInsights;
 using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using The49.Maui.BottomSheet;
+
 #if ANDROID
 using De.HDBW.Apollo.Client.Platforms;
 #else
@@ -92,6 +97,22 @@ namespace De.HDBW.Apollo.Client
                 .UseMauiCompatibility()
                 .UseCustomDatePicker()
                 .UseSkiaSharp()
+                .ConfigureLifecycleEvents((events) =>
+                {
+#if ANDROID
+                    events.AddAndroid((android) =>
+                    {
+                        android.OnResume((activity) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Running)); });
+                        android.OnPause((activity) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Paused)); });
+                    });
+#elif IOS
+                    events.AddiOS((ios) =>
+                    {
+                        ios.OnActivated((application) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Running)); });
+                        ios.DidEnterBackground((application) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Paused)); });
+                    });
+#endif
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
@@ -101,7 +122,22 @@ namespace De.HDBW.Apollo.Client
                     fonts.AddFont("NotoSerif-Bold.ttf", "NotoSerifBold");
                     fonts.AddFont("ApolloFontIcons.ttf", "ApolloFontIcons");
                 })
-            .UseBottomSheet();
+            .UseBottomSheet()
+            .AddAudio(
+                playbackOptions =>
+                {
+#if IOS || MACCATALYST
+                    playbackOptions.Category = AVFoundation.AVAudioSessionCategory.Playback;
+#endif
+                },
+                recordingOptions =>
+                {
+#if IOS || MACCATALYST
+                    recordingOptions.Category = AVFoundation.AVAudioSessionCategory.Record;
+                    recordingOptions.Mode = AVFoundation.AVAudioSessionMode.Default;
+                    recordingOptions.CategoryOptions = AVFoundation.AVAudioSessionCategoryOptions.MixWithOthers;
+#endif
+                });
             builder.ConfigureMauiHandlers(SetupHandlers);
             return builder.Build();
         }
@@ -236,6 +272,7 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AuthenticationResult? authenticationResult)
         {
+            services.AddSingleton<IAudioPlayerService, AudioPlayerService>();
             services.AddSingleton<IImageCacheService, ImageCacheService>();
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();

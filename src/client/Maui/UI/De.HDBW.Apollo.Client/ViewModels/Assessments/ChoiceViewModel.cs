@@ -16,17 +16,19 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             IAssessmentService service,
             ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
+            IUserSecretsService userSecretsService,
+            IAudioPlayerService audioPlayerService,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<ChoiceViewModel> logger)
-            : base(service, sessionRepository, repository, dispatcherService, navigationService, dialogService, logger)
+            : base(service, sessionRepository, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
         }
 
         protected override ChoiceEntry CreateEntry(Choice data)
         {
-            return ChoiceEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(ChoiceEntry)]);
+            return ChoiceEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(ChoiceEntry)], OnZoomImage);
         }
     }
 }

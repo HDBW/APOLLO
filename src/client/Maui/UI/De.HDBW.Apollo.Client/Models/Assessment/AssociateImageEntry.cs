@@ -18,7 +18,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         private Func<int?, int?> _incrementCallback;
 
-        public AssociateImageEntry(Image data, string basePath, int density, int size, Func<AssociateImageEntry, int> getIndexCallback, Func<int?, int?> incrementCallback)
+        private AssociateImageEntry(Image data, string basePath, int density, int size, Func<AssociateImageEntry, int> getIndexCallback, Func<int?, int?> incrementCallback)
             : base(data, basePath, density, size)
         {
             ArgumentNullException.ThrowIfNull(getIndexCallback);
@@ -73,20 +73,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [RelayCommand(AllowConcurrentExecutions = false)]
         private Task Increment(CancellationToken cancellationToken)
         {
-            try
+            if (cancellationToken.IsCancellationRequested)
             {
-                AssociatedIndex = _incrementCallback.Invoke(AssociatedIndex);
-            }
-            catch (OperationCanceledException ex)
-            {
-            }
-            catch (ObjectDisposedException ex)
-            {
-            }
-            catch (Exception ex)
-            {
+                return Task.CompletedTask;
             }
 
+            AssociatedIndex = _incrementCallback.Invoke(AssociatedIndex);
             return Task.CompletedTask;
         }
     }

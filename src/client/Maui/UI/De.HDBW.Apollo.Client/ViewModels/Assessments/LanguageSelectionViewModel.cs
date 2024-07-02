@@ -20,7 +20,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [NotifyPropertyChangedFor(nameof(FlowDirection))]
         private CultureInfo _culture = new CultureInfo("de-DE");
 
-        private string _selectedLanguage;
+        private string? _selectedLanguage;
         private string[] _supportedLanguages = Array.Empty<string>();
         private NavigationParameters? _parameters;
 
@@ -33,7 +33,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
         }
 
-        public FlowDirection FlowDirection { get { return Culture?.TextInfo.IsRightToLeft ?? false ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; } }
+        public FlowDirection FlowDirection
+        {
+            get { return Culture?.TextInfo.IsRightToLeft ?? false ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; }
+        }
 
         public async override Task OnNavigatedToAsync()
         {

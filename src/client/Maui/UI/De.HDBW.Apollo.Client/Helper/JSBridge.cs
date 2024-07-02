@@ -24,14 +24,20 @@ namespace De.HDBW.Apollo.Client.Helper
 
         /// <summary>
         /// Called from JS.
+        /// <param name="id">The id of the input.</param>
+        /// <param name="value">The current value of the input.</param>
         /// </summary>
         public async void SetValue(string id, string value)
         {
-            WeakReferenceMessenger.Default.Send(new SetValueMessage(id, value));
+            await _dispatcher.DispatchAsync(() =>
+            {
+                WeakReferenceMessenger.Default.Send(new SetValueMessage(id, value));
+            });
         }
 
         /// <summary>
         /// Called from JS.
+        /// <param name="id">The id of the input.</param>
         /// </summary>
         public async void RemovedFocused(string id)
         {

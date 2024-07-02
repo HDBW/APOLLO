@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.Client.Helper
 {
     public static class QuestionTypeExtensions
     {
-        public static string ToRoute(this QuestionType type)
+        public static string? ToRoute(this QuestionType type)
         {
             switch (type)
             {

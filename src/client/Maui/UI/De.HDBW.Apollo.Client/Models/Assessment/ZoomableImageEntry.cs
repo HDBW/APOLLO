@@ -8,19 +8,29 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class ZoomableImageEntry : ImageEntry
     {
-        private ZoomableImageEntry(Image data, string basePath, int density, int size)
+        private Action<ZoomableImageEntry> _zoomImageCallback;
+
+        private ZoomableImageEntry(Image data, string basePath, int density, int size, Action<ZoomableImageEntry> zoomImageCallback)
             : base(data, basePath, density, size)
         {
+            ArgumentNullException.ThrowIfNull(zoomImageCallback);
+            _zoomImageCallback = zoomImageCallback;
         }
 
-        public static new ZoomableImageEntry Import(Image data, string basePath, int density, int size)
+        public static ZoomableImageEntry Import(Image data, string basePath, int density, int size, Action<ZoomableImageEntry> zoomImageCallback)
         {
-            return new ZoomableImageEntry(data, basePath, density, size);
+            return new ZoomableImageEntry(data, basePath, density, size, zoomImageCallback);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false)]
         private Task Zoom(CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return Task.CompletedTask;
+            }
+
+            _zoomImageCallback.Invoke(this);
             return Task.CompletedTask;
         }
     }
