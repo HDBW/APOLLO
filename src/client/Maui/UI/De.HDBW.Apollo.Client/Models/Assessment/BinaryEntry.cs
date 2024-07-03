@@ -8,17 +8,25 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class BinaryEntry : AbstractQuestionEntry
     {
+        private readonly Func<AudioEntry, Action<bool>, Task<bool>> _togglePlaybackCallback;
+        private readonly Func<AudioEntry, Action<bool>, Task<bool>> _restartAudioCallback;
+
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(TogglePlayCommand))]
         private AudioEntry? _questionAudio;
 
         [ObservableProperty]
         private bool _isPlaying;
 
-        private BinaryEntry(Binary data, string basePath)
+        private BinaryEntry(Binary data, string basePath, Func<AudioEntry, Action<bool>, Task<bool>> togglePlaybackCallback, Func<AudioEntry, Action<bool>, Task<bool>> restartAudioCallback)
             : base(data)
         {
             ArgumentNullException.ThrowIfNull(basePath);
+            ArgumentNullException.ThrowIfNull(togglePlaybackCallback);
+            ArgumentNullException.ThrowIfNull(restartAudioCallback);
 
+            _togglePlaybackCallback = togglePlaybackCallback;
+            _restartAudioCallback = restartAudioCallback;
             if (data.QuestionAudio == null)
             {
                 return;
@@ -27,16 +35,36 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             QuestionAudio = AudioEntry.Import(data.QuestionAudio, basePath);
         }
 
-        public static BinaryEntry Import(Binary data, string basePath)
+        public static BinaryEntry Import(Binary data, string basePath, Func<AudioEntry, Action<bool>, Task<bool>> togglePlaybackCallback, Func<AudioEntry, Action<bool>, Task<bool>> restartAudioCallback)
         {
-            return new BinaryEntry(data, basePath);
+            return new BinaryEntry(data, basePath, togglePlaybackCallback, restartAudioCallback);
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false)]
-        private Task TogglePlay(CancellationToken cancellationToken)
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanTogglePlay))]
+        private async Task TogglePlay(CancellationToken cancellationToken)
         {
-            IsPlaying = !IsPlaying;
-            return Task.CompletedTask;
+            IsPlaying = await _togglePlaybackCallback.Invoke(QuestionAudio!, UpdateIsPlaying);
+        }
+
+        private bool CanTogglePlay()
+        {
+            return QuestionAudio != null;
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanRestartPlay))]
+        private async Task RestartPlay(CancellationToken cancellationToken)
+        {
+            IsPlaying = await _restartAudioCallback.Invoke(QuestionAudio!, UpdateIsPlaying);
+        }
+
+        private bool CanRestartPlay()
+        {
+            return IsPlaying;
+        }
+
+        private void UpdateIsPlaying(bool isPlaying)
+        {
+            IsPlaying = isPlaying;
         }
     }
 }

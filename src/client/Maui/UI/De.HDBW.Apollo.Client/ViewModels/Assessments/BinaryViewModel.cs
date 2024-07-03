@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected override BinaryEntry CreateEntry(Binary data)
         {
-            return BinaryEntry.Import(data, MediaBasePath);
+            return BinaryEntry.Import(data, MediaBasePath, OnToggleAudioPlaybackAsync, OnRestartAudioAsync);
         }
     }
 }

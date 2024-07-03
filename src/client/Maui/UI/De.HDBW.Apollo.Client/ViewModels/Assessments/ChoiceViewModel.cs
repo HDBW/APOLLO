@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected override ChoiceEntry CreateEntry(Choice data)
         {
-            return ChoiceEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(ChoiceEntry)], OnZoomImage);
+            return ChoiceEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(ChoiceEntry)], OnZoomImageAsync, OnToggleAudioPlaybackAsync, OnRestartAudioAsync);
         }
     }
 }

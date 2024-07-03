@@ -17,6 +17,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Audio;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 {
@@ -39,6 +40,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FlowDirection))]
         private CultureInfo _culture = new CultureInfo("de-DE");
+
+        private Action<bool>? _updateStateHandler;
 
         protected AbstractQuestionViewModel(
             IAssessmentService service,
@@ -90,7 +93,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected string MediaBasePath { get; } = string.Empty;
 
-        protected IAudioPlayerService AudioPlayerService { get; private set; }
+        protected IAudioPlayerService AudioPlayerService { get; }
 
         protected int Density { get; } = int.Max(1, int.Min((int)DeviceDisplay.MainDisplayInfo.Density, 4));
 
@@ -209,6 +212,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
+        public override Task OnNavigatingFromAsync()
+        {
+            AudioPlayerService.Stop(HandlePlaybackCompleted);
+            _updateStateHandler = null;
+            return base.OnNavigatingFromAsync();
+        }
+
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
             base.OnPrepare(navigationParameters);
@@ -282,7 +292,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        protected async void OnZoomImage(ZoomableImageEntry entry)
+        protected async void OnZoomImageAsync(ZoomableImageEntry entry)
         {
             if (IsBusy)
             {
@@ -292,6 +302,80 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             var parameters = new NavigationParameters();
             parameters.AddValue(NavigationParameter.Data, entry.AbsolutePath);
             await DialogService.ShowPopupAsync<ImageZoomDialog, NavigationParameters, NavigationParameters>(parameters, CancellationToken.None).ConfigureAwait(false);
+        }
+
+        protected async Task<bool> OnToggleAudioPlaybackAsync(AudioEntry entry, Action<bool> updateStateHandler)
+        {
+            try
+            {
+                if (IsBusy)
+                {
+                    return false;
+                }
+
+                if (!AudioPlayerService.IsPlaying && !AudioPlayerService.IsPaused)
+                {
+                    _updateStateHandler = updateStateHandler;
+                    return await AudioPlayerService.StartAsync(entry.AbsolutePath, HandlePlaybackCompleted, CancellationToken.None).ConfigureAwait(false);
+                }
+                else if (AudioPlayerService.IsPlaying)
+                {
+                    AudioPlayerService.Pause();
+                    return AudioPlayerService.IsPlaying;
+                }
+                else if (AudioPlayerService.IsPaused)
+                {
+                    AudioPlayerService.Resume();
+                    return AudioPlayerService.IsPlaying;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(OnToggleAudioPlaybackAsync)} in {GetType().Name}.");
+            }
+
+            return false;
+        }
+
+        protected async Task<bool> OnRestartAudioAsync(AudioEntry entry, Action<bool> updateStateHandler)
+        {
+            try
+            {
+                AudioPlayerService.Stop(HandlePlaybackCompleted);
+                _updateStateHandler?.Invoke(AudioPlayerService.IsPlaying);
+                _updateStateHandler = null;
+                return await OnToggleAudioPlaybackAsync(entry, updateStateHandler);
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(OnToggleAudioPlaybackAsync)} in {GetType().Name}.");
+            }
+
+            return false;
+        }
+
+        private void HandlePlaybackCompleted(object? sender, EventArgs e)
+        {
+            var player = sender as IAudioPlayer;
+            if (player == null)
+            {
+                return;
+            }
+
+            // We need to decouple her
+            Task.Run(UpdateStateAsync);
+        }
+
+        private async Task UpdateStateAsync()
+        {
+            await Task.Delay(200);
+            await ExecuteOnUIThreadAsync(
+                () =>
+                {
+                    AudioPlayerService.Stop(HandlePlaybackCompleted);
+                    _updateStateHandler?.Invoke(AudioPlayerService.IsPlaying);
+                    _updateStateHandler = null;
+                }, CancellationToken.None);
         }
 
         private void LoadonUIThread(List<TU> questions, TV? question, int offset, int count)

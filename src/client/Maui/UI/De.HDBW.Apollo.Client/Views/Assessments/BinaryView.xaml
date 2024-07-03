@@ -43,7 +43,7 @@
                 </Border>
                 <Grid ColumnDefinitions="*, auto" Margin="0,0,0,64" Grid.Row="1">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1"/>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding RestartPlayCommand, Mode=OneTime}"/>
                     </Grid.GestureRecognizers>
                     <Label Grid.Column="0" InputTransparent="True" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" Text="{x:Binding BindingContext[BtnTxtGlobalReset], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End"/>
                     <Image Grid.Column="1" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" VerticalOptions="Start" Margin="12">
@@ -52,7 +52,7 @@
                         </Image.Source>
                     </Image>
                 </Grid>
-                <Label Text="Hier Fehlt noch Text!" Margin="8,0,8,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Question, Mode=OneWay}" Margin="8,0,8,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
                 <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="8,0,8,0" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
                 <RadioButton Margin="0,0,0,0" ControlTemplate="{StaticResource RadioButtonLikeButtonTemplate}">
                     <RadioButton.Content>

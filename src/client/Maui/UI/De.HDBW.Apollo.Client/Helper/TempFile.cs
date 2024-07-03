@@ -1,5 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
+using System.IO;
+
 namespace De.HDBW.Apollo.Client.Helper
 {
     public sealed class TempFile : IDisposable
@@ -23,7 +25,7 @@ namespace De.HDBW.Apollo.Client.Helper
 
         ~TempFile() => Dispose(false);
 
-        public FileInfo FileInfo { get; }
+        public FileInfo FileInfo { get; private set; }
 
         public static implicit operator FileInfo(TempFile temporaryFile)
         {
@@ -45,6 +47,7 @@ namespace De.HDBW.Apollo.Client.Helper
             using (var file = new FileStream(this, FileMode.Open))
             {
                 await stream.CopyToAsync(file);
+                await file.FlushAsync();
             }
         }
 
@@ -71,6 +74,13 @@ namespace De.HDBW.Apollo.Client.Helper
             }
 
             _disposed = true;
+        }
+
+        public void Move(string path, bool overwrite)
+        {
+            var tempFile = FileInfo.FullName;
+            FileInfo.MoveTo(path, overwrite);
+            FileInfo = new FileInfo(tempFile);
         }
     }
 }

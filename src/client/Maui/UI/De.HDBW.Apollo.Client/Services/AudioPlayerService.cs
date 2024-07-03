@@ -1,11 +1,11 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Messages;
-using De.HDBW.Apollo.Client.Models.Assessment;
 using Microsoft.Extensions.Logging;
 using Plugin.Maui.Audio;
 
@@ -14,20 +14,71 @@ namespace De.HDBW.Apollo.Client.Services
     public class AudioPlayerService : IAudioPlayerService
     {
         private IAudioPlayer? _audioPlayer;
+        private bool? _wasPlaying;
 
         public AudioPlayerService(IAudioManager audioManager, ILogger<AudioPlayerService> logger)
         {
             ArgumentNullException.ThrowIfNull(audioManager);
             ArgumentNullException.ThrowIfNull(logger);
+            WeakReferenceMessenger.Default.Register<LiveCycleChangedMessage>(this, OnLifeCycleChanged);
             AudioManager = audioManager;
             Logger = logger;
+        }
+
+        public bool IsPaused
+        {
+            get
+            {
+                if (_audioPlayer == null)
+                {
+                    return false;
+                }
+
+                return !_audioPlayer.IsPlaying;
+            }
+        }
+
+        public bool IsPlaying
+        {
+            get
+            {
+                if (_audioPlayer == null)
+                {
+                    return false;
+                }
+
+                return _audioPlayer.IsPlaying;
+            }
         }
 
         private IAudioManager AudioManager { get; }
 
         private ILogger Logger { get; }
 
-        public async Task<bool> StartAsync(AudioEntry audio, CancellationToken token)
+        public void Pause()
+        {
+            if (IsPlaying)
+            {
+                _wasPlaying = true;
+                _audioPlayer?.Pause();
+            }
+            else
+            {
+                _wasPlaying = null;
+            }
+        }
+
+        public void Resume()
+        {
+            if (IsPaused)
+            {
+                _audioPlayer?.Play();
+            }
+
+            _wasPlaying = null;
+        }
+
+        public async Task<bool> StartAsync(string absolutePath, EventHandler handlePlaybackEnded, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             try
@@ -37,7 +88,7 @@ namespace De.HDBW.Apollo.Client.Services
                 AVFoundation.AVAudioSession.SharedInstance().SetCategory(AVFoundation.AVAudioSessionCategory.Playback);
 #endif
                 string cacheDir = FileSystem.Current.CacheDirectory;
-                var path = Path.Combine(cacheDir, Path.GetFileName(audio.AbsolutePath));
+                var path = Path.Combine(cacheDir, Path.GetFileName(absolutePath));
                 if (!File.Exists(path))
                 {
                     try
@@ -46,10 +97,10 @@ namespace De.HDBW.Apollo.Client.Services
                         {
                             using (var tempFile = new TempFile())
                             {
-                                using (var stream = await client.GetStreamAsync(audio.AbsolutePath, token).ConfigureAwait(false))
+                                using (var stream = await client.GetStreamAsync(absolutePath, token).ConfigureAwait(false))
                                 {
                                     await tempFile.SaveAsync(stream);
-                                    tempFile.FileInfo.MoveTo(path, true);
+                                    tempFile.Move(path, true);
                                 }
                             }
                         }
@@ -61,8 +112,9 @@ namespace De.HDBW.Apollo.Client.Services
                     }
                 }
 
-                _audioPlayer = AudioManager.CreatePlayer(File.Open(path, FileMode.Open, FileAccess.Read));
+                _audioPlayer = AudioManager.CreatePlayer(path);
                 _audioPlayer.Play();
+                _audioPlayer.PlaybackEnded += handlePlaybackEnded;
                 return true;
             }
             catch (Exception ex)
@@ -77,15 +129,21 @@ namespace De.HDBW.Apollo.Client.Services
             }
         }
 
-        public void Stop()
+        public void Stop(EventHandler eventHandler)
         {
 #if IOS
             AVFoundation.AVAudioSession.SharedInstance().SetCategory(AVFoundation.AVAudioSessionCategory.Playback);
             AVFoundation.AVAudioSession.SharedInstance().SetActive(false);
 #endif
+            if (_audioPlayer != null)
+            {
+                _audioPlayer.PlaybackEnded -= eventHandler;
+            }
+
             _audioPlayer?.Stop();
             _audioPlayer?.Dispose();
             _audioPlayer = null;
+            _wasPlaying = false;
         }
 
         private void OnLifeCycleChanged(object recipient, LiveCycleChangedMessage message)
@@ -93,10 +151,13 @@ namespace De.HDBW.Apollo.Client.Services
             switch (message.State)
             {
                 case LifeCycleState.Paused:
-                    _audioPlayer?.Pause();
+                    Pause();
                     break;
                 case LifeCycleState.Running:
-                    _audioPlayer?.Play();
+                    if (_wasPlaying == true)
+                    {
+                        Resume();
+                    }
                     break;
             }
         }

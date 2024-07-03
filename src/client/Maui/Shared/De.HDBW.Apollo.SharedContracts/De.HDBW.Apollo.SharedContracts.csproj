@@ -12,10 +12,10 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="T4\ClozeHtml.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ClozeHtml.cs</LastGenOutput>
-    </None>
+     <None Update="T4\ClozeHtml.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>ClozeHtml.cs</LastGenOutput>
+      </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />

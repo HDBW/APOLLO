@@ -24,7 +24,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             get
             {
-                return Path.Combine(_basePath, _data.id, _data.name);
+                var fileName = $"{_data.id}{Path.GetExtension(_data.name)}";
+                return Path.Combine(_basePath, fileName);
             }
         }
 

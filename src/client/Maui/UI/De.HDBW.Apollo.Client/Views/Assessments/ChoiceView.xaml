@@ -50,6 +50,7 @@
                 </Border>
             </Grid>
         </DataTemplate>
+        
         <DataTemplate x:Key="ChoiceEntryText" x:DataType="models:SelectableTextEntry">
             <Grid Padding="4">
                 <Border Grid.Column="1" Padding="12" StrokeThickness="4" Stroke="Transparent" Style="{StaticResource PictureEntryBorderStyle}">
@@ -132,7 +133,52 @@
                              IsVisible="{x:Binding HasQuestionImageView, Mode=OneWay}"
                              BindableLayout.ItemsSource="{x:Binding QuestionImageView, Mode=OneWay}"
                              BindableLayout.ItemTemplateSelector="{x:StaticResource QuestionImagesTemplateSelector}"/>
-
+                <VerticalStackLayout x:Name="PART_Audio" IsVisible="False">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{x:Binding HasAudioView, Mode=OneWay}" Value="True">
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Border Padding="12" Margin="4" Style="{StaticResource PictureEntryBorderStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding TogglePlayCommand, Mode=OneTime}"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*, auto" >
+                            <Label Text="{x:Binding BindingContext[AudioAssesmentsBinaryStart], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,12,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{x:Binding IsPlaying, Mode=OneWay}" Value="True">
+                                        <Setter Property="Text" Value="{x:Binding BindingContext[AudioAssesmentsBinaryStop], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Image Grid.Column="1" HeightRequest="24" WidthRequest="24" HorizontalOptions="End">
+                                <Image.Source>
+                                    <FontImageSource Glyph="{StaticResource Play}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                </Image.Source>
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image" Binding="{x:Binding IsPlaying, Mode=OneWay}" Value="True">
+                                        <Setter Property="Source">
+                                            <Setter.Value>
+                                                <FontImageSource Glyph="{StaticResource Pause}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
+                    </Border>
+                    <Grid ColumnDefinitions="*, auto" Margin="0,0,0,64" Grid.Row="1">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding RestartPlayCommand, Mode=OneTime}"/>
+                        </Grid.GestureRecognizers>
+                        <Label Grid.Column="0" InputTransparent="True" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" Text="{x:Binding BindingContext[BtnTxtGlobalReset], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End"/>
+                        <Image Grid.Column="1" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" VerticalOptions="Start" Margin="12">
+                            <Image.Source>
+                                <FontImageSource Glyph="{StaticResource Reset}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            </Image.Source>
+                        </Image>
+                    </Grid>
+                </VerticalStackLayout>
                 <Label Text="{x:Binding Question, Mode=OneWay}" Margin="4,0,4,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
                 <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,4" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
                 <CollectionView x:Name="PART_ImageChoice" Margin="0,0,0,0" ItemsSource="{x:Binding AnswerImages, Mode=OneWay}" ItemTemplate="{StaticResource ChoiceEntryImage}" IsVisible="True" ItemsLayout="VerticalGrid, 2"/>

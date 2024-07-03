@@ -24,7 +24,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
             AssessmentId = assessmentId;
             var parts = data.stemm.ToTextAndQuestion(culture);
             Text = parts.Text;
-            Question = parts.Question;
+            Question = parts.Question ?? SubQestion;
         }
 
         public bool IsRTL { get; }
@@ -34,6 +34,11 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public string? Instruction
         {
             get { return Data.instruction; }
+        }
+
+        public string? SubQestion
+        {
+            get { return Data.substemm; }
         }
 
         public string? Text { get; }
