@@ -6,7 +6,6 @@
 
 using System;
 using Invite.Apollo.App.Graph.Common.Models.Lists;
-using Invite.Apollo.App.Graph.Common.Models.UserProfile.Enums;
 
 namespace Invite.Apollo.App.Graph.Common.Models
 {

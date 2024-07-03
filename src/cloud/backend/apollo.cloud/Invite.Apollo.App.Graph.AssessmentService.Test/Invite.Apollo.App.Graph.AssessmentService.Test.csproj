@@ -16,8 +16,4 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Graph.Apollo.Cloud.Assessment\Invite.Apollo.App.Graph.Assessment.csproj" />
-  </ItemGroup>
-
 </Project>

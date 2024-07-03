@@ -10,9 +10,9 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/HDBW/APOLLO.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.1.71</AssemblyVersion>
-    <FileVersion>1.0.1.71</FileVersion>
-	  <Version>1.0.1.71</Version>
+    <AssemblyVersion>1.0.1.72</AssemblyVersion>
+    <FileVersion>1.0.1.72</FileVersion>
+	  <Version>1.0.1.72</Version>
 	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -21,11 +21,21 @@
     <Compile Remove="Models\Recommendation\**" />
     <EmbeddedResource Remove="Models\Activities\**" />
     <EmbeddedResource Remove="Models\Recommendation\**" />
+    <EmbeddedResource Remove="Protos\google\**" />
     <None Remove="Models\Activities\**" />
     <None Remove="Models\Recommendation\**" />
+    <None Remove="Protos\google\**" />
   </ItemGroup>
-
   <ItemGroup>
+    <Protobuf Include="Protos\invite.apollo.app.graph.common.proto" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Google.Api.CommonProtos" Version="2.15.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.57.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Google.Protobuf" Version="3.27.1" />
     <PackageReference Include="protobuf-net" Version="3.1.22" />
     <PackageReference Include="protobuf-net.BuildTools" Version="3.1.22">
       <PrivateAssets>all</PrivateAssets>
