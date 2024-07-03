@@ -13,12 +13,12 @@ namespace De.HDBW.Apollo.SharedContracts.T4
     using System.Text;
     using System.Collections.Generic;
     using System;
-
+    
     /// <summary>
     /// Class to produce the template output
     /// </summary>
-
-#line 1 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
+    
+    #line 1 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class ClozeHtml : ClozeHtmlBase
     {
@@ -33,110 +33,108 @@ namespace De.HDBW.Apollo.SharedContracts.T4
                     "th, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0\" user-scalable=\"no\" " +
                     "/>\r\n    <title></title>\r\n    <style>\r\n\r\n        body {\r\n            font-family:" +
                     " NotoSansRegular, sans-serif;\r\n            background-color: #F4E8D7;\r\n         " +
-                    "   padding: 24px 24px 0px 24px;\r\n            margin: 0px;\r\n            line-height: 3;\r\n  " +
-                    "      }\r\n\r\n        input[type=email], select {\r\n            color: #420A98;\r\n   " +
-                    "         border: 0px;\r\n            font-size: 1rem;\r\n            margin: 0px;\r\n " +
-                    "           padding: 0px;\r\n            height: 28px;\r\n            width: 128px;\r\n" +
-                    "            background-color: #FEFCF7;\r\n            padding: 8px 16px 8px 16px;\r\n " +
-                    "           border-radius: 4px;\r\n            box-shadow: 2px 2px 5px 1px #846C4B;" +
-                    "\r\n        }\r\n\r\n            input[type=email]:focus, select:focus {\r\n            " +
-                    "    outline: #420A98 solid 2px;\r\n                outline-offset: -2px;\r\n        " +
-                    "    }\r\n\r\n        .inputdiv {\r\n            height: 44px;\r\n            width: 160p" +
-                    "x;\r\n            line-height: 0;\r\n            margin: 0px 8px -16px 8px;\r\n       " +
-                    "     box-sizing: border-box;\r\n            border: 0px;\r\n            border-radiu" +
-                    "s: 4px;\r\n            background-color: #FEFCF7;\r\n            box-shadow: 2px 2px 5" +
-                    "px 1px #846C4B;\r\n            overflow: hidden;\r\n            display: inline-bloc" +
-                    "k;\r\n        }\r\n\r\n        p {\r\n            line-height: 3;\r\n            font-size" +
-                    ": 1rem;\r\n            text-align: left;\r\n        }\r\n    </style>\r\n    <script src" +
-                    "=\"_hwv/HybridWebView.js\"></script>\r\n    <script type=\"text/javascript\">\r\n       " +
-                    " function addListener(id) {\r\n            var source = document.getElementById(id" +
-                    ");\r\n            source.addEventListener(\'input\', onInput);\r\n            source.a" +
-                    "ddEventListener(\"focus\", onFocus);\r\n            source.addEventListener(\'focusou" +
-                    "t\', onUnfocus);\r\n            source.addEventListener(\'keydown\', onKeydown);\r\n\r\n " +
-                    "       }\r\n\r\n        function onInput(e) {\r\n            var text = e.target.value" +
-                    ";\r\n            HybridWebView.SendInvokeMessageToDotNet(\"SetValue\", [e.target.id," +
-                    " text]);\r\n        }\r\n\r\n        function onKeydown(e) {\r\n            if (e.which " +
-                    "== 13) {\r\n                let active = document.activeElement;\r\n                " +
-                    "if (active == null) {\r\n                    return;\r\n                }\r\n\r\n       " +
-                    "         var next = findNextTabStop(active);\r\n                if (next != null) " +
-                    "{\r\n                    next.focus();\r\n                }\r\n                else {\r" +
-                    "\n                    active.blur();\r\n                }\r\n            }\r\n        }" +
-                    "\r\n\r\n        function findNextTabStop(el) {\r\n            var universe = document." +
-                    "querySelectorAll(\'input, button, select, textarea, a[href]\');\r\n            var l" +
-                    "ist = Array.prototype.filter.call(universe, function (item) { return item.tabInd" +
-                    "ex >= \"0\" });\r\n            var index = list.indexOf(el);\r\n            return lis" +
-                    "t[index + 1] || null;\r\n        }\r\n\r\n        function removeFocus(id) {\r\n        " +
-                    "    var el = document.getElementById(id);\r\n            if (el == null) {\r\n      " +
-                    "          return;\r\n            }\r\n            el.blur();\r\n        }\r\n\r\n        f" +
-                    "unction onFocus(e) {\r\n            HybridWebView.SendInvokeMessageToDotNet(\"SetFo" +
-                    "cused\", [e.target.id, e.target.readOnly]);\r\n        }\r\n\r\n        function onUnfo" +
-                    "cus(e) {\r\n            HybridWebView.SendInvokeMessageToDotNet(\"RemovedFocused\", " +
-                    "[e.target.id]);\r\n        }\r\n\r\n\r\n        function setText(name, text) {\r\n        " +
-                    "    document.getElementById(name).value = text;\r\n        }</script>\r\n</head>\r\n<b" +
-                    "ody>\r\n    <p>\r\n        ");
-
-#line 124 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
+                    "   padding: 24px 24px 0px 24px;\r\n            margin: 0px;\r\n            line-heig" +
+                    "ht: 3;\r\n        }\r\n\r\n        input[type=email], select {\r\n            color: #42" +
+                    "0A98;\r\n            border: 0px;\r\n            font-size: 1rem;\r\n            margi" +
+                    "n: 0px;\r\n            padding: 0px;\r\n            height: 28px;\r\n            width" +
+                    ": 128px;\r\n            background-color: #FEFCF7;\r\n            padding: 8px 16px " +
+                    "8px 16px;\r\n            border-radius: 4px;\r\n            box-shadow: 2px 2px 5px " +
+                    "1px #846C4B;\r\n        }\r\n\r\n            input[type=email]:focus, select:focus {\r\n" +
+                    "                outline: #420A98 solid 2px;\r\n                outline-offset: -2p" +
+                    "x;\r\n            }\r\n\r\n        .inputdiv {\r\n            height: 44px;\r\n           " +
+                    " width: 160px;\r\n            line-height: 0;\r\n            margin: 0px 8px -16px 8" +
+                    "px;\r\n            box-sizing: border-box;\r\n            border: 0px;\r\n            " +
+                    "border-radius: 4px;\r\n            background-color: #FEFCF7;\r\n            box-sha" +
+                    "dow: 2px 2px 5px 1px #846C4B;\r\n            overflow: hidden;\r\n            displa" +
+                    "y: inline-block;\r\n        }\r\n\r\n        p {\r\n            line-height: 3;\r\n       " +
+                    "     font-size: 1rem;\r\n            text-align: left;\r\n        }\r\n    </style>\r\n " +
+                    "   <script src=\"_hwv/HybridWebView.js\"></script>\r\n    <script type=\"text/javascr" +
+                    "ipt\">\r\n        function addListener(id) {\r\n            var source = document.get" +
+                    "ElementById(id);\r\n            source.addEventListener(\'input\', onInput);\r\n      " +
+                    "      source.addEventListener(\"focus\", onFocus);\r\n            source.addEventLis" +
+                    "tener(\'focusout\', onUnfocus);\r\n            source.addEventListener(\'keydown\', on" +
+                    "Keydown);\r\n\r\n        }\r\n\r\n        function onInput(e) {\r\n            var text = " +
+                    "e.target.value;\r\n            HybridWebView.SendInvokeMessageToDotNet(\"SetValue\"," +
+                    " [e.target.id, text]);\r\n        }\r\n\r\n        function onKeydown(e) {\r\n          " +
+                    "  if (e.which == 13) {\r\n                let active = document.activeElement;\r\n  " +
+                    "              if (active == null) {\r\n                    return;\r\n              " +
+                    "  }\r\n\r\n                var next = findNextTabStop(active);\r\n                if (" +
+                    "next != null) {\r\n                    next.focus();\r\n                }\r\n         " +
+                    "       else {\r\n                    active.blur();\r\n                }\r\n          " +
+                    "  }\r\n        }\r\n\r\n        function findNextTabStop(el) {\r\n            var univer" +
+                    "se = document.querySelectorAll(\'input, button, select, textarea, a[href]\');\r\n   " +
+                    "         var list = Array.prototype.filter.call(universe, function (item) { retu" +
+                    "rn item.tabIndex >= \"0\" });\r\n            var index = list.indexOf(el);\r\n        " +
+                    "    return list[index + 1] || null;\r\n        }\r\n\r\n        function removeFocus(i" +
+                    "d) {\r\n            var el = document.getElementById(id);\r\n            if (el == n" +
+                    "ull) {\r\n                return;\r\n            }\r\n            el.blur();\r\n        " +
+                    "}\r\n\r\n        function onFocus(e) {\r\n            HybridWebView.SendInvokeMessageT" +
+                    "oDotNet(\"SetFocused\", [e.target.id, e.target.readOnly]);\r\n        }\r\n\r\n        f" +
+                    "unction onUnfocus(e) {\r\n            HybridWebView.SendInvokeMessageToDotNet(\"Rem" +
+                    "ovedFocused\", [e.target.id]);\r\n        }\r\n\r\n\r\n        function setText(name, tex" +
+                    "t) {\r\n            document.getElementById(name).value = text;\r\n        }</script" +
+                    ">\r\n</head>\r\n<body>\r\n    <p>\r\n        ");
+            
+            #line 124 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Body));
-
-#line default
-#line hidden
+            
+            #line default
+            #line hidden
             this.Write("\r\n    </p>\r\n    <script>\r\n");
-
-#line 127 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
-            foreach (string id in Ids)
-            {
-
-#line default
-#line hidden
-                this.Write("        addListener(\"");
-
-#line 128 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
-                this.Write(this.ToStringHelper.ToStringWithCulture(id));
-
-#line default
-#line hidden
-                this.Write("\");\r\n");
-
-#line 129 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
-            }
-
-#line default
-#line hidden
-
-#line 130 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
-            foreach (var keyValue in Values)
-            {
-
-#line default
-#line hidden
-                this.Write("        setText(\"");
-
-#line 131 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
-                this.Write(this.ToStringHelper.ToStringWithCulture(keyValue.Key));
-
-#line default
-#line hidden
-                this.Write("\", \"");
-
-#line 131 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
-                this.Write(this.ToStringHelper.ToStringWithCulture(keyValue.Value));
-
-#line default
-#line hidden
-                this.Write("\");\r\n");
-
-#line 132 "D:\workspace\HDBW\Assessments\Assessments\Assessments\T4\ClozeHtml.tt"
-            }
-
-#line default
-#line hidden
+            
+            #line 127 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
+ foreach (string id in Ids) { 
+            
+            #line default
+            #line hidden
+            this.Write("        addListener(\"");
+            
+            #line 128 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(id));
+            
+            #line default
+            #line hidden
+            this.Write("\");\r\n");
+            
+            #line 129 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 130 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
+ foreach (var keyValue in Values) { 
+            
+            #line default
+            #line hidden
+            this.Write("        setText(\"");
+            
+            #line 131 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(keyValue.Key));
+            
+            #line default
+            #line hidden
+            this.Write("\", \"");
+            
+            #line 131 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(keyValue.Value));
+            
+            #line default
+            #line hidden
+            this.Write("\");\r\n");
+            
+            #line 132 "D:\Workspace\HDBW\APOLLO\src\client\Maui\Shared\De.HDBW.Apollo.SharedContracts\T4\ClozeHtml.tt"
+ } 
+            
+            #line default
+            #line hidden
             this.Write("    </script>\r\n</body>\r\n</html>\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
-
-#line default
-#line hidden
+    
+    #line default
+    #line hidden
     #region Base class
     /// <summary>
     /// Base class for this transformation
@@ -236,7 +234,7 @@ namespace De.HDBW.Apollo.SharedContracts.T4
             }
             // If we're starting off, or if the previous text ended with a newline,
             // we have to append the current indent first.
-            if (((this.GenerationEnvironment.Length == 0)
+            if (((this.GenerationEnvironment.Length == 0) 
                         || this.endsWithNewline))
             {
                 this.GenerationEnvironment.Append(this.currentIndentField);
@@ -354,7 +352,7 @@ namespace De.HDBW.Apollo.SharedContracts.T4
         /// </summary>
         public class ToStringInstanceHelper
         {
-            private System.IFormatProvider formatProviderField = global::System.Globalization.CultureInfo.InvariantCulture;
+            private System.IFormatProvider formatProviderField  = global::System.Globalization.CultureInfo.InvariantCulture;
             /// <summary>
             /// Gets or sets format provider to be used by ToStringWithCulture method.
             /// </summary>
@@ -362,13 +360,13 @@ namespace De.HDBW.Apollo.SharedContracts.T4
             {
                 get
                 {
-                    return this.formatProviderField;
+                    return this.formatProviderField ;
                 }
                 set
                 {
                     if ((value != null))
                     {
-                        this.formatProviderField = value;
+                        this.formatProviderField  = value;
                     }
                 }
             }

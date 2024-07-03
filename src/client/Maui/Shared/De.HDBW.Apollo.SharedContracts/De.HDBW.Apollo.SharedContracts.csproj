@@ -13,7 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="T4\ClozeHtml.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
+      <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ClozeHtml.cs</LastGenOutput>
     </None>
   </ItemGroup>
