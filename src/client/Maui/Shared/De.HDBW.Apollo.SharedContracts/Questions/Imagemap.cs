@@ -62,7 +62,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
                 case ShapeType.Circle:
                     return new CircleShape(coordinates);
                 case ShapeType.Rectangle:
-                    return new RectancleShape(coordinates);
+                    return new RectangleShape(coordinates);
                 case ShapeType.Polygon:
                     return new PolygonShape(coordinates);
                 default:

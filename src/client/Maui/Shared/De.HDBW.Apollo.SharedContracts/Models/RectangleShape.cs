@@ -5,9 +5,9 @@ using System.Globalization;
 
 namespace De.HDBW.Apollo.SharedContracts.Models
 {
-    public class RectancleShape : Shape
+    public class RectangleShape : Shape
     {
-        public RectancleShape(string coordinates)
+        public RectangleShape(string coordinates)
         {
             var parts = coordinates.Split(",").Select(x => x.Trim()).ToList();
             X = Convert.ToSingle(parts[0], CultureInfo.InvariantCulture);
