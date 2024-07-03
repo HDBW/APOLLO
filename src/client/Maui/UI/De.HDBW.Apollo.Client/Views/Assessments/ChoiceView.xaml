@@ -78,14 +78,14 @@
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ZoomCommand, Mode=OneTime}"/>
                 </Grid.GestureRecognizers>
                 <HorizontalStackLayout HorizontalOptions="Center">
-                    <Image HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Start" Margin="12">
+                    <Image HeightRequest="24" WidthRequest="24" HorizontalOptions="Start" VerticalOptions="Start" Margin="0,12,12,12">
                         <Image.Source>
                             <FontImageSource Glyph="{StaticResource Search}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
                     <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
                 </HorizontalStackLayout>
-                <Image Grid.Row="1" Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="272">
+                <Image Grid.Row="1" Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="204">
                     <Image.Shadow>
                         <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
                     </Image.Shadow>
@@ -95,7 +95,7 @@
 
         <DataTemplate x:Key="PageableImages" x:DataType="models:PageableImagesEntry">
             <Grid RowDefinitions="auto, auto">
-                <Grid RowDefinitions="auto, 272">
+                <Grid RowDefinitions="auto, 204">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ZoomCommand, Mode=OneTime}"/>
                     </Grid.GestureRecognizers>
@@ -110,7 +110,7 @@
                     <CarouselView Grid.Row="1" ItemsSource="{x:Binding Images, Mode=OneWay}" IndicatorView="indicatorView" x:Name="PART_QuestionImages">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="models:ImageEntry">
-                                <Image Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="272"/>
+                                <Image Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="204"/>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
@@ -127,7 +127,7 @@
     <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
         <ScrollView>
             <VerticalStackLayout Padding="20" x:DataType="models:ChoiceEntry" BindingContext="{x:Binding Question, Mode=OneWay}">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,16" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
                 <StackLayout Margin="4,0,4,24"
                              IsVisible="{x:Binding HasQuestionImageView, Mode=OneWay}"
                              BindableLayout.ItemsSource="{x:Binding QuestionImageView, Mode=OneWay}"

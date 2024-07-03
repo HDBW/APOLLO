@@ -2,25 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:hwv="clr-namespace:HybridWebView;assembly=HybridWebView"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ClozeView"
-             Shell.BackgroundColor="Red"
-             Title="ClozeView"
+             Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
              x:DataType="viewModel:ClozeViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*,Auto">
-        <Border StrokeThickness="0" Padding="24" >
-            <hwv:HybridWebView x:Name="PART_WebView" 
+        <Border StrokeThickness="0">
+            <hwv:HybridWebView x:Name="PART_WebView"
                     HybridAssetRoot="hybrid_root"
                     MainFile="proxy"
                     RawMessageReceived="OnMessageReceived"
                     Navigated="HandleNavigated"
                     Loaded="HandleLoaded"/>
         </Border>
-        <Border Grid.Row="1" Padding="24,16">
-            <Button Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
-        </Border>
-    </Grid>
+        <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
+                <Button Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
+            </Border>
+        </Grid>
 </ContentPage>

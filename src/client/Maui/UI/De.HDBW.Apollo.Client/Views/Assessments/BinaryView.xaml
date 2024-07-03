@@ -54,14 +54,14 @@
                 </Grid>
                 <Label Text="Hier Fehlt noch Text!" Margin="8,0,8,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
                 <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="8,0,8,0" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
-                <RadioButton Margin="0,0,0,0" ControlTemplate="{StaticResource RadioButtonLikeButtonTemplate}">
+                <RadioButton ControlTemplate="{StaticResource RadioButtonLikeButtonBinaryViewTemplate}">
                     <RadioButton.Content>
-                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryTrue], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryTrue], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
                     </RadioButton.Content>
                 </RadioButton>
-                <RadioButton ControlTemplate="{StaticResource RadioButtonLikeButtonTemplate}">
+                <RadioButton ControlTemplate="{StaticResource RadioButtonLikeButtonBinaryViewTemplate}">
                     <RadioButton.Content>
-                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryFalse], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}"/>
+                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryFalse], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
                     </RadioButton.Content>
                 </RadioButton>
             </VerticalStackLayout>

@@ -32,19 +32,19 @@ namespace De.HDBW.Apollo.SharedContracts.T4
                     "   <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-wid" +
                     "th, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0\" user-scalable=\"no\" " +
                     "/>\r\n    <title></title>\r\n    <style>\r\n\r\n        body {\r\n            font-family:" +
-                    " NotoSansRegular, sans-serif;\r\n            background-color: #FEFCF7;\r\n         " +
-                    "   padding: 0px 16px;\r\n            margin: 0px;\r\n            line-height: 3;\r\n  " +
+                    " NotoSansRegular, sans-serif;\r\n            background-color: #F4E8D7;\r\n         " +
+                    "   padding: 24px 24px 0px 24px;\r\n            margin: 0px;\r\n            line-height: 3;\r\n  " +
                     "      }\r\n\r\n        input[type=email], select {\r\n            color: #420A98;\r\n   " +
                     "         border: 0px;\r\n            font-size: 1rem;\r\n            margin: 0px;\r\n " +
                     "           padding: 0px;\r\n            height: 28px;\r\n            width: 128px;\r\n" +
-                    "            background-color: white;\r\n            padding: 8px 16px 8px 16px;\r\n " +
+                    "            background-color: #FEFCF7;\r\n            padding: 8px 16px 8px 16px;\r\n " +
                     "           border-radius: 4px;\r\n            box-shadow: 2px 2px 5px 1px #846C4B;" +
                     "\r\n        }\r\n\r\n            input[type=email]:focus, select:focus {\r\n            " +
                     "    outline: #420A98 solid 2px;\r\n                outline-offset: -2px;\r\n        " +
                     "    }\r\n\r\n        .inputdiv {\r\n            height: 44px;\r\n            width: 160p" +
                     "x;\r\n            line-height: 0;\r\n            margin: 0px 8px -16px 8px;\r\n       " +
                     "     box-sizing: border-box;\r\n            border: 0px;\r\n            border-radiu" +
-                    "s: 4px;\r\n            background-color: white;\r\n            box-shadow: 2px 2px 5" +
+                    "s: 4px;\r\n            background-color: #FEFCF7;\r\n            box-shadow: 2px 2px 5" +
                     "px 1px #846C4B;\r\n            overflow: hidden;\r\n            display: inline-bloc" +
                     "k;\r\n        }\r\n\r\n        p {\r\n            line-height: 3;\r\n            font-size" +
                     ": 1rem;\r\n            text-align: left;\r\n        }\r\n    </style>\r\n    <script src" +
