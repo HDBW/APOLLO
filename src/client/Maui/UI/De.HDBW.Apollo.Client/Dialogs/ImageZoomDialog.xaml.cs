@@ -4,17 +4,17 @@ namespace De.HDBW.Apollo.Client.Dialogs;
 
 public partial class ImageZoomDialog
 {
-    public ImageZoomDialog(MessageDialogViewModel model)
+    public ImageZoomDialog(ImageZoomDialogViewModel model)
     {
         InitializeComponent();
         BindingContext = model;
     }
 
-    public MessageDialogViewModel? ViewModel
+    public ImageZoomDialogViewModel? ViewModel
     {
         get
         {
-            return BindingContext as MessageDialogViewModel;
+            return BindingContext as ImageZoomDialogViewModel;
         }
     }
 

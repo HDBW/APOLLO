@@ -6,7 +6,7 @@
               xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
               xmlns:local="clr-namespace:De.HDBW.Apollo.Client.Dialogs"
               Style="{StaticResource PopupStyle}"
-              x:DataType="viewModels:CancelAssessmentDialogViewModel" >
+              x:DataType="viewModels:ImageZoomDialogViewModel" >
     <Grid>
         <Grid.GestureRecognizers>
             <OnPlatform x:TypeArguments="GestureRecognizer">
@@ -19,7 +19,7 @@
             </OnPlatform>
         </Grid.GestureRecognizers>
         <Border x:Name="PART_Root" Style="{StaticResource PopupRoot}">
-            <Image Source="Apollo.png"/>
+            <Image Source="{x:Binding AbsolutePath}"/>
         </Border>
     </Grid>
 </local:Dialog>
