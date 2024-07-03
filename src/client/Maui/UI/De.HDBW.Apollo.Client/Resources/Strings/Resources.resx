@@ -3424,4 +3424,8 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <value>Frage {0}/30</value>
     <comment>Translate New</comment>
   </data>
+  <data name="TxtAssesmentsTitlePage" xml:space="preserve">
+    <value>Seite {0}/30</value>
+    <comment>Translate New</comment>
+  </data>
 </root>

@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.SortView"
-             Shell.BackgroundColor="Red"
-             Title="SortView"
+             Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
              x:DataType="viewModel:SortViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
@@ -16,10 +16,17 @@
                     <DragGestureRecognizer CanDrag="True"  DragStartingCommand="{x:Binding DragStartingCommand, Mode=OneTime}" DropCompletedCommand="{x:Binding DropCompletedCommand, Mode=OneTime}"/>
                     <DropGestureRecognizer AllowDrop="True" DropCommand="{x:Binding DropCommand, Mode=OneTime}"/>
                 </Grid.GestureRecognizers>
-                <Label InputTransparent="True" Text="{x:Binding DisplayIndex}" Grid.Column="0" Margin="0,12,8,12"/>
-                <Border Grid.Column="1" Padding="12">
+                <Label InputTransparent="True" Grid.Column="0" Margin="0,12,8,12" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Binding DisplayIndex, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}"/>
+                            <Span Text="." Style="{StaticResource Noto16SemiBold}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Border Grid.Column="1" Padding="12" Style="{StaticResource PictureEntryBorderStyle}">
                     <Grid ColumnDefinitions="*, auto">
-                        <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneTime}" Grid.Column="0" Margin="0,0,8,0"/>
+                        <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneTime}" Grid.Column="0" Margin="0,0,8,0" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}"/>
                         <Image HeightRequest="24" WidthRequest="24" HorizontalOptions="End" Grid.Column="1" VerticalOptions="Center">
                             <Image.Source>
                                 <FontImageSource Glyph="{StaticResource Drag}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -33,13 +40,13 @@
     <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
         <ScrollView>
             <VerticalStackLayout x:DataType="models:SortEntry" BindingContext="{x:Binding Question, Mode=OneWay}" Padding="24">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="0,0,0,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}"/>
-                <Label Text="{x:Binding Question, Mode=OneWay}" Margin="0,0,0,24"/>
-                <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="0,0,0,8"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="0,0,0,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Question, Mode=OneWay}" Margin="0,0,0,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="0,0,0,8" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                 <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding SortTexts}" BindableLayout.ItemTemplate="{StaticResource SortItemEntry}" x:Name="PART_Texts"/>
             </VerticalStackLayout>
         </ScrollView>
-        <Border Grid.Row="1" Padding="24,16">
+        <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
             <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
         </Border>
     </Grid>

@@ -7886,6 +7886,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seite {0}/30.
+        /// </summary>
+        public static string TxtAssesmentsTitlePage {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsTitlePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frage {0}/30.
         /// </summary>
         public static string TxtAssesmentsTitleQuestions {

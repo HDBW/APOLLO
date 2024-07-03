@@ -13,8 +13,8 @@
 
         body {
             font-family: NotoSansRegular, sans-serif;
-            background-color: #FEFCF7;
-            padding: 0px 16px;
+            background-color: #F4E8D7;
+            padding: 24px 24px 0px 24px;
             margin: 0px;
             line-height: 3;
         }
@@ -27,7 +27,7 @@
             padding: 0px;
             height: 28px;
             width: 128px;
-            background-color: white;
+            background-color: #FEFCF7;
             padding: 8px 16px 8px 16px;
             border-radius: 4px;
             box-shadow: 2px 2px 5px 1px #846C4B;
@@ -46,7 +46,7 @@
             box-sizing: border-box;
             border: 0px;
             border-radius: 4px;
-            background-color: white;
+            background-color: #FEFCF7;
             box-shadow: 2px 2px 5px 1px #846C4B;
             overflow: hidden;
             display: inline-block;

@@ -2,66 +2,97 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.AssociateView"
-             Shell.BackgroundColor="Red"
-             Title="AssociateView"
+             Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
              x:DataType="viewModel:AssociateViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="AssociateTextEntry" x:DataType="models:AssociateTextEntry">
-            <Border Margin="4,0,4,8" Padding="12">
-                <Grid ColumnDefinitions="auto, *" AutomationProperties.IsInAccessibleTree="True">
-                    <Label InputTransparent="True" Text="{x:Binding DisplayIndex, Mode=OneWay}" TextColor="{StaticResource Primary}" Grid.Column="0" Margin="0,0,8,0" VerticalOptions="Start"/>
-                    <Label InputTransparent="True" Text="{x:Binding Label, Mode=OneTime}" Grid.Column="1" VerticalTextAlignment="Start"/>
-                </Grid>
-            </Border>
+            <Grid>
+                <Border Margin="4,0,4,8" Padding="12" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.Shadow>
+                        <Shadow Opacity="0"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="auto, *" AutomationProperties.IsInAccessibleTree="True">
+                        <Label Grid.Column="0" Margin="0,0,8,0" VerticalOptions="Start">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{x:Binding DisplayIndex, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                                    <Span Text="." Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Text="{x:Binding Label, Mode=OneTime}" Grid.Column="1" VerticalTextAlignment="Start" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                    </Grid>
+                </Border>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="AssociateImage" x:DataType="models:AssociateImageEntry">
-            <Border FlexLayout.Basis="50%" Margin="4,0,4,4" StrokeThickness="0" HeightRequest="132" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsAssociateImageAnswer], Source={x:Reference PART_Root}, Mode=OneWay}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{x:Binding IncrementCommand, Mode=OneTime}" NumberOfTapsRequired="1" />
-                </Border.GestureRecognizers>
-                <Grid>
-                    <Image Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="132"/>
-                    <Grid IsVisible="Collapse">
-                        <Border Padding="12,8,8,4" BackgroundColor="White" HorizontalOptions="Start" VerticalOptions="Start">
-                            <Label InputTransparent="True" Text="{x:Binding DisplayAssociatedIndex}"/>
-                        </Border>
-                        <Rectangle x:Name="PART_Border" Stroke="White" StrokeThickness="8"/>
-                        <Rectangle Stroke="{StaticResource Primary}" StrokeThickness="4"/>
-                        <Grid.Triggers>
-                            <DataTrigger TargetType="Grid" Binding="{x:Binding IsAssociated, Mode=OneWay}" Value="True">
-                                <Setter Property="IsVisible" Value="True"/>
-                            </DataTrigger>
-                        </Grid.Triggers>
+            <Grid>
+                <Border Margin="4" StrokeThickness="0" HeightRequest="132" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsAssociateImageAnswer], Source={x:Reference PART_Root}, Mode=OneWay}" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding IncrementCommand, Mode=OneTime}" NumberOfTapsRequired="1" />
+                    </Border.GestureRecognizers>
+                    <Grid>
+                        <Image Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="132"/>
+                        <Grid IsVisible="Collapse">
+                            <Border Padding="12,8,8,4" BackgroundColor="{StaticResource Neutral300}" StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Label InputTransparent="True" Text="{x:Binding DisplayAssociatedIndex}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                            </Border>
+                            <Border Stroke="{StaticResource Primary}" StrokeThickness="4">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                            </Border>
+                            <Border Stroke="{StaticResource Neutral300}" StrokeThickness="4" Margin="4">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="4" />
+                                </Border.StrokeShape>
+                            </Border>
+                            <Grid.Triggers>
+                                <DataTrigger TargetType="Grid" Binding="{x:Binding IsAssociated, Mode=OneWay}" Value="True">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                            </Grid.Triggers>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Border.Triggers>
-                    <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
-                        <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
-                    </DataTrigger>
-                </Border.Triggers>
-            </Border>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{x:Binding IsAssociated, Mode=OneWay}" Value="True">
+                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                            <Setter Property="Shadow">
+                                <Setter.Value>
+                                    <Shadow Opacity="0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Border.Triggers>
+                </Border>
+
+            </Grid>
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
         <ScrollView Padding="20,24">
             <Grid RowDefinitions="Auto,Auto">
                 <VerticalStackLayout  BindingContext="{x:Binding Question, Mode=OneWay}" x:DataType="models:AssociateEntry">
-                    <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}"/>
-                    <Label Text="{x:Binding Question, Mode=OneWay}" Margin="4,0,4,24"/>
-                    <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,4"/>
-                    <Label Text="{x:Binding BindingContext[TxtAssesmentsAssociateDescription], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="4,0,4,4"/>
+                    <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                    <Label Text="{x:Binding Question, Mode=OneWay}" Margin="4,0,4,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                    <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
+                    <Label Text="{x:Binding BindingContext[TxtAssesmentsAssociateDescription], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                     <CollectionView x:Name="PART_Texts" Margin="0,0,0,12"  ItemTemplate="{StaticResource AssociateTextEntry}" ItemsSource="{x:Binding SourceTexts, Mode=OneWay}" ItemsLayout="VerticalGrid, 2"/>
-                    <FlexLayout Wrap="Wrap" x:Name="PART_Imges" Margin="0,0,0,12" BindableLayout.ItemsSource="{x:Binding TargetImages, Mode=OneWay}" BindableLayout.ItemTemplate="{StaticResource AssociateImage}"/>
+                    <CollectionView x:Name="PART_Imges" Margin="0,0,0,12" ItemsSource="{x:Binding TargetImages, Mode=OneWay}" ItemTemplate="{StaticResource AssociateImage}" ItemsLayout="VerticalGrid, 2"/>
                 </VerticalStackLayout>
                 <Grid ColumnDefinitions="*,Auto" Margin="4,0" Grid.Row="1" >
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ResetCommand, Mode=OneTime}"/>
                     </Grid.GestureRecognizers>
-                    <Label Grid.Column="0" InputTransparent="True" Text="{x:Binding [BtnTxtGlobalReset], Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" TextColor="{StaticResource Primary}"/>
+                    <Label Grid.Column="0" InputTransparent="True" Text="{x:Binding [BtnTxtGlobalReset], Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}"/>
                     <Image Grid.Column="1" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" VerticalOptions="Start" Margin="12">
                         <Image.Source>
                             <FontImageSource Glyph="{StaticResource Reset}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -70,7 +101,7 @@
                 </Grid>
             </Grid>
         </ScrollView>
-        <Border Grid.Row="1" Padding="24,16">
+        <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
             <Button Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
         </Border>
     </Grid>
