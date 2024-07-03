@@ -56,7 +56,7 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
                     </Border.GestureRecognizers>
-                    <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneTime}"/>
+                    <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneTime}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}"/>
                     <Border.Triggers>
                         <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
                             <Setter Property="Stroke" Value="{StaticResource Primary}"/>
@@ -134,7 +134,7 @@
                              BindableLayout.ItemTemplateSelector="{x:StaticResource QuestionImagesTemplateSelector}"/>
 
                 <Label Text="{x:Binding Question, Mode=OneWay}" Margin="4,0,4,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
-                <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,4" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                 <CollectionView x:Name="PART_ImageChoice" Margin="0,0,0,0" ItemsSource="{x:Binding AnswerImages, Mode=OneWay}" ItemTemplate="{StaticResource ChoiceEntryImage}" IsVisible="True" ItemsLayout="VerticalGrid, 2"/>
                 <StackLayout x:Name="PART_TextChoice" Margin="0,0,0,0" BindableLayout.ItemsSource="{x:Binding AnswerTexts, Mode=OneWay}" BindableLayout.ItemTemplate="{StaticResource ChoiceEntryText}" IsVisible="True" />
             </VerticalStackLayout>
