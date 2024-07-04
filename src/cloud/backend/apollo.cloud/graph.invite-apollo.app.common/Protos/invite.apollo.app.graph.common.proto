@@ -162,6 +162,15 @@ message ModuleTile {
 
   // Indicates whetere this Module is doable by a registered user only
   bool MemberOnly = 9;
+
+  // The current session id of the module
+  google.protobuf.StringValue SessionId = 10;
+
+  // The number of rawdata in this module
+  int RawDataCount = 11;
+
+  // The number of answers in current session.
+  int AwnserCount = 12;
 }
 
 message AssessmentScore {
@@ -288,15 +297,15 @@ message AssessmentSession {
     
   string SessionId = 2;
 
-      // The Id of the assesment
-  string AssesmentId = 3;
+      // The Id of the assessment
+  string AssessmentId = 3;
   
     // The Id of the module
   string ModuleId = 4;
 
   repeated RawData RawDatas = 5;
   
-  string CurrentRawdata = 6;
+  string CurrentRawDataId = 6;
 }
 
 message Answer {
