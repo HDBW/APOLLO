@@ -158,6 +158,7 @@ namespace De.HDBW.Apollo.Client.Services
                     {
                         Resume();
                     }
+
                     break;
             }
         }
