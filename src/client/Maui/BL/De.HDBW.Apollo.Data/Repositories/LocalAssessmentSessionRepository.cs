@@ -20,6 +20,13 @@ namespace De.HDBW.Apollo.Data.Repositories
         {
         }
 
+        public async Task<LocalAssessmentSession?> GetItemByAssessmentIdAndModuleIdAsync(string assessmentId, string moduleId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<LocalAssessmentSession>().FirstOrDefaultAsync(x => x.AssessmentId == assessmentId && x.ModuleId == moduleId).ConfigureAwait(false);
+        }
+
         public async Task<LocalAssessmentSession?> GetItemBySessionIdAsync(string sessionId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();

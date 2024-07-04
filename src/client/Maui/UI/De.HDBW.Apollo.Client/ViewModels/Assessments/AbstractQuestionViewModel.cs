@@ -17,7 +17,6 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 using Plugin.Maui.Audio;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Assessments
@@ -48,7 +47,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected AbstractQuestionViewModel(
             IAssessmentService service,
-            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository rawDataCacheRepository,
             IUserSecretsService userSecretsService,
             IAudioPlayerService audioPlayerService,
@@ -59,13 +57,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(service);
-            ArgumentNullException.ThrowIfNull(sessionRepository);
             ArgumentNullException.ThrowIfNull(rawDataCacheRepository);
             ArgumentNullException.ThrowIfNull(userSecretsService);
             ArgumentNullException.ThrowIfNull(audioPlayerService);
 
             Service = service;
-            SessionRepository = sessionRepository;
             RawDataCacheRepository = rawDataCacheRepository;
             MediaBasePath = userSecretsService["MediaAssetStorageURL"] ?? string.Empty;
             AudioPlayerService = audioPlayerService;
@@ -108,8 +104,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected IAssessmentService Service { get; }
 
         protected List<string>? RawDataIds { get; set; }
-
-        protected ILocalAssessmentSessionRepository SessionRepository { get; }
 
         protected IRawDataCacheRepository RawDataCacheRepository { get; }
 
@@ -181,7 +175,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         return;
                     }
 
-                    Session = await SessionRepository.GetItemBySessionIdAsync(SessionId, worker.Token).ConfigureAwait(false);
+                    Session = await Service.GetSessionAsync(SessionId, Language, worker.Token).ConfigureAwait(false);
                     if (Session == null)
                     {
                         Logger.LogError($"Session not found in {OnNavigatedToAsync} in {GetType().Name}.");
@@ -266,13 +260,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     }
                     else
                     {
-                        if (RawDataIds == null || Session == null || string.IsNullOrWhiteSpace(SessionId))
+                        if (Session?.SessionId == null || Session.CurrentRawDataId == null)
                         {
                             return;
                         }
 
-                        var nextRawDataId = RawDataIds[Offset + 1];
-                        var cachedData = await RawDataCacheRepository.GetItemAsync(SessionId, nextRawDataId, worker.Token).ConfigureAwait(false);
+                        var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, 0d, worker.Token).ConfigureAwait(false);
+                        if (cachedData == null)
+                        {
+                            throw new NotSupportedException($"Unable to get next question while {nameof(Navigate)} in {GetType().Name}.");
+                        }
+
                         var rawData = cachedData.ToRawData();
                         string? route = rawData?.type.ToRoute();
                         if (string.IsNullOrWhiteSpace(route))
@@ -280,8 +278,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             return;
                         }
 
-                        Session.CurrentRawDataId = nextRawDataId;
-                        await SessionRepository.UpdateItemAsync(Session, worker.Token).ConfigureAwait(false);
                         var stack = Shell.Current.Navigation.NavigationStack.ToArray();
                         await ExecuteOnUIThreadAsync(
                         async () =>

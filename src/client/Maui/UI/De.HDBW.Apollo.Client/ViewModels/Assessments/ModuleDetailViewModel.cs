@@ -45,11 +45,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private string? _assessmentId;
 
         private AssessmentType _assessmentType;
+
         private string? _language;
 
         public ModuleDetailViewModel(
             IAssessmentService assessmentService,
-            ILocalAssessmentSessionRepository localAssessmentSessionRepository,
             IRawDataCacheRepository rawDataCacheRepository,
             IDispatcherService dispatcherService,
             INavigationService navigationService,
@@ -58,10 +58,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(assessmentService);
-            ArgumentNullException.ThrowIfNull(localAssessmentSessionRepository);
             ArgumentNullException.ThrowIfNull(rawDataCacheRepository);
             AssessmentService = assessmentService;
-            LocalAssessmentSessionRepository = localAssessmentSessionRepository;
             RawDataCacheRepository = rawDataCacheRepository;
         }
 
@@ -71,8 +69,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         }
 
         private IAssessmentService AssessmentService { get; }
-
-        private ILocalAssessmentSessionRepository LocalAssessmentSessionRepository { get; }
 
         private IRawDataCacheRepository RawDataCacheRepository { get; }
 
@@ -252,54 +248,28 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             using (var worker = ScheduleWork())
             {
-                LocalAssessmentSession? localSession = null;
                 try
                 {
-                    var session = await AssessmentService.CreateSessionAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
-                    if (session == null || session.RawDatas == null)
+                    if (_moduleId == null || _assessmentId == null)
                     {
                         Logger?.LogError($"Unable to create session while {nameof(StartAssessment)} in {GetType().Name}.");
                         return;
                     }
 
-                    var questionIds = session.RawDatas.Select(x => x.RawDataId).ToList();
-                    var sessionId = session.SessionId;
-                    var assessmentId = session.AssesmentId;
-
-                    var orderedRawData = session.RawDatas.ToList();
-                    var item1 = orderedRawData.FirstOrDefault(x => x.Id == 31);
-                    if (item1 != null)
+                    var session = await AssessmentService.CreateSessionAsync(_moduleId, _assessmentId, _language, worker.Token).ConfigureAwait(false);
+                    if (session == null || session.SessionId == null || session.RawDataOrder == null || session.CurrentRawDataId == null)
                     {
-                        session.CurrentRawdata = item1.RawDataId;
-                        orderedRawData.Remove(item1);
-                        orderedRawData.Insert(0, item1);
-                    }
-
-                    localSession = new LocalAssessmentSession()
-                    {
-                        SessionId = sessionId,
-                        AssessmentId = assessmentId,
-                        ModuleId = _moduleId!,
-                        RawDataOrder = string.Join(";", questionIds),
-                        CurrentRawDataId = session.CurrentRawdata,
-                    };
-
-                    if (!await LocalAssessmentSessionRepository.AddItemAsync(localSession, worker.Token).ConfigureAwait(false))
-                    {
-                        Logger?.LogError($"Unable to create local session {nameof(StartAssessment)} in {GetType().Name}.");
+                        Logger?.LogError($"Unable to create session while {nameof(StartAssessment)} in {GetType().Name}.");
                         return;
                     }
 
-                    var items = new List<CachedRawData>();
+                    var questionIds = session.RawDataOrder.Split(";").ToList();
+                    var sessionId = session.SessionId;
+                    var assessmentId = session.AssessmentId;
+                    var rawDataId = session.CurrentRawDataId;
 
-                    for (var i = 1; i <= orderedRawData.Count; i++)
-                    {
-                        var data = orderedRawData[i - 1];
-                        items.Add(new CachedRawData() { Id = i, RawDataId = data.RawDataId, SessionId = session.SessionId, AssesmentId = data.AssesmentId, ModuleId = data.ModuleId, Data = data.Data });
-                    }
-
-                    await RawDataCacheRepository.ResetItemsAsync(items, worker.Token).ConfigureAwait(false);
-                    var rawData = orderedRawData.First(x => x.RawDataId == session.CurrentRawdata).ToRawData();
+                    var cachedData = await RawDataCacheRepository.GetItemAsync(sessionId, rawDataId, worker.Token).ConfigureAwait(false);
+                    var rawData = cachedData.ToRawData();
                     string? route = rawData?.type.ToRoute();
 
                     if (string.IsNullOrWhiteSpace(route))

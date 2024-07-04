@@ -21,7 +21,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         public ClozeViewModel(
             IAssessmentService service,
-            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IUserSecretsService userSecretsService,
             IAudioPlayerService audioPlayerService,
@@ -29,7 +28,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<ClozeViewModel> logger)
-            : base(service, sessionRepository, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
+            : base(service, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
         }
 

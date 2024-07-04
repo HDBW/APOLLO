@@ -14,7 +14,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
     {
         public EafrequencyViewModel(
             IAssessmentService service,
-            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IUserSecretsService userSecretsService,
             IAudioPlayerService audioPlayerService,
@@ -22,7 +21,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<EafrequencyViewModel> logger)
-            : base(service, sessionRepository, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
+            : base(service, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
         }
 

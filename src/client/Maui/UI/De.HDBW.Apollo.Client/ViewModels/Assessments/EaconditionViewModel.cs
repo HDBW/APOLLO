@@ -28,7 +28,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         public EaconditionViewModel(
             IAssessmentService service,
-            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IUserSecretsService userSecretsService,
             IAudioPlayerService audioPlayerService,
@@ -36,7 +35,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<EaconditionViewModel> logger)
-            : base(service, sessionRepository, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
+            : base(service, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
         }
 
@@ -64,7 +63,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         return;
                     }
 
-                    Session = await SessionRepository.GetItemBySessionIdAsync(SessionId, worker.Token).ConfigureAwait(false);
+                    Session = await Service.GetSessionAsync(SessionId, Language, worker.Token).ConfigureAwait(false);
                     if (Session == null)
                     {
                         Logger.LogError($"Session not found in {OnNavigatedToAsync} in {GetType().Name}.");
@@ -85,7 +84,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             if (!string.IsNullOrWhiteSpace(Session.CurrentRawDataId))
                             {
                                 Session.CurrentRawDataId = null;
-                                if (!await SessionRepository.UpdateItemAsync(Session, worker.Token).ConfigureAwait(false))
+                                if (!await Service.UpdateSessionAsync(Session, worker.Token).ConfigureAwait(false))
                                 {
                                     Logger.LogError($"Unabele to update session while {nameof(OnNavigatedToAsync)} in {GetType().Name}.");
                                     return;
@@ -254,7 +253,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 if (item != null)
                                 {
                                     Session.CurrentRawDataId = item.Export().RawDataId;
-                                    await SessionRepository.UpdateItemAsync(Session, worker.Token).ConfigureAwait(false);
+                                    await Service.UpdateSessionAsync(Session, worker.Token).ConfigureAwait(false);
                                 }
 
                                 break;

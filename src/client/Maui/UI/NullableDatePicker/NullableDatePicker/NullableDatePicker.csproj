@@ -54,8 +54,8 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.61" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.61" />
 	</ItemGroup>
 
 </Project>

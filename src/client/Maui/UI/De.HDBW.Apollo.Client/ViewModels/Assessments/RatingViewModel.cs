@@ -20,7 +20,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         public RatingViewModel(
             IAssessmentService service,
-            ILocalAssessmentSessionRepository sessionRepository,
             IRawDataCacheRepository repository,
             IUserSecretsService userSecretsService,
             IAudioPlayerService audioPlayerService,
@@ -28,7 +27,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             INavigationService navigationService,
             IDialogService dialogService,
             ILogger<RatingViewModel> logger)
-            : base(service, sessionRepository, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
+            : base(service, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
         }
 
@@ -44,7 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         return;
                     }
 
-                    Session = await SessionRepository.GetItemBySessionIdAsync(SessionId, worker.Token).ConfigureAwait(false);
+                    Session = await Service.GetSessionAsync(SessionId, Language, worker.Token).ConfigureAwait(false);
                     if (Session == null)
                     {
                         Logger.LogError($"Session not found in {OnNavigatedToAsync} in {GetType().Name}.");
