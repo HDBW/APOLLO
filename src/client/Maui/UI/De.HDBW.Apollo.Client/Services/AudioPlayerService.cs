@@ -97,9 +97,9 @@ namespace De.HDBW.Apollo.Client.Services
                         {
                             using (var tempFile = new TempFile())
                             {
-                                using (var stream = await client.GetStreamAsync(absolutePath, token).ConfigureAwait(false))
+                                using (var stream = await client.GetStreamAsync(absolutePath, token))
                                 {
-                                    await tempFile.SaveAsync(stream);
+                                    await tempFile.SaveAsync(stream, token);
                                     tempFile.Move(path, true);
                                 }
                             }

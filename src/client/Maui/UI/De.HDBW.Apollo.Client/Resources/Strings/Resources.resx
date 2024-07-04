@@ -1849,39 +1849,39 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain" xml:space="preserve">
-    <value>Erneut testen in {} Tagen</value>
+    <value>Erneut testen in {0} Tagen</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_ar" xml:space="preserve">
-    <value>الاختبار مرة أخرى خلال {} أيام</value>
+    <value>الاختبار مرة أخرى خلال {0} أيام</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_bg-BG" xml:space="preserve">
-    <value>Повторен тест след {} дни</value>
+    <value>Повторен тест след {0} дни</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_en-US" xml:space="preserve">
-    <value>Test again in {} days</value>
+    <value>Test again in {0} days</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_fr-FR" xml:space="preserve">
-    <value>Retester dans {} jours</value>
+    <value>Retester dans {0} jours</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_ro-RO" xml:space="preserve">
-    <value>Testați din nou peste {} zile</value>
+    <value>Testați din nou peste {0} zile</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_ru-RU" xml:space="preserve">
-    <value>Повторное тестирование через {} дней</value>
+    <value>Повторное тестирование через {0} дней</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_tr-TR" xml:space="preserve">
-    <value>{} gün içinde tekrar test edin</value>
+    <value>{0} gün içinde tekrar test edin</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtAssesmentsStartTestTimeTestAgain_uk-UA" xml:space="preserve">
-    <value>Повторіть тест через {} днів</value>
+    <value>Повторіть тест через {0} днів</value>
     <comment>Translate</comment>
   </data>
   <data name="BtnTxtGlobalReset" xml:space="preserve">
@@ -2609,43 +2609,43 @@ Tи можеш пройти цей тест самоперевірки й інш
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle" xml:space="preserve">
-    <value>Erfahrungsselbsttest Beruf {}</value>
+    <value>Erfahrungsselbsttest Beruf {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_ar" xml:space="preserve">
-    <value>الاختبار الذاتي للخبرات بالمهنة {}</value>
+    <value>الاختبار الذاتي للخبرات بالمهنة {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_bg-BG" xml:space="preserve">
-    <value>Самостоятелен тест за опит Професия {}</value>
+    <value>Самостоятелен тест за опит Професия {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_en-US" xml:space="preserve">
-    <value>Profession {} experience self-test</value>
+    <value>Profession {0} experience self-test</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_fr-FR" xml:space="preserve">
-    <value>Autotest d’expérience métier {}</value>
+    <value>Autotest d’expérience métier {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_ro-RO" xml:space="preserve">
-    <value>Autotest experiență profesia {}</value>
+    <value>Autotest experiență profesia {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_ru-RU" xml:space="preserve">
-    <value>Тест самопроверки опыта в профессии {}</value>
+    <value>Тест самопроверки опыта в профессии {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_tr-TR" xml:space="preserve">
-    <value>Meslek {} kendi kendine deneyim testi</value>
+    <value>Meslek {0} kendi kendine deneyim testi</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceStartTitle_uk-UA" xml:space="preserve">
-    <value>Тест самоперевірки досвіду в професії {}</value>
+    <value>Тест самоперевірки досвіду в професії {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished" xml:space="preserve">
-    <value>Du hast die Selbsteinschätzung {} abgeschlossen.</value>
+    <value>Du hast die Selbsteinschätzung {0} abgeschlossen.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinishedDescription" xml:space="preserve">
@@ -2685,35 +2685,35 @@ Tи можеш пройти цей тест самоперевірки й інш
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_ar" xml:space="preserve">
-    <value>لقد أكملت التقييم الذاتي {}</value>
+    <value>لقد أكملت التقييم الذاتي {0}</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_bg-BG" xml:space="preserve">
-    <value>Завърши самостоятелното оценяване {}.</value>
+    <value>Завърши самостоятелното оценяване {0}.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_en-US" xml:space="preserve">
-    <value>You have completed the {} self-assessment.</value>
+    <value>You have completed the {0} self-assessment.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_fr-FR" xml:space="preserve">
-    <value>Vous avez terminé l’autotest {}.</value>
+    <value>Vous avez terminé l’autotest {0}.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_ro-RO" xml:space="preserve">
-    <value>Ai finalizat autoevaluarea pentru {}.</value>
+    <value>Ai finalizat autoevaluarea pentru {0}.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_ru-RU" xml:space="preserve">
-    <value>Вы прошли самооценочный тест на пригодность для {}.</value>
+    <value>Вы прошли самооценочный тест на пригодность для {0}.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_tr-TR" xml:space="preserve">
-    <value>Öz değerlendirmeyi {} tamamladın.</value>
+    <value>Öz değerlendirmeyi {0} tamamladın.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsExperienceTestFinished_uk-UA" xml:space="preserve">
-    <value>Tи пройшов/пройшла тест самооцiнки на придатність до {}.</value>
+    <value>Tи пройшов/пройшла тест самооцiнки на придатність до {0}.</value>
     <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsGermanTestDescription" xml:space="preserve">
@@ -3032,43 +3032,43 @@ Tи відповідаєш на запитання, вибираючи прав�
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle" xml:space="preserve">
-    <value>Test Beruf {}</value>
+    <value>Test Beruf {0}</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_ar" xml:space="preserve">
-    <value>اختبار المهنة {}</value>
+    <value>اختبار المهنة {0}</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_bg-BG" xml:space="preserve">
-    <value>Тест професия {}</value>
+    <value>Тест професия {0}</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_en-US" xml:space="preserve">
-    <value>Profession {} test </value>
+    <value>Profession {0} test </value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_fr-FR" xml:space="preserve">
-    <value>Test métier</value>
+    <value>Test métier {0}</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_ro-RO" xml:space="preserve">
-    <value>Test profesia {}</value>
+    <value>Test profesia {0}</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_ru-RU" xml:space="preserve">
-    <value>Тест на пригодность для профессии {}</value>
+    <value>Тест на пригодность для профессии {0}</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_tr-TR" xml:space="preserve">
-    <value>Meslek {} testi</value>
+    <value>Meslek {0} testi</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsStartTitle_uk-UA" xml:space="preserve">
-    <value>Тест на придатність до професії {}</value>
+    <value>Тест на придатність до професії {0}</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished" xml:space="preserve">
-    <value>Du hast den Test {} abgeschlossen!</value>
+    <value>Du hast den Test {0} abgeschlossen!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinishedDescription" xml:space="preserve">
@@ -3144,35 +3144,35 @@ Tи відповідаєш на запитання, вибираючи прав�
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_ar" xml:space="preserve">
-    <value>لقد أكملت اختبار {}!</value>
+    <value>لقد أكملت اختبار {0}!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_bg-BG" xml:space="preserve">
-    <value>Завърши теста {}!</value>
+    <value>Завърши теста {0}!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_en-US" xml:space="preserve">
-    <value>You have completed the {} test!</value>
+    <value>You have completed the {0} test!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_fr-FR" xml:space="preserve">
-    <value>Vous avez terminé le test {}.</value>
+    <value>Vous avez terminé le test {0}.</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_ro-RO" xml:space="preserve">
-    <value>Ai finalizat testul pentru {}!</value>
+    <value>Ai finalizat testul pentru {0}!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_ru-RU" xml:space="preserve">
-    <value>Вы прошли тест на пригодность для {}!</value>
+    <value>Вы прошли тест на пригодность для {0}!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_tr-TR" xml:space="preserve">
-    <value>Testi {} tamamladın!</value>
+    <value>Testi {0} tamamladın!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSkillsTestFinished_uk-UA" xml:space="preserve">
-    <value>Ти пройшов/пройшла тест на придатність до {}!</value>
+    <value>Ти пройшов/пройшла тест на придатність до {0}!</value>
     <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsSoftSkillDescription" xml:space="preserve">
@@ -3289,75 +3289,75 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <comment>SoftSkill-SO</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions" xml:space="preserve">
-    <value>{} von 30 Fragen beantwortet</value>
+    <value>{0} von {1} Fragen beantwortet</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_ar" xml:space="preserve">
-    <value>تمت الإجابة على {} من 30 سؤالاً</value>
+    <value>تمت الإجابة على {0} من {1} سؤالاً</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_bg-BG" xml:space="preserve">
-    <value>{} от 30 въпроса, на които е отговорено</value>
+    <value>{0} от {1} въпроса, на които е отговорено</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_en-US" xml:space="preserve">
-    <value>{} of 30 questions answered</value>
+    <value>{0} of {1} questions answered</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_fr-FR" xml:space="preserve">
-    <value>{} sur 30 questions répondues</value>
+    <value>{0} sur {1} questions répondues</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_ro-RO" xml:space="preserve">
-    <value>{} din 30 de întrebări la care ați răspuns</value>
+    <value>{0} din {1} de întrebări la care ați răspuns</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_ru-RU" xml:space="preserve">
-    <value>Ответы на {} из 30 вопросов</value>
+    <value>Ответы на {0} из {1} вопросов</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_tr-TR" xml:space="preserve">
-    <value>30 sorudan {} tanesi cevaplandı</value>
+    <value>{1} sorudan {0} tanesi cevaplandı</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestAnsweredQuestions_uk-UA" xml:space="preserve">
-    <value>{} відповіді на 30 запитань</value>
+    <value>{0} відповіді на {1} запитань</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime" xml:space="preserve">
-    <value>{} Minuten</value>
+    <value>{0} Minuten</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_ar" xml:space="preserve">
-    <value>{} دقيقة</value>
+    <value>{0} دقيقة</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_bg-BG" xml:space="preserve">
-    <value>{} минути</value>
+    <value>{0} минути</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_en-US" xml:space="preserve">
-    <value>{} minutes</value>
+    <value>{0} minutes</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_fr-FR" xml:space="preserve">
-    <value>{} minutes</value>
+    <value>{0} minutes</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_ro-RO" xml:space="preserve">
-    <value>{} minute</value>
+    <value>{0} minute</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_ru-RU" xml:space="preserve">
-    <value>{} минут</value>
+    <value>{0} минут</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_tr-TR" xml:space="preserve">
-    <value>{} dakika</value>
+    <value>{0} dakika</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsStartTestTime_uk-UA" xml:space="preserve">
-    <value>{} хвилин</value>
+    <value>{0} хвилин</value>
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsTestFinishedCongrats" xml:space="preserve">
@@ -3397,7 +3397,7 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <comment>Translate</comment>
   </data>
   <data name="TxtAssesmentsTestGermanAnswersCorrect" xml:space="preserve">
-    <value>Du hast insgesamt {} von 10 Aufgaben richtig gelöst!</value>
+    <value>Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!</value>
     <comment>Deutschtest-GL</comment>
   </data>
   <data name="TxtAssesmentsTestGermanExcellent" xml:space="preserve">
@@ -3421,11 +3421,11 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <comment>Deutschtest-GL</comment>
   </data>
   <data name="TxtAssesmentsTitleQuestions" xml:space="preserve">
-    <value>Frage {0}/30</value>
+    <value>Frage {0}/{1}</value>
     <comment>Translate New</comment>
   </data>
   <data name="TxtAssesmentsTitlePage" xml:space="preserve">
-    <value>Seite {0}/30</value>
+    <value>Seite {0}/{1}</value>
     <comment>Translate New</comment>
   </data>
 </root>

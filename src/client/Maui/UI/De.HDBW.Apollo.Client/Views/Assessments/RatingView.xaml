@@ -5,7 +5,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.RatingView"
-             Title="{x:Static strings:Resources.TxtAssesmentsTitlePage}"
+             Title="{x:Binding Title}"
              x:DataType="viewModel:RatingViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">

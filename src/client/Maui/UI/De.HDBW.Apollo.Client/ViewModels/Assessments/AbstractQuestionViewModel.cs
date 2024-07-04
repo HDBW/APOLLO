@@ -17,6 +17,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 using Plugin.Maui.Audio;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Assessments
@@ -26,9 +27,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         where TV : AbstractQuestionEntry
     {
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Title))]
         private int _offset;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Title))]
         private int _count;
 
         [ObservableProperty]
@@ -71,6 +74,25 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         public FlowDirection FlowDirection
         {
             get { return Culture?.TextInfo.IsRightToLeft ?? false ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; }
+        }
+
+        public virtual string? Title
+        {
+            get
+            {
+                if (Culture == null)
+                {
+                    return string.Empty;
+                }
+
+                var formate = this["TxtAssesmentsTitleQuestions"];
+                if (string.IsNullOrWhiteSpace(formate) || Count == 0)
+                {
+                    return string.Empty;
+                }
+
+                return string.Format(formate, Offset + 1, Count);
+            }
         }
 
         protected string? ModuleId { get; set; }
@@ -299,42 +321,72 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 return;
             }
 
-            var parameters = new NavigationParameters();
-            parameters.AddValue(NavigationParameter.Data, entry.AbsolutePath);
-            await DialogService.ShowPopupAsync<ImageZoomDialog, NavigationParameters, NavigationParameters>(parameters, CancellationToken.None).ConfigureAwait(false);
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    var parameters = new NavigationParameters();
+                    parameters.AddValue(NavigationParameter.Data, entry.AbsolutePath);
+                    await DialogService.ShowPopupAsync<ImageZoomDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnZoomImageAsync)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OnZoomImageAsync)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnZoomImageAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
 
         protected async Task<bool> OnToggleAudioPlaybackAsync(AudioEntry entry, Action<bool> updateStateHandler)
         {
-            try
+            var result = false;
+            if (IsBusy)
             {
-                if (IsBusy)
-                {
-                    return false;
-                }
-
-                if (!AudioPlayerService.IsPlaying && !AudioPlayerService.IsPaused)
-                {
-                    _updateStateHandler = updateStateHandler;
-                    return await AudioPlayerService.StartAsync(entry.AbsolutePath, HandlePlaybackCompleted, CancellationToken.None).ConfigureAwait(false);
-                }
-                else if (AudioPlayerService.IsPlaying)
-                {
-                    AudioPlayerService.Pause();
-                    return AudioPlayerService.IsPlaying;
-                }
-                else if (AudioPlayerService.IsPaused)
-                {
-                    AudioPlayerService.Resume();
-                    return AudioPlayerService.IsPlaying;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, $"Unknown error while {nameof(OnToggleAudioPlaybackAsync)} in {GetType().Name}.");
+                return result;
             }
 
-            return false;
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    if (!AudioPlayerService.IsPlaying && !AudioPlayerService.IsPaused)
+                    {
+                        _updateStateHandler = updateStateHandler;
+                        result = await AudioPlayerService.StartAsync(entry.AbsolutePath, HandlePlaybackCompleted, worker.Token).ConfigureAwait(false);
+                    }
+                    else if (AudioPlayerService.IsPlaying)
+                    {
+                        AudioPlayerService.Pause();
+                        result = AudioPlayerService.IsPlaying;
+                    }
+                    else if (AudioPlayerService.IsPaused)
+                    {
+                        AudioPlayerService.Resume();
+                        result = AudioPlayerService.IsPlaying;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OnToggleAudioPlaybackAsync)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+
+                return result;
+            }
         }
 
         protected async Task<bool> OnRestartAudioAsync(AudioEntry entry, Action<bool> updateStateHandler)
@@ -384,6 +436,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             Count = count;
             Questions = new ObservableCollection<TU>(questions);
             Question = question;
+            OnPropertyChanged(nameof(Title));
         }
     }
 }

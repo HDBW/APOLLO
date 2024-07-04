@@ -5,7 +5,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.EafrequencyView"
-             Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
+             Title="{x:Binding Title}"
              x:DataType="viewModel:EafrequencyViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
@@ -20,7 +20,7 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
-                    <Label Text="{x:Binding Question, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,24,0,8"/>
+                    <Label Text="{x:Binding Question, Mode=OneWay}" TextType="Html" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,24,0,8"/>
                     <Label Text="{x:Binding Situation, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
                 </VerticalStackLayout>
             </ScrollView>

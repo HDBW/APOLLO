@@ -56,6 +56,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
+            base.OnPropertyChanged(e);
             if (e.PropertyName != nameof(Question))
             {
                 return;

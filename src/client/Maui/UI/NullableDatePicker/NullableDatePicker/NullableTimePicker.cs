@@ -54,7 +54,7 @@ namespace FedericoNembrini.Maui.CustomDatePicker
 
         public NullableTimePicker() { }
 
-        protected override void OnPropertyChanged(string propertyName = null)
+        protected override void OnPropertyChanged(string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
 

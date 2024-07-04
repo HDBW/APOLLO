@@ -6,7 +6,7 @@
              xmlns:hwv="clr-namespace:HybridWebView;assembly=HybridWebView"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ClozeView"
-             Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
+             Title="{x:Binding Title}"
              x:DataType="viewModel:ClozeViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">

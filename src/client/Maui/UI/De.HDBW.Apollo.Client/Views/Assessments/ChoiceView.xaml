@@ -6,7 +6,7 @@
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ChoiceView"
-             Title="{x:Static strings:Resources.TxtAssesmentsTitleQuestions}"
+             Title="{x:Binding Title}"
              x:DataType="viewModel:ChoiceViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
@@ -179,8 +179,8 @@
                         </Image>
                     </Grid>
                 </VerticalStackLayout>
-                <Label Text="{x:Binding Question, Mode=OneWay}" Margin="4,0,4,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
-                <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Question, Mode=OneWay}" TextType="Html" Margin="4,0,4,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Instruction, Mode=OneWay}" TextType="Html" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                 <CollectionView x:Name="PART_ImageChoice" Margin="0,0,0,0" ItemsSource="{x:Binding AnswerImages, Mode=OneWay}" ItemTemplate="{StaticResource ChoiceEntryImage}" IsVisible="True" ItemsLayout="VerticalGrid, 2"/>
                 <StackLayout x:Name="PART_TextChoice" Margin="0,0,0,0" BindableLayout.ItemsSource="{x:Binding AnswerTexts, Mode=OneWay}" BindableLayout.ItemTemplate="{StaticResource ChoiceEntryText}" IsVisible="True" />
             </VerticalStackLayout>

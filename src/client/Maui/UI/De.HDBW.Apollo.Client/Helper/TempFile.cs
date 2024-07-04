@@ -42,12 +42,12 @@ namespace De.HDBW.Apollo.Client.Helper
             return new TempFile(temporaryFile);
         }
 
-        public async Task SaveAsync(Stream stream)
+        public async Task SaveAsync(Stream stream, CancellationToken token = default)
         {
             using (var file = new FileStream(this, FileMode.Open))
             {
-                await stream.CopyToAsync(file);
-                await file.FlushAsync();
+                await stream.CopyToAsync(file, token).ConfigureAwait(false);
+                await file.FlushAsync(token).ConfigureAwait(false);
             }
         }
 

@@ -1303,7 +1303,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erneut testen in {} Tagen.
+        ///   Looks up a localized string similar to Erneut testen in {0} Tagen.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain {
             get {
@@ -1312,7 +1312,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to الاختبار مرة أخرى خلال {} أيام.
+        ///   Looks up a localized string similar to الاختبار مرة أخرى خلال {0} أيام.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_ar {
             get {
@@ -1321,7 +1321,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Повторен тест след {} дни.
+        ///   Looks up a localized string similar to Повторен тест след {0} дни.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_bg_BG {
             get {
@@ -1330,7 +1330,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test again in {} days.
+        ///   Looks up a localized string similar to Test again in {0} days.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_en_US {
             get {
@@ -1339,7 +1339,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Retester dans {} jours.
+        ///   Looks up a localized string similar to Retester dans {0} jours.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_fr_FR {
             get {
@@ -1348,7 +1348,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Testați din nou peste {} zile.
+        ///   Looks up a localized string similar to Testați din nou peste {0} zile.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_ro_RO {
             get {
@@ -1357,7 +1357,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Повторное тестирование через {} дней.
+        ///   Looks up a localized string similar to Повторное тестирование через {0} дней.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_ru_RU {
             get {
@@ -1366,7 +1366,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} gün içinde tekrar test edin.
+        ///   Looks up a localized string similar to {0} gün içinde tekrar test edin.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_tr_TR {
             get {
@@ -1375,7 +1375,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Повторіть тест через {} днів.
+        ///   Looks up a localized string similar to Повторіть тест через {0} днів.
         /// </summary>
         public static string BtnTxtAssesmentsStartTestTimeTestAgain_uk_UA {
             get {
@@ -6031,7 +6031,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Avec cet autotest, vous pouvez évaluer vous-mêmes vos compétences professionnelles. Le résultat vous montre combien d’expérience pratique vous avez déjà dans différents domaines du métier. Sur la base de cette information, nous pouvons vous proposer une formation continue adaptée.
         ///Pour répondre aux questions, vous devez indiquer à quelle fréquence vous avez déjà réalisé les tâches présentées. Essayez!
-        ///Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une langue en haut [rest of string was truncated]&quot;;.
+        ///Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une langue en ha [rest of string was truncated]&quot;;.
         /// </summary>
         public static string TxtAssesmentsExperienceStartDescription_fr_FR {
             get {
@@ -6084,7 +6084,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erfahrungsselbsttest Beruf {}.
+        ///   Looks up a localized string similar to Erfahrungsselbsttest Beruf {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle {
             get {
@@ -6093,7 +6093,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to الاختبار الذاتي للخبرات بالمهنة {}.
+        ///   Looks up a localized string similar to الاختبار الذاتي للخبرات بالمهنة {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_ar {
             get {
@@ -6102,7 +6102,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Самостоятелен тест за опит Професия {}.
+        ///   Looks up a localized string similar to Самостоятелен тест за опит Професия {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_bg_BG {
             get {
@@ -6111,7 +6111,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profession {} experience self-test.
+        ///   Looks up a localized string similar to Profession {0} experience self-test.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_en_US {
             get {
@@ -6120,7 +6120,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autotest d’expérience métier {}.
+        ///   Looks up a localized string similar to Autotest d’expérience métier {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_fr_FR {
             get {
@@ -6129,7 +6129,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autotest experiență profesia {}.
+        ///   Looks up a localized string similar to Autotest experiență profesia {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_ro_RO {
             get {
@@ -6138,7 +6138,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест самопроверки опыта в профессии {}.
+        ///   Looks up a localized string similar to Тест самопроверки опыта в профессии {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_ru_RU {
             get {
@@ -6147,7 +6147,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meslek {} kendi kendine deneyim testi.
+        ///   Looks up a localized string similar to Meslek {0} kendi kendine deneyim testi.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_tr_TR {
             get {
@@ -6156,7 +6156,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест самоперевірки досвіду в професії {}.
+        ///   Looks up a localized string similar to Тест самоперевірки досвіду в професії {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceStartTitle_uk_UA {
             get {
@@ -6165,7 +6165,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast die Selbsteinschätzung {} abgeschlossen..
+        ///   Looks up a localized string similar to Du hast die Selbsteinschätzung {0} abgeschlossen..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished {
             get {
@@ -6174,7 +6174,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to لقد أكملت التقييم الذاتي {}.
+        ///   Looks up a localized string similar to لقد أكملت التقييم الذاتي {0}.
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_ar {
             get {
@@ -6183,7 +6183,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Завърши самостоятелното оценяване {}..
+        ///   Looks up a localized string similar to Завърши самостоятелното оценяване {0}..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_bg_BG {
             get {
@@ -6192,7 +6192,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have completed the {} self-assessment..
+        ///   Looks up a localized string similar to You have completed the {0} self-assessment..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_en_US {
             get {
@@ -6201,7 +6201,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vous avez terminé l’autotest {}..
+        ///   Looks up a localized string similar to Vous avez terminé l’autotest {0}..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_fr_FR {
             get {
@@ -6210,7 +6210,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ai finalizat autoevaluarea pentru {}..
+        ///   Looks up a localized string similar to Ai finalizat autoevaluarea pentru {0}..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_ro_RO {
             get {
@@ -6219,7 +6219,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вы прошли самооценочный тест на пригодность для {}..
+        ///   Looks up a localized string similar to Вы прошли самооценочный тест на пригодность для {0}..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_ru_RU {
             get {
@@ -6228,7 +6228,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Öz değerlendirmeyi {} tamamladın..
+        ///   Looks up a localized string similar to Öz değerlendirmeyi {0} tamamladın..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_tr_TR {
             get {
@@ -6237,7 +6237,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tи пройшов/пройшла тест самооцiнки на придатність до {}..
+        ///   Looks up a localized string similar to Tи пройшов/пройшла тест самооцiнки на придатність до {0}..
         /// </summary>
         public static string TxtAssesmentsExperienceTestFinished_uk_UA {
             get {
@@ -6915,7 +6915,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.  
         ///Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!
-        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sp [rest of string was truncated]&quot;;.
+        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string TxtAssesmentsSkillsStartDescription {
             get {
@@ -7012,7 +7012,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test Beruf {}.
+        ///   Looks up a localized string similar to Test Beruf {0}.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle {
             get {
@@ -7021,7 +7021,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to اختبار المهنة {}.
+        ///   Looks up a localized string similar to اختبار المهنة {0}.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_ar {
             get {
@@ -7030,7 +7030,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест професия {}.
+        ///   Looks up a localized string similar to Тест професия {0}.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_bg_BG {
             get {
@@ -7039,7 +7039,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profession {} test .
+        ///   Looks up a localized string similar to Profession {0} test .
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_en_US {
             get {
@@ -7048,7 +7048,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test métier.
+        ///   Looks up a localized string similar to Test métier {0}.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_fr_FR {
             get {
@@ -7057,7 +7057,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test profesia {}.
+        ///   Looks up a localized string similar to Test profesia {0}.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_ro_RO {
             get {
@@ -7066,7 +7066,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест на пригодность для профессии {}.
+        ///   Looks up a localized string similar to Тест на пригодность для профессии {0}.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_ru_RU {
             get {
@@ -7075,7 +7075,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meslek {} testi.
+        ///   Looks up a localized string similar to Meslek {0} testi.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_tr_TR {
             get {
@@ -7084,7 +7084,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест на придатність до професії {}.
+        ///   Looks up a localized string similar to Тест на придатність до професії {0}.
         /// </summary>
         public static string TxtAssesmentsSkillsStartTitle_uk_UA {
             get {
@@ -7093,7 +7093,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast den Test {} abgeschlossen!.
+        ///   Looks up a localized string similar to Du hast den Test {0} abgeschlossen!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished {
             get {
@@ -7102,7 +7102,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to لقد أكملت اختبار {}!.
+        ///   Looks up a localized string similar to لقد أكملت اختبار {0}!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_ar {
             get {
@@ -7111,7 +7111,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Завърши теста {}!.
+        ///   Looks up a localized string similar to Завърши теста {0}!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_bg_BG {
             get {
@@ -7120,7 +7120,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have completed the {} test!.
+        ///   Looks up a localized string similar to You have completed the {0} test!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_en_US {
             get {
@@ -7129,7 +7129,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vous avez terminé le test {}..
+        ///   Looks up a localized string similar to Vous avez terminé le test {0}..
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_fr_FR {
             get {
@@ -7138,7 +7138,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ai finalizat testul pentru {}!.
+        ///   Looks up a localized string similar to Ai finalizat testul pentru {0}!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_ro_RO {
             get {
@@ -7147,7 +7147,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вы прошли тест на пригодность для {}!.
+        ///   Looks up a localized string similar to Вы прошли тест на пригодность для {0}!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_ru_RU {
             get {
@@ -7156,7 +7156,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Testi {} tamamladın!.
+        ///   Looks up a localized string similar to Testi {0} tamamladın!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_tr_TR {
             get {
@@ -7165,7 +7165,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ти пройшов/пройшла тест на придатність до {}!.
+        ///   Looks up a localized string similar to Ти пройшов/пройшла тест на придатність до {0}!.
         /// </summary>
         public static string TxtAssesmentsSkillsTestFinished_uk_UA {
             get {
@@ -7589,7 +7589,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} von 30 Fragen beantwortet.
+        ///   Looks up a localized string similar to {0} von {1} Fragen beantwortet.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions {
             get {
@@ -7598,7 +7598,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تمت الإجابة على {} من 30 سؤالاً.
+        ///   Looks up a localized string similar to تمت الإجابة على {0} من {1} سؤالاً.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_ar {
             get {
@@ -7607,7 +7607,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} от 30 въпроса, на които е отговорено.
+        ///   Looks up a localized string similar to {0} от {1} въпроса, на които е отговорено.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_bg_BG {
             get {
@@ -7616,7 +7616,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} of 30 questions answered.
+        ///   Looks up a localized string similar to {0} of {1} questions answered.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_en_US {
             get {
@@ -7625,7 +7625,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} sur 30 questions répondues.
+        ///   Looks up a localized string similar to {0} sur {1} questions répondues.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_fr_FR {
             get {
@@ -7634,7 +7634,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} din 30 de întrebări la care ați răspuns.
+        ///   Looks up a localized string similar to {0} din {1} de întrebări la care ați răspuns.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_ro_RO {
             get {
@@ -7643,7 +7643,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ответы на {} из 30 вопросов.
+        ///   Looks up a localized string similar to Ответы на {0} из {1} вопросов.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_ru_RU {
             get {
@@ -7652,7 +7652,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 30 sorudan {} tanesi cevaplandı.
+        ///   Looks up a localized string similar to {1} sorudan {0} tanesi cevaplandı.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_tr_TR {
             get {
@@ -7661,7 +7661,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} відповіді на 30 запитань.
+        ///   Looks up a localized string similar to {0} відповіді на {1} запитань.
         /// </summary>
         public static string TxtAssesmentsStartTestAnsweredQuestions_uk_UA {
             get {
@@ -7670,7 +7670,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} Minuten.
+        ///   Looks up a localized string similar to {0} Minuten.
         /// </summary>
         public static string TxtAssesmentsStartTestTime {
             get {
@@ -7679,7 +7679,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} دقيقة.
+        ///   Looks up a localized string similar to {0} دقيقة.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_ar {
             get {
@@ -7688,7 +7688,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} минути.
+        ///   Looks up a localized string similar to {0} минути.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_bg_BG {
             get {
@@ -7697,7 +7697,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} minutes.
+        ///   Looks up a localized string similar to {0} minutes.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_en_US {
             get {
@@ -7706,7 +7706,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} minutes.
+        ///   Looks up a localized string similar to {0} minutes.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_fr_FR {
             get {
@@ -7715,7 +7715,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} minute.
+        ///   Looks up a localized string similar to {0} minute.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_ro_RO {
             get {
@@ -7724,7 +7724,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} минут.
+        ///   Looks up a localized string similar to {0} минут.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_ru_RU {
             get {
@@ -7733,7 +7733,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} dakika.
+        ///   Looks up a localized string similar to {0} dakika.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_tr_TR {
             get {
@@ -7742,7 +7742,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {} хвилин.
+        ///   Looks up a localized string similar to {0} хвилин.
         /// </summary>
         public static string TxtAssesmentsStartTestTime_uk_UA {
             get {
@@ -7832,7 +7832,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du hast insgesamt {} von 10 Aufgaben richtig gelöst!.
+        ///   Looks up a localized string similar to Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!.
         /// </summary>
         public static string TxtAssesmentsTestGermanAnswersCorrect {
             get {
@@ -7886,7 +7886,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seite {0}/30.
+        ///   Looks up a localized string similar to Seite {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsTitlePage {
             get {
@@ -7895,7 +7895,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frage {0}/30.
+        ///   Looks up a localized string similar to Frage {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsTitleQuestions {
             get {
