@@ -22,7 +22,9 @@ namespace De.HDBW.Apollo.Client.Controls
 
         public RectF ImageRect { get; set; } = RectF.Zero;
 
-        public float Scale { get; set; } = 1f;
+        public float ImageScale { get; set; } = 1f;
+
+        public float ShapeScale { get; set; } = 1f;
 
         public void SetShapes(List<InteractionShape> shapes)
         {
@@ -70,11 +72,14 @@ namespace De.HDBW.Apollo.Client.Controls
                 using (var stream = File.OpenRead(path))
                 {
                     var image = PlatformImage.FromStream(stream, ImageFormat.Jpeg);
+                    var originalWidth = 1300; // todo: read from EXIF
+                    var originalHeight = 1300; // todo: read from EXIF
                     var xScale = dirtyRect.Width / image.Width;
                     var yScale = dirtyRect.Height / image.Height;
-                    Scale = Math.Min(xScale, yScale);
-                    Scale = Math.Min(Scale, 1);
-                    var size = new Size(image.Width * Scale, image.Height * Scale);
+                    ImageScale = Math.Min(xScale, yScale);
+                    ImageScale = Math.Min(ImageScale, 1);
+                    ShapeScale = Math.Min(dirtyRect.Width / originalWidth, dirtyRect.Height / originalHeight);
+                    var size = new Size(image.Width * ImageScale, image.Height * ImageScale);
                     var point = new PointF((dirtyRect.Width - Convert.ToSingle(size.Width)) / 2f, (dirtyRect.Height - Convert.ToSingle(size.Height)) / 2f);
                     ImageRect = new RectF(point, size);
                 }
@@ -96,22 +101,22 @@ namespace De.HDBW.Apollo.Client.Controls
                     switch (shape)
                     {
                         case InteractionCircle circle:
-                            var pt = new PointF(ImageRect.X + (Convert.ToSingle(circle.Location.X) * Scale), ImageRect.Y + (Convert.ToSingle(circle.Location.Y) * Scale));
+                            var pt = new PointF(ImageRect.X + (Convert.ToSingle(circle.Location.X) * ShapeScale), ImageRect.Y + (Convert.ToSingle(circle.Location.Y) * ShapeScale));
                             borderColor = circle.IsSelected ? InteractionSelectedBorderColor : InteractionBorderColor;
-                            DrawSelectionIndicator(canvas, pt, Convert.ToSingle(circle.Radius), borderColor, InteractionBackgroundColor);
+                            DrawSelectionIndicator(canvas, pt, Convert.ToSingle(circle.Radius * ShapeScale), borderColor, InteractionBackgroundColor);
                             if (circle.IsSelected)
                             {
-                                DrawSelectionIndicator(canvas, pt, Convert.ToSingle(circle.Radius) / 2, InteractionSelectedBorderColor, InteractionSelectedBackgroundColor);
+                                DrawSelectionIndicator(canvas, pt, Convert.ToSingle(circle.Radius * ShapeScale) / 2, InteractionSelectedBorderColor, InteractionSelectedBackgroundColor);
                             }
 
                             break;
 
                         case InteractionRectangle rect:
                             var rectangle = new RectF(
-                                ImageRect.X + (Convert.ToSingle(rect.Rectangle.X) * Scale),
-                                ImageRect.Y + (Convert.ToSingle(rect.Rectangle.Y) * Scale),
-                                Convert.ToSingle(rect.Rectangle.Width) * Scale,
-                                Convert.ToSingle(rect.Rectangle.Height) * Scale);
+                                ImageRect.X + (Convert.ToSingle(rect.Rectangle.X) * ShapeScale),
+                                ImageRect.Y + (Convert.ToSingle(rect.Rectangle.Y) * ShapeScale),
+                                Convert.ToSingle(rect.Rectangle.Width) * ShapeScale,
+                                Convert.ToSingle(rect.Rectangle.Height) * ShapeScale);
                             borderColor = rect.IsSelected ? InteractionSelectedBorderColor : InteractionBorderColor;
                             DrawSelectionIndicator(canvas, rectangle, borderColor, InteractionBackgroundColor);
                             break;
@@ -125,8 +130,8 @@ namespace De.HDBW.Apollo.Client.Controls
             canvas.StrokeColor = borderColor;
             canvas.FillColor = fillColor;
             canvas.StrokeSize = 2;
-            canvas.FillCircle(pt.X, pt.Y, radius * Scale);
-            canvas.DrawCircle(pt.X, pt.Y, radius * Scale);
+            canvas.FillCircle(pt.X, pt.Y, radius);
+            canvas.DrawCircle(pt.X, pt.Y, radius);
         }
 
         private void DrawSelectionIndicator(ICanvas canvas, RectF rect, Color borderColor, Color fillColor)
