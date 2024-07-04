@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Net.Http;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Assessment;
 
 namespace De.HDBW.Apollo.Client.Controls
@@ -134,7 +136,60 @@ namespace De.HDBW.Apollo.Client.Controls
             var control = bindable as ImageInteractionView;
             if (control?.OnImageSourceChanged() ?? false)
             {
-                control!.Invalidate();
+                var controlRef = new WeakReference<ImageInteractionView>(control);
+                var currentValue = control.ImageSource;
+                if (string.IsNullOrWhiteSpace(currentValue))
+                {
+                    control.Invalidate();
+                    return;
+                }
+
+                if (!Uri.IsWellFormedUriString(currentValue, UriKind.Absolute))
+                {
+                    control.Invalidate();
+                    return;
+                }
+
+                Task.Run(() => DonwloadFileAsync(currentValue)).ContinueWith((x) =>
+                {
+                    if (controlRef.TryGetTarget(out ImageInteractionView? control))
+                    {
+                        control.Dispatcher.Dispatch(() => { control.Invalidate(); });
+                    }
+                });
+            }
+        }
+
+        private static async Task DonwloadFileAsync(string file)
+        {
+            string cacheDir = FileSystem.Current.CacheDirectory;
+            var path = Path.Combine(cacheDir, Path.GetFileName(file));
+
+            var info = new FileInfo(path);
+            if (info.Exists && info.Length >0)
+            {
+                return;
+            }
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    using (var tempFile = new TempFile())
+                    {
+                        using (var response = await client.GetAsync(file))
+                        {
+                            using (var stream = await response.Content.ReadAsStreamAsync())
+                            {
+                                await tempFile.SaveAsync(stream);
+                                tempFile.Move(path, true);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
 
