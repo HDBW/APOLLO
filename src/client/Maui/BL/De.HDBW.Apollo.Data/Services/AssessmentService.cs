@@ -73,7 +73,7 @@ namespace GrpcClient.Service
             modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
             var be = Create(assessment, modules, string.Empty);
 
-            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Sk)!;
+            assessment = _data.Assessments.Skip(1).FirstOrDefault(x => x.Type == AssessmentType.Sk)!;
             modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
             var sa = Create(assessment, modules, "Teste dein Wissen");
 

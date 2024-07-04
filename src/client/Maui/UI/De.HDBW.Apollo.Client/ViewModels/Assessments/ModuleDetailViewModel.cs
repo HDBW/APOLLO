@@ -265,6 +265,16 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     var questionIds = session.RawDatas.Select(x => x.RawDataId).ToList();
                     var sessionId = session.SessionId;
                     var assessmentId = session.AssesmentId;
+
+                    var orderedRawData = session.RawDatas.ToList();
+                    var item1 = orderedRawData.FirstOrDefault(x => x.Id == 31);
+                    if (item1 != null)
+                    {
+                        session.CurrentRawdata = item1.RawDataId;
+                        orderedRawData.Remove(item1);
+                        orderedRawData.Insert(0, item1);
+                    }
+
                     localSession = new LocalAssessmentSession()
                     {
                         SessionId = sessionId,
@@ -281,14 +291,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     }
 
                     var items = new List<CachedRawData>();
-                    for (var i = 1; i <= session.RawDatas.Count; i++)
+
+                    for (var i = 1; i <= orderedRawData.Count; i++)
                     {
-                        var data = session.RawDatas[i - 1];
+                        var data = orderedRawData[i - 1];
                         items.Add(new CachedRawData() { Id = i, RawDataId = data.RawDataId, SessionId = session.SessionId, AssesmentId = data.AssesmentId, ModuleId = data.ModuleId, Data = data.Data });
                     }
 
                     await RawDataCacheRepository.ResetItemsAsync(items, worker.Token).ConfigureAwait(false);
-                    var rawData = session.RawDatas.First(x => x.RawDataId == session.CurrentRawdata).ToRawData();
+                    var rawData = orderedRawData.First(x => x.RawDataId == session.CurrentRawdata).ToRawData();
                     string? route = rawData?.type.ToRoute();
 
                     if (string.IsNullOrWhiteSpace(route))

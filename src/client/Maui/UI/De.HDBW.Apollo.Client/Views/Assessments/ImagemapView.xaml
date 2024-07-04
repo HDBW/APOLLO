@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              xmlns:blModels="clr-namespace:De.HDBW.Apollo.SharedContracts.Models;assembly=De.HDBW.Apollo.SharedContracts"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ImagemapView"
              Shell.BackgroundColor="Red"
@@ -22,8 +23,14 @@
                 <Label Text="{x:Binding Question, Mode=OneWay}" Margin="0,0,0,24"/>
                 <Label Text="{x:Binding Instruction, Mode=OneWay}" Margin="0,0,0,8"/>
                 <Grid>
-                    <Image Source="{x:Binding Image.AbsolutePath}" Aspect="AspectFit" HeightRequest="272"/>
-                    <AbsoluteLayout BindableLayout.ItemsSource="{x:Binding Shapes}" BindableLayout.ItemTemplate="{StaticResource Shape}" x:Name="PART_Shape"/>
+                    <controls:ImageInteractionView x:Name="PART_Canvas" 
+                                    InteractionSize="30" 
+                                    ImageSource="{x:Binding Image.AbsolutePath}"
+                                    Interactions="{x:Binding Shapes}"
+                                    InteractionBackgroundBrush="#A0FFFFFF"
+                                    HeightRequest="272"
+                                    >
+                    </controls:ImageInteractionView>
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
