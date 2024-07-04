@@ -87,6 +87,11 @@ namespace De.HDBW.Apollo.Client.Controls
             get { return _drawable?.ImageScale ?? 1f; }
         }
 
+        public float ShapeScale
+        {
+            get { return _drawable?.ShapeScale ?? 1f; }
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -334,7 +339,7 @@ namespace De.HDBW.Apollo.Client.Controls
                 return null;
             }
 
-            return new PointF((point.X - ImageRect.X) / _drawable?.ShapeScale ?? 1, (point.Y - ImageRect.Y) / _drawable?.ShapeScale ?? 1);
+            return new PointF((point.X - ImageRect.X) / ShapeScale, (point.Y - ImageRect.Y) / ShapeScale);
         }
     }
 }

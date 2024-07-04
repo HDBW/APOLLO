@@ -82,6 +82,7 @@ namespace De.HDBW.Apollo.Client.Controls
                     var size = new Size(image.Width * ImageScale, image.Height * ImageScale);
                     var point = new PointF((dirtyRect.Width - Convert.ToSingle(size.Width)) / 2f, (dirtyRect.Height - Convert.ToSingle(size.Height)) / 2f);
                     ImageRect = new RectF(point, size);
+                    canvas.DrawImage(image, ImageRect.X, ImageRect.Y, ImageRect.Width, ImageRect.Height);
                 }
             }
             catch (Exception ex)
