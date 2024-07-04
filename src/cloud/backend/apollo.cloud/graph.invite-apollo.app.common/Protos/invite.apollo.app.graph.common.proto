@@ -167,10 +167,10 @@ message ModuleTile {
   google.protobuf.StringValue SessionId = 10;
 
   // The number of rawdata in this module
-  int RawDataCount = 11;
+  google.protobuf.Int32Value RawDataCount = 11;
 
   // The number of answers in current session.
-  int AwnserCount = 12;
+  google.protobuf.Int32Value AwnserCount = 12;
 }
 
 message AssessmentScore {
