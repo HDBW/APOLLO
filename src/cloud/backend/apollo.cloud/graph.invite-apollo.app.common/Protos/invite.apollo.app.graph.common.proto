@@ -251,6 +251,15 @@ message Module {
   google.protobuf.StringValue ModuleId = 14;
   
   google.protobuf.Int64Value JobId = 15;
+
+  // The current session id of the module
+  google.protobuf.StringValue SessionId = 16;
+
+  // The number of rawdata in this module
+  google.protobuf.Int32Value RawDataCount = 17;
+
+  // The number of answers in current session.
+  google.protobuf.Int32Value AwnserCount = 18;
 }
 
 message Job {
