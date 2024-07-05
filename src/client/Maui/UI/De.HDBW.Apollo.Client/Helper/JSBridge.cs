@@ -2,7 +2,9 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.Messaging;
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Views.Assessments;
 using The49.Maui.BottomSheet;
 
@@ -12,13 +14,17 @@ namespace De.HDBW.Apollo.Client.Helper
     {
         private readonly WeakReference _reference;
         private readonly IDispatcher _dispatcher;
+        private readonly ISheetService _sheetService;
         private string? _lastId;
         private BottomSheet? _sheet;
 
-        public JSBridge(HybridWebView.HybridWebView webView)
+        public JSBridge(HybridWebView.HybridWebView webView, ISheetService sheetService)
         {
+            ArgumentNullException.ThrowIfNull(webView);
+            ArgumentNullException.ThrowIfNull(sheetService);
             _reference = new WeakReference(webView);
             _dispatcher = webView.Dispatcher;
+            _sheetService = sheetService;
             WeakReferenceMessenger.Default.Register<SelectionMessage>(this, OnSelectionMessage);
         }
 
@@ -104,9 +110,11 @@ namespace De.HDBW.Apollo.Client.Helper
             if (readOnly)
             {
                 _lastId = id;
-                _sheet = new SelectionSheet();
-                _sheet.Dismissed += HandleDismissed;
-                return _sheet.ShowAsync(true);
+                //_sheet = new SelectionSheet();
+                //_sheet.Dismissed += HandleDismissed;
+                var parameters = new NavigationParameters();
+                parameters.Add(NavigationParameter.Data, "Test;hallo");
+                return _sheetService.OpenAsync(Routes.SelectionSheet, CancellationToken.None, parameters);
             }
 
             _lastId = null;

@@ -96,5 +96,6 @@ namespace De.HDBW.Apollo.Client.Models
         public const string SortView = "/SortView";
 
         public const string ResultOverView = "/ResultOverView";
+        public const string SelectionSheet = "/SelectionSheet";
     }
 }

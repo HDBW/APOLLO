@@ -3436,4 +3436,7 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <value>Details zu deinem Testergebnis</value>
     <comment>Translate New</comment>
   </data>
+  <data name="SelectionSheet_Selection" xml:space="preserve">
+    <value>Auswahl</value>
+  </data>
 </root>

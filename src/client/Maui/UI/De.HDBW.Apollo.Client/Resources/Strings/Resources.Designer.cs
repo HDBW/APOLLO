@@ -4319,6 +4319,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auswahl.
+        /// </summary>
+        public static string SelectionSheet_Selection {
+            get {
+                return ResourceManager.GetString("SelectionSheet_Selection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abbrechen.
         /// </summary>
         public static string SelectOptionDialog_Cancel {

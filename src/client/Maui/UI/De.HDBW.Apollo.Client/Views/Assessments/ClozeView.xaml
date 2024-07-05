@@ -11,7 +11,7 @@
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*,Auto">
-        <Border StrokeThickness="0">
+        <Border StrokeThickness="0" x:Name="PART_HOST">
             <hwv:HybridWebView x:Name="PART_WebView"
                     HybridAssetRoot="hybrid_root"
                     MainFile="proxy"

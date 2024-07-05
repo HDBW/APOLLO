@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.Messaging;
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.ViewModels.Assessments;
@@ -11,11 +12,11 @@ namespace De.HDBW.Apollo.Client.Views.Assessments
     [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class ClozeView : ContentPage
     {
-        public ClozeView(ClozeViewModel viewModel)
+        public ClozeView(ClozeViewModel viewModel, ISheetService sheetService)
         {
             InitializeComponent();
             BindingContext = viewModel;
-            PART_WebView.JSInvokeTarget = new JSBridge(PART_WebView);
+            PART_WebView.JSInvokeTarget = new JSBridge(PART_WebView, sheetService);
             PART_WebView.ProxyRequestReceived += HandleRequest;
 
 #if IOS
@@ -60,7 +61,7 @@ namespace De.HDBW.Apollo.Client.Views.Assessments
         }
 
 #if IOS
-        private async void HandleNavigated(object sender, Microsoft.Maui.Controls.WebNavigatedEventArgs e)
+        private async void HandleNavigated(object sender, WebNavigatedEventArgs e)
         {
             var completed = await PART_WebView.EvaluateJavaScriptAsync("document.readyState");
             if (completed == null)
@@ -74,7 +75,7 @@ namespace De.HDBW.Apollo.Client.Views.Assessments
                 return;
             }
 
-            PART_WebView.HeightRequest = documentHeigh;
+            PART_WebView.HeightRequest = Math.Min(documentHeigh, PART_HOST.Height);
         }
 #else
         private void HandleNavigated(object sender, WebNavigatedEventArgs e)

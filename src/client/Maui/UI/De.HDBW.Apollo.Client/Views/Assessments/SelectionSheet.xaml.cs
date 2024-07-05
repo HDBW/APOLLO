@@ -3,6 +3,7 @@
 
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Messages;
+using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
 namespace De.HDBW.Apollo.Client.Views.Assessments
 {
@@ -14,10 +15,28 @@ namespace De.HDBW.Apollo.Client.Views.Assessments
             InitializeComponent();
         }
 
-        private void HandleClicked(object sender, EventArgs e)
+        public SelectionSheet(SelectionSheetViewModel model)
+            : this()
         {
-            var button = sender as Button;
-            WeakReferenceMessenger.Default.Send<SelectionMessage>(new SelectionMessage(button?.Text ?? string.Empty));
+            BindingContext = model;
+        }
+
+        public SelectionSheetViewModel? ViewModel
+        {
+            get
+            {
+                return BindingContext as SelectionSheetViewModel;
+            }
+        }
+
+        private async void OnShown(object? sender, EventArgs e)
+        {
+            if (ViewModel == null)
+            {
+                return;
+            }
+
+            await ViewModel.OnNavigatedToAsync();
         }
     }
 }
