@@ -57,7 +57,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         private async Task Cancel(CancellationToken token)
         {
             Logger.LogInformation($"Invoked {nameof(CancelCommand)} in {GetType().Name}.");
-            using (var worker = ScheduleWork())
+            using (var worker = ScheduleWork(token))
             {
                 try
                 {

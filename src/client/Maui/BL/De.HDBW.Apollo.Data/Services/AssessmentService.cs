@@ -150,7 +150,7 @@ namespace GrpcClient.Service
                     Title = module.Title,
                     SessionId = localSession?.SessionId,
                     RawDataCount = rawDataIds.Count,
-                    AwnserCount = offset,
+                    AnswerCount = offset,
                 });
             }
 
@@ -282,7 +282,7 @@ namespace GrpcClient.Service
                 var rawDataIds = localSession.RawDataOrder.Split(";").ToList();
                 var nextOffset = rawDataIds.IndexOf(localSession.CurrentRawDataId) + 1;
 
-                if (rawDataIds.Count >= nextOffset)
+                if (nextOffset >= rawDataIds.Count)
                 {
                     return null;
                 }

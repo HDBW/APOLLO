@@ -16,6 +16,7 @@ using De.HDBW.Apollo.SharedContracts.Helper;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
+using HarfBuzzSharp;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
 
@@ -47,6 +48,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private AssessmentType _assessmentType;
 
         private string? _language;
+
+        private string? _sessionId;
 
         public ModuleDetailViewModel(
             IAssessmentService assessmentService,
@@ -98,6 +101,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     }
 
                     _assessmentId = module?.AssessmentId;
+                    _sessionId = module?.SessionId;
                     if (module != null)
                     {
                         if (!string.IsNullOrWhiteSpace(module.Subtitle))
@@ -117,10 +121,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             sections.Add(TextEntry.Import(module.Description));
                         }
 
-                        //TODO: Add Sesssion
-                        if ((module.Repeatable ?? 0) > 0)
+                        if ((module.Repeatable ?? 0) > 0 || !string.IsNullOrWhiteSpace(module.SessionId))
                         {
-                            sections.Add(SessionStateEntry.Import(module.Repeatable));
+                            sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, HandleResume, CanResume));
                         }
 
                         var format = this["ModuleDetailView_Minutes"];
@@ -192,7 +195,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             base.RefreshCommands();
             OpenLanguageSelectionCommand?.NotifyCanExecuteChanged();
             StartAssessmentCommand?.NotifyCanExecuteChanged();
-            Sections.OfType<SessionStateEntry>().FirstOrDefault()?.RefreshCommands();
+            Sections.OfType<TestSessionEntry>().FirstOrDefault()?.RefreshCommands();
         }
 
         private void LoadonUIThread(
@@ -209,7 +212,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenLanguageSelection))]
         private async Task OpenLanguageSelection(CancellationToken token)
         {
-            using (var worker = ScheduleWork())
+            using (var worker = ScheduleWork(token))
             {
                 try
                 {
@@ -246,7 +249,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanStartAssessment))]
         private async Task StartAssessment(CancellationToken token)
         {
-            using (var worker = ScheduleWork())
+            using (var worker = ScheduleWork(token))
             {
                 try
                 {
@@ -305,6 +308,61 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private bool CanStartAssessment()
         {
             return !IsBusy && CanStartTest && !string.IsNullOrWhiteSpace(_moduleId) && !string.IsNullOrWhiteSpace(_assessmentId);
+        }
+
+        private bool CanResume()
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(_sessionId);
+        }
+
+        private async Task HandleResume(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var sessionId = _sessionId!;
+                    var session = await AssessmentService.GetSessionAsync(sessionId, _language, worker.Token).ConfigureAwait(false);
+                    if (session == null || session.RawDataOrder == null || session.CurrentRawDataId == null)
+                    {
+                        Logger?.LogError($"Unable to get session while {nameof(HandleResume)} in {GetType().Name}.");
+                        return;
+                    }
+
+                    var rawDataId = session.CurrentRawDataId;
+
+                    var cachedData = await RawDataCacheRepository.GetItemAsync(sessionId, rawDataId, worker.Token).ConfigureAwait(false);
+                    var rawData = cachedData.ToRawData();
+                    string? route = rawData?.type.ToRoute();
+
+                    if (string.IsNullOrWhiteSpace(route))
+                    {
+                        return;
+                    }
+
+                    var parameters = new NavigationParameters();
+                    parameters.AddValue(NavigationParameter.Id, _moduleId);
+                    parameters.AddValue(NavigationParameter.Data, sessionId);
+                    parameters.AddValue(NavigationParameter.Language, _language);
+                    await NavigationService.NavigateAsync(route, worker.Token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(HandleResume)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(HandleResume)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(HandleResume)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
     }
 }

@@ -250,7 +250,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false)]
         protected virtual async Task Navigate(CancellationToken cancellationToken)
         {
-            using (var worker = ScheduleWork())
+            using (var worker = ScheduleWork(cancellationToken))
             {
                 try
                 {

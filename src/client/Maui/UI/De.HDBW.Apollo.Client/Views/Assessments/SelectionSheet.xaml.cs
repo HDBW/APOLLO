@@ -6,6 +6,7 @@ using De.HDBW.Apollo.Client.Messages;
 
 namespace De.HDBW.Apollo.Client.Views.Assessments
 {
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class SelectionSheet
     {
         public SelectionSheet()
