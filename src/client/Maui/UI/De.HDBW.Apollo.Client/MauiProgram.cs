@@ -534,6 +534,8 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<RatingView>();
             services.AddTransient<SortViewModel>();
             services.AddTransient<SortView>();
+
+            services.AddTransient<ResultOverView>();
         }
 
         private static void SetupRoutes()
@@ -605,6 +607,8 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.ImagemapView, typeof(ImagemapView));
             Routing.RegisterRoute(Routes.RatingView, typeof(RatingView));
             Routing.RegisterRoute(Routes.SortView, typeof(SortView));
+
+            Routing.RegisterRoute(Routes.ResultOverView, typeof(ResultOverView));
 
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));

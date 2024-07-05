@@ -123,7 +123,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                         if ((module.Repeatable ?? 0) > 0 || !string.IsNullOrWhiteSpace(module.SessionId))
                         {
-                            sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, HandleResume, CanResume));
+                            sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, HandleResume, CanResume, HandleShowResult, CanShowResult));
                         }
 
                         var format = this["ModuleDetailView_Minutes"];
@@ -357,6 +357,41 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 catch (Exception ex)
                 {
                     Logger?.LogError(ex, $"Unknown error while {nameof(HandleResume)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanShowResult()
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(_sessionId);
+        }
+
+        private async Task HandleShowResult(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var parameters = new NavigationParameters();
+                    parameters.AddValue(NavigationParameter.Id, _moduleId);
+                    parameters.AddValue(NavigationParameter.Language, _language);
+                    await NavigationService.NavigateAsync(Routes.ResultOverView, worker.Token, parameters);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(HandleShowResult)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(HandleShowResult)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(HandleShowResult)} in {GetType().Name}.");
                 }
                 finally
                 {

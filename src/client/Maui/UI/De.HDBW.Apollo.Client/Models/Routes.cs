@@ -94,5 +94,7 @@ namespace De.HDBW.Apollo.Client.Models
         public const string ImagemapView = "/ImagemapView";
         public const string RatingView = "/RatingView";
         public const string SortView = "/SortView";
+
+        public const string ResultOverView = "/ResultOverView";
     }
 }
