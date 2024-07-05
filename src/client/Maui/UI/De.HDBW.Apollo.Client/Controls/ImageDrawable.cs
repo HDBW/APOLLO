@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using Microsoft.Maui.Graphics.Platform;
 
@@ -53,7 +54,8 @@ namespace De.HDBW.Apollo.Client.Controls
             {
                 using (var stream = File.OpenRead(path))
                 {
-                    var image = PlatformImage.FromStream(stream, ImageFormat.Jpeg);
+                    var imageFormat = ImageFormatHelper.RetrieveImageFormatFromFileExtension(path);
+                    var image = PlatformImage.FromStream(stream, imageFormat);
                     var originalWidth = 1300; // todo: read from EXIF
                     var originalHeight = 1300; // todo: read from EXIF
                     var xScale = dirtyRect.Width / image.Width;
@@ -64,7 +66,6 @@ namespace De.HDBW.Apollo.Client.Controls
                     var size = new Size(image.Width * ImageScale, image.Height * ImageScale);
                     var point = new PointF((dirtyRect.Width - Convert.ToSingle(size.Width)) / 2f, (dirtyRect.Height - Convert.ToSingle(size.Height)) / 2f);
                     ImageRect = new RectF(point, size);
-                    canvas.DrawImage(image, ImageRect.X, ImageRect.Y, ImageRect.Width, ImageRect.Height);
                 }
 
                 if (_shapes != null &&

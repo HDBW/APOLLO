@@ -6,7 +6,7 @@ using De.HDBW.Apollo.SharedContracts.Models;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
-    public class Eacondition : AbstractQuestion
+    public class Eacondition : AbstractQuestion, ICalculateScore<int>
     {
         public Eacondition(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
             : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
@@ -66,6 +66,11 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public int NumberOfChoices { get; set; }
 
         public Dictionary<int, double> Credits { get; } = new Dictionary<int, double>();
+
+        public double CalculateScore(int selection)
+        {
+            return Credits.TryGetValue(selection, out double value) ? value : 0d;
+        }
 
         private void CreateAditionalData(int index, string credit)
         {

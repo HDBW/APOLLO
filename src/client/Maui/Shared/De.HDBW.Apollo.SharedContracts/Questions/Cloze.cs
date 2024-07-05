@@ -1,13 +1,14 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.T4;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
-    public class Cloze : AbstractQuestion
+    public class Cloze : AbstractQuestion, ICalculateScore<Dictionary<int, string>>
     {
         public Cloze(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
             : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
@@ -51,6 +52,15 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public Dictionary<int, string> Scores { get; } = new Dictionary<int, string>();
 
         public Dictionary<int, double> Credits { get; } = new Dictionary<int, double>();
+
+        public double CalculateScore(Dictionary<int, string> selection)
+        {
+            return selection
+                .Join(Scores, x => x.Key, y => y.Key, (x, y) => (Index: x.Key, Expected: x.Value, Given: y.Value))
+                .Where(x => x.Expected.Split(';').Contains(x.Given))
+                .Select(x => Credits.TryGetValue(x.Index, out var val) ? val : 0d)
+                .Sum();
+        }
 
         private void CreateAditionalData(int id, List<string> data, List<string> scores, string credit)
         {

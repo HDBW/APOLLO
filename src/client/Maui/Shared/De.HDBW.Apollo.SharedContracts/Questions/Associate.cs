@@ -6,7 +6,7 @@ using De.HDBW.Apollo.SharedContracts.Models;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
-    public class Associate : AbstractQuestion
+    public class Associate : AbstractQuestion, ICalculateScore<string>
     {
         public Associate(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
             : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
@@ -31,6 +31,12 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public Dictionary<int, double> Credits { get; } = new Dictionary<int, double>();
 
         public Dictionary<int, string> Scores { get; } = new Dictionary<int, string>();
+
+        public double CalculateScore(string selection)
+        {
+            var score = Scores.FirstOrDefault(x => x.Value == selection);
+            return Credits.TryGetValue(score.Key, out double value) ? value : 0;
+        }
 
         private void CreateAditionalData(int sourceIndex, string targetIndex, string credit)
         {

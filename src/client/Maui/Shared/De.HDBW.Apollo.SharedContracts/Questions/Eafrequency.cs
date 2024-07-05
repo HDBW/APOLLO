@@ -6,7 +6,7 @@ using De.HDBW.Apollo.SharedContracts.Models;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
-    public class Eafrequency : AbstractQuestion
+    public class Eafrequency : AbstractQuestion, ICalculateScore<int>
     {
         public Eafrequency(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
             : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
@@ -28,6 +28,11 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public string Situation
         {
             get { return Data.situation; }
+        }
+
+        public double CalculateScore(int selection)
+        {
+            return Credits.TryGetValue(selection, out double value) ? value : 0d;
         }
 
         private void CreateAditionalData(int index, string credit)
