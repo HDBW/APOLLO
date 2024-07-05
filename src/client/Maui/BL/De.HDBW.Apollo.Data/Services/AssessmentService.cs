@@ -7,7 +7,7 @@ using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
 
-namespace GrpcClient.Service
+namespace De.HDBW.Apollo.Data.Services
 {
     public class AssessmentService : IAssessmentService
     {

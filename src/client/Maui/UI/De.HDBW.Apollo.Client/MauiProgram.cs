@@ -40,7 +40,6 @@ using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using FedericoNembrini.Maui.CustomDatePicker;
-using GrpcClient.Service;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
