@@ -68,23 +68,23 @@
 
         <DataTemplate x:Key="ContinueSessionTemplate" x:DataType="assessmentModels:TestSessionEntry">
             <VerticalStackLayout>
-                <Label Text="{x:Static strings:Resources.TxtAssesmentsStartTestAnsweredQuestions}" Margin="0,0,0,8"/>
-                <ProgressBar Progress="0.5" Margin="0,0,0,16"/>
-                <Button Command="{x:Binding ResumeCommand}" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestContinue}"/>
-                <Button Command="{x:Binding ShowResultCommand}" Style="{StaticResource BorderButton}" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestResult}" Margin="0,0,0,24"/>
+                <Label Text="{x:Binding ProgressText}" Margin="0,0,0,8"/>
+                <ProgressBar Progress="{x:Binding Progress}" Margin="0,0,0,16"/>
+                <Button Command="{x:Binding ResumeCommand}" Text="{x:Binding BindingContext[BtnTxtAssesmentsStartTestContinue], Source={x:Reference PART_Root}}"/>
+                <Button Command="{x:Binding CancelCommand}" Style="{StaticResource BorderButton}" Text="{x:Binding BindingContext[BtnTxtAssesmentsStartTestResult], Source={x:Reference PART_Root}}" Margin="0,0,0,24"/>
             </VerticalStackLayout>
         </DataTemplate>
 
         <DataTemplate x:Key="RepeatSessionTemplate" x:DataType="assessmentModels:TestSessionEntry">
-            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto">
                 <Image Grid.Column="0" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" Margin="0,0,8,8">
                     <Image.Source>
                         <FontImageSource Glyph="{StaticResource Repeat}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </Image.Source>
                 </Image>
-                <Label Grid.Column="1" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestTimeTestAgain}" Margin="0,0,0,8" VerticalOptions="Center"/>
-                <Button Grid.ColumnSpan="2" Grid.Row="1" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestRepeat}" Margin="0,0,0,16"/>
-                <Button Style="{StaticResource BorderButton}" Text="{x:Static strings:Resources.BtnTxtAssesmentsStartTestReset}" Margin="0,0,0,24"/>
+                <Label Grid.Column="1" Text="{x:Binding BindingContext[BtnTxtAssesmentsStartTestTimeTestAgain], Source={x:Reference PART_Root}}" Margin="0,0,0,8" VerticalOptions="Center"/>
+                <Button IsEnabled="False" Grid.ColumnSpan="2" Grid.Row="1" Text="{x:Binding BindingContext[BtnTxtAssesmentsStartTestRepeat], Source={x:Reference PART_Root}}" Margin="0,0,0,16"/>
+                <Button Command="{x:Binding ShowResultCommand}" Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource BorderButton}" Text="{x:Binding BindingContext[BtnTxtAssesmentsStartTestReset], Source={x:Reference PART_Root}}" Margin="0,0,0,24"/>
             </Grid>
         </DataTemplate>
 
@@ -98,7 +98,7 @@
                                                     RepeatSessionTemplate="{StaticResource RepeatSessionTemplate}"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*, Auto">        
+    <Grid RowDefinitions="*, Auto" x:Name="PART_Root">        
         <CollectionView
             ItemsSource="{x:Binding Sections}" Grid.Row="0"
             ItemsLayout="VerticalList"

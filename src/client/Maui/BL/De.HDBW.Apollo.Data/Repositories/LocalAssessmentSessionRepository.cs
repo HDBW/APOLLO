@@ -33,5 +33,12 @@ namespace De.HDBW.Apollo.Data.Repositories
             var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
             return await asyncConnection.Table<LocalAssessmentSession>().FirstOrDefaultAsync(x => x.SessionId == sessionId).ConfigureAwait(false);
         }
+
+        public async Task<bool> RemoveItemBySessionIdAsync(string sessionId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var asyncConnection = await DataBaseConnectionProvider.GetConnectionAsync(token).ConfigureAwait(false);
+            return await asyncConnection.Table<LocalAssessmentSession>().DeleteAsync(x => x.SessionId == sessionId).ConfigureAwait(false) == 1;
+        }
     }
 }

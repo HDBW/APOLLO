@@ -18,7 +18,10 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 
         Task<LocalAssessmentSession?> GetSessionAsync(string sessionId, string? language, CancellationToken token);
 
+        Task<bool> CancelSessionAsync(string sessionId, CancellationToken token);
+
         Task<Invite.Apollo.App.Graph.Common.Models.Assessments.RawData?> AnswerAsync(string sessionId, string rawDataId, double score, CancellationToken token);
+
         Task<bool> UpdateSessionAsync(LocalAssessmentSession session, CancellationToken token);
     }
 }

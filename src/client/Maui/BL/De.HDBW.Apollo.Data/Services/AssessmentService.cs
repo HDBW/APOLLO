@@ -13,6 +13,7 @@ namespace GrpcClient.Service
     {
         private readonly string? _defaultLanguage = "de-DE";
         private SampleDataContext _data;
+        private string? _lastDeletedSessionId;
 
         public AssessmentService(
             ILocalAssessmentSessionRepository sessionRepository,
@@ -125,8 +126,13 @@ namespace GrpcClient.Service
                 SessionId = localSession?.SessionId,
                 RawDataCount = rawDataIds.Count,
                 AwnserCount = offset,
-
+                Repeatable = _lastDeletedSessionId == moduleId ? 1 : 0,
             };
+
+            if (module.Repeatable == 1)
+            {
+                _lastDeletedSessionId = null;
+            }
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
             return module;
@@ -308,6 +314,14 @@ namespace GrpcClient.Service
         {
             token.ThrowIfCancellationRequested();
             return await SessionRepository.UpdateItemAsync(session, token).ConfigureAwait(false);
+        }
+
+        public async Task<bool> CancelSessionAsync(string sessionId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var session = await GetSessionAsync(sessionId, null, token).ConfigureAwait(false);
+            _lastDeletedSessionId = session?.ModuleId;
+            return await SessionRepository.RemoveItemBySessionIdAsync(sessionId, token);
         }
 
         private static AssessmentTile Create(Assessment assessment, IEnumerable<Module> modules, string grouping)

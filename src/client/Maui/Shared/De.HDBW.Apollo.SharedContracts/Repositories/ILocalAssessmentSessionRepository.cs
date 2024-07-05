@@ -12,5 +12,7 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
         Task<LocalAssessmentSession?> GetItemByAssessmentIdAndModuleIdAsync(string assessmentId, string moduleId, CancellationToken token);
 
         Task<LocalAssessmentSession?> GetItemBySessionIdAsync(string sessionId, CancellationToken token);
+
+        Task<bool> RemoveItemBySessionIdAsync(string sessionId, CancellationToken token);
     }
 }

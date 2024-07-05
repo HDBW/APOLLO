@@ -93,45 +93,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
-                    var sections = new List<ObservableObject>();
-                    Module? module = null;
-                    if (!string.IsNullOrWhiteSpace(_moduleId))
-                    {
-                        module = await AssessmentService.GetModuleAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
-                    }
-
-                    _assessmentId = module?.AssessmentId;
-                    _sessionId = module?.SessionId;
-                    if (module != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(module.Subtitle))
-                        {
-                            sections.Add(HeadlineTextEntry.Import(module.Subtitle));
-                        }
-
-                        switch (module.Type)
-                        {
-                            case AssessmentType.Gl:
-                                sections.Add(ProviderDecoEntry.Import());
-                                break;
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(module.Description))
-                        {
-                            sections.Add(TextEntry.Import(module.Description));
-                        }
-
-                        if ((module.Repeatable ?? 0) > 0 || !string.IsNullOrWhiteSpace(module.SessionId))
-                        {
-                            sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, HandleResume, CanResume, HandleShowResult, CanShowResult));
-                        }
-
-                        var format = this["ModuleDetailView_Minutes"];
-                        sections.Add(IconTextEntry.Import(KnownIcons.Watch, string.Format(format, module.EstimateDuration)));
-                    }
-
-                    var languages = module?.Languages?.Select(x => x) ?? new List<string>();
-                    await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, languages), worker.Token);
+                    await LoadDataAsync(worker.Token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -367,7 +329,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private bool CanShowResult()
         {
-            return !IsBusy && !string.IsNullOrWhiteSpace(_sessionId);
+            return !IsBusy && string.IsNullOrWhiteSpace(_sessionId);
         }
 
         private async Task HandleShowResult(CancellationToken token)
@@ -398,6 +360,87 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        private bool CanCancel()
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(_sessionId);
+        }
+
+        private async Task HandleCancel(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (!await AssessmentService.CancelSessionAsync(_sessionId!, worker.Token))
+                    {
+                        Logger?.LogError($"Unknown cancel session {nameof(HandleCancel)} in {GetType().Name}.");
+                    }
+
+                    await LoadDataAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(HandleCancel)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(HandleCancel)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(HandleCancel)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private async Task LoadDataAsync(CancellationToken token)
+        {
+            var sections = new List<ObservableObject>();
+            Module? module = null;
+            if (!string.IsNullOrWhiteSpace(_moduleId))
+            {
+                module = await AssessmentService.GetModuleAsync(_moduleId, _language, token).ConfigureAwait(false);
+            }
+
+            _assessmentId = module?.AssessmentId;
+            _sessionId = module?.SessionId;
+            if (module != null)
+            {
+                if (!string.IsNullOrWhiteSpace(module.Subtitle))
+                {
+                    sections.Add(HeadlineTextEntry.Import(module.Subtitle));
+                }
+
+                switch (module.Type)
+                {
+                    case AssessmentType.Gl:
+                        sections.Add(ProviderDecoEntry.Import());
+                        break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(module.Description))
+                {
+                    sections.Add(TextEntry.Import(module.Description));
+                }
+
+                var format = this["ModuleDetailView_Minutes"];
+                sections.Add(IconTextEntry.Import(KnownIcons.Watch, string.Format(format, module.EstimateDuration)));
+
+                if ((module.Repeatable ?? 0) > 0 || !string.IsNullOrWhiteSpace(module.SessionId))
+                {
+                    var progressFormat = this["TxtAssesmentsStartTestAnsweredQuestions"] ?? string.Empty;
+                    sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, progressFormat, HandleResume, CanResume, HandleCancel, CanCancel, HandleShowResult, CanShowResult));
+                }
+            }
+
+            var languages = module?.Languages?.Select(x => x) ?? new List<string>();
+            await ExecuteOnUIThreadAsync(() => LoadonUIThread(sections, languages), token);
         }
     }
 }
