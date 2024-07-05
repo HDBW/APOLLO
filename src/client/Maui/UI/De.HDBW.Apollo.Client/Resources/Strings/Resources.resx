@@ -3428,4 +3428,12 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <value>Seite {0}/{1}</value>
     <comment>Translate New</comment>
   </data>
+  <data name="TxtResultOverView_PageTitle" xml:space="preserve">
+    <value>Testergebnis</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtResultDetailSheetHeadline" xml:space="preserve">
+    <value>Details zu deinem Testergebnis</value>
+    <comment>Translate New</comment>
+  </data>
 </root>

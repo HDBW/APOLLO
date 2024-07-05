@@ -7904,6 +7904,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details zu deinem Testergebnis.
+        /// </summary>
+        public static string TxtResultDetailSheetHeadline {
+            get {
+                return ResourceManager.GetString("TxtResultDetailSheetHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testergebnis.
+        /// </summary>
+        public static string TxtResultOverView_PageTitle {
+            get {
+                return ResourceManager.GetString("TxtResultOverView_PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kolleg.
         /// </summary>
         public static string TypeOfSchool_Colleague {
