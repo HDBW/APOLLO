@@ -7,7 +7,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class AssociateEntry : AbstractQuestionEntry
+    public partial class AssociateEntry : AbstractQuestionEntry<Associate>
     {
         [ObservableProperty]
         private ObservableCollection<AssociateTextEntry> _sourceTexts = new ObservableCollection<AssociateTextEntry>();
@@ -25,6 +25,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static AssociateEntry Import(Associate data, string mediaBasePath, int density, Dictionary<string, int> imageSizeConfig)
         {
             return new AssociateEntry(data, mediaBasePath, density, imageSizeConfig);
+        }
+
+        public override double GetScore()
+        {
+            return Data.CalculateScore(string.Join(";", TargetImages.Select(x => x.AssociatedIndex ?? 0)));
         }
 
         private int? AssociateItemIndex(int? currentIndex)

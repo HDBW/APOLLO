@@ -7,7 +7,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class EafrequencyEntry : AbstractQuestionEntry
+    public partial class EafrequencyEntry : AbstractQuestionEntry<Eafrequency>
     {
         [ObservableProperty]
         private ObservableCollection<ImageEntry> _images = new ObservableCollection<ImageEntry>();
@@ -26,6 +26,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static EafrequencyEntry Import(Eafrequency data, string basePath, int density, Dictionary<string, int> imageSizeConfig)
         {
             return new EafrequencyEntry(data, basePath, density, imageSizeConfig);
+        }
+
+        public override double GetScore()
+        {
+            //TODO
+            return Data.CalculateScore(0);
         }
     }
 }

@@ -112,7 +112,8 @@ namespace GrpcClient.Service
             var localSession = await SessionRepository.GetItemByAssessmentIdAndModuleIdAsync(requestedModule.AssessmentId, requestedModule.ModuleId, token).ConfigureAwait(false);
             var rawDataIds = localSession?.RawDataOrder?.Split(";").ToList() ?? new List<string>();
             var offset = localSession?.CurrentRawDataId != null ? rawDataIds.IndexOf(localSession.CurrentRawDataId) : 0;
-
+            var waslastCanceledModule = _lastDeletedSessionId == moduleId && requestedModule.Type != AssessmentType.Be;
+            _lastDeletedSessionId = null;
             var module = new Module()
             {
                 Title = requestedModule.Title,
@@ -126,13 +127,8 @@ namespace GrpcClient.Service
                 SessionId = localSession?.SessionId,
                 RawDataCount = rawDataIds.Count,
                 AwnserCount = offset,
-                Repeatable = _lastDeletedSessionId == moduleId ? 1 : 0,
+                Repeatable = waslastCanceledModule ? 1 : 0,
             };
-
-            if (module.Repeatable == 1)
-            {
-                _lastDeletedSessionId = null;
-            }
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
             return module;
@@ -232,7 +228,7 @@ namespace GrpcClient.Service
                 var session = new AssessmentSession()
                 {
                     AssessmentId = localSession.AssessmentId,
-                    CurrentRawDataId = localSession.CurrentRawDataId,
+                    CurrentRawDataId = localSession.CurrentRawDataId ?? string.Empty,
                     SessionId = localSession.SessionId ?? string.Empty,
                     ModuleId = localSession.ModuleId,
                 };

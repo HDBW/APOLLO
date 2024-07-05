@@ -6,7 +6,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class RatingEntry : AbstractQuestionEntry
+    public partial class RatingEntry : AbstractQuestionEntry<Rating>
     {
         [ObservableProperty]
         private int _numberOfChoices;
@@ -20,6 +20,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static RatingEntry Import(Rating data)
         {
             return new RatingEntry(data);
+        }
+
+        public override double GetScore()
+        {
+            // TODO
+            return Data.CalculateScore(0);
         }
     }
 }

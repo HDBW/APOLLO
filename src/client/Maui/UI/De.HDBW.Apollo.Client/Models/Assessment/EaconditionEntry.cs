@@ -8,7 +8,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class EaconditionEntry : AbstractQuestionEntry
+    public partial class EaconditionEntry : AbstractQuestionEntry<Eacondition>
     {
         [ObservableProperty]
         private ObservableCollection<SelectableImageEntry> _images = new ObservableCollection<SelectableImageEntry>();
@@ -53,6 +53,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static EaconditionEntry Import(Eacondition data, string basePath, int density, Dictionary<string, int> imageSizeConfig)
         {
             return new EaconditionEntry(data, basePath, density, imageSizeConfig);
+        }
+
+        public override double GetScore()
+        {
+            return Data.CalculateScore(1);
         }
 
         private string? GenerateHtmlList(string? text)

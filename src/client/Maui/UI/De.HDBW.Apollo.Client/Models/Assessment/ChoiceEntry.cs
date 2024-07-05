@@ -8,7 +8,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class ChoiceEntry : AbstractQuestionEntry
+    public partial class ChoiceEntry : AbstractQuestionEntry<Choice>
     {
         private readonly Func<AudioEntry, Action<bool>, Task<bool>> _togglePlaybackCallback;
         private readonly Func<AudioEntry, Action<bool>, Task<bool>> _restartAudioCallback;
@@ -84,6 +84,22 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             return new ChoiceEntry(data, basePath, density, imageSizeConfig, zoomImageCallback, togglePlaybackCallback, restartAudioCallback);
         }
+
+        public override double GetScore()
+        {
+            string selection = string.Empty;
+            if (AnswerImages.Any())
+            {
+                selection = string.Join(";", AnswerImages.Select(x => x.IsSelected ? "1" : "0"));
+            }
+            else if (AnswerTexts.Any())
+            {
+                selection = string.Join(";", AnswerTexts.Select(x => x.IsSelected ? "1" : "0"));
+            }
+
+            return Data.CalculateScore(selection);
+        }
+
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanTogglePlay))]
         private async Task TogglePlay(CancellationToken cancellationToken)

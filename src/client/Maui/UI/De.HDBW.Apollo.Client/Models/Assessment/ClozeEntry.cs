@@ -6,7 +6,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class ClozeEntry : AbstractQuestionEntry
+    public partial class ClozeEntry : AbstractQuestionEntry<Cloze>
     {
         [ObservableProperty]
         private string? _clozeHtml;
@@ -24,6 +24,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static ClozeEntry Import(Cloze data)
         {
             return new ClozeEntry(data);
+        }
+
+        //TODO
+        public override double GetScore()
+        {
+            return Data.CalculateScore(null);
         }
     }
 }

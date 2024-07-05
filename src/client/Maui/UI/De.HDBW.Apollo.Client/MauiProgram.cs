@@ -298,13 +298,13 @@ namespace De.HDBW.Apollo.Client
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, handler);
             });
 
             services.AddSingleton<IProfileService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new ProfileService(serviceProvider.GetService<ILogger<ProfileService>>(), apiUrl, apiToken, handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
@@ -312,7 +312,7 @@ namespace De.HDBW.Apollo.Client
 
             services.AddSingleton<IApolloListService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new ApolloListService(serviceProvider.GetService<ILogger<ApolloListService>>(), apiUrl, apiToken, handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
 
@@ -322,7 +322,7 @@ namespace De.HDBW.Apollo.Client
             var unregisterUserUrl = userSecretsService["UnRegisteUserEndpointURL"] ?? string.Empty;
             services.AddSingleton<IUnregisterUserService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new UnregisterUserService(serviceProvider.GetService<ILogger<UnregisterUserService>>(), unregisterUserUrl, apiToken, handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
 
@@ -331,7 +331,7 @@ namespace De.HDBW.Apollo.Client
 
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, serviceProvider.GetService<IProfileService>(), handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;

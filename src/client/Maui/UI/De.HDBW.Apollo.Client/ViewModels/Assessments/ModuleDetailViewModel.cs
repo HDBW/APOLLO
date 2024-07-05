@@ -285,7 +285,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 {
                     var sessionId = _sessionId!;
                     var session = await AssessmentService.GetSessionAsync(sessionId, _language, worker.Token).ConfigureAwait(false);
-                    if (session == null || session.RawDataOrder == null || session.CurrentRawDataId == null)
+                    if (session == null || session.RawDataOrder == null)
                     {
                         Logger?.LogError($"Unable to get session while {nameof(HandleResume)} in {GetType().Name}.");
                         return;

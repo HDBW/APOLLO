@@ -2,13 +2,15 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class AbstractQuestionEntry : ObservableObject
+    public abstract partial class AbstractQuestionEntry<TU> : ObservableObject, IAbstractQuestionEntry
+        where TU : AbstractQuestion
     {
-        public AbstractQuestionEntry(AbstractQuestion data)
+        public AbstractQuestionEntry(TU data)
         {
             ArgumentNullException.ThrowIfNull(data);
             Data = data;
@@ -34,11 +36,13 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             get { return Data.IsRTL; }
         }
 
-        protected AbstractQuestion Data { get; }
+        protected TU Data { get; }
 
         public AbstractQuestion Export()
         {
             return Data;
         }
+
+        public abstract double GetScore();
     }
 }

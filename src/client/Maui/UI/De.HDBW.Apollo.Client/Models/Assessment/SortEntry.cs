@@ -7,7 +7,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class SortEntry : AbstractQuestionEntry
+    public partial class SortEntry : AbstractQuestionEntry<Sort>
     {
         [ObservableProperty]
         private ObservableCollection<DraggableEntry> _sortTexts;
@@ -27,6 +27,11 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static SortEntry Import(Sort data)
         {
             return new SortEntry(data);
+        }
+
+        public override double GetScore()
+        {
+            return Data.CalculateScore(string.Join(";", SortTexts.Select(x => x.Index)));
         }
 
         private void HandleDragStartingInteraction(DraggableEntry entry)

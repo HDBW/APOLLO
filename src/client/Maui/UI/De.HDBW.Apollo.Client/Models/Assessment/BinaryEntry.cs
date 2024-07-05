@@ -6,7 +6,7 @@ using De.HDBW.Apollo.SharedContracts.Questions;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class BinaryEntry : AbstractQuestionEntry
+    public partial class BinaryEntry : AbstractQuestionEntry<Binary>
     {
         private readonly Func<AudioEntry, Action<bool>, Task<bool>> _togglePlaybackCallback;
         private readonly Func<AudioEntry, Action<bool>, Task<bool>> _restartAudioCallback;
@@ -38,6 +38,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public static BinaryEntry Import(Binary data, string basePath, Func<AudioEntry, Action<bool>, Task<bool>> togglePlaybackCallback, Func<AudioEntry, Action<bool>, Task<bool>> restartAudioCallback)
         {
             return new BinaryEntry(data, basePath, togglePlaybackCallback, restartAudioCallback);
+        }
+
+        public override double GetScore()
+        {
+            // TODO
+            return Data.CalculateScore(false);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanTogglePlay))]

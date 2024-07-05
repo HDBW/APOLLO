@@ -7,7 +7,7 @@ namespace De.HDBW.Apollo.SharedContracts.Repositories
     public interface IRawDataCacheRepository
         : IRepository<CachedRawData>, IDatabaseRepository<CachedRawData>
     {
-        Task<CachedRawData> GetItemAsync(string sessionId, string rawdataId, CancellationToken token);
+        Task<CachedRawData> GetItemAsync(string sessionId, string? rawdataId, CancellationToken token);
 
         Task<IEnumerable<CachedRawData>> GetItemsAsync(string sessionId, IEnumerable<string> rawdataIds, CancellationToken token);
     }

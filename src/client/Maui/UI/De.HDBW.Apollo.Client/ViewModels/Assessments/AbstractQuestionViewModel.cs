@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 {
     public abstract partial class AbstractQuestionViewModel<TU, TV> : BaseViewModel
         where TU : AbstractQuestion
-        where TV : AbstractQuestionEntry
+        where TV : IAbstractQuestionEntry
     {
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Title))]
@@ -265,6 +265,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             return;
                         }
 
+                        var score = Question?.GetScore() ?? 0d;
                         var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, 0d, worker.Token).ConfigureAwait(false);
                         if (cachedData == null)
                         {
