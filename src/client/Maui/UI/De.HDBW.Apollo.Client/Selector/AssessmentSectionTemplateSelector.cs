@@ -34,7 +34,7 @@ namespace De.HDBW.Apollo.Client.Selector
         {
             switch (item)
             {
-                case SessionStateEntry session:
+                case TestSessionEntry session:
                     return session.CanContinue ? ContinueSessionTemplate : RepeatSessionTemplate;
                 case ProviderDecoEntry _:
                     return ProviderDecoTemplate;

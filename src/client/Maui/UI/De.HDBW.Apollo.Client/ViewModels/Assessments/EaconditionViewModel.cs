@@ -206,7 +206,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected async override Task Navigate(CancellationToken cancellationToken)
         {
-            using (var worker = ScheduleWork())
+            using (var worker = ScheduleWork(cancellationToken))
             {
                 try
                 {
