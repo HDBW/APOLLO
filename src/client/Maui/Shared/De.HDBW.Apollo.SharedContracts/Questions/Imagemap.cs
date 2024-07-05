@@ -4,11 +4,10 @@
 using System.Globalization;
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Models;
-using Invite.Apollo.App.Graph.Common.Models.Assessments;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
-    public class Imagemap : AbstractQuestion
+    public class Imagemap : AbstractQuestion, ICalculateScore<string>
     {
         public Imagemap(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
             : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
@@ -43,6 +42,12 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public IEnumerable<Shape> Shapes { get; }
 
         public int NumberOfChoices { get; set; }
+
+        public double CalculateScore(string selection)
+        {
+            var score = Scores.FirstOrDefault(x => x.Value == selection);
+            return Credits.TryGetValue(score.Key, out double value) ? value : 0;
+        }
 
         private void CreateAditionalData(int index, List<string> options, string credit)
         {

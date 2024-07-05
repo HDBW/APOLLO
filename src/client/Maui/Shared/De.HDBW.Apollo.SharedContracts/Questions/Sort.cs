@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
-    public class Sort : AbstractQuestion
+    public class Sort : AbstractQuestion, ICalculateScore<string>
     {
         public Sort(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
             : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
@@ -27,6 +27,12 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
         public Dictionary<int, string> Scores { get; } = new Dictionary<int, string>();
 
         public int NumberOfChoices { get; set; }
+
+        public double CalculateScore(string selection)
+        {
+            var score = Scores.FirstOrDefault(x => x.Value == selection);
+            return Credits.TryGetValue(score.Key, out double value) ? value : 0;
+        }
 
         private void CreateAditionalData(int index, List<string> pattern, string credit)
         {
