@@ -14,11 +14,17 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private IList<string> _ids;
 
+        private Dictionary<int, string?> CurrentValues { get; } = new Dictionary<int, string?>();
+
         private ClozeEntry(Cloze data)
             : base(data)
         {
             ClozeHtml = data.ClozeHtml;
             Ids = data.Ids;
+            for (var i = 1; i <= Ids.Count; i++)
+            {
+                CurrentValues[i] = null;
+            }
         }
 
         public static ClozeEntry Import(Cloze data)
@@ -26,10 +32,19 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new ClozeEntry(data);
         }
 
-        //TODO
         public override double GetScore()
         {
-            return Data.CalculateScore(null);
+            return Data.CalculateScore(CurrentValues);
+        }
+
+        public void OnSetValue(string id, string? value)
+        {
+            if (!Ids.Contains(id))
+            {
+                return;
+            }
+
+            CurrentValues[Ids.IndexOf(id) + 1] = value;
         }
     }
 }

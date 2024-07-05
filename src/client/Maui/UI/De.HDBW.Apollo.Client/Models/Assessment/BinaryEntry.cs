@@ -18,6 +18,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private bool _isPlaying;
 
+        [ObservableProperty]
+        private bool _isTrueSelected;
+
+        [ObservableProperty]
+        private bool _isFalseSelected;
+
         private BinaryEntry(Binary data, string basePath, Func<AudioEntry, Action<bool>, Task<bool>> togglePlaybackCallback, Func<AudioEntry, Action<bool>, Task<bool>> restartAudioCallback)
             : base(data)
         {
@@ -42,8 +48,22 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public override double GetScore()
         {
-            // TODO
-            return Data.CalculateScore(false);
+            bool? choice = null;
+            if (IsTrueSelected)
+            {
+                choice = true;
+            }
+            else if (IsFalseSelected)
+            {
+                choice = false;
+            }
+
+            if (choice == null)
+            {
+                return 0;
+            }
+
+            return Data.CalculateScore(choice.Value);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanTogglePlay))]

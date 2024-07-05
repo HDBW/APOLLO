@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -435,7 +436,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 if ((module.Repeatable ?? 0) > 0 || !string.IsNullOrWhiteSpace(module.SessionId))
                 {
                     var progressFormat = this["TxtAssesmentsStartTestAnsweredQuestions"] ?? string.Empty;
-                    sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, progressFormat, HandleResume, CanResume, HandleCancel, CanCancel, HandleShowResult, CanShowResult));
+                    var repeateFormat = this["BtnTxtAssesmentsStartTestTimeTestAgain"] ?? string.Empty;
+                    sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, progressFormat, repeateFormat, HandleResume, CanResume, HandleCancel, CanCancel, HandleShowResult, CanShowResult));
                 }
             }
 

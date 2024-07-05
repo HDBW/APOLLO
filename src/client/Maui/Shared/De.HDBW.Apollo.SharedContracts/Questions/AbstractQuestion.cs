@@ -23,7 +23,19 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
             ModulId = modulId;
             AssessmentId = assessmentId;
             var parts = data.stemm.ToTextAndQuestion(culture);
-            Text = parts.Text;
+            var text = new List<string?>();
+
+            if (!string.IsNullOrWhiteSpace(parts.Question))
+            {
+                text.Add(parts.Text);
+                text.Add(SubQestion);
+            }
+            else
+            {
+                text.Add(parts.Text);
+            }
+
+            Text = string.Join(Environment.NewLine, text.Where(s => !string.IsNullOrWhiteSpace(s)));
             Question = parts.Question ?? SubQestion;
         }
 

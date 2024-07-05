@@ -34,8 +34,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         public bool IsWebViewLoaded { get; set; } = false;
 
-        private Dictionary<string, string?> CurrentValues { get; } = new Dictionary<string, string?>();
-
         public override Task OnNavigatedToAsync()
         {
             WeakReferenceMessenger.Default.Register<SetValueMessage>(this, OnValueSet);
@@ -71,7 +69,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private void OnValueSet(object recipient, SetValueMessage message)
         {
-            CurrentValues[message.Id] = message.Value;
+            Question?.OnSetValue(message.Id, message.Value);
         }
     }
 }
