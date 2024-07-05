@@ -170,7 +170,7 @@ message ModuleTile {
   google.protobuf.Int32Value RawDataCount = 11;
 
   // The number of answers in current session.
-  google.protobuf.Int32Value AwnserCount = 12;
+  google.protobuf.Int32Value AnswerCount = 12;
 }
 
 message AssessmentScore {
