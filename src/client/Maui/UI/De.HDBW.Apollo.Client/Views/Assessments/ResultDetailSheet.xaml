@@ -3,27 +3,59 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ResultDetailSheet"
+            xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              HasHandle="True"
-             Padding="24, 0, 24, 16">
+            HasBackdrop="True"
+            CornerRadius="16"
+            BackgroundColor="{StaticResource Neutral500}">
+    <the49:BottomSheet.Resources>
+        <DataTemplate x:Key="HeadlineTextTemplate">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="TextTemplate">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="SkillTestDetailsResultCardTemplate">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="50%" Margin="0,0,8,0">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="50" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
+                                        <Span Text="%" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ProgressBar Grid.Column="1" Progress="0.5"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </the49:BottomSheet.Resources>
     <VerticalStackLayout>
         <Grid HorizontalOptions="FillAndExpand" MinimumHeightRequest="48">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="Details zu deinem Testergebnis" Style="{StaticResource Noto20Bold}" SemanticProperties.HeadingLevel="Level1"/>
-
-            <ImageButton Grid.Column="1" Padding="12"
-        Command="{x:Binding CloseCommand}"
-        HeightRequest="24"
-        WidthRequest="24"
-        HorizontalOptions="End" VerticalOptions="Center"
-        SemanticProperties.Description="{x:Static strings:Resources.Global_Close}">
+            <Label Text="{x:Static strings:Resources.TxtResultDetailSheetHeadline}" Style="{StaticResource Noto20Bold}" TextColor="{StaticResource TextColor}" SemanticProperties.HeadingLevel="Level1" Margin="24,0,8,0" VerticalOptions="Center"/>
+            <ImageButton Grid.Column="1" Padding="12" Command="{x:Binding CloseCommand}"
+                         HorizontalOptions="End" VerticalOptions="Center"
+                         SemanticProperties.Description="{x:Static strings:Resources.Global_Close}">
                 <ImageButton.Source>
                     <FontImageSource Glyph="{StaticResource Close}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                 </ImageButton.Source>
             </ImageButton>
-
         </Grid>
+        
+        <CollectionView/>
     </VerticalStackLayout>
 </the49:BottomSheet>

@@ -6,7 +6,6 @@
              xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              xmlns:blModels="clr-namespace:De.HDBW.Apollo.SharedContracts.Models;assembly=De.HDBW.Apollo.SharedContracts"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ImagemapView"
-             Shell.BackgroundColor="Red"
              Title="{x:Binding Title}"
              x:DataType="viewModel:ImagemapViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
@@ -19,9 +18,9 @@
     <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
         <ScrollView>
             <VerticalStackLayout Padding="24" x:DataType="models:ImagemapEntry" BindingContext="{x:Binding Question, Mode=OneWay}" >
-                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="0,0,0,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}"/>
-                <Label Text="{x:Binding Question, Mode=OneWay}" TextType="Html" Margin="0,0,0,24"/>
-                <Label Text="{x:Binding Instruction, Mode=OneWay}" TextType="Html" Margin="0,0,0,8"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="0,0,0,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Question, Mode=OneWay}" TextType="Html" Margin="0,0,0,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Instruction, Mode=OneWay}" TextType="Html" Margin="0,0,0,8" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                 <Grid>
                     <controls:ImageInteractionView x:Name="PART_Canvas" 
                                     InteractionSize="30" 
@@ -34,7 +33,7 @@
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
-        <Border Grid.Row="1" Padding="24,16">
+        <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
             <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
         </Border>
     </Grid>

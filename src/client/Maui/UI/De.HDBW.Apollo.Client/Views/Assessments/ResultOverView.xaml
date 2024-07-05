@@ -2,11 +2,157 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ResultOverView"
-             Title="ResultOverView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             Title="{x:Static strings:Resources.TxtResultOverView_PageTitle}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="DecoImageTemplate">
+            <Border StrokeThickness="0">
+                <Image Source="resultdeco.png" Margin="24" HeightRequest="122" HorizontalOptions="Center"/>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="DecoImageSoftSkillsTemplate">
+            <Border StrokeThickness="0">
+                <controls:SegmentSvgImage Margin="24"
+                InputTransparent="True"
+                x:Name="PART_Image"
+                HeightRequest="280"
+                HorizontalOptions="Center"/>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="HeadlineTextTemplate">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" />
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="SubHeadlineTextTemplate">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="SubHeadlinePrimaryTextTemplate">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" />
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="TextTemplate">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ExperienceResultCardTemplate">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="50%" Margin="0,0,8,0">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="50" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
+                                        <Span Text="%" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ProgressBar Grid.Column="1" Progress="0.5"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SkillResultCardTemplate">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Static strings:Resources.Global_Categories}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="50%" Margin="0,0,8,0">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="50" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
+                                        <Span Text="%" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ProgressBar Grid.Column="1" Progress="0.5"/>
+                        </Grid>
+                        <Label Text="{x:Static strings:Resources.TxtAssesmentsSkillsTestFinishedDetails}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" HorizontalOptions="End"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SoftSkillResultCardTemplate">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout >
+                        <Label Text="Bereich" Margin="0,0,0,8" TextColor="{StaticResource TextColor}" Style="{StaticResource Noto16SemiBold}"/>
+                        <Label Text="Fähigkeit zur Verwendung von Geräten wie Monitor, Maus, Tastatur, Speichergeräten, Druckern, Scannern usw. zur Durchführung von Tätigkeiten wie Anschließen, Hochfahren, Herunterfahren, Neustart, Speichern von Dateien usw." TextColor="{StaticResource TextColor}" Style="{StaticResource Noto14}" Margin="0,0,0,8"/>
+                        <Grid Margin="0,0,0,4">
+                            <ProgressBar Progress="0.75"/>
+                            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Line X1="0" Y1="0" X2="0" Y2="12" Stroke="{StaticResource Neutral0}" StrokeDashArray="2,2" />
+                                <Line X1="0" Y1="0" X2="0" Y2="12" Stroke="{StaticResource Primary}" StrokeDashArray="2,2" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <Label Text="Über Durchschnitt" Margin="0,0,0,8" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14SemiBold}" />
+                        <Label Text="Mehr Infos" HorizontalOptions="End" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16SemiBold}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="RecommendedTrainingInteractionEntry">
+            <Grid>
+                <Border Style="{StaticResource PictureEntryBorderStyle}" Margin="24,4" SemanticProperties.Hint="{OnPlatform Android={x:Static strings:Resources.Global_Alttext_KursDetails}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"  />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label InputTransparent="True"  Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="16,16,8,8" />
+                            <ImageButton Grid.Column="1" Padding="12" VerticalOptions="Start" IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}">
+                                <ImageButton.Source>
+                                    <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                </ImageButton.Source>
+                                <ImageButton.Triggers>
+                                    <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
+                                        <Setter Property="Source">
+                                            <Setter.Value>
+                                                <FontImageSource Glyph="{x:Static models:KnownIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="SemanticProperties.Description" Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
+                                    </DataTrigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                        </Grid>
+                        <Label InputTransparent="True" Grid.Column="0" Text="{x:Binding Subline, Mode=OneTime}" TextType="Html" LineBreakMode="TailTruncation" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto12}" Padding="16,0" IsVisible="{x:Binding HasSubline}" TextColor="{StaticResource TextColor}"/>
+                        <Label Margin="16,0,16,16" InputTransparent="True" Text="{x:Binding Info, Mode=OneTime}" Style="{StaticResource Noto12}" TextColor="{StaticResource TextColor}"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <VerticalStackLayout x:Name="PART_Root">
+        <CollectionView/>
     </VerticalStackLayout>
 </ContentPage>
