@@ -171,6 +171,12 @@
     <MauiXaml Update="Views\Assessments\RatingView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\Assessments\ResultDetailSheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\Assessments\ResultOverView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\Assessments\SelectionSheet.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
