@@ -20,7 +20,7 @@
                     Loaded="HandleLoaded"/>
         </Border>
         <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
-                <Button Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
+                <Button Text="{x:Binding [BtnTxtAssesmentsGlobalNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
             </Border>
         </Grid>
 </ContentPage>

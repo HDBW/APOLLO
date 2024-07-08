@@ -13,7 +13,7 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="ChoiceEntryImage" x:DataType="models:SelectableImageEntry">
             <Grid Padding="4">
-                <Border HeightRequest="132" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsAssociateImageAnswer], Source={x:Reference PART_Root}, Mode=OneWay}" Style="{StaticResource PictureEntryBorderStyle}">
+                <Border HeightRequest="132" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsAssociateViewImageAnswer], Source={x:Reference PART_Root}, Mode=OneWay}" Style="{StaticResource PictureEntryBorderStyle}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
                     </Border.GestureRecognizers>
@@ -39,7 +39,7 @@
                     </Grid>
                     <Border.Triggers>
                         <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
-                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsGlobalSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
                             <Setter Property="Shadow">
                                 <Setter.Value>
                                     <Shadow Opacity="0"/>
@@ -66,7 +66,7 @@
                                     <Shadow Opacity="0"/>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsGlobalSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
                         </DataTrigger>
                     </Border.Triggers>
                 </Border>
@@ -84,7 +84,7 @@
                             <FontImageSource Glyph="{StaticResource Search}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
-                    <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
+                    <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtAssesmentsChoiceViewMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
                 </HorizontalStackLayout>
                 <Image Grid.Row="1" Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="204">
                     <Image.Shadow>
@@ -106,7 +106,7 @@
                                 <FontImageSource Glyph="{StaticResource Search}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                             </Image.Source>
                         </Image>
-                        <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
+                        <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtAssesmentsChoiceViewMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
                     </HorizontalStackLayout>
                     <CarouselView Grid.Row="1" ItemsSource="{x:Binding Images, Mode=OneWay}" IndicatorView="indicatorView" x:Name="PART_QuestionImages">
                         <CarouselView.ItemTemplate>
@@ -128,7 +128,7 @@
     <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
         <ScrollView>
             <VerticalStackLayout Padding="20" x:DataType="models:ChoiceEntry" BindingContext="{x:Binding Question, Mode=OneWay}">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,16" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,16" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsGlobalBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
                 <StackLayout Margin="4,0,4,24"
                              IsVisible="{x:Binding HasQuestionImageView, Mode=OneWay}"
                              BindableLayout.ItemsSource="{x:Binding QuestionImageView, Mode=OneWay}"
@@ -144,10 +144,10 @@
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding TogglePlayCommand, Mode=OneTime}"/>
                         </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="*, auto" >
-                            <Label Text="{x:Binding BindingContext[AudioAssesmentsBinaryStart], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,12,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center">
+                            <Label Text="{x:Binding BindingContext[AudioAssesmentsBinaryViewStart], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,12,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center">
                                 <Label.Triggers>
                                     <DataTrigger TargetType="Label" Binding="{x:Binding IsPlaying, Mode=OneWay}" Value="True">
-                                        <Setter Property="Text" Value="{x:Binding BindingContext[AudioAssesmentsBinaryStop], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                                        <Setter Property="Text" Value="{x:Binding BindingContext[AudioAssesmentsBinaryViewStop], Source={x:Reference PART_Root}, Mode=OneWay}"/>
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
@@ -171,7 +171,7 @@
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding RestartPlayCommand, Mode=OneTime}"/>
                         </Grid.GestureRecognizers>
-                        <Label Grid.Column="0" InputTransparent="True" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" Text="{x:Binding BindingContext[BtnTxtGlobalReset], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End"/>
+                        <Label Grid.Column="0" InputTransparent="True" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" Text="{x:Binding BindingContext[BtnTxtAssesmentsGlobalReset], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End"/>
                         <Image Grid.Column="1" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" VerticalOptions="Start" Margin="12">
                             <Image.Source>
                                 <FontImageSource Glyph="{StaticResource Reset}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -186,7 +186,7 @@
             </VerticalStackLayout>
         </ScrollView>
         <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
-            <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}"/>
+            <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsGlobalNextQuestion], Mode=OneWay}"/>
         </Border>
     </Grid>
 </ContentPage>
