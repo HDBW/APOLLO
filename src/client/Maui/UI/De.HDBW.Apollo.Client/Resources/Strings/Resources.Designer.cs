@@ -3563,15 +3563,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sprachenauswahl.
-        /// </summary>
-        public static string LanguageSelectionView_Title {
-            get {
-                return ResourceManager.GetString("LanguageSelectionView_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sprachkenntnis.
         /// </summary>
         public static string LanguageView_Title {
@@ -3797,7 +3788,8 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Im Folgenden kannst Du an einem Test zur Selbsteinschätzung deiner persönlichen Fähigkeiten teilnehmen..
+        ///   Looks up a localized string similar to Mit diesem Selbsttest kannst du deine personalen, sozialen und digitalen Kompetenzen überprüfen. Dieser Test unterteilt sich in fünf Module. Du kannst jedes Modul einzeln machen. Das Ergebnis eines jeden Moduls erhältst du direkt im Anschluss. Außerdem gibt dir die Abbildung eine Gesamtübersicht über alle Module.
+        ///Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus..
         /// </summary>
         public static string ModuleOverViewModel_Description {
             get {
@@ -4545,15 +4537,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String {
-            get {
-                return ResourceManager.GetString("String", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Block.
         /// </summary>
         public static string TimeModel_Block {
@@ -5085,6 +5068,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wähle aus, was dich am meisten interessiert! Du kannst bis zu drei Bereiche wählen!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اختر أكثر شيء يثير اهتمامك! يمكنك اختيار ما يصل إلى ثلاثة مجالات!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Избери това, което те интересува най-много! Можеш да избереш до три области!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose what interests you most! You can choose up to three areas!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sélectionnez ce qui vous intéresse le plus ! Vous pouvez sélectionner trois domaines!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selectează ce te interesează cel mai mult! Poți selecta până la trei domenii!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выбирайте то, что интересует вас больше всего! Вы можете выбрать до трёх областей!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seni en çok ilgilendiren alanı seç! En fazla üç alan seçebilirsin!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вибирай те, що цікавить тебе найбільше! Ти можеш вибрати до трьох галузей!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deine passende Berufskategorie.
         /// </summary>
         public static string TxtAssesmentsEaconditionDetailViewSuitingCategory {
@@ -5168,81 +5232,81 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Klasse, der erste Schritt ist gemacht! Hier werden dir Berufsbereiche angezeigt, die zu deiner ersten Auswahl passen. Erfahre mehr über die Bereiche, in dem du sie anklickst..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to رائع، لقد تم اتخاذ الخطوة الأولى! ستظهر لك هنا المجالات المهنية التي تطابق اختيارك الأول. اكتشف المزيد عن المجالات من خلال النقر عليها..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_ar {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_ar {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_ar", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_ar", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Чудесно, първата стъпка е направена! Тук се показват професионалните области, които са подходящи за първия ти избор. Научи повече за областите, като щракнеш върху тях..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_bg_BG {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_bg_BG {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_bg-BG", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_bg-BG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Excellent, you’ve taken the first step! Here you will be shown career areas that match your first selection. Find out more about the areas by clicking on them..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_en_US {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_en_US {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_en-US", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_en-US", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Super, vous avez franchi la première étape! Vous trouverez ici de métiers qui correspondent à votre premier choix. Apprenez-en plus sur ces métiers en cliquant dessus..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_fr_FR {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_fr_FR {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_fr-FR", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_fr-FR", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Grozav – ai făcut primul pas! Aici sunt afișate domeniile profesional care se potrivesc cu prima ta alegere. Află mai multe despre aceste domenii, făcând clic pe ele..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_ro_RO {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_ro_RO {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_ro-RO", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_ro-RO", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Отлично, первый шаг уже сделан! Здесь вам будут показаны профессиональные области, соответствующие вашему первому выбору. Чтобы узнать больше об этих областях, нажмите на них..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_ru_RU {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_ru_RU {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_ru-RU", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_ru-RU", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Harika, ilk adım atıldı! Burada ilk yaptığın seçimle eşleşen meslek alanları gösterilecektir. Üzerlerine tıklayarak alanlar hakkında daha fazla bilgi edinebilirsin..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_tr_TR {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_tr_TR {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_tr-TR", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_tr-TR", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Чудово, перший крок зроблено! Тут тобi будуть показані професійні галузі, що відповідають твому першому вибору. Щоб дізнатися більше про ці галузі, натисни на них..
         /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredInstruction_uk_UA {
+        public static string TxtAssesmentsEaConditionFilteredViewInstruction_uk_UA {
             get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredInstruction_uk-UA", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_uk-UA", resourceCulture);
             }
         }
         
@@ -5324,87 +5388,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsEaconditionGlobalTitle_uk_UA {
             get {
                 return ResourceManager.GetString("TxtAssesmentsEaconditionGlobalTitle_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wähle aus, was dich am meisten interessiert! Du kannst bis zu drei Bereiche wählen!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to اختر أكثر شيء يثير اهتمامك! يمكنك اختيار ما يصل إلى ثلاثة مجالات!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Избери това, което те интересува най-много! Можеш да избереш до три области!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose what interests you most! You can choose up to three areas!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sélectionnez ce qui vous intéresse le plus ! Vous pouvez sélectionner trois domaines!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Selectează ce te interesează cel mai mult! Poți selecta până la trei domenii!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Выбирайте то, что интересует вас больше всего! Вы можете выбрать до трёх областей!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seni en çok ilgilendiren alanı seç! En fazla üç alan seçebilirsin!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Вибирай те, що цікавить тебе найбільше! Ти можеш вибрати до трьох галузей!.
-        /// </summary>
-        public static string TxtAssesmentsEaConditionInstruction_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionInstruction_uk-UA", resourceCulture);
             }
         }
         
@@ -5733,367 +5716,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mit diesem Selbsttest kannst du deine beruflichen Fähigkeiten selbst einschätzen. Das Ergebnis zeigt dir, wie viel Praxiserfahrung du bereits in den verschiedenen Bereichen des Berufs hast. Aufbauend darauf können wir dir passende Vorschläge für Weiterbildung zeigen.
-        ///Die Fragen beantwortest du, indem du auswählst, wie oft du die dargestellten Tätigkeiten schon gemacht hast. Probiere es aus!
-        ///Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to يمكنك باستخدام هذا الاختبار الذاتي تقييم مهاراتك المهنية بنفسك. وتُظهر لك النتيجة مقدار الخبرة العملية التي تتمتع بها بالفعل في مختلف مجالات المهنة. وبناءً على ذلك يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
-        ///يمكنك الإجابة على الأسئلة من خلال اختيار عدد المرات التي قمت فيها بالفعل بالأنشطة الموضحة. جربها!
-        ///يمكنك أيضاً إجراء هذا الاختبار الذاتي بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to С този тест можеш самостоятелно да оцениш своите професионални умения. Резултатът ти показва какъв практически опит вече притежаваш в различните области на професията. Въз основа на това можем да ти покажем подходящи предложения за продължаващо обучение.
-        ///Отговаряш на въпросите, като избираш колко често вече си вършил/а описаните дейности. Опитай!
-        ///Можеш да положиш самостоятелния тест и на друг език. За целта избери език горе..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This self-test is designed to help you assess your professional skills. The result will show you how much practical experience you already have in the various areas of the profession. Based on this, we can show you suitable suggestions for further training.
-        ///You answer the questions by selecting how often you have already done the activities shown. Try it out!
-        ///You can also take the self-test in another language. Select a language above..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Avec cet autotest, vous pouvez évaluer vous-mêmes vos compétences professionnelles. Le résultat vous montre combien d’expérience pratique vous avez déjà dans différents domaines du métier. Sur la base de cette information, nous pouvons vous proposer une formation continue adaptée.
-        ///Pour répondre aux questions, vous devez indiquer à quelle fréquence vous avez déjà réalisé les tâches présentées. Essayez!
-        ///Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une langue en ha [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cu ajutorul acestui test îți poți autoevalua calitățile profesionale. Rezultatul îți arată nivelul de experiență practică pe care îl ai în diferite domenii ale profesiei respective. Pe această bază, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.
-        ///Răspunzi la întrebări, selectând de câte ori ai efectuat deja până acum activitățile prezentate. Încearcă!
-        ///Poți da autotestul și într-o altă limbă. Selectează o limbă de mai sus..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to С помощью этого теста самопроверки вы можете сами оценить свои профессиональные навыки. Результат показывает, насколько большой практический опыт у вас уже есть в различных областях профессии. Исходя из этого, мы сможем показать вам подходящие предложения для продолжения образования.
-        ///Вы отвечаете на вопросы, выбирая, как часто вы уже занимались указанной деятельностью. Попробуйте!
-        ///Вы также можете пройти этот тест самопроверки и на другом языке. Для этого выберите вверху нужный язык..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bu kendi kendine test ile mesleki becerilerini kendin değerlendirebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar pratik bilgiye sahibi olduğunu gösterecektir. Buna dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.
-        ///Sorulara, gösterilen işlemleri ne kadar sık yaptığını seçerek cevap verirsin. Denemelisin!
-        ///Kendi kendine testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to За допомогою цього тесту самоперевірки ти можеш оцінити свої професійні навички. Результат показує, наскільки великий практичний досвід ти вже маєш у різних галузях професії. Виходячи з цього, ми зможемо показати тобi відповідні пропозиції для продовження освіти.
-        ///Tи відповідаєш на запитання, вибираючи, як часто ти вже займався/займалася зазначеною діяльністю. Спробуй!
-        ///Tи можеш пройти цей тест самоперевірки й іншою мовою. Для цього вибери вгорі мову..
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartDescription_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartDescription_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erfahrungsselbsttest Beruf {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to الاختبار الذاتي للخبرات بالمهنة {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Самостоятелен тест за опит Професия {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profession {0} experience self-test.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Autotest d’expérience métier {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Autotest experiență profesia {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Тест самопроверки опыта в профессии {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meslek {0} kendi kendine deneyim testi.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Тест самоперевірки досвіду в професії {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceStartTitle_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceStartTitle_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast die Selbsteinschätzung {0} abgeschlossen..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to لقد أكملت التقييم الذاتي {0}.
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Завърши самостоятелното оценяване {0}..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have completed the {0} self-assessment..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vous avez terminé l’autotest {0}..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ai finalizat autoevaluarea pentru {0}..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Вы прошли самооценочный тест на пригодность для {0}..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Öz değerlendirmeyi {0} tamamladın..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tи пройшов/пройшла тест самооцiнки на придатність до {0}..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinished_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinished_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Der Fortschrittsbalken zeigt dir, wie viel Erfahrung du in den Handlungsfeldern des Berufs hast. Du hast die Möglichkeit, dir deine Ergebnisse im Detail anzeigen zu lassen. Klicke dafür auf das jeweilige Handlungsfeld..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ويُظهر لك شريط التقدم مقدار خبرتك في مجالات عمل المهنة المعنية. لديك خيار عرض نتائجك بالتفصيل. انقر على مجال العمل المعني..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Чертичката за прогреса ти показва какъв опит имаш в полетата на действие на професията. Имаш възможност да изведеш подробностите за резултата си. За целта щракни върху съответното поле на действие..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The progress bar shows you how much experience you have in the fields of activity of the profession. You have the option of displaying your results in detail. To do this, click on the relevant field of activity..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to La barre de progression vous montre combien d’expérience vous avez dans différents domaines. Vous avez la possibilité d’afficher le détail des résultats. Pour cela, cliquez sur le domaine concerné..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bara de progres îți arată nivelul de experiență pe care îl ai în câmpurile de acțiune ale profesiei respective. Ai posibilitatea de a vedea rezultatele în detaliu. Pentru aceasta, fă clic pe fiecare câmp de acțiune..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Индикатор выполнения показывает, сколько опыта у вас есть в различных областях деятельности данной профессии. У вас есть возможность просмотреть свои результаты в деталях. Для этого нажмите на соответствующую область деятельности..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to İlerleme çubuğu sana mesleğin faaliyet alanlarında ne kadar deneyime sahip olduğunu gösterir. Sonuçlarının ayrıntılı şekilde gösterilmesini sağlayabilirsin. Bunun için ilgili faaliyet alanını tıkla..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Індикатор виконання показує, наскільки великий досвід ти вже маєш у різних галузях діяльності в межах даної професії. Ти можеш переглянути свої результати в деталях. Для цього натисніть на відповідну галузь діяльності..
-        /// </summary>
-        public static string TxtAssesmentsExperienceTestFinishedDescription_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsExperienceTestFinishedDescription_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hier kannst du herausfinden, wie gut dein Deutsch ist: Stehst du am Anfang, bist du fortgeschritten oder schon Profi? Dieser Test gibt dir eine erste Orientierung, wie gut du schriftliche und mündliche deutsche Texte verstehst und wie gut deine Grammatik- und Wortschatzkenntnisse schon sind.
-        ///Dies ist ein Test des Goethe-Instituts..
-        /// </summary>
-        public static string TxtAssesmentsGermanTestDescription {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsGermanTestDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Teste dein Deutsch.
-        /// </summary>
-        public static string TxtAssesmentsGermanTestTitle {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsGermanTestTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Die folgenden Fragen sind für blinde Personen teilweise nicht beantwortbar..
         /// </summary>
         public static string TxtAssesmentsGlobalBlindPersons {
@@ -6252,6 +5874,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsGlobalSelected_uk_UA {
             get {
                 return ResourceManager.GetString("TxtAssesmentsGlobalSelected_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frage {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitleQuestions {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitleQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprachenauswahl.
+        /// </summary>
+        public static string TxtAssesmentsLanguageSelectionViewTitle {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsLanguageSelectionViewTitle", resourceCulture);
             }
         }
         
@@ -6513,6 +6153,385 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_uk_UA {
             get {
                 return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mit diesem Selbsttest kannst du deine beruflichen Fähigkeiten selbst einschätzen. Das Ergebnis zeigt dir, wie viel Praxiserfahrung du bereits in den verschiedenen Bereichen des Berufs hast. Aufbauend darauf können wir dir passende Vorschläge für Weiterbildung zeigen.
+        ///Die Fragen beantwortest du, indem du auswählst, wie oft du die dargestellten Tätigkeiten schon gemacht hast. Probiere es aus!
+        ///Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يمكنك باستخدام هذا الاختبار الذاتي تقييم مهاراتك المهنية بنفسك. وتُظهر لك النتيجة مقدار الخبرة العملية التي تتمتع بها بالفعل في مختلف مجالات المهنة. وبناءً على ذلك يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
+        ///يمكنك الإجابة على الأسئلة من خلال اختيار عدد المرات التي قمت فيها بالفعل بالأنشطة الموضحة. جربها!
+        ///يمكنك أيضاً إجراء هذا الاختبار الذاتي بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to С този тест можеш самостоятелно да оцениш своите професионални умения. Резултатът ти показва какъв практически опит вече притежаваш в различните области на професията. Въз основа на това можем да ти покажем подходящи предложения за продължаващо обучение.
+        ///Отговаряш на въпросите, като избираш колко често вече си вършил/а описаните дейности. Опитай!
+        ///Можеш да положиш самостоятелния тест и на друг език. За целта избери език горе..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This self-test is designed to help you assess your professional skills. The result will show you how much practical experience you already have in the various areas of the profession. Based on this, we can show you suitable suggestions for further training.
+        ///You answer the questions by selecting how often you have already done the activities shown. Try it out!
+        ///You can also take the self-test in another language. Select a language above..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avec cet autotest, vous pouvez évaluer vous-mêmes vos compétences professionnelles. Le résultat vous montre combien d’expérience pratique vous avez déjà dans différents domaines du métier. Sur la base de cette information, nous pouvons vous proposer une formation continue adaptée.
+        ///Pour répondre aux questions, vous devez indiquer à quelle fréquence vous avez déjà réalisé les tâches présentées. Essayez!
+        ///Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une langue en ha [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cu ajutorul acestui test îți poți autoevalua calitățile profesionale. Rezultatul îți arată nivelul de experiență practică pe care îl ai în diferite domenii ale profesiei respective. Pe această bază, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.
+        ///Răspunzi la întrebări, selectând de câte ori ai efectuat deja până acum activitățile prezentate. Încearcă!
+        ///Poți da autotestul și într-o altă limbă. Selectează o limbă de mai sus..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to С помощью этого теста самопроверки вы можете сами оценить свои профессиональные навыки. Результат показывает, насколько большой практический опыт у вас уже есть в различных областях профессии. Исходя из этого, мы сможем показать вам подходящие предложения для продолжения образования.
+        ///Вы отвечаете на вопросы, выбирая, как часто вы уже занимались указанной деятельностью. Попробуйте!
+        ///Вы также можете пройти этот тест самопроверки и на другом языке. Для этого выберите вверху нужный язык..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu kendi kendine test ile mesleki becerilerini kendin değerlendirebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar pratik bilgiye sahibi olduğunu gösterecektir. Buna dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.
+        ///Sorulara, gösterilen işlemleri ne kadar sık yaptığını seçerek cevap verirsin. Denemelisin!
+        ///Kendi kendine testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to За допомогою цього тесту самоперевірки ти можеш оцінити свої професійні навички. Результат показує, наскільки великий практичний досвід ти вже маєш у різних галузях професії. Виходячи з цього, ми зможемо показати тобi відповідні пропозиції для продовження освіти.
+        ///Tи відповідаєш на запитання, вибираючи, як часто ти вже займався/займалася зазначеною діяльністю. Спробуй!
+        ///Tи можеш пройти цей тест самоперевірки й іншою мовою. Для цього вибери вгорі мову..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartDescription_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erfahrungsselbsttest Beruf {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الاختبار الذاتي للخبرات بالمهنة {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Самостоятелен тест за опит Професия {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profession {0} experience self-test.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autotest d’expérience métier {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autotest experiență profesia {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест самопроверки опыта в профессии {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meslek {0} kendi kendine deneyim testi.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест самоперевірки досвіду в професії {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewExperienceStartTitle_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewExperienceStartTitle_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hier kannst du herausfinden, wie gut dein Deutsch ist: Stehst du am Anfang, bist du fortgeschritten oder schon Profi? Dieser Test gibt dir eine erste Orientierung, wie gut du schriftliche und mündliche deutsche Texte verstehst und wie gut deine Grammatik- und Wortschatzkenntnisse schon sind.
+        ///Dies ist ein Test des Goethe-Instituts..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewGermanTestDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewGermanTestDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teste dein Deutsch.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewGermanTestTitle {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewGermanTestTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.  
+        ///Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!
+        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يمكنك اختبار مهاراتك المهنية من خلال هذا الاختبار. وتُظهر لك النتيجة مدى معرفتك في مختلف مجالات المهنة. بناءً على مهاراتك، يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
+        ///يمكنك الإجابة على الأسئلة إما عن طريق اختيار الإجابات الصحيحة أو ترتيبها بالترتيب الصحيح أو تكوين أزواج مطابقة. جربها!
+        ///يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to С този тест можеш да провериш своите професионални умения. Резултатът ти показва какво ниво на познания притежаваш в различните области. Въз основа на твоите компетенции можем да ти покажем подходящи предложения за продължаващо обучение.
+        ///Отговаряш на въпросите, като избираш приложимите отговори, подреждаш опциите в правилната последователност или свързваш подходящите двойки. Опитай!
+        ///Можеш да положиш теста и на друг език. За целта избери език горе..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This test is designed to help you assess your professional skills. The result will show you how much knowledge you have in the various areas of the profession. Based on your skills, we can show you suitable suggestions for further training.
+        ///You answer the questions by either selecting the right answers, putting them in the right order or forming matching pairs. Try it out!
+        ///You can also take this test in another language. Select a language above..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avec ce test, vous pouvez tester vos compétences professionnelles. Le résultat vous montre ce que vous savez déjà dans différents domaines du métier. Sur la base de ces compétences, nous pouvons vous proposer des formations continues adaptées.
+        ///Pour répondre aux questions, vous devez sélectionner les bonnes réponses, mettre les réponses dans le bon ordre ou former les paires qui conviennent. Essayez!
+        ///Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue en haut..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cu ajutorul acestui test îți poți verifica calitățile profesionale. Rezultatul îți arată nivelul de cunoștințe pe care îl ai în diferite domenii ale profesiei respective. Pe baza competențelor tale, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.
+        ///Răspunzi la întrebări selectând răspunsurile corecte, așezând enunțurile în ordinea corectă sau formând perechile potrivite. Încearcă!
+        ///Poți da testul și într-o altă limbă. Selectează o limbă de mai sus..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to С помощью этого теста вы можете проверить свои профессиональные навыки. Результат показывает, насколько глубоки ваши знания в различных областях профессии. Исходя из ваших навыков, мы сможем показать вам подходящие предложения для продолжения образования.
+        ///Вы отвечаете на вопросы, выбирая правильные ответы, располагая их в правильном порядке или составляя подходящие пары. Попробуйте!
+        ///Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu test ile mesleki becerilerini test edebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar bilgi sahibi olduğunu gösterecektir. Becerilerine dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.
+        ///Sorulara doğru cevapları seçerek, doğru sıraya koyarak veya doğru çiftleri cevap verirsin. Denemelisin!
+        ///Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to За допомогою цього тесту можна перевірити свої професійні навички. Результат показує, наскільки глибокі твої знання в різних галузях професії. Виходячи з твоїх навичок, ми зможемо показати тобi відповідні пропозиції для продовження освіти.
+        ///Tи відповідаєш на запитання, вибираючи правильні відповіді, розташовуючи їх у правильному порядку або складаючи відповідні пари. Спробуй!
+        ///Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову..
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartDescription_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Beruf {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اختبار المهنة {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест професия {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profession {0} test .
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test métier {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test profesia {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест на пригодность для профессии {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meslek {0} testi.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест на придатність до професії {0}.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewSkillsStartTitle_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewSkillsStartTitle_uk-UA", resourceCulture);
             }
         }
         
@@ -7084,6 +7103,24 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seite {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsRatingViewTitlePage {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details zu deinem Testergebnis.
+        /// </summary>
+        public static string TxtAssesmentsResultDetailSheetHeadline {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultDetailSheetHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Herzlichen Glückwunsch!.
         /// </summary>
         public static string TxtAssesmentsResultOverViewCongrats {
@@ -7165,768 +7202,470 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.  
-        ///Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!
-        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Du hast die Selbsteinschätzung {0} abgeschlossen..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to يمكنك اختبار مهاراتك المهنية من خلال هذا الاختبار. وتُظهر لك النتيجة مدى معرفتك في مختلف مجالات المهنة. بناءً على مهاراتك، يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
-        ///يمكنك الإجابة على الأسئلة إما عن طريق اختيار الإجابات الصحيحة أو ترتيبها بالترتيب الصحيح أو تكوين أزواج مطابقة. جربها!
-        ///يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
+        ///   Looks up a localized string similar to لقد أكملت التقييم الذاتي {0}.
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_ar {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_ar {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_ar", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_ar", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to С този тест можеш да провериш своите професионални умения. Резултатът ти показва какво ниво на познания притежаваш в различните области. Въз основа на твоите компетенции можем да ти покажем подходящи предложения за продължаващо обучение.
-        ///Отговаряш на въпросите, като избираш приложимите отговори, подреждаш опциите в правилната последователност или свързваш подходящите двойки. Опитай!
-        ///Можеш да положиш теста и на друг език. За целта избери език горе..
+        ///   Looks up a localized string similar to Завърши самостоятелното оценяване {0}..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_bg_BG {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_bg_BG {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_bg-BG", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_bg-BG", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This test is designed to help you assess your professional skills. The result will show you how much knowledge you have in the various areas of the profession. Based on your skills, we can show you suitable suggestions for further training.
-        ///You answer the questions by either selecting the right answers, putting them in the right order or forming matching pairs. Try it out!
-        ///You can also take this test in another language. Select a language above..
+        ///   Looks up a localized string similar to You have completed the {0} self-assessment..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_en_US {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_en_US {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_en-US", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_en-US", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Avec ce test, vous pouvez tester vos compétences professionnelles. Le résultat vous montre ce que vous savez déjà dans différents domaines du métier. Sur la base de ces compétences, nous pouvons vous proposer des formations continues adaptées.
-        ///Pour répondre aux questions, vous devez sélectionner les bonnes réponses, mettre les réponses dans le bon ordre ou former les paires qui conviennent. Essayez!
-        ///Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue en haut..
+        ///   Looks up a localized string similar to Vous avez terminé l’autotest {0}..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_fr_FR {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_fr_FR {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_fr-FR", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_fr-FR", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cu ajutorul acestui test îți poți verifica calitățile profesionale. Rezultatul îți arată nivelul de cunoștințe pe care îl ai în diferite domenii ale profesiei respective. Pe baza competențelor tale, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.
-        ///Răspunzi la întrebări selectând răspunsurile corecte, așezând enunțurile în ordinea corectă sau formând perechile potrivite. Încearcă!
-        ///Poți da testul și într-o altă limbă. Selectează o limbă de mai sus..
+        ///   Looks up a localized string similar to Ai finalizat autoevaluarea pentru {0}..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_ro_RO {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_ro_RO {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_ro-RO", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_ro-RO", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to С помощью этого теста вы можете проверить свои профессиональные навыки. Результат показывает, насколько глубоки ваши знания в различных областях профессии. Исходя из ваших навыков, мы сможем показать вам подходящие предложения для продолжения образования.
-        ///Вы отвечаете на вопросы, выбирая правильные ответы, располагая их в правильном порядке или составляя подходящие пары. Попробуйте!
-        ///Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык..
+        ///   Looks up a localized string similar to Вы прошли самооценочный тест на пригодность для {0}..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_ru_RU {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_ru_RU {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_ru-RU", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_ru-RU", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bu test ile mesleki becerilerini test edebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar bilgi sahibi olduğunu gösterecektir. Becerilerine dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.
-        ///Sorulara doğru cevapları seçerek, doğru sıraya koyarak veya doğru çiftleri cevap verirsin. Denemelisin!
-        ///Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç..
+        ///   Looks up a localized string similar to Öz değerlendirmeyi {0} tamamladın..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_tr_TR {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_tr_TR {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_tr-TR", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_tr-TR", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to За допомогою цього тесту можна перевірити свої професійні навички. Результат показує, наскільки глибокі твої знання в різних галузях професії. Виходячи з твоїх навичок, ми зможемо показати тобi відповідні пропозиції для продовження освіти.
-        ///Tи відповідаєш на запитання, вибираючи правильні відповіді, розташовуючи їх у правильному порядку або складаючи відповідні пари. Спробуй!
-        ///Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову..
+        ///   Looks up a localized string similar to Tи пройшов/пройшла тест самооцiнки на придатність до {0}..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartDescription_uk_UA {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinished_uk_UA {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartDescription_uk-UA", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinished_uk-UA", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test Beruf {0}.
+        ///   Looks up a localized string similar to Der Fortschrittsbalken zeigt dir, wie viel Erfahrung du in den Handlungsfeldern des Berufs hast. Du hast die Möglichkeit, dir deine Ergebnisse im Detail anzeigen zu lassen. Klicke dafür auf das jeweilige Handlungsfeld..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to اختبار المهنة {0}.
+        ///   Looks up a localized string similar to ويُظهر لك شريط التقدم مقدار خبرتك في مجالات عمل المهنة المعنية. لديك خيار عرض نتائجك بالتفصيل. انقر على مجال العمل المعني..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_ar {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_ar {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_ar", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_ar", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест професия {0}.
+        ///   Looks up a localized string similar to Чертичката за прогреса ти показва какъв опит имаш в полетата на действие на професията. Имаш възможност да изведеш подробностите за резултата си. За целта щракни върху съответното поле на действие..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_bg_BG {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_bg_BG {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_bg-BG", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_bg-BG", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profession {0} test .
+        ///   Looks up a localized string similar to The progress bar shows you how much experience you have in the fields of activity of the profession. You have the option of displaying your results in detail. To do this, click on the relevant field of activity..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_en_US {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_en_US {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_en-US", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_en-US", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test métier {0}.
+        ///   Looks up a localized string similar to La barre de progression vous montre combien d’expérience vous avez dans différents domaines. Vous avez la possibilité d’afficher le détail des résultats. Pour cela, cliquez sur le domaine concerné..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_fr_FR {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_fr_FR {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_fr-FR", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_fr-FR", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test profesia {0}.
+        ///   Looks up a localized string similar to Bara de progres îți arată nivelul de experiență pe care îl ai în câmpurile de acțiune ale profesiei respective. Ai posibilitatea de a vedea rezultatele în detaliu. Pentru aceasta, fă clic pe fiecare câmp de acțiune..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_ro_RO {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_ro_RO {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_ro-RO", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_ro-RO", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест на пригодность для профессии {0}.
+        ///   Looks up a localized string similar to Индикатор выполнения показывает, сколько опыта у вас есть в различных областях деятельности данной профессии. У вас есть возможность просмотреть свои результаты в деталях. Для этого нажмите на соответствующую область деятельности..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_ru_RU {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_ru_RU {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_ru-RU", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_ru-RU", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meslek {0} testi.
+        ///   Looks up a localized string similar to İlerleme çubuğu sana mesleğin faaliyet alanlarında ne kadar deneyime sahip olduğunu gösterir. Sonuçlarının ayrıntılı şekilde gösterilmesini sağlayabilirsin. Bunun için ilgili faaliyet alanını tıkla..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_tr_TR {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_tr_TR {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_tr-TR", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_tr-TR", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тест на придатність до професії {0}.
+        ///   Looks up a localized string similar to Індикатор виконання показує, наскільки великий досвід ти вже маєш у різних галузях діяльності в межах даної професії. Ти можеш переглянути свої результати в деталях. Для цього натисніть на відповідну галузь діяльності..
         /// </summary>
-        public static string TxtAssesmentsSkillsStartTitle_uk_UA {
+        public static string TxtAssesmentsResultOverViewExperienceTestFinishedDescription_uk_UA {
             get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsStartTitle_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du hast den Test {0} abgeschlossen!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to لقد أكملت اختبار {0}!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Завърши теста {0}!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have completed the {0} test!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vous avez terminé le test {0}..
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ai finalizat testul pentru {0}!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Вы прошли тест на пригодность для {0}!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Testi {0} tamamladın!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ти пройшов/пройшла тест на придатність до {0}!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinished_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinished_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Der Fortschrittsbalken zeigt dir, wie du insgesamt abgeschnitten hast. Du hast die Möglichkeit, dir dein Ergebnis in den einzelnen Bereichen anzusehen. Klicke dafür auf “Details anzeigen“!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to يوضح لك شريط التقدم كيف كان أداؤك بشكل عام. لديك خيار عرض نتيجتك في النطاقات الفردية. انقر على &quot;إظهار التفاصيل&quot;!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Чертичката за прогреса ти показва какво е твоето общо постижение. Имаш възможност да разгледаш резултата си в отделните области. За целта щракни върху „Показване на подробности“!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The progress bar shows you how you scored overall. You have the option of viewing your result in the individual areas. To do this, click on “Show details”!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to La barre de progression vous montre quelle est votre moyenne générale. Vous avez la possibilité de voir vos résultats pour les différents domaines. Cliquez sur «Afficher les détails»!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Barele de progres îți arată rezultatul per ansamblu. Ai posibilitatea de a vedea rezultatul din diferitele secțiuni. Pentru aceasta, fă clic pe „Afișare detalii”!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Индикатор выполнения показывает, как вы справились в целом. У вас есть возможность просмотреть свой результат в отдельных областях. Для этого нажмите на «Показать подробности»!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to İlerleme çubuğu sana toplamda nasıl bir performans sergilediğini gösterir. Sonuçlarını tek tek alanlarda görüntüleme seçeneğin vardır. Bunun için “Ayrıntıları göster“i tıkla!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Індикатор виконання показує, як ти впорався/впоралася загалом. Ти можеш переглянути свій результат в окремих галузях. Для цього натисни на «Показати в деталях»!.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDescription_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDescription_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Details anzeigen.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to إظهار التفاصيل.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Показване на подробности.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show details.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Afficher les détails.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Afișare detalii.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Показать подробности.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ayrıntıları göster.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Показати в деталях.
-        /// </summary>
-        public static string TxtAssesmentsSkillsTestFinishedDetails_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSkillsTestFinishedDetails_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mit diesem Selbsttest kannst du deine personalen, sozialen und digitalen Kompetenzen überprüfen. Dieser Test unterteilt sich in fünf Module. Du kannst jedes Modul einzeln machen. Das Ergebnis eines jeden Moduls erhältst du direkt im Anschluss. Außerdem gibt dir die Abbildung eine Gesamtübersicht über alle Module.
-        ///Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus..
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillDescription {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Persönliche Fähigkeiten.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to المهارات الشخصية.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Лични умения.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Personal skills.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Compétences personnelles.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Competențe personale.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Личные навыки.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kişisel beceriler.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Особисті навички.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillPesonalSkills_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillPesonalSkills_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Jetzt testen.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to اختبر الآن.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Тествайте сега.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Test now.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tester maintenant.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Testați acum.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пройдите тест прямо сейчас.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Şimdi test edin.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пройдіть тестування зараз.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTestNow_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTestNow_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deine persönlichen Fähigkeiten.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to الاختبار الذاتي للمهارات الداعمة.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Самостоятелен тест Меки умения.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Soft skills self-test.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Autotest soft skills.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Autotest Softskills.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Тест самопроверки социальных навыков.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sosyal beceriler kendi kendine test.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Тест самоперевірки соціальних навичок.
-        /// </summary>
-        public static string TxtAssesmentsSoftSkillTitle_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsSoftSkillTitle_uk-UA", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewExperienceTestFinishedDescription_uk-UA", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!.
         /// </summary>
-        public static string TxtAssesmentsTestGermanAnswersCorrect {
+        public static string TxtAssesmentsResultOverviewGermanAnswersCorrect {
             get {
-                return ResourceManager.GetString("TxtAssesmentsTestGermanAnswersCorrect", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverviewGermanAnswersCorrect", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Prima! Mit deinen Sprachkenntnissen kannst du schon fast alle Situationen gut meistern..
         /// </summary>
-        public static string TxtAssesmentsTestGermanExcellent {
+        public static string TxtAssesmentsResultOverviewGermanExcellent {
             get {
-                return ResourceManager.GetString("TxtAssesmentsTestGermanExcellent", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverviewGermanExcellent", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Gut gemacht! Du kannst dich in vielen Situationen des alltäglichen Lebens zurechtfinden..
         /// </summary>
-        public static string TxtAssesmentsTestGermanGood {
+        public static string TxtAssesmentsResultOverviewGermanGood {
             get {
-                return ResourceManager.GetString("TxtAssesmentsTestGermanGood", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverviewGermanGood", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Deutschkenntnisse.
         /// </summary>
-        public static string TxtAssesmentsTestGermanKnowledge {
+        public static string TxtAssesmentsResultOverviewGermanKnowledge {
             get {
-                return ResourceManager.GetString("TxtAssesmentsTestGermanKnowledge", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverviewGermanKnowledge", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Weiter so! Du hast Anfangskenntnisse in Deutsch..
         /// </summary>
-        public static string TxtAssesmentsTestGermanOkay {
+        public static string TxtAssesmentsResultOverviewGermanOkay {
             get {
-                return ResourceManager.GetString("TxtAssesmentsTestGermanOkay", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverviewGermanOkay", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Dein Ergebnis.
         /// </summary>
-        public static string TxtAssesmentsTestGermanYourResult {
+        public static string TxtAssesmentsResultOverviewGermanYourResult {
             get {
-                return ResourceManager.GetString("TxtAssesmentsTestGermanYourResult", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seite {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsTitlePage {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsTitlePage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Frage {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsTitleQuestions {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsTitleQuestions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Details zu deinem Testergebnis.
-        /// </summary>
-        public static string TxtResultDetailSheetHeadline {
-            get {
-                return ResourceManager.GetString("TxtResultDetailSheetHeadline", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverviewGermanYourResult", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Testergebnis.
         /// </summary>
-        public static string TxtResultOverView_PageTitle {
+        public static string TxtAssesmentsResultOverViewPageTitle {
             get {
-                return ResourceManager.GetString("TxtResultOverView_PageTitle", resourceCulture);
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast den Test {0} abgeschlossen!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لقد أكملت اختبار {0}!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Завърши теста {0}!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have completed the {0} test!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vous avez terminé le test {0}..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ai finalizat testul pentru {0}!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вы прошли тест на пригодность для {0}!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testi {0} tamamladın!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ти пройшов/пройшла тест на придатність до {0}!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinished_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinished_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Der Fortschrittsbalken zeigt dir, wie du insgesamt abgeschnitten hast. Du hast die Möglichkeit, dir dein Ergebnis in den einzelnen Bereichen anzusehen. Klicke dafür auf “Details anzeigen“!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يوضح لك شريط التقدم كيف كان أداؤك بشكل عام. لديك خيار عرض نتيجتك في النطاقات الفردية. انقر على &quot;إظهار التفاصيل&quot;!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Чертичката за прогреса ти показва какво е твоето общо постижение. Имаш възможност да разгледаш резултата си в отделните области. За целта щракни върху „Показване на подробности“!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The progress bar shows you how you scored overall. You have the option of viewing your result in the individual areas. To do this, click on “Show details”!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La barre de progression vous montre quelle est votre moyenne générale. Vous avez la possibilité de voir vos résultats pour les différents domaines. Cliquez sur «Afficher les détails»!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barele de progres îți arată rezultatul per ansamblu. Ai posibilitatea de a vedea rezultatul din diferitele secțiuni. Pentru aceasta, fă clic pe „Afișare detalii”!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Индикатор выполнения показывает, как вы справились в целом. У вас есть возможность просмотреть свой результат в отдельных областях. Для этого нажмите на «Показать подробности»!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İlerleme çubuğu sana toplamda nasıl bir performans sergilediğini gösterir. Sonuçlarını tek tek alanlarda görüntüleme seçeneğin vardır. Bunun için “Ayrıntıları göster“i tıkla!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Індикатор виконання показує, як ти впорався/впоралася загалом. Ти можеш переглянути свій результат в окремих галузях. Для цього натисни на «Показати в деталях»!.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDescription_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details anzeigen.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إظهار التفاصيل.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Показване на подробности.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show details.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Afficher les détails.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Afișare detalii.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Показать подробности.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ayrıntıları göster.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Показати в деталях.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_uk-UA", resourceCulture);
             }
         }
         

@@ -15,7 +15,7 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:FavoriteViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
-             Title="{x:Static strings:Resources.LanguageSelectionView_Title}"
+             Title="{x:Static strings:Resources.TxtAssesmentsLanguageSelectionViewTitle}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="LanguageSelectionTemplate" x:DataType="interactionModel:SelectInteractionEntry" >
