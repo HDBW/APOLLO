@@ -19,6 +19,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             Text = text;
             Index = index;
+            OriginalIndex = index;
             DragStartingHandler = dragStartingHandler;
             DropCompletedHandler = dropCompletedHandler;
             DropHandler = dropHandler;
@@ -28,6 +29,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         {
             get { return Index + 1; }
         }
+
+        public int OriginalIndex { get; }
 
         private Action<DraggableEntry>? DragStartingHandler { get; }
 

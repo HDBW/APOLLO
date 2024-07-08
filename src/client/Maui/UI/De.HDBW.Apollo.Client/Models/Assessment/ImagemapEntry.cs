@@ -42,8 +42,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public override double GetScore()
         {
-            //TODO:
-            return Data.CalculateScore("");
+            var pattern = string.Join(";", Shapes.Select(s => s.IsSelected ? "1" : "0"));
+            return Data.CalculateScore(pattern);
         }
     }
 }

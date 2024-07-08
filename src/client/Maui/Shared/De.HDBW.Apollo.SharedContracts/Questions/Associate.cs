@@ -34,8 +34,19 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public double CalculateScore(string selection)
         {
-            var score = Scores.FirstOrDefault(x => x.Value == selection);
-            return Credits.TryGetValue(score.Key, out double value) ? value : 0;
+            var isValid = true;
+            var values = selection.Split(';');
+            foreach (var value in values)
+            {
+                var score = Scores.FirstOrDefault(x => x.Value == value);
+                if (!Credits.TryGetValue(score.Key, out double credit))
+                {
+                    isValid = false;
+                    continue;
+                }
+            }
+
+            return isValid ? Credits[1] : 0d;
         }
 
         private void CreateAditionalData(int sourceIndex, string targetIndex, string credit)
@@ -45,7 +56,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
                 return;
             }
 
-            var score = $"{sourceIndex};{targetIndex}";
+            var score = $"{sourceIndex}:{targetIndex}";
             Scores.Add(sourceIndex, score);
             Credits.Add(sourceIndex, double.Parse(credit ?? "0", CultureInfo.InvariantCulture));
         }
