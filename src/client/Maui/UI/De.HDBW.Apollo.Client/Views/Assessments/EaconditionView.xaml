@@ -57,7 +57,7 @@
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto, *, Auto" x:Name="PART_Root">
-        <Label Text="{x:Binding [TxtAssesmentsEaConditionInstruction], Mode=OneWay}" Margin="24,24,24,0" Style="{StaticResource Noto16}"/>
+        <Label Text="{x:Binding [TxtAssesmentsEaConditionDetailViewInstruction], Mode=OneWay}" Margin="24,24,24,0" Style="{StaticResource Noto16}"/>
         <CollectionView 
             Grid.Row="1" 
             Margin="20,20,20,0"

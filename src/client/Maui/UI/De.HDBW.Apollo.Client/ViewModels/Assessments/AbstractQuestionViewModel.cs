@@ -81,7 +81,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     return string.Empty;
                 }
 
-                var formate = this["TxtAssesmentsTitleQuestions"];
+                var formate = this["TxtAssesmentsGlobalTitleQuestions"];
                 if (string.IsNullOrWhiteSpace(formate) || Count == 0)
                 {
                     return string.Empty;

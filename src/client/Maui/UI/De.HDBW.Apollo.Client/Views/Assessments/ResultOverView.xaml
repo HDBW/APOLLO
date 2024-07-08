@@ -12,7 +12,7 @@
              xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             Title="{x:Static strings:Resources.TxtResultOverView_PageTitle}"
+             Title="{x:Static strings:Resources.TxtAssesmentsResultOverViewPageTitle}"
              IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
@@ -90,7 +90,7 @@
                             </Label>
                             <ProgressBar Grid.Column="1" Progress="0.5"/>
                         </Grid>
-                        <Label Text="{x:Static strings:Resources.TxtAssesmentsSkillsTestFinishedDetails}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" HorizontalOptions="End"/>
+                        <Label Text="{x:Static strings:Resources.TxtAssesmentsResultOverViewSkillsTestFinishedDetails}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" HorizontalOptions="End"/>
                     </VerticalStackLayout>
                 </Border>
             </Grid>
