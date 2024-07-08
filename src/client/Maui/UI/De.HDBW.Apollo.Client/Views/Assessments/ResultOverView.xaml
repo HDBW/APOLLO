@@ -71,6 +71,7 @@
                 </Border>
             </Grid>
         </DataTemplate>
+        
         <DataTemplate x:Key="SkillResultCardTemplate">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
@@ -95,6 +96,7 @@
                 </Border>
             </Grid>
         </DataTemplate>
+        
         <DataTemplate x:Key="SoftSkillResultCardTemplate">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
@@ -117,6 +119,7 @@
                 </Border>
             </Grid>
         </DataTemplate>
+        
         <DataTemplate x:Key="RecommendedTrainingInteractionEntry">
             <Grid>
                 <Border Style="{StaticResource PictureEntryBorderStyle}" Margin="24,4" SemanticProperties.Hint="{OnPlatform Android={x:Static strings:Resources.Global_Alttext_KursDetails}}">
@@ -151,6 +154,7 @@
                 </Border>
             </Grid>
         </DataTemplate>
+        
     </ContentPage.Resources>
     <VerticalStackLayout x:Name="PART_Root">
         <CollectionView/>

@@ -534,7 +534,10 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<SortViewModel>();
             services.AddTransient<SortView>();
 
+            services.AddTransient<ResultOverViewModel>();
             services.AddTransient<ResultOverView>();
+            services.AddTransient<ResultDetailSheet>();
+
             services.AddTransient<SelectionSheet>();
             services.AddTransient<SelectionSheetViewModel>();
         }
@@ -610,6 +613,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.SortView, typeof(SortView));
 
             Routing.RegisterRoute(Routes.ResultOverView, typeof(ResultOverView));
+            Routing.RegisterRoute(Routes.ResultDetailSheet, typeof(ResultDetailSheet));
             Routing.RegisterRoute(Routes.SelectionSheet, typeof(SelectionSheet));
 
             // TBD

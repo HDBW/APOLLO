@@ -27,7 +27,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected override EafrequencyEntry CreateEntry(Eafrequency data)
         {
-            return EafrequencyEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(EafrequencyEntry)]);
+            return EafrequencyEntry.Import(data, MediaBasePath, Density, ImageSizeConfig[typeof(EafrequencyEntry)], (o) => { NavigateCommand.Execute(this); });
         }
     }
 }

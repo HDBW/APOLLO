@@ -254,9 +254,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
+                    var stack = Shell.Current.Navigation.NavigationStack.ToArray();
                     if (Offset == (Count - 1))
                     {
-                        await Shell.Current.GoToAsync(new ShellNavigationState(".."), true);
+                        Shell.Current.Navigation.RemovePage(stack.Last());
+                        var parameters = new NavigationParameters();
+                        parameters.AddValue(NavigationParameter.Id, ModuleId);
+                        parameters.AddValue(NavigationParameter.Data, SessionId);
+                        parameters.AddValue(NavigationParameter.Language, Language);
+                        await NavigationService.NavigateAsync(Routes.ResultOverView, worker.Token, parameters);
                     }
                     else
                     {
@@ -279,7 +285,6 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             return;
                         }
 
-                        var stack = Shell.Current.Navigation.NavigationStack.ToArray();
                         await ExecuteOnUIThreadAsync(
                         async () =>
                         {
