@@ -145,7 +145,13 @@ namespace De.HDBW.Apollo.Client.Controls
                     return;
                 }
 
-                Task.Run(() => DonwloadFileAsync(currentValue)).ContinueWith((x) =>
+                var tasks = new List<Task>()
+                {
+                    ImageHelper.EnsureOriginalSizesAreLoaded(),
+                    DownloadFileAsync(currentValue),
+                };
+
+                Task.Run(() => Task.WhenAll(tasks)).ContinueWith((x) =>
                 {
                     if (controlRef.TryGetTarget(out ImageInteractionView? control))
                     {
@@ -155,13 +161,13 @@ namespace De.HDBW.Apollo.Client.Controls
             }
         }
 
-        private static async Task DonwloadFileAsync(string file)
+        private static async Task DownloadFileAsync(string file)
         {
             string cacheDir = FileSystem.Current.CacheDirectory;
             var path = Path.Combine(cacheDir, Path.GetFileName(file));
 
             var info = new FileInfo(path);
-            if (info.Exists && info.Length >0)
+            if (info.Exists && info.Length > 0)
             {
                 return;
             }

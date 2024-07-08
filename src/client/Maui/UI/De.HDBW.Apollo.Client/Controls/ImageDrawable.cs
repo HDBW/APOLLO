@@ -54,18 +54,19 @@ namespace De.HDBW.Apollo.Client.Controls
             {
                 using (var stream = File.OpenRead(path))
                 {
-                    var imageFormat = ImageFormatHelper.RetrieveImageFormatFromFileExtension(path);
+                    var (id, _, scale) = ImageHelper.ParseFileName(path);
+                    var originalSize = await ImageHelper.GetOriginalSize(id);
+                    var imageFormat = ImageHelper.RetrieveImageFormatFromFileExtension(path);
                     var image = PlatformImage.FromStream(stream, imageFormat);
-                    var originalWidth = 1300; // todo: read from EXIF
-                    var originalHeight = 1300; // todo: read from EXIF
-                    var xScale = dirtyRect.Width / image.Width;
-                    var yScale = dirtyRect.Height / image.Height;
-                    ImageScale = Math.Min(xScale, yScale);
-                    ImageScale = Math.Min(ImageScale, 1);
-                    ShapeScale = Math.Min(dirtyRect.Width / originalWidth, dirtyRect.Height / originalHeight);
-                    var size = new Size(image.Width * ImageScale, image.Height * ImageScale);
+                    var originalWidth = originalSize.Width == 0 ? image.Width : originalSize.Width;
+                    var originalHeight = originalSize.Height == 0 ? image.Width : originalSize.Height;
+                    ImageScale = Math.Min(Math.Min(dirtyRect.Width / image.Width, dirtyRect.Height / image.Height), 1) * scale;
+                    ShapeScale = Math.Min(Math.Min(dirtyRect.Width / originalWidth, dirtyRect.Height / originalHeight), 1);
+                    var size = new Size(image.Width * ImageScale / scale, image.Height * ImageScale / scale);
                     var point = new PointF((dirtyRect.Width - Convert.ToSingle(size.Width)) / 2f, (dirtyRect.Height - Convert.ToSingle(size.Height)) / 2f);
                     ImageRect = new RectF(point, size);
+
+                    canvas.DrawImage(image, ImageRect.X, ImageRect.Y, ImageRect.Width, ImageRect.Height);
                 }
 
                 if (_shapes != null &&
