@@ -95,7 +95,7 @@ namespace De.HDBW.Apollo.Client.Helper
                 {
                     try
                     {
-                        while (true)
+                        while (binaryReader.BaseStream.Position != binaryReader.BaseStream.Length)
                         {
                             var idBytes = binaryReader.ReadBytes(32);
                             var width = binaryReader.ReadInt32();
