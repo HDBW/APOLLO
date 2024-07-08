@@ -5,7 +5,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.EaconditionFilteredView"
-             Title="{x:Static strings:Resources.TxtAssesmentsEaconditionStartViewTitle}"
+             Title="{x:Static strings:Resources.TxtAssesmentsEaconditionGlobalTitle}"
              x:DataType="viewModel:EaconditionViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
@@ -44,7 +44,7 @@
                     </Grid>
                     <Border.Triggers>
                         <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
-                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsGlobalSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
                             <Setter Property="Shadow">
                                 <Setter.Value>
                                     <Shadow Opacity="0"/>
@@ -57,7 +57,7 @@
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto, *" x:Name="PART_Root">
-        <Label Text="{x:Binding [TxtAssesmentsEaConditionFilteredInstruction], Mode=OneWay}" Margin="24,24,24,0" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+        <Label Text="{x:Binding [TxtAssesmentsEaConditionFilteredViewInstruction], Mode=OneWay}" Margin="24,24,24,0" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
         <CollectionView 
             Grid.Row="1" 
             Margin="20"

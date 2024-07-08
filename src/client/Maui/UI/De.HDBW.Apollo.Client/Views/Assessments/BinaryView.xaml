@@ -18,10 +18,10 @@
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding TogglePlayCommand, Mode=OneTime}"/>
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*, auto" >
-                        <Label Text="{x:Binding BindingContext[AudioAssesmentsBinaryStart], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,12,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center">
+                        <Label Text="{x:Binding BindingContext[AudioAssesmentsBinaryViewStart], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="0,0,12,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center">
                             <Label.Triggers>
                                 <DataTrigger TargetType="Label" Binding="{x:Binding IsPlaying, Mode=OneWay}" Value="True">
-                                    <Setter Property="Text" Value="{x:Binding BindingContext[AudioAssesmentsBinaryStop], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                                    <Setter Property="Text" Value="{x:Binding BindingContext[AudioAssesmentsBinaryViewStop], Source={x:Reference PART_Root}, Mode=OneWay}"/>
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -45,7 +45,7 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding RestartPlayCommand, Mode=OneTime}"/>
                     </Grid.GestureRecognizers>
-                    <Label Grid.Column="0" InputTransparent="True" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" Text="{x:Binding BindingContext[BtnTxtGlobalReset], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End"/>
+                    <Label Grid.Column="0" InputTransparent="True" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}" Text="{x:Binding BindingContext[BtnTxtAssesmentsGlobalReset], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="8,0,0,0" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End"/>
                     <Image Grid.Column="1" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" VerticalOptions="Start" Margin="12">
                         <Image.Source>
                             <FontImageSource Glyph="{StaticResource Reset}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -56,18 +56,18 @@
                 <Label Text="{x:Binding Instruction, Mode=OneWay}" TextType="Html" Margin="8,0,8,0" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                 <RadioButton IsChecked="{x:Binding IsTrueSelected, Mode=TwoWay}" Margin="0,0,0,0" ControlTemplate="{StaticResource RadioButtonLikeButtonBinaryViewTemplate}">
                     <RadioButton.Content>
-                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryTrue], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
+                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryViewTrue], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
                     </RadioButton.Content>
                 </RadioButton>
                 <RadioButton IsChecked="{x:Binding IsFalseSelected, Mode=TwoWay}" ControlTemplate="{StaticResource RadioButtonLikeButtonBinaryViewTemplate}">
                     <RadioButton.Content>
-                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryFalse], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
+                        <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryViewFalse], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>
                     </RadioButton.Content>
                 </RadioButton>
             </VerticalStackLayout>
         </ScrollView>
         <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
-            <Button Text="{x:Binding [BtnTxtAssesmentsNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
+            <Button Text="{x:Binding [BtnTxtAssesmentsGlobalNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
         </Border>
     </Grid>
 </ContentPage>

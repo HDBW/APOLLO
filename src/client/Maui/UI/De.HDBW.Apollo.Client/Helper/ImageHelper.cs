@@ -10,7 +10,7 @@ namespace De.HDBW.Apollo.Client.Helper
     {
         private static Dictionary<string, SizeF>? loadedOriginalSizes = null;
         private static string originalSizesFilePath = string.Empty;
-        private static SemaphoreSlim originalSizeLoaderSemaphore = new (1);
+        private static SemaphoreSlim originalSizeLoaderSemaphore = new SemaphoreSlim(1);
 
         static ImageHelper()
         {
@@ -44,12 +44,10 @@ namespace De.HDBW.Apollo.Client.Helper
             return (id, size, scale);
         }
 
-        public static async Task<SizeF> GetOriginalSize(string id)
+        public static SizeF GetOriginalSize(string id)
         {
             try
             {
-                await EnsureOriginalSizesAreLoaded();
-
                 return loadedOriginalSizes!.TryGetValue(id, out var size) ? size : default;
             }
             catch

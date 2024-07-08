@@ -85,6 +85,34 @@ namespace De.HDBW.Apollo.Client.Services
             return false;
         }
 
+        public async Task<bool> CloseAsync<TU>()
+            where TU : BaseViewModel
+        {
+            try
+            {
+                var itemsToClose = _sheetLookup.Where(x => x.Value is TU).ToList();
+                var result = true;
+                foreach (var itemToClose in itemsToClose)
+                {
+                    if (!itemToClose.Key.TryGetTarget(out BottomSheet? sheet))
+                    {
+                        result = false;
+                        continue;
+                    }
+
+                    await sheet.DismissAsync(true);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Unknown error while {nameof(CloseAsync)} in {GetType().Name}.");
+            }
+
+            return false;
+        }
+
         private async Task OpenOnUIThreadAsnc(string route, CancellationToken token, NavigationParameters? parameters)
         {
             token.ThrowIfCancellationRequested();

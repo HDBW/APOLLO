@@ -14,8 +14,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private IList<string> _ids;
 
-        private Dictionary<int, string?> CurrentValues { get; } = new Dictionary<int, string?>();
-
         private ClozeEntry(Cloze data)
             : base(data)
         {
@@ -27,9 +25,21 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        private Dictionary<int, string?> CurrentValues { get; } = new Dictionary<int, string?>();
+
         public static ClozeEntry Import(Cloze data)
         {
             return new ClozeEntry(data);
+        }
+
+        public IList<string>? GetPossibleValues(string id)
+        {
+            if (!Ids.Contains(id))
+            {
+                return new List<string>();
+            }
+
+            return Data.Inputs[Ids.IndexOf(id) + 1]?.ToList() ?? new List<string>();
         }
 
         public override double GetScore()

@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client.Controls
             _imageSource = imageSource;
         }
 
-        public async void Draw(ICanvas canvas, RectF dirtyRect)
+        public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             if (string.IsNullOrWhiteSpace(_imageSource))
             {
@@ -55,7 +55,7 @@ namespace De.HDBW.Apollo.Client.Controls
                 using (var stream = File.OpenRead(path))
                 {
                     var (id, _, scale) = ImageHelper.ParseFileName(path);
-                    var originalSize = await ImageHelper.GetOriginalSize(id);
+                    var originalSize = ImageHelper.GetOriginalSize(id);
                     var imageFormat = ImageHelper.RetrieveImageFormatFromFileExtension(path);
                     var image = PlatformImage.FromStream(stream, imageFormat);
                     var originalWidth = originalSize.Width == 0 ? image.Width : originalSize.Width;

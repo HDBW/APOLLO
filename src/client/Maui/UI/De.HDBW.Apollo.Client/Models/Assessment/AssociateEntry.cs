@@ -29,7 +29,16 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public override double GetScore()
         {
-            return Data.CalculateScore(string.Join(";", TargetImages.Select(x => x.AssociatedIndex ?? 0)));
+            var values = new List<string>();
+            foreach (var text in SourceTexts)
+            {
+                var sourceIndex = SourceTexts.IndexOf(text);
+                var target = TargetImages.FirstOrDefault(x => x.AssociatedIndex == sourceIndex);
+                var targetIndex = target != null ? TargetImages.IndexOf(target) : -1;
+                values.Add($"{sourceIndex + 1}:{targetIndex + 1}");
+            }
+
+            return Data.CalculateScore(string.Join(";", values));
         }
 
         private int? AssociateItemIndex(int? currentIndex)

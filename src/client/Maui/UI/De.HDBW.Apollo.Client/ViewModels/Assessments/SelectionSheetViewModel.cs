@@ -4,7 +4,9 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using Microsoft.Extensions.Logging;
@@ -16,6 +18,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [ObservableProperty]
         private ObservableCollection<SelectableTextEntry> _items = new ObservableCollection<SelectableTextEntry>();
         private List<string> _selectionsValues = new List<string>();
+        private string _id = string.Empty;
 
         public SelectionSheetViewModel(
             ISheetService sheetService,
@@ -37,7 +40,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
-                    var items = _selectionsValues.Select(x => SelectableTextEntry.Import(x));
+                    var items = _selectionsValues.Select(x => SelectableTextEntry.Import(x, ToggleSelection, CanToggleSelection));
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(items), worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -62,10 +65,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override void RefreshCommands()
         {
             CloseCommand?.NotifyCanExecuteChanged();
+            foreach (var item in Items)
+            {
+                item.ToggleSelectionCommand?.NotifyCanExecuteChanged();
+            }
         }
 
         protected override void OnPrepare(NavigationParameters navigationParameters)
         {
+            _id = navigationParameters.GetValue<string>(NavigationParameter.Id) ?? string.Empty;
             var selections = navigationParameters.GetValue<string>(NavigationParameter.Data);
             _selectionsValues = (selections ?? string.Empty).Split(";").ToList();
         }
@@ -87,7 +95,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
-                   // WeakReferenceMessenger.Default.Send<SelectionMessage>(new SelectionMessage(button?.Text ?? string.Empty));
+                    var text = Items.FirstOrDefault(x => x.IsSelected)?.Text ?? string.Empty;
+                    WeakReferenceMessenger.Default.Send(new SelectionMessage(_id, text));
                     await SheetService.CloseAsync(this);
                 }
                 catch (OperationCanceledException)
@@ -112,6 +121,26 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private bool CanClose()
         {
             return true;
+        }
+
+        private void ToggleSelection(SelectableTextEntry entry)
+        {
+            foreach (var item in Items)
+            {
+                if (item == entry)
+                {
+                    entry.IsSelected = !entry.IsSelected;
+                }
+                else
+                {
+                    item.IsSelected = false;
+                }
+            }
+        }
+
+        private bool CanToggleSelection(SelectableTextEntry entry)
+        {
+            return !IsBusy;
         }
     }
 }

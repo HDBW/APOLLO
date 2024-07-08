@@ -46,7 +46,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="{x:Static strings:Resources.TxtResultDetailSheetHeadline}" Style="{StaticResource Noto20Bold}" TextColor="{StaticResource TextColor}" SemanticProperties.HeadingLevel="Level1" Margin="24,0,8,0" VerticalOptions="Center"/>
+            <Label Text="{x:Static strings:Resources.TxtAssesmentsResultDetailSheetHeadline}" Style="{StaticResource Noto20Bold}" TextColor="{StaticResource TextColor}" SemanticProperties.HeadingLevel="Level1" Margin="24,0,8,0" VerticalOptions="Center"/>
             <ImageButton Grid.Column="1" Padding="12" Command="{x:Binding CloseCommand}"
                          HorizontalOptions="End" VerticalOptions="Center"
                          SemanticProperties.Description="{x:Static strings:Resources.Global_Close}">

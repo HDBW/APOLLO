@@ -31,7 +31,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public override double GetScore()
         {
-            return Data.CalculateScore(string.Join(";", SortTexts.Select(x => x.Index)));
+            return Data.CalculateScore(string.Join(";", SortTexts.Select(x => x.OriginalIndex + 1)));
         }
 
         private void HandleDragStartingInteraction(DraggableEntry entry)
