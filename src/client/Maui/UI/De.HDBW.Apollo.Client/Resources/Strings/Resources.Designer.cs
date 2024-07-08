@@ -6203,7 +6203,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Avec cet autotest, vous pouvez évaluer vous-mêmes vos compétences professionnelles. Le résultat vous montre combien d’expérience pratique vous avez déjà dans différents domaines du métier. Sur la base de cette information, nous pouvons vous proposer une formation continue adaptée.
         ///Pour répondre aux questions, vous devez indiquer à quelle fréquence vous avez déjà réalisé les tâches présentées. Essayez!
-        ///Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une langue en ha [rest of string was truncated]&quot;;.
+        ///Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une langue en haut [rest of string was truncated]&quot;;.
         /// </summary>
         public static string TxtAssesmentsModuleDetailViewExperienceStartDescription_fr_FR {
             get {
@@ -6358,7 +6358,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.  
         ///Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!
-        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine  [rest of string was truncated]&quot;;.
+        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sp [rest of string was truncated]&quot;;.
         /// </summary>
         public static string TxtAssesmentsModuleDetailViewSkillsStartDescription {
             get {
