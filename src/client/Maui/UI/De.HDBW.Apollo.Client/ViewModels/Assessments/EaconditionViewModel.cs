@@ -43,7 +43,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             get
             {
-                return string.Format(this["TxtAssesmentsEaConditionFav"], SelectedChoices.Count);
+                return string.Format(this["TxtAssesmentsEaConditionViewFav"], SelectedChoices.Count);
             }
         }
 

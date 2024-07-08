@@ -5,7 +5,7 @@
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.EaconditionDetailView"
-             Title="{x:Static strings:Resources.TxtAssesmentsEaconditionStartViewTitle}"
+             Title="{x:Static strings:Resources.TxtAssesmentsEaconditionGlobalTitle}"
              x:DataType="viewModel:EaconditionViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
@@ -13,12 +13,12 @@
         <ScrollView BindingContext="{x:Binding Question, Mode=OneWay}">
             <VerticalStackLayout x:DataType="models:EaconditionEntry">
                 <Image Source="{x:Binding Image.AbsolutePath, Mode=OneWay, FallbackValue={x:Null}}" HeightRequest="204" Margin="0,0,0,24" Aspect="AspectFill"/>
-                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionSuitingCategory], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionDetailViewSuitingCategory], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
                 <Label Text="{x:Binding Bezeichnung}" Margin="24,0,24,24" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}"/>
                 <Label Text="{x:Binding Infotext}" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
-                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionConditions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionDetailViewConditions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
                 <Label Text="{x:Binding Voraussetzungen}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
-                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionExampleProfessions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionDetailViewExampleProfessions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
                 <Label Text="{x:Binding Beispielberufe}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
             </VerticalStackLayout>
         </ScrollView>
