@@ -36,7 +36,7 @@ namespace De.HDBW.Apollo.Client.Controls
             _imageSource = imageSource;
         }
 
-        public async void Draw(ICanvas canvas, RectF dirtyRect)
+        public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             if (string.IsNullOrWhiteSpace(_imageSource))
             {

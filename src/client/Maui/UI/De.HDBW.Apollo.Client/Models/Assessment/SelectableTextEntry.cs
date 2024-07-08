@@ -8,27 +8,52 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class SelectableTextEntry : ObservableObject
     {
+        private readonly Action<SelectableTextEntry>? _changeSelection;
+
+        private readonly Func<SelectableTextEntry, bool>? _canChangeSelection;
+
         [ObservableProperty]
         private bool _isSelected;
 
         [ObservableProperty]
         private string _text;
 
-        private SelectableTextEntry(string text)
+        private SelectableTextEntry(
+            string text,
+            Action<SelectableTextEntry>? changeSelection,
+            Func<SelectableTextEntry, bool>? canChangeSelection)
         {
             Text = text;
+            _changeSelection = changeSelection;
+            _canChangeSelection = canChangeSelection;
         }
 
-        public static SelectableTextEntry Import(string text)
+        public static SelectableTextEntry Import(
+            string text,
+            Action<SelectableTextEntry>? changeSelection = null,
+            Func<SelectableTextEntry, bool>? canChangeSelection = null)
         {
-            return new SelectableTextEntry(text);
+            return new SelectableTextEntry(text, changeSelection, canChangeSelection);
         }
 
-        [RelayCommand(AllowConcurrentExecutions = false)]
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleSelection))]
         private Task ToggleSelection(CancellationToken cancellationToken)
         {
-            IsSelected = !IsSelected;
+            if (_changeSelection == null)
+            {
+                IsSelected = !IsSelected;
+            }
+            else
+            {
+                _changeSelection.Invoke(this);
+            }
+
             return Task.CompletedTask;
+        }
+
+        private bool CanToggleSelection()
+        {
+            return _canChangeSelection?.Invoke(this) ?? true;
         }
     }
 }

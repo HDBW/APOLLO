@@ -15,6 +15,9 @@ namespace De.HDBW.Apollo.Client.Contracts
 
         Task<bool> CloseAsync(BaseViewModel viewModel);
 
+        Task<bool> CloseAsync<TU>()
+            where TU : BaseViewModel;
+
         Task<bool> OpenAsync(string route, CancellationToken token, NavigationParameters? parameters = null);
     }
 }

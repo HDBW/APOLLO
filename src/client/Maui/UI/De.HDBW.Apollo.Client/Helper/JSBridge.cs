@@ -5,26 +5,27 @@ using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
-using De.HDBW.Apollo.Client.Views.Assessments;
-using The49.Maui.BottomSheet;
+using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
 namespace De.HDBW.Apollo.Client.Helper
 {
     public sealed class JSBridge
     {
         private readonly WeakReference _reference;
-        private readonly IDispatcher _dispatcher;
-        private readonly ISheetService _sheetService;
+
+        private readonly WeakReference _dispatcher;
+
+        private readonly WeakReference _sheetService;
+
         private string? _lastId;
-        private BottomSheet? _sheet;
 
         public JSBridge(HybridWebView.HybridWebView webView, ISheetService sheetService)
         {
             ArgumentNullException.ThrowIfNull(webView);
             ArgumentNullException.ThrowIfNull(sheetService);
             _reference = new WeakReference(webView);
-            _dispatcher = webView.Dispatcher;
-            _sheetService = sheetService;
+            _dispatcher = new WeakReference(webView.Dispatcher);
+            _sheetService = new WeakReference(sheetService);
             WeakReferenceMessenger.Default.Register<SelectionMessage>(this, OnSelectionMessage);
         }
 
@@ -35,7 +36,18 @@ namespace De.HDBW.Apollo.Client.Helper
         /// <param name="value">The current value of the input.</param>
         public async void SetValue(string id, string value)
         {
-            await _dispatcher.DispatchAsync(() =>
+            if (!(_dispatcher?.IsAlive ?? false))
+            {
+                return;
+            }
+
+            var dispatcher = _dispatcher?.Target as Dispatcher;
+            if (dispatcher == null)
+            {
+                return;
+            }
+
+            await dispatcher.DispatchAsync(() =>
             {
                 WeakReferenceMessenger.Default.Send(new SetValueMessage(id, value));
             });
@@ -47,49 +59,86 @@ namespace De.HDBW.Apollo.Client.Helper
         /// <param name="id">The id of the input.</param>
         public async void RemovedFocused(string id)
         {
-            var sheet = _sheet;
-            if (sheet != null)
+            var sheetService = _sheetService?.Target as ISheetService;
+            if (!(sheetService?.IsShowingSheet ?? false))
             {
-                _sheet = null;
-                try
-                {
-                    if (sheet.Parent != null)
-                    {
-                        await sheet.DismissAsync();
-                    }
-                }
-                catch
-                {
-                }
+                return;
             }
+
+            var dispatcher = _dispatcher?.Target as Dispatcher;
+            if (dispatcher == null)
+            {
+                return;
+            }
+
+            await dispatcher.DispatchAsync(() =>
+            {
+                sheetService.CloseAsync<SelectionSheetViewModel>();
+            });
         }
 
         public async void SetFocused(string? id, bool readOnly)
         {
-            await _dispatcher.DispatchAsync(() => SetFocusAsync(id, readOnly));
+            if (!(_dispatcher?.IsAlive ?? false))
+            {
+                return;
+            }
+
+            var dispatcher = _dispatcher?.Target as Dispatcher;
+            if (dispatcher == null)
+            {
+                return;
+            }
+
+            await dispatcher.DispatchAsync(() => SetFocusAsync(id, readOnly));
         }
 
         private async void OnSelectionMessage(object recipient, SelectionMessage message)
         {
-            await _dispatcher.DispatchAsync(() => OnSelectionMessageAsync(message.Text));
+            if (!(_dispatcher?.IsAlive ?? false))
+            {
+                return;
+            }
+
+            var dispatcher = _dispatcher?.Target as Dispatcher;
+            if (dispatcher == null)
+            {
+                return;
+            }
+
+            await dispatcher.DispatchAsync(() => OnSelectionMessageAsync(message.Id, message.Text));
         }
 
-        private async void HandleDismissed(object? sender, DismissOrigin e)
+        private async void HandleDismissed(object? sender, SheetDismissedMessage message)
         {
-            var sheet = sender as BottomSheet;
+            var sheet = sender as JSBridge;
             if (sheet != null)
             {
-                _sheet = null;
-                sheet.Dismissed -= HandleDismissed;
+                WeakReferenceMessenger.Default.Unregister<SheetDismissedMessage>(this);
             }
 
             await UnfocuseHtmlAsync();
         }
 
-        private async Task OnSelectionMessageAsync(string value)
+        private async Task OnSelectionMessageAsync(string id, string value)
         {
-            await SetTextAsync(_lastId, value);
+            await SetTextAsync(id, value);
             await UnfocuseHtmlAsync();
+            if (!(_dispatcher?.IsAlive ?? false))
+            {
+                return;
+            }
+
+            var dispatcher = _dispatcher?.Target as Dispatcher;
+            if (dispatcher == null)
+            {
+                return;
+            }
+
+            await dispatcher.DispatchAsync(() =>
+            {
+                WeakReferenceMessenger.Default.Send(new SetValueMessage(id, value));
+            });
         }
 
         private async Task UnfocuseHtmlAsync()
@@ -107,24 +156,41 @@ namespace De.HDBW.Apollo.Client.Helper
 
         private Task SetFocusAsync(string? id, bool readOnly)
         {
-            if (readOnly)
+            if (readOnly && !string.IsNullOrWhiteSpace(id))
             {
                 _lastId = id;
-                //_sheet = new SelectionSheet();
-                //_sheet.Dismissed += HandleDismissed;
-                var parameters = new NavigationParameters();
-                parameters.Add(NavigationParameter.Data, "Test;hallo");
-                return _sheetService.OpenAsync(Routes.SelectionSheet, CancellationToken.None, parameters);
+
+                if (!(_sheetService?.IsAlive ?? false))
+                {
+                    return Task.CompletedTask;
+                }
+
+                var sheetService = _sheetService?.Target as ISheetService;
+                if (sheetService == null)
+                {
+                    return Task.CompletedTask;
+                }
+
+                var webView = _reference.IsAlive ? _reference.Target as HybridWebView.HybridWebView : null;
+                var viewModel = webView?.BindingContext as ClozeViewModel;
+                var question = viewModel?.Question;
+                var values = question?.GetPossibleValues(id) ?? new List<string>();
+                if (values.Count == 0)
+                {
+                    return Task.CompletedTask;
+                }
+
+                var parameters = new NavigationParameters
+                {
+                    { NavigationParameter.Id, _lastId },
+                    { NavigationParameter.Data, string.Join(";", values) },
+                };
+
+                WeakReferenceMessenger.Default.Register<SheetDismissedMessage>(this, HandleDismissed);
+                return sheetService.OpenAsync(Routes.SelectionSheet, CancellationToken.None, parameters);
             }
 
             _lastId = null;
-            var sheet = _sheet;
-            if (sheet != null)
-            {
-                _sheet = null;
-                return sheet.DismissAsync();
-            }
-
             return Task.CompletedTask;
         }
 

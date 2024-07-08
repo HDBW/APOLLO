@@ -8,7 +8,7 @@ using De.HDBW.Apollo.SharedContracts.T4;
 
 namespace De.HDBW.Apollo.SharedContracts.Questions
 {
-    public class Cloze : AbstractQuestion, ICalculateScore<Dictionary<int, string>>
+    public class Cloze : AbstractQuestion, ICalculateScore<Dictionary<int, string?>>
     {
         public Cloze(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
             : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
@@ -63,10 +63,8 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
                     continue;
                 }
 
-                var validAnswerIndexes = Scores[currentValue.Key].Split(";").Select(x => (int.Parse(x) - 1));
-                var inputs = Inputs[currentValue.Key].ToList() ?? new List<string>();
-                var validAnswers = validAnswerIndexes.Select(x => inputs[x]);
-                if (!validAnswers.Contains(currentValue.Value))
+                var patter = string.Join(";", Inputs[currentValue.Key].Select(x => x.Split(";").Contains(currentValue.Value) ? "1" : "0"));
+                if (patter != Scores[currentValue.Key])
                 {
                     continue;
                 }
