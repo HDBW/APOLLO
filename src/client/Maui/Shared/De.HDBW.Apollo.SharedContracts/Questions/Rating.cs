@@ -25,9 +25,9 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public Dictionary<int, bool> Scores { get; } = new Dictionary<int, bool>();
 
-        public double CalculateScore(int selection)
+        public double? CalculateScore(int selection)
         {
-            return Credits.TryGetValue(selection, out double value) ? value : 0d;
+            return Credits.TryGetValue(selection, out double value) ? value : null;
         }
 
         private void CreateAditionalData(int index, string credit)

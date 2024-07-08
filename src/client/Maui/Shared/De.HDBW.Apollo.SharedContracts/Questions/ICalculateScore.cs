@@ -5,13 +5,13 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 {
     public interface ICalculateScore
     {
-        double CalculateScore(object selection);
+        double? CalculateScore(object selection);
     }
 
     public interface ICalculateScore<TIn> : ICalculateScore
     {
-        double ICalculateScore.CalculateScore(object selection) => CalculateScore((TIn)selection);
+        double? ICalculateScore.CalculateScore(object selection) => CalculateScore((TIn)selection);
 
-        double CalculateScore(TIn selection);
+        double? CalculateScore(TIn selection);
     }
 }

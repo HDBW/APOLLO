@@ -15,6 +15,18 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private string? _situation;
 
+        [ObservableProperty]
+        private bool _is0Selected;
+
+        [ObservableProperty]
+        private bool _is1Selected;
+
+        [ObservableProperty]
+        private bool _is2Selected;
+
+        [ObservableProperty]
+        private bool _is3Selected;
+
         private EafrequencyEntry(Eafrequency data, string basePath, int density, Dictionary<string, int> imageSizeConfig)
             : base(data)
         {
@@ -28,10 +40,26 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new EafrequencyEntry(data, basePath, density, imageSizeConfig);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
-            //TODO
-            return Data.CalculateScore(0);
+            if (Is0Selected)
+            {
+                return Data.CalculateScore(1);
+            }
+            else if (Is1Selected)
+            {
+                return Data.CalculateScore(2);
+            }
+            else if (Is2Selected)
+            {
+                return Data.CalculateScore(3);
+            }
+            else if (Is3Selected)
+            {
+                return Data.CalculateScore(4);
+            }
+
+            return null;
         }
     }
 }

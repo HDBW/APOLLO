@@ -29,7 +29,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new SortEntry(data);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
             return Data.CalculateScore(string.Join(";", SortTexts.Select(x => x.OriginalIndex + 1)));
         }

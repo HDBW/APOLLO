@@ -474,7 +474,8 @@
                 <Border.Shadow>
                     <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
                 </Border.Shadow>
-                <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" VerticalOptions="Fill" Margin="8" HorizontalOptions="Center"/>
+                <Label Grid.Column="1" Margin="8" Text="{TemplateBinding Content}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Center" VerticalOptions="Fill" TextColor="{StaticResource Primary}"/>
+                <!--<ContentPresenter x:Name="ContentPresenter" Grid.Column="1" VerticalOptions="Fill" Margin="8" HorizontalOptions="Center"/>-->
             </Border>
         </Grid>
     </ControlTemplate>

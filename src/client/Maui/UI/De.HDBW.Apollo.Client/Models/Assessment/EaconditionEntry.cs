@@ -55,8 +55,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new EaconditionEntry(data, basePath, density, imageSizeConfig);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
+            // TODO
             return Data.CalculateScore(1);
         }
 

@@ -43,6 +43,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return Data;
         }
 
-        public abstract double GetScore();
+        public abstract double? GetScore();
     }
 }

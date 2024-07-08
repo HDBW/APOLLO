@@ -46,7 +46,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new BinaryEntry(data, basePath, togglePlaybackCallback, restartAudioCallback);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
             bool? choice = null;
             if (IsTrueSelected)
@@ -60,7 +60,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
             if (choice == null)
             {
-                return 0;
+                return null;
             }
 
             return Data.CalculateScore(choice.Value);

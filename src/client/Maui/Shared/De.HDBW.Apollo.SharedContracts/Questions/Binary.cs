@@ -26,10 +26,10 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public Dictionary<int, bool> Scores { get; } = new Dictionary<int, bool>();
 
-        public double CalculateScore(bool selection)
+        public double? CalculateScore(bool selection)
         {
             var score = Scores.FirstOrDefault(x => x.Value == selection);
-            return Credits.TryGetValue(score.Key, out double value) ? value : 0;
+            return Credits.TryGetValue(score.Key, out double value) ? value : null;
         }
 
         private void CreateAditionalData(string credit1, string credit2)

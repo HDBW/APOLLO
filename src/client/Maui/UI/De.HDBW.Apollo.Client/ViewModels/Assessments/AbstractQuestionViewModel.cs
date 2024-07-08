@@ -265,8 +265,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             return;
                         }
 
-                        var score = Question?.GetScore() ?? 0d;
-                        var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, 0d, worker.Token).ConfigureAwait(false);
+                        var score = Question?.GetScore();
+                        var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, score, worker.Token).ConfigureAwait(false);
                         if (cachedData == null)
                         {
                             throw new NotSupportedException($"Unable to get next question while {nameof(Navigate)} in {GetType().Name}.");

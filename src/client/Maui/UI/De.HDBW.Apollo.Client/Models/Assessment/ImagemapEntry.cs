@@ -40,7 +40,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new ImagemapEntry(data, basePath, density, imageSizeConfig);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
             var pattern = string.Join(";", Shapes.Select(s => s.IsSelected ? "1" : "0"));
             return Data.CalculateScore(pattern);

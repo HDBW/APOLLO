@@ -11,6 +11,24 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private int _numberOfChoices;
 
+        [ObservableProperty]
+        private bool _is0Selected;
+
+        [ObservableProperty]
+        private bool _is1Selected;
+
+        [ObservableProperty]
+        private bool _is2Selected;
+
+        [ObservableProperty]
+        private bool _is3Selected;
+
+        [ObservableProperty]
+        private bool _is4Selected;
+
+        [ObservableProperty]
+        private bool _is5Selected;
+
         private RatingEntry(Rating data)
             : base(data)
         {
@@ -22,10 +40,34 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new RatingEntry(data);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
-            // TODO
-            return Data.CalculateScore(0);
+            if (Is0Selected)
+            {
+                return Data.CalculateScore(1);
+            }
+            else if (Is1Selected)
+            {
+                return Data.CalculateScore(2);
+            }
+            else if (Is2Selected)
+            {
+                return Data.CalculateScore(3);
+            }
+            else if (Is3Selected)
+            {
+                return Data.CalculateScore(4);
+            }
+            else if (Is4Selected)
+            {
+                return Data.CalculateScore(5);
+            }
+            else if (Is5Selected)
+            {
+                return Data.CalculateScore(6);
+            }
+
+            return null;
         }
     }
 }

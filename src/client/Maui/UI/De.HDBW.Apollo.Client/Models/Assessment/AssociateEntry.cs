@@ -27,7 +27,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new AssociateEntry(data, mediaBasePath, density, imageSizeConfig);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
             var values = new List<string>();
             foreach (var text in SourceTexts)

@@ -42,7 +42,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return Data.Inputs[Ids.IndexOf(id) + 1]?.ToList() ?? new List<string>();
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
             return Data.CalculateScore(CurrentValues);
         }

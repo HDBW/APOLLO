@@ -85,7 +85,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new ChoiceEntry(data, basePath, density, imageSizeConfig, zoomImageCallback, togglePlaybackCallback, restartAudioCallback);
         }
 
-        public override double GetScore()
+        public override double? GetScore()
         {
             string selection = string.Empty;
             if (AnswerImages.Any())
@@ -99,7 +99,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
             return Data.CalculateScore(selection);
         }
-
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanTogglePlay))]
         private async Task TogglePlay(CancellationToken cancellationToken)

@@ -28,10 +28,10 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public int NumberOfChoices { get; set; }
 
-        public double CalculateScore(string selection)
+        public double? CalculateScore(string selection)
         {
             var score = Scores.FirstOrDefault(x => x.Value == selection);
-            return Credits.TryGetValue(score.Key, out double value) ? value : 0;
+            return Credits.TryGetValue(score.Key, out double value) ? value : null;
         }
 
         private void CreateAditionalData(int index, List<string> pattern, string credit)

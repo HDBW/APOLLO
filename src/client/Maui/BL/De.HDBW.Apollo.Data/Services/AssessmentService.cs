@@ -265,7 +265,7 @@ namespace De.HDBW.Apollo.Data.Services
             return localSession;
         }
 
-        public async Task<RawData?> AnswerAsync(string sessionId, string rawDataId, double score, CancellationToken token)
+        public async Task<RawData?> AnswerAsync(string sessionId, string rawDataId, double? score, CancellationToken token)
         {
             RawData? nextRawData = null;
             token.ThrowIfCancellationRequested();
@@ -274,7 +274,7 @@ namespace De.HDBW.Apollo.Data.Services
                 var answer = new Answer();
                 answer.SessionId = sessionId;
                 answer.RawDataId = rawDataId;
-                answer.Score = score;
+                answer.Score = score ?? -1d;
                 var localSession = await SessionRepository.GetItemBySessionIdAsync(sessionId, token).ConfigureAwait(false);
                 if (localSession?.RawDataOrder == null || localSession?.CurrentRawDataId == null)
                 {

@@ -32,7 +32,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public Dictionary<int, string> Scores { get; } = new Dictionary<int, string>();
 
-        public double CalculateScore(string selection)
+        public double? CalculateScore(string selection)
         {
             var isValid = true;
             var values = selection.Split(';');
@@ -46,7 +46,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
                 }
             }
 
-            return isValid ? Credits[1] : 0d;
+            return isValid ? Credits[1] : null;
         }
 
         private void CreateAditionalData(int sourceIndex, string targetIndex, string credit)

@@ -53,9 +53,9 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public Dictionary<int, double> Credits { get; } = new Dictionary<int, double>();
 
-        public double CalculateScore(Dictionary<int, string?> selection)
+        public double? CalculateScore(Dictionary<int, string?> selection)
         {
-            var result = 0d;
+            double? result = null;
             foreach (var currentValue in selection)
             {
                 if (string.IsNullOrWhiteSpace(currentValue.Value))
@@ -70,6 +70,11 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
                 }
 
                 var credit = Credits[currentValue.Key];
+                if (result == null)
+                {
+                    result = 0;
+                }
+
                 result += credit;
             }
 
