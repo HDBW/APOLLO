@@ -12,7 +12,7 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? RepeatSessionTemplate { get; set; }
 
-        public DataTemplate? ProviderDecoTemplate { get; set; }
+        public DataTemplate? DecoTemplate { get; set; }
 
         public DataTemplate? IconTextTemplate { get; set; }
 
@@ -36,8 +36,8 @@ namespace De.HDBW.Apollo.Client.Selector
             {
                 case TestSessionEntry session:
                     return session.CanContinue ? ContinueSessionTemplate : RepeatSessionTemplate;
-                case ProviderDecoEntry _:
-                    return ProviderDecoTemplate;
+                case DecoEntry _:
+                    return DecoTemplate;
                 case IconTextEntry _:
                     return IconTextTemplate;
                 case HeadlineTextEntry _:

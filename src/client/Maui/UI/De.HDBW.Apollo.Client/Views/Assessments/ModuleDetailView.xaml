@@ -56,7 +56,7 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="ProviderDecoTemplate" x:DataType="assessmentModels:ProviderDecoEntry">
+        <DataTemplate x:Key="DecoTemplate" x:DataType="assessmentModels:DecoEntry">
             <VerticalStackLayout>
                 <HorizontalStackLayout Margin="0,0,0,24">
                     <Image HeightRequest="36" WidthRequest="75" Source="logo_goethe_institut.png" Margin="0,0,8,0"/>
@@ -93,7 +93,7 @@
                                                     SublineTextTemplate="{StaticResource SublineTextTemplate}"
                                                     TextTemplate="{StaticResource TextTemplate}"
                                                     IconTextTemplate="{StaticResource IconTextTemplate}"
-                                                    ProviderDecoTemplate="{StaticResource ProviderDecoTemplate}"
+                                                    DecoTemplate="{StaticResource DecoTemplate}"
                                                     ContinueSessionTemplate="{StaticResource ContinueSessionTemplate}"
                                                     RepeatSessionTemplate="{StaticResource RepeatSessionTemplate}"/>
     </ContentPage.Resources>

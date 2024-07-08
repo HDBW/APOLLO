@@ -5,15 +5,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
-    public partial class ProviderDecoEntry : ObservableObject
+    public partial class DecoEntry : ObservableObject
     {
-        private ProviderDecoEntry()
+        private DecoEntry()
         {
         }
 
-        public static ProviderDecoEntry Import()
+        public static DecoEntry Import()
         {
-            return new ProviderDecoEntry();
+            return new DecoEntry();
         }
     }
 }

@@ -4,7 +4,6 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -14,10 +13,8 @@ using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Helper;
-using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
-using HarfBuzzSharp;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
 
@@ -126,7 +123,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
 
             _language = navigationParameters.GetValue<string?>(NavigationParameter.Data) ?? "de-DE";
-            if (navigationParameters.ContainsKey(NavigationParameter.Type))
+            if (navigationParameters.ContainsKey(NavigationParameter.Result))
             {
                 _language = navigationParameters.GetValue<string?>(NavigationParameter.Result) ?? _language;
             }
@@ -421,7 +418,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 switch (module.Type)
                 {
                     case AssessmentType.Gl:
-                        sections.Add(ProviderDecoEntry.Import());
+                        sections.Add(DecoEntry.Import());
                         break;
                 }
 
@@ -435,8 +432,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                 if ((module.Repeatable ?? 0) > 0 || !string.IsNullOrWhiteSpace(module.SessionId))
                 {
-                    var progressFormat = this["TxtAssesmentsModuleDetailViewAnsweredQuestions"] ?? string.Empty;
-                    var repeateFormat = this["BtnTxtAssesmentsModuleDetailViewTimeTestAgain"] ?? string.Empty;
+                    var progressFormat = this["TxtAssesmentsStartTestAnsweredQuestions"] ?? string.Empty;
+                    var repeateFormat = this["BtnTxtAssesmentsStartTestTimeTestAgain"] ?? string.Empty;
                     sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, progressFormat, repeateFormat, HandleResume, CanResume, HandleCancel, CanCancel, HandleShowResult, CanShowResult));
                 }
             }

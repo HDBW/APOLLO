@@ -17,11 +17,13 @@
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
-        <DataTemplate x:Key="DecoImageTemplate">
+        
+        <DataTemplate x:Key="DecoTemplate" x:DataType="assessmentModels:DecoEntry">
             <Border StrokeThickness="0">
                 <Image Source="resultdeco.png" Margin="24" HeightRequest="122" HorizontalOptions="Center"/>
             </Border>
         </DataTemplate>
+
         <DataTemplate x:Key="DecoImageSoftSkillsTemplate">
             <Border StrokeThickness="0">
                 <controls:SegmentSvgImage Margin="24"
@@ -31,26 +33,31 @@
                 HorizontalOptions="Center"/>
             </Border>
         </DataTemplate>
+        
         <DataTemplate x:Key="HeadlineTextTemplate">
             <Border StrokeThickness="0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" />
             </Border>
         </DataTemplate>
+        
         <DataTemplate x:Key="SubHeadlineTextTemplate">
             <Border StrokeThickness="0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
             </Border>
         </DataTemplate>
+
         <DataTemplate x:Key="SubHeadlinePrimaryTextTemplate">
             <Border StrokeThickness="0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" />
             </Border>
         </DataTemplate>
+
         <DataTemplate x:Key="TextTemplate">
             <Border StrokeThickness="0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
             </Border>
         </DataTemplate>
+
         <DataTemplate x:Key="ExperienceResultCardTemplate">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
@@ -154,9 +161,16 @@
                 </Border>
             </Grid>
         </DataTemplate>
-        
+
+        <selector:ResultSectionTemplateSelector x:Key="ResultSectionTemplateSelector"
+                                            DecoTemplate="{StaticResource DecoTemplate}"
+                                            />
+
     </ContentPage.Resources>
     <VerticalStackLayout x:Name="PART_Root">
-        <CollectionView/>
+        <CollectionView
+            ItemsSource="{x:Binding Sections}"
+            ItemsLayout="VerticalList"
+            ItemTemplate="{StaticResource ResultSectionTemplateSelector}"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -317,7 +317,13 @@ namespace De.HDBW.Apollo.Data.Services
             token.ThrowIfCancellationRequested();
             var session = await GetSessionAsync(sessionId, null, token).ConfigureAwait(false);
             _lastDeletedSessionId = session?.ModuleId;
-            return await SessionRepository.RemoveItemBySessionIdAsync(sessionId, token);
+            return await SessionRepository.RemoveItemBySessionIdAsync(sessionId, token).ConfigureAwait(false);
+        }
+
+        public Task<bool> FinishSessionAsync(string sessionId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            return SessionRepository.RemoveItemBySessionIdAsync(sessionId, token);
         }
 
         private static AssessmentTile Create(Assessment assessment, IEnumerable<Module> modules, string grouping)

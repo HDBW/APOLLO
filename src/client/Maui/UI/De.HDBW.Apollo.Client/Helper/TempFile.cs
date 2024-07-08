@@ -1,7 +1,5 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
-using System.IO;
-
 namespace De.HDBW.Apollo.Client.Helper
 {
     public sealed class TempFile : IDisposable

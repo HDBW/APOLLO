@@ -254,30 +254,38 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
-                    var stack = Shell.Current.Navigation.NavigationStack.ToArray();
-                    if (Offset == (Count - 1))
+                    if (Session?.SessionId == null || Session.CurrentRawDataId == null)
                     {
-                        Shell.Current.Navigation.RemovePage(stack.Last());
-                        var parameters = new NavigationParameters();
-                        parameters.AddValue(NavigationParameter.Id, ModuleId);
-                        parameters.AddValue(NavigationParameter.Data, SessionId);
-                        parameters.AddValue(NavigationParameter.Language, Language);
-                        await NavigationService.NavigateAsync(Routes.ResultOverView, worker.Token, parameters);
+                        return;
                     }
-                    else
+
+                    var score = Question?.GetScore();
+                    var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, score, worker.Token).ConfigureAwait(false);
+                    if (cachedData == null && Offset != (Count - 1))
                     {
-                        if (Session?.SessionId == null || Session.CurrentRawDataId == null)
+                        throw new NotSupportedException($"Unable to get next question while {nameof(Navigate)} in {GetType().Name}.");
+                    }
+
+                    var stack = Shell.Current.Navigation.NavigationStack.ToArray();
+                    if (Offset == (Count - 1) && cachedData == null)
+                    {
+                        if (!await Service.FinishSessionAsync(Session.SessionId, cancellationToken).ConfigureAwait(false))
                         {
-                            return;
+                            throw new NotSupportedException($"Unable to cancel session while {nameof(Navigate)} in {GetType().Name}.");
                         }
 
-                        var score = Question?.GetScore();
-                        var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, score, worker.Token).ConfigureAwait(false);
-                        if (cachedData == null)
-                        {
-                            throw new NotSupportedException($"Unable to get next question while {nameof(Navigate)} in {GetType().Name}.");
-                        }
-
+                        await ExecuteOnUIThreadAsync(
+                            async () =>
+                            {
+                                Shell.Current.Navigation.RemovePage(stack.Last());
+                                var parameters = new NavigationParameters();
+                                parameters.AddValue(NavigationParameter.Id, ModuleId);
+                                parameters.AddValue(NavigationParameter.Language, Language);
+                                await NavigationService.NavigateAsync(Routes.ResultOverView, worker.Token, parameters);
+                            }, cancellationToken);
+                    }
+                    else if (cachedData != null)
+                    {
                         var rawData = cachedData.ToRawData();
                         string? route = rawData?.type.ToRoute();
                         if (string.IsNullOrWhiteSpace(route))
