@@ -14,12 +14,18 @@ namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo
             BindingContext = model;
         }
 
-        public StudyView? ViewModel
+        public StudyViewModel? ViewModel
         {
             get
             {
-                return BindingContext as StudyView;
+                return BindingContext as StudyViewModel;
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
         }
     }
 }

@@ -21,5 +21,11 @@ namespace De.HDBW.Apollo.Client.Views.Profile.WebReference
                 return BindingContext as WebReferenceViewModel;
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
+        }
     }
 }

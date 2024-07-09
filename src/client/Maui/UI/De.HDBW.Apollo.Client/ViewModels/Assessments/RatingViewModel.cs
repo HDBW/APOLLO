@@ -77,6 +77,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     var questions = new List<RatingEntry>();
                     foreach (var data in cachedDatas)
                     {
+                        if (string.IsNullOrWhiteSpace(data.RawDataId) || string.IsNullOrWhiteSpace(data.ModuleId) || string.IsNullOrWhiteSpace(data.AssesmentId))
+                        {
+                            continue;
+                        }
+
                         var rawData = data.ToRawData();
                         questions.Add(CreateEntry(QuestionFactory.Create<Rating>(rawData!, data.RawDataId, data.ModuleId, data.AssesmentId, Culture)));
                     }

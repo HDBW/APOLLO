@@ -1,6 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -11,7 +13,7 @@ namespace De.HDBW.Apollo.Data.Services
 {
     public class AssessmentService : IAssessmentService
     {
-        private readonly string? _defaultLanguage = "de-DE";
+        private readonly string _defaultLanguage = "de-DE";
         private SampleDataContext _data;
         private string? _lastDeletedSessionId;
 
@@ -41,7 +43,7 @@ namespace De.HDBW.Apollo.Data.Services
             var assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.So) !;
             var modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
             var so = Create(assessment, modules, string.Empty);
-            so.AssessmentScores.Add(new AssessmentScore()
+            so.ModuleScores.Add(new ModuleScore()
             {
                 AssessmentId = so.AssessmentId,
                 ModuleId = so.ModuleIds[0],
@@ -49,28 +51,28 @@ namespace De.HDBW.Apollo.Data.Services
                 Quantity = AssessmentScoreQuantity.Median,
             });
 
-            so.AssessmentScores.Add(new AssessmentScore()
+            so.ModuleScores.Add(new ModuleScore()
             {
                 AssessmentId = so.AssessmentId,
                 ModuleId = so.ModuleIds[1],
                 Result = 10,
                 Quantity = AssessmentScoreQuantity.Median,
             });
-            so.AssessmentScores.Add(new AssessmentScore()
+            so.ModuleScores.Add(new ModuleScore()
             {
                 AssessmentId = so.AssessmentId,
                 ModuleId = so.ModuleIds[2],
                 Result = 30,
                 Quantity = AssessmentScoreQuantity.Median,
             });
-            so.AssessmentScores.Add(new AssessmentScore()
+            so.ModuleScores.Add(new ModuleScore()
             {
                 AssessmentId = so.AssessmentId,
                 ModuleId = so.ModuleIds[3],
                 Result = 40,
                 Quantity = AssessmentScoreQuantity.Median,
             });
-            so.AssessmentScores.Add(new AssessmentScore()
+            so.ModuleScores.Add(new ModuleScore()
             {
                 AssessmentId = so.AssessmentId,
                 ModuleId = so.ModuleIds[4],
@@ -108,7 +110,7 @@ namespace De.HDBW.Apollo.Data.Services
         {
             var lang = language ?? _defaultLanguage;
             var modules = _data.Modules.Where(x => moduleId == x.ModuleId);
-            var requestedModule = modules.First(x => x.Language == language);
+            var requestedModule = modules.First(x => x.Language == lang);
             var localSession = await SessionRepository.GetItemByAssessmentIdAndModuleIdAsync(requestedModule.AssessmentId, requestedModule.ModuleId, token).ConfigureAwait(false);
             var rawDataIds = localSession?.RawDataOrder?.Split(";").ToList() ?? new List<string>();
             var offset = localSession?.CurrentRawDataId != null ? rawDataIds.IndexOf(localSession.CurrentRawDataId) : 0;
@@ -126,11 +128,12 @@ namespace De.HDBW.Apollo.Data.Services
                 AssessmentId = requestedModule.AssessmentId,
                 SessionId = localSession?.SessionId,
                 RawDataCount = rawDataIds.Count,
-                AwnserCount = offset,
+                AnswerCount = offset,
                 Repeatable = waslastCanceledModule ? 1 : 0,
             };
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
+            await GenerateScoresAsync(module, string.Empty, lang).ConfigureAwait(false);
             return module;
         }
 
@@ -342,6 +345,60 @@ namespace De.HDBW.Apollo.Data.Services
             }
 
             return tile;
+        }
+
+        private Task GenerateScoresAsync(Module module, string escoId, string language, AssessmentScoreQuantity quantity = AssessmentScoreQuantity.Over, double result = 1)
+        {
+            ModuleScore? score = null;
+            string pattern = $"{module.Type}_{escoId}_{quantity}_{nameof(ModuleScore.ResultDescription)}_{language}";
+
+            switch (module.Type)
+            {
+                case AssessmentType.Gl:
+                    score = new ModuleScore();
+                    score.Quantity = quantity;
+                    int correctAnswerCount = 0, questionCount = 0;
+                    var text = string.Format(pattern, correctAnswerCount, questionCount);
+                    score.ResultDescription = string.IsNullOrWhiteSpace(text) ? pattern : text;
+                    score.AssessmentId = module.AssessmentId;
+                    score.ModuleId = module.ModuleId;
+                    score.Result = result;
+                    score.Segment = string.Empty;
+                    module.ModuleScores.Add(score);
+                    break;
+                case AssessmentType.Sk:
+                    var rawDatas = _data.RawDatas.Where(x => x.ModuleId == module.ModuleId && x.Language == language).Select(x => x.Data).ToList();
+                    var segments = new List<string>();
+                    foreach (var rawData in rawDatas)
+                    {
+                        var node = JsonObject.Parse(rawData);
+                        var segment = node?[nameof(SharedContracts.RawData.handlungsfeld)]?.GetValue<string>();
+                        if (string.IsNullOrWhiteSpace(segment))
+                        {
+                            continue;
+                        }
+
+                        segments.Add(segment);
+                    }
+
+                    segments = segments.Distinct().ToList();
+                    foreach (var segment in segments)
+                    {
+                        var name = segment.Split("-").Last().Trim();
+                        score = new ModuleScore();
+                        score.Quantity = AssessmentScoreQuantity.Over;
+                        score.ResultDescription = pattern;
+                        score.AssessmentId = module.AssessmentId;
+                        score.ModuleId = module.ModuleId;
+                        score.Result = result;
+                        score.Segment = name;
+                        module.ModuleScores.Add(score);
+                    }
+
+                    break;
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

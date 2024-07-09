@@ -21,5 +21,11 @@ namespace De.HDBW.Apollo.Client.Views.Profile.Qualification
                 return BindingContext as QualificationViewModel;
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
+        }
     }
 }

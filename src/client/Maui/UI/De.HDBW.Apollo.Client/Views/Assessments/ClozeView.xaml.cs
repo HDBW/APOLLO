@@ -50,6 +50,12 @@ namespace De.HDBW.Apollo.Client.Views.Assessments
             base.OnAppearing();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.NavigateBackCommand.Execute(null);
+            return true;
+        }
+
         private void HandleReload(object recipient, ReloadMessage message)
         {
             if (ViewModel == null || !ViewModel.IsWebViewLoaded)

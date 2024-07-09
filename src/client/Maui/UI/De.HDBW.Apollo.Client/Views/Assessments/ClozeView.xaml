@@ -10,6 +10,9 @@
              x:DataType="viewModel:ClozeViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{x:Binding NavigateBackCommand, Mode=OneWay}" />
+    </Shell.BackButtonBehavior>
     <Grid RowDefinitions="*,Auto">
         <Border StrokeThickness="0" x:Name="PART_HOST">
             <hwv:HybridWebView x:Name="PART_WebView"

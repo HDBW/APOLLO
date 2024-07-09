@@ -2,18 +2,22 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using Invite.Apollo.App.Graph.Common.Models.Assessments;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class DecoEntry : ObservableObject
     {
-        private DecoEntry()
+        private DecoEntry(AssessmentType type)
         {
+            Type = type;
         }
 
-        public static DecoEntry Import()
+        public AssessmentType Type { get; }
+
+        public static DecoEntry Import(AssessmentType type)
         {
-            return new DecoEntry();
+            return new DecoEntry(type);
         }
     }
 }

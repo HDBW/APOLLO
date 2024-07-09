@@ -418,7 +418,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 switch (module.Type)
                 {
                     case AssessmentType.Gl:
-                        sections.Add(DecoEntry.Import());
+                        sections.Add(DecoEntry.Import(module.Type));
                         break;
                 }
 
@@ -434,7 +434,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 {
                     var progressFormat = this["TxtAssesmentsStartTestAnsweredQuestions"] ?? string.Empty;
                     var repeateFormat = this["BtnTxtAssesmentsStartTestTimeTestAgain"] ?? string.Empty;
-                    sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AwnserCount, progressFormat, repeateFormat, HandleResume, CanResume, HandleCancel, CanCancel, HandleShowResult, CanShowResult));
+                    sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AnswerCount, progressFormat, repeateFormat, HandleResume, CanResume, HandleCancel, CanCancel, HandleShowResult, CanShowResult));
                 }
             }
 

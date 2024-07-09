@@ -6,7 +6,7 @@
 
 using De.HDBW.Apollo.SharedContracts.Enums;
 using De.HDBW.Apollo.SharedContracts.Models;
-
+#pragma warning disable CS8669 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.
 namespace De.HDBW.Apollo.SharedContracts
 {
     public class RawData
@@ -201,4 +201,6 @@ namespace De.HDBW.Apollo.SharedContracts
         public string id { get; set; }
         public string name { get; set; }
     }
+#pragma warning restore CS8669 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.
+
 }

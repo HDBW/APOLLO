@@ -19,5 +19,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
                 return BindingContext as ContactViewModel;
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
+        }
     }
 }

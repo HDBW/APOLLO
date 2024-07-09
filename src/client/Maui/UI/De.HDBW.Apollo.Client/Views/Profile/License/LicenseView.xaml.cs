@@ -21,5 +21,11 @@ namespace De.HDBW.Apollo.Client.Views.Profile.License
                 return BindingContext as LicenseViewModel;
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
+        }
     }
 }

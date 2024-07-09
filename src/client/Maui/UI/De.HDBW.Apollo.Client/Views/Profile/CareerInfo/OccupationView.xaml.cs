@@ -21,5 +21,11 @@ namespace De.HDBW.Apollo.Client.Views.Profile.CareerInfo
                 return BindingContext as OccupationViewModel;
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
+        }
     }
 }

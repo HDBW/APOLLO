@@ -536,6 +536,7 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<ResultOverViewModel>();
             services.AddTransient<ResultOverView>();
+            services.AddTransient<ResultDetailSheetViewModel>();
             services.AddTransient<ResultDetailSheet>();
 
             services.AddTransient<SelectionSheet>();

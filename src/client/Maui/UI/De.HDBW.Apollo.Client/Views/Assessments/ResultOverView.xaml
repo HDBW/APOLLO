@@ -15,49 +15,67 @@
              Title="{x:Static strings:Resources.TxtAssesmentsResultOverViewPageTitle}"
              IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
-             Style="{StaticResource DefaultPageStyle}">
+             Style="{StaticResource DefaultPageStyle}"
+             x:DataType="viewModels:ResultOverViewModel">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{x:Binding NavigateBackCommand, Mode=OneWay}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.Resources>
-        
-        <DataTemplate x:Key="DecoTemplate" x:DataType="assessmentModels:DecoEntry">
-            <Border StrokeThickness="0">
-                <Image Source="resultdeco.png" Margin="24" HeightRequest="122" HorizontalOptions="Center"/>
-            </Border>
-        </DataTemplate>
 
-        <DataTemplate x:Key="DecoImageSoftSkillsTemplate">
-            <Border StrokeThickness="0">
-                <controls:SegmentSvgImage Margin="24"
-                InputTransparent="True"
-                x:Name="PART_Image"
-                HeightRequest="280"
-                HorizontalOptions="Center"/>
-            </Border>
-        </DataTemplate>
-        
-        <DataTemplate x:Key="HeadlineTextTemplate">
+        <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
             <Border StrokeThickness="0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" />
             </Border>
         </DataTemplate>
-        
-        <DataTemplate x:Key="SubHeadlineTextTemplate">
-            <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
-            </Border>
-        </DataTemplate>
 
-        <DataTemplate x:Key="SubHeadlinePrimaryTextTemplate">
+        <DataTemplate x:Key="SublineTextTemplate" x:DataType="assessmentModels:SublineTextEntry">
             <Border StrokeThickness="0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" />
             </Border>
         </DataTemplate>
 
-        <DataTemplate x:Key="TextTemplate">
+        <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
             <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
+                <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
             </Border>
         </DataTemplate>
 
+        <DataTemplate x:Key="GLDecoTemplate" x:DataType="assessmentModels:DecoEntry">
+            <Border StrokeThickness="0">
+                <Image Source="resultdeco.png" Margin="24" HeightRequest="122" HorizontalOptions="Center"/>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SKDecoTemplate" x:DataType="assessmentModels:DecoEntry">
+            <Border StrokeThickness="0">
+                <controls:SegmentSvgImage Margin="24" InputTransparent="True" x:Name="PART_Image" HeightRequest="280" HorizontalOptions="Center"/>
+            </Border>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="GLScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Description, Mode=OneWay}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SKScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding InteractCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Binding Segment}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="{x:Binding Result, StringFormat='{0:P0}'}" Margin="0,0,8,0" TextColor="{StaticResource Primary}" />
+                            <ProgressBar Grid.Column="1" Progress="{x:Binding Result}"/>
+                        </Grid>
+                        <Label Text="{x:Binding BindingContext[TxtAssesmentsResultOverViewSkillsTestFinishedDetails], Source={x:Reference PART_Root}}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" HorizontalOptions="End"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        
         <DataTemplate x:Key="ExperienceResultCardTemplate">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
@@ -74,31 +92,6 @@
                             </Label>
                             <ProgressBar Grid.Column="1" Progress="0.5"/>
                         </Grid>
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
-        </DataTemplate>
-        
-        <DataTemplate x:Key="SkillResultCardTemplate">
-            <Grid>
-                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1"/>
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="{x:Static strings:Resources.Global_Categories}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
-                        <Grid ColumnDefinitions="Auto, *">
-                            <Label Text="50%" Margin="0,0,8,0">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="50" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
-                                        <Span Text="%" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <ProgressBar Grid.Column="1" Progress="0.5"/>
-                        </Grid>
-                        <Label Text="{x:Static strings:Resources.TxtAssesmentsResultOverViewSkillsTestFinishedDetails}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" HorizontalOptions="End"/>
                     </VerticalStackLayout>
                 </Border>
             </Grid>
@@ -163,14 +156,19 @@
         </DataTemplate>
 
         <selector:ResultSectionTemplateSelector x:Key="ResultSectionTemplateSelector"
-                                            DecoTemplate="{StaticResource DecoTemplate}"
+                                                HeadlineTextTemplate ="{StaticResource HeadlineTextTemplate}"
+                                                SublineTextTemplate ="{StaticResource SublineTextTemplate}"
+                                                TextTemplate="{StaticResource TextTemplate}"
+                                                GLDecoTemplate="{StaticResource GLDecoTemplate}"
+                                                SKDecoTemplate="{StaticResource SKDecoTemplate}"
+                                                GLScoreTemplate="{StaticResource GLScoreTemplate}"
+                                                SKScoreTemplate="{StaticResource SKScoreTemplate}"
                                             />
 
     </ContentPage.Resources>
-    <VerticalStackLayout x:Name="PART_Root">
+    <Border x:Name="PART_Root" StrokeThickness="0">
         <CollectionView
             ItemsSource="{x:Binding Sections}"
-            ItemsLayout="VerticalList"
             ItemTemplate="{StaticResource ResultSectionTemplateSelector}"/>
-    </VerticalStackLayout>
+    </Border>
 </ContentPage>

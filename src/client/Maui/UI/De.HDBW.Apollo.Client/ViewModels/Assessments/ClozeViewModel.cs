@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Messages;
@@ -20,6 +21,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private List<string> _ids = new List<string>();
 
         public ClozeViewModel(
+            ISheetService sheetService,
             IAssessmentService service,
             IRawDataCacheRepository repository,
             IUserSecretsService userSecretsService,
@@ -30,9 +32,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             ILogger<ClozeViewModel> logger)
             : base(service, repository, userSecretsService, audioPlayerService, dispatcherService, navigationService, dialogService, logger)
         {
+            ArgumentNullException.ThrowIfNull(sheetService);
+            SheetService = sheetService;
         }
 
         public bool IsWebViewLoaded { get; set; } = false;
+
+        private ISheetService SheetService { get; }
 
         public override Task OnNavigatedToAsync()
         {
@@ -49,6 +55,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override ClozeEntry CreateEntry(Cloze data)
         {
             return ClozeEntry.Import(data);
+        }
+
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            NavigateBackCommand?.NotifyCanExecuteChanged();
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -70,6 +82,45 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private void OnValueSet(object recipient, SetValueMessage message)
         {
             Question?.OnSetValue(message.Id, message.Value);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateBack))]
+        private async Task NavigateBack(CancellationToken token)
+        {
+            Logger.LogInformation($"Invoked {nameof(NavigateBackCommand)} in {GetType().Name}.");
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    if (SheetService.IsShowingSheet)
+                    {
+                        await SheetService.CloseAsync<SelectionSheetViewModel>();
+                    }
+
+                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NavigateBack)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NavigateBack)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(NavigateBack)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanNavigateBack()
+        {
+            return !IsBusy;
         }
     }
 }

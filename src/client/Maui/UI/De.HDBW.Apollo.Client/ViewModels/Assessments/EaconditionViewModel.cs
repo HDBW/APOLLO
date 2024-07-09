@@ -212,7 +212,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 {
                     if (DrillDownMode == DrillDownMode.Detail)
                     {
-                        await Shell.Current.GoToAsync(new ShellNavigationState(".."), true);
+                        await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
                     }
                     else
                     {

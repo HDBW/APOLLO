@@ -20,5 +20,11 @@ namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo
                 return BindingContext as VocationalTrainingViewModel;
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
+        }
     }
 }
