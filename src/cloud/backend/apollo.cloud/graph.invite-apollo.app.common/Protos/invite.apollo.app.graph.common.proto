@@ -262,7 +262,7 @@ message Module {
   google.protobuf.Int32Value AnswerCount = 18;
 
   // The number of correct answers in last session.
-  google.protobuf.Int32Value CorrectAnswerCount = 18;
+  google.protobuf.Int32Value CorrectAnswerCount = 19;
 }
 
 message Job {
