@@ -265,8 +265,9 @@ message Module {
   google.protobuf.Int32Value AnswerCount = 18;
 
    // The Scores of the Module
-   // For Type Be: 1 Score containing: Quantity, ResultDescription;
   repeated ModuleScore ModuleScores = 19;
+
+  string JobName = 20;
 }
 
 message Job {
