@@ -88,7 +88,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.Sk:
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
-                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.Title)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
+                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.JobName)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
                                 foreach (var score in module.ModuleScores)
                                 {
                                     details.Add(score);
@@ -96,7 +96,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                                 var scoreSum = new ModuleScore
                                 {
-                                    Segment = module.Title,
+                                    Segment = module.JobName,
                                     AssessmentId = module.AssessmentId,
                                     ModuleId = module.ModuleId,
                                     Result = details.Sum(x => x.Result) / Math.Max(details.Count, 1),
@@ -106,6 +106,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                                 break;
                             case AssessmentType.Ea:
+                                sections.Add(DecoEntry.Import(module.Type));
+                                sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
+                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewExperienceTestFinished"], module.JobName)}</p><p>{this["TxtAssesmentsResultOverViewExperienceTestFinishedDescription"]}</p>"));
+                                foreach (var score in module.ModuleScores)
+                                {
+                                    sections.Add(ModuleScoreEntry.Import(score, module.Type));
+                                }
+
                                 break;
                             case AssessmentType.So:
                                 break;

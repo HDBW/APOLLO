@@ -12,7 +12,11 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? SKDecoTemplate { get; set; }
 
+        public DataTemplate? EADecoTemplate { get; set; }
+
         public DataTemplate? GLScoreTemplate { get; set; }
+
+        public DataTemplate? EAScoreTemplate { get; set; }
 
         public DataTemplate? SKScoreTemplate { get; set; }
 
@@ -44,6 +48,8 @@ namespace De.HDBW.Apollo.Client.Selector
                             return GLDecoTemplate;
                         case AssessmentType.Sk:
                             return SKDecoTemplate;
+                        case AssessmentType.Ea:
+                            return EADecoTemplate;
                         default:
                             return DefaultTemplate;
                     }
@@ -55,6 +61,8 @@ namespace De.HDBW.Apollo.Client.Selector
                             return GLScoreTemplate;
                         case AssessmentType.Sk:
                             return SKScoreTemplate;
+                        case AssessmentType.Ea:
+                            return EAScoreTemplate;
                         default:
                             return DefaultTemplate;
                     }

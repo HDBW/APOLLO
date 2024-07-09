@@ -1,7 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.Text.Json;
 using System.Text.Json.Nodes;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
@@ -112,13 +111,23 @@ namespace De.HDBW.Apollo.Data.Services
             var modules = _data.Modules.Where(x => moduleId == x.ModuleId);
             var requestedModule = modules.First(x => x.Language == lang);
             var localSession = await SessionRepository.GetItemByAssessmentIdAndModuleIdAsync(requestedModule.AssessmentId, requestedModule.ModuleId, token).ConfigureAwait(false);
+            var rawDatas = _data.RawDatas.Where(x => x.ModuleId == moduleId && x.Language == language).ToList();
             var rawDataIds = localSession?.RawDataOrder?.Split(";").ToList() ?? new List<string>();
             var offset = localSession?.CurrentRawDataId != null ? rawDataIds.IndexOf(localSession.CurrentRawDataId) : 0;
             var waslastCanceledModule = _lastDeletedSessionId == moduleId && requestedModule.Type != AssessmentType.Be;
             _lastDeletedSessionId = null;
+            var rawData = rawDatas.FirstOrDefault();
+            string jobName = string.Empty;
+            if (rawData != null)
+            {
+                var node = JsonObject.Parse(rawDatas.First().Data);
+                jobName = node?[nameof(SharedContracts.RawData.job)]?.GetValue<string>() ?? string.Empty;
+            }
+
             var module = new Module()
             {
                 Title = requestedModule.Title,
+                JobName = jobName,
                 Subtitle = requestedModule.Subtitle,
                 Description = requestedModule.Description,
                 Language = requestedModule.Language,
@@ -127,13 +136,13 @@ namespace De.HDBW.Apollo.Data.Services
                 ModuleId = moduleId,
                 AssessmentId = requestedModule.AssessmentId,
                 SessionId = localSession?.SessionId,
-                RawDataCount = rawDataIds.Count,
+                RawDataCount = rawDatas.Count,
                 AnswerCount = offset,
                 Repeatable = waslastCanceledModule ? 1 : 0,
             };
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
-            await GenerateScoresAsync(module, string.Empty, lang).ConfigureAwait(false);
+            await GenerateScoresAsync(module, rawDatas, string.Empty, lang).ConfigureAwait(false);
             return module;
         }
 
@@ -347,11 +356,11 @@ namespace De.HDBW.Apollo.Data.Services
             return tile;
         }
 
-        private Task GenerateScoresAsync(Module module, string escoId, string language, AssessmentScoreQuantity quantity = AssessmentScoreQuantity.Over, double result = 1)
+        private Task GenerateScoresAsync(Module module, List<RawData> rawDatas, string escoId, string language, AssessmentScoreQuantity quantity = AssessmentScoreQuantity.Over, double result = 1)
         {
             ModuleScore? score = null;
             string pattern = $"{module.Type}_{escoId}_{quantity}_{nameof(ModuleScore.ResultDescription)}_{language}";
-
+            var segments = new List<string>();
             switch (module.Type)
             {
                 case AssessmentType.Gl:
@@ -367,11 +376,9 @@ namespace De.HDBW.Apollo.Data.Services
                     module.ModuleScores.Add(score);
                     break;
                 case AssessmentType.Sk:
-                    var rawDatas = _data.RawDatas.Where(x => x.ModuleId == module.ModuleId && x.Language == language).Select(x => x.Data).ToList();
-                    var segments = new List<string>();
                     foreach (var rawData in rawDatas)
                     {
-                        var node = JsonObject.Parse(rawData);
+                        var node = JsonObject.Parse(rawData.Data);
                         var segment = node?[nameof(SharedContracts.RawData.handlungsfeld)]?.GetValue<string>();
                         if (string.IsNullOrWhiteSpace(segment))
                         {
@@ -386,7 +393,35 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         var name = segment.Split("-").Last().Trim();
                         score = new ModuleScore();
-                        score.Quantity = AssessmentScoreQuantity.Over;
+                        score.Quantity = quantity;
+                        score.ResultDescription = pattern;
+                        score.AssessmentId = module.AssessmentId;
+                        score.ModuleId = module.ModuleId;
+                        score.Result = result;
+                        score.Segment = name;
+                        module.ModuleScores.Add(score);
+                    }
+
+                    break;
+                case AssessmentType.Ea:
+                    foreach (var rawData in rawDatas)
+                    {
+                        var node = JsonObject.Parse(rawData.Data);
+                        var segment = node?[nameof(SharedContracts.RawData.handlungsfeld)]?.GetValue<string>();
+                        if (string.IsNullOrWhiteSpace(segment))
+                        {
+                            continue;
+                        }
+
+                        segments.Add(segment);
+                    }
+
+                    segments = segments.Distinct().ToList();
+                    foreach (var segment in segments)
+                    {
+                        var name = segment.Split("-").Last().Trim();
+                        score = new ModuleScore();
+                        score.Quantity = quantity;
                         score.ResultDescription = pattern;
                         score.AssessmentId = module.AssessmentId;
                         score.ModuleId = module.ModuleId;

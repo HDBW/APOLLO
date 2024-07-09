@@ -75,28 +75,21 @@
                 </Border>
             </Grid>
         </DataTemplate>
-        
-        <DataTemplate x:Key="ExperienceResultCardTemplate">
+
+        <DataTemplate x:Key="EAcoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
                         <Grid ColumnDefinitions="Auto, *">
-                            <Label Text="50%" Margin="0,0,8,0">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="50" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
-                                        <Span Text="%" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <ProgressBar Grid.Column="1" Progress="0.5"/>
+                            <Label Text="{x:Binding Segment, StringFormat='{0:P0}'}" Margin="0,0,8,0" TextColor="{StaticResource Primary}" />
+                            <ProgressBar Grid.Column="1" Progress="{x:Binding Result}"/>
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
             </Grid>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="SoftSkillResultCardTemplate">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
@@ -161,8 +154,10 @@
                                                 TextTemplate="{StaticResource TextTemplate}"
                                                 GLDecoTemplate="{StaticResource GLDecoTemplate}"
                                                 SKDecoTemplate="{StaticResource SKDecoTemplate}"
+                                                EADecoTemplate="{StaticResource SKDecoTemplate}"
                                                 GLScoreTemplate="{StaticResource GLScoreTemplate}"
                                                 SKScoreTemplate="{StaticResource SKScoreTemplate}"
+                                                EAScoreTemplate="{StaticResource EAScoreTemplate}"
                                             />
 
     </ContentPage.Resources>
