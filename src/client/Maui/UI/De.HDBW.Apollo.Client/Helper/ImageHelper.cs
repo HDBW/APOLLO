@@ -150,7 +150,7 @@ namespace De.HDBW.Apollo.Client.Helper
                         var width = binaryReader.ReadInt32();
                         var height = binaryReader.ReadInt32();
                         var idAsHexString = ByteArrayToString(idBytes);
-                        if (!loadedOriginalSizes.ContainsKey(idAsHexString))
+                        if (loadedOriginalSizes?.ContainsKey(idAsHexString) == false)
                         {
                             loadedOriginalSizes.Add(idAsHexString, new SizeF(width, height));
                         }
