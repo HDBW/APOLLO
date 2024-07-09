@@ -10,12 +10,14 @@ namespace De.HDBW.Apollo.Client.Helper
     {
         private static Dictionary<string, SizeF>? loadedOriginalSizes = null;
         private static string originalSizesFilePath = string.Empty;
+        private static string originalSizesMetaFilePath = string.Empty;
         private static SemaphoreSlim originalSizeLoaderSemaphore = new SemaphoreSlim(1);
 
         static ImageHelper()
         {
             string cacheDir = FileSystem.Current.CacheDirectory;
             originalSizesFilePath = Path.Combine(cacheDir, Path.GetFileName("images.bin"));
+            originalSizesMetaFilePath = Path.Combine(cacheDir, Path.GetFileName("images.bin.meta"));
         }
 
         public static ImageFormat RetrieveImageFormatFromFileExtension(string path) => path switch
@@ -61,7 +63,7 @@ namespace De.HDBW.Apollo.Client.Helper
         {
             if (loadedOriginalSizes == null)
             {
-                await originalSizeLoaderSemaphore.WaitAsync();
+                await originalSizeLoaderSemaphore.WaitAsync().ConfigureAwait(false);
                 if (loadedOriginalSizes != null)
                 {
                     return;
@@ -69,50 +71,94 @@ namespace De.HDBW.Apollo.Client.Helper
 
                 loadedOriginalSizes = new Dictionary<string, SizeF>();
 
-                var info = new FileInfo(originalSizesFilePath);
-                if (!info.Exists || info.Length == 0)
+                await DownloadOrUpdateOriginalSizes();
+                LoadOriginalSizesFromFile();
+
+                originalSizeLoaderSemaphore.Release();
+            }
+        }
+
+        private static async Task DownloadOrUpdateOriginalSizes()
+        {
+            try
+            {
+                using (var client = new HttpClient())
                 {
-                    using (var client = new HttpClient())
+                    string? lastModified = string.Empty;
+                    if (File.Exists(originalSizesMetaFilePath))
                     {
-                        using (var tempFile = new TempFile())
-                        {
-                            var userSecretsService = Application.Current?.MainPage?.Handler?.MauiContext?.Services.GetService<IUserSecretsService>();
-                            var url = (userSecretsService?["MediaAssetStorageURL"] ?? string.Empty) + "images.bin";
-
-                            using (var response = await client.GetAsync(url))
-                            {
-                                using (var stream = await response.Content.ReadAsStreamAsync())
-                                {
-                                    await tempFile.SaveAsync(stream);
-                                    tempFile.Move(originalSizesFilePath, true);
-                                }
-                            }
-                        }
+                        lastModified = File.ReadAllText(originalSizesMetaFilePath);
                     }
-                }
 
-                using (var binaryReader = new BinaryReader(File.OpenRead(originalSizesFilePath), Encoding.Default, false))
-                {
                     try
                     {
-                        while (binaryReader.BaseStream.Position != binaryReader.BaseStream.Length)
+                        if (!string.IsNullOrEmpty(lastModified))
                         {
-                            var idBytes = binaryReader.ReadBytes(32);
-                            var width = binaryReader.ReadInt32();
-                            var height = binaryReader.ReadInt32();
-                            var idAsHexString = ByteArrayToString(idBytes);
-                            if (!loadedOriginalSizes.ContainsKey(idAsHexString))
-                            {
-                                loadedOriginalSizes.Add(idAsHexString, new SizeF(width, height));
-                            }
+                            client.DefaultRequestHeaders.Add("If-Modified-Since", lastModified);
                         }
                     }
                     catch
                     {
                     }
-                }
 
-                originalSizeLoaderSemaphore.Release();
+                    var userSecretsService = Application.Current?.MainPage?.Handler?.MauiContext?.Services.GetService<IUserSecretsService>();
+                    var url = (userSecretsService?["MediaAssetStorageURL"] ?? string.Empty) + "images.bin";
+
+                    using (var response = await client.GetAsync(url))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var info = new FileInfo(originalSizesFilePath);
+
+                            if (!info.Exists || info.Length == 0)
+                            {
+                                using (var tempFile = new TempFile())
+                                {
+                                    using (var stream = await response.Content.ReadAsStreamAsync())
+                                    {
+                                        await tempFile.SaveAsync(stream);
+                                        tempFile.Move(originalSizesFilePath, true);
+                                    }
+                                }
+                            }
+
+                            string? newLastModified;
+                            if (response.Content.Headers.TryGetValues("Last-Modified", out var lastModifiedResponse)
+                              && (newLastModified = lastModifiedResponse.FirstOrDefault()) != null
+                              && newLastModified != lastModified)
+                            {
+                                File.WriteAllText(originalSizesMetaFilePath, newLastModified);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private static void LoadOriginalSizesFromFile()
+        {
+            using (var binaryReader = new BinaryReader(File.OpenRead(originalSizesFilePath), Encoding.Default, false))
+            {
+                try
+                {
+                    while (binaryReader.BaseStream.Position != binaryReader.BaseStream.Length)
+                    {
+                        var idBytes = binaryReader.ReadBytes(32);
+                        var width = binaryReader.ReadInt32();
+                        var height = binaryReader.ReadInt32();
+                        var idAsHexString = ByteArrayToString(idBytes);
+                        if (!loadedOriginalSizes.ContainsKey(idAsHexString))
+                        {
+                            loadedOriginalSizes.Add(idAsHexString, new SizeF(width, height));
+                        }
+                    }
+                }
+                catch
+                {
+                }
             }
         }
 
