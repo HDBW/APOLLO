@@ -115,7 +115,9 @@ message AssessmentTile {
   //Because Favorites suck!
   repeated google.protobuf.StringValue ModuleIds = 14;
 
-  repeated AssessmentScore AssessmentScores = 15;
+  //The Scores of each module.
+  //Remark: Only needed for AssessmentType.So
+  repeated ModuleScore ModuleScores = 15;
 }
 
 // The request message containing the user's name.
@@ -157,8 +159,9 @@ message ModuleTile {
   //Because Favorites suck!
   google.protobuf.StringValue ModuleId = 7;
 
-  // The Score of the Module
-  repeated AssessmentScore AssessmentScores = 8;
+  // The Scores of the Module
+  //Remark: Only needed for AssessmentType.So
+  repeated ModuleScore ModuleScores = 8;
 
   // Indicates whetere this Module is doable by a registered user only
   bool MemberOnly = 9;
@@ -173,7 +176,7 @@ message ModuleTile {
   google.protobuf.Int32Value AnswerCount = 12;
 }
 
-message AssessmentScore {
+message ModuleScore {
   google.protobuf.StringValue ProfileId = 1;
   google.protobuf.StringValue AssessmentId = 2;
   google.protobuf.StringValue ModuleId = 3;
@@ -261,8 +264,9 @@ message Module {
   // The number of answers in current session.
   google.protobuf.Int32Value AnswerCount = 18;
 
-  // The number of correct answers in last session.
-  google.protobuf.Int32Value CorrectAnswerCount = 19;
+   // The Scores of the Module
+   // For Type Be: 1 Score containing: Quantity, ResultDescription;
+  repeated ModuleScore ModuleScores = 19;
 }
 
 message Job {
@@ -328,4 +332,3 @@ message Answer {
 
   double Score = 3;
 }
-
