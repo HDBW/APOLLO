@@ -1465,87 +1465,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erneut testen in {0} Tagen.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to الاختبار مجددًا خلال {0} أيام.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ar {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторно тестване след {0} дни.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_bg_BG {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Test again in {0} days.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_en_US {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Effectuer une nouvelle évaluation dans {0} jours.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_fr_FR {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parcurge testul încă o dată în {0} zile.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ro_RO {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторить тест через {0} дней.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ru_RU {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} gün içinde yeniden testi başlat.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_tr_TR {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторити тест через {0} днів.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_uk_UA {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Fortfahren.
         /// </summary>
         public static string CancelAssessmentDialog_Cancel {
@@ -7000,6 +6919,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsModuleDetailViewTime_uk_UA {
             get {
                 return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTime_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erneut testen in {0} Tagen.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الاختبار مجددًا خلال {0} أيام.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повторно тестване след {0} дни.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test again in {0} days.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Effectuer une nouvelle évaluation dans {0} jours.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parcurge testul încă o dată în {0} zile.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повторить тест через {0} дней.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} gün içinde yeniden testi başlat.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повторити тест через {0} днів.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_uk-UA", resourceCulture);
             }
         }
         

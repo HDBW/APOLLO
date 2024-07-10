@@ -2462,39 +2462,39 @@ Tи відповідаєш на запитання, вибираючи прав�
     <value>Почати тест</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain" xml:space="preserve">
     <value>Erneut testen in {0} Tagen</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ar" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_ar" xml:space="preserve">
     <value>الاختبار مجددًا خلال {0} أيام</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_bg-BG" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_bg-BG" xml:space="preserve">
     <value>Повторно тестване след {0} дни</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_en-US" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_en-US" xml:space="preserve">
     <value>Test again in {0} days</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_fr-FR" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_fr-FR" xml:space="preserve">
     <value>Effectuer une nouvelle évaluation dans {0} jours</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ro-RO" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_ro-RO" xml:space="preserve">
     <value>Parcurge testul încă o dată în {0} zile</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ru-RU" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_ru-RU" xml:space="preserve">
     <value>Повторить тест через {0} дней</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_tr-TR" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_tr-TR" xml:space="preserve">
     <value>{0} gün içinde yeniden testi başlat</value>
     <comment>Translated</comment>
   </data>
-  <data name="BtnTxtAssesmentsModuleDetailViewTimeTestAgain_uk-UA" xml:space="preserve">
+  <data name="TxtAssesmentsModuleDetailViewTimeTestAgain_uk-UA" xml:space="preserve">
     <value>Повторити тест через {0} днів</value>
     <comment>Translated</comment>
   </data>

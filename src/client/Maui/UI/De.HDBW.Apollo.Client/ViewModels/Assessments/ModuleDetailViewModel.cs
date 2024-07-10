@@ -432,8 +432,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                 if ((module.Repeatable ?? 0) > 0 || !string.IsNullOrWhiteSpace(module.SessionId))
                 {
-                    var progressFormat = this["TxtAssesmentsStartTestAnsweredQuestions"] ?? string.Empty;
-                    var repeateFormat = this["BtnTxtAssesmentsStartTestTimeTestAgain"] ?? string.Empty;
+                    var progressFormat = this["TxtAssesmentsModuleDetailViewAnsweredQuestions"] ?? string.Empty;
+                    var repeateFormat = this["TxtAssesmentsModuleDetailViewTimeTestAgain"] ?? string.Empty;
                     sections.Add(TestSessionEntry.Import(module.Repeatable, module.SessionId, module.RawDataCount, module.AnswerCount, progressFormat, repeateFormat, HandleResume, CanResume, HandleCancel, CanCancel, HandleShowResult, CanShowResult));
                 }
             }

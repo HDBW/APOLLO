@@ -118,17 +118,26 @@ namespace De.HDBW.Apollo.Data.Services
             var waslastCanceledModule = _lastDeletedSessionId == moduleId && requestedModule.Type != AssessmentType.Be;
             _lastDeletedSessionId = null;
             var rawData = rawDatas.FirstOrDefault();
-            string jobName = string.Empty;
+            string localizedJobName = string.Empty;
             if (rawData != null)
             {
                 var node = JsonObject.Parse(rawDatas.First().Data);
-                jobName = node?[nameof(SharedContracts.RawData.job)]?.GetValue<string>() ?? string.Empty;
+                var job = node?[nameof(SharedContracts.RawData.job)]?.GetValue<string>()?.Trim() ?? string.Empty;
+                var schwerPunkt = node?[nameof(SharedContracts.RawData.schwerpunkt)]?.GetValue<string>()?.Trim() ?? string.Empty;
+                if (schwerPunkt == "-")
+                {
+                    schwerPunkt = string.Empty;
+                }
+
+                var parts = new List<string>() { job, schwerPunkt }.Where(x => !string.IsNullOrWhiteSpace(x));
+                localizedJobName = string.Join(" - ", parts);
             }
 
             var module = new Module()
             {
                 Title = requestedModule.Title,
-                JobName = jobName,
+                JobId = requestedModule.JobId,
+                LocalizedJobName = localizedJobName,
                 Language = requestedModule.Language,
                 Type = requestedModule.Type,
                 EstimateDuration = requestedModule.EstimateDuration,
@@ -141,8 +150,18 @@ namespace De.HDBW.Apollo.Data.Services
             };
             var escoId = string.Empty;
             var quantity = string.Empty;
-            module.Subtitle = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}");
-            module.Description = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}");
+            switch (module.Type)
+            {
+                case AssessmentType.Ea:
+                case AssessmentType.Sk:
+                    module.Subtitle = string.Format(GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}"), localizedJobName);
+                    module.Description = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}");
+                    break;
+                default:
+                    module.Subtitle = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}");
+                    module.Description = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}");
+                    break;
+            }
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
             await GenerateScoresAsync(module, rawDatas, string.Empty, lang).ConfigureAwait(false);
@@ -376,7 +395,8 @@ namespace De.HDBW.Apollo.Data.Services
                     score.ModuleId = module.ModuleId;
                     score.Result = result;
                     score.Segment = string.Empty;
-                    module.ModuleScores.Add(score);
+                    module.SegmentScores.Add(score);
+                    module.ModuleScore = score;
                     break;
                 case AssessmentType.Sk:
                     foreach (var rawData in rawDatas)
@@ -402,7 +422,12 @@ namespace De.HDBW.Apollo.Data.Services
                         score.ModuleId = module.ModuleId;
                         score.Result = result;
                         score.Segment = name;
-                        module.ModuleScores.Add(score);
+                        module.SegmentScores.Add(score);
+                        module.ModuleScore = new ModuleScore()
+                        {
+                            Quantity = AssessmentScoreQuantity.Median,
+                            Result = 0.5,
+                        };
                     }
 
                     break;
@@ -430,7 +455,12 @@ namespace De.HDBW.Apollo.Data.Services
                         score.ModuleId = module.ModuleId;
                         score.Result = result;
                         score.Segment = name;
-                        module.ModuleScores.Add(score);
+                        module.SegmentScores.Add(score);
+                        module.ModuleScore = new ModuleScore()
+                        {
+                            Quantity = AssessmentScoreQuantity.Median,
+                            Result = 0.5,
+                        };
                     }
 
                     break;
@@ -458,7 +488,12 @@ namespace De.HDBW.Apollo.Data.Services
                         score.ModuleId = module.ModuleId;
                         score.Result = result;
                         score.Segment = name;
-                        module.ModuleScores.Add(score);
+                        module.SegmentScores.Add(score);
+                        module.ModuleScore = new ModuleScore()
+                        {
+                            Quantity = AssessmentScoreQuantity.Median,
+                            Result = 0.5,
+                        };
                     }
 
                     break;
