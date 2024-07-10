@@ -155,5 +155,5 @@
 
     <CollectionView ItemsSource="{x:Binding Sections}"
             ItemsLayout="VerticalList"
-            ItemTemplate="{StaticResource AssessmentSectionTemplateSelector}" Margin="16,0,16,16"/>
+            ItemTemplate="{StaticResource AssessmentSectionTemplateSelector}" Margin="16,0,16,0"/>
 </ContentPage>
