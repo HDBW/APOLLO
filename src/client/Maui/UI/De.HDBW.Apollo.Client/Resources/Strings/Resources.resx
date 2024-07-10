@@ -3488,83 +3488,146 @@ Tи відповідаєш на запитання, вибираючи прав�
   </data>
   <data name="Quantity_Median" xml:space="preserve">
     <value>Durchschnitt</value>
-  </data>
-  <data name="Quantity_Over" xml:space="preserve">
-    <value>Über Durchschnitt</value>
-  </data>
-  <data name="Quantity_Under" xml:space="preserve">
-    <value>Unter Durchschnitt</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_ar" xml:space="preserve">
     <value>أقل من المتوسط</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_bg-BG" xml:space="preserve">
     <value>Средно ниво</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_en-US" xml:space="preserve">
     <value>Average</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_fr-FR" xml:space="preserve">
     <value>Dans la moyenne</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_ro-RO" xml:space="preserve">
     <value>Medii</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_ru-RU" xml:space="preserve">
     <value>Средний уровень</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_tr-TR" xml:space="preserve">
     <value>Ortalama</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Median_uk-UA" xml:space="preserve">
     <value>Середній рівень</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="Quantity_Over" xml:space="preserve">
+    <value>Über Durchschnitt</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_ar" xml:space="preserve">
     <value>فوق المتوسط</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_bg-BG" xml:space="preserve">
     <value>Над средното ниво</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_en-US" xml:space="preserve">
     <value>About average</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_fr-FR" xml:space="preserve">
     <value>Au-dessus de la moyenne</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_ro-RO" xml:space="preserve">
     <value>Peste medie</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_ru-RU" xml:space="preserve">
     <value>Выше среднего</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_tr-TR" xml:space="preserve">
     <value>Ortalamanın üstünde</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Over_uk-UA" xml:space="preserve">
     <value>Вищий за середній</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="Quantity_Under" xml:space="preserve">
+    <value>Unter Durchschnitt</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_ar" xml:space="preserve">
     <value>متوسط</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_bg-BG" xml:space="preserve">
     <value>Под средното ниво</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_en-US" xml:space="preserve">
     <value>Below average</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_fr-FR" xml:space="preserve">
     <value>En-dessous de la moyenne</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_ro-RO" xml:space="preserve">
     <value>Sub medie</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_ru-RU" xml:space="preserve">
     <value>Ниже среднего</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_tr-TR" xml:space="preserve">
     <value>Ortalamanın altında</value>
+    <comment>SoftSkill-SO</comment>
   </data>
   <data name="Quantity_Under_uk-UA" xml:space="preserve">
     <value>Нижчий за середній</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription" xml:space="preserve">
+    <value>Du siehst hier die Auswertung deines Selbsttests. Im Vergleich zu deiner Referenzgruppe hast du {0} Ergebnisse erzielt. Die Kompetenzspinne zeigt dir, wie du insgesamt abgeschnitten hast. Du hast die Möglichkeit, dir unten weitere Details zu deinen Kompetenzen anzeigen zu lassen. Klicke dazu auf „Mehr Informationen“.</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ar" xml:space="preserve">
+    <value>يمكنك رؤية تحليل اختبارك الذاتي هنا. لقد حققت نتائج {0}، بالمقارنة مع مجموعتك المرجعية. يُوضِّح لك مخطط الكفاءة ماذا كان تقييمك بشكل عام. يمكنك عرض مزيد من التفاصيل حول مهاراتك أدناه. ولعمل ذلك، انقر على "مزيد من المعلومات".</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_bg-BG" xml:space="preserve">
+    <value>Тук виждаш оценката от твоя самостоятелен тест. В сравнение с твоята референтна група резултатите ти са {0}. „Паяжината“ на прогреса ти показва какво е твоето общо постижение. Имаш възможност да изведеш по-долу допълнителни подробности за твоите компетенции. Щракни върху „Допълнителна информация“.</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_en-US" xml:space="preserve">
+    <value>You can see the evaluation of your self-test here. Compared to your reference group, you achieved {0} results. The strengthsfinder shows you how you scored overall. You have the option of displaying further details about your skills below. To do this, click on “More information.”</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_fr-FR" xml:space="preserve">
+    <value>Voici les résultats de votre auto-évaluation. Par rapport à votre groupe de référence, vous avez obtenu des résultats {0}. Le graphique des compétences vous indique votre score global. Vous avez la possibilité d’afficher plus de détails concernant vos compétences ci-dessous. Pour ce faire, cliquez sur « Plus d’informations ».</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ro-RO" xml:space="preserve">
+    <value>Aici vezi evaluarea autotestului tău. Comparativ cu grupul tău de referință, ai obținut rezultate {0}. Păianjenul competenței îți arată rezultatul per ansamblu. Mai jos, îți poți vedea competențele detaliate. Pentru aceasta, fă clic pe „Mai multe informații”.</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ru-RU" xml:space="preserve">
+    <value>Здесь вы можете посмотреть результаты теста самоконтроля. По сравнению с вашей референтной группой вы достигли результатов {0}. Сетка навыков показывает, как вы справились в целом. У вас есть возможность вызвать ниже более подробную информацию о своих навыках. Для этого нажмите на «Подробная информация».</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_tr-TR" xml:space="preserve">
+    <value>Self testin sonuçlarını burada görebilirsin. Referans grubunla karşılaştırıldığında, {0} sonuçlar elde ettin. Yetkinlik örümceği sana genel olarak kaç puan aldığını gösterir. Aşağıda yetkinliklerinle ilgili daha fazla ayrıntı görüntüleme seçeneğin bulunmaktadır. Bunun için „Daha fazla bilgi“ düğmesini tıkla.</value>
+    <comment>SoftSkill-SO</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_uk-UA" xml:space="preserve">
+    <value>Тут ти можеш подивитися результати тесту самоконтролю. Порівняно з референтною групою ти досяг результатів {0}. Сітка навичок показує, як ти впорався. Нижче ти можеш викликати більш детальну інформацію про свої навички. Для цього натисни кнопку «Детальна інформація».</value>
+    <comment>SoftSkill-SO</comment>
   </data>
 </root>
