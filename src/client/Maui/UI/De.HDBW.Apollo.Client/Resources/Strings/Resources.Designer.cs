@@ -8273,6 +8273,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du siehst hier die Auswertung deines Selbsttests. Im Vergleich zu deiner Referenzgruppe hast du {0} Ergebnisse erzielt. Die Kompetenzspinne zeigt dir, wie du insgesamt abgeschnitten hast. Du hast die Möglichkeit, dir unten weitere Details zu deinen Kompetenzen anzeigen zu lassen. Klicke dazu auf „Mehr Informationen“..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يمكنك رؤية تحليل اختبارك الذاتي هنا. لقد حققت نتائج {0}، بالمقارنة مع مجموعتك المرجعية. يُوضِّح لك مخطط الكفاءة ماذا كان تقييمك بشكل عام. يمكنك عرض مزيد من التفاصيل حول مهاراتك أدناه. ولعمل ذلك، انقر على &quot;مزيد من المعلومات&quot;..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тук виждаш оценката от твоя самостоятелен тест. В сравнение с твоята референтна група резултатите ти са {0}. „Паяжината“ на прогреса ти показва какво е твоето общо постижение. Имаш възможност да изведеш по-долу допълнителни подробности за твоите компетенции. Щракни върху „Допълнителна информация“..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can see the evaluation of your self-test here. Compared to your reference group, you achieved {0} results. The strengthsfinder shows you how you scored overall. You have the option of displaying further details about your skills below. To do this, click on “More information.”.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voici les résultats de votre auto-évaluation. Par rapport à votre groupe de référence, vous avez obtenu des résultats {0}. Le graphique des compétences vous indique votre score global. Vous avez la possibilité d’afficher plus de détails concernant vos compétences ci-dessous. Pour ce faire, cliquez sur « Plus d’informations »..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aici vezi evaluarea autotestului tău. Comparativ cu grupul tău de referință, ai obținut rezultate {0}. Păianjenul competenței îți arată rezultatul per ansamblu. Mai jos, îți poți vedea competențele detaliate. Pentru aceasta, fă clic pe „Mai multe informații”..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Здесь вы можете посмотреть результаты теста самоконтроля. По сравнению с вашей референтной группой вы достигли результатов {0}. Сетка навыков показывает, как вы справились в целом. У вас есть возможность вызвать ниже более подробную информацию о своих навыках. Для этого нажмите на «Подробная информация»..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self testin sonuçlarını burada görebilirsin. Referans grubunla karşılaştırıldığında, {0} sonuçlar elde ettin. Yetkinlik örümceği sana genel olarak kaç puan aldığını gösterir. Aşağıda yetkinliklerinle ilgili daha fazla ayrıntı görüntüleme seçeneğin bulunmaktadır. Bunun için „Daha fazla bilgi“ düğmesini tıkla..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тут ти можеш подивитися результати тесту самоконтролю. Порівняно з референтною групою ти досяг результатів {0}. Сітка навичок показує, як ти впорався. Нижче ти можеш викликати більш детальну інформацію про свої навички. Для цього натисни кнопку «Детальна інформація»..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kolleg.
         /// </summary>
         public static string TypeOfSchool_Colleague {
