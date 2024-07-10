@@ -51,7 +51,13 @@
                 <Image Source="resultdeco.png" Margin="24" HeightRequest="122" HorizontalOptions="Center"/>
             </Border>
         </DataTemplate>
-        
+
+        <DataTemplate x:Key="SODecoTemplate" x:DataType="assessmentModels:DecoEntry">
+            <Border StrokeThickness="0">
+                <controls:SegmentSvgImage Margin="24" InputTransparent="True" x:Name="PART_Image" HeightRequest="280" HorizontalOptions="Center"/>
+            </Border>
+        </DataTemplate>
+
         <DataTemplate x:Key="GLScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
             <Border StrokeThickness="0">
                 <Label Text="{x:Binding Description, Mode=OneWay}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
@@ -155,9 +161,11 @@
                                                 GLDecoTemplate="{StaticResource GLDecoTemplate}"
                                                 SKDecoTemplate="{StaticResource SKDecoTemplate}"
                                                 EADecoTemplate="{StaticResource SKDecoTemplate}"
+                                                SODecoTemplate="{StaticResource SODecoTemplate}"
                                                 GLScoreTemplate="{StaticResource GLScoreTemplate}"
                                                 SKScoreTemplate="{StaticResource SKScoreTemplate}"
                                                 EAScoreTemplate="{StaticResource EAScoreTemplate}"
+                                                SOScoreTemplate="{StaticResource SOScoreTemplate}"
                                             />
 
     </ContentPage.Resources>
