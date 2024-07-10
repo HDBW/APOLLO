@@ -115,8 +115,9 @@ message AssessmentTile {
   //Because Favorites suck!
   repeated google.protobuf.StringValue ModuleIds = 14;
 
-  //The Scores of each module.
-  //Remark: Only needed for AssessmentType.So
+  
+  // The Scores of each Module of the Assessment.
+  // remark: only for AssessmentType.So needed
   repeated ModuleScore ModuleScores = 15;
 }
 
@@ -158,10 +159,10 @@ message ModuleTile {
 
   //Because Favorites suck!
   google.protobuf.StringValue ModuleId = 7;
-
-  // The Scores of the Module
+  
+  // The unified Score of the Module
   //Remark: Only needed for AssessmentType.So
-  repeated ModuleScore ModuleScores = 8;
+  ModuleScore ModuleScore = 8;
 
   // Indicates whetere this Module is doable by a registered user only
   bool MemberOnly = 9;
@@ -264,8 +265,13 @@ message Module {
   // The number of answers in current session.
   google.protobuf.Int32Value AnswerCount = 18;
 
-   // The Scores of the Module
-  repeated ModuleScore ModuleScores = 19;
+  // The Scores of each segment of a Module
+  repeated ModuleScore SegmentScores = 19;
+
+   // The unified Score of the Module
+  ModuleScore ModuleScore = 21;
+
+  google.protobuf.StringValue LocalizedJobName = 22;
 }
 
 message Job {
