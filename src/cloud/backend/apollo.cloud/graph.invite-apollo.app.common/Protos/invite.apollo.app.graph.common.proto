@@ -267,7 +267,7 @@ message Module {
    // The Scores of the Module
   repeated ModuleScore ModuleScores = 19;
 
-  string JobName = 20;
+  google.protobuf.Int64Value JobId = 20;
 }
 
 message Job {
@@ -281,6 +281,8 @@ message Job {
   string EscoId = 4;
 
   string Version = 5;
+  
+  string Schwerpunkt = 6;
 }
 
 message RawData {
