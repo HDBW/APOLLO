@@ -61,9 +61,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to أنت لا تعرف بعد إلى أين تريد أن تتوجه مهنيًا أو ترغب في إعادة توجيه نفسك؟ إذن فأنت هنا في المكان الصحيح!
-        ///تساعدك الأداة في العثور على المجالات المهنية التي تتناسب مع اهتماماتك.
-        ///يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
+        ///   Looks up a localized string similar to &lt;p&gt;أنت لا تعرف بعد إلى أين تريد أن تتوجه مهنيًا أو ترغب في إعادة توجيه نفسك؟ إذن فأنت هنا في المكان الصحيح!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;تساعدك الأداة في العثور على المجالات المهنية التي تتناسب مع اهتماماتك.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض.&lt;/p&gt;.
         /// </summary>
         public static string Be___Description_ar {
             get {
@@ -72,9 +70,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du weißt noch nicht wohin es beruflich gehen soll oder möchtest dich umorientieren? Dann bist du hier richtig!
-        ///Das Tool hilft dir Berufsbereiche zu finden, die zu deinen Interessen passen.
-        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus..
+        ///   Looks up a localized string similar to &lt;p&gt;Du weißt noch nicht wohin es beruflich gehen soll oder möchtest dich umorientieren? Dann bist du hier richtig!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Das Tool hilft dir Berufsbereiche zu finden, die zu deinen Interessen passen.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus.&lt;/p&gt;.
         /// </summary>
         public static string Be___Description_de_DE {
             get {
@@ -85,25 +81,23 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         /// <summary>
         ///   Looks up a localized string similar to استمد الإلهام واكتشف المهن التي تهمك!.
         /// </summary>
-        public static string Be___SubTitle_ar {
+        public static string Be___Subtitle_ar {
             get {
-                return ResourceManager.GetString("Be___SubTitle_ar", resourceCulture);
+                return ResourceManager.GetString("Be___Subtitle_ar", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Lass dich inspirieren und entdecke Berufe, die dich interessieren!.
         /// </summary>
-        public static string Be___SubTitle_de_DE {
+        public static string Be___Subtitle_de_DE {
             get {
-                return ResourceManager.GetString("Be___SubTitle_de-DE", resourceCulture);
+                return ResourceManager.GetString("Be___Subtitle_de-DE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to يمكنك باستخدام هذا الاختبار الذاتي تقييم مهاراتك المهنية بنفسك. وتُظهر لك النتيجة مقدار الخبرة العملية التي تتمتع بها بالفعل في مختلف مجالات المهنة. وبناءً على ذلك يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
-        ///يمكنك الإجابة على الأسئلة من خلال اختيار عدد المرات التي قمت فيها بالفعل بالأنشطة الموضحة. جربها!
-        ///يمكنك أيضاً إجراء هذا الاختبار الذاتي بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
+        ///   Looks up a localized string similar to &lt;p&gt;يمكنك باستخدام هذا الاختبار الذاتي تقييم مهاراتك المهنية بنفسك. وتُظهر لك النتيجة مقدار الخبرة العملية التي تتمتع بها بالفعل في مختلف مجالات المهنة. وبناءً على ذلك يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;يمكنك الإجابة على الأسئلة من خلال اختيار عدد المرات التي قمت فيها بالفعل بالأنشطة الموضحة. جربها!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;يمكنك أيضاً إجراء هذا الاختبار الذاتي بلغة أخرى. اختر اللغة أعلاه لهذا الغرض.&lt;/p&gt;.
         /// </summary>
         public static string Ea___Description_ar {
             get {
@@ -112,9 +106,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mit diesem Selbsttest kannst du deine beruflichen Fähigkeiten selbst einschätzen. Das Ergebnis zeigt dir, wie viel Praxiserfahrung du bereits in den verschiedenen Bereichen des Berufs hast. Aufbauend darauf können wir dir passende Vorschläge für Weiterbildung zeigen.
-        ///Die Fragen beantwortest du, indem du auswählst, wie oft du die dargestellten Tätigkeiten schon gemacht hast. Probiere es aus!
-        ///Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus..
+        ///   Looks up a localized string similar to &lt;p&gt;Mit diesem Selbsttest kannst du deine beruflichen Fähigkeiten selbst einschätzen. Das Ergebnis zeigt dir, wie viel Praxiserfahrung du bereits in den verschiedenen Bereichen des Berufs hast. Aufbauend darauf können wir dir passende Vorschläge für Weiterbildung zeigen.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Die Fragen beantwortest du, indem du auswählst, wie oft du die dargestellten Tätigkeiten schon gemacht hast. Probiere es aus!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Ea___Description_de_DE {
             get {
@@ -125,24 +117,23 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         /// <summary>
         ///   Looks up a localized string similar to الاختبار الذاتي للخبرات بالمهنة {0}.
         /// </summary>
-        public static string Ea___SubTitle_ar {
+        public static string Ea___Subtitle_ar {
             get {
-                return ResourceManager.GetString("Ea___SubTitle_ar", resourceCulture);
+                return ResourceManager.GetString("Ea___Subtitle_ar", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Erfahrungsselbsttest Beruf {0}.
         /// </summary>
-        public static string Ea___SubTitle_de_DE {
+        public static string Ea___Subtitle_de_DE {
             get {
-                return ResourceManager.GetString("Ea___SubTitle_de-DE", resourceCulture);
+                return ResourceManager.GetString("Ea___Subtitle_de-DE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hier kannst du herausfinden, wie gut dein Deutsch ist: Stehst du am Anfang, bist du fortgeschritten oder schon Profi? Dieser Test gibt dir eine erste Orientierung, wie gut du schriftliche und mündliche deutsche Texte verstehst und wie gut deine Grammatik- und Wortschatzkenntnisse schon sind.
-        ///Dies ist ein Test des Goethe-Instituts..
+        ///   Looks up a localized string similar to &lt;p&gt;Hier kannst du herausfinden, wie gut dein Deutsch ist: Stehst du am Anfang, bist du fortgeschritten oder schon Profi? Dieser Test gibt dir eine erste Orientierung, wie gut du schriftliche und mündliche deutsche Texte verstehst und wie gut deine Grammatik- und Wortschatzkenntnisse schon sind.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Dies ist ein Test des Goethe-Instituts.&lt;/p&gt;.
         /// </summary>
         public static string Gl___Description_de_DE {
             get {
@@ -153,15 +144,14 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Teste dein Deutsch.
         /// </summary>
-        public static string Gl___SubTitle_de_DE {
+        public static string Gl___Subtitle_de_DE {
             get {
-                return ResourceManager.GetString("Gl___SubTitle_de-DE", resourceCulture);
+                return ResourceManager.GetString("Gl___Subtitle_de-DE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;&lt;bold&gt;Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!&lt;/bold&gt;&lt;p/&gt;
-        ///&lt;p&gt;Gut gemacht! Du kannst dich in vielen Situationen des alltäglichen Lebens zurechtfinden.&lt;p/&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;&lt;b&gt;Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!&lt;/b&gt;&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Gut gemacht! Du kannst dich in vielen Situationen des alltäglichen Lebens zurechtfinden.&lt;/p&gt;.
         /// </summary>
         public static string Gl__Median_ResultDescription_de_DE {
             get {
@@ -170,8 +160,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;&lt;bold&gt;Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!&lt;/bold&gt;&lt;p/&gt;
-        ///&lt;p&gt;Prima! Mit deinen Sprachkenntnissen kannst du schon fast alle Situationen gut meistern.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;&lt;b&gt;Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!&lt;/b&gt;&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Prima! Mit deinen Sprachkenntnissen kannst du schon fast alle Situationen gut meistern.&lt;/p&gt;.
         /// </summary>
         public static string Gl__Over_ResultDescription_de_DE {
             get {
@@ -180,8 +169,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;&lt;bold&gt;Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!&lt;/bold&gt;&lt;p/&gt;
-        ///&lt;p&gt;Weiter so! Du hast Anfangskenntnisse in Deutsch.&lt;p/&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;&lt;b&gt;Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!&lt;/b&gt;&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Weiter so! Du hast Anfangskenntnisse in Deutsch.&lt;/p&gt;.
         /// </summary>
         public static string Gl__Under_ResultDescription_de_DE {
             get {
@@ -190,9 +178,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to يمكنك اختبار مهاراتك المهنية من خلال هذا الاختبار. وتُظهر لك النتيجة مدى معرفتك في مختلف مجالات المهنة. بناءً على مهاراتك، يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
-        ///يمكنك الإجابة على الأسئلة إما عن طريق اختيار الإجابات الصحيحة أو ترتيبها بالترتيب الصحيح أو تكوين أزواج مطابقة. جربها!
-        ///يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
+        ///   Looks up a localized string similar to &lt;p&gt;يمكنك اختبار مهاراتك المهنية من خلال هذا الاختبار. وتُظهر لك النتيجة مدى معرفتك في مختلف مجالات المهنة. بناءً على مهاراتك، يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;يمكنك الإجابة على الأسئلة إما عن طريق اختيار الإجابات الصحيحة أو ترتيبها بالترتيب الصحيح أو تكوين أزواج مطابقة. جربها!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض.&lt;/p&gt;.
         /// </summary>
         public static string Sk___Description_ar {
             get {
@@ -201,9 +187,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.  
-        ///Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!
-        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;p&gt;Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst diesen Test auch in einer anderen Sprache machen. W [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Sk___Description_de_DE {
             get {
@@ -214,23 +198,23 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         /// <summary>
         ///   Looks up a localized string similar to اختبار المهنة {0}.
         /// </summary>
-        public static string Sk___SubTitle_ar {
+        public static string Sk___Subtitle_ar {
             get {
-                return ResourceManager.GetString("Sk___SubTitle_ar", resourceCulture);
+                return ResourceManager.GetString("Sk___Subtitle_ar", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Test Beruf {0}.
         /// </summary>
-        public static string Sk___SubTitle_de_DE {
+        public static string Sk___Subtitle_de_DE {
             get {
-                return ResourceManager.GetString("Sk___SubTitle_de-DE", resourceCulture);
+                return ResourceManager.GetString("Sk___Subtitle_de-DE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;يمكنك فيما يلي إجراء اختبار للتقييم الذاتي [لسلوكك المعرفي النمطي؛ مهاراتك في الإدارة الذاتية؛ مهاراتك الاجتماعية والتواصلية؛ مهاراتك التنفيذية؛ مهاراتك الرقمية]. يُرجى قراءة كل عبارة بعناية، والتفكير في مدى انطباقها عليك. يوجد أمامك مقياس إجابة مُكوَّن من 6 نقاط، بدءًا من &quot;لا أوافق بشدة&quot; إلى &quot;أوافق تمامًا&quot;.&lt;/p&gt;&lt;p&gt;حاوِل تجنُّب التفكير لفترة طويلة! لا يوجد صواب أو خطأ - إجابتك الأولى هي الأفضل غالبًا.&lt;/p&gt;&lt;p&gt;يمكنك أيضًا إجراء هذا الاختبار بلغة أخرى. ولعمل ذلك، حدد لغة أخرى من اللغات أعلاه. &lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;يمكنك فيما يلي إجراء اختبار للتقييم الذاتي {0}. يُرجى قراءة كل عبارة بعناية، والتفكير في مدى انطباقها عليك. يوجد أمامك مقياس إجابة مُكوَّن من 6 نقاط، بدءًا من &quot;لا أوافق بشدة&quot; إلى &quot;أوافق تمامًا&quot;.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;حاوِل تجنُّب التفكير لفترة طويلة! لا يوجد صواب أو خطأ - إجابتك الأولى هي الأفضل غالبًا.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;يمكنك أيضًا إجراء هذا الاختبار بلغة أخرى. ولعمل ذلك، حدد لغة أخرى من اللغات أعلاه. &lt;/p&gt;.
         /// </summary>
         public static string So___Description_ar {
             get {
@@ -239,7 +223,7 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Im Folgenden kannst du an einem Test zur Selbsteinschätzung [deines typischen kognitiven Verhaltens; deiner Selbstmanagementkompetenzen; deiner sozialen und kommunikativen Kompetenzen; deiner Umsetzungskompetenzen; deiner digitalen Kompetenzen] teilnehmen. Bitte lies jede Aussage aufmerksam durch und überlege, inwiefern sie auf dich zutrifft. Hierzu steht dir eine 6-stufige Antwortskala zur Verfügung, die von „trifft gar nicht zu“ bis „trifft voll und ganz zu“ reicht.&lt;/p&gt;&lt;p&gt;Versuche, allzu langes Grübeln [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;p&gt;Im Folgenden kannst du an einem Test zur Selbsteinschätzung {0} teilnehmen. Bitte lies jede Aussage aufmerksam durch und überlege, inwiefern sie auf dich zutrifft. Hierzu steht dir eine 6-stufige Antwortskala zur Verfügung, die von „trifft gar nicht zu“ bis „trifft voll und ganz zu“ reicht.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Versuche, allzu langes Grübeln zu vermeiden! Es gibt kein richtig oder falsch - deine erste Antwort ist oft die Beste.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben [rest of string was truncated]&quot;;.
         /// </summary>
         public static string So___Description_de_DE {
             get {
