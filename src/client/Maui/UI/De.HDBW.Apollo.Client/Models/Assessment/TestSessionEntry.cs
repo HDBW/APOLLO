@@ -47,7 +47,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             ArgumentNullException.ThrowIfNull(showResultCallback);
             ArgumentNullException.ThrowIfNull(canShowResultCallback);
             Repeatable = repeatable ?? 0;
-            CanContinue = (repeatable ?? 0) == 0 || (rawDataCount != answerCount);
+            CanContinue = (repeatable ?? 0) == 0 && (rawDataCount != answerCount);
             _rawDataCount = rawDataCount ?? 0;
             _answerCount = answerCount ?? 0;
             _resumeCallback = resumeCallback;

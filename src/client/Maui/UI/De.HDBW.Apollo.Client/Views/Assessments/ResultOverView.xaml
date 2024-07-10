@@ -76,7 +76,7 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="EAcoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
+        <DataTemplate x:Key="EAScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
                     <VerticalStackLayout Spacing="8">
