@@ -4104,6 +4104,249 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Durchschnitt.
+        /// </summary>
+        public static string Quantity_Median {
+            get {
+                return ResourceManager.GetString("Quantity_Median", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to أقل من المتوسط.
+        /// </summary>
+        public static string Quantity_Median_ar {
+            get {
+                return ResourceManager.GetString("Quantity_Median_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Средно ниво.
+        /// </summary>
+        public static string Quantity_Median_bg_BG {
+            get {
+                return ResourceManager.GetString("Quantity_Median_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average.
+        /// </summary>
+        public static string Quantity_Median_en_US {
+            get {
+                return ResourceManager.GetString("Quantity_Median_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dans la moyenne.
+        /// </summary>
+        public static string Quantity_Median_fr_FR {
+            get {
+                return ResourceManager.GetString("Quantity_Median_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medii.
+        /// </summary>
+        public static string Quantity_Median_ro_RO {
+            get {
+                return ResourceManager.GetString("Quantity_Median_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Средний уровень.
+        /// </summary>
+        public static string Quantity_Median_ru_RU {
+            get {
+                return ResourceManager.GetString("Quantity_Median_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ortalama.
+        /// </summary>
+        public static string Quantity_Median_tr_TR {
+            get {
+                return ResourceManager.GetString("Quantity_Median_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Середній рівень.
+        /// </summary>
+        public static string Quantity_Median_uk_UA {
+            get {
+                return ResourceManager.GetString("Quantity_Median_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Über Durchschnitt.
+        /// </summary>
+        public static string Quantity_Over {
+            get {
+                return ResourceManager.GetString("Quantity_Over", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فوق المتوسط.
+        /// </summary>
+        public static string Quantity_Over_ar {
+            get {
+                return ResourceManager.GetString("Quantity_Over_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Над средното ниво.
+        /// </summary>
+        public static string Quantity_Over_bg_BG {
+            get {
+                return ResourceManager.GetString("Quantity_Over_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About average.
+        /// </summary>
+        public static string Quantity_Over_en_US {
+            get {
+                return ResourceManager.GetString("Quantity_Over_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Au-dessus de la moyenne.
+        /// </summary>
+        public static string Quantity_Over_fr_FR {
+            get {
+                return ResourceManager.GetString("Quantity_Over_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peste medie.
+        /// </summary>
+        public static string Quantity_Over_ro_RO {
+            get {
+                return ResourceManager.GetString("Quantity_Over_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выше среднего.
+        /// </summary>
+        public static string Quantity_Over_ru_RU {
+            get {
+                return ResourceManager.GetString("Quantity_Over_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ortalamanın üstünde.
+        /// </summary>
+        public static string Quantity_Over_tr_TR {
+            get {
+                return ResourceManager.GetString("Quantity_Over_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вищий за середній.
+        /// </summary>
+        public static string Quantity_Over_uk_UA {
+            get {
+                return ResourceManager.GetString("Quantity_Over_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unter Durchschnitt.
+        /// </summary>
+        public static string Quantity_Under {
+            get {
+                return ResourceManager.GetString("Quantity_Under", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to متوسط.
+        /// </summary>
+        public static string Quantity_Under_ar {
+            get {
+                return ResourceManager.GetString("Quantity_Under_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Под средното ниво.
+        /// </summary>
+        public static string Quantity_Under_bg_BG {
+            get {
+                return ResourceManager.GetString("Quantity_Under_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Below average.
+        /// </summary>
+        public static string Quantity_Under_en_US {
+            get {
+                return ResourceManager.GetString("Quantity_Under_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En-dessous de la moyenne.
+        /// </summary>
+        public static string Quantity_Under_fr_FR {
+            get {
+                return ResourceManager.GetString("Quantity_Under_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub medie.
+        /// </summary>
+        public static string Quantity_Under_ro_RO {
+            get {
+                return ResourceManager.GetString("Quantity_Under_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ниже среднего.
+        /// </summary>
+        public static string Quantity_Under_ru_RU {
+            get {
+                return ResourceManager.GetString("Quantity_Under_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ortalamanın altında.
+        /// </summary>
+        public static string Quantity_Under_tr_TR {
+            get {
+                return ResourceManager.GetString("Quantity_Under_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нижчий за середній.
+        /// </summary>
+        public static string Quantity_Under_uk_UA {
+            get {
+                return ResourceManager.GetString("Quantity_Under_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Favoriten speichern.
         /// </summary>
         public static string RegisterView_Benefit1 {

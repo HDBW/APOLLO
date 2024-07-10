@@ -3486,4 +3486,85 @@ Tи відповідаєш на запитання, вибираючи прав�
     <value>Результат тесту</value>
     <comment>Translate New</comment>
   </data>
+  <data name="Quantity_Median" xml:space="preserve">
+    <value>Durchschnitt</value>
+  </data>
+  <data name="Quantity_Over" xml:space="preserve">
+    <value>Über Durchschnitt</value>
+  </data>
+  <data name="Quantity_Under" xml:space="preserve">
+    <value>Unter Durchschnitt</value>
+  </data>
+  <data name="Quantity_Median_ar" xml:space="preserve">
+    <value>أقل من المتوسط</value>
+  </data>
+  <data name="Quantity_Median_bg-BG" xml:space="preserve">
+    <value>Средно ниво</value>
+  </data>
+  <data name="Quantity_Median_en-US" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="Quantity_Median_fr-FR" xml:space="preserve">
+    <value>Dans la moyenne</value>
+  </data>
+  <data name="Quantity_Median_ro-RO" xml:space="preserve">
+    <value>Medii</value>
+  </data>
+  <data name="Quantity_Median_ru-RU" xml:space="preserve">
+    <value>Средний уровень</value>
+  </data>
+  <data name="Quantity_Median_tr-TR" xml:space="preserve">
+    <value>Ortalama</value>
+  </data>
+  <data name="Quantity_Median_uk-UA" xml:space="preserve">
+    <value>Середній рівень</value>
+  </data>
+  <data name="Quantity_Over_ar" xml:space="preserve">
+    <value>فوق المتوسط</value>
+  </data>
+  <data name="Quantity_Over_bg-BG" xml:space="preserve">
+    <value>Над средното ниво</value>
+  </data>
+  <data name="Quantity_Over_en-US" xml:space="preserve">
+    <value>About average</value>
+  </data>
+  <data name="Quantity_Over_fr-FR" xml:space="preserve">
+    <value>Au-dessus de la moyenne</value>
+  </data>
+  <data name="Quantity_Over_ro-RO" xml:space="preserve">
+    <value>Peste medie</value>
+  </data>
+  <data name="Quantity_Over_ru-RU" xml:space="preserve">
+    <value>Выше среднего</value>
+  </data>
+  <data name="Quantity_Over_tr-TR" xml:space="preserve">
+    <value>Ortalamanın üstünde</value>
+  </data>
+  <data name="Quantity_Over_uk-UA" xml:space="preserve">
+    <value>Вищий за середній</value>
+  </data>
+  <data name="Quantity_Under_ar" xml:space="preserve">
+    <value>متوسط</value>
+  </data>
+  <data name="Quantity_Under_bg-BG" xml:space="preserve">
+    <value>Под средното ниво</value>
+  </data>
+  <data name="Quantity_Under_en-US" xml:space="preserve">
+    <value>Below average</value>
+  </data>
+  <data name="Quantity_Under_fr-FR" xml:space="preserve">
+    <value>En-dessous de la moyenne</value>
+  </data>
+  <data name="Quantity_Under_ro-RO" xml:space="preserve">
+    <value>Sub medie</value>
+  </data>
+  <data name="Quantity_Under_ru-RU" xml:space="preserve">
+    <value>Ниже среднего</value>
+  </data>
+  <data name="Quantity_Under_tr-TR" xml:space="preserve">
+    <value>Ortalamanın altında</value>
+  </data>
+  <data name="Quantity_Under_uk-UA" xml:space="preserve">
+    <value>Нижчий за середній</value>
+  </data>
 </root>
