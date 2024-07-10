@@ -3326,4 +3326,164 @@ Tи відповідаєш на запитання, вибираючи прав�
     <value>Прийми наші вітання!</value>
     <comment>Translated</comment>
   </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_ar" xml:space="preserve">
+    <value>سؤال {0} / {1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_bg-BG" xml:space="preserve">
+    <value>Въпрос {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_en-US" xml:space="preserve">
+    <value>Question {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_fr-FR" xml:space="preserve">
+    <value>Question {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_ro-RO" xml:space="preserve">
+    <value>Întrebare {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_ru-RU" xml:space="preserve">
+    <value>Вопрос {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_tr-TR" xml:space="preserve">
+    <value>Soru {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitleQuestions_uk-UA" xml:space="preserve">
+    <value>Питання {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_ar" xml:space="preserve">
+    <value>اختيار اللغة</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_bg-BG" xml:space="preserve">
+    <value>Избор на език</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_en-US" xml:space="preserve">
+    <value>Language selection</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_fr-FR" xml:space="preserve">
+    <value>Choix de la langue</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_ro-RO" xml:space="preserve">
+    <value>Selectarea limbii</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_ru-RU" xml:space="preserve">
+    <value>Выбор языка</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_tr-TR" xml:space="preserve">
+    <value>Dil seçimi</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsLanguageSelectionViewTitle_uk-UA" xml:space="preserve">
+    <value>Вибір мови</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_ar" xml:space="preserve">
+    <value>الصفحة {0} / {1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_bg-BG" xml:space="preserve">
+    <value>Страница {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_en-US" xml:space="preserve">
+    <value>Page {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_fr-FR" xml:space="preserve">
+    <value>Page {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_ro-RO" xml:space="preserve">
+    <value>Pagina {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_ru-RU" xml:space="preserve">
+    <value>Страница {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_tr-TR" xml:space="preserve">
+    <value>Sayfa {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsRatingViewTitlePage_uk-UA" xml:space="preserve">
+    <value>Сторінка {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_ar" xml:space="preserve">
+    <value>تفاصيل نتيجة الاختبار</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_bg-BG" xml:space="preserve">
+    <value>Подробности за резултата от теста</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_en-US" xml:space="preserve">
+    <value>Details of your test result</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_fr-FR" xml:space="preserve">
+    <value>Détails de votre résultat de test</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_ro-RO" xml:space="preserve">
+    <value>Detalii despre rezultatul testului dvs.</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_ru-RU" xml:space="preserve">
+    <value>Информация о результатах теста</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_tr-TR" xml:space="preserve">
+    <value>Test sonucunuzun ayrıntıları</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultDetailSheetHeadline_uk-UA" xml:space="preserve">
+    <value>Детальна інформація про ваш результат тесту</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_ar" xml:space="preserve">
+    <value>نتيجة الاختبار</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_bg-BG" xml:space="preserve">
+    <value>Резултат от теста</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_en-US" xml:space="preserve">
+    <value>Test result</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_fr-FR" xml:space="preserve">
+    <value>Résultat du test</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_ro-RO" xml:space="preserve">
+    <value>Rezultatul testului</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_ru-RU" xml:space="preserve">
+    <value>Результат теста</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_tr-TR" xml:space="preserve">
+    <value>Test sonucu</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsResultOverViewPageTitle_uk-UA" xml:space="preserve">
+    <value>Результат тесту</value>
+    <comment>Translate New</comment>
+  </data>
 </root>
