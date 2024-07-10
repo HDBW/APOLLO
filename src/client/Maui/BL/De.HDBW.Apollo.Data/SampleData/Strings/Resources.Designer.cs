@@ -70,11 +70,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Все още не знаеш какъв професионален път искаш да поемеш или искаш да се преориентираш? Тогава това е правилното място за теб!&lt;/p&gt;&lt;p&gt;Инструментът ти помага да намериш професионални области, които отговарят на твоите интереси.&lt;/p&gt;&lt;p&gt;Можеш да положиш теста и на друг език. За целта избери език горе.&lt;/p&gt;.
+        /// </summary>
+        public static string Be___Description_bg_BG {
+            get {
+                return ResourceManager.GetString("Be___Description_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;Du weißt noch nicht wohin es beruflich gehen soll oder möchtest dich umorientieren? Dann bist du hier richtig!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Das Tool hilft dir Berufsbereiche zu finden, die zu deinen Interessen passen.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus.&lt;/p&gt;.
         /// </summary>
         public static string Be___Description_de_DE {
             get {
                 return ResourceManager.GetString("Be___Description_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Not sure what profession to pursue yet? Looking for a new direction? Then you’ve come to the right place!&lt;/p&gt;&lt;p&gt;The tool will help you find career areas that match your interests.&lt;/p&gt;&lt;p&gt;You can also take this test in another language. Select a language above.&lt;/p&gt;.
+        /// </summary>
+        public static string Be___Description_en_US {
+            get {
+                return ResourceManager.GetString("Be___Description_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Vous ne savez pas encore vers quel métier vous souhaitez vous orienter ou vous voulez vous réorienter? Alors, vous êtes au bon endroit!&lt;/p&gt;&lt;p&gt;Cet outil vous aide à trouver les domaines professionnels qui correspondent à vos centres d’intérêt.&lt;/p&gt;&lt;p&gt;Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue en haut.&lt;/p&gt;.
+        /// </summary>
+        public static string Be___Description_fr_FR {
+            get {
+                return ResourceManager.GetString("Be___Description_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Nu prea știi cum să continui drumul profesional sau dorești să te reorientezi? Atunci ai ajuns exact unde trebuie!&lt;/p&gt;&lt;p&gt;Acest instrument te ajută să găsești domenii profesional care se potrivesc cu interesele tale.&lt;/p&gt;&lt;p&gt;Poți da testul și într-o altă limbă. Selectează o limbă de mai sus.&lt;/p&gt;.
+        /// </summary>
+        public static string Be___Description_ro_RO {
+            get {
+                return ResourceManager.GetString("Be___Description_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Вы ещё не знаете, куда хотите двигаться в профессиональном плане, или же хотите переориентироваться? Тогда вы попали по адресу!&lt;/p&gt;&lt;p&gt;Это средство поможет вам найти те сферы деятельности, которые соответствуют вашим интересам.&lt;/p&gt;&lt;p&gt;Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык.&lt;/p&gt;.
+        /// </summary>
+        public static string Be___Description_ru_RU {
+            get {
+                return ResourceManager.GetString("Be___Description_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Meslek olarak nereye gitmek istediğini henüz bilmiyor musun veya kendine yeni bir yön bulmak mı istiyorsun? O zaman burada doğru yerdesin!&lt;/p&gt;&lt;p&gt;Bu araç, ilgi alanlarına uygun meslek alanlarını bulmana yardımcı olur.&lt;/p&gt;&lt;p&gt;Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç.&lt;/p&gt;.
+        /// </summary>
+        public static string Be___Description_tr_TR {
+            get {
+                return ResourceManager.GetString("Be___Description_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Ти ще не знаєш, куди хочеш рухатися в професійному плані? Aбо хочеш переорієнтуватися? Тоді ти потрапив/потрапила за адресою!   &lt;/p&gt;&lt;p&gt;Цей засіб допоможе тобi знайти сфери діяльності, які відповідають твоїм інтересам. &lt;/p&gt;&lt;p&gt;Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову. &lt;/p&gt;.
+        /// </summary>
+        public static string Be___Description_uk_UA {
+            get {
+                return ResourceManager.GetString("Be___Description_uk-UA", resourceCulture);
             }
         }
         
@@ -88,11 +151,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Остави се на вдъхновението и открий професии, които да те заинтригуват!.
+        /// </summary>
+        public static string Be___Subtitle_bg_BG {
+            get {
+                return ResourceManager.GetString("Be___Subtitle_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lass dich inspirieren und entdecke Berufe, die dich interessieren!.
         /// </summary>
         public static string Be___Subtitle_de_DE {
             get {
                 return ResourceManager.GetString("Be___Subtitle_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get inspired and discover professions that interest you!.
+        /// </summary>
+        public static string Be___Subtitle_en_US {
+            get {
+                return ResourceManager.GetString("Be___Subtitle_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Laissez-vous inspirer et découvrez des métiers qui vous intéresseront!.
+        /// </summary>
+        public static string Be___Subtitle_fr_FR {
+            get {
+                return ResourceManager.GetString("Be___Subtitle_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lasă-te inspirat(ă) și descoperă profesii care te interesează!.
+        /// </summary>
+        public static string Be___Subtitle_ro_RO {
+            get {
+                return ResourceManager.GetString("Be___Subtitle_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Не медлите и откройте для себя профессии, которые вам интересны!.
+        /// </summary>
+        public static string Be___Subtitle_ru_RU {
+            get {
+                return ResourceManager.GetString("Be___Subtitle_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İlham al ve ilgini çeken meslekleri keşfet!.
+        /// </summary>
+        public static string Be___Subtitle_tr_TR {
+            get {
+                return ResourceManager.GetString("Be___Subtitle_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Не зволікай та відкрий для себе професії, які тобi цікаві!  .
+        /// </summary>
+        public static string Be___Subtitle_uk_UA {
+            get {
+                return ResourceManager.GetString("Be___Subtitle_uk-UA", resourceCulture);
             }
         }
         
@@ -106,11 +232,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;С този тест можеш самостоятелно да оцениш своите професионални умения. Резултатът ти показва какъв практически опит вече притежаваш в различните области на професията. Въз основа на това можем да ти покажем подходящи предложения за продължаващо обучение.&lt;/p&gt;&lt;p&gt;Отговаряш на въпросите, като избираш колко често вече си вършил/а описаните дейности. Опитай!&lt;/p&gt;&lt;p&gt;Можеш да положиш самостоятелния тест и на друг език. За целта избери език горе.&lt;/p&gt;.
+        /// </summary>
+        public static string Ea___Description_bg_BG {
+            get {
+                return ResourceManager.GetString("Ea___Description_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;Mit diesem Selbsttest kannst du deine beruflichen Fähigkeiten selbst einschätzen. Das Ergebnis zeigt dir, wie viel Praxiserfahrung du bereits in den verschiedenen Bereichen des Berufs hast. Aufbauend darauf können wir dir passende Vorschläge für Weiterbildung zeigen.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Die Fragen beantwortest du, indem du auswählst, wie oft du die dargestellten Tätigkeiten schon gemacht hast. Probiere es aus!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Ea___Description_de_DE {
             get {
                 return ResourceManager.GetString("Ea___Description_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;This self-test is designed to help you assess your professional skills. The result will show you how much practical experience you already have in the various areas of the profession. Based on this, we can show you suitable suggestions for further training.&lt;/p&gt;&lt;p&gt;You answer the questions by selecting how often you have already done the activities shown. Try it out!&lt;/p&gt;&lt;p&gt;You can also take the self-test in another language. Select a language above.&lt;/p&gt;.
+        /// </summary>
+        public static string Ea___Description_en_US {
+            get {
+                return ResourceManager.GetString("Ea___Description_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Avec cet autotest, vous pouvez évaluer vous-mêmes vos compétences professionnelles. Le résultat vous montre combien d’expérience pratique vous avez déjà dans différents domaines du métier. Sur la base de cette information, nous pouvons vous proposer une formation continue adaptée.&lt;/p&gt;&lt;p&gt;Pour répondre aux questions, vous devez indiquer à quelle fréquence vous avez déjà réalisé les tâches présentées. Essayez!&lt;/p&gt;&lt;p&gt;Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Ea___Description_fr_FR {
+            get {
+                return ResourceManager.GetString("Ea___Description_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Cu ajutorul acestui test îți poți autoevalua calitățile profesionale. Rezultatul îți arată nivelul de experiență practică pe care îl ai în diferite domenii ale profesiei respective. Pe această bază, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.&lt;/p&gt;&lt;p&gt;Răspunzi la întrebări, selectând de câte ori ai efectuat deja până acum activitățile prezentate. Încearcă!&lt;/p&gt;&lt;p&gt;Poți da autotestul și într-o altă limbă. Selectează o limbă de mai sus.&lt;/p&gt;.
+        /// </summary>
+        public static string Ea___Description_ro_RO {
+            get {
+                return ResourceManager.GetString("Ea___Description_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;С помощью этого теста самопроверки вы можете сами оценить свои профессиональные навыки. Результат показывает, насколько большой практический опыт у вас уже есть в различных областях профессии. Исходя из этого, мы сможем показать вам подходящие предложения для продолжения образования.&lt;/p&gt;&lt;p&gt;Вы отвечаете на вопросы, выбирая, как часто вы уже занимались указанной деятельностью. Попробуйте!&lt;/p&gt;&lt;p&gt;Вы также можете пройти этот тест самопроверки и на другом языке. Для этого выберите вверху нужный язык.&lt;/p&gt;.
+        /// </summary>
+        public static string Ea___Description_ru_RU {
+            get {
+                return ResourceManager.GetString("Ea___Description_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Bu kendi kendine test ile mesleki becerilerini kendin değerlendirebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar pratik bilgiye sahibi olduğunu gösterecektir. Buna dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.&lt;/p&gt;&lt;p&gt;Sorulara, gösterilen işlemleri ne kadar sık yaptığını seçerek cevap verirsin. Denemelisin!&lt;/p&gt;&lt;p&gt;Kendi kendine testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç.&lt;/p&gt;.
+        /// </summary>
+        public static string Ea___Description_tr_TR {
+            get {
+                return ResourceManager.GetString("Ea___Description_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;За допомогою цього тесту самоперевірки ти можеш оцінити свої професійні навички. Результат показує, наскільки великий практичний досвід ти вже маєш у різних галузях професії. Виходячи з цього, ми зможемо показати тобi відповідні пропозиції для продовження освіти.&lt;/p&gt;&lt;p&gt;Tи відповідаєш на запитання, вибираючи, як часто ти вже займався/займалася зазначеною діяльністю. Спробуй!&lt;/p&gt;&lt;p&gt;Tи можеш пройти цей тест самоперевірки й іншою мовою. Для цього вибери вгорі мову.&lt;/p&gt;.
+        /// </summary>
+        public static string Ea___Description_uk_UA {
+            get {
+                return ResourceManager.GetString("Ea___Description_uk-UA", resourceCulture);
             }
         }
         
@@ -124,11 +313,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Самостоятелен тест за опит Професия {0}.
+        /// </summary>
+        public static string Ea___Subtitle_bg_BG {
+            get {
+                return ResourceManager.GetString("Ea___Subtitle_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erfahrungsselbsttest Beruf {0}.
         /// </summary>
         public static string Ea___Subtitle_de_DE {
             get {
                 return ResourceManager.GetString("Ea___Subtitle_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profession {0} experience self-test.
+        /// </summary>
+        public static string Ea___Subtitle_en_US {
+            get {
+                return ResourceManager.GetString("Ea___Subtitle_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autotest d’expérience métier {0}.
+        /// </summary>
+        public static string Ea___Subtitle_fr_FR {
+            get {
+                return ResourceManager.GetString("Ea___Subtitle_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autotest experiență profesia {0}.
+        /// </summary>
+        public static string Ea___Subtitle_ro_RO {
+            get {
+                return ResourceManager.GetString("Ea___Subtitle_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест самопроверки опыта в профессии {0}.
+        /// </summary>
+        public static string Ea___Subtitle_ru_RU {
+            get {
+                return ResourceManager.GetString("Ea___Subtitle_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meslek {0} kendi kendine deneyim testi.
+        /// </summary>
+        public static string Ea___Subtitle_tr_TR {
+            get {
+                return ResourceManager.GetString("Ea___Subtitle_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест самоперевірки досвіду в професії {0}.
+        /// </summary>
+        public static string Ea___Subtitle_uk_UA {
+            get {
+                return ResourceManager.GetString("Ea___Subtitle_uk-UA", resourceCulture);
             }
         }
         
@@ -187,11 +439,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;С този тест можеш да провериш своите професионални умения. Резултатът ти показва какво ниво на познания притежаваш в различните области. &lt;/p&gt;&lt;p&gt;Въз основа на твоите компетенции можем да ти покажем подходящи предложения за продължаващо обучение.&lt;/p&gt;&lt;p&gt;Можеш да положиш теста и на друг език. За целта избери език горе.&lt;/p&gt;.
+        /// </summary>
+        public static string Sk___Description_bg_BG {
+            get {
+                return ResourceManager.GetString("Sk___Description_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst diesen Test auch in einer anderen Sprache machen. W [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Sk___Description_de_DE {
             get {
                 return ResourceManager.GetString("Sk___Description_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;This test is designed to help you assess your professional skills. The result will show you how much knowledge you have in the various areas of the profession. Based on your skills, we can show you suitable suggestions for further training.&lt;/p&gt;&lt;p&gt;You answer the questions by either selecting the right answers, putting them in the right order or forming matching pairs. Try it out!&lt;/p&gt;&lt;p&gt;You can also take this test in another language. Select a language above.&lt;/p&gt;.
+        /// </summary>
+        public static string Sk___Description_en_US {
+            get {
+                return ResourceManager.GetString("Sk___Description_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Avec ce test, vous pouvez tester vos compétences professionnelles. Le résultat vous montre ce que vous savez déjà dans différents domaines du métier. Sur la base de ces compétences, nous pouvons vous proposer des formations continues adaptées.&lt;/p&gt;&lt;p&gt;Pour répondre aux questions, vous devez sélectionner les bonnes réponses, mettre les réponses dans le bon ordre ou former les paires qui conviennent. Essayez!&lt;/p&gt;&lt;p&gt;Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Sk___Description_fr_FR {
+            get {
+                return ResourceManager.GetString("Sk___Description_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Cu ajutorul acestui test îți poți verifica calitățile profesionale. Rezultatul îți arată nivelul de cunoștințe pe care îl ai în diferite domenii ale profesiei respective. Pe baza competențelor tale, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.&lt;/p&gt;&lt;p&gt;Răspunzi la întrebări selectând răspunsurile corecte, așezând enunțurile în ordinea corectă sau formând perechile potrivite. Încearcă!&lt;/p&gt;&lt;p&gt;Poți da testul și într-o altă limbă. Selectează o limbă de mai sus.&lt;/p&gt;.
+        /// </summary>
+        public static string Sk___Description_ro_RO {
+            get {
+                return ResourceManager.GetString("Sk___Description_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;С помощью этого теста вы можете проверить свои профессиональные навыки. Результат показывает, насколько глубоки ваши знания в различных областях профессии. Исходя из ваших навыков, мы сможем показать вам подходящие предложения для продолжения образования.&lt;/p&gt;&lt;p&gt;Вы отвечаете на вопросы, выбирая правильные ответы, располагая их в правильном порядке или составляя подходящие пары. Попробуйте!&lt;/p&gt;&lt;p&gt;Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык.&lt;/p&gt;.
+        /// </summary>
+        public static string Sk___Description_ru_RU {
+            get {
+                return ResourceManager.GetString("Sk___Description_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Bu test ile mesleki becerilerini test edebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar bilgi sahibi olduğunu gösterecektir. Becerilerine dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.&lt;/p&gt;&lt;p&gt;Sorulara doğru cevapları seçerek, doğru sıraya koyarak veya doğru çiftleri cevap verirsin. Denemelisin!&lt;/p&gt;&lt;p&gt;Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç.&lt;/p&gt;.
+        /// </summary>
+        public static string Sk___Description_tr_TR {
+            get {
+                return ResourceManager.GetString("Sk___Description_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;За допомогою цього тесту можна перевірити свої професійні навички. Результат показує, наскільки глибокі твої знання в різних галузях професії. Виходячи з твоїх навичок, ми зможемо показати тобi відповідні пропозиції для продовження освіти.&lt;/p&gt;&lt;p&gt;Tи відповідаєш на запитання, вибираючи правильні відповіді, розташовуючи їх у правильному порядку або складаючи відповідні пари. Спробуй!&lt;/p&gt;&lt;p&gt;Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову.&lt;/p&gt;.
+        /// </summary>
+        public static string Sk___Description_uk_UA {
+            get {
+                return ResourceManager.GetString("Sk___Description_uk-UA", resourceCulture);
             }
         }
         
@@ -205,11 +520,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Тест професия {0}.
+        /// </summary>
+        public static string Sk___Subtitle_bg_BG {
+            get {
+                return ResourceManager.GetString("Sk___Subtitle_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Test Beruf {0}.
         /// </summary>
         public static string Sk___Subtitle_de_DE {
             get {
                 return ResourceManager.GetString("Sk___Subtitle_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profession {0} test .
+        /// </summary>
+        public static string Sk___Subtitle_en_US {
+            get {
+                return ResourceManager.GetString("Sk___Subtitle_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test métier {0}.
+        /// </summary>
+        public static string Sk___Subtitle_fr_FR {
+            get {
+                return ResourceManager.GetString("Sk___Subtitle_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test profesia {0}.
+        /// </summary>
+        public static string Sk___Subtitle_ro_RO {
+            get {
+                return ResourceManager.GetString("Sk___Subtitle_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест на пригодность для профессии {0}.
+        /// </summary>
+        public static string Sk___Subtitle_ru_RU {
+            get {
+                return ResourceManager.GetString("Sk___Subtitle_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meslek {0} testi.
+        /// </summary>
+        public static string Sk___Subtitle_tr_TR {
+            get {
+                return ResourceManager.GetString("Sk___Subtitle_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тест на придатність до професії {0}.
+        /// </summary>
+        public static string Sk___Subtitle_uk_UA {
+            get {
+                return ResourceManager.GetString("Sk___Subtitle_uk-UA", resourceCulture);
             }
         }
         
@@ -223,11 +601,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;По-долу можеш да положиш тест за самооценка {0}. Моля, прочитай всяко твърдение внимателно и обмисляй доколко то се отнася до теб. Тук ще намериш 6-степенна скала на отговорите, която обхваща диапазона от „изобщо не е вярно“ до „напълно вярно“. &lt;/p&gt;&lt;p&gt;Опитай да не размишляваш прекалено дълго! Няма определен правилен или грешен отговор - твоят първи отговор често е най-добрият. &lt;/p&gt;&lt;p&gt;Можеш да положиш теста и на друг език. За целта избери друг език горе. &lt;/p&gt;.
+        /// </summary>
+        public static string So___Description_bg_BG {
+            get {
+                return ResourceManager.GetString("So___Description_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;Im Folgenden kannst du an einem Test zur Selbsteinschätzung {0} teilnehmen. Bitte lies jede Aussage aufmerksam durch und überlege, inwiefern sie auf dich zutrifft. Hierzu steht dir eine 6-stufige Antwortskala zur Verfügung, die von „trifft gar nicht zu“ bis „trifft voll und ganz zu“ reicht.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Versuche, allzu langes Grübeln zu vermeiden! Es gibt kein richtig oder falsch - deine erste Antwort ist oft die Beste.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben [rest of string was truncated]&quot;;.
         /// </summary>
         public static string So___Description_de_DE {
             get {
                 return ResourceManager.GetString("So___Description_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Below you can take a self-assessment test {0}. Please read each statement carefully and think about how it applies to you. You can use a 6-point answer scale ranging from “does not apply” to “completely applies.” &lt;/p&gt;&lt;p&gt;Try to avoid thinking for too long! There’s no right or wrong - your first answer is often the best. &lt;/p&gt;&lt;p&gt;You can also take this test in another language. To do so, select another language above. &lt;/p&gt;.
+        /// </summary>
+        public static string So___Description_en_US {
+            get {
+                return ResourceManager.GetString("So___Description_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Ci-dessous, vous pouvez participer à un test d’auto-évaluation {0}. Veuillez lire attentivement chaque affirmation et réfléchir à la manière dont elle s’applique à vous. Pour ce faire, vous avez le choix entre 6 réponses, allant de « pas du tout vrai » à « tout à fait vrai ». &lt;/p&gt;&lt;p&gt;Évitez de trop réfléchir ! Il n’y a pas de bonne ou de mauvaise réponse, votre première idée est souvent la meilleure. &lt;/p&gt;&lt;p&gt;Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une autre langu [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So___Description_fr_FR {
+            get {
+                return ResourceManager.GetString("So___Description_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;În continuare, poți participa la un test de autoevaluare {0}. Te rugăm să citești cu atenție fiecare enunț și să te gândești în ce măsură ți se potrivește. Ai la dispoziție o scală de răspunsuri cu 6 trepte – de la „nu se potrivește deloc” până la „se potrivește în totalitate”. &lt;/p&gt;&lt;p&gt;Încearcă să nu te gândești prea mult! Nu există răspunsuri corecte sau greșite – de multe ori, primul răspuns este cel mai bun. &lt;/p&gt;&lt;p&gt;Poți da testul și într-o altă limbă. Selectează o altă limbă de mai sus. &lt;/p&gt;.
+        /// </summary>
+        public static string So___Description_ro_RO {
+            get {
+                return ResourceManager.GetString("So___Description_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Ниже вы можете пройти тест для самооценки {0}. Пожалуйста, внимательно прочитайте каждое высказывание и подумайте, насколько оно применимо к вам. Используйте 6-балльную шкалу ответов от «совершенно не соответствует» до «полностью соответствует». &lt;/p&gt;&lt;p&gt;Постарайтесь не размышлять слишком долго! Здесь нет правильных или неправильных ответов – ваш первый спонтанный ответ часто самый лучший. &lt;/p&gt;&lt;p&gt;Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху другой язык. &lt;/p&gt;.
+        /// </summary>
+        public static string So___Description_ru_RU {
+            get {
+                return ResourceManager.GetString("So___Description_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Aşağıda {0} bir öz değerlendirme testine katılabilirsin. Lütfen her bir ifadeyi dikkatlice oku ve bunun senin için ne kadar geçerli olduğunu düşün. „Kesinlikle katılmıyorum&quot; ile „Kesinlikle katılıyorum&quot; arasında değişen 6 puanlık bir cevap ölçeği kullanabilirsin. &lt;/p&gt;&lt;p&gt;Çok fazla düşünmekten kaçınmayı dene! Doğru veya yanlış yoktur - ilk cevabın genellikle en iyisidir. &lt;/p&gt;&lt;p&gt;Bu testi başka bir dilde de yapabilirsin. Yukarıda farklı bir dil seç. &lt;/p&gt;.
+        /// </summary>
+        public static string So___Description_tr_TR {
+            get {
+                return ResourceManager.GetString("So___Description_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Нижче ти можеш пройти тест для самооцінки {0}. Уважно прочитай кожне висловлювання і помiркуй, наскільки воно стосується тебе. Використовуй 6-бальну шкалу відповідей від «цілком не відповідає» до «повністю відповідає». &lt;/p&gt;&lt;p&gt;Не роздумуй занадто довго! Тут немає правильних або неправильних відповідей – твоя перша спонтанна відповідь часто найкраща. &lt;/p&gt;&lt;p&gt;Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі іншу мову. &lt;/p&gt;.
+        /// </summary>
+        public static string So___Description_uk_UA {
+            get {
+                return ResourceManager.GetString("So___Description_uk-UA", resourceCulture);
             }
         }
         
@@ -241,11 +682,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Умение да се използват устройства като монитор, мишка, клавиатура, запаметяващи устройства, принтери, скенери и т.н. За изпълнението на дейности като свързване, стартиране, изключване, рестартиране, съхраняване на файлове и т.н..
+        /// </summary>
+        public static string So_131__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_131__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fähigkeit zur Verwendung von Geräten wie Monitor, Maus, Tastatur, Speichergeräten, Druckern, Scannern usw. zur Durchführung von Tätigkeiten wie Anschließen, Hochfahren, Herunterfahren, Neustart, Speichern von Dateien usw..
         /// </summary>
         public static string So_131__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_131__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Being able to use devices such as a monitor, a mouse, a keyboard, storage devices, printers, scanners, etc., to carry out activities such as connecting, booting up, shutting down, restarting, saving files, etc..
+        /// </summary>
+        public static string So_131__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_131__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utiliser des appareils tels qu’un écran, une souris, un clavier, des périphériques de stockage, des imprimantes, des scanners, etc. et effectuer des opérations telles que les brancher, les démarrer, les arrêter, les redémarrer, enregistrer des fichiers, etc..
+        /// </summary>
+        public static string So_131__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_131__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capacitatea de a folosi dispozitive, cum ar fi monitorul, mouse-ul, tastatura, dispozitive de stocare, imprimante, scanere șamd. pentru realizarea activităților, cum ar fi conectarea, pornirea, oprirea, repornirea, salvarea fișierelor etc..
+        /// </summary>
+        public static string So_131__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_131__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Умение использовать такие устройства, как монитор, мышь, клавиатура, устройства хранения данных, принтеры, сканеры и т.д. для выполнения таких операций, как подключение, загрузка, выключение, перезагрузка, сохранение файлов и т.п..
+        /// </summary>
+        public static string So_131__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_131__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Örneğin aygıtları bağlama, çalıştırma, kapatma, yeniden başlatma, dosya kaydetme vb. işlemleri gerçekleştirmek için monitör, fare, klavye, depolama aygıtları, yazıcılar, tarayıcılar vb. aygıtları kullanma becerisi..
+        /// </summary>
+        public static string So_131__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_131__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Уміння використовувати такі пристрої, як монітор, миша, клавіатура, пристрої зберігання даних, принтери, сканери тощо для виконання таких операцій, як підключення, завантаження, вимкнення, перезавантаження, збереження файлів тощо..
+        /// </summary>
+        public static string So_131__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_131__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -259,11 +763,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати умеят да боравят с дигитални устройства като мобилни телефони, лаптопи или таблети. Те знаят как да съхраняват документи върху външни носители на данни, да ги преработват или да осъществяват достъп до тях. Наред с простите дейности като включване/изключване или рестартиране на различни устройства, те владеят и разширени функции като скачването или свързването на дигитални устройства, както и боравенето с устройства като скенер или принтер..
+        /// </summary>
+        public static string So_131_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_131_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten besitzen die Fähigkeit, digitale Endgeräte, wie Handys, Laptops oder Tablets, zu verwenden. Sie wissen, wie sie Dokumente auf externen Speichermedien abspeichern, sie bearbeiten oder auf sie zugreifen. Neben leichten Tätigkeiten, wie An-/Ausschalten oder Neustarten verschiedener Geräte, beherrschen sie auch erweiterte Funktionen, wie den Anschluss oder die Verbindung digitaler Endgeräte sowie den Umgang mit Geräten wie Scanner oder Drucker..
         /// </summary>
         public static string So_131_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_131_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores can use digital devices like cell phones, laptops, or tablets. They know how to save documents on external storage media and edit or access them. In addition to simple activities, such as switching various devices on/off or restarting them, they are proficient in advanced functions, such as connecting or linking digital devices and using devices such as scanners or printers..
+        /// </summary>
+        public static string So_131_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_131_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont capables d’utiliser des terminaux numériques tels que des téléphones portables, des ordinateurs portables ou des tablettes. Elles savent comment sauvegarder des documents sur des supports de stockage externes, les modifier ou y accéder. Outre les activités simples telles que le démarrage/l’arrêt ou le redémarrage de différents appareils, elles maîtrisent également des fonctions avancées telles que la connexion ou le branchement de terminaux numériques et l’util [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_131_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_131_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate posedă aptitudinea de a folosi echipamente terminale digitale, cum ar fi telefoane mobile, laptopuri sau tablete. Știu cum să salveze documente pe medii de stocare externe, cum să le prelucreze sau să le acceseze. Pe lângă activitățile simple, cum ar fi pornirea/oprirea sau repornirea diferitelor dispozitive, ele stăpânesc și funcții extinse, cum ar fi conectarea sau legarea echipamentelor terminale și utilizarea altor dispozitive, precum scanere sau imprimante..
+        /// </summary>
+        public static string So_131_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_131_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями умеют пользоваться цифровыми устройствами, такими как мобильные телефоны, ноутбуки или планшеты. Они знают, как сохранять документы на внешних носителях, редактировать их или получать к ним доступ. Наряду с простыми задачами, такими как включение / выключение или перезагрузка различных устройств, они также владеют такими сложными функциями, как подключение или соединение цифровых пользовательских устройств и работа с такими устройствами, как сканеры или принтеры..
+        /// </summary>
+        public static string So_131_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_131_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler cep telefonu, dizüstü bilgisayar veya tablet gibi dijital cihazları kullanma becerisine sahiptir. Kendileri belgeleri harici depolama ortamına nasıl kaydedecekleri, düzenleyecekleri veya bunlara nasıl erişeceklerini bilirler. Çeşitli aygıtları açma/kapama veya yeniden başlatma gibi basit görevlerin yanı sıra, dijital aygıtları bağlama veya bağlantısını yapma, tarayıcı veya yazıcı gibi cihazları kullanma gibi gelişmiş işlevlerde de ustalaşırlar..
+        /// </summary>
+        public static string So_131_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_131_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками вміють користуватися цифровими пристроями, такими як мобільні телефони, ноутбуки, планшети. Вони знають, як зберігати документи на зовнішніх носіях, редагувати їх або отримувати до них доступ. Поряд із простими завданнями, як-от увімкнення / вимкнення або перезавантаження різних пристроїв, вони також володіють такими складними функціями, як підключення або з&apos;єднання цифрових пристроїв і робота з такими пристроями, як сканери або принтери..
+        /// </summary>
+        public static string So_131_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_131_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -277,11 +844,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати се затрудняват при работата с дигитални устройства като мобилни телефони, лаптопи или таблети. Те все пак могат да съхраняват документи в различни операционни системи. Въпреки това те нямат задълбочени познания за това и често трябва да търсят документите или не знаят как се обработват. Те изпитват затруднения с включването/изключването или рестартирането на устройства. Трудно им е да свързват различни устройства, да ги съединяват или да работят с тях.  .
+        /// </summary>
+        public static string So_131_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_131_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten haben Schwierigkeiten mit digitalen Endgeräten wie Handys, Laptops oder Tablets umzugehen. Sie können zwar Dokumente auf verschiedenen Betriebssystemen abspeichern. Allerdings sind sie ihnen nicht vertraut und sie müssen nach den Dokumenten oft suchen oder wissen nicht, wie die Bearbeitung funktioniert. Sie haben Probleme mit dem An-/Ausschalten oder Neustarten von Endgeräten. Es fällt ihnen schwer, verschiedene Geräte miteinander zu verbinden, sie anzuschließen oder zu bediene [rest of string was truncated]&quot;;.
         /// </summary>
         public static string So_131_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_131_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores have difficulty using digital devices such as cell phones, laptops, or tablets. They can save documents on different operating systems. However, they are unfamiliar with them and often have to search for documents or do not know how to edit them. They have problems with switching devices on/off or restarting them. They find it difficult to link different devices, connect them, or operate them.  .
+        /// </summary>
+        public static string So_131_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_131_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à utiliser des terminaux numériques tels que les téléphones portables, les ordinateurs portables ou les tablettes. Elles sont capables de sauvegarder des documents sur différents systèmes d’exploitation. Cependant, elles ne sont pas habituées à ces outils et doivent souvent rechercher les documents ou ne savent pas comment les traiter. Elles ont du mal à démarrer/éteindre ou redémarrer les terminaux. Elles peinent à connecter différents ap [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_131_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_131_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri redus posedă au dificultăți în a folosi echipamente terminale digitale, cum ar fi telefoane mobile, laptopuri sau tablete. Pot stoca documente în diferite sisteme de operare. Însă acestea nu le sunt familiare și deseori trebuie să caute documentele sau nu știu cum să le prelucreze. Au probleme cu pornirea/oprirea sau repornirea echipamentelor terminale. Pentru ele este dificil să conecteze dispozitivele, să le lege sau să le utilizeze.  .
+        /// </summary>
+        public static string So_131_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_131_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями испытывают трудности с использованием цифровых устройств, таких как мобильные телефоны, ноутбуки или планшеты. Хотя они тоже могут сохранять документы на разных операционных системах. Однако они не очень хорошо в них разбираются и часто вынуждены искать документы, или не знают, как их редактировать. У них возникают проблемы с включением / выключением или перезагрузкой пользовательских устройств. Им сложно соединить различные устройства друг с другом, подключить их или управлять и [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_131_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_131_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler cep telefonu, dizüstü bilgisayar veya tablet gibi dijital cihazları kullanmakta zorluk çekerler. Gerçi belgeleri farklı işletim sistemlerine kaydedebilirler. Ancak, bu belgelere vakıf değiller ve genellikle belgeleri aramak zorunda kalırlar veya nasıl işleyeceklerini bilmezler. Aygıtları açıp kapatırken veya yeniden başlatırken sorun yaşarlar. Farklı aygıtları birbirine bağlamakta, onları ağ sistemine bağlama veya çalıştırmakta zorlanırlar.  .
+        /// </summary>
+        public static string So_131_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_131_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками мають труднощі з використанням цифрових пристроїв, таких як мобільні телефони, ноутбуки, планшети. Хоча вони можуть зберігати документи на різних операційних системах, вони не дуже добре в них розбираються і часто змушені шукати документи, або не знають, як їх редагувати. Вони мають проблеми з увімкненням / вимкненням або перезавантаженням пристроїв. Їм важко з&apos;єднати різні пристрої один з одним, підключити або використовувати їх.  .
+        /// </summary>
+        public static string So_131_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_131_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -295,11 +925,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Търсене на данни, информация и материали чрез просто търсене в дигитална среда..
+        /// </summary>
+        public static string So_132__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_132__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suche nach Daten, Informationen und Inhalten durch einfache Suche in digitalen Umgebungen..
         /// </summary>
         public static string So_132__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_132__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for data, information, and content by simply searching in digital environments..
+        /// </summary>
+        public static string So_132__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_132__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rechercher des données, des informations et du contenu en effectuant des recherches simples dans des environnements numériques..
+        /// </summary>
+        public static string So_132__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_132__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Căutarea datelor, informațiilor și conținuturilor prin intermediul unei căutări simple în medii digitale..
+        /// </summary>
+        public static string So_132__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_132__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Поиск данных, информации и контента с помощью простого поиска в цифровой среде..
+        /// </summary>
+        public static string So_132__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_132__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dijital ortamlarda basitçe arama yaparak veri, bilgi ve içerik arama..
+        /// </summary>
+        public static string So_132__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_132__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пошук даних, інформації та контенту за допомогою простого пошуку в цифровому середовищі..
+        /// </summary>
+        public static string So_132__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_132__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -313,11 +1006,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати знаят как да търсят данни и информация в интернет. Това се познава по това, че те редовно използват търсачки като Google, Bing или Yahoo. Те знаят как се използват филтри или други разширени функции при задаването на търсене. При проблеми те намират целенасочени подходящи резултати от търсенето в интернет..
+        /// </summary>
+        public static string So_132_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_132_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten wissen, wie sie nach Daten und Informationen im Internet suchen. Dies zeigt sich dadurch, dass sie regelmäßig Suchmaschinen wie Google, Bing oder Yahoo benutzen. Sie wissen, wie Filter oder andere erweiterte Funktionen bei Suchaufträgen eingesetzt werden. Bei Problemen finden sie zielgerichtet passende Suchergebnisse im Internet..
         /// </summary>
         public static string So_132_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_132_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores know how to search for data and information online. This is demonstrated by their regular use of search engines such as Google, Bing, or Yahoo. They know how to use filters or other advanced functions for search queries. If they have problems, they can find suitable search results online..
+        /// </summary>
+        public static string So_132_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_132_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont capables de rechercher des données et des informations sur Internet. Cela se traduit par l’utilisation régulière de moteurs de recherche tels que Google, Bing ou Yahoo. Elles savent comment utiliser des filtres ou d’autres fonctions avancées pour effectuer des recherches. En cas de problème, elles trouvent des résultats de recherche ciblés sur Internet..
+        /// </summary>
+        public static string So_132_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_132_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate știu cum să caute date și informații pe internet. Acest lucru se evidențiază prin faptul că ele folosesc în mod regulat motoare de căutare, cum ar fi Google, Bing sau Yahoo. Știu cum se folosesc filtrele sau alte funcții extinse în căutări. Când se confruntă cu probleme, găsesc pe internet țintit rezultatele căutării..
+        /// </summary>
+        public static string So_132_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_132_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями знают, как искать данные и информацию в интернете. Об этом свидетельствует тот факт, что они регулярно пользуются поисковыми системами, такими как Google, Bing или Yahoo. Они знают, как использовать фильтры или другие расширенные функции для поисковых запросов. При возникновении проблем они целенаправленно находят нужную информацию в интернете..
+        /// </summary>
+        public static string So_132_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_132_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler internette nasıl veri ve bilgi arayacaklarını bilirler. Google, Bing veya Yahoo gibi arama motorlarını düzenli olarak kullanmaları da bunu gösterir. Arama işlemlerinde filtreleri veya diğer gelişmiş işlevleri nasıl kullanacaklarını bilirler. Problemleri çözmek için internette uygun arama sonuçlarını bulabilirler..
+        /// </summary>
+        public static string So_132_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_132_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками знають, як шукати дані та інформацію в інтернеті. Про це свідчить той факт, що вони регулярно користуються пошуковими системами – Google, Bing, Yahoo тощо. Вони знають, як використовувати фільтри або інші розширені функції для пошукових запитів. У разі виникнення проблем вони цілеспрямовано знаходять необхiдну інформацію в інтернеті..
+        /// </summary>
+        public static string So_132_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_132_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -331,11 +1087,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да намират подходящи решения в интернет. Те все пак използват търсачки като Google, Bing или Yahoo. Въпреки това при задаването на търсене те не използват или нямат знания за филтри или разширени функции, които биха могли да улеснят търсенето, и се доверяват на първия източник, който намерят..
+        /// </summary>
+        public static string So_132_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_132_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, passende Lösungen im Internet zu finden. Sie nutzen zwar Suchmaschinen wie Google, Bing oder Yahoo. Bei Suchaufträgen benutzen oder kennen sie jedoch keine Filter oder erweiterten Funktionen, die eine Recherche erleichtern könnten, und vertrauen der ersten Quelle, die sie finden können..
         /// </summary>
         public static string So_132_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_132_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it challenging to find suitable solutions on the Internet. They use search engines such as Google, Bing, and Yahoo. When searching, however, they do not use and are not familiar with filters or advanced functions that could facilitate research and trust the first source they can find..
+        /// </summary>
+        public static string So_132_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_132_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à trouver des solutions adaptées sur Internet. Elles utilisent des moteurs de recherche tels que Google, Bing ou Yahoo. Cependant, elles n’utilisent pas ou ne connaissent pas les filtres ou les fonctions avancées qui pourraient faciliter leurs recherches et se fient à la première source qu’elles trouvent..
+        /// </summary>
+        public static string So_132_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_132_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să găsească soluții adecvate pe internet. Ele folosesc motoare de căutare precum Google, Bing sau Yahoo. Însă la căutări, nu folosesc sau nu cunosc funcțiile de filtrare sau extinse ce pot înlesni căutarea și se bazează pe prima sursă găsită..
+        /// </summary>
+        public static string So_132_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_132_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно найти подходящие решения в интернете. Хотя они тоже используют поисковые системы, такие как Google, Bing или Yahoo. Однако они не используют или не знают никаких фильтров или дополнительных функций, которые могли бы облегчить поиск, и доверяют первому попавшемуся источнику..
+        /// </summary>
+        public static string So_132_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_132_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler internette uygun çözümler bulmakta zorlanırlar. Kendileri gerçi Google, Bing veya Yahoo gibi arama motorları kullanırlar. Ancak, aramayı kolaylaştırabilecek herhangi bir filtre veya gelişmiş işlev kullanmazlar veya bunları bilmezler ve bulabildikleri ilk kaynağa güvenirler..
+        /// </summary>
+        public static string So_132_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_132_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям з низькими показниками важко знайти відповідні рішення в інтернеті, хоча вони теж використовують пошукові системи – Google, Bing, Yahoo тощо. Однак вони не використовують / не знають жодних фільтрів або додаткових функцій, які могли б полегшити пошук, і довіряють першому-ліпшому джерелу..
+        /// </summary>
+        public static string So_132_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_132_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -349,11 +1168,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Използване на прости дигитални инструменти и технологии за комуникация, взаимодействие и сътрудничество с други..
+        /// </summary>
+        public static string So_133__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_133__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nutzen einfacher digitaler Werkzeuge und Technologien für die Kommunikation, Interaktion und Zusammenarbeit mit Anderen..
         /// </summary>
         public static string So_133__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_133__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using simple digital tools and technologies to communicate, interact, and collaborate with others..
+        /// </summary>
+        public static string So_133__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_133__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utiliser des outils et des technologies numériques simples pour communiquer, interagir et collaborer avec les autres..
+        /// </summary>
+        public static string So_133__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_133__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folosirea unor instrumente și tehnologii digitale simple pentru comunicare, interacțiune și colaborarea cu alte persoane..
+        /// </summary>
+        public static string So_133__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_133__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Использование простых цифровых инструментов и технологий для общения, взаимодействия и сотрудничества с другими людьми..
+        /// </summary>
+        public static string So_133__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_133__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başkalarıyla iletişim kurma, etkileşim ve işbirliği için basit dijital araç ve teknolojileri kullanma..
+        /// </summary>
+        public static string So_133__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_133__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Використання простих цифрових інструментів і технологій для спілкування, взаємодії та співпраці..
+        /// </summary>
+        public static string So_133__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_133__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -367,11 +1249,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати владеят използването на дигитални инструменти и технологии за комуникация, взаимодействие и сътрудничество. Те знаят как се съставят имейли, а и владеят съответните инструменти като Outlook, с които се съставят имейлите. Освен това те използват програми за онлайн видео конференции като Teams или Zoom и могат да организират планирани онлайн срещи. Те умеят и да вместват в работата си програми за съвместна работа - като Google Docs или Miro..
+        /// </summary>
+        public static string So_133_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_133_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten beherrschen die Nutzung digitaler Werkzeuge und Technologien für Kommunikation, Interaktion und Zusammenarbeit. Sie wissen, wie E-Mails verfasst werden, und sie beherrschen die entsprechenden Tools wie Outlook, mit denen E-Mails verfasst werden. Sie nutzen darüber hinaus Programme für Online-Videokonferenzen wie Teams oder Zoom und können geplante Online-Treffen organisieren. Außerdem sind sie in der Lage, Programme für die Zusammenarbeit - wie Google Docs oder Miro - in ihre Arbei [rest of string was truncated]&quot;;.
         /// </summary>
         public static string So_133_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_133_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are proficient in using digital tools and technologies to communicate, interact, and collaborate. They know how to compose emails and are proficient in using tools such as Outlook to write emails. They also use online video conferencing programs like Teams or Zoom and can organize scheduled online meetings. They can also integrate collaboration programs like Google Docs or Miro into their work..
+        /// </summary>
+        public static string So_133_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_133_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé maîtrisent l’utilisation des outils et technologies numériques pour communiquer, interagir et collaborer. Elles savent comment rédiger des e-mails et maîtrisent les outils correspondants, tels qu’Outlook, qui permettent de rédiger des e-mails. Elles utilisent également des programmes de vidéoconférence en ligne tels que Teams ou Zoom et sont capables d’organiser des réunions en ligne planifiées. Elles sont également capables d’intégrer des programmes de collaboratio [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_133_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_133_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate stăpânesc instrumente și tehnologii digitale pentru comunicare, interacțiune și colaborare. Știu cum să compună e-mailuri și știu să folosească instrumentele corespunzătoare, cum ar fi Outlook, cu care se compun e-mailuri. În plus, știu să utilizez programe pentru videoconferințe online, cum ar fi Teams sau Zoom, și pot organiza întâlniri online planificate. În plus, știu să integreze în activitatea lor programe de colaborare, cum ar fi Google Docs sau Miro..
+        /// </summary>
+        public static string So_133_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_133_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями умеют пользоваться цифровыми инструментами и технологиями для общения, взаимодействия и сотрудничества. Они знают, как составлять электронные письма, и знакомы с соответствующими инструментами, такими как Outlook, которые используются для составления электронных писем. Кроме того, они используют программы для онлайн-видеоконференций, такие как Teams или Zoom, и могут организовывать запланированные онлайн-встречи. Кроме того, они способны интегрировать в свою работу программы для [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_133_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_133_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler iletişim, etkileşim ve işbirliği için dijital araç ve teknolojileri kullanma konusunda yetkindir. Bu kişiler epostaların nasıl oluşturulacağını bilirler ve eposta oluşturmak için kullanılan örneğin Outlook gibi ilgili programlara aşinadırlar. Kendileri ayrıca Teams veya Zoom gibi çevrimiçi video konferans programlarını kullanırlar ve planlı çevrimiçi toplantılar düzenleyebilirler. Aynı zamanda Google Docs veya Miro gibi işbirliği yapma programlarını çalışmalarına en [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_133_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_133_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками вміють користуватися цифровими інструментами та технологіями для спілкування, взаємодії та співпраці. Вони знають, як складати електронні листи, знайомі з відповідними інструментами, наприклад з Outlook, для складання електронних листів. Крім того, вони використовують програми для онлайн-відеоконференцій, такі як Teams або Zoom, і можуть організовувати заплановані онлайн-зустрічі. Крім того, вони здатні інтегрувати в свою роботу програми для спільної роботи, такі як Google Docs а [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_133_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_133_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -385,11 +1330,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати работят рядко с дигитални инструменти и технологии за комуникация, взаимодействие и сътрудничество. Те изпитват затруднения да съставят имейли правилно и не знаят как функционират широко използваните програми за имейли като Outlook. Освен това те рядко или никога не използват програми за съвместна работа като GoogleDocs или Miro. Това се отнася и за програми за онлайн видео конференции. .
+        /// </summary>
+        public static string So_133_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_133_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten arbeiten selten mit digitalen Werkzeugen und Technologien für Kommunikation, Interaktion und Zusammenarbeit. Sie haben Probleme, E-Mails richtig zu verfassen und wissen nicht, wie gängige E-Mailprogramme wie Outlook funktionieren. Außerdem nutzen sie selten oder nie Programme zur Zusammenarbeit wie GoogleDocs oder Miro. Dies bezieht sich auch auf Programme für Online-Videokonferenzen..
         /// </summary>
         public static string So_133_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_133_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores rarely use digital tools and technologies for communication, interaction, and collaboration. They have problems writing emails correctly and do not know how common email programs like Outlook work. They also rarely or never use collaboration programs such as Google Docs or Miro. This also applies to online video conferencing programs. .
+        /// </summary>
+        public static string So_133_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_133_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible utilisent rarement les outils et technologies numériques de communication, d’interaction et de collaboration. Elles éprouvent des difficultés à rédiger correctement des e-mails et ne savent pas comment fonctionnent les programmes de messagerie courants tels qu’Outlook. De plus, elles utilisent rarement ou jamais des programmes de collaboration tels que Google Docs ou Miro. C’est également le cas pour les programmes de vidéoconférence en ligne. .
+        /// </summary>
+        public static string So_133_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_133_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate lucrează rareori cu instrumente și tehnologii digitale pentru comunicare, interacțiune și colaborare. Acestea au probleme să scrie corect e-mailuri și nu știu cum funcționează programele de e-mail uzuale, cum ar fi Outlook. În plus, ele nu folosesc niciodată sau rareori programe pentru colaborare, cum ar fi Google Docs sau Miro. Acest lucru se aplică și în cazul programelor pentru videoconferințe. .
+        /// </summary>
+        public static string So_133_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_133_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями редко работают с цифровыми инструментами и технологиями для общения, взаимодействия и сотрудничества. У них возникают проблемы с правильным составлением электронных писем, и они не знают, как работают обычные почтовые программы, такие как Outlook. Кроме того, они редко или никогда не используют программы для совместной работы, такие как GoogleDocs или Miro. Это относится также к программам для онлайн-видеоконференций. .
+        /// </summary>
+        public static string So_133_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_133_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler iletişim, etkileşim ve işbirliği için nadiren dijital araç ve teknolojilerle çalışmaktadır. Bu kişiler epostaları doğru şekilde oluşturmakta sorun yaşar ve Outlook gibi yaygın eposta programlarının nasıl çalıştığını bilmezler. Ayrıca GoogleDocs veya Miro gibi işbirliği programlarını nadiren veya hiç kullanmazlar. Bu aynı zamanda çevrimiçi video konferans programları için de geçerlidir. .
+        /// </summary>
+        public static string So_133_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_133_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками рідко працюють із цифровими інструментами та технологіями для спілкування, взаємодії та співпраці. Вони мають проблеми з правильним складанням електронних листів і не знають, як працюють звичайні поштові програми, такі як Outlook. Крім того, вони рідко або ніколи не використовують програми для спільної роботи, такі як GoogleDocs або Miro. Це стосується також програм для онлайн-відеоконференцій. .
+        /// </summary>
+        public static string So_133_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_133_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -403,11 +1411,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Създаване и обработка на прости дигитални материали, при необходимост с напътствия..
+        /// </summary>
+        public static string So_134__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_134__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erstellen und Bearbeiten einfacher digitaler Inhalte, bei Bedarf unter Anleitung..
         /// </summary>
         public static string So_134__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_134__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating and editing simple digital content, with guidance if needed..
+        /// </summary>
+        public static string So_134__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_134__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Créer et éditer des contenus numériques simples, en suivant des instructions si nécessaire..
+        /// </summary>
+        public static string So_134__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_134__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elaborarea și prelucrarea unor conținuturi digitale simple, dacă este necesar, sub îndrumare..
+        /// </summary>
+        public static string So_134__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_134__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Создание и редактирование простого цифрового контента, при необходимости под руководством..
+        /// </summary>
+        public static string So_134__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_134__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gerektiğinde yönlendirmeli olarak basit dijital içerik oluşturma ve düzenleme..
+        /// </summary>
+        public static string So_134__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_134__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Створення та редагування простого цифрового контенту, також під керівництвом..
+        /// </summary>
+        public static string So_134__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_134__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -421,11 +1492,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати знаят как се създават или обработват дигитални материали. Те могат да развиват и форматират базирани на текст материали, да променят формата на документите или за обработват изображения с компютър. Те имат солидни знания за използването на програми за обработка на текст или данни като Word или Excel. Освен това те имат опит в работата с редактори на интернет страници като например WordPress..
+        /// </summary>
+        public static string So_134_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_134_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten wissen, wie digitale Inhalte erstellt oder bearbeitet werden. Sie können textbasierte Inhalte entwickeln, formatieren, die Dokumentformate ändern oder Bilder am PC bearbeiten. Sie sind sicher im Umgang von Programmen zur Text- bzw. Datenverarbeitung wie Word oder Excel. Außerdem haben sie Erfahrungen im Umgang mit Websiteeditoren wie zum Beispiel WordPress..
         /// </summary>
         public static string So_134_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_134_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores know how to create or edit digital content. They can develop and format text-based content, change document formats, and edit images on a PC. They are confident in using word processing or data processing programs such as Word or Excel. They also have experience in using website editors such as WordPress..
+        /// </summary>
+        public static string So_134_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_134_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont capables de créer ou modifier des contenus numériques. Elles savent développer et mettre en forme des contenus textuels, modifier le format des documents ou traiter des images sur un ordinateur. Elles sont à l’aise avec les programmes de traitement de texte ou de données tels que Word ou Excel. Elles ont également de l’expérience dans l’utilisation d’éditeurs de sites Web tels que WordPress..
+        /// </summary>
+        public static string So_134_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_134_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate știu cum să creeze sau să prelucreze conținuturi digitale. Ele pot dezvolta conținuturi bazate pe texte, le pot formata, pot modifica formatele documentelor sau edita imagini pe PC. Sunt sigure în utilizarea programelor pentru prelucrarea datelor și a textelor, cum ar fi Word sau Excel. În plus, au experiență cu utilizarea unor editoare web, de ex. WordPress..
+        /// </summary>
+        public static string So_134_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_134_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями знают, как создавать или редактировать цифровой контент. Они способны разрабатывать и форматировать текстовые материалы, изменять форматы документов или редактировать изображения на своём компьютере. Вы уверенно пользуетесь программами для обработки текстов и данных, такими как Word или Excel. Кроме того, у них есть опыт работы с редакторами веб-сайтов, такими как WordPress..
+        /// </summary>
+        public static string So_134_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_134_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler dijital içeriği nasıl oluşturacaklarını veya düzenleyeceklerini bilirler. Bu kişiler bilgisayarda metin tabanlı içerik geliştirebilir ve biçimlendirebilir, belge formatlarını değiştirebilir veya görüntüleri düzenleyebilirler. Word veya Excel gibi metin ve veri işleme programlarını kendilerinden emin şekilde kullanabilirler. Ayrıca WordPress gibi web sitesi editörleriyle çalışma konusunda da deneyim sahibidirler..
+        /// </summary>
+        public static string So_134_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_134_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками знають, як створювати або редагувати цифровий контент. Вони здатні розробляти та форматувати текстові матеріали, змінювати формати документів або редагувати зображення на своєму комп&apos;ютері. Вони впевнено користуються програмами для обробки текстів і даних, такими як Word або Excel. Крім того, вони мають досвід роботи з редакторами веб-сайтів, такими як WordPress..
+        /// </summary>
+        public static string So_134_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_134_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -439,11 +1573,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to За хората с ниски резултати е проблем да създават или обработват дигитални материали. Те рядко работят на компютър или използват програми за обработка на текст или данни като Word или Excel. Те нямат опит с редактори на интернет страници и дори и с напътствия се затрудняват да развиват дигитални материали..
+        /// </summary>
+        public static string So_134_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_134_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten haben Probleme damit, digitale Inhalte zu erstellen oder zu bearbeiten. Sie arbeiten selten am Computer oder nutzen Programme zur Text- bzw. Datenverarbeitung wie z.B. Word oder Excel. Sie haben keine Erfahrung mit Websiteeditoren und haben auch unter Anleitung Probleme damit, digitale Inhalte zu entwickeln..
         /// </summary>
         public static string So_134_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_134_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores have problems creating or editing digital content. They rarely work on a computer or use word processing or data processing programs such as Word or Excel. They have no experience with website editors and have problems developing digital content, even with guidance..
+        /// </summary>
+        public static string So_134_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_134_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à créer ou à modifier des contenus numériques. Elles travaillent rarement sur ordinateur ou utilisent des programmes de traitement de texte ou de données tels que Word ou Excel. Elles n’ont pas d’expérience avec les éditeurs de sites Web et ont du mal à développer du contenu numérique, même avec des instructions..
+        /// </summary>
+        public static string So_134_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_134_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute au probleme în a elabora sau prelucra conținuturi digitale. Ele lucrează rareori la computer sau folosesc rareori programe pentru prelucrarea datelor și a textelor, cum ar fi Word sau Excel. Nu au experiență cu editoare web și au probleme să dezvolte conținuturi digitale chiar și sub îndrumare..
+        /// </summary>
+        public static string So_134_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_134_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями испытывают проблемы с созданием или редактированием цифрового контента. Они редко работают на компьютере или используют программы обработки текстов и данных, такие как Word или Excel. У них нет опыта работы с редакторами веб-сайтов, и они испытывают трудности с разработкой цифрового контента даже под внешним руководством..
+        /// </summary>
+        public static string So_134_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_134_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler dijital içerik oluşturmada veya düzenlemede sorun yaşarlar. Bu kişiler nadiren bilgisayarda çalışır veya Word veya Excel gibi metin veya veri işleme programlarını kullanırlar. Web sitesi editörleri konusunda deneyimleri yoktur ve yönlendirme altında dahi dijital içerik geliştirmede sorun yaşarlar..
+        /// </summary>
+        public static string So_134_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_134_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками мають проблеми зі створенням або редагуванням цифрового контенту. Вони рідко працюють на комп&apos;ютері або використовують програми обробки текстів і даних, такі як Word або Excel. Вони не мають досвіду роботи з редакторами веб-сайтів і зазнають труднощів з розробкою цифрового контенту навіть під зовнішнім керівництвом..
+        /// </summary>
+        public static string So_134_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_134_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -457,11 +1654,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Създаване и управление на една или повече дигитални самоличности; умение да се защитава собствената репутация; боравене с данни, които се добиват от редица дигитални инструменти, среди и услуги..
+        /// </summary>
+        public static string So_135__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_135__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erstellung und Verwaltung einer oder mehrerer digitaler Identitäten; Fähigkeit, die eigene Reputation zu schützen; Umgang mit den Daten, die durch mehrere digitale Werkzeuge, Umgebungen und Dienste erzeugt werden..
         /// </summary>
         public static string So_135__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_135__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating and managing one or more digital identities; being able to protect your reputation; handling data generated by multiple digital tools, environments, and services..
+        /// </summary>
+        public static string So_135__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_135__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Créer et gérer une ou plusieurs identités numériques, protéger sa réputation, traiter les données générées par plusieurs outils, environnements et services numériques..
+        /// </summary>
+        public static string So_135__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_135__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crearea și gestionarea unei alte sau mai multor identități digitale; capacitatea de a-și proteja propria reputație; gestionarea datelor generate prin mai multe instrumente, medii și servicii digitale..
+        /// </summary>
+        public static string So_135__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_135__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Создание и управление одной или несколькими цифровыми личностями; способность защищать собственную репутацию; работа с данными, генерируемыми несколькими цифровыми инструментами, средами и службами..
+        /// </summary>
+        public static string So_135__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_135__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bir veya daha fazla dijital kimliği oluşturma ve yönetme; kendi karakterleri koruma becerisi; birden fazla dijital araç, ortam ve hizmet tarafından üretilen verilerin işlenmesi..
+        /// </summary>
+        public static string So_135__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_135__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Створення та керування однією або декількома цифровими особистостями; здатність захищати власну репутацію; робота з даними, генерованими декількома цифровими інструментами, середовищами і службами..
+        /// </summary>
+        public static string So_135__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_135__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -475,11 +1735,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати знаят как да защитят собствената си самоличност в интернет или как да презентират материали. Те използват социалните мрежи редовно и отговорно. Те са запознати с настройките за личната сфера в социалните мрежи и знаят как да ги прилагат. Освен това те разпределят материалите в подходящ формат и в съответствие с обществената си позиция. В интернет платформите те също така се придържат към приетите правила за учтивост и уважение..
+        /// </summary>
+        public static string So_135_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_135_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten wissen, wie sie ihre eigene Identität im Internet schützen oder Inhalte präsentieren können. Sie nutzen soziale Netzwerke regelmäßig und verantwortungsvoll. Sie kennen die Privatsphäre-Einstellungen in sozialen Netzwerken und wissen, wie sie sie verwenden. Darüber hinaus teilen sie Inhalte in angemessenem Format und entsprechend ihrer gesellschaftlichen Rolle. Sie halten sich auch auf Internetplattformen an die gängigen Regeln von Höflichkeit und Respekt..
         /// </summary>
         public static string So_135_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_135_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores know how to protect their own identity online or present content. They use social networks regularly and responsibly. They know the privacy settings on social networks and how to use them. In addition, they share content in an appropriate format and according to their social role. They also adhere to the standard rules of politeness and respect on internet platforms..
+        /// </summary>
+        public static string So_135_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_135_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont capables de protéger leur propre identité en ligne ou de présenter du contenu. Elles utilisent les réseaux sociaux régulièrement et de manière responsable. Elles connaissent les paramètres de confidentialité des réseaux sociaux et savent comment les utiliser. En outre, elles partagent des contenus dans un format approprié et en fonction de leur rôle au sein de la société. Elles respectent également les règles courantes de politesse et de respect sur les platefo [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_135_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_135_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate știu cum să își protejeze propria identitate pe internet sau cum pot prezenta conținuturi. Folosesc în mod regulat și responsabil rețelele de socializare. Cunosc setările pentru sfera privată din rețelele de socializare și știu cum să le folosească. În plus, ele partajează conținuturi în format adecvat și corespunzător rolului lor din societate. Pe platformele internet, respectă regulile de politețe și respect..
+        /// </summary>
+        public static string So_135_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_135_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями знают, как защитить свою личность в интернете или как преподнести контент. Они регулярно и ответственно пользуются социальными сетями. Они знают о настройках конфиденциальности в социальных сетях и о том, как ими пользоваться. Кроме того, они делятся контентом в подходящем формате и в соответствии со своей социальной ролью. Они также придерживаются на интернет-площадках общепринятых правил вежливости и уважения..
+        /// </summary>
+        public static string So_135_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_135_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler internette kendi kimliklerini nasıl koruyacaklarını veya içeriği nasıl sunacaklarını bilirler. Bu kişiler sosyal ağları düzenli ve sorumlu bir şekilde kullanırlar. Sosyal ağlardaki gizlilik ayarlarını ve bunları nasıl kullanacaklarını bilirler. Ayrıca, içerikleri uygun bir formatta ve toplumsal rollerine göre paylaşırlar. Ayrıca, internet platformlarındaki yaygın nezaket ve saygı kurallarına da uyarlar..
+        /// </summary>
+        public static string So_135_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_135_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками знають, як захистити свою особистість в інтернеті або як подати контент. Вони регулярно та відповідально користуються соціальними мережами. Вони можуть налаштувати конфіденційності в соціальних мережах і знають, як ними користуватися. Крім того, вони діляться контентом у відповідному форматі та відповідно до своєї соціальної ролі. На інтернет-майданчиках вони також дотримуються загальноприйнятих правил ввічливості та поваги..
+        /// </summary>
+        public static string So_135_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_135_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -493,11 +1816,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати притежават по-малко знания за това как да защитят собствената си идентичност или как да презентират. В някои случаи те използват социалните мрежи нередовно или необмислено. Те не са запознати с настройките на личната сфера и евентуално издават несъзнателно информация за себе си. Възможно е и да не се споделят никакви материали. В интернет дискусиите те не се придържат към правилата като уважение и учтивост..
+        /// </summary>
+        public static string So_135_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_135_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten wissen weniger, wie sie ihre eigene Identität schützen oder Inhalte präsentieren können. Sie nutzen soziale Netzwerke gegebenenfalls nicht regelmäßig oder unüberlegt. Sie kennen sich mit den Privatsphäre-Einstellungen nicht aus und geben eventuell unbewusste Inhalte über sich preis. Möglicherweise werden auch gar keine Inhalte geteilt. In Internet-Diskussionen halten sie sich nicht an Normen wie Respekt und Höflichkeit..
         /// </summary>
         public static string So_135_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_135_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are less likely to know how to protect their own identity or present content. They may not use social networks regularly or use them indiscriminately. They are unfamiliar with privacy settings and may disclose content about themselves without realizing it. They may not share any content at all. They do not adhere to norms such as respect and politeness in online discussions..
+        /// </summary>
+        public static string So_135_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_135_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible sont moins capables de protéger leur propre identité ou de présenter du contenu. Elles n’utilisent pas les réseaux sociaux régulièrement ou de manière réfléchie. Elles ne connaissent pas les paramètres de confidentialité et risquent de divulguer des informations à leur insu. Il est aussi possible qu’elles ne partagent aucun contenu. Elles ne respectent pas les normes de respect et de politesse dans les discussions en ligne..
+        /// </summary>
+        public static string So_135_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_135_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute știu mai puțin cum să își protejeze propria identitate pe internet sau cum pot prezenta conținuturi. Nu folosesc în mod regulat rețelele de socializare sau le folosesc într-un mod nechibzuit. Nu cunosc setările privind sfera privată și uneori divulgă inconștient informații despre sine. Probabil că nu partajează conținuturi. În cadrul discuțiilor pe internet, nu respectă normele de politețe și nu manifestă respect..
+        /// </summary>
+        public static string So_135_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_135_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями меньше знают о том, как защитить свою личность или представить контент. Если они пользуются социальными сетями, то не регулярно или необдуманно. Они не знакомы с настройками конфиденциальности и могут раскрывать информацию о себе, не осознавая этого. Возможно также, что они вообще не делятся никаким контентом. В интернет-дискуссиях они не придерживаются таких норм, как уважение и вежливость..
+        /// </summary>
+        public static string So_135_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_135_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler kendi kimliklerini nasıl koruyacakları veya içeriklerini nasıl sunacakları konusunda daha az bilgi sahibidir. Sosyal ağları düzenli olarak kullanmazlar veya gelişigüzel kullanırlar. Gizlilik ayarlarına aşina değildirler ve farkında olmadan kendileri hakkındaki bilgileri ifşa edebilirler. Muhtemelen hiçbir paylaşımda bulunmazlar. İnternet tartışmalarında saygı ve nezaket gibi kurallara uymazlar..
+        /// </summary>
+        public static string So_135_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_135_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками менше знають про те, як захистити свою особистість або подати контент. Якщо вони користуються соціальними мережами, то не регулярно та необдумано. Вони не можуть налаштувати конфіденційнiсть та розкривають інформацію про себе, не усвідомлюючи цього. Можливо також, що вони взагалі не діляться жодним контентом. В інтернет-дискусіях вони не дотримуються таких норм, як повага та ввічливість..
+        /// </summary>
+        public static string So_135_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_135_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -511,11 +1897,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Следване на прости методи за защита на цифрови устройства и материали..
+        /// </summary>
+        public static string So_137__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_137__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Befolgen einfacher Methoden zum Schutz digitaler Geräte und Inhalte..
         /// </summary>
         public static string So_137__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_137__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Following simple methods to protect digital devices and content..
+        /// </summary>
+        public static string So_137__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_137__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suivre des méthodes simples pour protéger les appareils et contenus numériques..
+        /// </summary>
+        public static string So_137__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_137__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Urmarea unor metode simple pentru protejarea dispozitivelor și conținuturilor digitale..
+        /// </summary>
+        public static string So_137__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_137__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выполнение простых методов защиты цифровых устройств и контента..
+        /// </summary>
+        public static string So_137__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_137__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dijital cihazları ve içerikleri korumak için basit yöntemleri takip etme..
+        /// </summary>
+        public static string So_137__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_137__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Виконання простих методів захисту цифрових пристроїв і контенту..
+        /// </summary>
+        public static string So_137__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_137__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -529,11 +1978,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати познават и използват методи за защита на своите цифрови устройства и материали. Те предпазват своите устройства от вируси, като инсталират защитни програми, контролират настройките за сигурност или извършват необходимите актуализации за сигурността. По отношение на своята сигурност на данните те използват различни пароли, сменят ги редовно или използват множество специални символи, цифри и малки и големи букви.  Те познават доверени източници за изтегляния на програми или файлове и [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_137_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten kennen und nutzen Methoden zum Schutz ihrer digitalen Geräte und Inhalte. Sie schützen ihre Geräte vor Viren, indem sie Sicherheitsprogramme installieren, die Sicherheitseinstellungen kontrollieren oder erforderliche Sicherheitsupdates ausführen. Für ihre Datensicherheit nutzen sie verschiedene Passwörter, ändern diese regelmäßig oder verwenden viele Sonderzeichen, Zahlen und Groß- und Kleinschreibung.  Sie kennen vertrauenswürdige Quellen für Downloads von Programmen oder Dateien  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string So_137_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_137_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores know and use methods to protect their digital devices and content. They protect their devices from viruses by installing security programs, checking the security settings, or performing necessary security updates. They use different passwords for data security, change them regularly, or use many special characters, numbers, and upper- and lower-case letters.  They know trustworthy sources for downloading programs or files and quickly recognize fraudulent content. They also make regul [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_137_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé connaissent et utilisent des méthodes pour protéger leurs appareils et contenus numériques. Elles protègent leurs appareils contre les virus en installant des programmes de sécurité, en contrôlant les paramètres de sécurité ou en effectuant les mises à jour de sécurité nécessaires. Pour la sécurité de leurs données, elles utilisent différents mots de passe, les changent régulièrement ou emploient beaucoup de caractères spéciaux, de chiffres et de majuscules.  Elles  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_137_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate cunosc și folosesc metode pentru protejarea dispozitivelor și conținuturilor digitale. Își protejează dispozitivele de viruși prin instalarea unor programe de protecție, care controlează setările de siguranță sau execută update-urile de siguranță necesare. Pentru siguranța datelor, folosesc diferite parole, le modifică periodic sau folosesc multe caractere speciale, cifre și litere mici și mari.  Cunosc surse demne de încredere pentru descărcarea programelor sau fișierelor și  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_137_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями знают и используют методы защиты своих цифровых устройств и контента. Они защищают свои устройства от вирусов, устанавливая программы безопасности, проверяя настройки безопасности или выполняя необходимые обновления систем безопасности. Они используют различные пароли для защиты своих данных, регулярно меняют их или используют большое количество специальных символов, цифр, заглавных и строчных букв.  Они знают заслуживающие доверия источники для загрузки программ или файлов и бы [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_137_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler dijital cihazlarını ve içeriklerini korumak için yöntemler bilir ve kullanır. Bu kişiler güvenlik programları yükleyerek, güvenlik ayarlarını kontrol ederek veya gerekli güvenlik güncellemelerini yaparak cihazlarını virüslere karşı korurlar. Veri güvenlikleri için farklı şifreler kullanırlar, bunları düzenli olarak değiştirirler veya çok sayıda özel karakter, rakam, büyük ve küçük harf kullanırlar.  Programları veya dosyaları indirmek için güvenilir kaynakları bilir [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_137_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками знають і використовують методи захисту своїх цифрових пристроїв і контенту. Вони захищають свої пристрої від вірусів, встановлюючи програми безпеки, перевіряючи налаштування безпеки або виконуючи необхідні оновлення систем безпеки. Вони використовують різні паролі для захисту своїх даних, регулярно змінюють їх або використовують спеціальнi символи, цифри, великi та малi літери.  Вони знають джерела, що заслуговують на довіру, для завантаження програм або файлів і швидко розпізнаю [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_137_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -547,11 +2059,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати рядко защитават своите цифрови устройства или материали. Те не познават или повсеместно не използват методи за защита на своите цифрови устройства или материали; те рядко защитават своите устройства от вируси. Това се изразява особено в това, че те не инсталират защитни програми, рядко контролират настройките за сигурност или само нередовно извършват необходимите актуализации за сигурността. Използваните пароли се сменят рядко, като в повечето случаи дадена парола се използва за няк [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_137_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten schützen ihre digitalen Geräte und Inhalte selten. Methoden zum Schutz ihrer digitalen Geräte oder Inhalte kennen oder nutzen sie vielfach nicht; sie schützen ihre Geräte selten vor Viren. Dies zeigt sich insbesondere darin, dass sie keine Sicherheitsprogramme installiert haben, die Sicherheitseinstellungen selten kontrollieren oder erforderliche Sicherheitsupdates nur unregelmäßig ausführen. Verwendete Passwörter werden selten geändert, wobei ein Passwort meist für mehrere Acc [rest of string was truncated]&quot;;.
         /// </summary>
         public static string So_137_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_137_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores rarely protect their digital devices and content. In many cases, they do not know or use methods to protect their digital devices or content; they rarely safeguard their devices against viruses. This is particularly evident in their not installing any security programs, rarely checking the security settings, or only carrying out necessary security updates irregularly. They rarely change their passwords, usually with one password used for several accounts. They do not immediately recog [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_137_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible protègent rarement leurs appareils et contenus numériques. Dans la plupart des cas, elles ne connaissent pas ou n’utilisent pas de méthodes de protection de leurs appareils ou contenus numériques et protègent rarement leurs appareils contre les virus. Par exemple, elles n’ont pas installé de programmes de sécurité, elles contrôlent rarement les paramètres de sécurité ou elles n’effectuent pas régulièrement les mises à jour de sécurité nécessaires. Elles modifient r [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_137_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute își protejează rareori dispozitivele și conținuturile digitale. Nu cunosc metode de protejare a dispozitivelor și conținuturilor digitale sau nu le folosesc; rareori își protejează dispozitivele de viruși. Acest lucru se arată prin faptul că nu au instalate programe de securitate, că doar rareori își controlează setările de siguranță sau că efectuează update-urile de siguranță necesare doar sporadic. Parolele folosite sunt modificate rareori, iar o parolă este folosită de cele  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_137_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями редко защищают свои цифровые устройства и контент. Они часто не знают или не используют методы защиты своих цифровых устройств и контента; они редко защищают свои устройства от вирусов. Это особенно заметно по тому, что они не устанавливают никаких программ безопасности, редко проверяют настройки безопасности или лишь нерегулярно выполняют необходимые обновления систем безопасности. Используемые пароли меняют редко, а один и тот же пароль обычно используют для нескольких учётных  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_137_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler dijital cihazlarını ve içeriklerini nadiren korurlar. Genellikle dijital cihazlarını veya içeriklerini korumak için yöntemler bilmez veya kullanmazlar; cihazlarını virüslere karşı nadiren korurlar. Bu durum özellikle herhangi bir güvenlik programı yüklememiş olmaları, güvenlik ayarlarını nadiren kontrol etmeleri veya gerekli güvenlik güncellemelerini sadece düzensiz bir şekilde yapmalarından anlaşılmaktadır. Kullandıkları şifreleri nadiren değiştirirler, genellikle b [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_137_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками рідко захищають свої цифрові пристрої та контент. Вони часто не знають або не використовують методи захисту своїх цифрових пристроїв і контенту; вони рідко захищають свої пристрої від вірусів. Зокрема, вони не встановлюють жодних програм безпеки, рідко перевіряють налаштування безпеки, нерегулярно виконують необхідні оновлення систем безпеки. Використовувані паролі змінюють рідко; один пароль зазвичай використовують для кількох облікових записів. Шахрайський контент вони розпізна [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string So_137_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_137_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -565,11 +2140,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Вземане на преценки въз основа на вътрешни доказателства и външни критерии и защитаването им. Критично оценяване на достоверността и надеждността на информация, преди тази информация да бъде използвана или предадена на други. Развиване на самостоятелно и критично мислене..
+        /// </summary>
+        public static string So_211__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_211__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Urteile auf der Grundlage interner Beweise und externer Kriterien treffen und diese verteidigen. Die Glaubwürdigkeit und Verlässlichkeit von Informationen kritisch bewerten, bevor diese verwendet oder an Andere weitergegeben werden. Selbstständiges und kritisches Denken entwickeln..
         /// </summary>
         public static string So_211__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_211__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Making and defending judgments based on internal evidence and external criteria. Critically evaluating the credibility and reliability of information before using it or passing it on to others. Developing independent and critical thinking..
+        /// </summary>
+        public static string So_211__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_211__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Émettre des avis basés sur des preuves internes et des critères externes et les défendre. Évaluer de manière critique la crédibilité et la fiabilité des informations avant de les utiliser ou de les communiquer à d’autres. Développer une pensée autonome et critique..
+        /// </summary>
+        public static string So_211__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_211__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Judecată pe baza dovezilor interne și a criteriilor externe și apărarea acesteia. Evaluarea în manieră critică a credibilității și fiabilității informațiilor înainte de a le folosi și transmite altor persoane. Dezvoltarea gândirii independente și critice..
+        /// </summary>
+        public static string So_211__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_211__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выносить и защищать оценки, основанные на внутренних доказательствах и внешних критериях. Критический анализ достоверности и надёжности информации до её использования или передачи другим. Развитие независимого и критического мышления..
+        /// </summary>
+        public static string So_211__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_211__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşletme içi kanıtlara ve dış kriterlere dayalı karar verme ve bu kararları savunma. Bilgiyi kullanmadan veya başka kişilere aktarmadan önce bilginin güvenilirliği ve inanılırlığını eleştirel bir gözle değerlendirin. Bağımsız ve eleştirel düşünmeyi geliştirin..
+        /// </summary>
+        public static string So_211__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_211__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Виносити і захищати оцінки, засновані на внутрішніх доказах і зовнішніх критеріях. Критичний аналіз достовірності та надійності інформації до її використання або передачі далі. Розвиток незалежного та критичного мислення..
+        /// </summary>
+        public static string So_211__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_211__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -583,11 +2221,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи стойности могат самостоятелно да разпознават процеси и обстоятелства, да ги оценяват и на тази основа да стигат до разумни изводи. Те оценяват критично дадени материали и техните източници. В професионалното ежедневие това често се изразява във внимателно проучване на определени процеси и обстоятелства, дори и когато са налице йерархични структури..
+        /// </summary>
+        public static string So_211_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_211_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten können selbstständig Prozesse und Sachverhalte erkennen, diese bewerten, und darauf basierend zu nachvollziehbaren Schlussfolgerungen kommen. Sie bewerten Inhalte und deren Quellen kritisch. Im beruflichen Alltag drückt sich dies oft durch das Hinterfragen gegebener Prozesse und Sachverhalte aus, selbst, wenn hierarchische Strukturen vorgegeben sind..
         /// </summary>
         public static string So_211_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_211_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores can independently recognize processes and topics, evaluate them, and come to comprehensible conclusions based on them. They critically evaluate content and its sources. In everyday professional life, this is often expressed by questioning given processes and topics, even when hierarchical structures are in place..
+        /// </summary>
+        public static string So_211_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_211_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont capables d’identifier de manière autonome des processus et des faits, de les évaluer et de parvenir à des conclusions cohérentes sur cette base. Elles évaluent les contenus et leurs sources de manière critique. Au travail, cela s’exprime souvent par la remise en question de processus et de faits donnés, même en cas de structures hiérarchiques imposées..
+        /// </summary>
+        public static string So_211_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_211_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate pot recunoaște în mod autonom procese și situații de fapt, le pot evalua și, pe baza lor, pot formula concluzii transparente. Acestea evaluează în manieră critică conținuturile și sursele acestora. În activitățile de muncă curente, acest aspect se traduce prin examinarea critică a proceselor și situațiilor, chiar și atunci când sunt prescrise structuri ierarhice..
+        /// </summary>
+        public static string So_211_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_211_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями способны самостоятельно распознавать процессы и положение дел, оценивать их и делать на их основе обоснованные выводы. Они критически оценивают информацию и её источники. В повседневной работе это часто выражается в том, что под сомнение ставятся существующие процессы и положение дел, даже при наличии иерархических структур..
+        /// </summary>
+        public static string So_211_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_211_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler süreçleri ve olayları bağımsız olarak algılayabilir, değerlendirebilir ve bunlara dayanarak anlaşılabilir sonuçlara varabilirler. Bu kişiler içerik ve kaynaklarını eleştirel bir gözle değerlendirirler. Günlük iş hayatında bu durum, hiyerarşik yapılar mevcut olsa dahi, genellikle verilen süreç ve koşulların sorgulanmasıyla ifade edilir..
+        /// </summary>
+        public static string So_211_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_211_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками здатні самостійно розпізнавати процеси та стан справ, оцінювати їх і робити на їх основі обґрунтовані висновки. Вони критично оцінюють інформацію та її джерела. У повсякденній роботі це нерiдко виражається в тому, що під сумнів ставлять наявні процеси та стан справ, навіть за наявності ієрархічних структур..
+        /// </summary>
+        public static string So_211_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_211_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -601,11 +2302,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати се затрудняват да разпознават процеси и обстоятелства, да ги оценяват и на тази основа да ги проучват критично. Те рядко преценяват истинността на дадена информация и изпитват трудности да разпознаят дали отсрещната страна разполага с експертни познания. Те рядко поставят под въпрос структурите на работното място или решенията на ръководството..
+        /// </summary>
+        public static string So_211_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_211_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten haben Schwierigkeiten, Prozesse und Sachverhalte zu erkennen, zu bewerten, und kritisch zu hinterfragen. Sie beurteilen selten den Wahrheitsgehalt einer Information und haben Schwierigkeiten, zu erkennen, ob ihr Gegenüber Fachwissen besitzt. Sie hinterfragen Strukturen am Arbeitsplatz oder die Entscheidungen Vorgesetzter selten..
         /// </summary>
         public static string So_211_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_211_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores have difficulty recognizing, evaluating, and critically questioning processes and topics. They rarely assess the truthfulness of information and have difficulty recognizing whether their counterpart has specialist knowledge. They rarely question structures in the workplace or the decisions of superiors..
+        /// </summary>
+        public static string So_211_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_211_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant un score faible éprouvent des difficultés à identifier, évaluer et remettre en question de manière critique les processus et les faits. Elles évaluent rarement la véracité d’une information et ont du mal à savoir si leur interlocuteur possède des connaissances spécialisées. Elles remettent rarement en question les structures de leur lieu de travail ou les décisions de leurs supérieurs..
+        /// </summary>
+        public static string So_211_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_211_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute au dificultăți să înțeleagă, să evalueze și să examineze în manieră critică procesele și situațiile. Ele apreciază rareori veridicitatea informațiilor și au dificultăți în a recunoaște dacă cealaltă persoană posedă cunoștințe de specialitate. Rareori pun la îndoială structurile de la locul de muncă sau deciziile superiorilor ierarhici..
+        /// </summary>
+        public static string So_211_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_211_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно распознавать, оценивать и критически осмысливать процессы и обстоятельства. Они редко оценивают правдивость информации и с трудом понимают, обладает ли другой человек специальными знаниями. Они редко ставят под сомнение организацию рабочего процесса на рабочем месте или решения начальства..
+        /// </summary>
+        public static string So_211_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_211_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler süreçleri ve olayları algılamakta, değerlendirmekte ve eleştirel bir şekilde sorgulamakta zorluk çekerler. Bilginin doğruluğunu nadiren değerlendirirler ve karşılarındaki kişinin uzmanlık bilgisine sahip olup olmadığını anlamakta zorluk çekerler. İşyerindeki organizasyon yapısı veya amirlerinin kararlarını nadiren sorgularlar..
+        /// </summary>
+        public static string So_211_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_211_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко розпізнавати, оцінювати та критично осмислювати процеси й обставини. Вони рідко оцінюють правдивість інформації і не завжди розуміють, чи володіє інша людина спеціальними знаннями. Вони рідко ставлять під сумнів організацію робочого процесу на робочому місці та рішення начальства..
+        /// </summary>
+        public static string So_211_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_211_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -619,11 +2383,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Постигане на размишления с логика и здрав разум, за да се проучват силните и слабите страни на алтернативни решения, да се вадят заключения или да се разработват наченки на решения..
+        /// </summary>
+        public static string So_212__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_212__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Anstellen von Überlegungen mit Logik und Verstand, um die Stärken und Schwächen alternativer Lösungen zu ermitteln, Schlussfolgerungen zu ziehen oder Lösungsansätze zu erarbeiten.
         /// </summary>
         public static string So_212__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_212__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using logic and reason to determine the strengths and weaknesses of alternative solutions, draw conclusions, or develop solutions..
+        /// </summary>
+        public static string So_212__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_212__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Réfléchir et faire preuve de logique et de bon sens afin de déterminer les forces et les faiblesses des solutions alternatives, de tirer des conclusions ou d’élaborer des solutions..
+        /// </summary>
+        public static string So_212__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_212__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Considerații bazate pe logică și rațiune pentru a determina punctele forte și punctele slabe ale soluțiilor alternative, a trage concluzii sau a elabora soluții.
+        /// </summary>
+        public static string So_212__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_212__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Определение сильных и слабых сторон альтернативных решений, формулировка выводов или разработка концепций решений проблем с использованием логики и разума.
+        /// </summary>
+        public static string So_212__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_212__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alternatif çözümlerin güçlü ve zayıf yönlerini belirleme, sonuçlar çıkarma veya çözümler geliştirmek için mantık ve muhakeme kullanmak.
+        /// </summary>
+        public static string So_212__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_212__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Визначення сильних і слабких сторін альтернативних рішень, формулювання висновків або розробка концепцій вирішення проблем з використанням логіки і розуму.
+        /// </summary>
+        public static string So_212__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_212__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -637,11 +2464,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати умеят с лекота да анализират процеси и обстоятелства с логика и здрав разум, за да откриват силните и слабите им страни. Те бързо разпознават по-широки взаимовръзки и могат и при голям обем информация да определят каква информация е относима за тях..
+        /// </summary>
+        public static string So_212_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_212_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten fällt es leicht, Prozesse und Sachverhalte mit Logik und Verstand zu analysieren, um Stärken und Schwächen dieser zu ermitteln. Sie erkennen größere Zusammenhänge schnell und können auch bei einer Vielzahl von Informationen bestimmen, welche davon relevant für sie sind..
         /// </summary>
         public static string So_212_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_212_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores easily analyze processes and topics with logic and reason to determine their strengths and weaknesses. They recognize larger contexts quickly and can determine which information is relevant to them, even when faced with a large amount of information..
+        /// </summary>
+        public static string So_212_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_212_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé n’ont aucun mal à analyser les processus et les faits avec logique et intelligence afin d’en déterminer les points forts et les points faibles. Elles identifient rapidement les interactions plus larges et peuvent déterminer, même en présence d’une multitude d’informations, lesquelles sont pertinentes pour elles..
+        /// </summary>
+        public static string So_212_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_212_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri ridicate le este ușor să analizeze procesele și problemele prin prisma logicii și rațiunii pentru a identifica punctele tari și punctele slabe ale acestora. Acestea recunosc rapid contexte mai largi și sunt capabile să determine ce informații sunt relevante pentru ei chiar și atunci când există o multitudine de informații..
+        /// </summary>
+        public static string So_212_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_212_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями легко анализируют процессы и обстоятельства с помощью логики и разума, чтобы определить их сильные и слабые стороны. Они быстро распознают более широкие взаимосвязи и могут определить, какая информация имеет для них значение, даже когда сталкиваются с большим объёмом информации..
+        /// </summary>
+        public static string So_212_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_212_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, süreçler ve olayların güçlü ve zayıf yönlerini belirlemek için  mantık ve akıl yoluyla analiz etmeyi kolaylıkla yapabilirler. Bu kişiler daha geniş bağlamları hızlı bir şekilde algılar ve çok miktarda bilgiyle karşı karşıya kaldıklarında dahi hangi bilginin kendileriyle ilgili olduğunu belirleyebilirler..
+        /// </summary>
+        public static string So_212_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_212_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками легко аналізують процеси й обставини за допомогою логіки та розуму, щоб визначити їхні сильні та слабкі сторони. Вони швидко розпізнають більш широкі взаємозв&apos;язки і можуть визначити, яка інформація має для них значення, навіть коли працюють з великим обсягом інформації..
+        /// </summary>
+        public static string So_212_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_212_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -655,11 +2545,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да анализират процеси и обстоятелства. За тях е проблем да откриват по-широки взаимовръзки или да вместят определено обстоятелство в контекста. Прекалено големият обем информация често ги претоварва и те трудно откриват шаблон..
+        /// </summary>
+        public static string So_212_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_212_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, Prozesse und Sachverhalte zu analysieren. Sie haben Probleme damit, größere Zusammenhänge zu erkennen oder einen Sachverhalt in den Kontext einzuordnen. Zu viele Informationen überfordern sie oft und es fällt ihnen schwer, Muster zu erkennen..
         /// </summary>
         public static string So_212_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_212_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to analyze processes and topics. They have problems recognizing more extensive connections or putting a topic into context. Too much information often overwhelms them, and they find it difficult to recognize patterns..
+        /// </summary>
+        public static string So_212_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_212_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à analyser les processus et les faits. Il est difficile pour elles d’identifier les interactions plus larges ou de replacer un fait dans son contexte. Elles se sentent souvent dépassées par trop d’informations et ont du mal à identifier des tendances..
+        /// </summary>
+        public static string So_212_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_212_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute întâmpină dificultăți în a analiza procese și situații. Acestea au probleme în a recunoaște contexte mai largi sau în a clasifica o problemă în context. Adesea, prea multe informații le copleșesc și le este dificil să recunoască tiparele..
+        /// </summary>
+        public static string So_212_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_212_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно анализировать процессы и обстоятельства. У них возникают проблемы с распознаванием более широких взаимосвязей или с определением обстоятельства в существующем контексте. Слишком большой объём информации их часто перенапрягает, и им трудно распознать закономерности..
+        /// </summary>
+        public static string So_212_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_212_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip süreçleri ve olayları analiz etmekte zorlanırlar. Kendileri daha geniş bağlamları algılamakta veya olayları bir bağlama oturtmakta sorun yaşarlar. Çok fazla bilgi genellikle bu kişileri bunaltır ve kalıpları tanımakta zorlanırlar..
+        /// </summary>
+        public static string So_212_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_212_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко аналізувати процеси та обставини. Вони мають проблеми з розпізнаванням більш широких взаємозв&apos;язків або з визначенням обставини в наявному контексті. Їх часто перенапружує занадто великий обсяг інформації, їм важко розпізнати закономірності..
+        /// </summary>
+        public static string So_212_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_212_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -673,11 +2626,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Вземане предвид на косвени и дългосрочни последствия при планирането и вземането на решения. Съобразяване с отражението върху другите хора, процеси и околната среда и тяхното въвличане в собственото планиране..
+        /// </summary>
+        public static string So_213__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_213__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Berücksichtigen indirekter und langfristiger Folgen bei der Planung und Entscheidungsfindung. Berücksichtigen der Auswirkungen auf andere Menschen, Prozesse und die Umwelt und deren Einbeziehung in die eigene Planung..
         /// </summary>
         public static string So_213__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_213__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taking indirect and long-term consequences into account when planning and making decisions. Considering the effects on other people, processes, and the environment and including them when planning..
+        /// </summary>
+        public static string So_213__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_213__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tenir compte des conséquences indirectes et à long terme dans la planification et la prise de décision. Tenir compte des effets sur les autres personnes, les processus et l’environnement et les intégrer dans sa propre planification..
+        /// </summary>
+        public static string So_213__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_213__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Luarea în considerare a consecințelor indirecte și pe termen lung în timpul planificării și luării deciziilor. Luarea în considerare a efectelor asupra altor persoane, procese și asupra mediului înconjurător și includerea acestor efecte în propria planificare..
+        /// </summary>
+        public static string So_213__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_213__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Учёт косвенных и долгосрочных последствий при планировании и принятии решений. Учёт влияния на других людей, процессы и окружающую среду, и включение этого влияния в собственное планирование..
+        /// </summary>
+        public static string So_213__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_213__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlama ve karar alma süreçlerinde dolaylı ve uzun vadeli sonuçların dikkate alınması. Diğer insanlar, süreçler ve çevre üzerindeki etkileri göz önünde bulundurmak ve bunları kendi planlamanıza dahil etmek..
+        /// </summary>
+        public static string So_213__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_213__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Врахування непрямих і довгострокових наслідків під час планування та ухвалення рішень. Врахування впливу на інших людей, процеси та навколишнє середовище, включення цього впливу у власне планування..
+        /// </summary>
+        public static string So_213__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_213__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -691,11 +2707,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи стойности разпознават взаимовръзките между различни аспекти на живота и успяват да се съобразяват с тях в своето планиране на работата и вземането на решения. Те възприемат работното място като цялостна политическа концепция. Те обръщат внимание на дългосрочните последици от своите решения и тяхното отражение върху техните близки, систематичните процеси и околната среда..
+        /// </summary>
+        public static string So_213_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_213_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten erkennen Wechselbeziehungen verschiedener Aspekte des Lebens und können diese in ihrer Arbeitsplanung und Entscheidungsfindung berücksichtigen. Sie sehen den Arbeitsplatz als ganzheitliches, politisches Konstrukt. Sie achten auf die langfristigen Folgen ihrer Entscheidungen und deren Auswirkungen auf Mitmenschen, systemische Prozesse und Umwelt..
         /// </summary>
         public static string So_213_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_213_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores recognize interrelationships between different aspects of life and can consider these in their work planning and decision-making. They see the workplace as a holistic, political construct. They pay attention to the long-term consequences of their decisions and their impact on fellow human beings, systemic processes, and the environment..
+        /// </summary>
+        public static string So_213_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_213_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé identifient les interactions entre différents aspects de la vie et peuvent en tenir compte dans leur planification du travail et leur prise de décision. Elles considèrent le lieu de travail comme une entité politique globale. Elles prêtent attention aux conséquences à long terme de leurs décisions et à leur impact sur les autres, les processus systémiques et l’environnement..
+        /// </summary>
+        public static string So_213_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_213_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate recunosc corelațiile dintre diferite aspecte ale vieții și pot ține cont de ele în procesele de planificare a activității și decizionale. Acestea privesc locul de muncă ca pe un construct global, politic. Ele țin cont de consecințele pe termen lung a deciziilor lor și de efectele asupra semenilor, proceselor sistemice și mediului înconjurător..
+        /// </summary>
+        public static string So_213_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_213_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями осознают взаимосвязь между различными аспектами жизни и могут принимать их во внимание при планировании работы и принятии решений. Они рассматривают рабочее место как целостную политическую конструкцию. Они принимают во внимание долгосрочные последствия своих решений и их влияние на окружающих людей, системные процессы и окружающую среду..
+        /// </summary>
+        public static string So_213_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_213_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, hayatın farklı yönleri arasındaki karşılıklı ilişkilerin farkındadır ve bunları iş planlamalarında ve karar verme süreçlerinde dikkate alabilirler. Bu kişiler işyerini bütünsel, siyasi bir yapı olarak görüyorlar. Aldıkları kararların uzun vadeli sonuçlarına ve bunların diğer insanlar, sistemik süreçler ve çevre üzerindeki etkilerine dikkat ederler..
+        /// </summary>
+        public static string So_213_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_213_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками усвідомлюють взаємозв&apos;язок між різними аспектами життя і можуть враховувати їх під час планування роботи та ухвалення рішень. Вони розглядають робоче місце як цілісну політичну конструкцію. Вони враховують довгострокові наслідки своїх рішень та їхній вплив на людей у своєму оточенні, системні процеси та навколишнє середовище..
+        /// </summary>
+        public static string So_213_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_213_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -709,11 +2788,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати се затрудняват да преценят косвените и дългосрочните последици при вземането на своите решения. На работното място за тях е трудно да намерят мястото на своята дейност в по-мащабния контекст на организацията. Те рядко обмислят дългосрочните последици от своите решения..
+        /// </summary>
+        public static string So_213_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_213_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, indirekte und langfristige Folgen bei ihrer Entscheidungsfindung zu berücksichtigen. Am Arbeitsplatz haben sie Schwierigkeiten, ihre Tätigkeit in den größeren Kontext der Organisation einzuordnen. Die langfristigen Folgen eigener Entscheidungen bedenken sie nur selten..
         /// </summary>
         public static string So_213_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_213_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to consider indirect and long-term consequences in their decision-making. In the workplace, they have difficulty placing their activities in the wider context of the organization. They rarely consider the long-term consequences of their own decisions..
+        /// </summary>
+        public static string So_213_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_213_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à tenir compte des conséquences indirectes et à long terme dans leur prise de décision. Sur le lieu de travail, elles ont du mal à replacer leur activité dans le contexte plus large de l’organisation. Elles prennent rarement en compte les conséquences à long terme de leurs décisions..
+        /// </summary>
+        public static string So_213_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_213_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pentru persoanele cu scoruri mici este dificil să aibă în vedere consecințele indirecte și pe termen lung atunci când iau decizii. La locul de muncă, ele au dificultăți să încadreze activitatea de lucru în contextul mai larg al organizației. Rareori reflectă asupra consecințelor pe termen lung ale propriilor decizii..
+        /// </summary>
+        public static string So_213_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_213_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно принимать во внимание косвенные и долгосрочные последствия при принятии решений. На рабочем месте им трудно соотнести свою работу с более широким контекстом деятельности организации. Они редко задумываются о долгосрочных последствиях своих решений..
+        /// </summary>
+        public static string So_213_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_213_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler karar verirken dolaylı ve uzun vadeli sonuçları dikkate almakta zorlanırlar. İşyerinde, yaptıkları işi şirket organizasyon yapısının daha geniş bağlamına yerleştirmekte zorluk çekerler. Kendi verdikleri kararların uzun vadeli sonuçlarını nadiren göz önünde bulundururlar..
+        /// </summary>
+        public static string So_213_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_213_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко враховувати непрямі та довгострокові наслідки під час ухвалення рішень. На робочому місці їм важко співвіднести свою роботу з ширшим контекстом діяльності організації. Вони рідко замислюються про довгострокові наслідки своїх рішень..
+        /// </summary>
+        public static string So_213_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_213_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -727,11 +2869,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Бързо и прецизно схващане и асимилиране на най-важните аспекти на обстоятелства и техните взаимовръзки..
+        /// </summary>
+        public static string So_214__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_214__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schnelles und präzises Erfassen und Verarbeiten der wichtigsten Aspekte von Sachverhalten und deren Zusammenhänge..
         /// </summary>
         public static string So_214__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_214__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quickly and accurately grasping and processing the most critical aspects of topics and their interrelationships..
+        /// </summary>
+        public static string So_214__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_214__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comprendre et traiter rapidement et avec précision les principaux aspects de sujets et leurs interactions..
+        /// </summary>
+        public static string So_214__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_214__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Înțelegerea și procesarea rapidă și precisă a celor mai importante aspecte ale situațiilor și ale corelațiilor..
+        /// </summary>
+        public static string So_214__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_214__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Быстрое и точное восприятие и осмысление наиболее важных аспектов обстоятельств и их взаимосвязей..
+        /// </summary>
+        public static string So_214__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_214__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olayların ve aralarındaki ilişkilerin en önemli yönlerinin hızlı ve hassas bir şekilde kavranması ve işlenmesi..
+        /// </summary>
+        public static string So_214__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_214__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Швидке і точне сприйняття й осмислення найважливіших аспектів обставин та їхніх взаємозв&apos;язків..
+        /// </summary>
+        public static string So_214__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_214__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -745,11 +2950,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати притежават способността бързо да схващат и да асимилират най-важните аспекти на дадено обстоятелство. При това те не губят разбирането си за точността и евентуалната сложност на обстоятелството. Все пак успяват да останат трайно съсредоточени при прости или продължителни задачи..
+        /// </summary>
+        public static string So_214_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_214_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten besitzen die Fähigkeit, die wichtigsten Aspekte eines Sachverhaltes schnell zu erfassen und zu verarbeiten. Sie verlieren dabei nicht das Verständnis für Genauigkeit und etwaige Komplexität des Sachverhaltes. Bei einfachen oder langandauernden Aufgaben schaffen sie es trotzdem, konstant aufmerksam zu sein..
         /// </summary>
         public static string So_214_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_214_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores can quickly grasp and process the most important aspects of a topic. They do not lose their understanding of the accuracy and possible complexity of the topic. In simple or lengthy tasks, they still manage to remain constantly attentive..
+        /// </summary>
+        public static string So_214_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_214_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont capables de comprendre et de traiter rapidement les aspects les plus importants d’un sujet. Elles ne perdent pas de vue l’exactitude et la complexité du sujet. Pour les tâches simples ou de longue durée, elles parviennent à garder une attention constante..
+        /// </summary>
+        public static string So_214_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_214_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate au capacitatea de a înțelege și a procesa rapid cele mai importante aspecte ale unei situații. Ele nu pierd aspectele exacte și eventuala complexitate a situației de fapt. În cazul unor sarcini simple sau de durată, reușesc să rămână atente constant..
+        /// </summary>
+        public static string So_214_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_214_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями обладают способностью быстро схватывать и осмыслять наиболее важные аспекты обстоятельств. При этом они не теряют понимания точности и возможной сложности положения дел. При этом они не теряют способности к точному анализу и учёту возможной сложности обстоятельств..
+        /// </summary>
+        public static string So_214_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_214_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanımlı kişiler, bir konu veya olayın en önemli yönlerini hızlı bir şekilde kavrama ve işleme yeteneğine sahiptir. Bu kişiler olayların doğruluğu ve olası karmaşıklığı konusundaki anlayışlarını kaybetmezler. Basit veya uzun süreli görevlerde dahi sürekli dikkatli olmayı başarırlar..
+        /// </summary>
+        public static string So_214_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_214_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками здатні швидко схоплювати й осмислювати найважливіші аспекти обставин. При цьому вони не втрачають здатності до точного аналізу та розумiння можливої складності обставин. Під час виконання простих або тривалих завдань їм вдається постійно зберігати уважність..
+        /// </summary>
+        public static string So_214_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_214_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -763,11 +3031,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да схващат най-важните аспекти на дадено обстоятелство. Често минава много време, докато разберат дадена задача. Те често се разсейват и губят нишката, преди да са приключили дадена задача, или имат нужда по-скоро от повече време, за да приключат една задача и да се заемат с друга..
+        /// </summary>
+        public static string So_214_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_214_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten haben Schwierigkeiten, die wichtigsten Aspekte eines Sachverhaltes zu erfassen. Oft dauert es länger, bis sie eine Aufgabe verstanden haben. Sie schweifen oft ab und verlieren den Faden, bevor sie eine Aufgabe beendet haben, oder brauchen eher lange, um sich von einer Aufgabe ab- und einer neuen zuzuwenden..
         /// </summary>
         public static string So_214_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_214_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores have difficulty grasping the most important aspects of a topic. It often takes longer for them to understand a task. They often digress and lose the thread before they finish a task or take a long time to switch from one task to another..
+        /// </summary>
+        public static string So_214_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_214_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à comprendre les aspects les plus importants d’un sujet. Il leur faut souvent plus de temps pour comprendre une tâche. Elles ont tendance à se disperser et à perdre le fil de la tâche avant de l’avoir terminée ou mettent plus de temps à abandonner une tâche pour passer à une autre..
+        /// </summary>
+        public static string So_214_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_214_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute au dificultăți să înțeleagă aspectele cele mai importante ale unei situații. De multe ori, durează mai mult până când au înțeles sarcina. Ele pierd deseori șirul înainte de a fi finalizat o sarcină sau au nevoie de mai mult timp pentru a se deconecta de o sarcină și a aborda o sarcină nouă..
+        /// </summary>
+        public static string So_214_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_214_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями с трудом могут уловить наиболее важные аспекты обстоятельств. Часто им требуется больше времени, чтобы понять задание. Они часто отвлекаются и путаются, ещё не закончив задание, или долго переключаются с одного задания на другое..
+        /// </summary>
+        public static string So_214_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_214_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanımlı kişiler bir konu veya olayın en önemli yönlerini kavramakta zorluk çekerler. Bu kişilerin bir görevi anlamaları genellikle daha uzun sürer. Ayrıca bir görevi bitirmeden önce sık sık konudan uzaklaşır ve bağlantıyı kuramazlar ya da bir görevden diğer yeni bir göreve geçmeleri uzun zaman alır..
+        /// </summary>
+        public static string So_214_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_214_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям iз низькими показниками важко вловити найважливіші аспекти обставин. Зазвичай їм потрібно більше часу, щоб зрозуміти завдання. Вони нерiдко відволікаються та втрачають нитку, ще не закінчивши завдання, або постійно перемикаються з одного завдання на інше..
+        /// </summary>
+        public static string So_214_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_214_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -781,11 +3112,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Насочване на дейности и задачи, съставяне на графици и координиране на дейности на групи и отделни лица, за да се постигат целите в зададените срокове и при спазване на предвидения бюджет..
+        /// </summary>
+        public static string So_220__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_220__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Anleiten von Tätigkeiten und Aufgaben, Erstellen von Zeitplänen und Koordinieren der Tätigkeiten von Gruppen und Einzelpersonen, um Ziele fristgerecht und unter Einhaltung der Budgetvorgaben zu erreichen..
         /// </summary>
         public static string So_220__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_220__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directing activities and tasks, creating schedules, and coordinating the activities of groups and individuals to achieve goals on time and within budget..
+        /// </summary>
+        public static string So_220__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_220__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diriger des activités et des tâches, établir des calendriers et coordonner les activités de groupes et individuelles afin d’atteindre des objectifs dans les délais et dans le respect des contraintes budgétaires..
+        /// </summary>
+        public static string So_220__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_220__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dirijarea unor activități și sarcini, elaborarea de calendare și coordonarea activităților unor grupuri și persoane pentru a atinge obiectivele la termen și cu respectarea specificațiilor bugetare..
+        /// </summary>
+        public static string So_220__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_220__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Руководство деятельностью и задачами, составление календарных графиков и координация деятельности групп и отдельных сотрудников для достижения целей в срок и в рамках бюджета..
+        /// </summary>
+        public static string So_220__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_220__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hedeflere zamanında ve bütçe dahilinde ulaşmak için faaliyetleri ve görevleri yönlendirme, programlar oluşturma, grupların ve bireylerin faaliyetlerini koordine etme..
+        /// </summary>
+        public static string So_220__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_220__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Керівництво діяльністю і завданнями, складання календарних графіків і координація діяльності груп і окремих співробітників для досягнення цілей у строк і в межах бюджету..
+        /// </summary>
+        public static string So_220__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_220__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -799,11 +3193,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават със своята способност да планират и организират ефективно. Те успяват да насочват и да координират дейности и задачи, както и да съставят графици, съобразени с краткосрочните и дългосрочните обстоятелства. По този начин те постигат целите в повечето случаи в рамките на сроковете или при спазване на предвидения бюджет..
+        /// </summary>
+        public static string So_220_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_220_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch ihre Fähigkeit aus, effektiv zu planen und zu organisieren. Sie schaffen es, Tätigkeiten und Aufgaben anzuleiten und zu koordinieren und Zeitpläne zu erstellen, in denen sie kurzfristige und langfristige Umstände mitdenken. So erreichen sie Ziele meist fristgerecht oder unter Einhaltung der Budgetvorgaben..
         /// </summary>
         public static string So_220_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_220_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by their ability to plan and organize effectively. They manage to direct and coordinate activities and tasks and create schedules that consider both short-term and long-term circumstances. As a result, they usually achieve goals on time or within budget..
+        /// </summary>
+        public static string So_220_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_220_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se distinguent par leur capacité à planifier et à organiser efficacement. Elles parviennent à diriger et à coordonner les activités et les tâches et à établir des calendriers en tenant compte des situations à court et à long terme. Elles atteignent généralement leurs objectifs dans les délais ou dans le respect des contraintes budgétaires..
+        /// </summary>
+        public static string So_220_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_220_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează prin capacitatea de a planifica și organiza eficient. Ele reușesc să dirijeze și să coordoneze activități și sarcini și să elaboreze calendare în care să includă circumstanțe pe termen scurt și pe termen lung. În acest fel, ele își ating obiectivele de cele mai multe ori la termen și cu respectarea specificațiilor bugetare..
+        /// </summary>
+        public static string So_220_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_220_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями характеризуются способностью эффективно планировать и организовывать. Им удаётся направлять и координировать деятельность и задачи, составлять календарные графики, в которых они учитывают как краткосрочные, так и долгосрочные обстоятельства. В результате они обычно достигают поставленных целей в срок или в рамках бюджета..
+        /// </summary>
+        public static string So_220_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_220_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, etkili bir şekilde planlama ve organize etme becerileriyle karakterize edilirler. Bu kişiler faaliyetleri ve görevleri yönlendirmeyi ve koordine etmeyi başarırlar, hem kısa vadeli hem de uzun vadeli koşulları dikkate aldıkları programlar oluştururlar. Böylece genellikle hedeflere zamanında veya bütçe dahilinde ulaşırlar..
+        /// </summary>
+        public static string So_220_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_220_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками здатні ефективно планувати й організовувати. Вони можуть спрямовувати та координувати діяльність і завдання, складати календарні графіки, в яких вони враховують як короткострокові, так і довгострокові обставини. У результаті вони зазвичай досягають поставлених цілей в строк або в межах бюджету..
+        /// </summary>
+        public static string So_220_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_220_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -817,11 +3274,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да планират и организират ефективно. За тях е проблем да спазват сроковете в собствените си графици, да разпознават и преценяват краткосрочни и дългосрочни обстоятелства, или да координират дейностите на групи и отделни хора..
+        /// </summary>
+        public static string So_220_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_220_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, effektiv zu planen und zu organisieren. Sie haben Probleme damit, Fristen in ihren eigenen Zeitplänen einzuhalten, kurzfristige und langfristige Umstände zu erkennen und abzuwägen, oder die Tätigkeiten von Gruppen und Einzelpersonen zu koordinieren..
         /// </summary>
         public static string So_220_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_220_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to plan and organize effectively. They have problems meeting deadlines in their own schedules, recognizing and balancing short-term and long-term circumstances, or coordinating the activities of groups and individuals..
+        /// </summary>
+        public static string So_220_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_220_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à planifier et à organiser efficacement. Elles éprouvent des difficultés à respecter les délais dans leur propre emploi du temps, à identifier et à évaluer les situations à court et à long terme, ou à coordonner les activités de groupe et individuelles..
+        /// </summary>
+        public static string So_220_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_220_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să planifice și să organizeze eficient. Au probleme în a respecta termenele din propriile lor planificări de timp, să recunoască și să cântărească circumstanțele pe termen scurt și lung sau să coordoneze activitățile unor grupuri și persoane..
+        /// </summary>
+        public static string So_220_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_220_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно эффективно планировать и организовывать. У них возникают проблемы с соблюдением сроков в собственном календарном графике, с распознаванием и взвешиванием краткосрочных и долгосрочных обстоятельств, а также с координацией деятельности групп и отдельных людей..
+        /// </summary>
+        public static string So_220_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_220_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler etkili bir şekilde plan yapmakta ve organize olmakta zorlanırlar. Kendi programlarında son teslim tarihlerine uymakta, kısa ve uzun vadeli koşulları tanımakta ve dengelemekte veya grupların ve bireylerin faaliyetlerini koordine etmekte sorun yaşarlar..
+        /// </summary>
+        public static string So_220_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_220_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко планувати й організовувати з ефективним результатом. Вони мають проблеми з дотриманням термінів у власному календарному графіку, з розпізнаванням і порiвнянням короткострокових і довгострокових обставин, а також з координацією діяльності груп та окремих людей..
+        /// </summary>
+        public static string So_220_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_220_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -835,11 +3355,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Намиране на решения за практични, свързани с фирмата или концептуални проблеми в множество различни контексти..
+        /// </summary>
+        public static string So_232__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_232__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lösungen für praktische, betriebsbezogene oder konzeptionelle Probleme in einer Vielzahl unterschiedlicher Kontexte finden.
         /// </summary>
         public static string So_232__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_232__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finding solutions to practical, operational, or conceptual problems in various contexts..
+        /// </summary>
+        public static string So_232__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_232__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trouver des solutions à des problèmes pratiques, opérationnels ou conceptuels dans un grand nombre de contextes différents..
+        /// </summary>
+        public static string So_232__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_232__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Găsirea soluțiilor la probleme practice, legate de activitatea de lucru sau conceptuale într-o multitudine de contexte diferite.
+        /// </summary>
+        public static string So_232__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_232__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нахождение решений практических, производственных или концептуальных проблем во множестве различных контекстов.
+        /// </summary>
+        public static string So_232__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_232__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeşitli bağlamlarda pratik, işletmeye özgü veya kavramsal sorunlara çözüm bulma.
+        /// </summary>
+        public static string So_232__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_232__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пошук рішень практичних, виробничих або концептуальних проблем у безлічі різних контекстів.
+        /// </summary>
+        public static string So_232__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_232__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -853,11 +3436,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати успяват с лекота да решават проблемите стратегически и целенасочено. Те знаят как могат стратегически да решават проблеми в конкретни ситуации и в рамките на определени общи условия, надграждайки върху предходни знания или предишна експертиза. При това те често преплитат съществуващи знания, преценяват и противоречиви цели и мислят динамично и съвкупно..
+        /// </summary>
+        public static string So_232_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_232_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten fällt es leicht, Probleme strategisch und zielorientiert zu lösen. Sie wissen, wie sie in konkreten Situationen und innerhalb gewisser Rahmenbedingungen, aufbauend auf Vorwissen oder vorheriger Expertise, strategisch Probleme lösen können. Dazu vernetzen sie oft bestehendes Wissen, wägen auch widersprüchliche Ziele ab, und denken dynamisch und komplex..
         /// </summary>
         public static string So_232_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_232_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores find it easy to solve problems in a strategic and goal-oriented way. They know how to solve problems strategically in specific situations and within certain framework conditions, building on previous knowledge or expertise. To do this, they often network existing knowledge, weigh up contradictory goals and think dynamically and complexly..
+        /// </summary>
+        public static string So_232_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_232_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé n’ont aucun mal à résoudre des problèmes de manière stratégique et ciblée. Elles savent comment résoudre des problèmes de manière stratégique dans des situations concrètes et dans certaines conditions, en s’appuyant sur des connaissances ou une expertise préalables. Pour ce faire, elles associent souvent des connaissances existantes, arbitrent entre des objectifs contradictoires et pensent de manière dynamique et complexe..
+        /// </summary>
+        public static string So_232_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_232_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pentru persoanele cu scoruri ridicate este simplu să găsească soluții strategice și orientate spre obiectiv la probleme. Ele știu cum să acționeze strategic în situații specifice și în anumite condiții-cadru, bazându-se pe cunoștințele sau expertiza anterioară privind rezolvarea problemelor în mod strategic. Pentru aceasta, ele interconectează adesea cunoștințele existente, cântăresc și obiective contradictorii și gândesc dinamic și complex..
+        /// </summary>
+        public static string So_232_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_232_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с высокими показателями легко даётся стратегическое и целенаправленное решение проблем. Они знают, как в конкретных ситуациях и в определённых условиях, опираясь на предыдущие знания или опыт, можно стратегически решить проблемы. Для этого они часто взаимосвязывают существующие знания, взвешивают противоречивые цели и мыслят динамично и комплексно..
+        /// </summary>
+        public static string So_232_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_232_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, problemleri stratejik ve hedef odaklı bir şekilde çözmeyi kolaylıkla yapabilirler. Bu kişiler somut durumlarda ve belirli çerçeve koşulları dahilinde, önceki bilgi veya uzmanlıklarına dayanarak problemleri stratejik olarak nasıl çözeceklerini bilirler. Bunu yapmak için genellikle mevcut bilgiler arasında ağ kurarlar, çelişkili hedefleri tartar, dinamik ve karmaşık bir şekilde düşünürler..
+        /// </summary>
+        public static string So_232_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_232_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із високими показниками легко знайти стратегічне та цілеспрямоване вирішення проблем. Вони знають, як у конкретних ситуаціях і за певних умов, спираючись на попередні знання або досвід, можна стратегічно розв&apos;язати проблеми. Для цього вони часто взаємопов&apos;язують наявні знання, порiвнюють суперечливі цілі, мислять динамічно й комплексно..
+        /// </summary>
+        public static string So_232_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_232_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -871,11 +3517,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да решават проблемите стратегически и целенасочено. Например, те се затрудняват да събират цялата необходима информация и да свързват знанията си, за да развият стратегия. Те често не могат да преценяват противоречиви цели добре..
+        /// </summary>
+        public static string So_232_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_232_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, Probleme zielorientiert zu lösen. Sie haben zum Beispiel Schwierigkeiten damit, alle nötigen Informationen zu beschaffen und ihr Wissen zu vernetzen, um eine Strategie zu entwickeln. Widersprüchliche Ziele können sie oft nicht abwägen..
         /// </summary>
         public static string So_232_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_232_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to solve problems in a goal-oriented way. For example, they have difficulty gathering all the necessary information and networking their knowledge in order to develop a strategy. They are often unable to weigh up conflicting goals..
+        /// </summary>
+        public static string So_232_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_232_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à résoudre des problèmes de manière ciblée. Par exemple, elles éprouvent des difficultés à se procurer toutes les informations nécessaires et à associer leurs connaissances pour élaborer une stratégie. Souvent, elles ne parviennent pas à arbitrer entre des objectifs contradictoires..
+        /// </summary>
+        public static string So_232_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_232_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să rezolve problemele într-o manieră orientată spre obiective. Ele au dificultăți, de exemplu, în a aduna toate informațiile necesare și a interconecta cunoștințele pentru a dezvolta o strategie. De multe ori, aceste persoane nu pot aprecia obiective contradictorii..
+        /// </summary>
+        public static string So_232_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_232_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно целенаправленно решать проблемы. Например, им сложно получить всю необходимую информацию и структурировать свои знания определённым образом, чтобы разработать стратегию. Они часто не способны взвесить противоречивые цели..
+        /// </summary>
+        public static string So_232_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_232_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler sorunları hedef odaklı bir şekilde çözmekte zorlanırlar. Bu kişiler örneğin, bir strateji geliştirmek için gerekli tüm bilgileri elde etmekte ve bilgi ağlarını oluşturmakta zorlanırlar. Genellikle birbiriyle çelişen hedefleri tartamazlar..
+        /// </summary>
+        public static string So_232_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_232_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко цілеспрямовано вирішувати проблеми. Так, їм важко отримати всю необхідну інформацію та структурувати свої знання певним чином, щоб розробити стратегію. Вони часто не здатні порiвняти суперечливі цілі..
+        /// </summary>
+        public static string So_232_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_232_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -889,11 +3598,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Развиване на нови идеи или комбиниране на съществуващи идеи, за да се създават иновативни и новаторски решения..
+        /// </summary>
+        public static string So_240__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_240__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entwickeln neuer Ideen oder Kombinieren bestehender Ideen, um innovative und neuartige Lösungen zu erstellen..
         /// </summary>
         public static string So_240__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_240__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Developing new ideas or combining existing ideas to create innovative and novel solutions..
+        /// </summary>
+        public static string So_240__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_240__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Développer de nouvelles idées ou combiner des idées existantes pour créer des solutions innovantes et inédites..
+        /// </summary>
+        public static string So_240__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_240__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dezvoltarea unor idei noi sau combinarea ideilor existente pentru elaborarea unor soluții inovatoare, de pionierat..
+        /// </summary>
+        public static string So_240__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_240__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Разработка новых идей или комбинирование существующих идей для создания инновационных и оригинальных решений..
+        /// </summary>
+        public static string So_240__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_240__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yenilikçi ve yeni çözümler oluşturmak için yeni fikirler geliştirmek veya mevcut fikirleri birleştirmek..
+        /// </summary>
+        public static string So_240__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_240__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Розроблення нових ідей або комбінування наявних ідей для створення інноваційних та оригінальних рішень..
+        /// </summary>
+        public static string So_240__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_240__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -907,11 +3679,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават със своето умение да мислят креативно и иновативно. Те развиват нови идеи и подходи или съчетават съществуващи процеси, за да създават иновативни и новаторски решения. Това се изразява особено силно чрез многократно внасяне на предложения за подобрения на работното място..
+        /// </summary>
+        public static string So_240_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_240_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch ihre Fähigkeit zu kreativem und innovativem Denken aus. Sie entwickeln neue Ideen und Herangehensweisen oder kombinieren existierende Prozesse, um innovative und neuartige Lösungen zu erstellen. Dies drückt sich besonders durch wiederholtes Einbringen von Vorschlägen zur Verbesserung am Arbeitsplatz aus..
         /// </summary>
         public static string So_240_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_240_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by their ability to think creatively and innovatively. They develop new ideas and approaches or combine existing processes to create innovative and novel solutions. This is particularly evident in their repeated suggestions for improvement in the workplace..
+        /// </summary>
+        public static string So_240_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_240_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se distinguent par leur capacité à penser de manière créative et innovante. Elles développent de nouvelles idées et approches ou combinent des processus existants pour créer des solutions innovantes et inédites. Cela se traduit notamment par des propositions répétées d’amélioration sur le lieu de travail..
+        /// </summary>
+        public static string So_240_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_240_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează prin capacitatea lor de a gândi în mod creativ și inovator. Ele dezvoltă idei și abordări noi sau combină procese existente pentru elaborarea unor soluții inovatoare, de pionierat. Acest lucru se exprimă mai ales prin formularea în mod repetat a unor sugestii de îmbunătățiri la locul de muncă..
+        /// </summary>
+        public static string So_240_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_240_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людей с высокими показателями отличает способность мыслить творчески и новаторски. Они разрабатывают новые идеи и подходы или комбинируют существующие процессы для создания инновационных и оригинальных решений. Это выражается, в частности, в неоднократных предложениях по улучшению ситуации на рабочем месте..
+        /// </summary>
+        public static string So_240_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_240_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, yaratıcı ve yenilikçi düşünme becerileriyle karakterize edilirler. Bu kişiler yeni fikirler ve yaklaşımlar geliştirir veya mevcut süreçleri birleştirerek yenilikçi ve yeni çözümler üretirler. Bu çözümler özellikle işyerinde iyileştirme için tekrarlanan öneriler yoluyla ifade edilmektedir..
+        /// </summary>
+        public static string So_240_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_240_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людей з високими показниками вирізняє творче новаторське мислення. Вони розробляють нові ідеї та підходи або комбінують наявні процеси для створення інноваційних та оригінальних рішень. Це виражається, зокрема, в неодноразових пропозиціях щодо поліпшення ситуації на робочому місці..
+        /// </summary>
+        public static string So_240_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_240_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -925,11 +3760,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати мислят по по-малко креативен и иновативен начин. В повечето случаи те работят последователно със зададени структури и рядко се впускат в новаторски процеси. Това означава и че и на работното място те рядко внасят нови импулси, идеи или решения..
+        /// </summary>
+        public static string So_240_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_240_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten denken weniger kreativ und innovativ. Sie arbeiten meist konsequent in vorgegebenen Strukturen und versuchen sich selten an neuartigen Prozessen. Dies bedeutet auch, dass sie am Arbeitsplatz selten neue Impulse, Ideen oder Lösungen einbringen..
         /// </summary>
         public static string So_240_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_240_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores think less creatively and innovatively. They usually work consistently within predefined structures and rarely try out new processes. This also means that they rarely contribute new impulses, ideas, or solutions in the workplace..
+        /// </summary>
+        public static string So_240_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_240_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible pensent de manière moins créative et innovante. Elles travaillent généralement de manière cohérente dans des structures prédéfinies, mais tentent rarement des processus inédits. Cela signifie également qu’elles apportent rarement de nouvelles impulsions, idées ou solutions sur le lieu de travail..
+        /// </summary>
+        public static string So_240_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_240_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute gândesc mai puțin creativ și inovator. De cele mai multe ori, acestea lucrează în mod consecvent în cadrul structurilor prescrise și încearcă rareori procese inovatoare. Acest lucru înseamnă și că doar rareori vin cu impulsuri, idei sau soluții noi la locul de muncă..
+        /// </summary>
+        public static string So_240_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_240_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями мыслят менее творчески и новаторски. Они обычно работают в рамках заранее определённых структур и редко пробуют новые процессы. Это также означает, что они редко привносят на рабочем месте новые импульсы, идеи или решения..
+        /// </summary>
+        public static string So_240_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_240_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler daha az yaratıcı ve yenilikçi düşünürler. Bu kişiler genellikle önceden tanımlanmış yapılar içinde tutarlı bir şekilde çalışırlar ve nadiren yeni süreçler denerler. Bu aynı zamanda işyerine nadiren yeni sinyaller, fikirler veya çözümler getirdikleri anlamına gelir..
+        /// </summary>
+        public static string So_240_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_240_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками мислять не так творчо та новаторськи. Вони зазвичай працюють у межах заздалегідь визначених структур і рідко пробують нові процеси. Це також означає, що вони рідко привносять нові імпульси, ідеї або рішення на робочому місці..
+        /// </summary>
+        public static string So_240_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_240_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -943,11 +3841,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Развиване на собствен начин на работа по собствена инициатива, с малко или никакъв надзор, и самостоятелно изпълнение на дейностите..
+        /// </summary>
+        public static string So_311__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_311__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entwickeln eigener Arbeitsweisen aus eigenem Antrieb, mit wenig oder gar keiner Aufsicht, und eigenständiges Bewältigen der Arbeiten..
         /// </summary>
         public static string So_311__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_311__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Developing your own ways of working on your own initiative, with little or no supervision, and managing work independently..
+        /// </summary>
+        public static string So_311__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_311__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Développer ses propres méthodes de travail de sa propre initiative, avec peu ou pas de supervision, et gérer sa charge de travail en autonomie..
+        /// </summary>
+        public static string So_311__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_311__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dezvoltarea unor moduri de lucru proprii din proprie inițiativă, cu puțină supraveghere sau chiar deloc și îndeplinirea pe cont propriu a activităților..
+        /// </summary>
+        public static string So_311__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_311__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Разработка собственных методов работы по собственной инициативе, с минимальным контролем или без него, и самостоятельное выполнение работ..
+        /// </summary>
+        public static string So_311__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_311__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kendi inisiyatifleriyle, çok az denetimle veya hiç denetim olmadan kendi çalışma yöntemlerini geliştirme ve işlerini bağımsız olarak tamamlama..
+        /// </summary>
+        public static string So_311__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_311__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Розроблення власних методів роботи за власною ініціативою, з мінімальним контролем або без нього, і самостійне виконання робіт..
+        /// </summary>
+        public static string So_311__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_311__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -961,11 +3922,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават с висока степен на самостоятелност. Те извършват работата си самостоятелно и знаят и без помощ или надзор как да вършат задачите си. За тях е лесно да развиват собствени структури и рутини..
+        /// </summary>
+        public static string So_311_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_311_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch einen hohen Grad an Selbstständigkeit aus. Sie bewältigen ihre Arbeiten eigenständig und wissen auch ohne Hilfe oder Aufsicht, wie sie ihre Aufgaben erledigen sollten. Es fällt ihnen leicht, eigene Strukturen und Routinen zu entwickeln..
         /// </summary>
         public static string So_311_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_311_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by a high degree of independence. They manage their work independently and know how to complete their tasks without help or supervision. They find it easy to develop their own structures and routines..
+        /// </summary>
+        public static string So_311_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_311_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se démarquent par un degré élevé d’autonomie. Elles gèrent leur charge de travail en autonomie et savent comment s’acquitter de leurs tâches sans aide ni supervision. Elles n’ont aucun mal à développer leurs propres structures et procédures..
+        /// </summary>
+        public static string So_311_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_311_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează printr-un grad ridicat de autonomie. Ele își îndeplinesc activitățile de lucru în mod independent și știu cum să își îndeplinească sarcinile chiar și fără ajutor sau supraveghere. Pentru ele este simplu să elaboreze structuri și rutine proprii..
+        /// </summary>
+        public static string So_311_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_311_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с высокими показателями свойственна высокая степень самостоятельности. Они самостоятельно справляются со своей работой и умеют выполнять задания без посторонней помощи или контроля. Им легко даётся разработка собственных организационных структур и распорядка..
+        /// </summary>
+        public static string So_311_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_311_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler yüksek derecede bağımsız çalışmakla karakterize edilirler. Bu kişiler işlerini bağımsız olarak yönetir ve görevlerini yardım veya gözetim olmadan nasıl tamamlayacaklarını bilirler. Kendi yapılarını ve rutinlerini kolayca geliştirirler..
+        /// </summary>
+        public static string So_311_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_311_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із високими показниками властивий високий рівень самостійності. Вони самостійно справляються зі своєю роботою і вміють виконувати завдання без сторонньої допомоги або контролю. Їм легко дається розроблення власних організаційних структур і розпорядку..
+        /// </summary>
+        public static string So_311_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_311_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -979,11 +4003,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да работят самостоятелно и да си поставят цели сами. В работата те имат нужда от някого, който да им дава напътствия. На тях им е трудно да създават собствени структури и рутини..
+        /// </summary>
+        public static string So_311_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_311_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, selbstständig zu arbeiten und sich selbstständig Ziele zu setzen. Sie brauchen bei der Arbeit jemanden, der ihnen Anweisungen gibt. Eigene Strukturen und Routinen zu entwickeln, fällt ihnen schwer..
         /// </summary>
         public static string So_311_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_311_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to work independently and set their own goals. They need someone to give them instructions at work. They find it hard to develop own structures and routines..
+        /// </summary>
+        public static string So_311_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_311_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à travailler de manière indépendante et à se fixer des objectifs de manière autonome. Elles ont besoin de quelqu’un pour leur donner des instructions au travail. Elles ont du mal à développer leurs propres structures et procédures..
+        /// </summary>
+        public static string So_311_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_311_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să lucreze independent și să își stabilească obiective în mod autonom. Atunci când lucrează, au nevoie ca cineva să le dea indicații. Le este dificil să dezvolte structuri și rutine proprii..
+        /// </summary>
+        public static string So_311_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_311_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно работать самостоятельно и самим ставить перед собой цели. Им нужен кто-то, кто будет давать им указания по работе. Им трудно разработать собственные организационные структуры и распорядок..
+        /// </summary>
+        public static string So_311_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_311_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler bağımsız çalışmakta ve kendi hedeflerini belirlemekte zorlanırlar. Bu kişiler iş yerinde onlara talimat verecek birine ihtiyaç duyarlar. Kendi yapıları ve rutinlerini geliştirmekte zorlanırlar..
+        /// </summary>
+        public static string So_311_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_311_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко працювати самостійно і ставити перед собою цілі. Їм потрібен хтось, хто даватиме їм вказівки щодо роботи. Їм важко розробити власні організаційні структури та розпорядок..
+        /// </summary>
+        public static string So_311_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_311_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -997,11 +4084,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Самодисциплинирано, надеждно и целенасочено възприемане на задачи.
+        /// </summary>
+        public static string So_313__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_313__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selbstdiszipliniertes, zuverlässiges und zielorientiertes Wahrnehmen von Aufgaben..
         /// </summary>
         public static string So_313__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_313__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self-disciplined, reliable, and goal-oriented performance of tasks.
+        /// </summary>
+        public static string So_313__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_313__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faire preuve d’autodiscipline, de fiabilité et de sens de l’objectif dans l’exécution des tâches..
+        /// </summary>
+        public static string So_313__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_313__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Îndeplinirea sarcinilor cu autodisciplină, seriozitate și în manieră orientată spre obiective.
+        /// </summary>
+        public static string So_313__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_313__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Самодисциплинированное, надёжное и целенаправленное выполнение заданий.
+        /// </summary>
+        public static string So_313__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_313__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Öz disiplinli, güvenilir ve hedef odaklı görev performansı.
+        /// </summary>
+        public static string So_313__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_313__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Самодисципліноване, надійне та цілеспрямоване виконання завдань.
+        /// </summary>
+        public static string So_313__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_313__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1015,11 +4165,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават със самодисциплинирано, надеждно и целенасочено възприемане на задачите. Те например подхождат съвестно към задълженията си, спазват сроковете за предаване и изпълняват своите задачи самостоятелно. На уговорените срещи те са точни и добре подготвени. В повечето случаи техните колеги и колежки ги възприемат като надеждни..
+        /// </summary>
+        public static string So_313_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_313_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch selbstdiszipliniertes, zuverlässiges und zielorientiertes Wahrnehmen von Aufgaben aus. Beispielsweise kommen sie ihren Verpflichtungen gewissenhaft nach, halten Abgabetermine ein und erledigen ihre Aufgaben eigenständig. Zu Terminen sind sie pünktlich und gut vorbereitet. Ihre Kolleg:Innen nehmen sie meist als zuverlässig wahr..
         /// </summary>
         public static string So_313_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_313_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by self-disciplined, reliable, and goal-oriented performance in tasks. For example, they fulfill their obligations conscientiously, meet deadlines, and complete their tasks independently. They are punctual and well-prepared for appointments. Their colleagues usually perceive them as reliable..
+        /// </summary>
+        public static string So_313_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_313_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se distinguent par leur autodiscipline, leur fiabilité et leur sens de l’objectif dans l’exécution des tâches. Par exemple, elles s’acquittent consciencieusement de leurs obligations, respectent les délais et accomplissent leurs tâches de manière autonome. Elles sont ponctuelles et arrivent bien préparés aux rendez-vous. Leurs collègues les perçoivent généralement comme fiables..
+        /// </summary>
+        public static string So_313_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_313_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează prin îndeplinirea sarcinilor cu autodisciplină, seriozitate și în manieră orientată spre obiective. De exemplu, își îndeplinesc obligațiile cu conștiinciozitate, respectă termenele și își îndeplinesc sarcinile în mod independent. Vin la timp la întâlniri și sunt bine pregătite. Colegii percep aceste persoane ca fiind de încredere..
+        /// </summary>
+        public static string So_313_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_313_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с высокими показателями свойственны самодисциплина, надёжность и целеустремленность при выполнении задач. Например, они добросовестно выполняют свои обязанности, укладываются в сроки и выполняют задания самостоятельно. На назначенные мероприятия они приходят вовремя и хорошо подготовленными. Коллеги обычно воспринимают их как людей, на которых можно положиться..
+        /// </summary>
+        public static string So_313_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_313_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, öz disiplinli, güvenilir ve hedef odaklı görev performansı ile karakterize edilir. Bu kişiler örneğin, yükümlülüklerini bilinçli bir şekilde yerine getirirler, son teslim tarihlerine uyarlar ve görevlerini bağımsız olarak tamamlarlar. Randevularına tam zamanında gelirler ve iyi hazırlanmışlardır. Meslektaşları onları genellikle güvenilir olarak algılar..
+        /// </summary>
+        public static string So_313_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_313_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із високими показниками властиві самодисципліна, надійність і цілеспрямованість під час виконання завдань. Наприклад, вони сумлінно виконують свої обов&apos;язки, вкладаються в терміни та виконують завдання самостійно. На зустрiчi вони приходять вчасно і добре підготовленими. Колеги зазвичай сприймають їх як людей, на яких можна покластися..
+        /// </summary>
+        public static string So_313_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_313_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1033,11 +4246,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати работят по по-малко целенасочен и самодисциплиниран начин. Те са отчасти неточни или неподготвени за своите задачи. Например, те поемат повече задачи, отколкото могат да свършат. Затова те не винаги успяват да спазят своите задължения. Техните колеги и колежки ги възприемат по-скоро като ненадеждни и невнимателни..
+        /// </summary>
+        public static string So_313_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_313_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten arbeiten weniger zielorientiert und selbstdiszipliniert. Sie sind teilweise unpünktlich oder nicht auf ihre Aufgaben vorbereitet. Sie nehmen zum Beispiel mehr Aufgaben an, als sie erledigen können. Ihren Verpflichtungen können sie daher nicht immer nachkommen. Ihre Kolleg:Innen nehmen sie als eher unzuverlässig und nicht sorgfältig wahr..
         /// </summary>
         public static string So_313_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_313_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are less goal-oriented and self-disciplined. They are sometimes unpunctual or unprepared for their tasks. For example, they take on more tasks than they can complete. They are, therefore, not always able to fulfill their obligations. Their colleagues perceive them as rather unreliable and not careful..
+        /// </summary>
+        public static string So_313_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_313_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible travaillent de manière moins ciblée et avec moins d’autodiscipline. Elles manquent parfois de ponctualité ou ne se préparent pas suffisamment à leurs tâches. Elles acceptent par exemple plus de tâches qu’elles ne peuvent en accomplir. Elles ne peuvent donc pas toujours remplir leurs obligations. Leurs collègues les perçoivent comme peu fiables et peu soigneuses..
+        /// </summary>
+        public static string So_313_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_313_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri mici lucrează mai puțin orientat spre obiectiv și cu mai puțină autodisciplină. Uneori nu sunt punctuale sau nu sunt pregătite pentru sarcinile lor. De exemplu, acceptă mai multe sarcini decât pot rezolva. Din acest motiv, uneori nu își îndeplinesc toate obligațiile. Colegii percep aceste persoane ca fiind mai degrabă neserioase și neatente..
+        /// </summary>
+        public static string So_313_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_313_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями работают менее целеустремленно и самодисциплинированно. Иногда они непунктуальны или не готовы к выполнению своих задач. Например, они берут на себя больше задач, чем могут выполнить. Поэтому они не всегда могут выполнить свои обязательства. Коллеги обычно воспринимают их как не вполне надёжных и добросовестных..
+        /// </summary>
+        public static string So_313_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_313_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler daha az hedef odaklı ve öz disiplinlidir. Bu kişiler kısmen dakik değillerdir veya görevlerine hazırlıksızdırlar. Örneğin kendileri halledebileceklerinden daha fazla görev üstlenirler. Bu nedenle yükümlülüklerini her zaman yerine getiremezler. Meslektaşları onları daha çok güvenilmez ve dikkatli olmayan biri olarak algılar..
+        /// </summary>
+        public static string So_313_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_313_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками працюють менш цілеспрямовано і самодисципліновано. Іноді вони непунктуальні або не готові до виконання своїх завдань. Наприклад, вони беруть на себе більше завдань, ніж можуть виконати. Тому вони не завжди можуть виконати свої зобов&apos;язання. Колеги зазвичай сприймають їх як не цілком надійних і сумлінних робітників..
+        /// </summary>
+        public static string So_313_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_313_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1051,11 +4327,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Изпълнение на дадена задача при вземане предвид на всички засегнати, дори и съвсем малки сфери..
+        /// </summary>
+        public static string So_315__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_315__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ausführen einer Aufgabe unter Berücksichtigung aller betroffenen, noch so kleinen Bereiche..
         /// </summary>
         public static string So_315__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_315__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carrying out tasks taking into account all areas involved, no matter how small..
+        /// </summary>
+        public static string So_315__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_315__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exécuter une tâche en tenant compte de tous les domaines concernés, aussi petits soient-ils..
+        /// </summary>
+        public static string So_315__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_315__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executarea unei sarcini ținând cont de toate aspectele vizate, chiar și minore..
+        /// </summary>
+        public static string So_315__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_315__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выполнение задачи с учётом всех затронутых областей, какими бы незначительными они ни были..
+        /// </summary>
+        public static string So_315__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_315__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ne kadar küçük olursa olsun, etkilenen tüm alanları dikkate alarak bir görevi yerine getirmek..
+        /// </summary>
+        public static string So_315__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_315__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Виконання завдання з урахуванням усіх порушених сфер, якими б незначними вони не були..
+        /// </summary>
+        public static string So_315__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_315__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1069,11 +4408,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават с внимателна и акуратна работа. Например те винаги следят за подробностите и детайлите. В повечето случаи техните колеги и колежки ги възприемат като внимателни и съвестни..
+        /// </summary>
+        public static string So_315_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_315_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch sorgfältiges und genaues Arbeiten aus. Sie haben beispielsweise ein Auge für Kleinigkeiten und Details. Ihre Kolleg:innen nehmen sie meist als sorgfältige und gewissenhafte Mitarbeiter:in wahr..
         /// </summary>
         public static string So_315_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_315_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by careful and precise work. For example, they have an eye for small details. Their colleagues usually perceive them as careful and conscientious employees..
+        /// </summary>
+        public static string So_315_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_315_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se distinguent par un travail minutieux et précis. Elles ont par exemple l’œil pour les détails. Leurs collègues les perçoivent généralement comme des collaborateurs minutieux et consciencieux..
+        /// </summary>
+        public static string So_315_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_315_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează printr-un mod de lucru atent și precis. De exemplu, sunt atente la amănunte și detalii. Colegii percep aceste persoane ca fiind cu meticuloase și conștiincioase..
+        /// </summary>
+        public static string So_315_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_315_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с высокими показателями свойственна аккуратность и точность в работе. Например, они принимают во внимание все мелочи и детали. Коллеги обычно воспринимают их как старательных и добросовестных сотрудников..
+        /// </summary>
+        public static string So_315_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_315_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, dikkatli ve hassas çalışma ile karakterize edilirler. Bu kişiler örneğin detaylara önem verirler. İş arkadaşları onları genellikle dikkatli ve düzgün bir çalışan olarak algılar..
+        /// </summary>
+        public static string So_315_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_315_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із високими показниками властива акуратність і точність у роботі. Наприклад, вони беруть до уваги всі дрібниці та деталі. Колеги зазвичай сприймають їх як старанних і сумлінних співробітників..
+        /// </summary>
+        public static string So_315_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_315_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1087,11 +4489,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати често работят неточно или невнимателно. Те се затрудняват да добият цялостна представа за задачите си. Например, за тях е трудно да следят за подробностите и детайлите. Често те се сещат впоследствие, че са пропуснали или забравили някоя подробност..
+        /// </summary>
+        public static string So_315_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_315_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten arbeiten oft ungenau oder nicht sorgfältig. Sie haben Schwierigkeiten damit, ihre Aufgaben zu überblicken. Zum Beispiel fällt es ihnen schwer, Details und Kleinigkeiten im Auge zu behalten. Oft fällt ihnen im Nachhinein auf, dass sie Kleinigkeiten übersehen oder vergessen haben..
         /// </summary>
         public static string So_315_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_315_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores often work inaccurately or not carefully. They have difficulty keeping track of their tasks. For example, they find it difficult to keep track of details and small details. They often realize afterward that they have overlooked or forgotten small details..
+        /// </summary>
+        public static string So_315_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_315_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible travaillent souvent de manière imprécise ou peu soigneuse. Elles ont du mal à avoir une vue d’ensemble de leurs tâches. Elles éprouvent par exemple des difficultés à garder à l’esprit les détails. Souvent, elles se rendent compte après coup qu’elles ont négligé ou oublié des détails..
+        /// </summary>
+        public static string So_315_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_315_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri mici lucrează de multe ori imprecis sau lipsit ne conștiinciozitate. Au dificultăți în a avea o privire de ansamblu asupra sarcinilor. De exemplu, este dificil pentru ele să aibă în vedere detalii și amănunte. De multe ori, abia ulterior realizează că au omis sau au uitat anumite detalii..
+        /// </summary>
+        public static string So_315_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_315_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями часто работают неточно или неаккуратно. Им трудно держать в поле зрения весь комплекс своих задач. Например, им сложно уследить за всеми деталями и мелочами. Часто спустя время им приходит в голову, что упустили из виду какие-то мелочи или забыли о них..
+        /// </summary>
+        public static string So_315_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_315_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler genellikle hatalı çalışır veya dikkatli çalışmazlar. Bu kişiler görevlerini kavramada zorlanırlar. Kendileri örneğin, ayrıntılara ve küçük detaylara dikkat etmekte zorlanırlar. Genellikle küçük şeyleri gözden kaçırdıklarını veya unuttuklarını sonradan fark ederler..
+        /// </summary>
+        public static string So_315_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_315_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками часто працюють неточно та неакуратно. Їм важко тримати в полі зору весь комплекс своїх завдань. Taк, їм важко встежити за всіма деталями і дрібницями. Через деякий час їм нерiдко спадає на думку, що вони випустили з уваги якісь дрібниці або забули про них..
+        /// </summary>
+        public static string So_315_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_315_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1105,11 +4570,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Демонстриране на готовност да се поемат задачи веднага, дори и когато те са трудни или неприятни..
+        /// </summary>
+        public static string So_321__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_321__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Demonstrieren von Bereitschaft, Aufgaben sofort zu übernehmen, auch wenn sie schwierig oder unangenehm sind..
         /// </summary>
         public static string So_321__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_321__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demonstrating a willingness to take on tasks immediately, even if difficult or unpleasant..
+        /// </summary>
+        public static string So_321__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_321__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Démontrer une volonté de prendre en charge les tâches immédiatement, même si elles sont difficiles ou désagréables..
+        /// </summary>
+        public static string So_321__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_321__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demonstrarea disponibilității de a își asuma sarcini imediat, chiar dacă acestea sunt dificile sau neplăcute..
+        /// </summary>
+        public static string So_321__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_321__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Демонстрация готовности немедленно браться за выполнение задач, даже если они трудны или неприятны..
+        /// </summary>
+        public static string So_321__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_321__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zor veya rahatsız edici olsalar dahi görevleri hemen üstlenmeye hazır olduklarını gösterirler..
+        /// </summary>
+        public static string So_321__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_321__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Демонстрація готовності негайно братися за виконання завдань, навіть якщо вони важкі або неприємні..
+        /// </summary>
+        public static string So_321__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_321__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1123,11 +4651,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават със своята силна готовност за действие. При нови задачи те често откликват веднага и са готови да поемат и неприятни или трудни задачи. Често те поемат и допълнителни задачи..
+        /// </summary>
+        public static string So_321_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_321_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch ihre hohe Einsatzbereitschaft aus. Bei neuen Aufgaben melden sie sich oft sofort und sind auch bereit, unangenehme oder anstrengende Aufgaben zu übernehmen. Auch zusätzliche Aufgaben übernehmen sie oft..
         /// </summary>
         public static string So_321_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_321_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by their high level of commitment. They often volunteer immediately for new tasks and are prepared to take on unpleasant or strenuous tasks. They also often take on additional tasks..
+        /// </summary>
+        public static string So_321_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_321_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se distinguent par leur grande disponibilité. Elles se portent souvent volontaires pour de nouvelles tâches et sont prêtes à accepter des tâches désagréables ou pénibles. Elles acceptent également souvent des tâches supplémentaires..
+        /// </summary>
+        public static string So_321_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_321_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează prin disponibilitatea lor ridicată. Ele se prezintă de multe ori imediat când apar sarcini noi și sunt dispuse să își asume și sarcini neplăcute sau solicitante. Ele preiau de multe ori și sarcini suplimentare..
+        /// </summary>
+        public static string So_321_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_321_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людей с высокими показателями характеризует высокий уровень готовности к работе. Они часто сразу же вызываются выполнять новые задания, а также готовы браться за неприятные или трудоёмкие задачи. Кроме того, они часто берут на себя дополнительные задачи..
+        /// </summary>
+        public static string So_321_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_321_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, yüksek çalışma motivasyonu ve mücadele özelliği ile karakterize edilirler. Genellikle yeni görevleri üstlenmeye hemen aday  olurlar ve hoş olmayan veya yorucu görevleri üstlenmeye de hazırdırlar. Aynı zamanda sıklıkla ek görevler de üstlenirler..
+        /// </summary>
+        public static string So_321_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_321_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людей з високими показниками характеризує високий рівень готовності до роботи. Вони часто готовi виконувати нові завдання, а також братися за неприємні або трудомісткі завдання. Крім того, вони часто беруть на себе додаткові завдання..
+        /// </summary>
+        public static string So_321_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_321_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1141,11 +4732,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати поемат допълнителни или трудни задачи само с нежелание. Те само много рядко показват готовност за действие..
+        /// </summary>
+        public static string So_321_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_321_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten stellen sich zusätzlichen oder schwierigen Aufgaben nur ungern. Sie demonstrieren Einsatzbereitschaft nur sehr selten..
         /// </summary>
         public static string So_321_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_321_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are reluctant to take on additional or difficult tasks. They very rarely demonstrate commitment..
+        /// </summary>
+        public static string So_321_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_321_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible sont réticentes à prendre en charge des tâches supplémentaires ou difficiles. Elles ne font que très rarement preuve de disponibilité..
+        /// </summary>
+        public static string So_321_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_321_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute nu preiau cu plăcere sarcini suplimentare sau dificile. Doar rareori arată disponibilitate..
+        /// </summary>
+        public static string So_321_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_321_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями неохотно берутся за дополнительные или сложные задачи. Они очень редко демонстрируют готовность к работе..
+        /// </summary>
+        public static string So_321_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_321_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler ek veya zor görevleri üstlenmekte isteksizdir. Çok nadiren çalışma isteği gösterirler..
+        /// </summary>
+        public static string So_321_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_321_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками неохоче беруться за додаткові або складні завдання. Вони дуже рідко демонструють готовність до роботи..
+        /// </summary>
+        public static string So_321_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_321_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1159,11 +4813,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Показване на ангажираност за нещо, което е трудно и изисква усилена работа. Предприемане на големи усилия, човек да е стимулиран от интерес или задоволство от работата, без да се упражнява външен натиск..
+        /// </summary>
+        public static string So_322__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_322__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Engagement für etwas zeigen, das schwierig ist und harte Arbeit erfordert. Große Anstrengungen unternehmen, durch Interesse oder Freude an der Arbeit angetrieben sein, ohne dass Druck von außen ausgeübt wird..
         /// </summary>
         public static string So_322__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_322__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Showing commitment to something that is difficult and requires hard work. Making a significant effort, being driven by interest or enjoyment of work without external pressure..
+        /// </summary>
+        public static string So_322__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_322__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faire preuve d’engagement pour quelque chose de difficile et exigeant un travail acharné. Faire de gros efforts, être motivé·e par l’intérêt pour le travail ou la satisfaction qu’il procure, sans pression extérieure..
+        /// </summary>
+        public static string So_322__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_322__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manifestarea angajamentului față de ceva ce este dificil și necesită o muncă grea. Asumarea unor eforturi mari, motivație trezită din interesul și bucuria față de muncă, fără a exista o presiune din exterior..
+        /// </summary>
+        public static string So_322__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_322__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Проявление энтузиазма к выполнению чему-то сложного и требующего напряженной работы. Приложение больших усилий, когда это обусловлено интересом или удовольствием от работы, без внешнего давления..
+        /// </summary>
+        public static string So_322__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_322__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zor olan ve sıkı çalışma gerektiren bir şeye bağlılık göstermek. Büyük bir çaba sarf etme, dış baskı olmaksızın ilgiyle veya işten zevk alarak hareket etme..
+        /// </summary>
+        public static string So_322__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_322__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Прояв ентузіазму до виконання чогось складного і такого, що вимагає напруженої роботи. Докладання великих зусиль без зовнішнього тиску, коли це зумовлено інтересом або задоволенням від роботи..
+        /// </summary>
+        public static string So_322__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_322__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1177,11 +4894,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават със своята голяма решителност при преследването на дадена цел. В повечето случаи те имат вътрешна мотивация да постигнат целите си. Ако си поставят цел, те работят усърдно и без външен натиск за постигането ѝ..
+        /// </summary>
+        public static string So_322_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_322_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch ihre hohe Entschlossenheit bei der Verfolgung eines Ziels aus. Sie sind meist intrinsisch motiviert, ihre Ziele zu erreichen. Wenn sie sich ein Ziel gesetzt haben, arbeiten sie konsequent und auch ohne externen Druck daraufhin, dieses zu erreichen..
         /// </summary>
         public static string So_322_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_322_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by their high level of determination in pursuing a goal. They are usually intrinsically motivated to achieve their goals. Once they have set themselves a goal, they work consistently and without external pressure to achieve it..
+        /// </summary>
+        public static string So_322_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_322_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se distinguent par leur grande détermination dans la poursuite d’un objectif. Elles sont généralement intimement motivées par la réalisation de leurs objectifs. Une fois qu’elles se sont fixé un objectif, elles travaillent de manière cohérente pour l’atteindre, même sans pression extérieure..
+        /// </summary>
+        public static string So_322_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_322_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează prin determinarea lor puternică în urmărirea unui obiectiv precis. De cele mai multe ori, au o motivație intrinsecă pentru a își atinge obiectivele. Când și-au stabilit un obiectiv, lucrează în mod consecvent pentru a-și atinge obiectivul, fără o presiune din exterior..
+        /// </summary>
+        public static string So_322_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_322_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людей с высокими показателями характеризует высокий уровень решимости в достижении цели. Как правило, они имеют внутреннюю мотивацию для достижения своих целей. Поставив перед собой цель, они последовательно и без внешнего давления работают над её достижением..
+        /// </summary>
+        public static string So_322_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_322_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, bir hedefin peşinden giderken gösterdikleri yüksek kararlılıkla karakterize edilirler. Bu kişiler hedeflerine ulaşmak için genellikle içsel olarak motive olurlar. Kendilerine bir hedef koyduktan sonra, bu hedefe ulaşmak için tutarlı bir şekilde ve dış baskı olmadan çalışırlar..
+        /// </summary>
+        public static string So_322_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_322_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людей з високими показниками характеризує високий рівень рішучості в досягненні мети. Як правило, вони мають внутрішню мотивацію задля досягнення своїх цілей. Поставивши перед собою мету, вони послідовно і без зовнішнього тиску працюють над її досягненням..
+        /// </summary>
+        public static string So_322_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_322_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1195,11 +4975,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати не са много решени са постигат целите си без външен натиск. Те са малко заинтересовани от своите задачи и имат нужда от външна мотивация, за да покажат ангажираност към своята работа. Те често се възприемат като по-малко отдадени, отколкото други колеги и колежки на работното място. .
+        /// </summary>
+        public static string So_322_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_322_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten sind wenig entschlossen, ihre Ziele ohne externen Druck zu erreichen. Sie sind wenig interessiert an ihren Aufgaben und brauchen extrinsische Motivation, um Engagement für ihre Arbeit zu zeigen. Sie nehmen sich oft als weniger engagiert als Kolleg:innen am Arbeitsplatz wahr..
         /// </summary>
         public static string So_322_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_322_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are less determined to achieve their goals without external pressure. They have little interest in their tasks and need extrinsic motivation to show commitment to their work. They often perceive themselves as less committed than colleagues at work. .
+        /// </summary>
+        public static string So_322_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_322_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible sont peu déterminées à atteindre leurs objectifs sans pression externe. Elles s’intéressent peu à leurs tâches et ont besoin d’une motivation extérieure pour s’engager dans leur travail. Elles se perçoivent souvent comme moins engagées que leurs collègues au travail. .
+        /// </summary>
+        public static string So_322_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_322_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri mici nu sunt determinate să își atingă obiectivele fără o presiune externă. Manifestă un interes redus față de sarcinile lor și au nevoie de o motivație extrinsecă pentru a se implica în activitatea de lucru. Se percep pe sine ca fiind mai puțin implicate la locul de muncă decât colegii. .
+        /// </summary>
+        public static string So_322_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_322_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями менее решительны в достижении своих целей без внешнего давления. Они мало интересуются своими задачами и нуждаются во внешней мотивации, чтобы проявить активность в выполнении своей работы. Они часто считают себя менее увлечёнными, чем их коллеги по работе. .
+        /// </summary>
+        public static string So_322_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_322_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler, dış baskı olmadan hedeflerine ulaşma konusunda daha az kararlıdır. Bu kişiler görevlerine çok az ilgi duyarlar ve işlerine bağlılık göstermek için dışsal motivasyona ihtiyaç duyarlar. Genellikle kendileri iş yerindeki arkadaşlarından daha az angaje olurlar. .
+        /// </summary>
+        public static string So_322_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_322_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками менш рішучі в досягненні своїх цілей без зовнішнього тиску. Вони мало цікавляться своїми завданнями і для того, щоб проявити активність у виконанні роботи, потребують зовнішньої мотивації. Часто вони вважають себе менш захопленими, ніж їхні колеги. .
+        /// </summary>
+        public static string So_322_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_322_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1213,11 +5056,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Показване на инициативност и предприемане на първата крачка, без човек да чака какво казват или правят другите..
+        /// </summary>
+        public static string So_323__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_323__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proaktiv sein und den ersten Schritt unternehmen, ohne darauf zu warten, was Andere sagen oder tun..
         /// </summary>
         public static string So_323__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_323__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Being proactive and taking the first step without waiting to see what others say or do..
+        /// </summary>
+        public static string So_323__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_323__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avoir une attitude proactive et faire le premier pas sans attendre ce que disent ou font les autres..
+        /// </summary>
+        public static string So_323__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_323__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A fi proactiv și a face primul pas, fără a aștepta ce zic sau ce fac alte persoane..
+        /// </summary>
+        public static string So_323__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_323__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Проявление инициативы и готовность сделать первый шаг, не дожидаясь, что скажут или сделают другие..
+        /// </summary>
+        public static string So_323__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_323__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proaktif olma ve başkalarının ne diyeceğini veya ne yapacağını beklemeden ilk adımı atma..
+        /// </summary>
+        public static string So_323__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_323__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Прояв ініціативи та готовність зробити перший крок, не чекаючи, що скажуть чи зроблять інші..
+        /// </summary>
+        public static string So_323__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_323__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1231,11 +5137,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се отличават със собствена инициативност. Те са много проактивни и често са движещата сила в екипа или в даден проект. Те предприемат първата крачка, за да се реши дадена задача – дори и още преди да са били натоварени с това..
+        /// </summary>
+        public static string So_323_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_323_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeichnen sich durch ihre Eigeninitiative aus. Sie sind sehr proaktiv und oft die treibende Kraft im Team oder Projekt. Sie unternehmen den ersten Schritt, um eine Aufgabe zu lösen – auch, bevor sie explizit dazu aufgefordert werden..
         /// </summary>
         public static string So_323_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_323_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are characterized by their initiative. They are very proactive and are often the driving force in a team or project. They take the first step to solve a task - even before they are explicitly asked..
+        /// </summary>
+        public static string So_323_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_323_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé se distinguent par leur esprit d’initiative. Elles sont très proactives et agissent souvent en force motrice au sein de l’équipe ou du projet. Elles font le premier pas pour accomplir une tâche, même avant d’être explicitement invitées à le faire..
+        /// </summary>
+        public static string So_323_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_323_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se caracterizează prin inițiativă proprie. Ele sunt foarte proactive și deseori sunt motorul echipei sau al proiectului. Fac primul pas pentru a soluționa o sarcină – chiar și înainte de a li se cere explicit acest lucru..
+        /// </summary>
+        public static string So_323_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_323_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с высокими показателями свойственна инициативность. Они очень инициативны и часто являются движущей силой в команде или проекте. Они первыми делают шаги к решению задачи – даже до того, как их прямо попросят об этом..
+        /// </summary>
+        public static string So_323_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_323_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler kendi inisiyatifleriyle karakterize edilirler. Bu kişiler çok proaktiftirler ve genellikle ekip veya projenin itici güçleridir. Kendilerinden açıkça istenmeden önce dahi bir görevi çözmek için ilk adımı atarlar..
+        /// </summary>
+        public static string So_323_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_323_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із високими показниками властива ініціативність. Вони дуже ініціативні і часто виступають рушійною силою в команді чи проєкті. Вони першими роблять кроки до вирішення завдання – навіть ще до того, як їх прямо попросять про це..
+        /// </summary>
+        public static string So_323_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_323_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1249,11 +5218,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да се захванат с дадена задача, без тя изрично да им е била възложена. Ако трябва да се свърши нещо, те често го отстъпват на другите. Вместо да са движещата сила, в повечето случаи те само участват и се активизират само, когато това е наложително..
+        /// </summary>
+        public static string So_323_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_323_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten haben Schwierigkeiten, eine Aufgabe ohne explizite Aufforderung anzugehen. Wenn etwas zu tun ist, lassen sie oft anderen den Vortritt. Anstatt die treibende Kraft zu sein, machen sie meist nur mit und werden erst aktiv, wenn es wirklich sein muss..
         /// </summary>
         public static string So_323_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_323_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to tackle a task without an explicit request. If something needs to be done, they let others take the lead. Instead of being the driving force, they usually just join in and only become active when they have to..
+        /// </summary>
+        public static string So_323_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_323_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à entreprendre une tâche sans y être explicitement invitées. Lorsqu’il y a quelque chose à faire, elles laissent souvent les autres prendre le relais. Au lieu d’être la force motrice, elles se contentent généralement de suivre le mouvement et n’agissent que lorsque c’est vraiment nécessaire..
+        /// </summary>
+        public static string So_323_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_323_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute au dificultăți să abordeze o sarcină fără o solicitare explicită. Dacă este ceva de făcut, îi lasă de multe ori mai întâi pe alții. În loc să fie forța motrice, de obicei doar participă și devin active numai atunci când chiar trebuie..
+        /// </summary>
+        public static string So_323_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_323_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно приступить к решению задачи без явно высказанного требования. Когда нужно что-то сделать, они часто предоставляют инициативу другим. Вместо того чтобы быть движущей силой, они обычно просто присоединяются к другим и становятся активными только тогда, когда это действительно необходимо..
+        /// </summary>
+        public static string So_323_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_323_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler, kesin bir talimat olmadan bir görevin üstesinden gelmekte zorluk çekerler. Bir şey yapılması gerektiğinde, genellikle başkalarının önden gitmesine izin verirler. İtici güç olmak yerine, genellikle sadece katılırlar ve sadece gerçekten zorunda olduklarında etkin olurlar..
+        /// </summary>
+        public static string So_323_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_323_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям iз низькими показниками важко приступити до вирішення завдання без явно висловленої вимоги. Коли потрібно щось зробити, вони часто надають ініціативу іншим. Замість того щоб виступати рушійною силою, вони зазвичай приєднуються до інших і розвивають активність лише тоді, коли це дійсно необхідно..
+        /// </summary>
+        public static string So_323_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_323_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1267,11 +5299,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Избиране на една или повече алтернативни възможности..
+        /// </summary>
+        public static string So_324__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_324__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auswählen einer von mehreren alternativen Möglichkeiten..
         /// </summary>
         public static string So_324__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_324__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecting one of several alternative options..
+        /// </summary>
+        public static string So_324__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_324__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faire des choix..
+        /// </summary>
+        public static string So_324__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_324__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alegere unei posibilități din mai multe alternative..
+        /// </summary>
+        public static string So_324__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_324__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выбор одной из нескольких альтернативных возможностей..
+        /// </summary>
+        public static string So_324__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_324__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birkaç alternatif seçenekten birini seçme..
+        /// </summary>
+        public static string So_324__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_324__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вибір однієї з кількох альтернативних можливостей..
+        /// </summary>
+        public static string So_324__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_324__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1285,11 +5380,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати лесно успяват да вземат решение в работата. Дори и при много алтернативни възможности те избират една опция в рамките на зададения краен срок. Те знаят кога, след преценка на всички възможности, трябва да се вземе решение..
+        /// </summary>
+        public static string So_324_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_324_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten fällt es leicht, bei der Arbeit Entscheidungen zu treffen. Auch bei vielen alternativen Möglichkeiten entscheiden sie sich im gesetzten Zeitrahmen für eine Option. Sie wissen, wann es nach Abwägung aller Möglichkeiten gilt, eine Entscheidung zu treffen..
         /// </summary>
         public static string So_324_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_324_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores find it easy to make decisions at work. Even when faced with many alternative options, they choose one option within the given time frame. They know when to make a decision after weighing up all the options..
+        /// </summary>
+        public static string So_324_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_324_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé n’éprouvent aucune difficulté à prendre des décisions au travail. Même si elles ont de nombreuses alternatives, elles choisissent une option dans les délais impartis. Elles savent quand prendre une décision après avoir considéré toutes les options..
+        /// </summary>
+        public static string So_324_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_324_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate iau cu ușurință decizii la locul de muncă. Chiar dacă există multe posibilități alternative, ele se decid pentru o opțiune în termenul stabilit. Știu când trebuie să ia o decizie, după ce au cântărit toate posibilitățile..
+        /// </summary>
+        public static string So_324_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_324_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с высокими показателями легко даётся принимать решения на работе. Даже имея множество альтернативных возможностей, они принимают решение в пользу одного варианта в установленные сроки. Они знают, когда нужно принять решение, взвесив все варианты..
+        /// </summary>
+        public static string So_324_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_324_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler iş yerinde kararları kolay alırlar. Çok sayıda alternatif seçenek olsa dahi, belirlenen zaman dilimi içinde bir seçenek lehine karar verirler. Bu kişiler tüm seçenekleri değerlendirdikten sonra ne zaman karar vereceklerini bilirler..
+        /// </summary>
+        public static string So_324_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_324_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із високими показниками легко приймати рішення на роботі. Навіть маючи безліч альтернативних можливостей, вони приймають рішення на користь одного варіанта у встановлені терміни. Вони знають, коли потрібно прийняти рішення, розглянувши всі варіанти..
+        /// </summary>
+        public static string So_324_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_324_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1303,11 +5461,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to За хората с ниски резултати е проблем да вземат решения на работното място. Те протакат решенията и често се чувстват претоварени при избора между няколко алтернативи. Преди да съжаляват, те по-скоро предпочитат изобщо да не вземат никакво решение..
+        /// </summary>
+        public static string So_324_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_324_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten haben Probleme damit, Entscheidungen am Arbeitsplatz zu treffen. Sie zögern Entscheidungen hinaus und fühlen sich bei der Auswahl zwischen mehreren Alternativen oft überfordert. Bevor sie eine Entscheidung bereuen, treffen sie daher lieber keine..
         /// </summary>
         public static string So_324_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_324_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores have problems making decisions at work. They delay decisions and often feel overwhelmed when choosing between several alternatives. Before they regret a decision, they prefer not to make one..
+        /// </summary>
+        public static string So_324_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_324_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à prendre des décisions au travail. Elles diffèrent les décisions et se sentent souvent dépassées lorsqu’elles doivent choisir entre plusieurs options. Elles préfèrent donc ne pas prendre de décision plutôt que de le regretter plus tard..
+        /// </summary>
+        public static string So_324_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_324_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute au probleme în a lua decizii la locul de muncă. Acestea întârzie luarea deciziilor și se simt adesea copleșite când au de ales între mai multe alternative. Decât să regrete o decizie, preferă să nu ia nicio decizie..
+        /// </summary>
+        public static string So_324_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_324_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями испытывают проблемы с принятием решений на рабочем месте. Они откладывают принятие решений и часто чувствуют себя не в силах сделать выбор между несколькими альтернативами. Чтобы не сожалеть о принятом решении, они предпочитают вообще его не принимать..
+        /// </summary>
+        public static string So_324_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_324_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler iş yerinde karar verme konusunda sorun yaşarlar. Kararlarını geciktirirler ve çeşitli alternatifler arasında seçim yaparken kendilerini genellikle bunalmış hissederler. Bir karardan pişmanlık duyacaklarına karar vermemeyi tercih ederler..
+        /// </summary>
+        public static string So_324_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_324_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками мають проблеми з прийняттям рішень на робочому місці. Вони відкладають прийняття рішень і часто не в силах зробити вибір між кількома альтернативами. Щоб не шкодувати про прийняте рішення, вони вважають за краще взагалі його не приймати..
+        /// </summary>
+        public static string So_324_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_324_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1321,11 +5542,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Поемане на отговорност и задължение за отчитане за собствените професионални решения и действия или тези, които са били делегирани на други..
+        /// </summary>
+        public static string So_325__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_325__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Übernehmen von Verantwortung und Rechenschaftspflicht für die eigenen beruflichen Entscheidungen und Handlungen oder die, die an Andere delegiert werden..
         /// </summary>
         public static string So_325__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_325__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taking responsibility and accountability for your own professional decisions and actions or those delegated to others..
+        /// </summary>
+        public static string So_325__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_325__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prendre la responsabilité et rendre compte de ses propres décisions et actions professionnelles ou de celles qui ont été déléguées à d’autres..
+        /// </summary>
+        public static string So_325__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_325__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asumarea răspunderii și responsabilității pentru deciziile și acțiunile profesionale proprii sau delegate de alte persoane..
+        /// </summary>
+        public static string So_325__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_325__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Принятие на себя ответственности и обязанности держать ответ за собственные профессиональные решения и действия или за те, которые делегированы другим..
+        /// </summary>
+        public static string So_325__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_325__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kişinin kendi mesleki kararları ve eylemleri veya başkalarına devredilenler için sorumluluk ve hesap verebilirlik üstlenmesi..
+        /// </summary>
+        public static string So_325__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_325__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Прийняття на себе відповідальності та обов&apos;язок відповідати за власні професійні рішення і дії або за ті рішення і дії, які були делеговані іншим..
+        /// </summary>
+        public static string So_325__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_325__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1339,11 +5623,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати притежават ясно изразено чувство за отговорност. В тяхното обкръжение те спадат към хората, които поемат отговорност и при грешки стоят зад действията си. По този начин те не се страхуват от негативни последици. Те осъзнават отговорността си и когато прехвърлят задачи, като вземат на сериозно своите прехвърлени задължения..
+        /// </summary>
+        public static string So_325_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_325_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten besitzen ein ausgeprägtes Verantwortungsbewusstsein. Sie zählen zu den Personen in ihrem Umfeld, die Verantwortung übernehmen und bei Fehlern für ihre Taten einstehen. Sie scheuen negative Konsequenzen somit nicht. So sind sie sich auch ihrer Verantwortung bewusst, wenn sie Aufgaben übertragen, und nehmen ihre übertragenen Pflichten ernst..
         /// </summary>
         public static string So_325_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_325_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores have a strong sense of responsibility. They are among the people in their environment who take responsibility and defend their actions if they make mistakes. They are not afraid of negative consequences. They are also aware of their responsibility when assigning tasks and take their duties seriously..
+        /// </summary>
+        public static string So_325_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_325_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé ont un sens aigu des responsabilités. Dans leur entourage, elles font partie de ceux qui prennent leurs responsabilités et assument leurs actes en cas d’erreur. Elles ne craignent donc pas les conséquences négatives. Elles sont également conscientes de leur responsabilité lorsqu’elles confient des tâches et prennent au sérieux les missions qui leur sont confiées..
+        /// </summary>
+        public static string So_325_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_325_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate au un simț al răspunderii dezvoltat. Ele se numără printre persoanele care își asumă răspundere și își asumă faptele atunci când greșesc. Prin urmare, nu se tem de consecințe negative. Aceste persoane sunt conștiente de răspunderea pe care o au atunci când deleagă sarcini și își iau în serios obligațiile care le sunt delegate..
+        /// </summary>
+        public static string So_325_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_325_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями обладают выраженным чувством ответственности. Они относятся к тем людям, которые берут на себя ответственность и отвечают свои действия, когда совершают ошибки. При этом они не боятся негативных последствий. Они также осознают свою ответственность при распределении заданий и серьёзно относятся к своим обязанностям..
+        /// </summary>
+        public static string So_325_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_325_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip insanlar güçlü bir sorumluluk bilincine sahiptir. Bu kişiler etraflarında sorumluluk alan ve hata yaptıklarında eylemlerinin arkasında duran insanlardır. Bu nedenle olumsuz sonuçlardan korkmazlar. Ayrıca görev verirken sorumluluklarının farkındadırlar ve kendilerine verilen görevleri ciddiye alırlar..
+        /// </summary>
+        public static string So_325_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_325_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками мають виражене почуття відповідальності. Вони належать до тих людей, які беруть на себе відповідальність і відповідають за свої помилки. При цьому вони не бояться негативних наслідків. Вони усвідомлюють свою відповідальність при розподілі завдань і серйозно ставляться до своїх обов&apos;язків..
+        /// </summary>
+        public static string So_325_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_325_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1357,11 +5704,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да поемат отговорност. Ако е възможно, те с радост прехвърлят отговорността си върху други. Те се страхуват от последствията. Затова те предпочитат да избягат от отговорност или пък дори изобщо не я поемат.  .
+        /// </summary>
+        public static string So_325_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_325_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, Verantwortung zu übernehmen. Wenn es geht, übertragen sie ihre Verantwortung gerne auf andere. Sie haben Angst vor Konsequenzen. Daher entfliehen sie lieber einer Verantwortung oder nehmen sie erst gar nicht an.  .
         /// </summary>
         public static string So_325_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_325_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it challenging to take responsibility. If they can, they are happy to delegate their responsibility to others. They are afraid of consequences. As a result, they prefer to escape responsibility or not accept it at all.  .
+        /// </summary>
+        public static string So_325_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_325_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à assumer des responsabilités. Quand elles le peuvent, elles préfèrent déléguer leurs responsabilités à d’autres. Elles ont peur des conséquences. Elles préfèrent donc fuir une responsabilité ou ne pas l’accepter du tout.  .
+        /// </summary>
+        public static string So_325_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_325_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să își asume răspunderea. Dacă se poate, preferă să delege răspunderea altor persoane. Le este teamă de consecințe. Din acest motiv, preferă să ocolească răspunderea sau nu și-o asumă.  .
+        /// </summary>
+        public static string So_325_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_325_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно брать на себя ответственность. Если есть возможность, они с удовольствием перекладывают свою ответственность на других. Они боятся последствий. Поэтому они предпочитают уйти от ответственности или вообще не брать её на себя.  .
+        /// </summary>
+        public static string So_325_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_325_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler sorumluluk almakta zorlanırlar. Mümkünse, sorumluluklarını başkalarına devretmekten memnun olurlar. Ortaya çıkacak sonuçlardan korkarlar. Bu nedenle sorumluluktan kaçmayı veya hiç kabul etmemeyi tercih ederler.  .
+        /// </summary>
+        public static string So_325_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_325_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко брати на себе відповідальність. Вони із задоволенням перекладають свою відповідальність на інших, якщо є така можливість. Вони бояться наслідків. Тому вони вважають за краще уникнути відповідальності або взагалі не брати її на себе.  .
+        /// </summary>
+        public static string So_325_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_325_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1375,11 +5785,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Преодоляване на предизвикателства, обрати и промени, възстановяване от несполуки и справяне с неуспехи..
+        /// </summary>
+        public static string So_333__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_333__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Herausforderungen, Umbrüche und Veränderungen bewältigen, sich von Rückschlägen erholen und mit Widrigkeiten umgehen..
         /// </summary>
         public static string So_333__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_333__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overcoming challenges, upheavals, and changes, recovering from setbacks, and dealing with adversity..
+        /// </summary>
+        public static string So_333__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_333__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faire face aux défis, aux bouleversements et aux changements, surmonter les échecs et faire face à l’adversité..
+        /// </summary>
+        public static string So_333__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_333__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depășirea provocărilor, a perturbărilor și a schimbărilor, recuperarea după eșecuri și gestionarea adversității..
+        /// </summary>
+        public static string So_333__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_333__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Преодоление трудностей, кризисов и перемен, восстановление после неудач и борьба с неприятностями..
+        /// </summary>
+        public static string So_333__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_333__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zorlukların, çalkantıların ve değişikliklerin üstesinden gelmek, aksiliklerden kurtulmak ve sıkıntılarla başa çıkma..
+        /// </summary>
+        public static string So_333__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_333__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подолання труднощів, криз і змін, відновлення після невдач і боротьба з неприємностями..
+        /// </summary>
+        public static string So_333__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_333__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1393,11 +5866,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати са устойчиви на стреса. По принцип те преодоляват несполуките добре и не се оставят толкова бързо да бъдат изкарани от равновесие. Когато нещо не ми се удава, това не им се отразява негативно твърде дълго. Те запазват спокойствие, ако са под напрежение..
+        /// </summary>
+        public static string So_333_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_333_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten sind stressresistent. Sie verarbeiten Rückschläge in der Regel gut und lassen sich nicht so schnell aus der Ruhe bringen. Wenn ihnen etwas nicht gelingt, beeinflusst sie das nicht lange negativ. Unter Druck bleiben sie gelassen..
         /// </summary>
         public static string So_333_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_333_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are stress-resistant. They generally cope well with setbacks and are not easily rattled. It doesn&apos;t affect them negatively for long if they don&apos;t succeed at something. They remain calm under pressure..
+        /// </summary>
+        public static string So_333_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_333_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont résistantes au stress. Généralement, elles gèrent bien les échecs et ne se laissent pas facilement déstabiliser. Si elles échouent dans une tâche, cela ne les affecte pas négativement pendant longtemps. Elles gardent leur calme sous la pression..
+        /// </summary>
+        public static string So_333_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_333_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate sunt rezistente la stres. De regulă, gestionează bine eșecurile și nu își pierd prea lesne echilibrul interior. Dacă ceva nu le reușește, eșecul nu le influențează negativ prea mult timp. Rămâne relaxate chiar și în situații tensionate..
+        /// </summary>
+        public static string So_333_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_333_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями устойчивы к стрессу. Как правило, они хорошо переносят неудачи и не поддаются эмоциям. Если у них что-то не получается, это не оказывает на них негативного влияния в течение длительного времени. Они сохраняют спокойствие под давлением..
+        /// </summary>
+        public static string So_333_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_333_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip insanlar strese dayanıklıdır. Bu kişiler genellikle aksiliklerle iyi başa çıkar ve kolay kolay sarsılmazlar. Bir konuda başarılı olamazlarsa, bu onları uzun süre olumsuz etkilemez. Baskı altındayken sakin kalırlar..
+        /// </summary>
+        public static string So_333_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_333_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками стійкі до стресу. Як правило, вони добре переносять невдачі та не піддаються емоціям. Якщо в них щось не виходить, це не має на них негативного впливу. Під тиском вони зберігають спокій..
+        /// </summary>
+        public static string So_333_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_333_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1411,11 +5947,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати са по-малко устойчиви на стреса. Те не преодоляват пораженията толкова добре, а несполуките често им се отразяват впоследствие. В стресови ситуации те често губят спокойствие..
+        /// </summary>
+        public static string So_333_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_333_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten sind weniger stressresistent. Niederlagen bewältigen sie weniger gut und Rückschläge beeinflussen sie oft nachhaltig. In stressigen Situationen lassen sie sich oft aus der Ruhe bringen..
         /// </summary>
         public static string So_333_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_333_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are less stress-resistant. They cope less well with defeats and setbacks, which often have lasting effects on them. They often lose their cool in stressful situations..
+        /// </summary>
+        public static string So_333_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_333_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible sont moins résistantes au stress. Elles surmontent moins bien les défaites et les échecs les affectent souvent durablement. Dans les situations stressantes, elles se laissent souvent déstabiliser..
+        /// </summary>
+        public static string So_333_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_333_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri mici sunt mai puțin rezistente la stres. Nu gestionează atât de bine eșecurile, care le influențează, de multe ori, pe termen lung. În situații stresante, își pierd deseori echilibrul interior..
+        /// </summary>
+        public static string So_333_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_333_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями менее устойчивы к стрессу. Они хуже справляются с поражениями, и неудачи часто угнетают их надолго. В стрессовых ситуациях они часто теряют самообладание..
+        /// </summary>
+        public static string So_333_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_333_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler strese karşı daha az dayanıklıdır. Yenilgilerle daha az başa çıkarlar ve aksilikler genellikle onlar üzerinde kalıcı bir etkiye sahiptir. Stresli durumlarda genellikle soğukkanlılıklarını kaybederler..
+        /// </summary>
+        public static string So_333_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_333_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками менш стійкі до стресу. Вони гірше справляються з поразками, і невдачі часто пригнічують їх надовго. У стресових ситуаціях вони нерiдко втрачають самовладання..
+        /// </summary>
+        public static string So_333_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_333_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1429,11 +6028,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Показване на интерес и отвореност спрямо проблемите на другите..
+        /// </summary>
+        public static string So_341__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_341__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zeigen von Interesse und Aufgeschlossenheit gegenüber den Problemen Anderer..
         /// </summary>
         public static string So_341__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_341__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Showing interest and openness to the problems of others..
+        /// </summary>
+        public static string So_341__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_341__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manifester de l’intérêt et de l’ouverture d’esprit face aux problèmes des autres..
+        /// </summary>
+        public static string So_341__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_341__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manifestarea interesului și deschiderii față de problemele altor persoane..
+        /// </summary>
+        public static string So_341__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_341__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Проявление интереса и открытости к проблемам других людей..
+        /// </summary>
+        public static string So_341__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_341__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başkalarının sorunlarına karşı ilgi ve açıklık gösterme..
+        /// </summary>
+        public static string So_341__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_341__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Прояв інтересу та відкритості до проблем інших людей..
+        /// </summary>
+        public static string So_341__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_341__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1447,11 +6109,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати показват истински интерес към другите. Те с желание търсят контакт с други хора и в повечето случаи ги посрещат без предразсъдъци. Те са отворени за други перспективи.  .
+        /// </summary>
+        public static string So_341_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_341_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten zeigen aufrichtiges Interesse anderen gegenüber. Sie gehen gerne auf andere Menschen zu und begegnen diesen meist vorurteilsfrei. Für andere Perspektiven sind sie aufgeschlossen.  .
         /// </summary>
         public static string So_341_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_341_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores show a genuine interest in others. They enjoy approaching other people and usually meet them without prejudice. They are open to other perspectives.  .
+        /// </summary>
+        public static string So_341_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_341_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé montrent un intérêt sincère pour les autres. Elles vont volontiers vers les autres et les abordent généralement sans préjugés. Elles sont ouvertes à d’autres points de vue.  .
+        /// </summary>
+        public static string So_341_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_341_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate manifestă un interes autentic față de alte persoane. Le place să se apropie de alți oameni și de obicei nu au prejudecăți față de aceștia. Sunt receptive la alte perspective.  .
+        /// </summary>
+        public static string So_341_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_341_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями проявляют искренний интерес к окружающим. Они с удовольствием общаются с другими людьми и обычно относятся к ним без предубеждений. Они открыты для других точек зрения.  .
+        /// </summary>
+        public static string So_341_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_341_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip insanlar başkalarına samimi ilgi gösterirler. Diğer insanlar ile iletişim kurmaktan memnuniyet duyarlar ve genellikle onlarla önyargısız bir şekilde çalışırlar. Diğer perspektiflere açıktırlar.  .
+        /// </summary>
+        public static string So_341_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_341_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками проявляють щирий інтерес до оточуючих. Вони із задоволенням спілкуються з іншими людьми і зазвичай ставляться до них без упереджень. Вони відкриті для інших точок зору.  .
+        /// </summary>
+        public static string So_341_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_341_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1465,11 +6190,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да покажат интерес към другите. Те са малко отворени към проблемите и перспективите на другите. Те рядко правят първата стъпка към другите и често имат чувството, че това е само престорен интерес..
+        /// </summary>
+        public static string So_341_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_341_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, Interesse an anderen zu zeigen. Sie zeigen sich wenig aufgeschlossen den Problemen und Perspektiven anderer gegenüber. Sie gehen selten den ersten Schritt auf andere zu und haben oft das Gefühl, Interesse nur vorzuheucheln..
         /// </summary>
         public static string So_341_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_341_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to show interest in others. They are not very open to the problems and perspectives of others. They rarely take the first step towards others and often have the feeling that they are only feigning interest..
+        /// </summary>
+        public static string So_341_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_341_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à s’intéresser aux autres. Elles font preuve de peu d’ouverture face aux problèmes et aux points de vue des autres. Elles font rarement le premier pas vers les autres et ont souvent l’impression de faire semblant de s’intéresser à eux..
+        /// </summary>
+        public static string So_341_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_341_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să arate interes pentru alte persoane. Ele arată puțină deschidere față de problemele și perspectivele altora. Rareori fac primul pas către alte persoane și de multe ori au senzația că doar simulează interesul..
+        /// </summary>
+        public static string So_341_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_341_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно проявлять интерес к окружающим. Они не проявляют интереса к проблемам и взглядам других людей. Они редко делают первый шаг навстречу другим, и часто возникает ощущение, что они лишь симулируют интерес..
+        /// </summary>
+        public static string So_341_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_341_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler başkalarına ilgi göstermekte zorlanırlar. Başkalarının sorunlarına ve bakış açılarına karşı çok az açıktırlar. Başkalarına doğru nadiren ilk adımı atarlar ve genellikle sadece ilgi gösteriyormuş gibi davrandıkları hissine kapılırlar..
+        /// </summary>
+        public static string So_341_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_341_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям iз низькими показниками важко проявляти інтерес до оточуючих. Вони не проявляють інтересу до проблем і поглядів інших людей. Вони рідко роблять перший крок назустріч іншим, і часто виникає відчуття, що вони лише симулюють інтерес..
+        /// </summary>
+        public static string So_341_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_341_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1483,11 +6271,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Промяна в позицията или в поведението, за да се приспособява човек към променени условия на работното място.
+        /// </summary>
+        public static string So_343__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_343__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ändern der Haltung oder des Verhaltens, um sich an veränderte Bedingungen am Arbeitsplatz anzupassen..
         /// </summary>
         public static string So_343__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_343__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing your attitude or conduct to adapt to changing conditions at work..
+        /// </summary>
+        public static string So_343__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_343__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changer d’attitude ou de comportement pour s’adapter à des conditions changeantes sur le lieu de travail..
+        /// </summary>
+        public static string So_343__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_343__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schimbarea atitudinii sau a comportamentului pentru a se adapta la condițiile modificate de la locul de muncă.
+        /// </summary>
+        public static string So_343__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_343__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Изменение отношения или поведения для адаптации к меняющимся условиям на рабочем месте.
+        /// </summary>
+        public static string So_343__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_343__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşyerindeki değişen koşullara uyum sağlamak için tutum veya davranış değişikliği.
+        /// </summary>
+        public static string So_343__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_343__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Зміна ставлення або поведінки для адаптації до мінливих умов на робочому місці..
+        /// </summary>
+        public static string So_343__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_343__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1501,11 +6352,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати умеят с лекота да се приспособяват към нови ситуации. Така промените на работното място по-скоро не представляват проблем. Освен това те са в състояние да нагаждат вече съществуващи планове към променящите се условия. Те са отворени за критика и са готови да променят поведението си, ако е необходимо..
+        /// </summary>
+        public static string So_343_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_343_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten fällt es leicht, sich an neue Situationen anzupassen. So sind Veränderungen am Arbeitsplatz eher kein Problem. Darüber hinaus besitzen sie die Fähigkeit, bereits bestehende Pläne flexibel an verändernde Bedingungen anzupassen. Sie sind kritikfähig und bereit, ihr Verhalten zu ändern, wenn es erforderlich ist..
         /// </summary>
         public static string So_343_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_343_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores find it easy to adapt to new situations. This means that changes in the workplace are not a problem. They also can flexibly adapt existing plans to changing conditions. They are open to criticism and willing to change their conduct if necessary..
+        /// </summary>
+        public static string So_343_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_343_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé s’adaptent facilement à de nouvelles situations. Les changements sur le lieu de travail ne sont donc pas un problème. En outre, elles sont capables d’adapter en souplesse les plans existants aux conditions changeantes. Elles savent émettre des critiques et sont prêtes à changer de comportement si nécessaire..
+        /// </summary>
+        public static string So_343_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_343_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se adaptează ușor la situații noi. Astfel, schimbările la locul de muncă nu reprezintă, de regulă, o problemă. În plus, au capacitatea de a adapta planurile deja existente la condițiile schimbate. Sunt capabile de critică și sunt dispuse să își schimbe comportamentul, dacă este necesar..
+        /// </summary>
+        public static string So_343_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_343_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями легко адаптируются к новым ситуациям. Поэтому изменения на рабочем месте не представляют для них проблем. Кроме того, они способны гибко адаптировать существующие планы к меняющимся условиям. Они открыты для критики и готовы изменить своё поведение, если это необходимо..
+        /// </summary>
+        public static string So_343_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_343_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler yeni durumlara daha kolay uyum sağlarlar. Bu nedenle işyerindeki değişiklikler onlar için bir sorun teşkil etmez. Ayrıca mevcut planları değişen koşullara esnek bir şekilde uyarlama becerisine de sahiptirler. Kendileri eleştiriye açıktırlar ve gerekirse davranışlarını değiştirmeye hazırlardır..
+        /// </summary>
+        public static string So_343_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_343_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками легко адаптуються до нових ситуацій. Тому зміни на робочому місці не становлять для них проблем. Крім того, вони здатні гнучко адаптувати наявні плани до мінливих умов. Вони відкриті для критики і готові змінити свою поведінку, якщо це необхідно..
+        /// </summary>
+        public static string So_343_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_343_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1519,11 +6433,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати се нагаждат с нежелание към нови ситуации. Те изпитват затруднения да нагаждат поведението си към необходимите условия. На работното си място те предпочитат да се придържат съм установения си начин на поведение и съществуващите планове вместо да се изправят срещу нови предизвикателства..
+        /// </summary>
+        public static string So_343_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_343_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten passen sich ungerne an neue Situationen an. Ihnen fällt es meist schwer, ihr Verhalten an erforderliche Bedingungen anzupassen. Am Arbeitsplatz halten sie lieber an ihren Verhaltensweisen und Plänen fest, als sich neuen Herausforderungen zu stellen..
         /// </summary>
         public static string So_343_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_343_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are reluctant to adapt to new situations. They usually find it difficult to adapt their conduct to necessary conditions. In the workplace, they prefer to stick to their behaviors and plans rather than face new challenges..
+        /// </summary>
+        public static string So_343_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_343_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible sont réticentes à s’adapter à de nouvelles situations. Elles ont généralement du mal à adapter leur comportement aux conditions requises. Au travail, elles préfèrent s’en tenir à leurs comportements et à leurs projets plutôt que de relever de nouveaux défis..
+        /// </summary>
+        public static string So_343_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_343_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute sunt reticente în a se adapta la situații noi. Pentru acestea, adaptarea la condițiile necesare este de cele mai multe ori dificilă. La locul de muncă, preferă să se țină de modelele lor de comportament și de planuri, decât să își asume provocări..
+        /// </summary>
+        public static string So_343_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_343_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями неохотно адаптируются к новым ситуациям. Обычно им трудно адаптировать своё поведение в соответствии с необходимыми требованиями. На рабочем месте они предпочитают придерживаться своих привычек и планов, а не сталкиваться с новыми задачами..
+        /// </summary>
+        public static string So_343_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_343_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler yeni durumlara uyum sağlama konusunda isteksizdir. Genellikle davranışlarını gerekli koşullara adapte etmekte zorluk yaşarlar. İşyerinde, yeni zorluklarla baş etmek yerine davranışlarına ve planlarına bağlı kalmayı tercih ederler..
+        /// </summary>
+        public static string So_343_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_343_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками неохоче адаптуються до нових ситуацій. Зазвичай їм важко адаптувати свою поведінку до необхідних вимог. На робочому місці вони воліють дотримуватися своїх звичок і планів, а не стикатися з новими завданнями..
+        /// </summary>
+        public static string So_343_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_343_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1537,11 +6514,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Демонстриране на позитивна нагласа спрямо нови и взискателни изисквания, като такава нагласа може да се постигне само чрез продължаващо през целия живот учене..
+        /// </summary>
+        public static string So_345__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_345__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Demonstrieren einer positiven Einstellung gegenüber neuen und anspruchsvollen Anforderungen, die nur durch lebenslanges Lernen erreicht werden können.
         /// </summary>
         public static string So_345__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_345__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demonstrating a positive attitude towards new and challenging demands that can only be achieved through lifelong learning.
+        /// </summary>
+        public static string So_345__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_345__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Démontrer une attitude positive face à des exigences nouvelles et ambitieuses qui ne peuvent être atteintes que par l’apprentissage tout au long de la vie..
+        /// </summary>
+        public static string So_345__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_345__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atitudine pozitivă față de solicitări noi și exigente, la care se poate ajunge numai prin învățare pe tot parcursul vieții.
+        /// </summary>
+        public static string So_345__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_345__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Демонстрация позитивного отношения к новым и сложным требованиям, которым можно соответствовать только при условии непрерывного обучения.
+        /// </summary>
+        public static string So_345__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_345__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sadece yaşam boyu öğrenme yoluyla elde edilebilecek yeni ve zorlu gereksinimlere karşı olumlu bir tutum sergileme.
+        /// </summary>
+        public static string So_345__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_345__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Демонстрація позитивного ставлення до нових і складних вимог, яким можна відповідати тільки за умови безперервного навчання.
+        /// </summary>
+        public static string So_345__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_345__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1555,11 +6595,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати са готови да усвояват нови знания. Те имат желание да завършват курсове по продължаващо обучение или повишаване на квалификацията, за да придобиват нови знания за кариерата си и да изграждат нови умения. Мотивацията им за учене е висока и така я възприемат също и техните ръководители..
+        /// </summary>
+        public static string So_345_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_345_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten sind bereit, sich neues Wissen anzueignen. Sie wollen berufliche Weiterbildungen oder Fortbildungen absolvieren, um Neues für ihre Karriere zu lernen und ihre Fähigkeiten auszubauen. Ihre Lernmotivation ist hoch und so nehmen es auch ihre Vorgesetzten wahr..
         /// </summary>
         public static string So_345_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_345_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are willing to acquire new knowledge. They want to complete professional training or further education to learn new skills and advance their careers. Their motivation to learn is high and this is also the perception of their superiors..
+        /// </summary>
+        public static string So_345_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_345_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont prêtes à acquérir de nouvelles connaissances. Elles souhaitent suivre des formations professionnelles ou continues afin d’apprendre de nouvelles choses pour leur carrière et de développer leurs compétences. Leur motivation à apprendre est élevée et c’est ainsi que leurs supérieurs la perçoivent..
+        /// </summary>
+        public static string So_345_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_345_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate sunt dispuse să își însușească cunoștințe noi. Ele doresc să absolve cursuri de perfecționare și de formare continuă, pentru a învăța lucruri noi pentru cariera lor și pentru a-și extinde abilitățile. Motivația lor pentru învățare este ridicată, ceea ce este perceput și de superiorii lor..
+        /// </summary>
+        public static string So_345_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_345_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями готовы приобретать новые знания. Они стремятся пройти курсы продолжения профессионального образования или повышения квалификации, чтобы узнать что-то новое для своей карьеры и расширить свои умения. Они обладают высокой мотивацией к обучению, и это видят их руководители..
+        /// </summary>
+        public static string So_345_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_345_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler yeni bilgiler edinmeye hazırdır. Bu kişiler kariyerleri için yeni şeyler öğrenme ve becerilerini genişletmek amacıyla mesleki gelişim veya ileri eğitim kurslarını tamamlamak isterler. Öğrenme motivasyonları yüksektir ve amirleri de bunun farkındadır..
+        /// </summary>
+        public static string So_345_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_345_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками готові здобувати нові знання. Вони прагнуть пройти курси продовження професійної освіти або підвищення кваліфікації, щоб у побудовi своєї кар&apos;єри дізнатися щось нове та розширити свої вміння. Вони мають високу мотивацію до навчання, і це бачать їхні керівники..
+        /// </summary>
+        public static string So_345_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_345_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1573,11 +6676,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати нямат голямо желание да се захващат с учене. Те изпитват затруднения да научават нови неща. Затова в техния случай по-скоро не може и да се мисли за курсове по продължаващо обучение или повишаване на квалификацията. Ръководителите им оценяват тяхната мотивация за готовност за учене по-скоро като незначителна.  .
+        /// </summary>
+        public static string So_345_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_345_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten lassen sich ungern auf Lernen ein. Es fällt ihnen schwer, sich auf neue Lerninhalte einzulassen. Daher kommt für sie eine Weiterbildung oder Fortbildung eher nicht infrage. Ihre Vorgesetzten schätzen ihre Motivation zur Lernbereitschaft eher gering ein.  .
         /// </summary>
         public static string So_345_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_345_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are reluctant to engage in learning. They find it difficult to engage with new learning content. As a result, further education or training tends not to be an option for them. Their superiors tend to rate their motivation to learn as low.  .
+        /// </summary>
+        public static string So_345_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_345_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible sont réticentes à l’idée d’apprendre. Elles ont du mal à s’engager dans de nouveaux contenus d’apprentissage. Elles n’envisagent donc pas de suivre une formation continue ou de perfectionnement. Leurs supérieurs estiment que leur motivation à apprendre est plutôt faible.  .
+        /// </summary>
+        public static string So_345_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_345_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri scăzute sunt reticente la învățare. Pentru ele este dificil să abordeze conținuturi de învățare noi. Din acest motiv, mai degrabă nu intră în discuție pentru cursuri de formare continuă și de perfecționare profesională. Superiorii ierarhici le apreciază dorința de a învăța ca fiind mai degrabă redusă.  .
+        /// </summary>
+        public static string So_345_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_345_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями учатся неохотно. Им трудно воспринимать новые учебные материалы. Поэтому продолжение образования или повышение квалификации для них скорее не вариант. Начальство оценивает их мотивацию к обучению как довольно низкую.  .
+        /// </summary>
+        public static string So_345_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_345_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler öğrenme konusunda isteksizdir. Yeni bir şeyler öğrenme konusunda zorlanırlar. Bu nedenle, ileri eğitim veya öğretim onlar için bir seçenek değildir. Amirleri bu kişilerin öğrenme motivasyonlarını daha çok düşük olarak değerlendirir.  .
+        /// </summary>
+        public static string So_345_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_345_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками навчаються неохоче. Їм важко сприймати нові навчальні матеріали. Тому продовження освіти або підвищення кваліфікації для них скоріше не варіант. Начальство оцінює їхню мотивацію до навчання як низьку.  .
+        /// </summary>
+        public static string So_345_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_345_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1591,11 +6757,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Формулиране и обмяна на информация, идеи, концепции, мисли и чувства и преодоляване на различия в мненията в официална и неофициална обстановка чрез използване на обща система от думи, символи и правила..
+        /// </summary>
+        public static string So_410__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_410__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Artikulieren und Austauschen von Informationen, Ideen, Konzepten, Gedanken und Gefühlen und Überwinden von Meinungsverschiedenheiten in formellen und informellen Kontexten durch die Nutzung eines gemeinsamen Systems von Wörtern, Zeichen und Regeln..
         /// </summary>
         public static string So_410__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_410__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Articulating and exchanging information, ideas, concepts, thoughts, and feelings and overcoming differences of opinion in formal and informal contexts by using a common system of words, signs, and rules..
+        /// </summary>
+        public static string So_410__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_410__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Articuler et échanger des informations, des idées, des concepts, des pensées et des sentiments et surmonter les désaccords dans des contextes formels et informels en utilisant un système commun de mots, de signes et de règles..
+        /// </summary>
+        public static string So_410__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_410__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Articularea și schimbul de informații, idei, concepte, gânduri și sentimente și depășirea diferențelor de opinie în contexte formale și informale prin folosirea unui sistem comun de cuvinte, semne și reguli..
+        /// </summary>
+        public static string So_410__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_410__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Формулирование и обмен информацией, идеями, концепциями, мыслями и чувствами, а также преодоление разногласий в формальных и неформальных контекстах с помощью общей системы слов, знаков и правил..
+        /// </summary>
+        public static string So_410__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_410__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi, fikir, kavram, düşünce ve duyguların ifade edilmesi ve paylaşılması ile resmi ve gayri resmi bağlamlardaki görüş ayrılıklarının ortak bir kelime, işaret ve kurallar sistemi kullanılarak aşılması..
+        /// </summary>
+        public static string So_410__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_410__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Формулювання та обмін інформацією, ідеями, концепціями, думками і почуттями, а також подолання розбіжностей у формальних і неформальних контекстах за допомогою загальної системи слів, знаків і правил..
+        /// </summary>
+        public static string So_410__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_410__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1609,11 +6838,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати притежават способността ефективно да формулират информация, идеи или концепции. За тях е лесно да се изразяват писмено, устно или чрез мимика и жестове. Те съобщават ефективно и за трудни обстоятелства. На работното място това се изразява във факта, че те ефективно представят информацията на другите или умеят да преодоляват различия в мненията чрез комуникация..
+        /// </summary>
+        public static string So_410_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_410_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten besitzen die Fähigkeit, Informationen, Ideen oder Konzepte wirksam zu artikulieren. Es fällt ihnen leicht, sich schriftlich, verbal, oder mit Mimik und Gestik auszudrücken. Auch schwierige Sachverhalte kommunizieren sie effizient. Am Arbeitsplatz drückt sich das darin aus, dass sie anderen effektiv Inhalte präsentieren oder es schaffen, durch Kommunikation Meinungsverschiedenheiten zu überwinden..
         /// </summary>
         public static string So_410_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_410_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores can articulate information, ideas, or concepts effectively. They find it easy to express themselves in writing, verbally, or with facial expressions and gestures. They also communicate complex topics efficiently. In the workplace, this is reflected in their ability to effectively present content to others or overcome differences of opinion through communication..
+        /// </summary>
+        public static string So_410_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_410_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé ont la capacité d’articuler efficacement des informations, des idées ou des concepts. Elles s’expriment facilement par écrit, verbalement ou avec des mimiques et des gestes. Elles communiquent efficacement même sur des sujets difficiles. Sur le lieu de travail, cela se traduit par une présentation efficace des contenus aux autres ou par une communication permettant de surmonter les divergences d’opinion..
+        /// </summary>
+        public static string So_410_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_410_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate posedă aptitudinea de a articula eficient informații, idei sau concepte. Le vine ușor să se exprime în scris, verbal sau prin mimică și gestică. Ele comunică eficient chiar și situații dificile. Această abilitate se exprimă la locul de muncă prin faptul că prezintă eficient conținuturi altor persoane sau că reușesc să depășească diferențele de opinie prin comunicare..
+        /// </summary>
+        public static string So_410_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_410_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями обладают способностью чётко излагать информацию, идеи или концепции. Они легко выражают свои мысли письменно, устно или с помощью мимики и жестов. Даже о сложных обстоятельствах они сообщают эффективно. На рабочем месте это выражается в том, что они эффективно преподносят информацию другим или преодолевают разногласия с помощью общения..
+        /// </summary>
+        public static string So_410_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_410_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler bilgi, fikir veya kavramları etkili bir şekilde ifade etme becerisine sahiptir. Kendilerini yazılı, sözlü veya yüz ifadeleri ve jestlerle kolayca ifade ederler. Ayrıca zor konular da etkili bir şekilde iletişim kurarlar. İşyerinde bu, başkalarına etkili bir şekilde içerik sunmaları veya iletişim yoluyla fikir ayrılıklarının üstesinden gelmeyi başarmalarıyla ifade edilir..
+        /// </summary>
+        public static string So_410_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_410_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками здатні чітко викладати інформацію, ідеї або концепції. Вони легко висловлюють свої думки письмово, усно або за допомогою міміки та жестів. Навіть про складні обставини вони розповiдають ефективно. На робочому місці вони ефективно подають інформацію іншим або долають розбіжності за допомогою спілкування..
+        /// </summary>
+        public static string So_410_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_410_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1627,11 +6919,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да формулират ефективно информация, идеи или концепции. Вследствие на това им е трудно също и да се изразяват писмено, устно или чрез мимика и жестове. Те рядко успяват да следват плавно нишката на дадена комуникация или да постигнат консенсус между събеседниците и събеседничките.  .
+        /// </summary>
+        public static string So_410_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_410_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten haben Schwierigkeiten, Informationen, Ideen oder Konzepte wirksam zu artikulieren. Es fällt ihnen dementsprechend schwer, sich schriftlich, verbal, oder mit Mimik und Gestik auszudrücken. Sie schaffen es selten, den Kommunikationsfluss laufen zu lassen oder Konsens zwischen Gesprächspartner:Innen herzustellen.  .
         /// </summary>
         public static string So_410_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_410_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores have difficulty articulating information, ideas, or concepts effectively. Accordingly, they find it difficult to express themselves in writing, verbally, or with facial expressions and gestures. They rarely manage to keep the flow of communication going or build consensus between conversation partners.  .
+        /// </summary>
+        public static string So_410_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_410_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible éprouvent des difficultés à articuler efficacement les informations, les idées ou les concepts. Elles ont donc du mal à s’exprimer par écrit, verbalement ou avec des mimiques et des gestes. Elles parviennent rarement à entretenir la communication ou à établir un consensus entre les interlocuteurs.  .
+        /// </summary>
+        public static string So_410_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_410_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri redus au dificultăți de a articula eficient informații, idei sau concepte. Prin urmare, au dificultăți în a se exprima în scris, verbal sau prin mimică și gestică. Rareori reușesc să întrețină fluxul de comunicare sau să stabilească un consens între parteneri de discuție.  .
+        /// </summary>
+        public static string So_410_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_410_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями испытывают трудности с чётким изложением информации, идей или концепций. Соответственно, им трудно выразить свои мысли письменно, устно или с помощью мимики и жестов. Им редко удается поддерживать поток общения или достичь консенсуса между партнёрами по диалогу.  .
+        /// </summary>
+        public static string So_410_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_410_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler bilgi, fikir veya kavramları etkili bir şekilde ifade etmekte zorlanırlar. Bu nedenle kendilerini yazılı, sözlü veya yüz ifadeleri ve jestlerle ifade etmekte zorlanırlar. İletişim akışını devam ettirmeyi veya görüşme partnerleri arasında fikir birliği yaratmayı nadiren başarırlar.  .
+        /// </summary>
+        public static string So_410_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_410_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками зазнають труднощів із чітким викладенням інформації, ідей або концепцій. Відповідно, їм важко висловити свої думки письмово, усно або за допомогою міміки та жестів. Їм рідко вдається підтримувати потік спілкування або досягти консенсусу між партнерами по діалогу.  .
+        /// </summary>
+        public static string So_410_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_410_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1645,11 +7000,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Изразяване на съпричастност, за да се избегне всякакъв вид символично насилие и изолация и да се гарантира, че всяка отделна личност получава дължимото ѝ внимание. Способност да се разбират различни вербални и невербални форми на изразяване на настроения и чувства..
+        /// </summary>
+        public static string So_421__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_421__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zeigen von Einfühlungsvermögen, um jede Art von symbolischer Gewalt und Isolation zu verhindern und sicherzustellen, dass jedem Einzelnen gebührend Aufmerksamkeit geschenkt wird. Fähigkeit, verschiedene verbale und nicht verbale Ausdrucksformen von Stimmungen und Gefühlen zu verstehen..
         /// </summary>
         public static string So_421__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_421__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Showing empathy to prevent any kind of symbolic violence and isolation and ensuring that each individual is given due attention. Being able to understand different verbal and non-verbal expressions of moods and feelings..
+        /// </summary>
+        public static string So_421__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_421__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faire preuve d’empathie pour éviter toute forme de violence symbolique et d’isolement et veiller à ce que chaque individu reçoive l’attention qu’il mérite. Comprendre les différentes formes d’expression verbale et non verbale des humeurs et des sentiments..
+        /// </summary>
+        public static string So_421__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_421__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manifestarea empatiei pentru a evita orice fel de violență simbolică sau izolare și pentru a asigura că fiecărei persoane i se acordă atenția cuvenită. Capacitatea de a înțelege diferite forme de exprimare verbală și nonverbală a stărilor interioare și sentimentelor..
+        /// </summary>
+        public static string So_421__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_421__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Проявление сочувствия для предотвращения любых проявлений символического насилия и изоляции и обеспечения должного внимания к каждому человеку. Способность понимать различные вербальные и невербальные выражения настроения и чувств..
+        /// </summary>
+        public static string So_421__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_421__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Her türlü sembolik şiddet ve izolasyonu önlemek için empati gösterme ve her bireye gereken ilginin gösterilmesini sağlama. Ruh halleri ve duyguların farklı sözlü ve sözsüz ifadelerini anlama becerisi..
+        /// </summary>
+        public static string So_421__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_421__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Співчуття для запобігання будь-яким проявам символічного насильства та ізоляції й забезпечення належної уваги до кожної людини. Здатність розуміти різні вербальні та невербальні вирази настрою та почуттів..
+        /// </summary>
+        public static string So_421__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_421__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1663,11 +7081,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати успяват с лекота да се поставят на мястото на другите и да покажат съпричастност. Те са чувствителни за настроението на колегите и колежките и за тях не представлява проблем да покажат емпатия към околните. Те подхождат с чувствителност към емоциите на работното място..
+        /// </summary>
+        public static string So_421_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_421_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten fällt es leicht, sich in Andere hineinzuversetzen und Einfühlungsvermögen zu zeigen. Sie sind sensibel für die Stimmung von Kolleg:Innen und haben keine Probleme damit, Empathie für ihr Gegenüber zu zeigen. Mit Emotionen am Arbeitsplatz gehen sie sensibel um..
         /// </summary>
         public static string So_421_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_421_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores easily empathize with others and show empathy. They are sensitive to the moods of colleagues and have no problems showing empathy for their counterparts. They deal sensitively with emotions in the workplace..
+        /// </summary>
+        public static string So_421_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_421_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé peuvent facilement se mettre à la place des autres et faire preuve d’empathie. Elles sont sensibles à l’humeur de leurs collègues et n’ont aucun mal à faire preuve d’empathie pour leurs interlocuteurs. Elles sont sensibles aux émotions sur le lieu de travail..
+        /// </summary>
+        public static string So_421_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_421_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri ridicate le vine ușor să îi înțeleagă pe alții și să manifeste empatie. Ele sunt sensibile la starea de spirit a colegiilor și nu au nicio problemă să arate empatie față de alte persoane. Gestionează în mod sensibil emoțiile la locul de muncă..
+        /// </summary>
+        public static string So_421_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_421_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с высокими показателями легко сопереживать другим и проявлять сочувствие. Они чутко реагируют на настроение своих коллег и без проблем проявляют эмпатию к своим коллегам. Они чутко реагируют на эмоции на рабочем месте..
+        /// </summary>
+        public static string So_421_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_421_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler başkalarıyla kolay şekilde empati kurar ve empati gösterir. İş arkadaşlarının ruh haline karşı duyarlıdırlar ve karşılarındaki kişilere empati göstermekte sorun yaşamazlar. İşyerindeki duygularla hassas bir şekilde ilgilenirler..
+        /// </summary>
+        public static string So_421_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_421_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із високими показниками легко співпереживати іншим і виявляти співчуття. Вони чуйно реагують на настрій колег і без проблем виявляють емпатію. Вони чуйно ставляться до емоцій на робочому місці..
+        /// </summary>
+        public static string So_421_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_421_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1681,11 +7162,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да се поставят на мястото на други хора. Те са малко чувствителни към настроението на колегите и колежките и рядко забелязват, ако някой колега не се чувства добре. Като цяло те считат, че емоциите на работното място са неуместни..
+        /// </summary>
+        public static string So_421_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_421_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, sich in andere Menschen hineinzudenken. Sie sind wenig sensibel für die Stimmung ihrer Kolleg:Innen und merken selten, wenn es diesen nicht gut geht. Sie halten Emotionen am Arbeitsplatz grundsätzlich für unpassend..
         /// </summary>
         public static string So_421_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_421_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it challenging to empathize with other people. They are not very sensitive to the mood of their colleagues and rarely notice when they are not feeling well. They generally consider emotions inappropriate in the workplace..
+        /// </summary>
+        public static string So_421_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_421_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à se mettre à la place des autres. Elles sont peu sensibles à l’humeur de leurs collègues et remarquent rarement quand ils ne vont pas bien. Elles considèrent que les émotions ne sont pas appropriées sur le lieu de travail..
+        /// </summary>
+        public static string So_421_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_421_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să se pună în pielea altor persoane. Nu sunt sensibile la starea de spirit a colegilor și rareori observă că aceștia nu sunt într-o stare de spirit bună. În general, consideră că emoțiile la locul de muncă sunt nepotrivite..
+        /// </summary>
+        public static string So_421_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_421_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно сопереживать другим людям. Они не очень восприимчивы к настроению своих коллег и редко замечают, когда те плохо себя чувствуют. Они считают эмоции на рабочем месте принципиально неуместными..
+        /// </summary>
+        public static string So_421_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_421_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler diğer insanlarla empati kurmakta zorlanırlar. İş arkadaşlarının ruh haline karşı çok duyarlı değildirler ve iş arkadaşının kendisini iyi hissetmediğini nadiren fark ederler. İşyerinde duyguların temelde uygunsuz olduğunu düşünürler..
+        /// </summary>
+        public static string So_421_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_421_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко співпереживати іншим людям. Вони не дуже сприйнятливі до настрою колег і рідко помічають, коли ті погано почуваються. Емоції на робочому місці вони вважають принципово недоречними..
+        /// </summary>
+        public static string So_421_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_421_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1699,11 +7243,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Разбиране за това какво искат клиентите и заемане на положителна позиция при общуването с тях, при тяхното консултиране, при продажбата на продукти или услуги или при обработката на оплаквания..
+        /// </summary>
+        public static string So_422__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_422__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verstehen, was Kunden wollen, und Einnehmen einer positiven Haltung beim Umgang mit ihnen, bei deren Beratung, beim Verkauf von Produkten oder Dienstleistungen oder beim Bearbeiten von Beschwerden..
         /// </summary>
         public static string So_422__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_422__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Understanding what customers want and adopt a positive attitude when dealing with them, advising them, selling products or services, or dealing with complaints..
+        /// </summary>
+        public static string So_422__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_422__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comprendre ce que veulent les clients et adopter une attitude positive dans les relations avec eux, dans le conseil, dans la vente de produits ou de services ou dans le traitement des réclamations..
+        /// </summary>
+        public static string So_422__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_422__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Înțelegerea dorințelor clienților și adoptarea unei atitudini pozitive în relațiile cu clienții, la consilierea acestora, la vânzarea de produse sau servicii sau gestionarea reclamațiilor..
+        /// </summary>
+        public static string So_422__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_422__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Понимание желаний клиентов и позитивное отношение к ним при общении, консультировании, продаже товаров и услуг или рассмотрении жалоб..
+        /// </summary>
+        public static string So_422__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_422__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşterilerin ne istediğini anlama ve onlarla ilgilenirken, onlara tavsiyelerde bulunurken, ürün veya hizmet satarken veya şikayetlerle ilgilenirken olumlu bir tutum benimseme..
+        /// </summary>
+        public static string So_422__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_422__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Розуміння бажань клієнтів і позитивне ставлення під час спілкування, консультування, продажу товарів і послуг або розгляду скарг..
+        /// </summary>
+        public static string So_422__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_422__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1717,11 +7324,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати са силно ориентирани към клиентите. Те държат на удовлетворението на своите клиенти и клиентки и знаят, че трябва да нагодят своето поведение, за да създадат положителна среда за отношенията с клиентите. Те действат уверено и тогава, когато не могат да разрешат даден проблем веднага..
+        /// </summary>
+        public static string So_422_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_422_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten sind sehr kundenorientiert. Sie legen Wert auf die Zufriedenheit ihrer Kund:Innen und wissen, wie sie ihr Verhalten anpassen müssen, um den Umgang mit ihnen positiv zu gestalten. Sie agieren auch dann souverän, wenn sie etwas nicht sofort lösen können..
         /// </summary>
         public static string So_422_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_422_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are very customer-oriented. They value their customers&apos; satisfaction and know how to adapt their conduct to make their interactions positive. They act confidently even if they cannot solve something immediately..
+        /// </summary>
+        public static string So_422_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_422_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont très orientées vers le client. Elles accordent de l’importance à la satisfaction de leurs clients et savent comment adapter leur comportement afin d’être positives dans leurs relations avec eux. Elles agissent avec assurance même lorsqu’elles ne peuvent pas résoudre immédiatement un problème..
+        /// </summary>
+        public static string So_422_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_422_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate sunt foarte orientate spre client. Ele pun preț pe satisfacția clienților și știu cum trebuie să își adapteze comportamentul pentru a avea o relație pozitivă cu clienții. Acționează în mod suveran și în situațiile în care ceva nu poate fi rezolvat imediat..
+        /// </summary>
+        public static string So_422_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_422_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями ориентированы на клиента. Они ценят удовлетворенность своих клиентов и знают, как себя вести, чтобы взаимодействие с ними было позитивным. Они действуют уверенно, даже если не могут решить проблему сразу..
+        /// </summary>
+        public static string So_422_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_422_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip insanlar oldukça müşteri odaklıdır. Müşterilerinin memnuniyetine büyük önem verirler ve onlarla olan ilişkilerini olumlu hale getirmek için davranışlarını nasıl uyarlayacaklarını bilirler. Bir olayı hemen çözemeseler dahi kendilerine güvenerek hareket ederler..
+        /// </summary>
+        public static string So_422_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_422_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками орієнтовані на клієнтiв. Вони цінують задоволеність своїх клієнтів і знають, як поводитися, щоб взаємодія з ними була позитивною. Вони діють упевнено, навіть якщо не можуть вирішити проблему одразу..
+        /// </summary>
+        public static string So_422_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_422_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1735,11 +7405,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати не са ориентирани към клиентите. Те изпитват затруднения да нагаждат поведението си към потребностите на клиентите и клиентките. Те не се смятат за отговорни за удовлетвореността на клиентите и клиентките и не търсят например помощ от колеги или колежки, ако не могат да разрешат даден проблем веднага..
+        /// </summary>
+        public static string So_422_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_422_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten sind wenig kundenorientiert. Es fällt ihnen schwer, ihr Verhalten den Bedürfnissen von Kund:Innen anzupassen. Sie fühlen sich nicht für die Zufriedenheit von Kund:Innen verantwortlich und suchen zum Beispiel keine Unterstützung bei Kolleg:Innen, sollten sie etwas nicht sofort lösen können..
         /// </summary>
         public static string So_422_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_422_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores are not very customer-oriented. They find it difficult to adapt their conduct to the needs of customers. They do not feel responsible for customer satisfaction and, for example, do not seek support from colleagues if they do not have to solve something immediately..
+        /// </summary>
+        public static string So_422_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_422_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible sont peu orientées vers le client. Elles ont du mal à adapter leur comportement en fonction des besoins des clients. Elles ne se sentent pas responsables de la satisfaction des clients et ne cherchent pas de soutien auprès de leurs collègues si elles ne peuvent pas résoudre un problème immédiatement..
+        /// </summary>
+        public static string So_422_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_422_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri mici nu sunt orientate spre client. Le este dificil să își adapteze comportamentul la nevoile clienților. Nu se simt responsabile de satisfacția clienților. Nu caută sprijin la colegii atunci când nu pot rezolva imediat o problemă..
+        /// </summary>
+        public static string So_422_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_422_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с низкими показателями ценностей менее ориентированы на клиента. Им трудно приспособить своё поведение к потребностям клиентов. Они не чувствуют себя ответственными за удовлетворенность клиентов и, например, не обращаются за поддержкой к коллегам, если не могут решить проблему сразу..
+        /// </summary>
+        public static string So_422_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_422_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler daha az müşteri odaklıdır. Davranışlarını müşterilerin ihtiyaçlarına göre uyarlamakta zorlanırlar. Kendilerini müşteri memnuniyetinden sorumlu hissetmezler ve örneğin bir olayı hemen çözemediklerinde iş arkadaşlarından destek talep etmezler..
+        /// </summary>
+        public static string So_422_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_422_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з низькими показниками цінностей менш орієнтовані на клієнтiв. Їм важко пристосувати свою поведінку відповідно до потреб клієнтів. Вони не відчувають себе відповідальними за задоволеність клієнтів і, якщо не можуть розв&apos;язати проблему одразу, не звертаються за підтримкою до колег..
+        /// </summary>
+        public static string So_422_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_422_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1753,11 +7486,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Доверено сътрудничество в екип, при което всеки член на екипа има своята сфера на задачи..
+        /// </summary>
+        public static string So_431__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_431__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vertrauensvolle Zusammenarbeit in einem Team, in dem jedes Teammitglied seinen Aufgabenbereich hat..
         /// </summary>
         public static string So_431__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_431__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trusting cooperation in a team in which each member has their own area of responsibility..
+        /// </summary>
+        public static string So_431__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_431__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Travailler en confiance au sein d’une équipe où chaque membre a son domaine de compétence..
+        /// </summary>
+        public static string So_431__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_431__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colaborare bazată pe încredere în cadrul unei echipe, în care fiecare membru al echipei are un domeniu de competență..
+        /// </summary>
+        public static string So_431__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_431__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Доверительное сотрудничество в команде, в которой у каждого члена команды есть своя зона ответственности..
+        /// </summary>
+        public static string So_431__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_431__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Her ekip üyesinin kendi sorumluluk alanına sahip olduğu bir ekipte güvene dayalı işbirliği..
+        /// </summary>
+        public static string So_431__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_431__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Довірча співпраця в команді, в якій кожен має свою сферу відповідальності..
+        /// </summary>
+        public static string So_431__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_431__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1771,11 +7567,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати се застъпват и без лидерска позиция активно за това екипът да работи съвместно добре. Те подкрепят например колеги и колежки, които постъпват в екипа, стараят се решенията да бъдат вземани съвместно и на базата на доверие, и се уверяват, че по-мълчаливите членове на екипа получават възможност да се изкажат..
+        /// </summary>
+        public static string So_431_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_431_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten setzen sich auch ohne leitende Funktion aktiv dafür ein, dass ihr Team gut zusammenarbeitet. Sie unterstützen zum Beispiel Kolleg:Innen, die neu ins Team kommen, sorgen dafür, dass Entscheidungen vertrauensvoll und gemeinsam getroffen werden, und achten darauf, dass auch stillere Teammitglieder zu Wort kommen..
         /// </summary>
         public static string So_431_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_431_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores are committed to ensuring their team works well together, even without a management role. For example, they support colleagues new to the team, ensure that decisions are made jointly and in a spirit of trust, and ensure that quieter team members also have their say..
+        /// </summary>
+        public static string So_431_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_431_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé s’engagent activement pour que leur équipe travaille bien ensemble, même si elles n’occupent pas de fonction de direction. Par exemple, elles soutiennent les nouveaux membres de l’équipe, veillent à ce que les décisions soient prises en commun et en toute confiance et s’assurent que les membres les plus discrets de l’équipe puissent également s’exprimer..
+        /// </summary>
+        public static string So_431_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_431_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate se implică în mod activ pentru ca echipa să colaboreze bine, chiar dacă nu au funcții de conducere. De exemplu, îi susțin pe colegii nou veniți în echipă, se asigură că deciziile sunt luate în comun și pe bază de încredere și că pot lua cuvântul și membrii echipei mai puțin vocali..
+        /// </summary>
+        public static string So_431_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_431_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями активно заботятся о том, чтобы их команда работала слаженно, даже не занимая руководящей должности. Например, они поддерживают коллег, недавно пришедших в команду, следят за тем, чтобы решения принимались совместно и в духе взаимного доверия, а также за тем, чтобы более молчаливые члены команды тоже могли высказать своё мнение..
+        /// </summary>
+        public static string So_431_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_431_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler, yönetici konumunda olmasalar dahi ekiplerinin birlikte iyi çalışmasını sağlamak için aktif olarak çalışırlar. Örneğin, ekibe yeni katılan iş arkadaşlarını desteklerler, kararların ortaklaşa ve güven ruhu içinde alınmasını sağlarlar ve daha sessiz ekip üyelerinin de söz sahibi olmasını sağlarlar..
+        /// </summary>
+        public static string So_431_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_431_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками, навіть не маючи керівної посади, активно дбають про те, щоб їхня команда працювала злагоджено. Наприклад, вони підтримують колег, які нещодавно приєдналися до команди, стежать за тим, щоб рішення ухвалювали спільно і в дусі взаємної довіри, а також за тим, щоб більш мовчазні члени команди теж могли висловити свою думку..
+        /// </summary>
+        public static string So_431_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_431_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1789,11 +7648,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да работят в екип. Те само рядко подкрепят членовете на екипа или го правят само при изрично поискване.  Никога или много рядко се застъпват за по-мълчаливите членове на екипа..
+        /// </summary>
+        public static string So_431_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_431_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, im Team zu arbeiten. Sie unterstützen Teammitglieder nur selten oder nur mit expliziter Aufforderung.  Für stillere Teammitglieder setzen sie sich nicht oder selten ein..
         /// </summary>
         public static string So_431_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_431_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it challenging to work in a team. They rarely support team members or only do so when explicitly asked.  They rarely or never stand up for quieter team members..
+        /// </summary>
+        public static string So_431_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_431_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à travailler en équipe. Elles ne soutiennent que rarement les membres de l’équipe ou seulement si elles y sont explicitement invitées.  Elles n’interviennent pas ou rarement pour aider les membres plus silencieux de l’équipe à s’exprimer..
+        /// </summary>
+        public static string So_431_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_431_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să lucreze în echipă. Ele sprijină doar rareori alți membrii ai echipei sau doar în urma unei solicitări explicite.  Nu îi sprijină pe membrii mai puțini vocali ai echipei sau o fac doar rareori..
+        /// </summary>
+        public static string So_431_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_431_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно работать в команде. Они редко оказывают поддержку членам команды или только по прямому напоминанию.  Они редко или никогда не вступаются за более молчаливых членов команды..
+        /// </summary>
+        public static string So_431_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_431_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler bir ekip içinde çalışmakta zorlanırlar. Bu kişiler ekip üyelerini nadiren veya sadece kesin bir talimat verildiğinde desteklerler.  Daha sessiz ekip üyeleri ile ilgilenmezler veya nadiren ilgilenirler..
+        /// </summary>
+        public static string So_431_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_431_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям із низькими показниками важко працювати в команді. Вони рідко або лише за прямим нагадуванням надають підтримку членам команди.  Вони рідко або ніколи не заступаються за більш мовчазних членів команди..
+        /// </summary>
+        public static string So_431_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_431_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1807,11 +7729,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Напътстване и ръководене на други, често в група или екип, за постигането на обща цел..
+        /// </summary>
+        public static string So_444__ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_444__ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lenken und Leiten anderer, oft in einer Gruppe oder einem Team, um ein gemeinsames Ziel zu erreichen..
         /// </summary>
         public static string So_444__ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_444__ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directing and leading others, often in a group or team, to achieve a common goal..
+        /// </summary>
+        public static string So_444__ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_444__ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diriger et guider les autres, souvent au sein d’un groupe ou d’une équipe, pour atteindre un objectif commun..
+        /// </summary>
+        public static string So_444__ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_444__ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conducerea și îndrumarea altor persoane, deseori în cadrul unei echipe sau al unui grup, pentru a atinge obiective comune..
+        /// </summary>
+        public static string So_444__ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_444__ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Направление и руководство другими людьми, часто в группе или команде, для достижения общей цели..
+        /// </summary>
+        public static string So_444__ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_444__ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ortak bir hedefe ulaşmak için genellikle bir grup veya ekip içinde başkalarını yönlendirme ve onlara liderlik etme..
+        /// </summary>
+        public static string So_444__ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_444__ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Керівництво іншими людьми, часто в групі або команді, для досягнення спільної мети..
+        /// </summary>
+        public static string So_444__ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_444__ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1825,11 +7810,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с високи резултати могат успешно да ръководят другите. Те са добри в това да делегират задачи и да постигат поставените цели съвместно. Те успяват да насърчават членовете на екипа и да ги развиват допълнително..
+        /// </summary>
+        public static string So_444_Over_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_444_Over_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit hohen Werten können andere erfolgreich leiten. Sie sind gut darin, Aufgaben delegieren und gemeinsam gesetzte Ziele zu erreichen. Sie schaffen es, Teammitglieder zu fordern und sie weiterzuentwickeln..
         /// </summary>
         public static string So_444_Over_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_444_Over_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with high scores can successfully lead others. They are good at delegating tasks and achieving shared goals. They manage to challenge team members and develop them further..
+        /// </summary>
+        public static string So_444_Over_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_444_Over_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score élevé sont capables de diriger les autres avec succès. Elles savent déléguer les tâches et atteindre les objectifs fixés en commun. Elles parviennent à stimuler les membres de l’équipe et à les faire progresser..
+        /// </summary>
+        public static string So_444_Over_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_444_Over_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanele cu scoruri ridicate pot conduce cu succes alte persoane. Sunt bune la delegarea sarcinilor și la atingerea obiectivelor stabilite în comun. Reușesc să promoveze membrii echipei și să îi ajute în dezvoltarea lor ulterioară..
+        /// </summary>
+        public static string So_444_Over_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_444_Over_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди с высокими показателями могут успешно руководить другими. Они хорошо умеют делегировать задачи и добиваться совместно поставленных целей. У них получается добиваться результатов от членов команды и способствовать их развитию..
+        /// </summary>
+        public static string So_444_Over_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_444_Over_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüksek donanım ve değerlere sahip kişiler başkalarına başarılı bir şekilde liderlik edebilir. Bu kişiler görevleri yönetme ve ortaklaşa belirlenen hedeflere ulaşma konusunda iyidirler. Kendileri ekip üyelerini teşvik eder ve onları daha da geliştirmeyi başarır..
+        /// </summary>
+        public static string So_444_Over_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_444_Over_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Люди з високими показниками можуть успішно керувати іншими. Вони добре вміють делегувати завдання і досягати спільно поставлених цілей. У них виходить домогтися результатів від членів команди і сприяти їхньому розвитку..
+        /// </summary>
+        public static string So_444_Over_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_444_Over_ResultDescription_uk-UA", resourceCulture);
             }
         }
         
@@ -1843,11 +7891,74 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Хората с ниски резултати изпитват затруднения да ръководят другите. За тях е проблем да вземат решения въз основа на компетенциите на другите, кой каква задача трябва да върши, да делегират задачи или да насърчават хората..
+        /// </summary>
+        public static string So_444_Under_ResultDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("So_444_Under_ResultDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personen mit niedrigen Werten fällt es schwer, andere zu leiten. Sie haben oft Probleme damit, basierend auf den Kompetenzen anderer zu entscheiden, wer welche Aufgabe machen sollte, Aufgaben zu delegieren oder Menschen zu fordern..
         /// </summary>
         public static string So_444_Under_ResultDescription_de_DE {
             get {
                 return ResourceManager.GetString("So_444_Under_ResultDescription_de-DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People with low scores find it difficult to lead others. They often have problems deciding who has to do what task, delegating tasks, or challenging people based on the competencies of others..
+        /// </summary>
+        public static string So_444_Under_ResultDescription_en_US {
+            get {
+                return ResourceManager.GetString("So_444_Under_ResultDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Les personnes ayant obtenu un score faible ont du mal à diriger les autres. Elles éprouvent souvent des difficultés à décider qui doit faire quoi en se basant sur les compétences des autres, à déléguer des tâches ou à demander aux gens de faire des efforts..
+        /// </summary>
+        public static string So_444_Under_ResultDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("So_444_Under_ResultDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persoanelor cu scoruri scăzute le este dificil să conducă alte persoane. De multe ori, acestea au probleme în a decide, pe baza competențelor, cine să îndeplinească ce sarcină, precum și de a delega sau de a promova alte persoane..
+        /// </summary>
+        public static string So_444_Under_ResultDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("So_444_Under_ResultDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям с низкими показателями трудно руководить другими. У них часто возникают проблемы с тем, чтобы решить, кто должен выполнять ту или иную задачу, основываясь на их компетенции, делегировать задачи или требовать результатов..
+        /// </summary>
+        public static string So_444_Under_ResultDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("So_444_Under_ResultDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düşük donanım ve değerlere sahip kişiler başkalarına liderlik etmekte zorlanırlar. Başkalarının yetkinliklerine göre kimin hangi görevi yapması gerektiğine karar vermekte, görevleri yönetmekte veya insanları teşvik etmekte genellikle sorun yaşarlar..
+        /// </summary>
+        public static string So_444_Under_ResultDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("So_444_Under_ResultDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Людям iз низькими показниками важко керувати іншими У них часто виникають проблеми з тим, щоб вирішити, хто, ґрунтуючись на компетенції, повинен виконувати те чи інше завдання, а також з тим, щоб делегувати завдання та вимагати результатів..
+        /// </summary>
+        public static string So_444_Under_ResultDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("So_444_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
     }
