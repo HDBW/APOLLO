@@ -81,6 +81,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                     _assessmentId = module?.AssessmentId;
                     _sessionId = module?.SessionId;
+                    var quantity_Patter = "Quantity_{0}";
                     if (module != null)
                     {
                         switch (module.Type)
@@ -102,7 +103,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                     Result = details.Sum(x => x.Result) / Math.Max(details.Count, 1),
                                 };
 
-                                sections.Add(ModuleScoreEntry.Import(scoreSum, module.Type, HandleOpenDetails, CanHandleOpenDetails));
+                                sections.Add(ModuleScoreEntry.Import(scoreSum, this[string.Format(quantity_Patter, scoreSum.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails));
 
                                 break;
                             case AssessmentType.Ea:
@@ -111,7 +112,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewExperienceTestFinished"], module.JobName)}</p><p>{this["TxtAssesmentsResultOverViewExperienceTestFinishedDescription"]}</p>"));
                                 foreach (var score in module.ModuleScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score, module.Type));
+                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
                                 }
 
                                 break;
@@ -123,7 +124,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverviewGermanYourResult"]));
                                 foreach (var score in module.ModuleScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score, module.Type));
+                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
                                 }
 
                                 break;

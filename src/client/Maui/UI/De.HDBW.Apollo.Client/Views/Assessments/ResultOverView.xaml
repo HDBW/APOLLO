@@ -90,23 +90,23 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="SoftSkillResultCardTemplate">
+        <DataTemplate x:Key="SOScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1"/>
                     </Border.GestureRecognizers>
                     <VerticalStackLayout >
-                        <Label Text="Bereich" Margin="0,0,0,8" TextColor="{StaticResource TextColor}" Style="{StaticResource Noto16SemiBold}"/>
-                        <Label Text="Fähigkeit zur Verwendung von Geräten wie Monitor, Maus, Tastatur, Speichergeräten, Druckern, Scannern usw. zur Durchführung von Tätigkeiten wie Anschließen, Hochfahren, Herunterfahren, Neustart, Speichern von Dateien usw." TextColor="{StaticResource TextColor}" Style="{StaticResource Noto14}" Margin="0,0,0,8"/>
+                        <Label Text="{x:Binding Segment, Mode=OneWay}" Margin="0,0,0,8" TextColor="{StaticResource TextColor}" Style="{StaticResource Noto16SemiBold}"/>
+                        <Label Text="{x:Binding Description, Mode=OneWay}" TextColor="{StaticResource TextColor}" Style="{StaticResource Noto14}" Margin="0,0,0,8"/>
                         <Grid Margin="0,0,0,4">
-                            <ProgressBar Progress="0.75"/>
+                            <ProgressBar Progress="{x:Binding Result, Mode=OneWay}"/>
                             <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                 <Line X1="0" Y1="0" X2="0" Y2="12" Stroke="{StaticResource Neutral0}" StrokeDashArray="2,2" />
                                 <Line X1="0" Y1="0" X2="0" Y2="12" Stroke="{StaticResource Primary}" StrokeDashArray="2,2" />
                             </HorizontalStackLayout>
                         </Grid>
-                        <Label Text="Über Durchschnitt" Margin="0,0,0,8" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14SemiBold}" />
+                        <Label Text="{x:Binding DisplayQuantity, Mode=OneWay}" Margin="0,0,0,8" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14SemiBold}" />
                         <Label Text="Mehr Infos" HorizontalOptions="End" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16SemiBold}" />
                     </VerticalStackLayout>
                 </Border>

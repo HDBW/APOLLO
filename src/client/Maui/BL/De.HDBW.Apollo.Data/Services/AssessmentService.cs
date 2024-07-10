@@ -434,6 +434,34 @@ namespace De.HDBW.Apollo.Data.Services
                     }
 
                     break;
+                case AssessmentType.So:
+                    foreach (var rawData in rawDatas)
+                    {
+                        var node = JsonObject.Parse(rawData.Data);
+                        var segment = node?[nameof(SharedContracts.RawData.esco)]?.GetValue<string>();
+                        if (string.IsNullOrWhiteSpace(segment))
+                        {
+                            continue;
+                        }
+
+                        segments.Add(segment);
+                    }
+
+                    segments = segments.Distinct().ToList();
+                    foreach (var segment in segments)
+                    {
+                        var name = segment.Split("-").Last().Trim();
+                        score = new ModuleScore();
+                        score.Quantity = quantity;
+                        score.ResultDescription = GetText(pattern);
+                        score.AssessmentId = module.AssessmentId;
+                        score.ModuleId = module.ModuleId;
+                        score.Result = result;
+                        score.Segment = name;
+                        module.ModuleScores.Add(score);
+                    }
+
+                    break;
             }
 
             return Task.CompletedTask;
