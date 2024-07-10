@@ -266,8 +266,6 @@ message Module {
 
    // The Scores of the Module
   repeated ModuleScore ModuleScores = 19;
-
-  google.protobuf.Int64Value JobId = 20;
 }
 
 message Job {
