@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Text.Json.Nodes;
+using De.HDBW.Apollo.Data.SampleData.Strings;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -128,8 +129,6 @@ namespace De.HDBW.Apollo.Data.Services
             {
                 Title = requestedModule.Title,
                 JobName = jobName,
-                Subtitle = requestedModule.Subtitle,
-                Description = requestedModule.Description,
                 Language = requestedModule.Language,
                 Type = requestedModule.Type,
                 EstimateDuration = requestedModule.EstimateDuration,
@@ -140,6 +139,10 @@ namespace De.HDBW.Apollo.Data.Services
                 AnswerCount = offset,
                 Repeatable = waslastCanceledModule ? 1 : 0,
             };
+            var escoId = string.Empty;
+            var quantity = string.Empty;
+            module.Subtitle = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}");
+            module.Description = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}");
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
             await GenerateScoresAsync(module, rawDatas, string.Empty, lang).ConfigureAwait(false);
@@ -367,7 +370,7 @@ namespace De.HDBW.Apollo.Data.Services
                     score = new ModuleScore();
                     score.Quantity = quantity;
                     int correctAnswerCount = 0, questionCount = 0;
-                    var text = string.Format(pattern, correctAnswerCount, questionCount);
+                    var text = string.Format(GetText(pattern), correctAnswerCount, questionCount);
                     score.ResultDescription = string.IsNullOrWhiteSpace(text) ? pattern : text;
                     score.AssessmentId = module.AssessmentId;
                     score.ModuleId = module.ModuleId;
@@ -394,7 +397,7 @@ namespace De.HDBW.Apollo.Data.Services
                         var name = segment.Split("-").Last().Trim();
                         score = new ModuleScore();
                         score.Quantity = quantity;
-                        score.ResultDescription = pattern;
+                        score.ResultDescription = GetText(pattern);
                         score.AssessmentId = module.AssessmentId;
                         score.ModuleId = module.ModuleId;
                         score.Result = result;
@@ -422,35 +425,7 @@ namespace De.HDBW.Apollo.Data.Services
                         var name = segment.Split("-").Last().Trim();
                         score = new ModuleScore();
                         score.Quantity = quantity;
-                        score.ResultDescription = pattern;
-                        score.AssessmentId = module.AssessmentId;
-                        score.ModuleId = module.ModuleId;
-                        score.Result = result;
-                        score.Segment = name;
-                        module.ModuleScores.Add(score);
-                    }
-
-                    break;
-                case AssessmentType.Be:
-                    foreach (var rawData in rawDatas)
-                    {
-                        var node = JsonObject.Parse(rawData.Data);
-                        var segment = node?[nameof(SharedContracts.RawData.handlungsfeld)]?.GetValue<string>();
-                        if (string.IsNullOrWhiteSpace(segment))
-                        {
-                            continue;
-                        }
-
-                        segments.Add(segment);
-                    }
-
-                    segments = segments.Distinct().ToList();
-                    foreach (var segment in segments)
-                    {
-                        var name = segment.Split("-").Last().Trim();
-                        score = new ModuleScore();
-                        score.Quantity = quantity;
-                        score.ResultDescription = pattern;
+                        score.ResultDescription = GetText(pattern);
                         score.AssessmentId = module.AssessmentId;
                         score.ModuleId = module.ModuleId;
                         score.Result = result;
@@ -462,6 +437,11 @@ namespace De.HDBW.Apollo.Data.Services
             }
 
             return Task.CompletedTask;
+        }
+
+        private string GetText(string name)
+        {
+            return Resources.ResourceManager.GetString(name) ?? name;
         }
     }
 }

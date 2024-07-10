@@ -41,7 +41,7 @@
 
         <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
             <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"  Margin="0,0,0,24"/>
+                <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"  Margin="0,0,0,24"/>
             </Border>
         </DataTemplate>
 
