@@ -8354,6 +8354,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mehr Informationen.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مزيد من المعلومات.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Допълнителна информация.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More information.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plus d’informations .
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mai multe informații.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подробная информация.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daha fazla bilgi.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Детальна інформація.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kolleg.
         /// </summary>
         public static string TypeOfSchool_Colleague {
