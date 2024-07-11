@@ -119,9 +119,11 @@ namespace De.HDBW.Apollo.Data.Services
             _lastDeletedSessionId = null;
             var rawData = rawDatas.FirstOrDefault();
             string localizedJobName = string.Empty;
+            string moduleName = string.Empty;
             if (rawData != null)
             {
                 var node = JsonObject.Parse(rawDatas.First().Data);
+                moduleName = node?[nameof(SharedContracts.RawData.module)]?.GetValue<string>()?.Trim() ?? string.Empty;
                 var job = node?[nameof(SharedContracts.RawData.job)]?.GetValue<string>()?.Trim() ?? string.Empty;
                 var schwerPunkt = node?[nameof(SharedContracts.RawData.schwerpunkt)]?.GetValue<string>()?.Trim() ?? string.Empty;
                 if (schwerPunkt == "-")
@@ -156,6 +158,10 @@ namespace De.HDBW.Apollo.Data.Services
                 case AssessmentType.Sk:
                     module.Subtitle = string.Format(GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}"), localizedJobName);
                     module.Description = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}");
+                    break;
+                case AssessmentType.So:
+                    module.Subtitle = moduleName;
+                    module.Description = string.Format(GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}"), module.Title);
                     break;
                 default:
                     module.Subtitle = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}");
