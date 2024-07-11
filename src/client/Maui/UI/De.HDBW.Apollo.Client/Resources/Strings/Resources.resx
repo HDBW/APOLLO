@@ -181,16 +181,16 @@
     <value>Unbekannter Anbieter</value>
   </data>
   <data name="SkipQuestionDialog_Title" xml:space="preserve">
-    <value>Bist du dir sicher, dass du diese Frage überspringen möchtest?</value>
+    <value>Übersprungene Fragen können nicht wiederholt werden!</value>
   </data>
   <data name="SkipQuestionDialog_Message" xml:space="preserve">
-    <value>Jede Frage ist nur einmalig durchführbar und Antworten können nicht korrigiert werden</value>
+    <value>Unbeantwortete Fragen wirken sich negativ auf dein Testergebnis aus.</value>
   </data>
   <data name="SkipQuestionDialog_Cancel" xml:space="preserve">
-    <value>Antwort wählen</value>
+    <value>Frage beantworten</value>
   </data>
   <data name="SkipQuestionDialog_Continue" xml:space="preserve">
-    <value>Überspringen</value>
+    <value>Frage überspringen</value>
   </data>
   <data name="SettingsView_Imprint" xml:space="preserve">
     <value>Impressum</value>
@@ -1008,7 +1008,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Los geht's!</value>
   </data>
   <data name="SearchView_Title" xml:space="preserve">
-    <value>Suche</value>
+    <value>Kurse</value>
   </data>
   <data name="FiltersSheet_Location" xml:space="preserve">
     <value>Standort</value>
@@ -1299,7 +1299,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Bist du dir sicher, dass du den Test beenden möchtest?</value>
   </data>
   <data name="AssessmentFeedView_Title" xml:space="preserve">
-    <value>Test</value>
+    <value>Tests</value>
   </data>
   <data name="AssessmentFeed_Subline" xml:space="preserve">
     <value>Lerne deine Stärken kennen und entdecke passende Berufsfelder!</value>

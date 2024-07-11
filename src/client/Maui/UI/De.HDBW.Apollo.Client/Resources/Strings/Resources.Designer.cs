@@ -187,7 +187,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test.
+        ///   Looks up a localized string similar to Tests.
         /// </summary>
         public static string AssessmentFeedView_Title {
             get {
@@ -4464,7 +4464,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suche.
+        ///   Looks up a localized string similar to Kurse.
         /// </summary>
         public static string SearchView_Title {
             get {
@@ -4663,7 +4663,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Antwort wählen.
+        ///   Looks up a localized string similar to Frage beantworten.
         /// </summary>
         public static string SkipQuestionDialog_Cancel {
             get {
@@ -4672,7 +4672,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Überspringen.
+        ///   Looks up a localized string similar to Frage überspringen.
         /// </summary>
         public static string SkipQuestionDialog_Continue {
             get {
@@ -4681,7 +4681,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jede Frage ist nur einmalig durchführbar und Antworten können nicht korrigiert werden.
+        ///   Looks up a localized string similar to Unbeantwortete Fragen wirken sich negativ auf dein Testergebnis aus..
         /// </summary>
         public static string SkipQuestionDialog_Message {
             get {
@@ -4690,7 +4690,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bist du dir sicher, dass du diese Frage überspringen möchtest?.
+        ///   Looks up a localized string similar to Übersprungene Fragen können nicht wiederholt werden!.
         /// </summary>
         public static string SkipQuestionDialog_Title {
             get {
