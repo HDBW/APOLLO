@@ -56,6 +56,11 @@ namespace De.HDBW.Apollo.Client.Controls
                 {
                     var (id, _, scale) = ImageHelper.ParseFileName(path);
                     var originalSize = ImageHelper.GetOriginalSize(id);
+                    if (originalSize == default)
+                    {
+                        return;
+                    }
+
                     var imageFormat = ImageHelper.RetrieveImageFormatFromFileExtension(path);
                     var image = PlatformImage.FromStream(stream, imageFormat);
                     var originalWidth = originalSize.Width == 0 ? image.Width : originalSize.Width;
