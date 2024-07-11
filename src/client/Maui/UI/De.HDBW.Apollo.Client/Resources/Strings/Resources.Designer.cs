@@ -6121,6 +6121,42 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schätze jetzt deine beruflichen Fähigkeiten selbst ein oder teste dein berufliches Wissen..
+        /// </summary>
+        public static string TxtAssesmentsJobSearchResultViewDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsJobSearchResultViewDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beruf.
+        /// </summary>
+        public static string TxtAssesmentsJobSearchResultViewTitle {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsJobSearchResultViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deine beruflichen Erfahrungen kannst du in zwei kurzen Selbsttests entweder selbst einschätzen oder testen. Diese stehen für insgesamt 50 Berufe zur Verfügung..
+        /// </summary>
+        public static string TxtAssesmentsJobSearchViewDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsJobSearchViewDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Berufe.
+        /// </summary>
+        public static string TxtAssesmentsJobSearchViewTitle {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsJobSearchViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sprachenauswahl.
         /// </summary>
         public static string TxtAssesmentsLanguageSelectionViewTitle {

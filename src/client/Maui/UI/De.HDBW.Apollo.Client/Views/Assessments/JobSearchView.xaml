@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.JobSearchView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
+             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
+             xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:interactionModel="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewModels:FavoriteViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Title="{x:Static strings:Resources.TxtAssesmentsJobSearchViewTitle}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ProfessionSelectionTemplate" x:DataType="interactionModel:SelectInteractionEntry" >
+            <Border StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{x:Binding ToggleSelectionStateCommand}" NumberOfTapsRequired="1"/>
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*">
+                    <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center" Margin="24,16,24,16">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{x:Binding IsSelected}" Value="True">
+                                <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Border HeightRequest="1" StrokeThickness="0" BackgroundColor="{StaticResource Neutral600}" VerticalOptions="End" Grid.ColumnSpan="2"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="auto,auto,*">
+        <Label Text="{x:Static strings:Resources.TxtAssesmentsJobSearchViewDescription}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="24"/>
+        <Border Grid.Row="1" Margin="24,4" Style="{StaticResource SearchInputBorderStyle}" >
+            <SearchBar Text="{x:Binding SearchText, Mode=TwoWay}"
+                   SearchCommand="{x:Binding SearchCommand}"
+                   SearchCommandParameter="{x:Binding Text, Source={x:Reference PART_SearchBar}}"
+                   x:Name="PART_SearchBar" SemanticProperties.Description="{x:Static strings:Resources.SearchView_Title}"/>
+        </Border>
+        <CollectionView Grid.Row="2" Margin="24,0"
+        ItemsSource="{x:Binding}"
+        ItemsLayout="VerticalList"
+        ItemTemplate="{StaticResource ProfessionSelectionTemplate}"/>
+    </Grid>
+</ContentPage>
