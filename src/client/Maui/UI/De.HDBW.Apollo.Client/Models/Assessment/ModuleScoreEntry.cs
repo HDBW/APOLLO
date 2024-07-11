@@ -13,7 +13,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private readonly Func<ModuleScoreEntry, bool>? _canInteractHandler;
         private ModuleScore _score;
 
-        private ModuleScoreEntry(ModuleScore score, AssessmentType type, Func<ModuleScoreEntry, CancellationToken, Task>? interactHandler, Func<ModuleScoreEntry, bool>? canInteractHandler)
+        private ModuleScoreEntry(ModuleScore score, string displayQuantity, AssessmentType type, Func<ModuleScoreEntry, CancellationToken, Task>? interactHandler, Func<ModuleScoreEntry, bool>? canInteractHandler)
         {
             ArgumentNullException.ThrowIfNull(score);
             if (type == AssessmentType.Unknown)
@@ -22,6 +22,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
 
             _score = score;
+            DisplayQuantity = displayQuantity;
             Type = type;
             _interactHandler = interactHandler;
             _canInteractHandler = canInteractHandler;
@@ -45,6 +46,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public string DisplayQuantity { get; }
+
         public double? Result
         {
             get
@@ -61,9 +64,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
-        public static ModuleScoreEntry Import(ModuleScore score, AssessmentType type, Func<ModuleScoreEntry, CancellationToken, Task>? interactHandler = null, Func<ModuleScoreEntry, bool>? canInteractHandler = null)
+        public static ModuleScoreEntry Import(ModuleScore score, string displayQuantity, AssessmentType type, Func<ModuleScoreEntry, CancellationToken, Task>? interactHandler = null, Func<ModuleScoreEntry, bool>? canInteractHandler = null)
         {
-            return new ModuleScoreEntry(score, type, interactHandler, canInteractHandler);
+            return new ModuleScoreEntry(score, displayQuantity,type, interactHandler, canInteractHandler);
         }
 
         public void RefreshCommands()

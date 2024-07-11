@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using System.Text.Json.Nodes;
+using De.HDBW.Apollo.Data.SampleData.Strings;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -117,19 +118,28 @@ namespace De.HDBW.Apollo.Data.Services
             var waslastCanceledModule = _lastDeletedSessionId == moduleId && requestedModule.Type != AssessmentType.Be;
             _lastDeletedSessionId = null;
             var rawData = rawDatas.FirstOrDefault();
-            string jobName = string.Empty;
+            string localizedJobName = string.Empty;
+            string moduleName = string.Empty;
             if (rawData != null)
             {
                 var node = JsonObject.Parse(rawDatas.First().Data);
-                jobName = node?[nameof(SharedContracts.RawData.job)]?.GetValue<string>() ?? string.Empty;
+                moduleName = node?[nameof(SharedContracts.RawData.module)]?.GetValue<string>()?.Trim() ?? string.Empty;
+                var job = node?[nameof(SharedContracts.RawData.job)]?.GetValue<string>()?.Trim() ?? string.Empty;
+                var schwerPunkt = node?[nameof(SharedContracts.RawData.schwerpunkt)]?.GetValue<string>()?.Trim() ?? string.Empty;
+                if (schwerPunkt == "-")
+                {
+                    schwerPunkt = string.Empty;
+                }
+
+                var parts = new List<string>() { job, schwerPunkt }.Where(x => !string.IsNullOrWhiteSpace(x));
+                localizedJobName = string.Join(" - ", parts);
             }
 
             var module = new Module()
             {
                 Title = requestedModule.Title,
-                JobName = jobName,
-                Subtitle = requestedModule.Subtitle,
-                Description = requestedModule.Description,
+                JobId = requestedModule.JobId,
+                LocalizedJobName = localizedJobName,
                 Language = requestedModule.Language,
                 Type = requestedModule.Type,
                 EstimateDuration = requestedModule.EstimateDuration,
@@ -140,6 +150,24 @@ namespace De.HDBW.Apollo.Data.Services
                 AnswerCount = offset,
                 Repeatable = waslastCanceledModule ? 1 : 0,
             };
+            var escoId = string.Empty;
+            var quantity = string.Empty;
+            switch (module.Type)
+            {
+                case AssessmentType.Ea:
+                case AssessmentType.Sk:
+                    module.Subtitle = string.Format(GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}"), localizedJobName);
+                    module.Description = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}");
+                    break;
+                case AssessmentType.So:
+                    module.Subtitle = moduleName;
+                    module.Description = string.Format(GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}"), module.Title);
+                    break;
+                default:
+                    module.Subtitle = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Subtitle)}_{language}");
+                    module.Description = GetText($"{module.Type}_{escoId}_{quantity}_{nameof(Module.Description)}_{language}");
+                    break;
+            }
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
             await GenerateScoresAsync(module, rawDatas, string.Empty, lang).ConfigureAwait(false);
@@ -367,13 +395,14 @@ namespace De.HDBW.Apollo.Data.Services
                     score = new ModuleScore();
                     score.Quantity = quantity;
                     int correctAnswerCount = 0, questionCount = 0;
-                    var text = string.Format(pattern, correctAnswerCount, questionCount);
+                    var text = string.Format(GetText(pattern), correctAnswerCount, questionCount);
                     score.ResultDescription = string.IsNullOrWhiteSpace(text) ? pattern : text;
                     score.AssessmentId = module.AssessmentId;
                     score.ModuleId = module.ModuleId;
                     score.Result = result;
                     score.Segment = string.Empty;
-                    module.ModuleScores.Add(score);
+                    module.SegmentScores.Add(score);
+                    module.ModuleScore = score;
                     break;
                 case AssessmentType.Sk:
                     foreach (var rawData in rawDatas)
@@ -394,12 +423,17 @@ namespace De.HDBW.Apollo.Data.Services
                         var name = segment.Split("-").Last().Trim();
                         score = new ModuleScore();
                         score.Quantity = quantity;
-                        score.ResultDescription = pattern;
+                        score.ResultDescription = GetText(pattern);
                         score.AssessmentId = module.AssessmentId;
                         score.ModuleId = module.ModuleId;
                         score.Result = result;
                         score.Segment = name;
-                        module.ModuleScores.Add(score);
+                        module.SegmentScores.Add(score);
+                        module.ModuleScore = new ModuleScore()
+                        {
+                            Quantity = AssessmentScoreQuantity.Median,
+                            Result = 0.5,
+                        };
                     }
 
                     break;
@@ -422,18 +456,61 @@ namespace De.HDBW.Apollo.Data.Services
                         var name = segment.Split("-").Last().Trim();
                         score = new ModuleScore();
                         score.Quantity = quantity;
-                        score.ResultDescription = pattern;
+                        score.ResultDescription = GetText(pattern);
                         score.AssessmentId = module.AssessmentId;
                         score.ModuleId = module.ModuleId;
                         score.Result = result;
                         score.Segment = name;
-                        module.ModuleScores.Add(score);
+                        module.SegmentScores.Add(score);
+                        module.ModuleScore = new ModuleScore()
+                        {
+                            Quantity = AssessmentScoreQuantity.Median,
+                            Result = 0.5,
+                        };
+                    }
+
+                    break;
+                case AssessmentType.So:
+                    foreach (var rawData in rawDatas)
+                    {
+                        var node = JsonObject.Parse(rawData.Data);
+                        var segment = node?[nameof(SharedContracts.RawData.esco)]?.GetValue<string>();
+                        if (string.IsNullOrWhiteSpace(segment))
+                        {
+                            continue;
+                        }
+
+                        segments.Add(segment);
+                    }
+
+                    segments = segments.Distinct().ToList();
+                    foreach (var segment in segments)
+                    {
+                        var name = segment.Split("-").Last().Trim();
+                        score = new ModuleScore();
+                        score.Quantity = quantity;
+                        score.ResultDescription = GetText(pattern);
+                        score.AssessmentId = module.AssessmentId;
+                        score.ModuleId = module.ModuleId;
+                        score.Result = result;
+                        score.Segment = name;
+                        module.SegmentScores.Add(score);
+                        module.ModuleScore = new ModuleScore()
+                        {
+                            Quantity = AssessmentScoreQuantity.Median,
+                            Result = 0.5,
+                        };
                     }
 
                     break;
             }
 
             return Task.CompletedTask;
+        }
+
+        private string GetText(string name)
+        {
+            return Resources.ResourceManager.GetString(name) ?? name;
         }
     }
 }

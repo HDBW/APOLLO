@@ -1465,87 +1465,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erneut testen in {0} Tagen.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to الاختبار مجددًا خلال {0} أيام.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ar {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторно тестване след {0} дни.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_bg_BG {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Test again in {0} days.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_en_US {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Effectuer une nouvelle évaluation dans {0} jours.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_fr_FR {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parcurge testul încă o dată în {0} zile.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ro_RO {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторить тест через {0} дней.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ru_RU {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} gün içinde yeniden testi başlat.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_tr_TR {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторити тест через {0} днів.
-        /// </summary>
-        public static string BtnTxtAssesmentsModuleDetailViewTimeTestAgain_uk_UA {
-            get {
-                return ResourceManager.GetString("BtnTxtAssesmentsModuleDetailViewTimeTestAgain_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Fortfahren.
         /// </summary>
         public static string CancelAssessmentDialog_Cancel {
@@ -4100,6 +4019,249 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string QualificationView_Title {
             get {
                 return ResourceManager.GetString("QualificationView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durchschnitt.
+        /// </summary>
+        public static string Quantity_Median {
+            get {
+                return ResourceManager.GetString("Quantity_Median", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to أقل من المتوسط.
+        /// </summary>
+        public static string Quantity_Median_ar {
+            get {
+                return ResourceManager.GetString("Quantity_Median_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Средно ниво.
+        /// </summary>
+        public static string Quantity_Median_bg_BG {
+            get {
+                return ResourceManager.GetString("Quantity_Median_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average.
+        /// </summary>
+        public static string Quantity_Median_en_US {
+            get {
+                return ResourceManager.GetString("Quantity_Median_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dans la moyenne.
+        /// </summary>
+        public static string Quantity_Median_fr_FR {
+            get {
+                return ResourceManager.GetString("Quantity_Median_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medii.
+        /// </summary>
+        public static string Quantity_Median_ro_RO {
+            get {
+                return ResourceManager.GetString("Quantity_Median_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Средний уровень.
+        /// </summary>
+        public static string Quantity_Median_ru_RU {
+            get {
+                return ResourceManager.GetString("Quantity_Median_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ortalama.
+        /// </summary>
+        public static string Quantity_Median_tr_TR {
+            get {
+                return ResourceManager.GetString("Quantity_Median_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Середній рівень.
+        /// </summary>
+        public static string Quantity_Median_uk_UA {
+            get {
+                return ResourceManager.GetString("Quantity_Median_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Über Durchschnitt.
+        /// </summary>
+        public static string Quantity_Over {
+            get {
+                return ResourceManager.GetString("Quantity_Over", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فوق المتوسط.
+        /// </summary>
+        public static string Quantity_Over_ar {
+            get {
+                return ResourceManager.GetString("Quantity_Over_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Над средното ниво.
+        /// </summary>
+        public static string Quantity_Over_bg_BG {
+            get {
+                return ResourceManager.GetString("Quantity_Over_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About average.
+        /// </summary>
+        public static string Quantity_Over_en_US {
+            get {
+                return ResourceManager.GetString("Quantity_Over_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Au-dessus de la moyenne.
+        /// </summary>
+        public static string Quantity_Over_fr_FR {
+            get {
+                return ResourceManager.GetString("Quantity_Over_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peste medie.
+        /// </summary>
+        public static string Quantity_Over_ro_RO {
+            get {
+                return ResourceManager.GetString("Quantity_Over_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выше среднего.
+        /// </summary>
+        public static string Quantity_Over_ru_RU {
+            get {
+                return ResourceManager.GetString("Quantity_Over_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ortalamanın üstünde.
+        /// </summary>
+        public static string Quantity_Over_tr_TR {
+            get {
+                return ResourceManager.GetString("Quantity_Over_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вищий за середній.
+        /// </summary>
+        public static string Quantity_Over_uk_UA {
+            get {
+                return ResourceManager.GetString("Quantity_Over_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unter Durchschnitt.
+        /// </summary>
+        public static string Quantity_Under {
+            get {
+                return ResourceManager.GetString("Quantity_Under", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to متوسط.
+        /// </summary>
+        public static string Quantity_Under_ar {
+            get {
+                return ResourceManager.GetString("Quantity_Under_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Под средното ниво.
+        /// </summary>
+        public static string Quantity_Under_bg_BG {
+            get {
+                return ResourceManager.GetString("Quantity_Under_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Below average.
+        /// </summary>
+        public static string Quantity_Under_en_US {
+            get {
+                return ResourceManager.GetString("Quantity_Under_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En-dessous de la moyenne.
+        /// </summary>
+        public static string Quantity_Under_fr_FR {
+            get {
+                return ResourceManager.GetString("Quantity_Under_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub medie.
+        /// </summary>
+        public static string Quantity_Under_ro_RO {
+            get {
+                return ResourceManager.GetString("Quantity_Under_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ниже среднего.
+        /// </summary>
+        public static string Quantity_Under_ru_RU {
+            get {
+                return ResourceManager.GetString("Quantity_Under_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ortalamanın altında.
+        /// </summary>
+        public static string Quantity_Under_tr_TR {
+            get {
+                return ResourceManager.GetString("Quantity_Under_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нижчий за середній.
+        /// </summary>
+        public static string Quantity_Under_uk_UA {
+            get {
+                return ResourceManager.GetString("Quantity_Under_uk-UA", resourceCulture);
             }
         }
         
@@ -6761,6 +6923,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erneut testen in {0} Tagen.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الاختبار مجددًا خلال {0} أيام.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повторно тестване след {0} дни.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test again in {0} days.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Effectuer une nouvelle évaluation dans {0} jours.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parcurge testul încă o dată în {0} zile.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повторить тест через {0} дней.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} gün içinde yeniden testi başlat.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повторити тест через {0} днів.
+        /// </summary>
+        public static string TxtAssesmentsModuleDetailViewTimeTestAgain_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewTimeTestAgain_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trifft zu 20% zu.
         /// </summary>
         public static string TxtAssesmentsRatingView20 {
@@ -8026,6 +8269,168 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsResultOverViewSkillsTestFinishedDetails_uk_UA {
             get {
                 return ResourceManager.GetString("TxtAssesmentsResultOverViewSkillsTestFinishedDetails_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du siehst hier die Auswertung deines Selbsttests. Im Vergleich zu deiner Referenzgruppe hast du {0} Ergebnisse erzielt. Die Kompetenzspinne zeigt dir, wie du insgesamt abgeschnitten hast. Du hast die Möglichkeit, dir unten weitere Details zu deinen Kompetenzen anzeigen zu lassen. Klicke dazu auf „Mehr Informationen“..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يمكنك رؤية تحليل اختبارك الذاتي هنا. لقد حققت نتائج {0}، بالمقارنة مع مجموعتك المرجعية. يُوضِّح لك مخطط الكفاءة ماذا كان تقييمك بشكل عام. يمكنك عرض مزيد من التفاصيل حول مهاراتك أدناه. ولعمل ذلك، انقر على &quot;مزيد من المعلومات&quot;..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тук виждаш оценката от твоя самостоятелен тест. В сравнение с твоята референтна група резултатите ти са {0}. „Паяжината“ на прогреса ти показва какво е твоето общо постижение. Имаш възможност да изведеш по-долу допълнителни подробности за твоите компетенции. Щракни върху „Допълнителна информация“..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can see the evaluation of your self-test here. Compared to your reference group, you achieved {0} results. The strengthsfinder shows you how you scored overall. You have the option of displaying further details about your skills below. To do this, click on “More information.”.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voici les résultats de votre auto-évaluation. Par rapport à votre groupe de référence, vous avez obtenu des résultats {0}. Le graphique des compétences vous indique votre score global. Vous avez la possibilité d’afficher plus de détails concernant vos compétences ci-dessous. Pour ce faire, cliquez sur « Plus d’informations »..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aici vezi evaluarea autotestului tău. Comparativ cu grupul tău de referință, ai obținut rezultate {0}. Păianjenul competenței îți arată rezultatul per ansamblu. Mai jos, îți poți vedea competențele detaliate. Pentru aceasta, fă clic pe „Mai multe informații”..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Здесь вы можете посмотреть результаты теста самоконтроля. По сравнению с вашей референтной группой вы достигли результатов {0}. Сетка навыков показывает, как вы справились в целом. У вас есть возможность вызвать ниже более подробную информацию о своих навыках. Для этого нажмите на «Подробная информация»..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self testin sonuçlarını burada görebilirsin. Referans grubunla karşılaştırıldığında, {0} sonuçlar elde ettin. Yetkinlik örümceği sana genel olarak kaç puan aldığını gösterir. Aşağıda yetkinliklerinle ilgili daha fazla ayrıntı görüntüleme seçeneğin bulunmaktadır. Bunun için „Daha fazla bilgi“ düğmesini tıkla..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тут ти можеш подивитися результати тесту самоконтролю. Порівняно з референтною групою ти досяг результатів {0}. Сітка навичок показує, як ти впорався. Нижче ти можеш викликати більш детальну інформацію про свої навички. Для цього натисни кнопку «Детальна інформація»..
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mehr Informationen.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مزيد من المعلومات.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Допълнителна информация.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More information.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plus d’informations .
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mai multe informații.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подробная информация.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daha fazla bilgi.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Детальна інформація.
+        /// </summary>
+        public static string TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos_uk-UA", resourceCulture);
             }
         }
         

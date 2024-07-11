@@ -260,6 +260,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     }
 
                     var score = Question?.GetScore();
+                    if (score == null)
+                    {
+                       var parameters = new NavigationParameters();
+                       var result = await DialogService.ShowPopupAsync<SkipQuestionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
+                    }
+
                     var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, score, worker.Token).ConfigureAwait(false);
                     if (cachedData == null && Offset != (Count - 1))
                     {

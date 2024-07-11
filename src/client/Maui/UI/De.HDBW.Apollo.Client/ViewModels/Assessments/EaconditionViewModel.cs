@@ -247,6 +247,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 parameter.Add(NavigationParameter.Type, DrillDownMode.Filtered.ToString());
                                 break;
                             case DrillDownMode.Filtered:
+                                foreach (var choice in CurrentChoices)
+                                {
+                                    choice.IsSelected = false;
+                                }
+
                                 route = Routes.EaconditionDetailView;
                                 parameter.Add(NavigationParameter.Type, DrillDownMode.Detail.ToString());
                                 var item = SelectedChoices[0];

@@ -74,6 +74,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     var sections = new List<ObservableObject>();
                     var details = new List<ModuleScore>();
                     Module? module = null;
+                    Job? job = null;
                     if (!string.IsNullOrWhiteSpace(_moduleId))
                     {
                         module = await AssessmentService.GetModuleAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
@@ -81,6 +82,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                     _assessmentId = module?.AssessmentId;
                     _sessionId = module?.SessionId;
+                    var quantity_Patter = "Quantity_{0}";
                     if (module != null)
                     {
                         switch (module.Type)
@@ -88,42 +90,50 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.Sk:
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
-                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.JobName)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
-                                foreach (var score in module.ModuleScores)
+                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.JobId)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
+                                foreach (var score in module.SegmentScores)
                                 {
                                     details.Add(score);
                                 }
 
                                 var scoreSum = new ModuleScore
                                 {
-                                    Segment = module.JobName,
+                                    Segment = module.LocalizedJobName,
                                     AssessmentId = module.AssessmentId,
                                     ModuleId = module.ModuleId,
                                     Result = details.Sum(x => x.Result) / Math.Max(details.Count, 1),
                                 };
 
-                                sections.Add(ModuleScoreEntry.Import(scoreSum, module.Type, HandleOpenDetails, CanHandleOpenDetails));
+                                sections.Add(ModuleScoreEntry.Import(scoreSum, this[string.Format(quantity_Patter, scoreSum.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails));
 
                                 break;
                             case AssessmentType.Ea:
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
-                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewExperienceTestFinished"], module.JobName)}</p><p>{this["TxtAssesmentsResultOverViewExperienceTestFinishedDescription"]}</p>"));
-                                foreach (var score in module.ModuleScores)
+                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewExperienceTestFinished"], module.LocalizedJobName)}</p><p>{this["TxtAssesmentsResultOverViewExperienceTestFinishedDescription"]}</p>"));
+                                foreach (var score in module.SegmentScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score, module.Type));
+                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
                                 }
 
                                 break;
                             case AssessmentType.So:
+                                sections.Add(DecoEntry.Import(module.Type));
+                                sections.Add(SublineTextEntry.Import(module.Title));
+                                sections.Add(TextEntry.Import(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"]));
+                                foreach (var score in module.SegmentScores)
+                                {
+                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
+                                }
+
                                 break;
                             case AssessmentType.Gl:
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(SublineTextEntry.Import(this["TxtAssesmentsResultOverviewGermanKnowledge"]));
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverviewGermanYourResult"]));
-                                foreach (var score in module.ModuleScores)
+                                foreach (var score in module.SegmentScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score, module.Type));
+                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
                                 }
 
                                 break;
