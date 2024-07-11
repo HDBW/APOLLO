@@ -184,9 +184,18 @@ message ModuleScore {
   google.protobuf.DoubleValue Result = 5;
   string Segment = 6;
   AssessmentScoreQuantity Quantity = 7;
-
-  //it only applies to SO 
   google.protobuf.StringValue ResultDescription = 8;
+}
+
+message SegmentScore {
+  google.protobuf.StringValue ProfileId = 1;
+  google.protobuf.StringValue AssessmentId = 2;
+  google.protobuf.StringValue ModuleId = 3;
+  google.protobuf.DoubleValue Result = 5;
+  string Segment = 6;
+  AssessmentScoreQuantity Quantity = 7;
+  google.protobuf.StringValue ResultDescription = 8;
+  google.protobuf.StringValue ResultDetail = 9;
 }
 
 message ModulesRequest {
@@ -266,7 +275,7 @@ message Module {
   google.protobuf.Int32Value AnswerCount = 18;
 
   // The Scores of each segment of a Module
-  repeated ModuleScore SegmentScores = 19;
+  repeated SegmentScore SegmentScores = 19;
 
    // The unified Score of the Module
   ModuleScore ModuleScore = 21;
@@ -312,6 +321,8 @@ message RawData {
 
   //Indidcates if the module is deleted
   bool Deleted = 8;
+
+  google.protobuf.StringValue ScoringKey = 9;
 }
 
 message AssessmentSession {
