@@ -84,51 +84,43 @@ namespace De.HDBW.Apollo.Client.Helper
             {
                 using (var client = new HttpClient())
                 {
-                    string? lastModified = string.Empty;
+                    string? lastEtag = string.Empty;
                     if (File.Exists(originalSizesMetaFilePath))
                     {
-                        lastModified = File.ReadAllText(originalSizesMetaFilePath);
+                        lastEtag = File.ReadAllText(originalSizesMetaFilePath);
                     }
 
                     try
                     {
-                        if (!string.IsNullOrEmpty(lastModified))
+                        if (!string.IsNullOrEmpty(lastEtag))
                         {
-                            client.DefaultRequestHeaders.Add("If-Modified-Since", lastModified);
+                            client.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue();
+                            client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                            client.DefaultRequestHeaders.TryAddWithoutValidation("If-None-Match", lastEtag);
                         }
                     }
                     catch
                     {
                     }
 
-                    var userSecretsService = Application.Current?.MainPage?.Handler?.MauiContext?.Services.GetService<IUserSecretsService>();
+                    var userSecretsService = IocServiceHelper.ServiceProvider?.GetService<IUserSecretsService>();
                     var url = (userSecretsService?["MediaAssetStorageURL"] ?? string.Empty) + "images.bin";
 
                     using (var response = await client.GetAsync(url))
                     {
                         if (response.IsSuccessStatusCode)
                         {
-                            var info = new FileInfo(originalSizesFilePath);
-
-                            if (!info.Exists || info.Length == 0)
+                            using (var tempFile = new TempFile())
                             {
-                                using (var tempFile = new TempFile())
+                                using (var stream = await response.Content.ReadAsStreamAsync())
                                 {
-                                    using (var stream = await response.Content.ReadAsStreamAsync())
-                                    {
-                                        await tempFile.SaveAsync(stream);
-                                        tempFile.Move(originalSizesFilePath, true);
-                                    }
+                                    await tempFile.SaveAsync(stream);
+                                    tempFile.Move(originalSizesFilePath, true);
                                 }
                             }
 
-                            string? newLastModified;
-                            if (response.Content.Headers.TryGetValues("Last-Modified", out var lastModifiedResponse)
-                              && (newLastModified = lastModifiedResponse.FirstOrDefault()) != null
-                              && newLastModified != lastModified)
-                            {
-                                File.WriteAllText(originalSizesMetaFilePath, newLastModified);
-                            }
+                            var newEtag = response.Headers.FirstOrDefault(x => x.Key == "ETag").Value?.FirstOrDefault();
+                            File.WriteAllText(originalSizesMetaFilePath, newEtag);
                         }
                     }
                 }
