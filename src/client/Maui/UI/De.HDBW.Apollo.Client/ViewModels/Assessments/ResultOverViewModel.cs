@@ -120,7 +120,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.So:
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(SublineTextEntry.Import(module.Title));
-                                sections.Add(TextEntry.Import(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"]));
+                                var moduleScoreQuantity = this[string.Format(quantity_Patter, module.ModuleScore.Quantity)];
+                                sections.Add(HeadlineTextEntry.Import(moduleScoreQuantity));
+                                sections.Add(TextEntry.Import(string.Format(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"], moduleScoreQuantity)));
                                 foreach (var score in module.SegmentScores)
                                 {
                                     sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));

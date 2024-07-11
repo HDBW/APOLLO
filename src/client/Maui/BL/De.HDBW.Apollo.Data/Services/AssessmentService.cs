@@ -137,7 +137,7 @@ namespace De.HDBW.Apollo.Data.Services
 
             var module = new Module()
             {
-                Title = requestedModule.Title,
+                Title = moduleName ?? requestedModule.Title,
                 JobId = requestedModule.JobId,
                 LocalizedJobName = localizedJobName,
                 Language = requestedModule.Language,
@@ -170,7 +170,7 @@ namespace De.HDBW.Apollo.Data.Services
             }
 
             module.Languages.AddRange(modules.Select(x => x.Language).Distinct());
-            await GenerateScoresAsync(module, rawDatas, string.Empty, lang).ConfigureAwait(false);
+            await GenerateScoresAsync(module, rawDatas, lang).ConfigureAwait(false);
             return module;
         }
 
@@ -384,11 +384,11 @@ namespace De.HDBW.Apollo.Data.Services
             return tile;
         }
 
-        private Task GenerateScoresAsync(Module module, List<RawData> rawDatas, string escoId, string language, AssessmentScoreQuantity quantity = AssessmentScoreQuantity.Over, double result = 1)
+        private Task GenerateScoresAsync(Module module, List<RawData> rawDatas, string language, AssessmentScoreQuantity quantity = AssessmentScoreQuantity.Over, double result = 1)
         {
             ModuleScore? score = null;
-            string pattern = $"{module.Type}_{escoId}_{quantity}_{nameof(ModuleScore.ResultDescription)}_{language}";
-            var segments = new List<string>();
+            string pattern = $"{module.Type}_{string.Empty}_{quantity}_{nameof(ModuleScore.ResultDescription)}_{language}";
+            var segments = new List<(string SegmentName, string EscoId)>();
             switch (module.Type)
             {
                 case AssessmentType.Gl:
@@ -400,7 +400,7 @@ namespace De.HDBW.Apollo.Data.Services
                     score.AssessmentId = module.AssessmentId;
                     score.ModuleId = module.ModuleId;
                     score.Result = result;
-                    score.Segment = string.Empty;
+                    score.Segment = module.Title;
                     module.SegmentScores.Add(score);
                     module.ModuleScore = score;
                     break;
@@ -409,18 +409,19 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         var node = JsonObject.Parse(rawData.Data);
                         var segment = node?[nameof(SharedContracts.RawData.handlungsfeld)]?.GetValue<string>();
+                        var escoId = GetEscoId(node);
                         if (string.IsNullOrWhiteSpace(segment))
                         {
                             continue;
                         }
 
-                        segments.Add(segment);
+                        segments.Add((segment, escoId));
                     }
 
-                    segments = segments.Distinct().ToList();
+                    segments = segments = segments.DistinctBy(x => x.SegmentName).ToList();
                     foreach (var segment in segments)
                     {
-                        var name = segment.Split("-").Last().Trim();
+                        var name = segment.SegmentName;
                         score = new ModuleScore();
                         score.Quantity = quantity;
                         score.ResultDescription = GetText(pattern);
@@ -431,6 +432,7 @@ namespace De.HDBW.Apollo.Data.Services
                         module.SegmentScores.Add(score);
                         module.ModuleScore = new ModuleScore()
                         {
+                            Segment = module.Title,
                             Quantity = AssessmentScoreQuantity.Median,
                             Result = 0.5,
                         };
@@ -441,19 +443,20 @@ namespace De.HDBW.Apollo.Data.Services
                     foreach (var rawData in rawDatas)
                     {
                         var node = JsonObject.Parse(rawData.Data);
-                        var segment = node?[nameof(SharedContracts.RawData.handlungsfeld)]?.GetValue<string>();
+                        var segment = GetSegmentName(node, nameof(SharedContracts.RawData.handlungsfeld));
+                        var escoId = GetEscoId(node);
                         if (string.IsNullOrWhiteSpace(segment))
                         {
                             continue;
                         }
 
-                        segments.Add(segment);
+                        segments.Add((segment, escoId));
                     }
 
-                    segments = segments.Distinct().ToList();
+                    segments = segments = segments.DistinctBy(x => x.SegmentName).ToList();
                     foreach (var segment in segments)
                     {
-                        var name = segment.Split("-").Last().Trim();
+                        var name = segment.SegmentName;
                         score = new ModuleScore();
                         score.Quantity = quantity;
                         score.ResultDescription = GetText(pattern);
@@ -464,6 +467,7 @@ namespace De.HDBW.Apollo.Data.Services
                         module.SegmentScores.Add(score);
                         module.ModuleScore = new ModuleScore()
                         {
+                            Segment = module.Title,
                             Quantity = AssessmentScoreQuantity.Median,
                             Result = 0.5,
                         };
@@ -474,19 +478,21 @@ namespace De.HDBW.Apollo.Data.Services
                     foreach (var rawData in rawDatas)
                     {
                         var node = JsonObject.Parse(rawData.Data);
-                        var segment = node?[nameof(SharedContracts.RawData.esco)]?.GetValue<string>();
+                        var segment = GetSegmentName(node, nameof(SharedContracts.RawData.esco));
+                        var escoId = GetEscoId(node);
                         if (string.IsNullOrWhiteSpace(segment))
                         {
                             continue;
                         }
 
-                        segments.Add(segment);
+                        segments.Add((segment, escoId));
                     }
 
-                    segments = segments.Distinct().ToList();
+                    segments = segments.DistinctBy(x => x.SegmentName).ToList();
                     foreach (var segment in segments)
                     {
-                        var name = segment.Split("-").Last().Trim();
+                        pattern = $"{module.Type}_{segment.EscoId}_{string.Empty}_{nameof(ModuleScore.ResultDescription)}_{language}";
+                        var name = segment.SegmentName;
                         score = new ModuleScore();
                         score.Quantity = quantity;
                         score.ResultDescription = GetText(pattern);
@@ -497,6 +503,7 @@ namespace De.HDBW.Apollo.Data.Services
                         module.SegmentScores.Add(score);
                         module.ModuleScore = new ModuleScore()
                         {
+                            Segment = module.Title,
                             Quantity = AssessmentScoreQuantity.Median,
                             Result = 0.5,
                         };
@@ -506,6 +513,22 @@ namespace De.HDBW.Apollo.Data.Services
             }
 
             return Task.CompletedTask;
+        }
+
+        private string? GetSegmentName(JsonNode? node, string nodeName)
+        {
+            var name = node?[nodeName]?.GetValue<string>() ?? string.Empty;
+            name = name.Split("-").Last().Trim();
+            return name.Trim();
+        }
+
+        private string GetEscoId(JsonNode? node)
+        {
+            var escoId = node?[nameof(SharedContracts.RawData.idesco)]?.GetValue<string>() ?? string.Empty;
+            escoId = escoId.Replace("(", string.Empty);
+            escoId = escoId.Replace(")", string.Empty);
+            escoId = escoId.Replace(".", string.Empty);
+            return escoId.Trim();
         }
 
         private string GetText(string name)
