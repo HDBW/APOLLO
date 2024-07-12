@@ -65,6 +65,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         _allItems.Add(InteractionEntry.Import(name, data, Interact, CanInteract));
                     }
 
+                    _allItems = _allItems.OrderBy(x => x.Text).ToList();
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(_allItems), worker.Token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
