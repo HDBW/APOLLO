@@ -1286,18 +1286,6 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
   <data name="Global_Alttext_KursDetails" xml:space="preserve">
     <value>Link zu den Kursdetails</value>
   </data>
-  <data name="CancelAssessmentDialog_Cancel" xml:space="preserve">
-    <value>Fortfahren</value>
-  </data>
-  <data name="CancelAssessmentDialog_Continue" xml:space="preserve">
-    <value>Test beenden</value>
-  </data>
-  <data name="CancelAssessmentDialog_Message" xml:space="preserve">
-    <value>Tests sind nur einmalig durchführbar und können nicht wiederholt werden.</value>
-  </data>
-  <data name="CancelAssessmentDialog_Title" xml:space="preserve">
-    <value>Bist du dir sicher, dass du den Test beenden möchtest?</value>
-  </data>
   <data name="AssessmentFeedView_Title" xml:space="preserve">
     <value>Tests</value>
   </data>

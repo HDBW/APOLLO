@@ -100,7 +100,7 @@
             <Grid>
                 <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1"/>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding InteractCommand}"/>
                     </Border.GestureRecognizers>
                     <VerticalStackLayout >
                         <Label Text="{x:Binding Segment, Mode=OneWay}" Margin="0,0,0,8" TextColor="{StaticResource TextColor}" Style="{StaticResource Noto16SemiBold}"/>

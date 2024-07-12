@@ -511,6 +511,9 @@ namespace De.HDBW.Apollo.Data.Services
                         segmentScore.ModuleId = module.ModuleId;
                         segmentScore.Result = result;
                         segmentScore.Segment = name;
+                        var overPatter = $"{module.Type}_{segment.EscoId}_{AssessmentScoreQuantity.Over}_{nameof(ModuleScore.ResultDescription)}_{language}";
+                        var underPatter = $"{module.Type}_{segment.EscoId}_{AssessmentScoreQuantity.Under}_{nameof(ModuleScore.ResultDescription)}_{language}";
+                        segmentScore.ResultDetail = $"<p>{GetText(overPatter)}</p><br/><p>{GetText(underPatter)}</p>";
                         module.SegmentScores.Add(segmentScore);
                         module.ModuleScore = new ModuleScore()
                         {

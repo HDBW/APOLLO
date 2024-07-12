@@ -1465,42 +1465,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fortfahren.
-        /// </summary>
-        public static string CancelAssessmentDialog_Cancel {
-            get {
-                return ResourceManager.GetString("CancelAssessmentDialog_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Test beenden.
-        /// </summary>
-        public static string CancelAssessmentDialog_Continue {
-            get {
-                return ResourceManager.GetString("CancelAssessmentDialog_Continue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tests sind nur einmalig durchführbar und können nicht wiederholt werden..
-        /// </summary>
-        public static string CancelAssessmentDialog_Message {
-            get {
-                return ResourceManager.GetString("CancelAssessmentDialog_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bist du dir sicher, dass du den Test beenden möchtest?.
-        /// </summary>
-        public static string CancelAssessmentDialog_Title {
-            get {
-                return ResourceManager.GetString("CancelAssessmentDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Berufserfahrungen hinzufügen.
         /// </summary>
         public static string CareerInfoEditView_ButtonTxt {

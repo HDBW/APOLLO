@@ -306,9 +306,6 @@
     <MauiXaml Update="Views\Training\TrainingContentView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Dialogs\CancelAssessmentDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Dialogs\SkipQuestionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

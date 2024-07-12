@@ -371,9 +371,6 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<PickUserNameView>();
             services.AddTransient<PickUserNameViewModel>();
 
-            services.AddTransient<CancelAssessmentDialog>();
-            services.AddTransient<CancelAssessmentDialogViewModel>();
-
             services.AddTransient<SkipQuestionDialog>();
             services.AddTransient<SkipQuestionDialogViewModel>();
 
