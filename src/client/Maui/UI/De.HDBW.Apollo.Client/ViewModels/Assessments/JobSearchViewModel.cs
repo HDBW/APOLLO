@@ -46,6 +46,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
+                    if (_allItems.Any())
+                    {
+                        return;
+                    }
+
                     var jobs = await AssessmentService.GetJobsAsync(worker.Token).ConfigureAwait(false);
                     _allItems = new List<InteractionEntry>();
                     foreach (var job in jobs)
