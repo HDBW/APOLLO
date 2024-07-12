@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
     public class Eafrequency : AbstractQuestion, ICalculateScore<int>
     {
         public Eafrequency(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
-            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
+            : base(data, rawDataId, modulId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 1 : int.Parse(Data.noprimary, CultureInfo.InvariantCulture);
             Images = new List<Image>() { data.bild1, data.bild2, data.bild3, data.bild4 }.Where(x => x != null).ToList();

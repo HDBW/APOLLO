@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -21,7 +22,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
         [ObservableProperty]
-        private ObservableCollection<ModuleScore> _details = new ObservableCollection<ModuleScore>();
+        private ObservableCollection<SegmentScore> _details = new ObservableCollection<SegmentScore>();
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FlowDirection))]
@@ -72,9 +73,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
-                    var details = new List<ModuleScore>();
+                    var details = new List<SegmentScore>();
                     Module? module = null;
-                    Job? job = null;
                     if (!string.IsNullOrWhiteSpace(_moduleId))
                     {
                         module = await AssessmentService.GetModuleAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
@@ -96,15 +96,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                     details.Add(score);
                                 }
 
-                                var scoreSum = new ModuleScore
-                                {
-                                    Segment = module.LocalizedJobName,
-                                    AssessmentId = module.AssessmentId,
-                                    ModuleId = module.ModuleId,
-                                    Result = details.Sum(x => x.Result) / Math.Max(details.Count, 1),
-                                };
-
-                                sections.Add(ModuleScoreEntry.Import(scoreSum, this[string.Format(quantity_Patter, scoreSum.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails));
+                                sections.Add(ModuleScoreEntry.Import(module.ModuleScore, this[string.Format(quantity_Patter, module.ModuleScore.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails));
 
                                 break;
                             case AssessmentType.Ea:
@@ -113,7 +105,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewExperienceTestFinished"], module.LocalizedJobName)}</p><p>{this["TxtAssesmentsResultOverViewExperienceTestFinishedDescription"]}</p>"));
                                 foreach (var score in module.SegmentScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
+                                    sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type));
                                 }
 
                                 break;
@@ -125,7 +117,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(TextEntry.Import(string.Format(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"], moduleScoreQuantity)));
                                 foreach (var score in module.SegmentScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
+                                    sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type));
                                 }
 
                                 break;
@@ -135,7 +127,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverviewGermanYourResult"]));
                                 foreach (var score in module.SegmentScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score, this[string.Format(quantity_Patter, score.Quantity)], module.Type));
+                                    sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type));
                                 }
 
                                 break;
@@ -186,10 +178,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         }
 
         private void LoadonUIThread(
-            List<ObservableObject> sections, List<ModuleScore> details)
+            List<ObservableObject> sections, List<SegmentScore> details)
         {
             Sections = new ObservableCollection<ObservableObject>(sections);
-            Details = new ObservableCollection<ModuleScore>(details);
+            Details = new ObservableCollection<SegmentScore>(details);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateBack))]

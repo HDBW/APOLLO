@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
     public class Associate : AbstractQuestion, ICalculateScore<string>
     {
         public Associate(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
-            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
+            : base(data, rawDataId, modulId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             SourceTexts = new List<string>() { data.secdistractor1, data.secdistractor2, data.secdistractor3, data.secdistractor4 }.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();

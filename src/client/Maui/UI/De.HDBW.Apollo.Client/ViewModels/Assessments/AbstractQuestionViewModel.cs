@@ -153,6 +153,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             },
         };
 
+        private bool WasShowingDialog { get; set; }
+
         [IndexerName("Item")]
         public new string this[string key]
         {
@@ -169,6 +171,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
+                    if (WasShowingDialog)
+                    {
+                        WasShowingDialog = false;
+                        return;
+                    }
+
                     if (string.IsNullOrWhiteSpace(SessionId))
                     {
                         Logger.LogError($"Session not present in {OnNavigatedToAsync} in {GetType().Name}.");
@@ -206,7 +214,13 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     }
 
                     var rawData = cachedData.ToRawData();
-                    var question = CreateEntry(QuestionFactory.Create<TU>(rawData!, cachedData.RawDataId, cachedData.ModuleId, cachedData.AssesmentId, Culture));
+                    var item = QuestionFactory.Create<TU>(rawData!, cachedData.RawDataId, cachedData.ModuleId, cachedData.AssesmentId, Culture);
+                    if (item == null)
+                    {
+                        throw new NotSupportedException();
+                    }
+
+                    var question = CreateEntry(item);
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(questions, question, offset, count), worker.Token);
                 }
                 catch (OperationCanceledException)
@@ -260,10 +274,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     }
 
                     var score = Question?.GetScore();
+                    var result = score != null;
                     if (score == null)
                     {
-                       var parameters = new NavigationParameters();
-                       var result = await DialogService.ShowPopupAsync<SkipQuestionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
+                        WasShowingDialog = true;
+                        var parameters = new NavigationParameters();
+                        var resultParameters = await DialogService.ShowPopupAsync<SkipQuestionDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token);
+                        result = resultParameters?.GetValue<bool?>(NavigationParameter.Result) ?? false;
+                    }
+
+                    if (!result)
+                    {
+                        return;
                     }
 
                     var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, score, worker.Token).ConfigureAwait(false);

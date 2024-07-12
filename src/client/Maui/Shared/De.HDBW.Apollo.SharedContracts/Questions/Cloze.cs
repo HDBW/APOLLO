@@ -11,7 +11,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
     public class Cloze : AbstractQuestion, ICalculateScore<Dictionary<int, string?>>
     {
         public Cloze(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
-            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
+            : base(data, rawDataId, modulId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             var id1Inputs = new List<string>() { data.cloze_id1_1, data.cloze_id1_2, data.cloze_id1_3, data.cloze_id1_4 };

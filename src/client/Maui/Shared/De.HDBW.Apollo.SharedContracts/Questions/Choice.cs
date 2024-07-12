@@ -9,7 +9,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
     public class Choice : AbstractQuestion, ICalculateScore<string>
     {
         public Choice(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
-            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
+            : base(data, rawDataId, modulId, assessmentId, cultureInfo)
         {
             NumberOfChoices = string.IsNullOrWhiteSpace(Data.noprimary) ? 0 : int.TryParse(Data.noprimary, CultureInfo.InvariantCulture, out int _) ? int.Parse(Data.noprimary, CultureInfo.InvariantCulture) : 0;
             QuestionImages = new List<Image>() { data.bild1, data.bild2, data.bild3, data.bild4 }.Where(x => x != null).ToList();

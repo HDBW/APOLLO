@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
     public class Rating : AbstractQuestion, ICalculateScore<int>
     {
         public Rating(RawData data, string rawDataId, string modulId, string assessmentId, CultureInfo cultureInfo)
-            : base(data, rawDataId, assessmentId, assessmentId, cultureInfo)
+            : base(data, rawDataId, modulId, assessmentId, cultureInfo)
         {
             NumberOfChoices = int.Parse(Data.noprimary, CultureInfo.InvariantCulture);
             CreateAditionalData(1, Data.rating_credit1);

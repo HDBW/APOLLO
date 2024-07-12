@@ -386,23 +386,32 @@ namespace De.HDBW.Apollo.Data.Services
 
         private Task GenerateScoresAsync(Module module, List<RawData> rawDatas, string language, AssessmentScoreQuantity quantity = AssessmentScoreQuantity.Over, double result = 1)
         {
-            ModuleScore? score = null;
+            SegmentScore? segmentScore = null;
             string pattern = $"{module.Type}_{string.Empty}_{quantity}_{nameof(ModuleScore.ResultDescription)}_{language}";
             var segments = new List<(string SegmentName, string EscoId)>();
             switch (module.Type)
             {
                 case AssessmentType.Gl:
-                    score = new ModuleScore();
-                    score.Quantity = quantity;
+                    segmentScore = new SegmentScore();
+                    segmentScore.Quantity = quantity;
                     int correctAnswerCount = 0, questionCount = 0;
                     var text = string.Format(GetText(pattern), correctAnswerCount, questionCount);
-                    score.ResultDescription = string.IsNullOrWhiteSpace(text) ? pattern : text;
-                    score.AssessmentId = module.AssessmentId;
-                    score.ModuleId = module.ModuleId;
-                    score.Result = result;
-                    score.Segment = module.Title;
-                    module.SegmentScores.Add(score);
-                    module.ModuleScore = score;
+                    segmentScore.ResultDescription = string.IsNullOrWhiteSpace(text) ? pattern : text;
+                    segmentScore.AssessmentId = module.AssessmentId;
+                    segmentScore.ModuleId = module.ModuleId;
+                    segmentScore.Result = result;
+                    segmentScore.Segment = module.Title;
+                    module.SegmentScores.Add(segmentScore);
+                    module.ModuleScore = new ModuleScore()
+                    {
+                        Segment = segmentScore.Segment,
+                        AssessmentId = segmentScore.AssessmentId,
+                        ModuleId = segmentScore.ModuleId,
+                        ProfileId = segmentScore.ProfileId,
+                        Quantity = segmentScore.Quantity,
+                        Result = segmentScore.Result,
+                        ResultDescription = segmentScore.ResultDescription,
+                    };
                     break;
                 case AssessmentType.Sk:
                     foreach (var rawData in rawDatas)
@@ -418,25 +427,27 @@ namespace De.HDBW.Apollo.Data.Services
                         segments.Add((segment, escoId));
                     }
 
-                    segments = segments = segments.DistinctBy(x => x.SegmentName).ToList();
+                    segments = segments.DistinctBy(x => x.SegmentName).ToList();
                     foreach (var segment in segments)
                     {
                         var name = segment.SegmentName;
-                        score = new ModuleScore();
-                        score.Quantity = quantity;
-                        score.ResultDescription = GetText(pattern);
-                        score.AssessmentId = module.AssessmentId;
-                        score.ModuleId = module.ModuleId;
-                        score.Result = result;
-                        score.Segment = name;
-                        module.SegmentScores.Add(score);
-                        module.ModuleScore = new ModuleScore()
-                        {
-                            Segment = module.Title,
-                            Quantity = AssessmentScoreQuantity.Median,
-                            Result = 0.5,
-                        };
+                        segmentScore = new SegmentScore();
+                        segmentScore.Quantity = quantity;
+                        segmentScore.ResultDescription = GetText(pattern);
+                        segmentScore.AssessmentId = module.AssessmentId;
+                        segmentScore.ModuleId = module.ModuleId;
+                        segmentScore.Result = result;
+                        segmentScore.Segment = name;
+                        module.SegmentScores.Add(segmentScore);
                     }
+
+                    module.ModuleScore = new ModuleScore
+                    {
+                        Segment = module.LocalizedJobName,
+                        AssessmentId = module.AssessmentId,
+                        ModuleId = module.ModuleId,
+                        Result = module.SegmentScores.Sum(x => x.Result) / Math.Max(module.SegmentScores.Count, 1),
+                    };
 
                     break;
                 case AssessmentType.Ea:
@@ -457,14 +468,14 @@ namespace De.HDBW.Apollo.Data.Services
                     foreach (var segment in segments)
                     {
                         var name = segment.SegmentName;
-                        score = new ModuleScore();
-                        score.Quantity = quantity;
-                        score.ResultDescription = GetText(pattern);
-                        score.AssessmentId = module.AssessmentId;
-                        score.ModuleId = module.ModuleId;
-                        score.Result = result;
-                        score.Segment = name;
-                        module.SegmentScores.Add(score);
+                        segmentScore = new SegmentScore();
+                        segmentScore.Quantity = quantity;
+                        segmentScore.ResultDescription = GetText(pattern);
+                        segmentScore.AssessmentId = module.AssessmentId;
+                        segmentScore.ModuleId = module.ModuleId;
+                        segmentScore.Result = result;
+                        segmentScore.Segment = name;
+                        module.SegmentScores.Add(segmentScore);
                         module.ModuleScore = new ModuleScore()
                         {
                             Segment = module.Title,
@@ -493,14 +504,14 @@ namespace De.HDBW.Apollo.Data.Services
                     {
                         pattern = $"{module.Type}_{segment.EscoId}_{string.Empty}_{nameof(ModuleScore.ResultDescription)}_{language}";
                         var name = segment.SegmentName;
-                        score = new ModuleScore();
-                        score.Quantity = quantity;
-                        score.ResultDescription = GetText(pattern);
-                        score.AssessmentId = module.AssessmentId;
-                        score.ModuleId = module.ModuleId;
-                        score.Result = result;
-                        score.Segment = name;
-                        module.SegmentScores.Add(score);
+                        segmentScore = new SegmentScore();
+                        segmentScore.Quantity = quantity;
+                        segmentScore.ResultDescription = GetText(pattern);
+                        segmentScore.AssessmentId = module.AssessmentId;
+                        segmentScore.ModuleId = module.ModuleId;
+                        segmentScore.Result = result;
+                        segmentScore.Segment = name;
+                        module.SegmentScores.Add(segmentScore);
                         module.ModuleScore = new ModuleScore()
                         {
                             Segment = module.Title,
