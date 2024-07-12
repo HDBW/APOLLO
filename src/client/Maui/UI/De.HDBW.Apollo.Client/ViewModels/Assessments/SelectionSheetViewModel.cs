@@ -40,7 +40,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
-                    var items = _selectionsValues.Select(x => SelectableTextEntry.Import(x, () => { },ToggleSelection, CanToggleSelection));
+                    var items = _selectionsValues.Select(x => SelectableTextEntry.Import(x, () => { }, ToggleSelection, CanToggleSelection));
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(items), worker.Token);
                 }
                 catch (OperationCanceledException)

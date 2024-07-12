@@ -81,7 +81,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.So:
                                 foreach (var item in items)
                                 {
-                                    sections.Add(TextEntry.Import(item.ResultDetail ));
+                                    sections.Add(TextEntry.Import(item.ResultDetail));
                                 }
 
                                 break;
