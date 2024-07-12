@@ -21,5 +21,15 @@ namespace De.HDBW.Apollo.Client.Views.Assessments
                 return BindingContext as ResultDetailSheetViewModel;
             }
         }
+
+        private async void OnShown(object? sender, EventArgs e)
+        {
+            if (ViewModel == null)
+            {
+                return;
+            }
+
+            await ViewModel.OnNavigatedToAsync();
+        }
     }
 }

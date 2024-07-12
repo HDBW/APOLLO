@@ -30,6 +30,8 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? TextTemplate { get; set; }
 
+        public DataTemplate? SegmentScoreTemplate { get; set; }
+
         public DataTemplate DefaultTemplate { get; } = new DataTemplate();
 
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
@@ -59,6 +61,9 @@ namespace De.HDBW.Apollo.Client.Selector
                         default:
                             return DefaultTemplate;
                     }
+
+                case SegmentScoreEntry _:
+                    return SegmentScoreTemplate;
 
                 case ModuleScoreEntry score:
                     switch (score.Type)

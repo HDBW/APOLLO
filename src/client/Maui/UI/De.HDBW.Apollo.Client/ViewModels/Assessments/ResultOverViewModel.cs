@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
@@ -28,6 +29,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [NotifyPropertyChangedFor(nameof(FlowDirection))]
         private CultureInfo _culture = new CultureInfo("de-DE");
         private string? _moduleId;
+        private AssessmentType? _moduleType;
         private string? _assessmentId;
         private string? _sessionId;
         private string? _language;
@@ -80,6 +82,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         module = await AssessmentService.GetModuleAsync(_moduleId, _language, worker.Token).ConfigureAwait(false);
                     }
 
+                    _moduleType = module?.Type;
                     _assessmentId = module?.AssessmentId;
                     _sessionId = module?.SessionId;
                     var quantity_Patter = "Quantity_{0}";
@@ -117,7 +120,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(TextEntry.Import(string.Format(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"], moduleScoreQuantity)));
                                 foreach (var score in module.SegmentScores)
                                 {
-                                    sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type));
+                                    details.Add(score);
+                                    sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails));
                                 }
 
                                 break;
@@ -234,7 +238,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
-                    var parameters = new NavigationParameters();
+                    var parameters = new NavigationParameters
+                    {
+                        { NavigationParameter.Language, _language ?? "de-DE" },
+                        { NavigationParameter.Type, _moduleType?.ToString() ?? string.Empty },
+                        { NavigationParameter.Data, JsonSerializer.Serialize(Details.ToList()) },
+                    };
                     await SheetService.OpenAsync(Routes.ResultDetailSheet, worker.Token, parameters);
                 }
                 catch (OperationCanceledException)

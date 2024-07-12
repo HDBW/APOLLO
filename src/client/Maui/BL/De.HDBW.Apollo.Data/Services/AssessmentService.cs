@@ -417,7 +417,7 @@ namespace De.HDBW.Apollo.Data.Services
                     foreach (var rawData in rawDatas)
                     {
                         var node = JsonObject.Parse(rawData.Data);
-                        var segment = node?[nameof(SharedContracts.RawData.handlungsfeld)]?.GetValue<string>();
+                        var segment = GetSegmentName(node, nameof(SharedContracts.RawData.handlungsfeld));
                         var escoId = GetEscoId(node);
                         if (string.IsNullOrWhiteSpace(segment))
                         {
@@ -433,7 +433,8 @@ namespace De.HDBW.Apollo.Data.Services
                         var name = segment.SegmentName;
                         segmentScore = new SegmentScore();
                         segmentScore.Quantity = quantity;
-                        segmentScore.ResultDescription = GetText(pattern);
+                        segmentScore.ResultDescription = name;
+                        segmentScore.ResultDetail = name;
                         segmentScore.AssessmentId = module.AssessmentId;
                         segmentScore.ModuleId = module.ModuleId;
                         segmentScore.Result = result;

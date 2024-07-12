@@ -11,22 +11,27 @@
                    HasBackdrop="True"
                    CornerRadius="16"
                    BackgroundColor="{StaticResource Neutral500}"
-                   x:DataType="viewModels:ResultDetailSheetViewModel">
-
-    <VerticalStackLayout>
-        <VerticalStackLayout.Resources>
+                   x:DataType="viewModels:ResultDetailSheetViewModel"
+                   Shown="OnShown">
+    <the49:BottomSheet.Detents>
+        <the49:RatioDetent Ratio="0.5" />
+    </the49:BottomSheet.Detents>
+    <Grid RowDefinitions="auto,*" FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+        <Grid.Resources>
+            
             <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="models:HeadlineTextEntry">
                 <Border StrokeThickness="0">
-                    <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
+                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
                 </Border>
             </DataTemplate>
+            
             <DataTemplate x:Key="TextTemplate" x:DataType="models:TextEntry">
                 <Border StrokeThickness="0">
-                    <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
+                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0,24,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
                 </Border>
             </DataTemplate>
 
-            <DataTemplate x:Key="SKScoreDetailTemplate" x:DataType="models:ModuleScoreEntry">
+            <DataTemplate x:Key="SegmentScoreTemplate" x:DataType="models:SegmentScoreEntry">
                 <Grid>
                     <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
                         <VerticalStackLayout Spacing="8">
@@ -43,8 +48,8 @@
             <selector:ResultSectionTemplateSelector x:Key="ResultSectionTemplateSelector"
                                                 HeadlineTextTemplate ="{StaticResource HeadlineTextTemplate}"
                                                 TextTemplate="{StaticResource TextTemplate}"
-                                                SKScoreTemplate="{StaticResource SKScoreDetailTemplate}"/>
-        </VerticalStackLayout.Resources>
+                                                SegmentScoreTemplate="{StaticResource SegmentScoreTemplate}"/>
+        </Grid.Resources>
         <Grid HorizontalOptions="FillAndExpand" MinimumHeightRequest="48" x:Name="PART_Root" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -60,7 +65,8 @@
             </ImageButton>
         </Grid>
         <CollectionView
+            Grid.Row="1"
             ItemsSource="{x:Binding Sections}"
             ItemTemplate="{StaticResource ResultSectionTemplateSelector}"/>
-    </VerticalStackLayout>
+    </Grid>
 </the49:BottomSheet>
