@@ -89,6 +89,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public bool IsRegistered
+        {
+            get
+            {
+                return SessionService?.HasRegisteredUser ?? false;
+            }
+        }
+
         public string FavoriteIcon
         {
             get
@@ -635,6 +643,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 searchResult.IsFavorite = favoriteIds.Contains(id);
             }
+
+            OnPropertyChanged(nameof(IsRegistered));
+            WeakReferenceMessenger.Default.Send(new UpdateToolbarMessage());
         }
 
         private Filter CreateDefaultTrainingsFilter(string query)
@@ -829,6 +840,39 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             var occurencesDates = model.Appointment.Where(x => (x.Occurences?.Any() ?? false)).SelectMany(x => x.Occurences).Select(x => (x.StartDate, x.EndDate)).ToList();
             return occurencesDates.Any(x => x.StartDate.Date <= (start?.Date ?? x.StartDate.Date) && x.EndDate.Date >= (end?.Date ?? x.EndDate.Date));
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFavorites))]
+        private async Task OpenFavorites(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.TrainingsFavoritesView!, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenFavorites)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenFavorites)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OpenFavorites)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenFavorites()
+        {
+            return !IsBusy && IsRegistered;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string TrainingView = "/TrainingView";
 
+        public const string TrainingsFavoritesView = "/TrainingsFavoriteView";
+
         public const string LoansView = "/LoansView";
 
         public const string AppointmentsView = "/AppointmentsView";
@@ -35,8 +37,6 @@ namespace De.HDBW.Apollo.Client.Models
         public const string LicensesView = "/LicensesView";
 
         public const string FeedbackView = "/FeedbackView";
-
-        public const string FavoritesView = "/EmptyView";
 
         public const string ProfileView = "/ProfileView";
 

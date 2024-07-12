@@ -550,6 +550,7 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.LicensesView, typeof(LicensesView));
 
             Routing.RegisterRoute(Routes.TrainingView, typeof(TrainingView));
+            Routing.RegisterRoute(Routes.TrainingsFavoritesView, typeof(Views.FavoriteView));
             Routing.RegisterRoute(Routes.LoansView, typeof(LoansView));
             Routing.RegisterRoute(Routes.AppointmentsView, typeof(AppointmentsView));
             Routing.RegisterRoute(Routes.TrainingContentView, typeof(TrainingContentView));
@@ -617,7 +618,6 @@ namespace De.HDBW.Apollo.Client
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
             Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
-            Routing.RegisterRoute(Routes.FavoritesView, typeof(EmptyView));
         }
 
         private static void SetupHandler()

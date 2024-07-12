@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Messages;
+using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.ViewModels;
 
 namespace De.HDBW.Apollo.Client.Views
@@ -24,6 +25,8 @@ namespace De.HDBW.Apollo.Client.Views
             {
                 PART_SearchHandler.ClearIcon.Parent = this;
             }
+
+            WeakReferenceMessenger.Default.Register<UpdateToolbarMessage>(this, RefreshToolbarItems);
         }
 
         public SearchView()
@@ -58,8 +61,27 @@ namespace De.HDBW.Apollo.Client.Views
             PART_SearchHandler.Close();
             PART_SearchHandler.Unfocus();
             base.OnAppearing();
+            RefreshToolbarItems(this, new UpdateToolbarMessage());
             PART_Collection.PropertyChanged += OnPropertyChanged;
             WeakReferenceMessenger.Default.Register<FlyoutStateChangedMessage>(this, OnFlyoutStateChangedMessage);
+        }
+
+        private void RefreshToolbarItems(object recipient, UpdateToolbarMessage message)
+        {
+            SetToolbarItemVisibility(PART_Favorites, ViewModel?.IsRegistered ?? false);
+        }
+
+        private void SetToolbarItemVisibility(ToolbarItem toolbarItem, bool value)
+        {
+            if (value && !ToolbarItems.Contains(toolbarItem))
+            {
+                ToolbarItems.Add(toolbarItem);
+                toolbarItem.Command = ViewModel?.OpenFavoritesCommand;
+            }
+            else if (!value)
+            {
+                ToolbarItems.Remove(toolbarItem);
+            }
         }
 
         private void OnFlyoutStateChangedMessage(object recipient, FlyoutStateChangedMessage message)
