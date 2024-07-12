@@ -55,8 +55,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     _allItems = new List<InteractionEntry>();
                     foreach (var job in jobs)
                     {
-                        var parts = new List<string>() { job.Title, job.Schwerpunkt };
-                        var name = string.Join(" - ", parts);
+                        var parts = new List<string>() { job.Title.Trim(), job.Schwerpunkt };
+                        var name = string.Join(" - ", parts.Where(x => !string.IsNullOrWhiteSpace(x)));
                         var data = new NavigationParameters
                         {
                             { NavigationParameter.Title, name },
