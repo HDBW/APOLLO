@@ -55,12 +55,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     _allItems = new List<InteractionEntry>();
                     foreach (var job in jobs)
                     {
+                        var parts = new List<string>() { job.Title, job.Schwerpunkt };
+                        var name = string.Join(" - ", parts);
                         var data = new NavigationParameters
                         {
-                            { NavigationParameter.Title, job.Title },
+                            { NavigationParameter.Title, name },
                             { NavigationParameter.Id, job.Id },
                         };
-                        _allItems.Add(InteractionEntry.Import(job.Title, data, Interact, CanInteract));
+                        _allItems.Add(InteractionEntry.Import(name, data, Interact, CanInteract));
                     }
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(_allItems), worker.Token).ConfigureAwait(false);
