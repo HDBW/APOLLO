@@ -69,7 +69,6 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             return new ModuleScoreEntry(score, displayQuantity,type, interactHandler, canInteractHandler);
         }
 
-
         public void RefreshCommands()
         {
             InteractCommand?.NotifyCanExecuteChanged();

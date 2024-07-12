@@ -36,6 +36,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             get { return Data.IsRTL; }
         }
 
+        public abstract bool DidInteract { get; protected set; }
+
         protected TU Data { get; }
 
         public AbstractQuestion Export()

@@ -274,9 +274,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         return;
                     }
 
-                    var score = Question?.GetScore();
-                    var result = score != null;
-                    if (score == null)
+                    var result = Question?.DidInteract ?? false;
+                    if (!result)
                     {
                         WasShowingDialog = true;
                         var parameters = new NavigationParameters();
@@ -288,6 +287,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     {
                         return;
                     }
+
+                    var score = Question?.GetScore();
 
                     var cachedData = await Service.AnswerAsync(Session.SessionId, Session.CurrentRawDataId, score, worker.Token).ConfigureAwait(false);
                     if (cachedData == null && Offset != (Count - 1))

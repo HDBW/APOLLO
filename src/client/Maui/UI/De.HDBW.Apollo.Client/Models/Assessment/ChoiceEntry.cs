@@ -44,8 +44,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             _togglePlaybackCallback = togglePlaybackCallback;
             _restartAudioCallback = restartAudioCallback;
             QuestionImages = new ObservableCollection<ImageEntry>(data.QuestionImages.Select(x => ImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.QuestionImages)])));
-            AnswerImages = new ObservableCollection<SelectableImageEntry>(data.AnswerImages.Select(x => SelectableImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.AnswerImages)])));
-            AnswerTexts = new ObservableCollection<SelectableTextEntry>(data.AnswerTexts.Select(x => SelectableTextEntry.Import(x)));
+            AnswerImages = new ObservableCollection<SelectableImageEntry>(data.AnswerImages.Select(x => SelectableImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.AnswerImages)], () => { DidInteract = true; })));
+            AnswerTexts = new ObservableCollection<SelectableTextEntry>(data.AnswerTexts.Select(x => SelectableTextEntry.Import(x, () => { DidInteract = true; })));
             switch (QuestionImages.Count())
             {
                 case 1:
@@ -79,6 +79,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 return QuestionAudio != null;
             }
         }
+
+        public override bool DidInteract { get; protected set; }
 
         public static ChoiceEntry Import(Choice data, string basePath, int density, Dictionary<string, int> imageSizeConfig, Action<ZoomableImageEntry> zoomImageCallback, Func<AudioEntry, Action<bool>, Task<bool>> togglePlaybackCallback, Func<AudioEntry, Action<bool>, Task<bool>> restartAudioCallback)
         {

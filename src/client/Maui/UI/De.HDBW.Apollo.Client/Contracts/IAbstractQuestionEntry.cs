@@ -5,6 +5,8 @@ namespace De.HDBW.Apollo.Client.Contracts
 {
     public interface IAbstractQuestionEntry
     {
+        bool DidInteract { get; }
+
         double? GetScore();
     }
 }

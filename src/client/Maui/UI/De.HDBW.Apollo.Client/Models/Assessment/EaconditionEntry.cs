@@ -35,7 +35,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             : base(data)
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(basePath);
-            Images = new ObservableCollection<SelectableImageEntry>(data.Images.Select(x => SelectableImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.Images)])));
+            Images = new ObservableCollection<SelectableImageEntry>(data.Images.Select(x => SelectableImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.Images)], () => { DidInteract = true; })));
             Image = Images.FirstOrDefault();
             Beispielberufe = GenerateHtmlList(data.Beispielberufe);
             Voraussetzungen = GenerateHtmlList(data.Voraussetzungen);
@@ -49,6 +49,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         }
 
         public List<Reliant> Links { get; } = new List<Reliant>();
+
+        public override bool DidInteract { get; protected set; }
 
         public static EaconditionEntry Import(Eacondition data, string basePath, int density, Dictionary<string, int> imageSizeConfig)
         {

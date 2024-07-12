@@ -8,6 +8,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class SelectableTextEntry : ObservableObject
     {
+        private readonly Action _interactedHandler;
         private readonly Action<SelectableTextEntry>? _changeSelection;
 
         private readonly Func<SelectableTextEntry, bool>? _canChangeSelection;
@@ -20,25 +21,31 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         private SelectableTextEntry(
             string text,
+            Action interactedHandler,
             Action<SelectableTextEntry>? changeSelection,
             Func<SelectableTextEntry, bool>? canChangeSelection)
         {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(text);
+            ArgumentNullException.ThrowIfNull(interactedHandler);
             Text = text;
+            _interactedHandler = interactedHandler;
             _changeSelection = changeSelection;
             _canChangeSelection = canChangeSelection;
         }
 
         public static SelectableTextEntry Import(
             string text,
+            Action interactedHandler,
             Action<SelectableTextEntry>? changeSelection = null,
             Func<SelectableTextEntry, bool>? canChangeSelection = null)
         {
-            return new SelectableTextEntry(text, changeSelection, canChangeSelection);
+            return new SelectableTextEntry(text, interactedHandler, changeSelection, canChangeSelection);
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleSelection))]
         private Task ToggleSelection(CancellationToken cancellationToken)
         {
+            _interactedHandler.Invoke();
             if (_changeSelection == null)
             {
                 IsSelected = !IsSelected;

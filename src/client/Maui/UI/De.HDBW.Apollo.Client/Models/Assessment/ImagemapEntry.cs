@@ -22,8 +22,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             ArgumentNullException.ThrowIfNullOrWhiteSpace(basePath);
             Shapes = new ObservableCollection<InteractionShape>(data.Shapes.Select(shape => shape switch
             {
-                CircleShape circle => new InteractionCircle(new Point(circle.X, circle.Y), circle.Radius, false) as InteractionShape,
-                RectangleShape rect => new InteractionRectangle(new Rect(rect.X, rect.Y, rect.Width, rect.Height), false),
+                CircleShape circle => new InteractionCircle(new Point(circle.X, circle.Y), circle.Radius, false, () => { DidInteract = true; }) as InteractionShape,
+                RectangleShape rect => new InteractionRectangle(new Rect(rect.X, rect.Y, rect.Width, rect.Height), false, () => { DidInteract = true; }),
                 //Todo: PolygonShape poly =>
                 _ => throw new ArgumentException(),
             }));
@@ -34,6 +34,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
             Image = ImageEntry.Import(data.Image, basePath, density, imageSizeConfig[nameof(data.Image)]);
         }
+
+        public override bool DidInteract { get; protected set; }
 
         public static ImagemapEntry Import(Imagemap data, string basePath, int density, Dictionary<string, int> imageSizeConfig)
         {

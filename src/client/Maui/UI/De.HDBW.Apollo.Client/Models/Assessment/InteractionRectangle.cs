@@ -10,8 +10,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private Rect _rectangle;
 
-        public InteractionRectangle(Rect rectangle, bool isSelected)
-            : base(isSelected)
+        public InteractionRectangle(Rect rectangle, bool isSelected, Action interactedHandler)
+            : base(isSelected, interactedHandler)
         {
             Rectangle = rectangle;
         }

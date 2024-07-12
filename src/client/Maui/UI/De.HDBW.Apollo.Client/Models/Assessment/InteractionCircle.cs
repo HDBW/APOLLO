@@ -13,8 +13,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         [ObservableProperty]
         private double _radius;
 
-        public InteractionCircle(Point location, double radius, bool isSelected)
-            : base(isSelected)
+        public InteractionCircle(Point location, double radius, bool isSelected, Action interactedHandler)
+            : base(isSelected, interactedHandler)
         {
             Location = location;
             Radius = radius;

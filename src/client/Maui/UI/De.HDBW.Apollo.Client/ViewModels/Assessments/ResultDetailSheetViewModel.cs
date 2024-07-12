@@ -83,6 +83,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 {
                                     sections.Add(TextEntry.Import(item.ResultDetail ));
                                 }
+
                                 break;
                         }
                     }

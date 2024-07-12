@@ -22,6 +22,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             TargetImages = new ObservableCollection<AssociateImageEntry>(data.TargetImages.Select(x => AssociateImageEntry.Import(x, mediaBasePath, density, imageSizeConfig[nameof(AssociateEntry.TargetImages)], (item) => { return TargetImages.IndexOf(item) + 1; }, AssociateItemIndex)));
         }
 
+        public override bool DidInteract { get; protected set; }
+
         public static AssociateEntry Import(Associate data, string mediaBasePath, int density, Dictionary<string, int> imageSizeConfig)
         {
             return new AssociateEntry(data, mediaBasePath, density, imageSizeConfig);
@@ -43,6 +45,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         private int? AssociateItemIndex(int? currentIndex)
         {
+            DidInteract = true;
             if (currentIndex == null && !SourceTexts.Any())
             {
                 return null;

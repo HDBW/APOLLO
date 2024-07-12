@@ -40,6 +40,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             Situation = data.Situation;
         }
 
+        public override bool DidInteract { get; protected set; }
+
         public static EafrequencyEntry Import(Eafrequency data, string basePath, int density, Dictionary<string, int> imageSizeConfig, Action<EafrequencyEntry> completedHandler)
         {
             return new EafrequencyEntry(data, basePath, density, imageSizeConfig, completedHandler);
@@ -75,6 +77,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 e.PropertyName == nameof(Is2Selected) ||
                 e.PropertyName == nameof(Is3Selected))
             {
+                DidInteract = true;
                 _completedHandler.Invoke(this);
             }
         }

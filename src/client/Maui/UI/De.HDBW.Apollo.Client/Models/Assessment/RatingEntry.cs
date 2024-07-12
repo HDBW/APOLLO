@@ -1,6 +1,7 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.SharedContracts.Questions;
 
@@ -35,6 +36,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             NumberOfChoices = data.NumberOfChoices;
         }
 
+        public override bool DidInteract { get; protected set; }
+
         public static RatingEntry Import(Rating data)
         {
             return new RatingEntry(data);
@@ -68,6 +71,20 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
 
             return null;
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if (e.PropertyName == nameof(Is0Selected) ||
+                e.PropertyName == nameof(Is1Selected) ||
+                e.PropertyName == nameof(Is2Selected) ||
+                e.PropertyName == nameof(Is3Selected) ||
+                e.PropertyName == nameof(Is4Selected) ||
+                e.PropertyName == nameof(Is5Selected))
+            {
+                DidInteract = true;
+            }
         }
     }
 }

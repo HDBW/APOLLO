@@ -25,6 +25,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public override bool DidInteract { get; protected set; }
+
         private Dictionary<int, string?> CurrentValues { get; } = new Dictionary<int, string?>();
 
         public static ClozeEntry Import(Cloze data)
@@ -49,6 +51,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public void OnSetValue(string id, string? value)
         {
+            DidInteract = true;
             if (!Ids.Contains(id))
             {
                 return;

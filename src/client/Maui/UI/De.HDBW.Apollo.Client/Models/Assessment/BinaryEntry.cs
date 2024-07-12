@@ -1,5 +1,6 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.SharedContracts.Questions;
@@ -41,6 +42,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             QuestionAudio = AudioEntry.Import(data.QuestionAudio, basePath);
         }
 
+        public override bool DidInteract { get; protected set; }
+
         public static BinaryEntry Import(Binary data, string basePath, Func<AudioEntry, Action<bool>, Task<bool>> togglePlaybackCallback, Func<AudioEntry, Action<bool>, Task<bool>> restartAudioCallback)
         {
             return new BinaryEntry(data, basePath, togglePlaybackCallback, restartAudioCallback);
@@ -64,6 +67,16 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
 
             return Data.CalculateScore(choice.Value);
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if (e.PropertyName == nameof(IsTrueSelected) ||
+                e.PropertyName == nameof(IsFalseSelected))
+            {
+                DidInteract = true;
+            }
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanTogglePlay))]

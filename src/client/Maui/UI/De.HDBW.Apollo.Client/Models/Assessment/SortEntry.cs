@@ -24,6 +24,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 HandleDropInteraction)));
         }
 
+        public override bool DidInteract { get; protected set; }
+
         public static SortEntry Import(Sort data)
         {
             return new SortEntry(data);
@@ -36,6 +38,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         private void HandleDragStartingInteraction(DraggableEntry entry)
         {
+            DidInteract = true;
             _draggingItemIndex = SortTexts.IndexOf(entry);
         }
 
