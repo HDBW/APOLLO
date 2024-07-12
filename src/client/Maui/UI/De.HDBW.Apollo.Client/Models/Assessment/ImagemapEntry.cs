@@ -24,7 +24,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             {
                 CircleShape circle => new InteractionCircle(new Point(circle.X, circle.Y), circle.Radius, false, () => { DidInteract = true; }) as InteractionShape,
                 RectangleShape rect => new InteractionRectangle(new Rect(rect.X, rect.Y, rect.Width, rect.Height), false, () => { DidInteract = true; }),
-                //Todo: PolygonShape poly =>
+
+                // Todo: PolygonShape poly =>
                 _ => throw new ArgumentException(),
             }));
             if (data.Image == null)

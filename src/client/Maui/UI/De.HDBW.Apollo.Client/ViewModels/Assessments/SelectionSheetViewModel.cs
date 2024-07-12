@@ -34,7 +34,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private ISheetService SheetService { get; }
 
-        public async override Task OnNavigatedToAsync()
+        public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
             {

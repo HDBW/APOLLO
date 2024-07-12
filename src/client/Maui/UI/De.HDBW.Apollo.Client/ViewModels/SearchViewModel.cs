@@ -141,7 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public async override Task OnNavigatedToAsync()
+        public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
             {

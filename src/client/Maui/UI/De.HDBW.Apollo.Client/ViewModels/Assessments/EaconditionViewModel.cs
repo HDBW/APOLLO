@@ -51,7 +51,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private DrillDownMode DrillDownMode { get; set; }
 
-        public async override Task OnNavigatedToAsync()
+        public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
             {
@@ -204,7 +204,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             DrillDownMode = Enum.Parse<DrillDownMode>(navigationParameters.GetValue<string?>(NavigationParameter.Type)?.ToString() ?? nameof(DrillDownMode.Unknown));
         }
 
-        protected async override Task Navigate(CancellationToken cancellationToken)
+        protected override async Task Navigate(CancellationToken cancellationToken)
         {
             Logger.LogInformation($"Invoked {nameof(NavigateCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(cancellationToken))
