@@ -113,7 +113,7 @@
                             </HorizontalStackLayout>
                         </Grid>
                         <Label Text="{x:Binding DisplayQuantity, Mode=OneWay}" Margin="0,0,0,8" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14SemiBold}" />
-                        <Label Text="Mehr Infos" HorizontalOptions="End" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16SemiBold}" />
+                        <Label Text="{x:Binding BindingContext[TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos], Source={x:Reference PART_Root}}" HorizontalOptions="End" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16SemiBold}" />
                     </VerticalStackLayout>
                 </Border>
             </Grid>
