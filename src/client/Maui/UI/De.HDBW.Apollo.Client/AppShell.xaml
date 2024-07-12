@@ -68,12 +68,6 @@
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate profileViews:ProfileView}" IsVisible="{x:Binding IsRegistered}"/>
         </Tab>
-        <Tab Title="{x:Static strings:Resources.FavoriteView_Title}">
-            <Tab.Icon>
-                <FontImageSource Glyph="{StaticResource Test}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:FavoriteView}" IsVisible="{x:Binding IsRegistered}"/>
-        </Tab>
         <Tab Title="{x:Static strings:Resources.RegisterView_Title}">
             <Tab.Icon>
                 <FontImageSource Glyph="{StaticResource Login}" FontFamily="ApolloFontIcons" Size="28" Color="{StaticResource Primary}"/>

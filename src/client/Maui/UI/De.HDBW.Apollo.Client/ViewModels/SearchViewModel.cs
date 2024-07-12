@@ -89,6 +89,14 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
+        public string FavoriteIcon
+        {
+            get
+            {
+                return KnownIcons.Favorites;
+            }
+        }
+
         private IImageCacheService ImageCacheService { get; }
 
         private IFavoriteRepository FavoriteRepository { get; }
