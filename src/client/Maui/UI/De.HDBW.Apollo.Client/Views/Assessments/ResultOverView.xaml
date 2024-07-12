@@ -155,8 +155,8 @@
         </DataTemplate>
 
         <selector:ResultSectionTemplateSelector x:Key="ResultSectionTemplateSelector"
-                                                HeadlineTextTemplate ="{StaticResource HeadlineTextTemplate}"
-                                                SublineTextTemplate ="{StaticResource SublineTextTemplate}"
+                                                HeadlineTextTemplate="{StaticResource HeadlineTextTemplate}"
+                                                SublineTextTemplate="{StaticResource SublineTextTemplate}"
                                                 TextTemplate="{StaticResource TextTemplate}"
                                                 GLDecoTemplate="{StaticResource GLDecoTemplate}"
                                                 SKDecoTemplate="{StaticResource SKDecoTemplate}"

@@ -7961,5 +7961,14 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
                 return ResourceManager.GetString("So_444_Under_ResultDescription_uk-UA", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teste dein Wissen.
+        /// </summary>
+        public static string TestYourKnowledge {
+            get {
+                return ResourceManager.GetString("TestYourKnowledge", resourceCulture);
+            }
+        }
     }
 }

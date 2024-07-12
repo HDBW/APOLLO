@@ -1465,6 +1465,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alle Berufe.
+        /// </summary>
+        public static string BtnTxtAssessmentFeed_AllJobs {
+            get {
+                return ResourceManager.GetString("BtnTxtAssessmentFeed_AllJobs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Berufserfahrungen hinzufügen.
         /// </summary>
         public static string CareerInfoEditView_ButtonTxt {
@@ -6103,7 +6112,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deine beruflichen Erfahrungen kannst du in zwei kurzen Selbsttests entweder selbst einschätzen oder testen. Diese stehen für insgesamt 50 Berufe zur Verfügung..
+        ///   Looks up a localized string similar to Deine beruflichen Erfahrungen kannst du in zwei kurzen Selbsttests entweder selbst einschätzen oder testen. Diese stehen für insgesamt {0} Berufe zur Verfügung..
         /// </summary>
         public static string TxtAssesmentsJobSearchViewDescription {
             get {

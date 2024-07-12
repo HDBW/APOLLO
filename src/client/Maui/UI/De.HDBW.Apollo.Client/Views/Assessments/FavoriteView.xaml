@@ -52,8 +52,8 @@
                         </DataTrigger>
                     </ImageButton.Triggers>
                 </ImageButton>
-                <Label InputTransparent="False" Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneWay}" Margin="16"  TextColor="{StaticResource Primary}" Style="{StaticResource Noto14SemiBold}"/>
-                <Label InputTransparent="False" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resources.Global_TestNow}" Margin="16,0,16,16"  TextColor="{StaticResource Primary}" Style="{StaticResource Noto14}"/>
+                <Label InputTransparent="False" Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Binding Text, Mode=OneWay}" Margin="16" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14SemiBold}"/>
+                <Label InputTransparent="False" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resources.Global_TestNow}" Margin="16,0,16,16" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14}"/>
             </Grid>
         </DataTemplate>
     </ContentPage.Resources>

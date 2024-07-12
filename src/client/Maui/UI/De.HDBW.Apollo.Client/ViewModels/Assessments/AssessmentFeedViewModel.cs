@@ -66,7 +66,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
-                    var assessmentTiles = await AssessmentService.GetAssessmentTilesAsync(worker.Token).ConfigureAwait(false);
+                    var assessmentTiles = await AssessmentService.GetAssessmentTilesAsync(null, worker.Token).ConfigureAwait(false);
                     var favorites = await FavoriteRepository.GetItemsByTypeAsync(nameof(ModuleTile), worker.Token).ConfigureAwait(false) ?? new List<Favorite>();
                     var tiles = assessmentTiles.GroupBy(x => x.Grouping).OrderBy(x => x.Key);
                     foreach (var tile in tiles)
@@ -107,10 +107,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                             sections.Add(AssessmentTileEntry.Import(item, route, parameters, isFavorite, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
                         }
-
-                        sections.Add(InteractionEntry.Import("Berufe", null, OpenBerufeSearch, CanOpenBerufeSearch));
                     }
 
+                    sections.Add(InteractionEntry.Import(Resources.Strings.Resources.BtnTxtAssessmentFeed_AllJobs, null, OpenJobSearch, CanOpenJobSearch));
                     await ExecuteOnUIThreadAsync(
                         () => LoadonUIThread(sections), worker.Token);
                 }
@@ -136,8 +135,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
-            var interactiveSections = Sections.OfType<AssessmentTileEntry>().ToList();
-            foreach (var interactiveSection in interactiveSections)
+            var tilesSections = Sections.OfType<AssessmentTileEntry>().ToList();
+            foreach (var interactiveSection in tilesSections)
+            {
+                interactiveSection.RefreshCommands();
+            }
+
+            var interactionSections = Sections.OfType<InteractionEntry>().ToList();
+            foreach (var interactiveSection in interactionSections)
             {
                 interactiveSection.RefreshCommands();
             }
@@ -198,6 +203,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private async Task Interact(AssessmentTileEntry tile, CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(Interact)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -243,6 +249,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFavorite))]
         private async Task OpenFavorite(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenFavorite)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -268,13 +275,37 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        private bool CanOpenBerufeSearch(InteractionEntry entry)
+        private bool CanOpenJobSearch(InteractionEntry entry)
         {
             return !IsBusy && entry != null;
         }
 
-        private async Task OpenBerufeSearch(InteractionEntry entry)
+        private async Task OpenJobSearch(InteractionEntry entry)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenJobSearch)} in {GetType().Name}.");
+            using (var worker = ScheduleWork())
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.JobSearchView, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenJobSearch)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenJobSearch)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenJobSearch)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
         }
     }
 }

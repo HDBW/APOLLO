@@ -130,8 +130,8 @@
         </DataTemplate>
 
         <selector:AppointmentItemTemplateSelector x:Key="AppointmentItemTemplateSelector"
-                                                  LineItemTemplate ="{StaticResource LineItemTemplate}"
-                                                  HeaderItemTemplate ="{StaticResource HeaderItemTemplate}"
+                                                  LineItemTemplate="{StaticResource LineItemTemplate}"
+                                                  HeaderItemTemplate="{StaticResource HeaderItemTemplate}"
                                                   HeaderedLineItemTemplate="{StaticResource HeaderedLineItemTemplate}"
                                                   ButtonLineItemTemplate="{StaticResource ButtonLineItemTemplate}"
                                                   ContactItemTemplate="{StaticResource ContactItemTemplate}"

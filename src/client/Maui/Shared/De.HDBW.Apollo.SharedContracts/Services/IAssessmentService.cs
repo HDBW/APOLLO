@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
 {
     public interface IAssessmentService
     {
-        Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(CancellationToken token);
+        Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(long? jobId, CancellationToken token);
 
         Task<Module> GetModuleAsync(string moduleId, string? language, CancellationToken token);
 
@@ -25,5 +25,7 @@ namespace De.HDBW.Apollo.SharedContracts.Services
         Task<bool> UpdateSessionAsync(LocalAssessmentSession session, CancellationToken token);
 
         Task<bool> FinishSessionAsync(string sessionId, CancellationToken token);
+
+        Task<IEnumerable<Job>> GetJobsAsync(CancellationToken token);
     }
 }

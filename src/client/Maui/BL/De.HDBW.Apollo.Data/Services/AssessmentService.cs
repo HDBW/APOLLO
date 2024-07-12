@@ -37,73 +37,87 @@ namespace De.HDBW.Apollo.Data.Services
 
         private IRawDataCacheRepository RawDataCacheRepository { get; }
 
-        public Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(CancellationToken token)
+        public Task<IEnumerable<AssessmentTile>> GetAssessmentTilesAsync(long? jobId, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            var assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.So) !;
-            var modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
-            var so = Create(assessment, modules, string.Empty);
-            so.ModuleScores.Add(new ModuleScore()
+            IEnumerable<Invite.Apollo.App.Graph.Common.Models.Assessments.Module> modules = new List<Invite.Apollo.App.Graph.Common.Models.Assessments.Module>();
+            if (jobId == null)
             {
-                AssessmentId = so.AssessmentId,
-                ModuleId = so.ModuleIds[0],
-                Result = 50,
-                Quantity = AssessmentScoreQuantity.Median,
-            });
+                var assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.So)!;
+                modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+                var so = Create(assessment, modules, string.Empty);
+                so.ModuleScores.Add(new ModuleScore()
+                {
+                    AssessmentId = so.AssessmentId,
+                    ModuleId = so.ModuleIds[0],
+                    Result = 50,
+                    Quantity = AssessmentScoreQuantity.Median,
+                });
 
-            so.ModuleScores.Add(new ModuleScore()
+                so.ModuleScores.Add(new ModuleScore()
+                {
+                    AssessmentId = so.AssessmentId,
+                    ModuleId = so.ModuleIds[1],
+                    Result = 10,
+                    Quantity = AssessmentScoreQuantity.Median,
+                });
+                so.ModuleScores.Add(new ModuleScore()
+                {
+                    AssessmentId = so.AssessmentId,
+                    ModuleId = so.ModuleIds[2],
+                    Result = 30,
+                    Quantity = AssessmentScoreQuantity.Median,
+                });
+                so.ModuleScores.Add(new ModuleScore()
+                {
+                    AssessmentId = so.AssessmentId,
+                    ModuleId = so.ModuleIds[3],
+                    Result = 40,
+                    Quantity = AssessmentScoreQuantity.Median,
+                });
+                so.ModuleScores.Add(new ModuleScore()
+                {
+                    AssessmentId = so.AssessmentId,
+                    ModuleId = so.ModuleIds[4],
+                    Result = 80,
+                    Quantity = AssessmentScoreQuantity.Median,
+                });
+
+                assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Gl)!;
+                modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+                AssessmentTile gl = Create(assessment, modules, string.Empty);
+
+                assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Be)!;
+                modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+                var be = Create(assessment, modules, string.Empty);
+
+                assessment = _data.Assessments.Skip(1).FirstOrDefault(x => x.Type == AssessmentType.Sk)!;
+                modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+                var sa = Create(assessment, modules, Resources.TestYourKnowledge);
+
+                assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Ea)!;
+                modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+                var sa1 = Create(assessment, modules, Resources.TestYourKnowledge);
+
+                return Task.FromResult<IEnumerable<AssessmentTile>>(new List<AssessmentTile>()
+                {
+                    so,
+                    gl,
+                    be,
+                    sa,
+                    sa1,
+                });
+            }
+
+            var assessments = _data.Assessments.Where(x => x.JobId == jobId);
+            var tiles = new List<AssessmentTile>();
+            foreach (var assessment in assessments)
             {
-                AssessmentId = so.AssessmentId,
-                ModuleId = so.ModuleIds[1],
-                Result = 10,
-                Quantity = AssessmentScoreQuantity.Median,
-            });
-            so.ModuleScores.Add(new ModuleScore()
-            {
-                AssessmentId = so.AssessmentId,
-                ModuleId = so.ModuleIds[2],
-                Result = 30,
-                Quantity = AssessmentScoreQuantity.Median,
-            });
-            so.ModuleScores.Add(new ModuleScore()
-            {
-                AssessmentId = so.AssessmentId,
-                ModuleId = so.ModuleIds[3],
-                Result = 40,
-                Quantity = AssessmentScoreQuantity.Median,
-            });
-            so.ModuleScores.Add(new ModuleScore()
-            {
-                AssessmentId = so.AssessmentId,
-                ModuleId = so.ModuleIds[4],
-                Result = 80,
-                Quantity = AssessmentScoreQuantity.Median,
-            });
+                modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+                tiles.Add(Create(assessment, modules, Resources.TestYourKnowledge));
+            }
 
-            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Gl) !;
-            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
-            AssessmentTile gl = Create(assessment, modules, string.Empty);
-
-            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Be) !;
-            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
-            var be = Create(assessment, modules, string.Empty);
-
-            assessment = _data.Assessments.Skip(1).FirstOrDefault(x => x.Type == AssessmentType.Sk) !;
-            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
-            var sa = Create(assessment, modules, "Teste dein Wissen");
-
-            assessment = _data.Assessments.FirstOrDefault(x => x.Type == AssessmentType.Ea) !;
-            modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
-            var sa1 = Create(assessment, modules, "Teste dein Wissen");
-
-            return Task.FromResult<IEnumerable<AssessmentTile>>(new List<AssessmentTile>()
-            {
-                so,
-                gl,
-                be,
-                sa,
-                sa1,
-            });
+            return Task.FromResult<IEnumerable<AssessmentTile>>(tiles);
         }
 
         public async Task<Module> GetModuleAsync(string moduleId, string? language, CancellationToken token)
@@ -364,6 +378,12 @@ namespace De.HDBW.Apollo.Data.Services
         {
             token.ThrowIfCancellationRequested();
             return SessionRepository.RemoveItemBySessionIdAsync(sessionId, token);
+        }
+
+        public Task<IEnumerable<Job>> GetJobsAsync(CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            return Task.FromResult<IEnumerable<Job>>(_data.Jobs);
         }
 
         private static AssessmentTile Create(Assessment assessment, IEnumerable<Module> modules, string grouping)

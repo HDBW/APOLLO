@@ -598,6 +598,8 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.SearchFilterSheet, typeof(SearchFilterSheet));
 
             Routing.RegisterRoute(Routes.ModuleOverView, typeof(ModuleOverView));
+            Routing.RegisterRoute(Routes.JobSearchView, typeof(JobSearchView));
+            Routing.RegisterRoute(Routes.JobSearchResultView, typeof(JobSearchResultView));
             Routing.RegisterRoute(Routes.AssessmentFavoriteView, typeof(Views.Assessments.FavoriteView));
             Routing.RegisterRoute(Routes.ModuleDetailView, typeof(ModuleDetailView));
             Routing.RegisterRoute(Routes.LanguageSelectionView, typeof(LanguageSelectionView));

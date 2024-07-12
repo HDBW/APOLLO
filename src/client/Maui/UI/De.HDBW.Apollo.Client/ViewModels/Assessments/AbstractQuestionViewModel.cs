@@ -264,6 +264,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false)]
         protected virtual async Task Navigate(CancellationToken cancellationToken)
         {
+            Logger.LogInformation($"Invoked {nameof(NavigateCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(cancellationToken))
             {
                 try

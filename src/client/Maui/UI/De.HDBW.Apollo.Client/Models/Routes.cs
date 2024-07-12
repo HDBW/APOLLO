@@ -76,6 +76,8 @@ namespace De.HDBW.Apollo.Client.Models
         public const string OccupationSearchView = "/OccupationSearchView";
 
         public const string AssessmentFeedView = "/AssessmentFeedView";
+        public const string JobSearchView = "/JobSearchView";
+        public const string JobSearchResultView = "/JobSearchResultView";
         public const string ModuleOverView = "/ModuleOverView";
         public const string AssessmentFavoriteView = "/AssessmentFavoriteView";
         public const string ModuleDetailView = "/ModuleDetailView";

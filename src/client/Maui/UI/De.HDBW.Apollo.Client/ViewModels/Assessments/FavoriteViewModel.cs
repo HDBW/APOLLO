@@ -165,6 +165,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private async Task Interact(ModuleTileEntry tile, CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(Interact)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

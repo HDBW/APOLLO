@@ -172,6 +172,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenLanguageSelection))]
         private async Task OpenLanguageSelection(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(OpenLanguageSelectionCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -209,6 +210,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanStartAssessment))]
         private async Task StartAssessment(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(StartAssessment)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -277,6 +279,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private async Task HandleResume(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(HandleResume)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try
@@ -332,6 +335,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private async Task HandleShowResult(CancellationToken token)
         {
+            Logger.LogInformation($"Invoked {nameof(HandleShowResult)} in {GetType().Name}.");
             using (var worker = ScheduleWork(token))
             {
                 try

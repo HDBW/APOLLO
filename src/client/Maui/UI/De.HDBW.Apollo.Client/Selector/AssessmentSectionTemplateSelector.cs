@@ -2,6 +2,7 @@
 // The HDBW licenses this file to you under the MIT license.
 
 using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.Client.Models.Interactions;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 
 namespace De.HDBW.Apollo.Client.Selector
@@ -28,6 +29,8 @@ namespace De.HDBW.Apollo.Client.Selector
 
         public DataTemplate? TileTemplate { get; set; }
 
+        public DataTemplate? InteractionTemplate { get; set; }
+
         public DataTemplate DefaultTemplate { get; } = new DataTemplate();
 
         protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
@@ -36,6 +39,8 @@ namespace De.HDBW.Apollo.Client.Selector
             {
                 case TestSessionEntry session:
                     return session.CanContinue ? ContinueSessionTemplate : RepeatSessionTemplate;
+                case InteractionEntry _:
+                    return InteractionTemplate;
                 case DecoEntry _:
                     return DecoTemplate;
                 case IconTextEntry _:

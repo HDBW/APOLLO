@@ -104,6 +104,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private async Task HandleInteract(InteractionEntry interaction)
         {
+            Logger.LogInformation($"Invoked {nameof(HandleInteract)} in {GetType().Name}.");
             switch (interaction.Data)
             {
                 case NavigationData navigationData:

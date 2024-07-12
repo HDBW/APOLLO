@@ -206,6 +206,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         protected async override Task Navigate(CancellationToken cancellationToken)
         {
+            Logger.LogInformation($"Invoked {nameof(NavigateCommand)} in {GetType().Name}.");
             using (var worker = ScheduleWork(cancellationToken))
             {
                 try
