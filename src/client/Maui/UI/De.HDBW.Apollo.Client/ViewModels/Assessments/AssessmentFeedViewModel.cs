@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
+using De.HDBW.Apollo.Client.Models.Interactions;
 using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
@@ -106,6 +107,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                             sections.Add(AssessmentTileEntry.Import(item, route, parameters, isFavorite, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
                         }
+
+                        sections.Add(InteractionEntry.Import("Berufe", null, OpenBerufeSearch, CanOpenBerufeSearch));
                     }
 
                     await ExecuteOnUIThreadAsync(
@@ -263,6 +266,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        private bool CanOpenBerufeSearch(InteractionEntry entry)
+        {
+            return !IsBusy && entry != null;
+        }
+
+        private async Task OpenBerufeSearch(InteractionEntry entry)
+        {
         }
     }
 }

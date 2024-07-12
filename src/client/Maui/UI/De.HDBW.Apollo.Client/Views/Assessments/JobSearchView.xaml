@@ -13,7 +13,7 @@
              xmlns:interactionModel="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             x:DataType="viewModels:FavoriteViewModel"
+             x:DataType="viewModels:JobSearchViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Title="{x:Static strings:Resources.TxtAssesmentsJobSearchViewTitle}"
              Style="{StaticResource DefaultPageStyle}">
@@ -45,8 +45,8 @@
                    x:Name="PART_SearchBar" SemanticProperties.Description="{x:Static strings:Resources.SearchView_Title}"/>
         </Border>
         <CollectionView Grid.Row="2" Margin="24,0"
-        ItemsSource="{x:Binding}"
-        ItemsLayout="VerticalList"
-        ItemTemplate="{StaticResource ProfessionSelectionTemplate}"/>
+            ItemsSource="{x:Binding Jobs}"
+            ItemsLayout="VerticalList"
+            ItemTemplate="{StaticResource ProfessionSelectionTemplate}"/>
     </Grid>
 </ContentPage>

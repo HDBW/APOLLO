@@ -509,6 +509,10 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<ModuleDetailViewModel>();
             services.AddTransient<LanguageSelectionView>();
             services.AddTransient<LanguageSelectionViewModel>();
+            services.AddTransient<JobSearchViewModel>();
+            services.AddTransient<JobSearchView>();
+            services.AddTransient<JobSearchResultViewModel>();
+            services.AddTransient<JobSearchResultView>();
 
             services.AddTransient<AssociateViewModel>();
             services.AddTransient<AssociateView>();

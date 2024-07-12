@@ -13,7 +13,7 @@
              xmlns:interactionModel="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             x:DataType="viewModels:FavoriteViewModel"
+             x:DataType="viewModels:JobSearchResultViewModel"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
              Title="{x:Static strings:Resources.TxtAssesmentsJobSearchResultViewTitle}"
              Style="{StaticResource DefaultPageStyle}">
@@ -62,8 +62,8 @@
         <Label Text="Beruf" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="24,24,24,16"/>
         <Label Grid.Row="1" Text="{x:Static strings:Resources.TxtAssesmentsJobSearchResultViewDescription}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="24,0,24,24"/>
         <CollectionView Grid.Row="2" Margin="24,0"
-        ItemsSource="{x:Binding}"
-        ItemsLayout="VerticalList"
-        ItemTemplate="{StaticResource ProfessionSelectionTemplate}"/>
+                        ItemsSource="{x:Binding}"
+                        ItemsLayout="VerticalList"
+                        ItemTemplate="{StaticResource ProfessionSelectionTemplate}"/>
     </Grid>
 </ContentPage>
