@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Models;
@@ -322,6 +323,41 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             Offset = offset;
             Question = question;
             CurrentChoices = new ObservableCollection<SelectableEaconditionEntry>(questions);
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateBack))]
+        private async Task NavigateBack(CancellationToken token)
+        {
+            Logger.LogInformation($"Invoked {nameof(NavigateBackCommand)} in {GetType().Name}.");
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await Service.CancelSessionAsync(SessionId!, worker.Token);
+                    await NavigationService.PopAsync(worker.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NavigateBack)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(NavigateBack)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(NavigateBack)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanNavigateBack()
+        {
+            return !IsBusy && SessionId != null;
         }
     }
 }
