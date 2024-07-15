@@ -54,7 +54,7 @@
 
         <DataTemplate x:Key="SODecoTemplate" x:DataType="assessmentModels:ModuleScoreDecoEntry">
             <Border StrokeThickness="0">
-                <controls:SegmentSvgImage Margin="24" Segments="{x:Binding Segments}" IsShowingModulResult="True" InputTransparent="True" x:Name="PART_Image" HeightRequest="280" HorizontalOptions="Center"/>
+                <controls:SegmentSvgImage Margin="24" Segments="{x:Binding Segments}" IsShowingModulResult="True" InputTransparent="True" x:Name="PART_Image" HeightRequest="280" />
             </Border>
         </DataTemplate>
 
