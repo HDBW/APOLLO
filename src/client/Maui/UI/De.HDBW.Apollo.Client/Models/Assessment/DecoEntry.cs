@@ -8,7 +8,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 {
     public partial class DecoEntry : ObservableObject
     {
-        private DecoEntry(AssessmentType type)
+        protected DecoEntry(AssessmentType type)
         {
             Type = type;
         }

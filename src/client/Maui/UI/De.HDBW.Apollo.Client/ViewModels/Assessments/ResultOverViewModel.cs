@@ -113,7 +113,17 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
                                 break;
                             case AssessmentType.So:
-                                sections.Add(DecoEntry.Import(module.Type));
+
+                                var tile = await AssessmentService.GetAssessmentTileAsync(module.AssessmentId, worker.Token).ConfigureAwait(false);
+                                var segments = tile?.ModuleScores?.Select(x => ModuleScoreEntry.Import(x, this[string.Format(quantity_Patter, x.Quantity)], module.Type)).ToList() ?? new List<ModuleScoreEntry>();
+                                var currentSegment = segments.FirstOrDefault(x => x.ModuleId == module.ModuleId);
+                                if (currentSegment != null)
+                                {
+                                    segments.Remove(currentSegment);
+                                    segments.Insert(0, currentSegment);
+                                }
+
+                                sections.Add(ModuleScoreDecoEntry.Import(segments, module.Type));
                                 sections.Add(SublineTextEntry.Import(module.Title));
                                 var moduleScoreQuantity = this[string.Format(quantity_Patter, module.ModuleScore.Quantity)];
                                 sections.Add(HeadlineTextEntry.Import(moduleScoreQuantity));

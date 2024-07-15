@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ResultOverView"
@@ -52,9 +52,9 @@
             </Border>
         </DataTemplate>
 
-        <DataTemplate x:Key="SODecoTemplate" x:DataType="assessmentModels:DecoEntry">
+        <DataTemplate x:Key="SODecoTemplate" x:DataType="assessmentModels:ModuleScoreDecoEntry">
             <Border StrokeThickness="0">
-                <controls:SegmentSvgImage Margin="24" InputTransparent="True" x:Name="PART_Image" HeightRequest="280" HorizontalOptions="Center"/>
+                <controls:SegmentSvgImage Margin="24" Segments="{x:Binding Segments}" IsShowingModulResult="True" InputTransparent="True" x:Name="PART_Image" HeightRequest="280" HorizontalOptions="Center"/>
             </Border>
         </DataTemplate>
 

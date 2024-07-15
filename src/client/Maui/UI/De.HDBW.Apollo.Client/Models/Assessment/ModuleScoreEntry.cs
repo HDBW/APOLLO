@@ -48,6 +48,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public string DisplayQuantity { get; }
 
+        public string ModuleId
+        {
+            get
+            {
+                return _score.ModuleId;
+            }
+        }
+
         public double? Result
         {
             get

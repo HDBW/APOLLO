@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ModuleOverView"
@@ -63,32 +63,35 @@
             <Label Text="{x:Static strings:Resources.ModuleOverViewModel_Description}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="8,0,8,26"/>
             <Grid ColumnDefinitions="Auto,*,Auto" Margin="8,0,8,16"
               RowDefinitions="Auto, Auto">
-                <ImageButton Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HeightRequest="44" WidthRequest="44" Padding="10" SemanticProperties.Description="{x:Static strings:Resources.Global_Back}">
+                <ImageButton Grid.Column="0" Command="{x:Binding ToggleSegmentSelectionCommand}" CommandParameter="-1" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HeightRequest="44" WidthRequest="44" Padding="10" SemanticProperties.Description="{x:Static strings:Resources.Global_Back}">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{StaticResource ArrowLeft}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
                 </ImageButton>
                 <Label
                     Grid.Column="1" Grid.Row="0" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16SemiBold}"
-                    Text="Kategorie ??"
+                    Text="{x:Binding CurrentSegment}"
+                    HorizontalTextAlignment="Center"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
                 <Label
                     Grid.Column="1" Grid.Row="1" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"
-                    Text="Status ??"
+                    Text="{x:Binding CurrentQuantity}"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
-                <ImageButton Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HeightRequest="48" WidthRequest="48" Padding="12" SemanticProperties.Description="{x:Static strings:Resources.Global_Next}">
+                <ImageButton Grid.Column="2" Command="{x:Binding ToggleSegmentSelectionCommand}" CommandParameter="1" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HeightRequest="48" WidthRequest="48" Padding="12" SemanticProperties.Description="{x:Static strings:Resources.Global_Next}">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{StaticResource ArrowRight}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                     </ImageButton.Source>
                 </ImageButton>
             </Grid>
+            
             <controls:SegmentSvgImage Margin="8,0,8,24"
-                InputTransparent="True"
-                x:Name="PART_Image"
-                HeightRequest="280"
-                HorizontalOptions="Center"/>
+                                      InputTransparent="True"
+                                      x:Name="PART_Image"
+                                      HeightRequest="280"
+                                      IsShowingModulResult="True"
+                                      Segments="{x:Binding Segments}" />
             <VerticalStackLayout Margin="0"
                 BindableLayout.ItemsSource="{x:Binding Modules}"
                 BindableLayout.ItemTemplate="{StaticResource ModuleTemplate}"/>

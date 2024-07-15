@@ -51,9 +51,7 @@
                     </Border.GestureRecognizers>
                 </Border>
                 <StackLayout Margin="16" InputTransparent="True">
-                    <ContentView HeightRequest="240" >
-                        <controls:SegmentSvgImage Segments="{x:Binding Segments}" InputTransparent="True" x:Name="PART_Image" HeightRequest="240" />
-                    </ContentView>
+                    <controls:SegmentSvgImage Segments="{x:Binding Segments}" InputTransparent="True" x:Name="PART_Image" HeightRequest="240" />
                     <Label Text="{x:Binding Text, Mode=OneWay}" InputTransparent="True" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="0,16,0,8"/>
                     <Label Text="{x:Static strings:Resources.Global_Overview}" InputTransparent="True" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
                 </StackLayout>

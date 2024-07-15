@@ -16,6 +16,7 @@ namespace De.HDBW.Apollo.Data.Services
         private readonly string _defaultLanguage = "de-DE";
         private SampleDataContext _data;
         private string? _lastDeletedSessionId;
+        private Random _random = new Random(Guid.NewGuid().GetHashCode());
 
         public AssessmentService(
             ILocalAssessmentSessionRepository sessionRepository,
@@ -120,6 +121,26 @@ namespace De.HDBW.Apollo.Data.Services
             return Task.FromResult<IEnumerable<AssessmentTile>>(tiles);
         }
 
+        public Task<AssessmentTile?> GetAssessmentTileAsync(string? assessmentId, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            var assessment = _data.Assessments.FirstOrDefault(x => x.AssessmentId == assessmentId)!;
+            var modules = _data.Modules.Where(x => x.AssessmentId == assessment.AssessmentId && x.Language == _defaultLanguage);
+            var tile = Create(assessment, modules, string.Empty);
+            foreach (var module in modules)
+            {
+                tile.ModuleScores.Add(new ModuleScore()
+                {
+                    AssessmentId = tile.AssessmentId,
+                    ModuleId = tile.ModuleIds[0],
+                    Result = _random.Next(100) * 0.01,
+                    Quantity = AssessmentScoreQuantity.Median,
+                });
+            }
+
+            return Task.FromResult<AssessmentTile?>(tile);
+        }
+
         public async Task<Module> GetModuleAsync(string moduleId, string? language, CancellationToken token)
         {
             var lang = language ?? _defaultLanguage;
@@ -192,12 +213,15 @@ namespace De.HDBW.Apollo.Data.Services
         {
             var result = new List<ModuleTile>();
             var modules = _data.Modules.Where(x => moduleIds.Contains(x.ModuleId) && x.Language == _defaultLanguage);
-
+            var language = "de-DE";
             foreach (var module in modules)
             {
+                var moduleId = module.ModuleId;
                 var localSession = await SessionRepository.GetItemByAssessmentIdAndModuleIdAsync(module.AssessmentId, module.ModuleId, token).ConfigureAwait(false);
                 var rawDataIds = localSession?.RawDataOrder?.Split(";").ToList() ?? new List<string>();
                 var offset = localSession?.CurrentRawDataId != null ? rawDataIds.IndexOf(localSession.CurrentRawDataId) : 0;
+                var rawDatas = _data.RawDatas.Where(x => x.ModuleId == moduleId && x.Language == language).ToList();
+                await GenerateScoresAsync(module, rawDatas, language).ConfigureAwait(false);
                 result.Add(new ModuleTile()
                 {
                     Deleted = module.Deleted,
@@ -207,6 +231,7 @@ namespace De.HDBW.Apollo.Data.Services
                     SessionId = localSession?.SessionId,
                     RawDataCount = rawDataIds.Count,
                     AnswerCount = offset,
+                    ModuleScore = module.ModuleScore,
                 });
             }
 
@@ -536,14 +561,14 @@ namespace De.HDBW.Apollo.Data.Services
                         var underPatter = $"{module.Type}_{segment.EscoId}_{AssessmentScoreQuantity.Under}_{nameof(ModuleScore.ResultDescription)}_{language}";
                         segmentScore.ResultDetail = $"<p>{GetText(overPatter)}</p><br/><p>{GetText(underPatter)}</p>";
                         module.SegmentScores.Add(segmentScore);
-                        module.ModuleScore = new ModuleScore()
-                        {
-                            Segment = module.Title,
-                            Quantity = AssessmentScoreQuantity.Median,
-                            Result = 0.5,
-                        };
                     }
 
+                    module.ModuleScore = new ModuleScore()
+                    {
+                        Segment = module.Title,
+                        Quantity = AssessmentScoreQuantity.Median,
+                        Result = (double)_random.Next(100) * 0.01,
+                    };
                     break;
             }
 

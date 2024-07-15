@@ -1,7 +1,10 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
+using System;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
@@ -17,6 +20,9 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
     {
         [ObservableProperty]
         private ObservableCollection<ModuleTileEntry> _modules = new ObservableCollection<ModuleTileEntry>();
+
+        [ObservableProperty]
+        private List<ModuleScoreEntry> _segments = new List<ModuleScoreEntry>();
 
         [ObservableProperty]
         private string? _title;
@@ -47,6 +53,22 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             SessionService = sessionService;
         }
 
+        public string? CurrentSegment
+        {
+            get
+            {
+                return Segments.FirstOrDefault()?.Segment;
+            }
+        }
+
+        public string? CurrentQuantity
+        {
+            get
+            {
+                return Segments.FirstOrDefault()?.DisplayQuantity;
+            }
+        }
+
         private IAssessmentService AssessmentService { get; }
 
         private IFavoriteRepository FavoriteRepository { get; }
@@ -55,6 +77,15 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
         private ISessionService SessionService { get; }
 
+        [IndexerName("Item")]
+        public new string this[string key]
+        {
+            get
+            {
+                return Resources.Strings.Resources.ResourceManager.GetString(key) ?? string.Empty;
+            }
+        }
+
         public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
@@ -62,9 +93,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
+                    var segments = new List<ModuleScoreEntry>();
                     var moduleTiles = await AssessmentService.GetModuleTilesAsync(_moduleIds ?? new List<string>(), worker.Token).ConfigureAwait(false);
                     var favorites = await FavoriteRepository.GetItemsByTypeAsync(nameof(ModuleTile), worker.Token).ConfigureAwait(false) ?? new List<Favorite>();
                     var modules = new List<ModuleTileEntry>();
+                    var quantity_Patter = "Quantity_{0}";
                     foreach (var moduleTile in moduleTiles)
                     {
                         var route = Routes.ModuleDetailView;
@@ -75,10 +108,11 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                     };
 
                         modules.Add(ModuleTileEntry.Import(moduleTile, route, parameters, favorites.Any(f => f.Id == moduleTile.ModuleId), Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
+                        segments.Add(ModuleScoreEntry.Import(moduleTile.ModuleScore, this[string.Format(quantity_Patter, moduleTile.ModuleScore.Quantity)], moduleTile.Type));
                     }
 
                     await ExecuteOnUIThreadAsync(
-                        () => LoadonUIThread(modules), worker.Token);
+                        () => LoadonUIThread(modules, segments), worker.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -132,6 +166,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         protected override void RefreshCommands()
         {
             base.RefreshCommands();
+            ToggleSegmentSelectionCommand?.NotifyCanExecuteChanged();
             var items = Modules.ToList();
             foreach (var item in items)
             {
@@ -139,9 +174,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
-        private void LoadonUIThread(IEnumerable<ModuleTileEntry> modules)
+        private void LoadonUIThread(IEnumerable<ModuleTileEntry> modules, IEnumerable<ModuleScoreEntry> segments)
         {
             Modules = new ObservableCollection<ModuleTileEntry>(modules);
+            Segments = new List<ModuleScoreEntry>(segments);
+            OnPropertyChanged(nameof(CurrentSegment));
+            OnPropertyChanged(nameof(CurrentQuantity));
         }
 
         private bool CanToggleFavorite(ModuleTileEntry entry)
@@ -230,6 +268,59 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     UnscheduleWork(worker);
                 }
             }
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanToggleSegmentSelection))]
+        private Task ToggleSegmentSelection(string direction, CancellationToken token)
+        {
+            Logger.LogInformation($"Invoked {nameof(ToggleSegmentSelectionCommand)} in {GetType().Name}.");
+            var dir = Convert.ToInt32(direction);
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    var items = Segments.ToList();
+                    if (dir < 0)
+                    {
+                        var item = items.Last();
+                        items.Remove(item);
+                        items.Insert(0, item);
+                    }
+                    else
+                    {
+                        var item = items.First();
+                        items.Remove(item);
+                        items.Add(item);
+                    }
+
+                    Segments = new List<ModuleScoreEntry>(items);
+                    OnPropertyChanged(nameof(CurrentSegment));
+                    OnPropertyChanged(nameof(CurrentQuantity));
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ToggleSegmentSelection)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(ToggleSegmentSelection)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(ToggleSegmentSelection)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+
+                return Task.CompletedTask;
+            }
+        }
+
+        private bool CanToggleSegmentSelection(string direction)
+        {
+            return !IsBusy && Segments.Any();
         }
     }
 }
