@@ -50,7 +50,7 @@ namespace De.HDBW.Apollo.Data.Services
                 {
                     AssessmentId = so.AssessmentId,
                     ModuleId = so.ModuleIds[0],
-                    Result = 50,
+                    Result = 0.50,
                     Quantity = AssessmentScoreQuantity.Median,
                 });
 
@@ -58,28 +58,28 @@ namespace De.HDBW.Apollo.Data.Services
                 {
                     AssessmentId = so.AssessmentId,
                     ModuleId = so.ModuleIds[1],
-                    Result = 10,
+                    Result = 0.10,
                     Quantity = AssessmentScoreQuantity.Median,
                 });
                 so.ModuleScores.Add(new ModuleScore()
                 {
                     AssessmentId = so.AssessmentId,
                     ModuleId = so.ModuleIds[2],
-                    Result = 30,
+                    Result = 0.30,
                     Quantity = AssessmentScoreQuantity.Median,
                 });
                 so.ModuleScores.Add(new ModuleScore()
                 {
                     AssessmentId = so.AssessmentId,
                     ModuleId = so.ModuleIds[3],
-                    Result = 40,
+                    Result = 0.40,
                     Quantity = AssessmentScoreQuantity.Median,
                 });
                 so.ModuleScores.Add(new ModuleScore()
                 {
                     AssessmentId = so.AssessmentId,
                     ModuleId = so.ModuleIds[4],
-                    Result = 80,
+                    Result = 0.80,
                     Quantity = AssessmentScoreQuantity.Median,
                 });
 

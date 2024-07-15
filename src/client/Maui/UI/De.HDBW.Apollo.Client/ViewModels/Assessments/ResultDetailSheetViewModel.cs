@@ -74,7 +74,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.Sk:
                                 foreach (var item in items)
                                 {
-                                    sections.Add(SegmentScoreEntry.Import(item, this[string.Format(quantity_Patter, item.Quantity)], _type));
+                                    sections.Add(Models.Assessment.SegmentScoreEntry.Import(item, this[string.Format(quantity_Patter, item.Quantity)], _type));
                                 }
 
                                 break;

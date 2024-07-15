@@ -1,7 +1,8 @@
 ﻿// (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using De.HDBW.Apollo.Client.Models;
+using De.HDBW.Apollo.Client.Models.Assessment;
+using Microsoft.Maui.Controls.Shapes;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
@@ -10,25 +11,25 @@ namespace De.HDBW.Apollo.Client.Controls
 {
     public class SegmentSvgImage : SKCanvasView
     {
-        public static BindableProperty SegmentsProperty = BindableProperty.Create(nameof(Segments), typeof(IList<TestResultEntry>), typeof(SegmentSvgImage), null, propertyChanged: OnSegmentsChanged);
+        public static BindableProperty SegmentsProperty = BindableProperty.Create(nameof(Segments), typeof(IList<ModuleScoreEntry>), typeof(SegmentSvgImage), null, propertyChanged: OnSegmentsChanged);
 
-        public static BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(SegmentSvgImage), 62d, propertyChanged: OnSegmentsChanged);
+        public static BindableProperty IsShowingModulResultProperty = BindableProperty.Create(nameof(IsShowingModulResult), typeof(bool), typeof(SegmentSvgImage), false, propertyChanged: OnIsShowingModulChanged);
 
         public SegmentSvgImage()
         {
-            BackgroundColor = Colors.AliceBlue;
+            Background = Colors.White;
         }
 
-        public IList<TestResultEntry>? Segments
+        public IList<ModuleScoreEntry>? Segments
         {
-            get => (IList<TestResultEntry>?)GetValue(SegmentsProperty);
+            get => (IList<ModuleScoreEntry>?)GetValue(SegmentsProperty);
             set => SetValue(SegmentsProperty, value);
         }
 
-        public double FontSize
+        public bool IsShowingModulResult
         {
-            get => (double)GetValue(FontSizeProperty);
-            set => SetValue(FontSizeProperty, value);
+            get => (bool)GetValue(IsShowingModulResultProperty);
+            set => SetValue(IsShowingModulResultProperty, value);
         }
 
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs args)
@@ -48,7 +49,6 @@ namespace De.HDBW.Apollo.Client.Controls
         protected override void OnBindingContextChanged()
         {
             base.OnBindingContextChanged();
-
             InvalidateSurface();
         }
 
@@ -60,6 +60,12 @@ namespace De.HDBW.Apollo.Client.Controls
         }
 
         private static void OnSegmentsChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var skCanvasView = bindable as SKCanvasView;
+            skCanvasView?.InvalidateSurface();
+        }
+
+        private static void OnIsShowingModulChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var skCanvasView = bindable as SKCanvasView;
             skCanvasView?.InvalidateSurface();
@@ -81,131 +87,134 @@ namespace De.HDBW.Apollo.Client.Controls
 
                 var svg = new Svg.Skia.SKSvg();
                 var info = args.Info;
-                var cp = new SKPoint(info.Width / 2f, info.Height / 2f);
-                double angle = segmentCount > 0 ? (double)(2d * Math.PI) / (segmentCount * 2d) : 2d * Math.PI / 2;
-                double rad = Math.Min(info.Width / 2d, info.Height / 2d);
-                double radAvarage = rad * 0.3;
 
-                var layer0Drawing = new List<(SKPoint p0, SKPoint p1)>();
-                var labelDrawing = new List<(SKPoint p0, string)>();
-                var layer2Drawing = new List<SKPoint>();
-                var layer3Drawing = new List<SKPoint>();
-                var figures = new List<List<SKPoint>>();
-                var testSizes = new Dictionary<TestResultEntry, float>();
+                // claculate center point
+                var cp = new SKPoint(info.Width / 2f, info.Height / 2f);
+
+                // the angle of each segment
+                double angle = segmentCount > 0 ? (double)(2d * Math.PI) / (segmentCount * 2d) : 2d * Math.PI / 2;
+                var offset = angle * (double)(segmentCount - 1);
+
+                // the radius
+                double rad = Math.Min(info.Width / 2d, info.Height / 2d);
+                var radSection = rad / 5d;
+
+                var backgroundLayer = new List<SKPoint>();
+                var lineLayers = new Dictionary<int, List<SKPoint>>();
+                var axesDrawing = new List<(SKPoint p0, SKPoint p1)>();
+
+                var resultsDrawing = new List<List<SKPoint>>();
+
                 using (var paint = new SKPaint() { IsAntialias = false, StrokeWidth = 10 })
                 {
-                    paint.TextSize = (float)FontSize;
-                    foreach (var segment in Segments!)
-                    {
-                        testSizes.Add(segment, paint.MeasureText(segment.Text));
-                    }
-
-                    TestResultEntry? currentSegment = null;
+                    ModuleScoreEntry? currentSegment = null;
                     for (var i = 0; i < segmentCount * 2; i++)
                     {
+                        var r = (angle * i) + offset;
                         if (i % 2 == 0)
                         {
                             float pRx = 0f;
                             float pRy = 0f;
-                            if (figures.Any())
+                            if (resultsDrawing.Any())
                             {
-                                pRx = (float)(currentSegment!.Score * rad * Math.Sin(angle * i)) + cp.X;
-                                pRy = (float)(currentSegment!.Score * rad * Math.Cos(angle * i)) + cp.Y;
-                                figures.Last().Add(new SKPoint(pRx, pRy));
-                                figures.Last().Add(cp);
+                                pRx = (float)((currentSegment!.Result ?? 0d) * rad * Math.Sin(r)) + cp.X;
+                                pRy = (float)((currentSegment!.Result ?? 0d) * rad * Math.Cos(r)) + cp.Y;
+                                resultsDrawing.Last().Add(new SKPoint(pRx, pRy));
+                                resultsDrawing.Last().Add(cp);
                             }
 
                             currentSegment = Segments![i / 2];
-                            figures.Add(new List<SKPoint>());
-                            float px = (float)(rad * Math.Sin(angle * i)) + cp.X;
-                            float py = (float)(rad * Math.Cos(angle * i)) + cp.Y;
-                            pRx = (float)(currentSegment.Score * rad * Math.Sin(angle * i)) + cp.X;
-                            pRy = (float)(currentSegment.Score * rad * Math.Cos(angle * i)) + cp.Y;
-                            figures.Last().Add(cp);
-                            figures.Last().Add(new SKPoint(pRx, pRy));
+                            resultsDrawing.Add(new List<SKPoint>());
+                            float px = (float)(rad * Math.Sin(r)) + cp.X;
+                            float py = (float)(rad * Math.Cos(r)) + cp.Y;
+                            pRx = (float)((currentSegment!.Result ?? 0d) * rad * Math.Sin(r)) + cp.X;
+                            pRy = (float)((currentSegment!.Result ?? 0d) * rad * Math.Cos(r)) + cp.Y;
+                            resultsDrawing.Last().Add(cp);
+                            resultsDrawing.Last().Add(new SKPoint(pRx, pRy));
                             var p0 = new SKPoint(px, py);
-                            layer0Drawing.Add((p0, cp));
+                            axesDrawing.Add((p0, cp));
                         }
                         else
                         {
-                            float pRx = (float)(currentSegment!.Score * rad * Math.Sin(angle * i)) + cp.X;
-                            float pRy = (float)(currentSegment!.Score * rad * Math.Cos(angle * i)) + cp.Y;
-                            figures.Last().Add(new SKPoint(pRx, pRy));
+                            float pRx = (float)((currentSegment!.Result ?? 0d) * rad * Math.Sin(r)) + cp.X;
+                            float pRy = (float)((currentSegment!.Result ?? 0d) * rad * Math.Cos(r)) + cp.Y;
+                            resultsDrawing.Last().Add(new SKPoint(pRx, pRy));
 
-                            float px = (float)(rad * Math.Sin(angle * i)) + cp.X;
-                            float py = (float)(rad * Math.Cos(angle * i)) + cp.Y;
+                            float px = (float)(rad * Math.Sin(r)) + cp.X;
+                            float py = (float)(rad * Math.Cos(r)) + cp.Y;
 
-                            var x = px - testSizes[currentSegment];
-                            if (x < 0)
-                            {
-                                x = px;
-                            }
-
-                            var p0 = new SKPoint(x, py);
-
-                            labelDrawing.Add((p0, currentSegment.Text));
                             if (i == (segmentCount * 2) - 1)
                             {
-                                pRx = (float)(currentSegment.Score * rad * Math.Sin(0)) + cp.X;
-                                pRy = (float)(currentSegment.Score * rad * Math.Cos(0)) + cp.Y;
-                                figures.Last().Add(new SKPoint(pRx, pRy));
-                                figures.Last().Add(cp);
+                                pRx = (float)((currentSegment!.Result ?? 0d) * rad * Math.Sin(offset)) + cp.X;
+                                pRy = (float)((currentSegment!.Result ?? 0d) * rad * Math.Cos(offset)) + cp.Y;
+                                resultsDrawing.Last().Add(new SKPoint(pRx, pRy));
+                                resultsDrawing.Last().Add(cp);
                             }
                         }
 
-                        float pMx = (float)(rad * Math.Sin(angle * i)) + cp.X;
-                        float pMy = (float)(rad * Math.Cos(angle * i)) + cp.Y;
-                        layer2Drawing.Add(new SKPoint(pMx, pMy));
+                        for (var z = 1; z < 6; z++)
+                        {
+                            float pAx = (float)((z * radSection) * Math.Sin(angle * i)) + cp.X;
+                            float pAy = (float)((z * radSection) * Math.Cos(angle * i)) + cp.Y;
+                            if (!lineLayers.ContainsKey(z))
+                            {
+                                lineLayers.Add(z, new List<SKPoint>());
+                            }
 
-                        float pAx = (float)(radAvarage * Math.Sin(angle * i)) + cp.X;
-                        float pAy = (float)(radAvarage * Math.Cos(angle * i)) + cp.Y;
-                        layer3Drawing.Add(new SKPoint(pAx, pAy));
+                            lineLayers[z].Add(new SKPoint(pAx, pAy));
+                        }
                     }
 
-                    layer2Drawing.Add(layer2Drawing[0]);
-                    layer3Drawing.Add(layer3Drawing[0]);
-
-                    paint.Color = new SKColor(233, 210, 177);
-                    foreach (var line in layer0Drawing)
+                    foreach (var lineLayer in lineLayers.Values)
                     {
-                        canvas.DrawLine(line.p0, line.p1, paint);
+                        lineLayer.Add(lineLayer[0]);
                     }
 
-                    // paint.Color = new SKColor(255, 0, 255);
-                    // foreach (var line in layer1Drawing)
-                    // {
-                    //    canvas.DrawLine(line.p0, line.p1, paint);
-                    // }
-                    paint.StrokeWidth = 5;
-                    paint.Color = new SKColor(233, 210, 177);
-                    paint.PathEffect = SKPathEffect.CreateDash(new float[2] { 50f, 10f }, -25f);
-                    canvas.DrawPoints(SKPointMode.Polygon, layer2Drawing.ToArray(), paint);
+                    backgroundLayer = lineLayers.Values.Last().Select(x => x).ToList();
 
-                    foreach (var figure in figures)
+                    // White
+                    var defaultColor = new SKColor(255, 255, 255);
+                    var highlightColor = new SKColor(66, 10, 152);
+                    var mediumHighlightColor = new SKColor(148, 107, 210);
+                    var backgroundColor = new SKColor(233, 210, 177);
+
+                    DrawBackground(paint, canvas, backgroundColor, backgroundLayer);
+                    foreach (var lineLayer in lineLayers)
                     {
-                        var path = new SKPath() { FillType = SKPathFillType.EvenOdd };
-                        path.MoveTo(figure[0].X, figure[0].Y);
-                        foreach (var point in figure)
+                        bool isSolid = lineLayer.Key != 3;
+                        DrawLines(paint, canvas, isSolid ? defaultColor : highlightColor, isSolid, lineLayer.Value);
+                    }
+
+                    foreach (var result in resultsDrawing)
+                    {
+                        var index = resultsDrawing.IndexOf(result);
+                        var color = highlightColor;
+
+                        if (IsShowingModulResult && index != 0)
+                        {
+                            color = mediumHighlightColor;
+                        }
+
+                        DrawResult(paint, canvas, color, result);
+                    }
+
+                    canvas.Save();
+                    var path = new SKPath();
+                    foreach (var result in resultsDrawing)
+                    {
+                        path.MoveTo(result[0].X, result[0].Y);
+                        foreach (var point in result)
                         {
                             path.LineTo(point.X, point.Y);
                         }
-
-                        path.Close();
-                        paint.Color = new SKColor(66, 10, 152, 50);
-                        paint.Style = SKPaintStyle.StrokeAndFill;
-                        canvas.DrawPath(path, paint);
                     }
 
-                    foreach (var label in labelDrawing)
-                    {
-                        paint.Color = new SKColor(0, 0, 0);
-                        canvas.DrawText(label.Item2, label.p0, paint);
-                    }
+                    path.Close();
+                    canvas.ClipPath(path, SKClipOperation.Intersect, true);
+                    DrawLines(paint, canvas, defaultColor, false, lineLayers[3]);
+                    canvas.Restore();
 
-                    paint.StrokeWidth = 5;
-                    paint.Color = new SKColor(66, 10, 152);
-                    paint.PathEffect = SKPathEffect.CreateDash(new float[2] { 50f, 10f }, -25f);
-                    canvas.DrawPoints(SKPointMode.Polygon, layer3Drawing.ToArray(), paint);
+                    DrawAxes(paint, canvas, defaultColor, axesDrawing);
 
                     canvas.Flush();
                 }
@@ -214,6 +223,62 @@ namespace De.HDBW.Apollo.Client.Controls
             {
                 throw new Exception("An error occured when reading the Svg Resource: " + ex.Message);
             }
+        }
+
+        private void DrawResult(SKPaint paint, SKCanvas canvas, SKColor color, List<SKPoint> points)
+        {
+            var path = new SKPath() { FillType = SKPathFillType.EvenOdd };
+            path.MoveTo(points[0].X, points[0].Y);
+            for (var i = 1; i < points.Count - 1; i++)
+            {
+                path.LineTo(points[i]);
+            }
+
+            path.Close();
+            paint.Color = color;
+            paint.Style = SKPaintStyle.StrokeAndFill;
+            canvas.DrawPath(path, paint);
+        }
+
+        private void DrawAxes(SKPaint paint, SKCanvas canvas, SKColor color, List<(SKPoint p0, SKPoint p1)> axes)
+        {
+            paint.PathEffect = null;
+            paint.Color = color;
+            foreach (var axis in axes)
+            {
+                canvas.DrawLine(axis.p0, axis.p1, paint);
+            }
+        }
+
+        private void DrawBackground(SKPaint paint, SKCanvas canvas, SKColor color, List<SKPoint> backgroundLayer)
+        {
+            var path = new SKPath() { FillType = SKPathFillType.EvenOdd };
+            path.MoveTo(backgroundLayer[0].X, backgroundLayer[0].Y);
+            foreach (var point in backgroundLayer)
+            {
+                path.LineTo(point.X, point.Y);
+            }
+
+            path.Close();
+            paint.Color = color;
+            paint.Style = SKPaintStyle.StrokeAndFill;
+            canvas.DrawPath(path, paint);
+        }
+
+        private void DrawLines(SKPaint paint, SKCanvas canvas, SKColor color, bool isSolid, List<SKPoint> values)
+        {
+            paint.StrokeWidth = 5;
+            paint.Color = color;
+            if (!isSolid)
+            {
+                paint.PathEffect = SKPathEffect.CreateDash(new float[2] { 50f, 10f }, -25f);
+            }
+            else
+            {
+                paint.PathEffect = null;
+            }
+
+            canvas.DrawPoints(SKPointMode.Polygon, values.ToArray(), paint);
         }
     }
 }

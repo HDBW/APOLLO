@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.AssessmentFeedView"
@@ -51,8 +51,10 @@
                     </Border.GestureRecognizers>
                 </Border>
                 <StackLayout Margin="16" InputTransparent="True">
-                    <controls:SegmentSvgImage InputTransparent="True" x:Name="PART_Image" HeightRequest="240" HorizontalOptions="Center" Margin="0,0,0,16"/>
-                    <Label Text="{x:Binding Text, Mode=OneWay}" InputTransparent="True" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
+                    <ContentView HeightRequest="240" >
+                        <controls:SegmentSvgImage Segments="{x:Binding Segments}" InputTransparent="True" x:Name="PART_Image" HeightRequest="240" />
+                    </ContentView>
+                    <Label Text="{x:Binding Text, Mode=OneWay}" InputTransparent="True" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="0,16,0,8"/>
                     <Label Text="{x:Static strings:Resources.Global_Overview}" InputTransparent="True" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
                 </StackLayout>
             </Grid>
@@ -152,7 +154,7 @@
                         <TapGestureRecognizer Command="{x:Binding NavigateCommand}" NumberOfTapsRequired="1"/>
                     </Border.GestureRecognizers>
                 </Border>
-                <Label HorizontalTextAlignment="Center" Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="16"/>
+                <Label InputTransparent="True" HorizontalTextAlignment="Center" Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="16"/>
             </Grid>
         </DataTemplate>
 

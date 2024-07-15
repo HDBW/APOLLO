@@ -3,6 +3,7 @@
 
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
@@ -19,6 +20,9 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         [ObservableProperty]
         private bool _isFavorite;
+
+        [ObservableProperty]
+        private List<ModuleScoreEntry> _segments = new List<ModuleScoreEntry>();
 
         private AssessmentTileEntry(
             AssessmentTile data,
@@ -39,6 +43,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             _canInteractHandler = canInteractHandler;
             _toggleFavoriteHandler = toggleFavoriteHandler;
             _canToggleFavoriteHandler = canToggleFavoriteHandler;
+            Segments = new List<ModuleScoreEntry>(data.ModuleScores.Select(x => ModuleScoreEntry.Import(x, string.Empty, data.Type)));
         }
 
         public string? Route { get; }
