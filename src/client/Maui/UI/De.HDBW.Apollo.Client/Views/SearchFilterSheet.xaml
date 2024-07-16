@@ -1,6 +1,5 @@
 ﻿<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
             x:Class="De.HDBW.Apollo.Client.Views.SearchFilterSheet"
@@ -15,10 +14,8 @@
             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
             xmlns:editorViewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.PropertyEditors"
             xmlns:editors="clr-namespace:De.HDBW.Apollo.Client.Views.PropertyEditor"
-            xmlns:layouts="clr-namespace:De.HDBW.Apollo.Client.Layouts"
             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
             x:DataType="viewModels:SearchFilterSheetViewModel"
-            xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
             Padding="0,20">
     <the49:BottomSheet.Detents>
         <the49:RatioDetent x:Name="PART_Detent" Ratio="0.7" />
@@ -73,7 +70,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="{Static strings:Resources.Global_SearchFilterSheet_Title}" Style="{StaticResource Noto20Bold}" SemanticProperties.HeadingLevel="Level2"/>
+            <Label Text="{Static strings:Resources.Global_SearchFilterSheet_Title}" Style="{StaticResource Noto20Bold}" SemanticProperties.HeadingLevel="Level2" LineBreakMode="TailTruncation" Margin="0,0,8,0"/>
             
             <ImageButton Grid.Column="1"
                 Command="{x:Binding CloseCommand}"

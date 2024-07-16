@@ -3,6 +3,7 @@
 
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -23,7 +24,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private ObservableCollection<ObservableObject> _sections = new ObservableCollection<ObservableObject>();
 
         [ObservableProperty]
-        private ObservableCollection<SegmentScore> _details = new ObservableCollection<SegmentScore>();
+        private Dictionary<ModuleScoreEntry, List<SegmentScore>> _details = new Dictionary<ModuleScoreEntry, List<SegmentScore>>();
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FlowDirection))]
@@ -75,7 +76,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var sections = new List<ObservableObject>();
-                    var details = new List<SegmentScore>();
+                    var details = new Dictionary<ModuleScoreEntry, List<SegmentScore>>();
                     Module? module = null;
                     if (!string.IsNullOrWhiteSpace(_moduleId))
                     {
@@ -86,6 +87,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                     _assessmentId = module?.AssessmentId;
                     _sessionId = module?.SessionId;
                     var quantity_Patter = "Quantity_{0}";
+                    ModuleScoreEntry? moduleScoreEntry = null;
                     if (module != null)
                     {
                         switch (module.Type)
@@ -94,12 +96,18 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
                                 sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.JobId)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
+                                moduleScoreEntry = ModuleScoreEntry.Import(module.ModuleScore, this[string.Format(quantity_Patter, module.ModuleScore.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails);
                                 foreach (var score in module.SegmentScores)
                                 {
-                                    details.Add(score);
+                                    if (!details.ContainsKey(moduleScoreEntry))
+                                    {
+                                        details.Add(moduleScoreEntry, new List<SegmentScore>());
+                                    }
+
+                                    details[moduleScoreEntry].Add(score);
                                 }
 
-                                sections.Add(ModuleScoreEntry.Import(module.ModuleScore, this[string.Format(quantity_Patter, module.ModuleScore.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails));
+                                sections.Add(moduleScoreEntry);
 
                                 break;
                             case AssessmentType.Ea:
@@ -130,8 +138,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(TextEntry.Import(string.Format(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"], moduleScoreQuantity)));
                                 foreach (var score in module.SegmentScores)
                                 {
-                                    details.Add(score);
-                                    sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails));
+                                    moduleScoreEntry = ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails);
+                                    if (!details.ContainsKey(moduleScoreEntry))
+                                    {
+                                        details.Add(moduleScoreEntry, new List<SegmentScore>());
+                                    }
+
+                                    details[moduleScoreEntry].Add(score);
+                                    sections.Add(moduleScoreEntry);
                                 }
 
                                 break;
@@ -192,10 +206,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         }
 
         private void LoadonUIThread(
-            List<ObservableObject> sections, List<SegmentScore> details)
+            List<ObservableObject> sections, Dictionary<ModuleScoreEntry, List<SegmentScore>> details)
         {
             Sections = new ObservableCollection<ObservableObject>(sections);
-            Details = new ObservableCollection<SegmentScore>(details);
+            Details = details;
         }
 
         [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanNavigateBack))]
@@ -248,11 +262,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             {
                 try
                 {
+                    var details = Details[entry];
                     var parameters = new NavigationParameters
                     {
                         { NavigationParameter.Language, _language ?? "de-DE" },
                         { NavigationParameter.Type, _moduleType?.ToString() ?? string.Empty },
-                        { NavigationParameter.Data, JsonSerializer.Serialize(Details.ToList()) },
+                        { NavigationParameter.Data, JsonSerializer.Serialize(details) },
                     };
                     await SheetService.OpenAsync(Routes.ResultDetailSheet, worker.Token, parameters);
                 }

@@ -1,15 +1,18 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                    xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
                    x:Class="De.HDBW.Apollo.Client.Views.Assessments.ResultDetailSheet"
                    xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
-                   xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
                    xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
                    xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+                   ios:Page.UseSafeArea="true"
                    HasHandle="True"
                    HasBackdrop="True"
+                   IsCancelable="True"
                    CornerRadius="16"
+                   Padding="0,20"
                    BackgroundColor="{StaticResource Neutral500}"
                    x:DataType="viewModels:ResultDetailSheetViewModel"
                    Shown="OnShown">
@@ -27,7 +30,7 @@
             
             <DataTemplate x:Key="TextTemplate" x:DataType="models:TextEntry">
                 <Border StrokeThickness="0">
-                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0,24,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
+                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
                 </Border>
             </DataTemplate>
 
@@ -50,14 +53,14 @@
                                                 TextTemplate="{StaticResource TextTemplate}"
                                                 SegmentScoreTemplate="{StaticResource SegmentScoreTemplate}"/>
         </Grid.Resources>
-        <Grid HorizontalOptions="FillAndExpand" MinimumHeightRequest="48" x:Name="PART_Root" >
+        <Grid HorizontalOptions="FillAndExpand" Padding="20,0,20,12" x:Name="PART_Root" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="{x:Binding [TxtAssesmentsResultDetailSheetHeadline], Mode=OneWay}" Style="{StaticResource Noto20Bold}" TextColor="{StaticResource TextColor}" SemanticProperties.HeadingLevel="Level1" Margin="24,0,8,0" VerticalOptions="Center"/>
-            <ImageButton Grid.Column="1" Padding="12" Command="{x:Binding CloseCommand}"
-                         HorizontalOptions="End" VerticalOptions="Center"
+            <Label Text="{x:Binding [TxtAssesmentsResultDetailSheetHeadline], Mode=OneWay}" LineBreakMode="TailTruncation" Style="{StaticResource Noto20Bold}" TextColor="{StaticResource TextColor}" SemanticProperties.HeadingLevel="Level1" Margin="0,0,8,0" VerticalOptions="Center"/>
+            <ImageButton Grid.Column="1" Command="{x:Binding CloseCommand}"
+                          HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"
                          SemanticProperties.Description="{x:Binding [Global_Close], Mode=OneWay}">
                 <ImageButton.Source>
                     <FontImageSource Glyph="{StaticResource Close}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>

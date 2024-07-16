@@ -96,8 +96,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 try
                 {
                     var text = Items.FirstOrDefault(x => x.IsSelected)?.Text ?? string.Empty;
-                    WeakReferenceMessenger.Default.Send(new SelectionMessage(_id, text));
                     await SheetService.CloseAsync(this);
+                    WeakReferenceMessenger.Default.Send(new SelectionMessage(_id, text));
                 }
                 catch (OperationCanceledException)
                 {
