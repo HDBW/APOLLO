@@ -28,25 +28,25 @@
     <ContentPage.Resources>
 
         <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
-            <Border StrokeThickness="0">
+            <Border StrokeThickness="0" Padding="24,24,24,0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,24" SemanticProperties.HeadingLevel="Level1"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="SublineTextTemplate" x:DataType="assessmentModels:SublineTextEntry">
-            <Border StrokeThickness="0">
+            <Border StrokeThickness="0" Padding="24,0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,0,0,24"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
-            <Border StrokeThickness="0">
+            <Border StrokeThickness="0" Padding="24,0">
                 <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"  Margin="0,0,0,24"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="IconTextTemplate" x:DataType="assessmentModels:IconTextEntry">
-            <Grid ColumnDefinitions="auto, *" Margin="0,0,0,24">
+            <Grid ColumnDefinitions="auto, *" Padding="24,0,24,24">
                 <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center">
                     <Image.Source>
                         <FontImageSource Glyph="{x:Binding Icon}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -57,7 +57,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="DecoTemplate" x:DataType="assessmentModels:DecoEntry">
-            <VerticalStackLayout>
+            <VerticalStackLayout Padding="24,0">
                 <HorizontalStackLayout Margin="0,0,0,24">
                     <Image HeightRequest="36" WidthRequest="75" Source="logo_goethe_institut.png" Margin="0,0,8,0"/>
                     <Label Text="{x:Static strings:Resources.ModuleDetailView_GoetheInstitut}" VerticalOptions="Center"/>
@@ -67,7 +67,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ContinueSessionTemplate" x:DataType="assessmentModels:TestSessionEntry">
-            <VerticalStackLayout>
+            <VerticalStackLayout Padding="24,0">
                 <Label Text="{x:Binding ProgressText}" Margin="0,0,0,8"/>
                 <ProgressBar Progress="{x:Binding Progress}" Margin="0,0,0,16"/>
                 <Button Command="{x:Binding ResumeCommand}" Text="{x:Binding BindingContext[BtnTxtAssesmentsModuleDetailViewContinue], Source={x:Reference PART_Root}}" Margin="0,0,0,16"/>
@@ -76,7 +76,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="RepeatSessionTemplate" x:DataType="assessmentModels:TestSessionEntry">
-            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto">
+            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto" Padding="24,0">
                 <Image Grid.Column="0" HeightRequest="24" WidthRequest="24" HorizontalOptions="End" Margin="0,0,8,16">
                     <Image.Source>
                         <FontImageSource Glyph="{StaticResource Repeat}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
@@ -102,8 +102,7 @@
         <CollectionView
             ItemsSource="{x:Binding Sections}" Grid.Row="0"
             ItemsLayout="VerticalList"
-            ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}"
-            Margin="24,24,24,0"/>
+            ItemTemplate="{StaticResource AssessmentDetailSectionTemplateSelector}"/>
         <Border IsVisible="{x:Binding CanStartTest}" Grid.Row="1" VerticalOptions="EndAndExpand" Style="{StaticResource FooterStyle}">
             <Button Text="{x:Binding [BtnTxtAssesmentsModuleDetailViewStart]}" Command="{x:Binding StartAssessmentCommand}" Margin="24,16"/>
         </Border>

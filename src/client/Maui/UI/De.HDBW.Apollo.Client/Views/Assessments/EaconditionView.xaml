@@ -15,7 +15,7 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="SelectableEaconditionEntry" x:DataType="models:SelectableEaconditionEntry">
             <Grid>
-                <Border Margin="4,8,4,8" StrokeThickness="0" HeightRequest="96" SemanticProperties.Description="{x:Binding Bezeichnung}" Style="{StaticResource PictureEntryBorderStyle}">
+                <Border Margin="4" StrokeThickness="0" HeightRequest="96" SemanticProperties.Description="{x:Binding Bezeichnung}" Style="{StaticResource PictureEntryBorderStyle}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
                     </Border.GestureRecognizers>
@@ -60,14 +60,13 @@
         </DataTemplate>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto, *, Auto" x:Name="PART_Root">
-        <Label Text="{x:Binding [TxtAssesmentsEaConditionDetailViewInstruction], Mode=OneWay}" Margin="24,24,24,0" Style="{StaticResource Noto16}"/>
+        <Label Text="{x:Binding [TxtAssesmentsEaConditionDetailViewInstruction], Mode=OneWay}" Margin="24" Style="{StaticResource Noto16}"/>
         <CollectionView 
             Grid.Row="1" 
-            Margin="20,20,20,0"
             ItemTemplate="{StaticResource SelectableEaconditionEntry}"
             ItemsSource="{x:Binding CurrentChoices, Mode=OneWay}"
-            ItemsLayout="VerticalGrid, 2">
-        </CollectionView>
+            ItemsLayout="VerticalGrid, 2"
+            Margin="20,0"/>
         <Border Grid.Row="2" Padding="24,16" Style="{StaticResource FooterStyle}">
             <VerticalStackLayout>
                 <Label Text="{x:Binding SelectedChoicesCount}" Margin="0,0,0,8" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>

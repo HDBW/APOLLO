@@ -18,7 +18,7 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="TileTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
-            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="8">
+            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="24,8">
                 <Border Style="{StaticResource InputBorderStyle}" Grid.ColumnSpan="2" Grid.RowSpan="3">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding InteractCommand}" NumberOfTapsRequired="1"/>
@@ -60,7 +60,7 @@
     <Grid RowDefinitions="auto,auto,*">
         <Label Text="{x:Binding SelectedJob}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="24,24,24,16"/>
         <Label Grid.Row="1" Text="{x:Static strings:Resources.TxtAssesmentsJobSearchResultViewDescription}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="24,0,24,24"/>
-        <CollectionView Grid.Row="2" Margin="24,0"
+        <CollectionView Grid.Row="2" 
                         ItemsSource="{x:Binding Sections}"
                         ItemsLayout="VerticalList"
                         ItemTemplate="{StaticResource TileTemplate}"/>

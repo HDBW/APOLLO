@@ -11,12 +11,12 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="AssociateTextEntry" x:DataType="models:AssociateTextEntry">
-            <Grid>
-                <Border Margin="4,0,4,8" Padding="12" Style="{StaticResource PictureEntryBorderStyle}">
+            <Grid VerticalOptions="Fill">
+                <Border Margin="4,0,4,8" Padding="12" Style="{StaticResource PictureEntryBorderStyle}" VerticalOptions="Fill">
                     <Border.Shadow>
                         <Shadow Opacity="0"/>
                     </Border.Shadow>
-                    <Grid ColumnDefinitions="auto, *" AutomationProperties.IsInAccessibleTree="True">
+                    <Grid ColumnDefinitions="auto, *" AutomationProperties.IsInAccessibleTree="True" VerticalOptions="Fill">
                         <Label Grid.Column="0" Margin="0,0,8,0" VerticalOptions="Start">
                             <Label.FormattedText>
                                 <FormattedString>
