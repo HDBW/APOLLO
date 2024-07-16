@@ -6031,7 +6031,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Въпрос {0}/{1}.
+        ///   Looks up a localized string similar to Страница {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitlePage_bg_BG {
             get {
@@ -6040,7 +6040,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Question {0}/{1}.
+        ///   Looks up a localized string similar to Page {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitlePage_en_US {
             get {
@@ -6049,7 +6049,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Question {0}/{1}.
+        ///   Looks up a localized string similar to Page {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitlePage_fr_FR {
             get {
@@ -6058,7 +6058,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Întrebare {0}/{1}.
+        ///   Looks up a localized string similar to Pagina {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitlePage_ro_RO {
             get {
@@ -6067,7 +6067,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вопрос {0}/{1}.
+        ///   Looks up a localized string similar to Страница {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitlePage_ru_RU {
             get {
@@ -6076,7 +6076,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Soru {0}/{1}.
+        ///   Looks up a localized string similar to Sayfa {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitlePage_tr_TR {
             get {
@@ -6085,7 +6085,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Питання {0}/{1}.
+        ///   Looks up a localized string similar to Сторінка {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitlePage_uk_UA {
             get {
@@ -7396,87 +7396,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsRatingViewNotApply_uk_UA {
             get {
                 return ResourceManager.GetString("TxtAssesmentsRatingViewNotApply_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seite {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to الصفحة {0} / {1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Страница {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Page {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Page {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pagina {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Страница {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sayfa {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Сторінка {0}/{1}.
-        /// </summary>
-        public static string TxtAssesmentsRatingViewTitlePage_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsRatingViewTitlePage_uk-UA", resourceCulture);
             }
         }
         
