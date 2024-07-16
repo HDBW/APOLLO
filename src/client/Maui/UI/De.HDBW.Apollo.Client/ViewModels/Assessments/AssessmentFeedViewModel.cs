@@ -105,7 +105,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                     };
                             }
 
-                            sections.Add(AssessmentTileEntry.Import(item, route, parameters, isFavorite, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
+                            sections.Add(AssessmentTileEntry.Import(item, route, parameters, isFavorite, SessionService.HasRegisteredUser, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
                         }
                     }
 

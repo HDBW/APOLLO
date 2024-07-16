@@ -76,7 +76,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                         { NavigationParameter.Id, assessment.ModuleIds.First() },
                                         { NavigationParameter.Type, assessment.Type.ToString() },
                                     };
-                        section.Add(AssessmentTileEntry.Import(assessment, route, parameters, isFavorite, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
+                        section.Add(AssessmentTileEntry.Import(assessment, route, parameters, isFavorite, SessionService.HasRegisteredUser, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
                     }
 
                     await ExecuteOnUIThreadAsync(() => LoadonUIThread(section), worker.Token).ConfigureAwait(false);
