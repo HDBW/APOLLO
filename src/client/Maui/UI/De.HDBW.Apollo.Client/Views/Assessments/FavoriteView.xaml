@@ -18,7 +18,7 @@
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <DataTemplate x:Key="TileTemplate" x:DataType="assessmentModels:ModuleTileEntry">
-            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="8">
+            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="24,8">
                 <Border Style="{StaticResource InputBorderStyle}" Grid.ColumnSpan="2" Grid.RowSpan="3">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding InteractCommand}" NumberOfTapsRequired="1"/>
@@ -110,7 +110,7 @@
                                                     TileTemplate="{StaticResource TileTemplate}" />
     </ContentPage.Resources>
     <Grid x:Name="PART_Root">
-        <CollectionView  Margin="16,0,16,16"
+        <CollectionView 
             x:Name="PART_Collection"
             ItemsSource="{x:Binding FavoriteItems}"
             ItemTemplate="{StaticResource AssessmentSectionTemplateSelector}"
