@@ -52,11 +52,18 @@ namespace De.HDBW.Apollo.Client.Selector
                 case TextEntry _:
                     return TextTemplate;
                 case AssessmentTileEntry tile:
+                    if (tile.NeedsUser && !tile.HasUser)
+                    {
+                        return IsMemberOnlyTemplate;
+                    }
+
                     if (tile.Type == AssessmentType.So)
                     {
                         return SkillAssessmentTemplate;
                     }
 
+                    return TileTemplate;
+                case ModuleTileEntry tile:
                     if (tile.NeedsUser && !tile.HasUser)
                     {
                         return IsMemberOnlyTemplate;

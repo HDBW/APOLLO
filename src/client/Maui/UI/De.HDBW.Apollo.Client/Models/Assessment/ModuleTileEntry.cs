@@ -23,6 +23,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             string? route,
             NavigationParameters? parameters,
             bool isFavorite,
+            bool hasUser,
             Func<ModuleTileEntry, CancellationToken, Task> interactHandler,
             Func<ModuleTileEntry, bool> canInteractHandler,
             Func<ModuleTileEntry, CancellationToken, Task> toggleFavoriteHandler,
@@ -33,6 +34,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             Route = route;
             Parameters = parameters;
             IsFavorite = isFavorite;
+            HasUser = hasUser;
             _interactHandler = interactHandler;
             _canInteractHandler = canInteractHandler;
             _toggleFavoriteHandler = toggleFavoriteHandler;
@@ -151,11 +153,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
         }
 
+        public bool HasUser { get; }
+
         public static ModuleTileEntry Import(
             ModuleTile data,
             string? route,
             NavigationParameters? parameters,
             bool isFavorite,
+            bool hasUser,
             Func<ModuleTileEntry, CancellationToken, Task> interactHandler,
             Func<ModuleTileEntry, bool> canInteractHandler,
             Func<ModuleTileEntry, CancellationToken, Task> toggleFavoriteHandler,
@@ -166,6 +171,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
                 route,
                 parameters,
                 isFavorite,
+                hasUser,
                 interactHandler,
                 canInteractHandler,
                 toggleFavoriteHandler,

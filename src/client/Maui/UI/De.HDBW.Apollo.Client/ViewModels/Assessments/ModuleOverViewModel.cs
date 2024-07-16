@@ -107,7 +107,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                         { NavigationParameter.Type, moduleTile.Type.ToString() },
                                     };
 
-                        modules.Add(ModuleTileEntry.Import(moduleTile, route, parameters, favorites.Any(f => f.Id == moduleTile.ModuleId), Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
+                        modules.Add(ModuleTileEntry.Import(moduleTile, route, parameters, favorites.Any(f => f.Id == moduleTile.ModuleId), SessionService.HasRegisteredUser, Interact, CanInteract, ToggleFavorite, CanToggleFavorite));
                         segments.Add(ModuleScoreEntry.Import(moduleTile.ModuleScore, this[string.Format(quantity_Patter, moduleTile.ModuleScore.Quantity)], moduleTile.Type));
                     }
 
