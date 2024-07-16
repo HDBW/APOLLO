@@ -184,6 +184,7 @@ namespace De.HDBW.Apollo.Data.Services
                 RawDataCount = rawDatas.Count,
                 AnswerCount = offset,
                 Repeatable = waslastCanceledModule ? 1 : 0,
+                MemberOnly = requestedModule.MemberOnly,
             };
             var escoId = string.Empty;
             var quantity = string.Empty;
@@ -226,12 +227,14 @@ namespace De.HDBW.Apollo.Data.Services
                 {
                     Deleted = module.Deleted,
                     Type = module.Type,
+                    AssessmentId = module.AssessmentId,
                     ModuleId = module.ModuleId,
                     Title = module.Title,
                     SessionId = localSession?.SessionId,
                     RawDataCount = rawDataIds.Count,
                     AnswerCount = offset,
                     ModuleScore = module.ModuleScore,
+                    MemberOnly = module.MemberOnly,
                 });
             }
 
@@ -419,6 +422,7 @@ namespace De.HDBW.Apollo.Data.Services
                 Type = assessment.Type,
                 Title = assessment.Title,
                 Grouping = grouping,
+                MemberOnly = assessment.MemberOnly,
             };
 
             foreach (var module in modules)
@@ -489,9 +493,11 @@ namespace De.HDBW.Apollo.Data.Services
 
                     module.ModuleScore = new ModuleScore
                     {
-                        Segment = module.LocalizedJobName,
+                        ProfileId = string.Empty,
+                        Segment = module.LocalizedJobName ?? string.Empty,
                         AssessmentId = module.AssessmentId,
                         ModuleId = module.ModuleId,
+                        ResultDescription = string.Empty,
                         Result = module.SegmentScores.Sum(x => x.Result) / Math.Max(module.SegmentScores.Count, 1),
                     };
 
