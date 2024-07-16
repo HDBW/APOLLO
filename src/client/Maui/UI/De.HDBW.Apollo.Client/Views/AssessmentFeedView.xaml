@@ -26,25 +26,25 @@
     <ContentPage.Resources>
 
         <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
-            <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="8,24,8,16" SemanticProperties.HeadingLevel="Level1"/>
+            <Border StrokeThickness="0" Padding="24,24,24,0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,16" SemanticProperties.HeadingLevel="Level1"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="SublineTextTemplate" x:DataType="assessmentModels:SublineTextEntry">
-            <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="8,0,8,16"/>
+            <Border StrokeThickness="0" Padding="24,0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,0,0,16"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
-            <Border StrokeThickness="0">
-                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" Margin="8,24,8,8" SemanticProperties.HeadingLevel="Level2"/>
+            <Border StrokeThickness="0" Padding="24,0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" Margin="0,24,0,8" SemanticProperties.HeadingLevel="Level2"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="SkillAssessmentTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
-            <Grid Padding="8" Margin="0,0,0,0">
+            <Grid Padding="24,8">
                 <Border Style="{StaticResource InputBorderStyle}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding InteractCommand}" NumberOfTapsRequired="1"/>
@@ -59,7 +59,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="IsMemberOnlyTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
-            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="8">
+            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto"  Padding="24,8">
                 <Border Style="{StaticResource InputBorderStyle}" Grid.ColumnSpan="2" Grid.RowSpan="3">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding InteractCommand}" NumberOfTapsRequired="1"/>
@@ -106,7 +106,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="TileTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
-            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="8">
+            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" Padding="24,8">
                 <Border Style="{StaticResource InputBorderStyle}" Grid.ColumnSpan="2" Grid.RowSpan="3">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding InteractCommand}" NumberOfTapsRequired="1"/>
@@ -146,7 +146,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="InteractionTemplate" x:DataType="interactionsModels:InteractionEntry">
-            <Grid Padding="8">
+            <Grid Padding="24,8,24,24">
                 <Border Style="{StaticResource InputBorderStyle}" >
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{x:Binding NavigateCommand}" NumberOfTapsRequired="1"/>
@@ -168,5 +168,5 @@
 
     <CollectionView ItemsSource="{x:Binding Sections}"
             ItemsLayout="VerticalList"
-            ItemTemplate="{StaticResource AssessmentSectionTemplateSelector}" Margin="16,0,16,0"/>
+            ItemTemplate="{StaticResource AssessmentSectionTemplateSelector}"/>
 </ContentPage>
