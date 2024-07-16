@@ -196,7 +196,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Persönliche Fähigkeiten.
+        ///   Looks up a localized string similar to Inspiration.
         /// </summary>
         public static string AssessmentTypeBe {
             get {

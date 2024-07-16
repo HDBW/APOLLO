@@ -1296,7 +1296,7 @@ Hinweis: Nicht gespeicherte Daten gehen verloren.</value>
     <value>Teste deine Fähigkeiten</value>
   </data>
   <data name="AssessmentTypeBe" xml:space="preserve">
-    <value>Persönliche Fähigkeiten</value>
+    <value>Inspiration</value>
   </data>
   <data name="AssessmentTypeEa" xml:space="preserve">
     <value>Berufserfahrung</value>
