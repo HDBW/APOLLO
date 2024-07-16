@@ -61,101 +61,11 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;أنت لا تعرف بعد إلى أين تريد أن تتوجه مهنيًا أو ترغب في إعادة توجيه نفسك؟ إذن فأنت هنا في المكان الصحيح!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;تساعدك الأداة في العثور على المجالات المهنية التي تتناسب مع اهتماماتك.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض.&lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_ar {
-            get {
-                return ResourceManager.GetString("Be___Description_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Все още не знаеш какъв професионален път искаш да поемеш или искаш да се преориентираш? Тогава това е правилното място за теб!&lt;/p&gt;&lt;p&gt;Инструментът ти помага да намериш професионални области, които отговарят на твоите интереси.&lt;/p&gt;&lt;p&gt;Можеш да положиш теста и на друг език. За целта избери език горе.&lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_bg_BG {
-            get {
-                return ResourceManager.GetString("Be___Description_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Du weißt noch nicht wohin es beruflich gehen soll oder möchtest dich umorientieren? Dann bist du hier richtig!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Das Tool hilft dir Berufsbereiche zu finden, die zu deinen Interessen passen.&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;Du weißt noch nicht wohin es beruflich gehen soll oder möchtest dich umorientieren? Dann bist du hier richtig!&lt;/p&gt;&lt;br/&gt;&lt;p&gt;Das Tool hilft dir Berufsbereiche zu finden, die zu deinen Interessen passen.&lt;/p&gt;.
         /// </summary>
         public static string Be___Description_de_DE {
             get {
                 return ResourceManager.GetString("Be___Description_de-DE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Not sure what profession to pursue yet? Looking for a new direction? Then you’ve come to the right place!&lt;/p&gt;&lt;p&gt;The tool will help you find career areas that match your interests.&lt;/p&gt;&lt;p&gt;You can also take this test in another language. Select a language above.&lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_en_US {
-            get {
-                return ResourceManager.GetString("Be___Description_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Vous ne savez pas encore vers quel métier vous souhaitez vous orienter ou vous voulez vous réorienter? Alors, vous êtes au bon endroit!&lt;/p&gt;&lt;p&gt;Cet outil vous aide à trouver les domaines professionnels qui correspondent à vos centres d’intérêt.&lt;/p&gt;&lt;p&gt;Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue en haut.&lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_fr_FR {
-            get {
-                return ResourceManager.GetString("Be___Description_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Nu prea știi cum să continui drumul profesional sau dorești să te reorientezi? Atunci ai ajuns exact unde trebuie!&lt;/p&gt;&lt;p&gt;Acest instrument te ajută să găsești domenii profesional care se potrivesc cu interesele tale.&lt;/p&gt;&lt;p&gt;Poți da testul și într-o altă limbă. Selectează o limbă de mai sus.&lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_ro_RO {
-            get {
-                return ResourceManager.GetString("Be___Description_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Вы ещё не знаете, куда хотите двигаться в профессиональном плане, или же хотите переориентироваться? Тогда вы попали по адресу!&lt;/p&gt;&lt;p&gt;Это средство поможет вам найти те сферы деятельности, которые соответствуют вашим интересам.&lt;/p&gt;&lt;p&gt;Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык.&lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_ru_RU {
-            get {
-                return ResourceManager.GetString("Be___Description_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Meslek olarak nereye gitmek istediğini henüz bilmiyor musun veya kendine yeni bir yön bulmak mı istiyorsun? O zaman burada doğru yerdesin!&lt;/p&gt;&lt;p&gt;Bu araç, ilgi alanlarına uygun meslek alanlarını bulmana yardımcı olur.&lt;/p&gt;&lt;p&gt;Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç.&lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_tr_TR {
-            get {
-                return ResourceManager.GetString("Be___Description_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;Ти ще не знаєш, куди хочеш рухатися в професійному плані? Aбо хочеш переорієнтуватися? Тоді ти потрапив/потрапила за адресою!   &lt;/p&gt;&lt;p&gt;Цей засіб допоможе тобi знайти сфери діяльності, які відповідають твоїм інтересам. &lt;/p&gt;&lt;p&gt;Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову. &lt;/p&gt;.
-        /// </summary>
-        public static string Be___Description_uk_UA {
-            get {
-                return ResourceManager.GetString("Be___Description_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to استمد الإلهام واكتشف المهن التي تهمك!.
-        /// </summary>
-        public static string Be___Subtitle_ar {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Остави се на вдъхновението и открий професии, които да те заинтригуват!.
-        /// </summary>
-        public static string Be___Subtitle_bg_BG {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_bg-BG", resourceCulture);
             }
         }
         
@@ -165,60 +75,6 @@ namespace De.HDBW.Apollo.Data.SampleData.Strings {
         public static string Be___Subtitle_de_DE {
             get {
                 return ResourceManager.GetString("Be___Subtitle_de-DE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Get inspired and discover professions that interest you!.
-        /// </summary>
-        public static string Be___Subtitle_en_US {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Laissez-vous inspirer et découvrez des métiers qui vous intéresseront!.
-        /// </summary>
-        public static string Be___Subtitle_fr_FR {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lasă-te inspirat(ă) și descoperă profesii care te interesează!.
-        /// </summary>
-        public static string Be___Subtitle_ro_RO {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Не медлите и откройте для себя профессии, которые вам интересны!.
-        /// </summary>
-        public static string Be___Subtitle_ru_RU {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to İlham al ve ilgini çeken meslekleri keşfet!.
-        /// </summary>
-        public static string Be___Subtitle_tr_TR {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Не зволікай та відкрий для себе професії, які тобi цікаві!  .
-        /// </summary>
-        public static string Be___Subtitle_uk_UA {
-            get {
-                return ResourceManager.GetString("Be___Subtitle_uk-UA", resourceCulture);
             }
         }
         
