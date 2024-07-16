@@ -453,7 +453,7 @@ namespace De.HDBW.Apollo.Data.Services
                 case AssessmentType.Gl:
                     segmentScore = new SegmentScore();
                     segmentScore.Quantity = quantity;
-                    int correctAnswerCount = 0, questionCount = 0;
+                    int correctAnswerCount = module.AnswerCount ?? 0, questionCount = module.RawDataCount ?? 0;
                     var text = string.Format(GetText(pattern), correctAnswerCount, questionCount);
                     segmentScore.ResultDescription = string.IsNullOrWhiteSpace(text) ? pattern : text;
                     segmentScore.AssessmentId = module.AssessmentId;

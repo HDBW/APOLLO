@@ -1408,42 +1408,7 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <value>Чудово, перший крок зроблено! Тут тобi будуть показані професійні галузі, що відповідають твому першому вибору. Щоб дізнатися більше про ці галузі, натисни на них.</value>
     <comment>EACondition-BE</comment>
   </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction" xml:space="preserve">
-    <value>Wähle aus, was dich am meisten interessiert! Du kannst bis zu drei Bereiche wählen!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_ar" xml:space="preserve">
-    <value>اختر أكثر شيء يثير اهتمامك! يمكنك اختيار ما يصل إلى ثلاثة مجالات!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_bg-BG" xml:space="preserve">
-    <value>Избери това, което те интересува най-много! Можеш да избереш до три области!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_en-US" xml:space="preserve">
-    <value>Choose what interests you most! You can choose up to three areas!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_fr-FR" xml:space="preserve">
-    <value>Sélectionnez ce qui vous intéresse le plus ! Vous pouvez sélectionner trois domaines!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_ro-RO" xml:space="preserve">
-    <value>Selectează ce te interesează cel mai mult! Poți selecta până la trei domenii!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_ru-RU" xml:space="preserve">
-    <value>Выбирайте то, что интересует вас больше всего! Вы можете выбрать до трёх областей!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_tr-TR" xml:space="preserve">
-    <value>Seni en çok ilgilendiren alanı seç! En fazla üç alan seçebilirsin!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionDetailViewInstruction_uk-UA" xml:space="preserve">
-    <value>Вибирай те, що цікавить тебе найбільше! Ти можеш вибрати до трьох галузей!</value>
-    <comment>EACondition-BE</comment>
-  </data>
+  
   <data name="TxtAssesmentsEaconditionGlobalTitle" xml:space="preserve">
     <value>Berufe entdecken</value>
     <comment>EACondition-BE</comment>
@@ -1479,96 +1444,6 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
   <data name="TxtAssesmentsEaconditionGlobalTitle_uk-UA" xml:space="preserve">
     <value>Дізнатися про професії</value>
     <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription" xml:space="preserve">
-    <value>Mit diesem Selbsttest kannst du deine beruflichen Fähigkeiten selbst einschätzen. Das Ergebnis zeigt dir, wie viel Praxiserfahrung du bereits in den verschiedenen Bereichen des Berufs hast. Aufbauend darauf können wir dir passende Vorschläge für Weiterbildung zeigen.
-Die Fragen beantwortest du, indem du auswählst, wie oft du die dargestellten Tätigkeiten schon gemacht hast. Probiere es aus!
-Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_ar" xml:space="preserve">
-    <value>يمكنك باستخدام هذا الاختبار الذاتي تقييم مهاراتك المهنية بنفسك. وتُظهر لك النتيجة مقدار الخبرة العملية التي تتمتع بها بالفعل في مختلف مجالات المهنة. وبناءً على ذلك يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
-يمكنك الإجابة على الأسئلة من خلال اختيار عدد المرات التي قمت فيها بالفعل بالأنشطة الموضحة. جربها!
-يمكنك أيضاً إجراء هذا الاختبار الذاتي بلغة أخرى. اختر اللغة أعلاه لهذا الغرض.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_bg-BG" xml:space="preserve">
-    <value>С този тест можеш самостоятелно да оцениш своите професионални умения. Резултатът ти показва какъв практически опит вече притежаваш в различните области на професията. Въз основа на това можем да ти покажем подходящи предложения за продължаващо обучение.
-Отговаряш на въпросите, като избираш колко често вече си вършил/а описаните дейности. Опитай!
-Можеш да положиш самостоятелния тест и на друг език. За целта избери език горе.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_en-US" xml:space="preserve">
-    <value>This self-test is designed to help you assess your professional skills. The result will show you how much practical experience you already have in the various areas of the profession. Based on this, we can show you suitable suggestions for further training.
-You answer the questions by selecting how often you have already done the activities shown. Try it out!
-You can also take the self-test in another language. Select a language above.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_fr-FR" xml:space="preserve">
-    <value>Avec cet autotest, vous pouvez évaluer vous-mêmes vos compétences professionnelles. Le résultat vous montre combien d’expérience pratique vous avez déjà dans différents domaines du métier. Sur la base de cette information, nous pouvons vous proposer une formation continue adaptée.
-Pour répondre aux questions, vous devez indiquer à quelle fréquence vous avez déjà réalisé les tâches présentées. Essayez!
-Vous pouvez également passer cet autotest dans une autre langue. Pour cela, sélectionnez une langue en haut.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_ro-RO" xml:space="preserve">
-    <value>Cu ajutorul acestui test îți poți autoevalua calitățile profesionale. Rezultatul îți arată nivelul de experiență practică pe care îl ai în diferite domenii ale profesiei respective. Pe această bază, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.
-Răspunzi la întrebări, selectând de câte ori ai efectuat deja până acum activitățile prezentate. Încearcă!
-Poți da autotestul și într-o altă limbă. Selectează o limbă de mai sus.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_ru-RU" xml:space="preserve">
-    <value>С помощью этого теста самопроверки вы можете сами оценить свои профессиональные навыки. Результат показывает, насколько большой практический опыт у вас уже есть в различных областях профессии. Исходя из этого, мы сможем показать вам подходящие предложения для продолжения образования.
-Вы отвечаете на вопросы, выбирая, как часто вы уже занимались указанной деятельностью. Попробуйте!
-Вы также можете пройти этот тест самопроверки и на другом языке. Для этого выберите вверху нужный язык.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_tr-TR" xml:space="preserve">
-    <value>Bu kendi kendine test ile mesleki becerilerini kendin değerlendirebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar pratik bilgiye sahibi olduğunu gösterecektir. Buna dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.
-Sorulara, gösterilen işlemleri ne kadar sık yaptığını seçerek cevap verirsin. Denemelisin!
-Kendi kendine testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartDescription_uk-UA" xml:space="preserve">
-    <value>За допомогою цього тесту самоперевірки ти можеш оцінити свої професійні навички. Результат показує, наскільки великий практичний досвід ти вже маєш у різних галузях професії. Виходячи з цього, ми зможемо показати тобi відповідні пропозиції для продовження освіти.
-Tи відповідаєш на запитання, вибираючи, як часто ти вже займався/займалася зазначеною діяльністю. Спробуй!
-Tи можеш пройти цей тест самоперевірки й іншою мовою. Для цього вибери вгорі мову.</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle" xml:space="preserve">
-    <value>Erfahrungsselbsttest Beruf {0}</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_ar" xml:space="preserve">
-    <value>الاختبار الذاتي للخبرات بالمهنة {0}</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_bg-BG" xml:space="preserve">
-    <value>Самостоятелен тест за опит Професия {0}</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_en-US" xml:space="preserve">
-    <value>Profession {0} experience self-test</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_fr-FR" xml:space="preserve">
-    <value>Autotest d’expérience métier {0}</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_ro-RO" xml:space="preserve">
-    <value>Autotest experiență profesia {0}</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_ru-RU" xml:space="preserve">
-    <value>Тест самопроверки опыта в профессии {0}</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_tr-TR" xml:space="preserve">
-    <value>Meslek {0} kendi kendine deneyim testi</value>
-    <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewExperienceStartTitle_uk-UA" xml:space="preserve">
-    <value>Тест самоперевірки досвіду в професії {0}</value>
-    <comment>Experience-EA</comment>
   </data>
   <data name="TxtAssesmentsResultOverViewExperienceTestFinished" xml:space="preserve">
     <value>Du hast die Selbsteinschätzung {0} abgeschlossen.</value>
@@ -1641,105 +1516,6 @@ Tи можеш пройти цей тест самоперевірки й інш
   <data name="TxtAssesmentsResultOverViewExperienceTestFinished_uk-UA" xml:space="preserve">
     <value>Tи пройшов/пройшла тест самооцiнки на придатність до {0}.</value>
     <comment>Experience-EA</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewGermanTestDescription" xml:space="preserve">
-    <value>Hier kannst du herausfinden, wie gut dein Deutsch ist: Stehst du am Anfang, bist du fortgeschritten oder schon Profi? Dieser Test gibt dir eine erste Orientierung, wie gut du schriftliche und mündliche deutsche Texte verstehst und wie gut deine Grammatik- und Wortschatzkenntnisse schon sind.
-Dies ist ein Test des Goethe-Instituts.</value>
-    <comment>Deutschtest-GL</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewGermanTestTitle" xml:space="preserve">
-    <value>Teste dein Deutsch</value>
-    <comment>Deutschtest-GL</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription" xml:space="preserve">
-    <value>Mit diesem Test kannst du deine beruflichen Fähigkeiten prüfen. Das Ergebnis zeigt dir, wie viel Wissen du in den verschiedenen Bereichen des Berufs mitbringst. Aufbauend auf deinen Kompetenzen können wir dir passende Vorschläge für Weiterbildungen zeigen.  
-Die Fragen beantwortest du, indem du entweder die passenden Antworten auswählst, eine richtige Reihenfolge herstellst oder die passenden Paare bildest. Probiere es aus!
-Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_ar" xml:space="preserve">
-    <value>يمكنك اختبار مهاراتك المهنية من خلال هذا الاختبار. وتُظهر لك النتيجة مدى معرفتك في مختلف مجالات المهنة. بناءً على مهاراتك، يمكننا أن نعرض عليك اقتراحات مناسبة لمسارات التدريب التكميلي.
-يمكنك الإجابة على الأسئلة إما عن طريق اختيار الإجابات الصحيحة أو ترتيبها بالترتيب الصحيح أو تكوين أزواج مطابقة. جربها!
-يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_bg-BG" xml:space="preserve">
-    <value>С този тест можеш да провериш своите професионални умения. Резултатът ти показва какво ниво на познания притежаваш в различните области. Въз основа на твоите компетенции можем да ти покажем подходящи предложения за продължаващо обучение.
-Отговаряш на въпросите, като избираш приложимите отговори, подреждаш опциите в правилната последователност или свързваш подходящите двойки. Опитай!
-Можеш да положиш теста и на друг език. За целта избери език горе.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_en-US" xml:space="preserve">
-    <value>This test is designed to help you assess your professional skills. The result will show you how much knowledge you have in the various areas of the profession. Based on your skills, we can show you suitable suggestions for further training.
-You answer the questions by either selecting the right answers, putting them in the right order or forming matching pairs. Try it out!
-You can also take this test in another language. Select a language above.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_fr-FR" xml:space="preserve">
-    <value>Avec ce test, vous pouvez tester vos compétences professionnelles. Le résultat vous montre ce que vous savez déjà dans différents domaines du métier. Sur la base de ces compétences, nous pouvons vous proposer des formations continues adaptées.
-Pour répondre aux questions, vous devez sélectionner les bonnes réponses, mettre les réponses dans le bon ordre ou former les paires qui conviennent. Essayez!
-Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue en haut.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_ro-RO" xml:space="preserve">
-    <value>Cu ajutorul acestui test îți poți verifica calitățile profesionale. Rezultatul îți arată nivelul de cunoștințe pe care îl ai în diferite domenii ale profesiei respective. Pe baza competențelor tale, îți putem prezenta apoi propuneri adecvate de cursuri de formare continuă.
-Răspunzi la întrebări selectând răspunsurile corecte, așezând enunțurile în ordinea corectă sau formând perechile potrivite. Încearcă!
-Poți da testul și într-o altă limbă. Selectează o limbă de mai sus.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_ru-RU" xml:space="preserve">
-    <value>С помощью этого теста вы можете проверить свои профессиональные навыки. Результат показывает, насколько глубоки ваши знания в различных областях профессии. Исходя из ваших навыков, мы сможем показать вам подходящие предложения для продолжения образования.
-Вы отвечаете на вопросы, выбирая правильные ответы, располагая их в правильном порядке или составляя подходящие пары. Попробуйте!
-Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_tr-TR" xml:space="preserve">
-    <value>Bu test ile mesleki becerilerini test edebilirsin. Sonuç sana mesleğin çeşitli alanlarında ne kadar bilgi sahibi olduğunu gösterecektir. Becerilerine dayanarak, sana ileri eğitim için uygun önerilerde bulunabiliriz.
-Sorulara doğru cevapları seçerek, doğru sıraya koyarak veya doğru çiftleri cevap verirsin. Denemelisin!
-Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartDescription_uk-UA" xml:space="preserve">
-    <value>За допомогою цього тесту можна перевірити свої професійні навички. Результат показує, наскільки глибокі твої знання в різних галузях професії. Виходячи з твоїх навичок, ми зможемо показати тобi відповідні пропозиції для продовження освіти.
-Tи відповідаєш на запитання, вибираючи правильні відповіді, розташовуючи їх у правильному порядку або складаючи відповідні пари. Спробуй!
-Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову.</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle" xml:space="preserve">
-    <value>Test Beruf {0}</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_ar" xml:space="preserve">
-    <value>اختبار المهنة {0}</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_bg-BG" xml:space="preserve">
-    <value>Тест професия {0}</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_en-US" xml:space="preserve">
-    <value>Profession {0} test </value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_fr-FR" xml:space="preserve">
-    <value>Test métier {0}</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_ro-RO" xml:space="preserve">
-    <value>Test profesia {0}</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_ru-RU" xml:space="preserve">
-    <value>Тест на пригодность для профессии {0}</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_tr-TR" xml:space="preserve">
-    <value>Meslek {0} testi</value>
-    <comment>Skills-SK</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewSkillsStartTitle_uk-UA" xml:space="preserve">
-    <value>Тест на придатність до професії {0}</value>
-    <comment>Skills-SK</comment>
   </data>
   <data name="TxtAssesmentsResultOverViewSkillsTestFinished" xml:space="preserve">
     <value>Du hast den Test {0} abgeschlossen!</value>
@@ -1849,24 +1625,8 @@ Tи відповідаєш на запитання, вибираючи прав�
     <value>Ти пройшов/пройшла тест на придатність до {0}!</value>
     <comment>Skills-SK</comment>
   </data>
-  <data name="TxtAssesmentsResultOverviewGermanAnswersCorrect" xml:space="preserve">
-    <value>Du hast insgesamt {0} von {1} Aufgaben richtig gelöst!</value>
-    <comment>Deutschtest-GL</comment>
-  </data>
-  <data name="TxtAssesmentsResultOverviewGermanExcellent" xml:space="preserve">
-    <value>Prima! Mit deinen Sprachkenntnissen kannst du schon fast alle Situationen gut meistern.</value>
-    <comment>Deutschtest-GL</comment>
-  </data>
-  <data name="TxtAssesmentsResultOverviewGermanGood" xml:space="preserve">
-    <value>Gut gemacht! Du kannst dich in vielen Situationen des alltäglichen Lebens zurechtfinden.</value>
-    <comment>Deutschtest-GL</comment>
-  </data>
   <data name="TxtAssesmentsResultOverviewGermanKnowledge" xml:space="preserve">
     <value>Deutschkenntnisse</value>
-    <comment>Deutschtest-GL</comment>
-  </data>
-  <data name="TxtAssesmentsResultOverviewGermanOkay" xml:space="preserve">
-    <value>Weiter so! Du hast Anfangskenntnisse in Deutsch.</value>
     <comment>Deutschtest-GL</comment>
   </data>
   <data name="TxtAssesmentsResultOverviewGermanYourResult" xml:space="preserve">
