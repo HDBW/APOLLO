@@ -347,36 +347,46 @@ namespace De.HDBW.Apollo.Data.Services
             return localSession;
         }
 
-        public async Task<RawData?> AnswerAsync(string sessionId, string rawDataId, double? score, CancellationToken token)
+        public Task<RawData?> AnswerAsync(string sessionId, string rawDataId, double? score, CancellationToken token)
+        {
+            return AnswerAsync(sessionId, rawDataId, new List<double?>() { score }, token);
+        }
+
+        public async Task<RawData?> AnswerAsync(string sessionId, string rawDataId, IEnumerable<double?> scores, CancellationToken token)
         {
             RawData? nextRawData = null;
             token.ThrowIfCancellationRequested();
             try
             {
-                var answer = new Answer();
-                answer.SessionId = sessionId;
-                answer.RawDataId = rawDataId;
-                answer.Score = score ?? -1d;
-                var localSession = await SessionRepository.GetItemBySessionIdAsync(sessionId, token).ConfigureAwait(false);
-                if (localSession?.RawDataOrder == null || localSession?.CurrentRawDataId == null)
+                foreach (var score in scores)
                 {
-                    return null;
-                }
+                    var answer = new Answer();
+                    answer.SessionId = sessionId;
+                    answer.RawDataId = rawDataId;
+                    answer.Score = score ?? -1d;
+                    var localSession = await SessionRepository.GetItemBySessionIdAsync(sessionId, token).ConfigureAwait(false);
+                    if (localSession?.RawDataOrder == null || localSession?.CurrentRawDataId == null)
+                    {
+                        return null;
+                    }
 
-                var rawDataIds = localSession.RawDataOrder.Split(";").ToList();
-                var nextOffset = rawDataIds.IndexOf(localSession.CurrentRawDataId) + 1;
+                    var rawDataIds = localSession.RawDataOrder.Split(";").ToList();
+                    var nextOffset = rawDataIds.IndexOf(localSession.CurrentRawDataId) + 1;
 
-                if (nextOffset >= rawDataIds.Count)
-                {
-                    return null;
-                }
+                    if (nextOffset >= rawDataIds.Count)
+                    {
+                        return null;
+                    }
 
-                var nextRawDataId = rawDataIds[nextOffset];
-                nextRawData = _data.RawDatas.FirstOrDefault(x => x.RawDataId == nextRawDataId);
-                if (nextRawData != null)
-                {
-                    localSession.CurrentRawDataId = nextRawDataId;
-                    await SessionRepository.UpdateItemAsync(localSession, CancellationToken.None).ConfigureAwait(false);
+                    var nextRawDataId = rawDataIds[nextOffset];
+                    nextRawData = _data.RawDatas.FirstOrDefault(x => x.RawDataId == nextRawDataId);
+                    if (nextRawData != null)
+                    {
+                        localSession.CurrentRawDataId = nextRawDataId;
+                        await SessionRepository.UpdateItemAsync(localSession, CancellationToken.None).ConfigureAwait(false);
+                    }
+
+                    rawDataId = nextRawDataId;
                 }
             }
             catch (Exception ex)

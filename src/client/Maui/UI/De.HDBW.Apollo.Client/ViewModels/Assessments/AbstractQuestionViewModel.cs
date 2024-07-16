@@ -153,7 +153,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             },
         };
 
-        private bool WasShowingDialog { get; set; }
+        protected bool WasShowingDialog { get; set; }
 
         [IndexerName("Item")]
         public new string this[string key]
