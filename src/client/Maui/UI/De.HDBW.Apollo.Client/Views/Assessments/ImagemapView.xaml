@@ -27,6 +27,9 @@
                                     ImageSource="{x:Binding Image.AbsolutePath}"
                                     Interactions="{x:Binding Shapes}"
                                     InteractionBackgroundBrush="#A0FFFFFF"
+                                    InteractionBorderBrush="{StaticResource PrimaryBrush}"
+                                    InteractionSelectedBackgroundBrush="#A0FFFFFF"
+                                    InteractionSelectedBorderBrush="{StaticResource PrimaryBrush}"
                                     HeightRequest="272"
                                     >
                     </controls:ImageInteractionView>

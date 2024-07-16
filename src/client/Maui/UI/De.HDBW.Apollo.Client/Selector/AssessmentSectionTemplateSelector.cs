@@ -57,7 +57,7 @@ namespace De.HDBW.Apollo.Client.Selector
                         return SkillAssessmentTemplate;
                     }
 
-                    if (tile.IsMemberOnly)
+                    if (tile.NeedsUser && !tile.HasUser)
                     {
                         return IsMemberOnlyTemplate;
                     }
