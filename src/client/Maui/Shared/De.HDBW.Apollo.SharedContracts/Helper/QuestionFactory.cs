@@ -10,6 +10,8 @@ namespace De.HDBW.Apollo.SharedContracts.Helper
             where TU : AbstractQuestion
         {
             var type = rawData.type;
+
+            #pragma warning disable CS8603 // Possible null reference return.
             switch (type)
             {
                 case QuestionType.EACONDITIONS:
@@ -33,6 +35,7 @@ namespace De.HDBW.Apollo.SharedContracts.Helper
                 default:
                     throw new NotSupportedException($"QuestionType {rawData?.type} not supported.");
             }
+            #pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }
