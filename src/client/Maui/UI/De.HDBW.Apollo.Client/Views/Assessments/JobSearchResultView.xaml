@@ -56,6 +56,57 @@
                 <Label InputTransparent="True" Grid.Row="2" Grid.ColumnSpan="2" Text="{x:Static strings:Resources.Global_TestNow}" Margin="16,0,16,16" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14}"/>
             </Grid>
         </DataTemplate>
+
+        <DataTemplate x:Key="IsMemberOnlyTemplate" x:DataType="assessmentModels:AssessmentTileEntry">
+            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto"  Padding="24,8">
+                <Border Style="{StaticResource InputBorderStyle}" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{x:Binding InteractCommand}" NumberOfTapsRequired="1"/>
+                    </Border.GestureRecognizers>
+                </Border>
+                <Border InputTransparent="True" Style="{StaticResource InputBorderHeaderStyle}" BackgroundColor="{StaticResource Primary300}" Grid.Column="0" HorizontalOptions="Start">
+                    <HorizontalStackLayout InputTransparent="True" >
+                        <Image InputTransparent="True" WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center">
+                            <Image.Source>
+                                <FontImageSource Glyph="{x:Binding DecoratorImagePath}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource TextColor}"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{x:Binding Title, Mode=OneWay}" TextColor="{StaticResource TextColor}" VerticalOptions="Center" Style="{StaticResource Noto12}"/>
+                    </HorizontalStackLayout>
+                </Border>
+                <ImageButton Grid.Column="1" WidthRequest="48" HeightRequest="48" Padding="12"
+                             Command="{x:Binding ToggleIsFavoriteCommand}"
+                             IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}" SemanticProperties.Hint="{x:Binding Text, Mode=OneTime}"
+                             VerticalOptions="Start">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                    </ImageButton.Source>
+                    <ImageButton.Triggers>
+                        <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <FontImageSource Glyph="{x:Static models:KnownIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="SemanticProperties.Description" Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
+                        </DataTrigger>
+                    </ImageButton.Triggers>
+                </ImageButton>
+                <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneWay}" Grid.Row="1" Grid.ColumnSpan="2" Margin="16" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+                <HorizontalStackLayout InputTransparent="True" Grid.Row="2" Grid.ColumnSpan="2" Margin="16,0,16,16">
+                    <Image InputTransparent="True" WidthRequest="16" HeightRequest="16" IsVisible="{x:Binding HasDecoratorImage, Mode=OneTime}" Margin="0,0,8,0" VerticalOptions="Center" SemanticProperties.Description="{x:Static strings:Resources.AssessmentFeedView_Locked}">
+                        <Image.Source>
+                            <FontImageSource Glyph="{StaticResource Lock}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                        </Image.Source>
+                    </Image>
+                    <Label InputTransparent="True" Text="{x:Static strings:Resources.Global_RegisterNow}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}"/>
+                </HorizontalStackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <!--<selector:AssessmentSectionTemplateSelector x:Key="JobSearchResultSectionTemplateSelector"
+                                                    IsMemberOnlyTemplate="{StaticResource IsMemberOnlyTemplate}"
+                                                    TileTemplate="{StaticResource TileTemplate}"/>-->
     </ContentPage.Resources>
     <Grid RowDefinitions="auto,auto,*">
         <Label Text="{x:Binding SelectedJob}" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="24,24,24,16"/>
