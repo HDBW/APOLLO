@@ -115,7 +115,10 @@ message AssessmentTile {
   //Because Favorites suck!
   repeated google.protobuf.StringValue ModuleIds = 14;
 
-  repeated AssessmentScore AssessmentScores = 15;
+  
+  // The Scores of each Module of the Assessment.
+  // remark: only for AssessmentType.So needed
+  repeated ModuleScore ModuleScores = 15;
 }
 
 // The request message containing the user's name.
@@ -156,24 +159,43 @@ message ModuleTile {
 
   //Because Favorites suck!
   google.protobuf.StringValue ModuleId = 7;
-
-  // The Score of the Module
-  repeated AssessmentScore AssessmentScores = 8;
+  
+  // The unified Score of the Module
+  //Remark: Only needed for AssessmentType.So
+  ModuleScore ModuleScore = 8;
 
   // Indicates whetere this Module is doable by a registered user only
   bool MemberOnly = 9;
+
+  // The current session id of the module
+  google.protobuf.StringValue SessionId = 10;
+
+  // The number of rawdata in this module
+  google.protobuf.Int32Value RawDataCount = 11;
+
+  // The number of answers in current session.
+  google.protobuf.Int32Value AnswerCount = 12;
 }
 
-message AssessmentScore {
+message ModuleScore {
   google.protobuf.StringValue ProfileId = 1;
   google.protobuf.StringValue AssessmentId = 2;
   google.protobuf.StringValue ModuleId = 3;
   google.protobuf.DoubleValue Result = 5;
   string Segment = 6;
   AssessmentScoreQuantity Quantity = 7;
-
-  //it only applies to SO 
   google.protobuf.StringValue ResultDescription = 8;
+}
+
+message SegmentScore {
+  google.protobuf.StringValue ProfileId = 1;
+  google.protobuf.StringValue AssessmentId = 2;
+  google.protobuf.StringValue ModuleId = 3;
+  google.protobuf.DoubleValue Result = 5;
+  string Segment = 6;
+  AssessmentScoreQuantity Quantity = 7;
+  google.protobuf.StringValue ResultDescription = 8;
+  google.protobuf.StringValue ResultDetail = 9;
 }
 
 message ModulesRequest {
@@ -242,6 +264,23 @@ message Module {
   google.protobuf.StringValue ModuleId = 14;
   
   google.protobuf.Int64Value JobId = 15;
+
+  // The current session id of the module
+  google.protobuf.StringValue SessionId = 16;
+
+  // The number of rawdata in this module
+  google.protobuf.Int32Value RawDataCount = 17;
+
+  // The number of answers in current session.
+  google.protobuf.Int32Value AnswerCount = 18;
+
+  // The Scores of each segment of a Module
+  repeated SegmentScore SegmentScores = 19;
+
+   // The unified Score of the Module
+  ModuleScore ModuleScore = 21;
+
+  google.protobuf.StringValue LocalizedJobName = 22;
 }
 
 message Job {
@@ -255,6 +294,8 @@ message Job {
   string EscoId = 4;
 
   string Version = 5;
+  
+  string Schwerpunkt = 6;
 }
 
 message RawData {
@@ -280,6 +321,8 @@ message RawData {
 
   //Indidcates if the module is deleted
   bool Deleted = 8;
+
+  google.protobuf.StringValue ScoringKey = 9;
 }
 
 message AssessmentSession {
@@ -288,15 +331,15 @@ message AssessmentSession {
     
   string SessionId = 2;
 
-      // The Id of the assesment
-  string AssesmentId = 3;
+      // The Id of the assessment
+  string AssessmentId = 3;
   
     // The Id of the module
   string ModuleId = 4;
 
   repeated RawData RawDatas = 5;
   
-  string CurrentRawdata = 6;
+  string CurrentRawDataId = 6;
 }
 
 message Answer {
@@ -307,4 +350,3 @@ message Answer {
 
   double Score = 3;
 }
-
