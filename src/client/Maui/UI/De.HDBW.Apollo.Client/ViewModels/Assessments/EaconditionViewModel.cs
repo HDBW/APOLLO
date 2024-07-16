@@ -288,6 +288,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             }
         }
 
+        protected override void RefreshCommands()
+        {
+            base.RefreshCommands();
+            NavigateBackCommand?.NotifyCanExecuteChanged();
+        }
+
         private SelectableEaconditionEntry CreateSelectableEntry(Eacondition data)
         {
             return SelectableEaconditionEntry.Import(data, SelectionChangedHandler, MediaBasePath, Density, ImageSizeConfig[typeof(EaconditionEntry)]);

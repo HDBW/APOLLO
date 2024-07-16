@@ -14,11 +14,8 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private ModuleScoreDecoEntry(List<ModuleScoreEntry> segments, AssessmentType type)
             : base(type)
         {
-            Type = type;
             Segments = new List<ModuleScoreEntry>(segments);
         }
-
-        public AssessmentType Type { get; }
 
         public static ModuleScoreDecoEntry Import(List<ModuleScoreEntry> segments, AssessmentType type)
         {
