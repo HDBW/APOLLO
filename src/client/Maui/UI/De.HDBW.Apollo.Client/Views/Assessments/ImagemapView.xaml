@@ -28,7 +28,7 @@
                                     Interactions="{x:Binding Shapes}"
                                     InteractionBackgroundBrush="#A0FFFFFF"
                                     InteractionBorderBrush="{StaticResource PrimaryBrush}"
-                                    InteractionSelectedBackgroundBrush="#A0FFFFFF"
+                                    InteractionSelectedBackgroundBrush="{StaticResource PrimaryBrush}"
                                     InteractionSelectedBorderBrush="{StaticResource PrimaryBrush}"
                                     HeightRequest="272"
                                     >
