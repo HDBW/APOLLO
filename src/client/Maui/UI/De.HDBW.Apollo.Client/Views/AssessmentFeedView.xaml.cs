@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
 namespace De.HDBW.Apollo.Client.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class AssessmentFeedView : ContentPage
     {
         public AssessmentFeedView(AssessmentFeedViewModel model)

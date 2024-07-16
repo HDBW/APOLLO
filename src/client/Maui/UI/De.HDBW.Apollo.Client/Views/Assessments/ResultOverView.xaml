@@ -2,16 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Assessments.ResultOverView"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
              xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
              xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
              xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
-             xmlns:converter="clr-namespace:De.HDBW.Apollo.Client.Converter"
              xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
-             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              Title="{x:Static strings:Resources.TxtAssesmentsResultOverViewPageTitle}"
              IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
@@ -119,7 +116,7 @@
             </Grid>
         </DataTemplate>
         
-        <DataTemplate x:Key="RecommendedTrainingInteractionEntry">
+        <DataTemplate x:Key="RecommendedTrainingInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">
             <Grid>
                 <Border Style="{StaticResource PictureEntryBorderStyle}" Margin="24,4" SemanticProperties.Hint="{OnPlatform Android={x:Static strings:Resources.Global_Alttext_KursDetails}}">
                     <Border.StrokeShape>
@@ -130,7 +127,7 @@
                     </Border.GestureRecognizers>
                     <VerticalStackLayout Spacing="8">
                         <Grid ColumnDefinitions="*, Auto">
-                            <Label InputTransparent="True"  Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="16,16,8,8" />
+                            <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="16,16,8,8" />
                             <ImageButton Grid.Column="1" Padding="12" VerticalOptions="Start" IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}">
                                 <ImageButton.Source>
                                     <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>

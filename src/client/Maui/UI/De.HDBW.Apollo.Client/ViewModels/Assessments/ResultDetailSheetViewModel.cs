@@ -26,7 +26,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         private CultureInfo _culture = new CultureInfo("de-DE");
 
         private string? _data;
-        private string _language;
+        private string _language = "de-DE";
         private AssessmentType _type = AssessmentType.Unknown;
 
         public ResultDetailSheetViewModel(

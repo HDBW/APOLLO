@@ -3,7 +3,7 @@
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class ContactView : ContentPage
     {
         public ContactView(ContactViewModel model)

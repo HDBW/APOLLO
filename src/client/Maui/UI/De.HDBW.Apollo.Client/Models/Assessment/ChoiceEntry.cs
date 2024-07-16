@@ -28,7 +28,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         private ObservableCollection<SelectableImageEntry> _answerImages = new ObservableCollection<SelectableImageEntry>();
 
         [ObservableProperty]
-        private ObservableCollection<ImageEntry> _questionImages = new ObservableCollection<ImageEntry>();
+        private ObservableCollection<ZoomableImageEntry> _questionImages = new ObservableCollection<ZoomableImageEntry>();
 
         [ObservableProperty]
         private ObservableCollection<object> _questionImageView = new ObservableCollection<object>();
@@ -43,13 +43,13 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
             _togglePlaybackCallback = togglePlaybackCallback;
             _restartAudioCallback = restartAudioCallback;
-            QuestionImages = new ObservableCollection<ImageEntry>(data.QuestionImages.Select(x => ImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.QuestionImages)])));
+            QuestionImages = new ObservableCollection<ZoomableImageEntry>(data.QuestionImages.Select(x => ZoomableImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.QuestionImages)], zoomImageCallback)));
             AnswerImages = new ObservableCollection<SelectableImageEntry>(data.AnswerImages.Select(x => SelectableImageEntry.Import(x, basePath, density, imageSizeConfig[nameof(data.AnswerImages)], () => { DidInteract = true; })));
             AnswerTexts = new ObservableCollection<SelectableTextEntry>(data.AnswerTexts.Select(x => SelectableTextEntry.Import(x, () => { DidInteract = true; })));
             switch (QuestionImages.Count())
             {
                 case 1:
-                    QuestionImageView.Add(ZoomableImageEntry.Import(QuestionImages[0].Export(), basePath, density, imageSizeConfig[nameof(data.QuestionImages)], zoomImageCallback));
+                    QuestionImageView.Add(QuestionImages[0]);
                     break;
                 case 2:
                     QuestionImageView.Add(PageableImagesEntry.Import(QuestionImages));

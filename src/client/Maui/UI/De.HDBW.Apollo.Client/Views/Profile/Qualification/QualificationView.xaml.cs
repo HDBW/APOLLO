@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.Qualification
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class QualificationView : ContentPage
     {
         public QualificationView(QualificationViewModel model)

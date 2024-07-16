@@ -30,6 +30,14 @@ namespace De.HDBW.Apollo.Client.Models.Training
             }
         }
 
+        public bool HasItems
+        {
+            get
+            {
+                return Items.Any();
+            }
+        }
+
         public static LoanItem Import(
             Loans loan,
             Func<string?, CancellationToken, Task>? openUrlHandler,

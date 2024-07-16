@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class StudyView : ContentPage
     {
         public StudyView(StudyViewModel model)

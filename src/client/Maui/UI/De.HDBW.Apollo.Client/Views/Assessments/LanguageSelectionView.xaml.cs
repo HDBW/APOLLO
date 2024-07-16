@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Assessments;
 
 namespace De.HDBW.Apollo.Client.Views.Assessments
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class LanguageSelectionView : ContentPage
     {
         public LanguageSelectionView(LanguageSelectionViewModel model)

@@ -74,7 +74,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         public static ModuleScoreEntry Import(ModuleScore score, string displayQuantity, AssessmentType type, Func<ModuleScoreEntry, CancellationToken, Task>? interactHandler = null, Func<ModuleScoreEntry, bool>? canInteractHandler = null)
         {
-            return new ModuleScoreEntry(score, displayQuantity,type, interactHandler, canInteractHandler);
+            return new ModuleScoreEntry(score, displayQuantity, type, interactHandler, canInteractHandler);
         }
 
         public void RefreshCommands()

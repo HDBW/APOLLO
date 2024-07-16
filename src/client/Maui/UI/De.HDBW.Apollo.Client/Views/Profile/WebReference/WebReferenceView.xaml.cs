@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.WebReference
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class WebReferenceView : ContentPage
     {
         public WebReferenceView(WebReferenceViewModel model)

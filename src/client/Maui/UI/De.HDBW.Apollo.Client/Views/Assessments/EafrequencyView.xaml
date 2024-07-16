@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
@@ -24,7 +24,7 @@
             </VerticalStackLayout>
         </ScrollView>
         <Border Grid.Row="1" Padding="16,16" Style="{StaticResource FooterStyle}" BindingContext="{x:Binding Question, Mode=OneWay}">
-            <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="auto,auto,auto" >
+            <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="auto,auto,auto" x:DataType="models:EafrequencyEntry">
                 <Label Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Binding BindingContext[TxtAssesmentsEafrequencyViewInstruction], Mode=OneWay, Source={x:Reference PART_Root}}" Margin="8,0,8,8" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
                 <RadioButton Content="0" IsChecked="{x:Binding Is0Selected, Mode=TwoWay}" Grid.Column="0" Grid.Row="1" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsEafrequencyViewNever], Mode=OneWay, Source={x:Reference PART_Root}}" ControlTemplate="{StaticResource RadioButtonLikeButtonEafrequencyViewTemplate}">
                 </RadioButton>

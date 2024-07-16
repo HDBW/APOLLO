@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="De.HDBW.Apollo.Client.Views.Training.LoansView"
              xmlns:system="clr-namespace:System;assembly=netstandard"
@@ -57,7 +57,7 @@
                         <Grid RowDefinitions="auto, auto, auto" Margin="24,0">
                             <Label Text="{x:Binding Header}" Style="{StaticResource Noto16SemiBold}" Margin="0,0,0,8"/>
                             <Label Grid.Row="1" Text="{x:Binding Description}" Style="{StaticResource Noto16}" Margin="0,0,0,8"/>
-                            <Border Grid.Row="2" Style="{StaticResource FrameBorder}" >
+                            <Border Grid.Row="2" Style="{StaticResource FrameBorder}" IsVisible="{x:Binding HasItems}">
                                 <VerticalStackLayout BindableLayout.ItemsSource="{x:Binding Items}" Spacing="8" BindableLayout.ItemTemplateSelector="{StaticResource LineItemTemplateSelector}"/>
                             </Border>
                         </Grid>

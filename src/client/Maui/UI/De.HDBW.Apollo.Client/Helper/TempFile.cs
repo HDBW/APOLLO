@@ -49,6 +49,13 @@ namespace De.HDBW.Apollo.Client.Helper
             }
         }
 
+        public void Move(string path, bool overwrite)
+        {
+            var tempFile = FileInfo.FullName;
+            FileInfo.MoveTo(path, overwrite);
+            FileInfo = new FileInfo(tempFile);
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -72,13 +79,6 @@ namespace De.HDBW.Apollo.Client.Helper
             }
 
             _disposed = true;
-        }
-
-        public void Move(string path, bool overwrite)
-        {
-            var tempFile = FileInfo.FullName;
-            FileInfo.MoveTo(path, overwrite);
-            FileInfo = new FileInfo(tempFile);
         }
     }
 }

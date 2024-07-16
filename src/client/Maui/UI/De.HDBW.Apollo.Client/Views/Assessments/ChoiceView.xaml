@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
@@ -108,9 +108,9 @@
                         </Image>
                         <Label InputTransparent="True" Text="{x:Binding BindingContext[BtnTxtAssesmentsChoiceViewMaximize], Source={x:Reference PART_Root}, Mode=OneTime}" VerticalOptions="Center" TextColor="{StaticResource Primary}"/>
                     </HorizontalStackLayout>
-                    <CarouselView Grid.Row="1" ItemsSource="{x:Binding Images, Mode=OneWay}" IndicatorView="indicatorView" x:Name="PART_QuestionImages">
+                    <CarouselView Grid.Row="1" ItemsSource="{x:Binding Images, Mode=OneWay}" CurrentItem="{x:Binding CurrentImage, Mode=TwoWay}" IndicatorView="indicatorView" x:Name="PART_QuestionImages">
                         <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="models:ImageEntry">
+                            <DataTemplate x:DataType="models:ZoomableImageEntry">
                                 <Image Source="{x:Binding AbsolutePath, Mode=OneTime}" Aspect="AspectFit" HeightRequest="204"/>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
