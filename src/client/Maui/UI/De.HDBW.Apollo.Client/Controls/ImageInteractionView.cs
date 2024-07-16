@@ -102,7 +102,11 @@ namespace De.HDBW.Apollo.Client.Controls
             }
 
             UnsubscribeEvents();
-            Drawable = null;
+            if (disposing)
+            {
+                Drawable = null;
+            }
+
             _drawable = null;
             _disposed = true;
         }
