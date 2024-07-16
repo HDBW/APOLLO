@@ -1444,96 +1444,7 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <value>Вибирай те, що цікавить тебе найбільше! Ти можеш вибрати до трьох галузей!</value>
     <comment>EACondition-BE</comment>
   </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription" xml:space="preserve">
-    <value>Du weißt noch nicht wohin es beruflich gehen soll oder möchtest dich umorientieren? Dann bist du hier richtig!
-Das Tool hilft dir Berufsbereiche zu finden, die zu deinen Interessen passen.
-Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_ar" xml:space="preserve">
-    <value>أنت لا تعرف بعد إلى أين تريد أن تتوجه مهنيًا أو ترغب في إعادة توجيه نفسك؟ إذن فأنت هنا في المكان الصحيح!
-تساعدك الأداة في العثور على المجالات المهنية التي تتناسب مع اهتماماتك.
-يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_bg-BG" xml:space="preserve">
-    <value>Все още не знаеш какъв професионален път искаш да поемеш или искаш да се преориентираш? Тогава това е правилното място за теб!
-Инструментът ти помага да намериш професионални области, които отговарят на твоите интереси.
-Можеш да положиш теста и на друг език. За целта избери език горе.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_en-US" xml:space="preserve">
-    <value>Not sure what profession to pursue yet? Looking for a new direction? Then you’ve come to the right place!
-The tool will help you find career areas that match your interests.
-You can also take this test in another language. Select a language above.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_fr-FR" xml:space="preserve">
-    <value>Vous ne savez pas encore vers quel métier vous souhaitez vous orienter ou vous voulez vous réorienter? Alors, vous êtes au bon endroit!
-Cet outil vous aide à trouver les domaines professionnels qui correspondent à vos centres d’intérêt.
-Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue en haut.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_ro-RO" xml:space="preserve">
-    <value>Nu prea știi cum să continui drumul profesional sau dorești să te reorientezi? Atunci ai ajuns exact unde trebuie!
-Acest instrument te ajută să găsești domenii profesional care se potrivesc cu interesele tale.
-Poți da testul și într-o altă limbă. Selectează o limbă de mai sus.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_ru-RU" xml:space="preserve">
-    <value>Вы ещё не знаете, куда хотите двигаться в профессиональном плане, или же хотите переориентироваться? Тогда вы попали по адресу!
-Это средство поможет вам найти те сферы деятельности, которые соответствуют вашим интересам.
-Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_tr-TR" xml:space="preserve">
-    <value>Meslek olarak nereye gitmek istediğini henüz bilmiyor musun veya kendine yeni bir yön bulmak mı istiyorsun? O zaman burada doğru yerdesin!
-Bu araç, ilgi alanlarına uygun meslek alanlarını bulmana yardımcı olur.
-Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartDescription_uk-UA" xml:space="preserve">
-    <value>Ти ще не знаєш, куди хочеш рухатися в професійному плані? Aбо хочеш переорієнтуватися? Тоді ти потрапив/потрапила за адресою!
-Цей засіб допоможе тобi знайти сфери діяльності, які відповідають твоїм інтересам.
-Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle" xml:space="preserve">
-    <value>Lass dich inspirieren und entdecke Berufe, die dich interessieren!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_ar" xml:space="preserve">
-    <value>استمد الإلهام واكتشف المهن التي تهمك!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_bg-BG" xml:space="preserve">
-    <value>Остави се на вдъхновението и открий професии, които да те заинтригуват!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_en-US" xml:space="preserve">
-    <value>Get inspired and discover professions that interest you!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_fr-FR" xml:space="preserve">
-    <value>Laissez-vous inspirer et découvrez des métiers qui vous intéresseront!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_ro-RO" xml:space="preserve">
-    <value>Lasă-te inspirat(ă) și descoperă profesii care te interesează!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_ru-RU" xml:space="preserve">
-    <value>Не медлите и откройте для себя профессии, которые вам интересны!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_tr-TR" xml:space="preserve">
-    <value>İlham al ve ilgini çeken meslekleri keşfet!</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsModuleDetailViewEaconditionStartTitle_uk-UA" xml:space="preserve">
-    <value>Не зволікай та відкрий для себе професії, які тобi цікаві!</value>
-    <comment>EACondition-BE</comment>
-  </data>
+  
   <data name="TxtAssesmentsEaconditionGlobalTitle" xml:space="preserve">
     <value>Berufe entdecken</value>
     <comment>EACondition-BE</comment>
@@ -3315,7 +3226,7 @@ Tи відповідаєш на запитання, вибираючи прав�
     <comment>Translated</comment>
   </data>
   <data name="TxtAssesmentsGlobalTitleQuestions_ar" xml:space="preserve">
-    <value>سؤال {0} / {1}</value>
+    <value>سؤال {0}/{1}</value>
     <comment>Translate New</comment>
   </data>
   <data name="TxtAssesmentsGlobalTitleQuestions_bg-BG" xml:space="preserve">
@@ -3668,5 +3579,39 @@ Tи відповідаєш на запитання, вибираючи прав�
   </data>
   <data name="BtnTxtAssessmentFeed_AllJobs" xml:space="preserve">
     <value>Alle Berufe</value>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage" xml:space="preserve">
+    <value>Seite {0}/{1}</value>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_ar" xml:space="preserve">
+    <value>صفحة {0}/{1}</value>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_bg-BG" xml:space="preserve">
+    <value>Въпрос {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_en-US" xml:space="preserve">
+    <value>Question {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_fr-FR" xml:space="preserve">
+    <value>Question {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_ro-RO" xml:space="preserve">
+    <value>Întrebare {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_ru-RU" xml:space="preserve">
+    <value>Вопрос {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_tr-TR" xml:space="preserve">
+    <value>Soru {0}/{1}</value>
+    <comment>Translate New</comment>
+  </data>
+  <data name="TxtAssesmentsGlobalTitlePage_uk-UA" xml:space="preserve">
+    <value>Питання {0}/{1}</value>
+    <comment>Translate New</comment>
   </data>
 </root>

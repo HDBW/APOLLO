@@ -6013,6 +6013,87 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seite {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to صفحة {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_ar {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_ar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Въпрос {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_bg_BG {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_bg-BG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_en_US {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_en-US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_fr_FR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_fr-FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Întrebare {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_ro_RO {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_ro-RO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вопрос {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_ru_RU {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_ru-RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soru {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_tr_TR {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_tr-TR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Питання {0}/{1}.
+        /// </summary>
+        public static string TxtAssesmentsGlobalTitlePage_uk_UA {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsGlobalTitlePage_uk-UA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frage {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitleQuestions {
@@ -6022,7 +6103,7 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to سؤال {0} / {1}.
+        ///   Looks up a localized string similar to سؤال {0}/{1}.
         /// </summary>
         public static string TxtAssesmentsGlobalTitleQuestions_ar {
             get {
@@ -6288,186 +6369,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsModuleDetailViewAnsweredQuestions_uk_UA {
             get {
                 return ResourceManager.GetString("TxtAssesmentsModuleDetailViewAnsweredQuestions_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Du weißt noch nicht wohin es beruflich gehen soll oder möchtest dich umorientieren? Dann bist du hier richtig!
-        ///Das Tool hilft dir Berufsbereiche zu finden, die zu deinen Interessen passen.
-        ///Du kannst diesen Test auch in einer anderen Sprache machen. Wähle dafür oben eine Sprache aus..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to أنت لا تعرف بعد إلى أين تريد أن تتوجه مهنيًا أو ترغب في إعادة توجيه نفسك؟ إذن فأنت هنا في المكان الصحيح!
-        ///تساعدك الأداة في العثور على المجالات المهنية التي تتناسب مع اهتماماتك.
-        ///يمكنك أيضاً إجراء هذا الاختبار بلغة أخرى. اختر اللغة أعلاه لهذا الغرض..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Все още не знаеш какъв професионален път искаш да поемеш или искаш да се преориентираш? Тогава това е правилното място за теб!
-        ///Инструментът ти помага да намериш професионални области, които отговарят на твоите интереси.
-        ///Можеш да положиш теста и на друг език. За целта избери език горе..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not sure what profession to pursue yet? Looking for a new direction? Then you’ve come to the right place!
-        ///The tool will help you find career areas that match your interests.
-        ///You can also take this test in another language. Select a language above..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vous ne savez pas encore vers quel métier vous souhaitez vous orienter ou vous voulez vous réorienter? Alors, vous êtes au bon endroit!
-        ///Cet outil vous aide à trouver les domaines professionnels qui correspondent à vos centres d’intérêt.
-        ///Vous pouvez également passer ce test dans une autre langue. Pour cela, sélectionnez une langue en haut..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nu prea știi cum să continui drumul profesional sau dorești să te reorientezi? Atunci ai ajuns exact unde trebuie!
-        ///Acest instrument te ajută să găsești domenii profesional care se potrivesc cu interesele tale.
-        ///Poți da testul și într-o altă limbă. Selectează o limbă de mai sus..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Вы ещё не знаете, куда хотите двигаться в профессиональном плане, или же хотите переориентироваться? Тогда вы попали по адресу!
-        ///Это средство поможет вам найти те сферы деятельности, которые соответствуют вашим интересам.
-        ///Вы также можете пройти этот тест и на другом языке. Для этого выберите вверху нужный язык..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meslek olarak nereye gitmek istediğini henüz bilmiyor musun veya kendine yeni bir yön bulmak mı istiyorsun? O zaman burada doğru yerdesin!
-        ///Bu araç, ilgi alanlarına uygun meslek alanlarını bulmana yardımcı olur.
-        ///Bu testi başka bir dilde de yapabilirsin. Bunun için yukarıda bir dili seç..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ти ще не знаєш, куди хочеш рухатися в професійному плані? Aбо хочеш переорієнтуватися? Тоді ти потрапив/потрапила за адресою!
-        ///Цей засіб допоможе тобi знайти сфери діяльності, які відповідають твоїм інтересам.
-        ///Ти можеш пройти цей тест і іншою мовою. Для цього вибери вгорі мову..
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartDescription_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartDescription_uk-UA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lass dich inspirieren und entdecke Berufe, die dich interessieren!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to استمد الإلهام واكتشف المهن التي تهمك!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Остави се на вдъхновението и открий професии, които да те заинтригуват!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Get inspired and discover professions that interest you!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Laissez-vous inspirer et découvrez des métiers qui vous intéresseront!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lasă-te inspirat(ă) și descoperă profesii care te interesează!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Не медлите и откройте для себя профессии, которые вам интересны!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to İlham al ve ilgini çeken meslekleri keşfet!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Не зволікай та відкрий для себе професії, які тобi цікаві!.
-        /// </summary>
-        public static string TxtAssesmentsModuleDetailViewEaconditionStartTitle_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsModuleDetailViewEaconditionStartTitle_uk-UA", resourceCulture);
             }
         }
         
