@@ -1376,39 +1376,10 @@ Du kannst den Selbsttest auch in einer anderen Sprache machen. Wähle dafür obe
     <value>Klasse, der erste Schritt ist gemacht! Hier werden dir Berufsbereiche angezeigt, die zu deiner ersten Auswahl passen. Erfahre mehr über die Bereiche, in dem du sie anklickst.</value>
     <comment>EACondition-BE</comment>
   </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_ar" xml:space="preserve">
-    <value>رائع، لقد تم اتخاذ الخطوة الأولى! ستظهر لك هنا المجالات المهنية التي تطابق اختيارك الأول. اكتشف المزيد عن المجالات من خلال النقر عليها.</value>
+  <data name="TxtAssesmentsEaConditionDetailViewInstruction" xml:space="preserve">
+    <value>Wähle aus, was dich am meisten interessiert! Du kannst bis zu drei Bereiche wählen!</value>
     <comment>EACondition-BE</comment>
   </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_bg-BG" xml:space="preserve">
-    <value>Чудесно, първата стъпка е направена! Тук се показват професионалните области, които са подходящи за първия ти избор. Научи повече за областите, като щракнеш върху тях.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_en-US" xml:space="preserve">
-    <value>Excellent, you’ve taken the first step! Here you will be shown career areas that match your first selection. Find out more about the areas by clicking on them.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_fr-FR" xml:space="preserve">
-    <value>Super, vous avez franchi la première étape! Vous trouverez ici de métiers qui correspondent à votre premier choix. Apprenez-en plus sur ces métiers en cliquant dessus.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_ro-RO" xml:space="preserve">
-    <value>Grozav – ai făcut primul pas! Aici sunt afișate domeniile profesional care se potrivesc cu prima ta alegere. Află mai multe despre aceste domenii, făcând clic pe ele.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_ru-RU" xml:space="preserve">
-    <value>Отлично, первый шаг уже сделан! Здесь вам будут показаны профессиональные области, соответствующие вашему первому выбору. Чтобы узнать больше об этих областях, нажмите на них.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_tr-TR" xml:space="preserve">
-    <value>Harika, ilk adım atıldı! Burada ilk yaptığın seçimle eşleşen meslek alanları gösterilecektir. Üzerlerine tıklayarak alanlar hakkında daha fazla bilgi edinebilirsin.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  <data name="TxtAssesmentsEaConditionFilteredViewInstruction_uk-UA" xml:space="preserve">
-    <value>Чудово, перший крок зроблено! Тут тобi будуть показані професійні галузі, що відповідають твому першому вибору. Щоб дізнатися більше про ці галузі, натисни на них.</value>
-    <comment>EACondition-BE</comment>
-  </data>
-  
   <data name="TxtAssesmentsEaconditionGlobalTitle" xml:space="preserve">
     <value>Berufe entdecken</value>
     <comment>EACondition-BE</comment>

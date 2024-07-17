@@ -5200,6 +5200,15 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wähle aus, was dich am meisten interessiert! Du kannst bis zu drei Bereiche wählen!.
+        /// </summary>
+        public static string TxtAssesmentsEaConditionDetailViewInstruction {
+            get {
+                return ResourceManager.GetString("TxtAssesmentsEaConditionDetailViewInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deine passende Berufskategorie.
         /// </summary>
         public static string TxtAssesmentsEaconditionDetailViewSuitingCategory {
@@ -5286,78 +5295,6 @@ namespace De.HDBW.Apollo.Client.Resources.Strings {
         public static string TxtAssesmentsEaConditionFilteredViewInstruction {
             get {
                 return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to رائع، لقد تم اتخاذ الخطوة الأولى! ستظهر لك هنا المجالات المهنية التي تطابق اختيارك الأول. اكتشف المزيد عن المجالات من خلال النقر عليها..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_ar {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Чудесно, първата стъпка е направена! Тук се показват професионалните области, които са подходящи за първия ти избор. Научи повече за областите, като щракнеш върху тях..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_bg_BG {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_bg-BG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Excellent, you’ve taken the first step! Here you will be shown career areas that match your first selection. Find out more about the areas by clicking on them..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_en_US {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_en-US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Super, vous avez franchi la première étape! Vous trouverez ici de métiers qui correspondent à votre premier choix. Apprenez-en plus sur ces métiers en cliquant dessus..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_fr_FR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_fr-FR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Grozav – ai făcut primul pas! Aici sunt afișate domeniile profesional care se potrivesc cu prima ta alegere. Află mai multe despre aceste domenii, făcând clic pe ele..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_ro_RO {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_ro-RO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Отлично, первый шаг уже сделан! Здесь вам будут показаны профессиональные области, соответствующие вашему первому выбору. Чтобы узнать больше об этих областях, нажмите на них..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_ru_RU {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_ru-RU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Harika, ilk adım atıldı! Burada ilk yaptığın seçimle eşleşen meslek alanları gösterilecektir. Üzerlerine tıklayarak alanlar hakkında daha fazla bilgi edinebilirsin..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_tr_TR {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_tr-TR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Чудово, перший крок зроблено! Тут тобi будуть показані професійні галузі, що відповідають твому першому вибору. Щоб дізнатися більше про ці галузі, натисни на них..
-        /// </summary>
-        public static string TxtAssesmentsEaConditionFilteredViewInstruction_uk_UA {
-            get {
-                return ResourceManager.GetString("TxtAssesmentsEaConditionFilteredViewInstruction_uk-UA", resourceCulture);
             }
         }
         
