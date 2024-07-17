@@ -19,7 +19,7 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-                <Label Text="{x:Binding Question, Mode=OneWay}" TextType="Html" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,24,0,8"/>
+                <Label Text="{x:Binding QuestionHtml, Mode=OneWay}" TextType="Html" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="0,24,0,8"/>
                 <Label Text="{x:Binding Situation, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
             </VerticalStackLayout>
         </ScrollView>

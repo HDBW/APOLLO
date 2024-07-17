@@ -82,8 +82,8 @@
             <Grid RowDefinitions="Auto,Auto">
                 <VerticalStackLayout  BindingContext="{x:Binding Question, Mode=OneWay}" x:DataType="models:AssociateEntry">
                     <Label Text="{x:Binding Text, Mode=OneWay}" Margin="4,0,4,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsGlobalBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
-                    <Label Text="{x:Binding Question, Mode=OneWay}" TextType="Html" Margin="4,0,4,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
-                    <Label Text="{x:Binding Instruction, Mode=OneWay}" TextType="Html" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
+                    <Label Text="{x:Binding QuestionHtml, Mode=OneWay}" TextType="Html" Margin="4,0,4,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                    <Label Text="{x:Binding InstructionHtml, Mode=OneWay}" TextType="Html" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                     <Label Text="{x:Binding BindingContext[TxtAssesmentsAssociateViewDescription], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="4,0,4,4" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                     <CollectionView x:Name="PART_Texts" Margin="0,0,0,12"  ItemTemplate="{StaticResource AssociateTextEntry}" ItemsSource="{x:Binding SourceTexts, Mode=OneWay}" ItemsLayout="VerticalGrid, 2"/>
                     <CollectionView x:Name="PART_Imges" Margin="0,0,0,12" ItemsSource="{x:Binding TargetImages, Mode=OneWay}" ItemTemplate="{StaticResource AssociateImage}" ItemsLayout="VerticalGrid, 2"/>

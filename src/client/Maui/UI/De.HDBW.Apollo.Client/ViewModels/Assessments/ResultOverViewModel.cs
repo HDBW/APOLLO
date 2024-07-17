@@ -15,6 +15,7 @@ using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.SharedContracts.Services;
 using Invite.Apollo.App.Graph.Common.Models.Assessments;
 using Microsoft.Extensions.Logging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 {
@@ -94,8 +95,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         {
                             case AssessmentType.Sk:
                                 sections.Add(DecoEntry.Import(module.Type));
-                                sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
-                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.LocalizedJobName)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
+                                sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"].EnsureHtmlFlowDirection(Culture) ?? string.Empty));
+                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.LocalizedJobName)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>".EnsureHtmlFlowDirection(Culture) ?? string.Empty));
                                 moduleScoreEntry = ModuleScoreEntry.Import(module.ModuleScore, this[string.Format(quantity_Patter, module.ModuleScore.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails);
                                 foreach (var score in module.SegmentScores)
                                 {
@@ -112,8 +113,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 break;
                             case AssessmentType.Ea:
                                 sections.Add(DecoEntry.Import(module.Type));
-                                sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
-                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewExperienceTestFinished"], module.LocalizedJobName)}</p><p>{this["TxtAssesmentsResultOverViewExperienceTestFinishedDescription"]}</p>"));
+                                sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"].EnsureHtmlFlowDirection(Culture) ?? string.Empty));
+                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewExperienceTestFinished"], module.LocalizedJobName)}</p><p>{this["TxtAssesmentsResultOverViewExperienceTestFinishedDescription"]}</p>".EnsureHtmlFlowDirection(Culture) ?? string.Empty));
                                 foreach (var score in module.SegmentScores)
                                 {
                                     sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type));
@@ -134,8 +135,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                                 sections.Add(ModuleScoreDecoEntry.Import(segments, module.Type));
                                 sections.Add(SublineTextEntry.Import(module.Title));
                                 var moduleScoreQuantity = this[string.Format(quantity_Patter, module.ModuleScore.Quantity)];
-                                sections.Add(HeadlineTextEntry.Import(moduleScoreQuantity));
-                                sections.Add(TextEntry.Import(string.Format(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"], moduleScoreQuantity)));
+                                sections.Add(HeadlineTextEntry.Import(moduleScoreQuantity.EnsureHtmlFlowDirection(Culture) ?? string.Empty));
+                                sections.Add(TextEntry.Import(string.Format(this["TxtAssesmentsResultOverViewSoftSkillsTestFinishedDescription"], moduleScoreQuantity).EnsureHtmlFlowDirection(Culture) ?? string.Empty));
                                 foreach (var score in module.SegmentScores)
                                 {
                                     moduleScoreEntry = ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails);
@@ -152,7 +153,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.Gl:
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(SublineTextEntry.Import(this["TxtAssesmentsResultOverviewGermanKnowledge"]));
-                                sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverviewGermanYourResult"]));
+                                sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverviewGermanYourResult"].EnsureHtmlFlowDirection(Culture) ?? string.Empty));
                                 foreach (var score in module.SegmentScores)
                                 {
                                     sections.Add(ModuleScoreEntry.Import(score.ToModuleScore(), this[string.Format(quantity_Patter, score.Quantity)], module.Type));

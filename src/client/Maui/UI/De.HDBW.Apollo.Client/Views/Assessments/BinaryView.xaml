@@ -52,8 +52,8 @@
                         </Image.Source>
                     </Image>
                 </Grid>
-                <Label Text="{x:Binding Question}" TextType="Html" Margin="8,0,8,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
-                <Label Text="{x:Binding Instruction, Mode=OneWay}" TextType="Html" Margin="8,0,8,0" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding QuestionHtml}" TextType="Html" Margin="8,0,8,16" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding InstructionHtml, Mode=OneWay}" TextType="Html" Margin="8,0,8,0" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                 <RadioButton IsChecked="{x:Binding IsTrueSelected, Mode=TwoWay}" Margin="0,0,0,0" ControlTemplate="{StaticResource RadioButtonLikeButtonBinaryViewTemplate}">
                     <RadioButton.Content>
                         <Label Text="{x:Binding BindingContext[BtnTxtAssesmentsBinaryViewTrue], Source={x:Reference PART_Root}, Mode=OneWay}" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16}"/>

@@ -130,6 +130,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
             Culture = new CultureInfo(_language);
             OnPropertyChanged(string.Empty);
+            Title = null;
             switch (_assessmentType)
             {
                 case AssessmentType.Sk:
@@ -426,9 +427,10 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                         break;
                 }
 
-                if (!string.IsNullOrWhiteSpace(module.Description))
+                var text = module.Description.EnsureHtmlFlowDirection(Culture);
+                if (!string.IsNullOrWhiteSpace(text))
                 {
-                    sections.Add(TextEntry.Import(module.Description));
+                    sections.Add(TextEntry.Import(text));
                 }
 
                 var format = this["ModuleDetailView_Minutes"];

@@ -3,7 +3,9 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.SharedContracts.Questions;
+using Microsoft.Maui.Platform;
 
 namespace De.HDBW.Apollo.Client.Models.Assessment
 {
@@ -21,6 +23,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             get { return Data.Instruction; }
         }
 
+        public string? InstructionHtml
+        {
+            get
+            {
+                return Instruction.EnsureHtmlFlowDirection(Data.Culture);
+            }
+        }
+
         public string? Text
         {
             get { return Data.Text; }
@@ -29,6 +39,14 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
         public string? Question
         {
             get { return Data.Question; }
+        }
+
+        public string? QuestionHtml
+        {
+            get
+            {
+                return Question.EnsureHtmlFlowDirection(Data.Culture);
+            }
         }
 
         public bool? IsRTL

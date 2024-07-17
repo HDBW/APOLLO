@@ -17,6 +17,12 @@ namespace De.HDBW.Apollo.Client.Platforms
         {
         }
 
+        protected override void UpdatePageTitle(AndroidX.AppCompat.Widget.Toolbar toolbar, Page page)
+        {
+            toolbar.LayoutDirection = page.FlowDirection == FlowDirection.RightToLeft? Android.Views.LayoutDirection.Rtl : Android.Views.LayoutDirection.Ltr;
+            base.UpdatePageTitle(toolbar, page);
+        }
+
         protected override IShellSearchView GetSearchView(Context context)
         {
             return new CustomShellSearchView(context, ShellContext);
