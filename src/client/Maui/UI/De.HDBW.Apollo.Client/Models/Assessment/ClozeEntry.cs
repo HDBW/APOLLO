@@ -59,5 +59,10 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
             CurrentValues[Ids.IndexOf(id) + 1] = value;
         }
+
+        public void SetDidInteract(bool value)
+        {
+            DidInteract = value;
+        }
     }
 }

@@ -76,6 +76,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 OnValueSet(this, new SetValueMessage(id, null));
             }
 
+            Question?.SetDidInteract(false);
+
             WeakReferenceMessenger.Default.Send(new ReloadMessage());
         }
 
