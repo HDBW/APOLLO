@@ -95,7 +95,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.Sk:
                                 sections.Add(DecoEntry.Import(module.Type));
                                 sections.Add(HeadlineTextEntry.Import(this["TxtAssesmentsResultOverViewCongrats"]));
-                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.JobId)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
+                                sections.Add(TextEntry.Import($"<p>{string.Format(this["TxtAssesmentsResultOverViewSkillsTestFinished"], module.LocalizedJobName)}</p><p>{this["TxtAssesmentsResultOverViewSkillsTestFinishedDescription"]}</p>"));
                                 moduleScoreEntry = ModuleScoreEntry.Import(module.ModuleScore, this[string.Format(quantity_Patter, module.ModuleScore.Quantity)], module.Type, HandleOpenDetails, CanHandleOpenDetails);
                                 foreach (var score in module.SegmentScores)
                                 {
