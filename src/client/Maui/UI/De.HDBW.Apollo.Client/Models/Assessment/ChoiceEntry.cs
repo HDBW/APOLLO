@@ -121,7 +121,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
 
         private bool CanRestartPlay()
         {
-            return IsPlaying;
+            return true;
         }
 
         private void UpdateIsPlaying(bool isPlaying)

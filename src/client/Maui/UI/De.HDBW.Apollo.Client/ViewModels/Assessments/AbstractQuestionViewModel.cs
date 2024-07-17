@@ -433,9 +433,20 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
         {
             try
             {
+                var wasPlaying = AudioPlayerService.IsPlaying;
+                if (!AudioPlayerService.IsPaused && !AudioPlayerService.IsPlaying)
+                {
+                    return AudioPlayerService.IsPlaying;
+                }
+
                 AudioPlayerService.Stop(HandlePlaybackCompleted);
                 _updateStateHandler?.Invoke(AudioPlayerService.IsPlaying);
                 _updateStateHandler = null;
+                if (!wasPlaying)
+                {
+                    return AudioPlayerService.IsPlaying;
+                }
+
                 return await OnToggleAudioPlaybackAsync(entry, updateStateHandler);
             }
             catch (Exception ex)
