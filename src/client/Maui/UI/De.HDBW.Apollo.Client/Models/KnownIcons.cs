@@ -113,7 +113,7 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string LanguageIcon = "\u0042";
 
-        public const string WebReferenceIcon = "\u00a0";
+        public const string WebReferenceIcon = "\u00bf";
 
         public const string MobilityInfoIcon = "\u0055";
 
