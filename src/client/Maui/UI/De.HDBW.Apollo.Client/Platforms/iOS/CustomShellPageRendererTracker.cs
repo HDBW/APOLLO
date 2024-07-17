@@ -54,7 +54,7 @@ namespace De.HDBW.Apollo.Client.Platforms
             var bar = ViewController?.NavigationController?.NavigationBar;
             if (bar != null)
             {
-                bar.SemanticContentAttribute = UISemanticContentAttribute.ForceRightToLeft;
+                bar.SemanticContentAttribute = Page.FlowDirection == FlowDirection.RightToLeft ? UISemanticContentAttribute.ForceRightToLeft : UISemanticContentAttribute.Unspecified;
             }
         }
 
