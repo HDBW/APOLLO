@@ -15,6 +15,7 @@ namespace De.HDBW.Apollo.Client.Platforms
     public class CustomShellPageRendererTracker : ShellPageRendererTracker
     {
         private WeakReference<UISearchController>? _searchController = null;
+        private WeakReference<UINavigationItem>? _navigationItem = null;
         private IShellContext? _context;
 
         public CustomShellPageRendererTracker(IShellContext context)
@@ -29,6 +30,31 @@ namespace De.HDBW.Apollo.Client.Platforms
             if (_searchController == null)
             {
                 base.OnSearchHandlerPropertyChanged(sender, new PropertyChangedEventArgs(SearchHandler.SearchBoxVisibilityProperty.PropertyName));
+            }
+        }
+
+        protected override void OnRendererSet()
+        {
+            if (ViewController?.NavigationItem != null)
+            {
+                _navigationItem = new WeakReference<UINavigationItem>(ViewController.NavigationItem);
+            }
+
+            base.OnRendererSet();
+        }
+
+        protected override void UpdateTitle()
+        {
+            base.UpdateTitle();
+            if (!(_navigationItem?.TryGetTarget(out UINavigationItem? control) ?? false) || control == null)
+            {
+                return;
+            }
+
+            var bar = ViewController?.NavigationController?.NavigationBar;
+            if (bar != null)
+            {
+                bar.SemanticContentAttribute = UISemanticContentAttribute.ForceRightToLeft;
             }
         }
 
@@ -63,6 +89,7 @@ namespace De.HDBW.Apollo.Client.Platforms
             _context = null;
             WeakReferenceMessenger.Default.Unregister<HideSearchSuggestionsMessage>(this);
             _searchController = null;
+            _navigationItem = null;
             base.Dispose(disposing);
         }
 
