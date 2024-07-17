@@ -22,15 +22,9 @@
     <Grid RowDefinitions="auto,*" FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
         <Grid.Resources>
             
-            <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="models:HeadlineTextEntry">
-                <Border StrokeThickness="0">
-                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
-                </Border>
-            </DataTemplate>
-            
             <DataTemplate x:Key="TextTemplate" x:DataType="models:TextEntry">
                 <Border StrokeThickness="0">
-                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}" />
+                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
                 </Border>
             </DataTemplate>
 
@@ -49,7 +43,6 @@
             </DataTemplate>
 
             <selector:ResultSectionTemplateSelector x:Key="ResultSectionTemplateSelector"
-                                                HeadlineTextTemplate ="{StaticResource HeadlineTextTemplate}"
                                                 TextTemplate="{StaticResource TextTemplate}"
                                                 SegmentScoreTemplate="{StaticResource SegmentScoreTemplate}"/>
         </Grid.Resources>

@@ -19,8 +19,8 @@
         <ScrollView>
             <VerticalStackLayout Padding="24" x:DataType="models:ImagemapEntry" BindingContext="{x:Binding Question, Mode=OneWay}" >
                 <Label Text="{x:Binding Text, Mode=OneWay}" Margin="0,0,0,24" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsGlobalBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
-                <Label Text="{x:Binding Question, Mode=OneWay}" TextType="Html" Margin="0,0,0,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
-                <Label Text="{x:Binding Instruction, Mode=OneWay}" TextType="Html" Margin="0,0,0,8" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding QuestionHtml, Mode=OneWay}" TextType="Html" Margin="0,0,0,24" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding InstructionHtml, Mode=OneWay}" TextType="Html" Margin="0,0,0,8" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
                 <Grid>
                     <controls:ImageInteractionView x:Name="PART_Canvas" 
                                     InteractionSize="30" 

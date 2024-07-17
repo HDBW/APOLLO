@@ -3,6 +3,7 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.SharedContracts;
 using De.HDBW.Apollo.SharedContracts.Questions;
 
@@ -71,7 +72,7 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             }
 
             var parts = text.Split(";").Select(x => $"<li>{x}</li>");
-            return $"<ul>{Environment.NewLine}{string.Join(Environment.NewLine, parts)}{Environment.NewLine}</ul>";
+            return $"<ul dir=\"RTL\">{Environment.NewLine}{string.Join(Environment.NewLine, parts)}{Environment.NewLine}</ul>".EnsureHtmlFlowDirection(Data.Culture);
         }
     }
 }

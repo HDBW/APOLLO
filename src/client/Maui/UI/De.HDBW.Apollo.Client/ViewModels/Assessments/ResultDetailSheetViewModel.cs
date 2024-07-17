@@ -8,6 +8,7 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using De.HDBW.Apollo.Client.Contracts;
+using De.HDBW.Apollo.Client.Helper;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Models.Assessment;
 using De.HDBW.Apollo.Client.Services;
@@ -74,14 +75,14 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                             case AssessmentType.Sk:
                                 foreach (var item in items)
                                 {
-                                    sections.Add(Models.Assessment.SegmentScoreEntry.Import(item, this[string.Format(quantity_Patter, item.Quantity)], _type));
+                                    sections.Add(SegmentScoreEntry.Import(item, this[string.Format(quantity_Patter, item.Quantity)], _type));
                                 }
 
                                 break;
                             case AssessmentType.So:
                                 foreach (var item in items)
                                 {
-                                    sections.Add(TextEntry.Import(item.ResultDetail));
+                                    sections.Add(TextEntry.Import(item.ResultDetail.EnsureHtmlFlowDirection(Culture) ?? string.Empty));
                                 }
 
                                 break;
