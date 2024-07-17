@@ -130,6 +130,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
 
             Culture = new CultureInfo(_language);
             OnPropertyChanged(string.Empty);
+            Title = null;
             switch (_assessmentType)
             {
                 case AssessmentType.Sk:
