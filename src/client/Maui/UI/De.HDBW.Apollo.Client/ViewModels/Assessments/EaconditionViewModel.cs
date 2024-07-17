@@ -304,7 +304,8 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
             if (entry.IsSelected)
             {
                 SelectedChoices.Add(entry);
-                if (SelectedChoices.Count > 3)
+                var selectionCount = DrillDownMode == DrillDownMode.Unknown ? 3 : 1;
+                if (SelectedChoices.Count > selectionCount)
                 {
                     var item = SelectedChoices[0];
                     item.IsSelected = false;
