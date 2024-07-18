@@ -28,7 +28,6 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
             if (!string.IsNullOrWhiteSpace(parts.Question))
             {
                 text.Add(parts.Text);
-                text.Add(SubQestion);
             }
             else
             {
@@ -36,7 +35,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
             }
 
             Text = string.Join(Environment.NewLine, text.Where(s => !string.IsNullOrWhiteSpace(s)));
-            Question = parts.Question ?? SubQestion;
+            Question = string.Join(Environment.NewLine, new List<string?>() { parts.Question?.Trim(), SubQuestion }.Where(x => !string.IsNullOrEmpty(x)));
         }
 
         public bool IsRTL { get; }
@@ -48,7 +47,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
             get { return Data.instruction; }
         }
 
-        public string? SubQestion
+        public string? SubQuestion
         {
             get { return Data.substemm; }
         }

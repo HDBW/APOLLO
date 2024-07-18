@@ -48,10 +48,12 @@ namespace De.HDBW.Apollo.Client.Models.Assessment
             AnswerTexts = new ObservableCollection<SelectableTextEntry>(data.AnswerTexts.Select(x => SelectableTextEntry.Import(x, () => { DidInteract = true; })));
             switch (QuestionImages.Count())
             {
+                case 0:
+                    break;
                 case 1:
                     QuestionImageView.Add(QuestionImages[0]);
                     break;
-                case 2:
+                default:
                     QuestionImageView.Add(PageableImagesEntry.Import(QuestionImages));
                     break;
             }
