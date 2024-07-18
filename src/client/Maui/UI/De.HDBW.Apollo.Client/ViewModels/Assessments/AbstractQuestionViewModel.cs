@@ -367,6 +367,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Assessments
                 {
                     var parameters = new NavigationParameters();
                     parameters.AddValue(NavigationParameter.Data, entry.AbsolutePath);
+                    WasShowingDialog = true;
                     await DialogService.ShowPopupAsync<ImageZoomDialog, NavigationParameters, NavigationParameters>(parameters, worker.Token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
