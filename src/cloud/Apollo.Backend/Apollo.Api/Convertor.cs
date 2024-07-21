@@ -836,7 +836,7 @@ namespace Apollo.Api
                     AlternativeLabels = dict.ContainsKey(nameof(Skill.AlternativeLabels)) ? ToApolloList((ExpandoObject)dict[nameof(Skill.AlternativeLabels)]) : new ApolloList() { ItemType = nameof(Skill.AlternativeLabels) },
                     IsEssentialForOccupationsID = dict.ContainsKey(nameof(Skill.IsEssentialForOccupationsID)) ? (List<string>?)dict[nameof(Skill.IsEssentialForOccupationsID)] : null,
                     IsOptionalForOccupationsID = dict.ContainsKey(nameof(Skill.IsOptionalForOccupationsID)) ? (List<string>?)dict[nameof(Skill.IsOptionalForOccupationsID)] : null,
-                    SkillUri = dict.ContainsKey(nameof(Skill.SkillUri)) ? new Uri((string)dict[nameof(Skill.SkillUri)]) : null,
+                    SkillUri = dict.ContainsKey(nameof(Skill.SkillUri)) && dict[nameof(Skill.SkillUri)] != null ? new Uri((string)dict[nameof(Skill.SkillUri)]) : null,
                     Version = dict.ContainsKey(nameof(Skill.Version)) ? (string?)dict[nameof(Skill.Version)] : null,
                     ScopeNote = dict.ContainsKey(nameof(Skill.ScopeNote)) ? (string?)dict[nameof(Skill.ScopeNote)] : null,
                     TaxonomyInfo = dict.ContainsKey(nameof(Skill.TaxonomyInfo)) ? (Taxonomy?)dict[nameof(Skill.TaxonomyInfo)] : null,
