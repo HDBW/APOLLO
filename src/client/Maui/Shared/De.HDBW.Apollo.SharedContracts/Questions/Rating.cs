@@ -27,7 +27,7 @@ namespace De.HDBW.Apollo.SharedContracts.Questions
 
         public double? CalculateScore(int selection)
         {
-            return Credits.TryGetValue(selection, out double value) ? value : null;
+            return selection;
         }
 
         private void CreateAditionalData(int index, string credit)
