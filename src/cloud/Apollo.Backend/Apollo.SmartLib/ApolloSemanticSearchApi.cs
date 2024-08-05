@@ -95,6 +95,8 @@ namespace Apollo.SmartLib
                     }
                 }
 
+
+                // test the implementation here (did TOP property definiert wieviele Ergebnisse zurückgegeben werden)
                 int top = query.Top > 0 ? query.Top : _topN;
 
                 //

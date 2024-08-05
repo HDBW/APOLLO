@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Apollo.Common.Entities;
-using Apollo.SemanticSearchWorker;
+using Apollo.SemanticSearchExporter;
 
 namespace Apollo.SemanticSearchExporter
 {

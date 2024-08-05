@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.RestService.Intergra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.SemanticSearchExporter", "Apollo.SemanticSearchExporter\Apollo.SemanticSearchExporter.csproj", "{814A8CAE-06D6-4BD3-87C1-6634D14F28AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apollo.ProfileImporter", "Apollo.ProfileImporter\Apollo.ProfileImporter.csproj", "{DEDC9893-6DE3-42E3-ADAB-814CCEE71F3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apollo.ProfileImporter", "Apollo.ProfileImporter\Apollo.ProfileImporter.csproj", "{DEDC9893-6DE3-42E3-ADAB-814CCEE71F3A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "semanticsearchdb-m2", "semanticsearchdb-m2\semanticsearchdb-m2.sqlproj", "{BE9DB085-9949-43D4-8026-8B0D970536AD}"
 EndProject
