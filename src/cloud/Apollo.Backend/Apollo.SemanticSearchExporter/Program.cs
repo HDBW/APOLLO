@@ -11,7 +11,7 @@ using Daenet.MongoDal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Apollo.SemanticSearchWorker
+namespace Apollo.SemanticSearchExporter
 {
     /// <summary>
     /// Implement sthe console application that exports the given Apollo entity into the CSV file

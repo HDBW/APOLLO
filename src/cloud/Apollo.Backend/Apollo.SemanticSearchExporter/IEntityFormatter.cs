@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
-namespace Apollo.SemanticSearchWorker
+namespace Apollo.SemanticSearchExporter
 {
     /// <summary>
     /// Defines the formatter which transform the apollo entity instance to a string.

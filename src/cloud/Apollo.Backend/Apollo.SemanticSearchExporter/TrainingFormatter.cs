@@ -4,7 +4,7 @@
 using System.Text;
 using Apollo.Common.Entities;
 
-namespace Apollo.SemanticSearchWorker
+namespace Apollo.SemanticSearchExporter
 {
     /// <summary>
     /// Converts the training instance into the set of strings.

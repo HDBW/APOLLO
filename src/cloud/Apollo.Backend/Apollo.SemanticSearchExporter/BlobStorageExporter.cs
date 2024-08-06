@@ -13,7 +13,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs;
 using Amazon.Runtime.Internal.Util;
 
-namespace Apollo.SemanticSearchWorker
+namespace Apollo.SemanticSearchExporter
 {
     /// <summary>
     /// Exports the given Apollo entity into the CSV file compatible with daenet Semantic Search.
