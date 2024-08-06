@@ -95,15 +95,11 @@ namespace Apollo.SmartLib
                     }
                 }
 
-
-              
-                int top = query.Top > 0 ? query.Top : _topN;
-
                 //
                 //Currently we are using existing context for test
                 //After Amit fix we will replace with Trainings context
                 //var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, $"{nameof(Training)}s");
-                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), top, _context);
+                var semRes = await _sApi.FindMatchingContentAsync(sb.ToString(), _topN, _context);
 
                 res = ToSemanticSearchResult(semRes);
 
