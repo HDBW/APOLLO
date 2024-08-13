@@ -18,7 +18,7 @@ namespace Apollo.ProfileImporter
 {
 
     /// <summary>
-    /// Imports profiles from blob storage, maps them to the the profile including skills property and upsert them into the
+    /// Imports apolloprofiles from blob storage, maps them to the the profile including skills property and upsert them into the
     /// Apollo backend.
     /// </summary>
     /// <param name="args"></param>
@@ -27,7 +27,7 @@ namespace Apollo.ProfileImporter
         private readonly ApolloApi _api;
         private readonly ILogger<ProfileImporterService> _logger;
         private readonly IConfiguration _configuration;
-         
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileImporterService"/> class.
@@ -50,7 +50,7 @@ namespace Apollo.ProfileImporter
         /// <returns>A Task that represents the asynchronous operation of starting the service.</returns>
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Import of profiles started");
+            _logger.LogInformation("Import of apolloprofiles started");
 
             try
             {
@@ -60,7 +60,7 @@ namespace Apollo.ProfileImporter
 
                 await ImportProfilesFromBlobStorage(blobConnectionString, containerName, maxConsumers);
 
-                _logger.LogInformation("Import of profiles completed");
+                _logger.LogInformation("Import of apolloprofiles completed");
             }
             catch (Exception ex)
             {
@@ -77,11 +77,8 @@ namespace Apollo.ProfileImporter
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
 
-
-        // NOTE: METHOD CHANGED FOR ONLY FIRST 5 Blobs FOR TESTING FUNCTIONALITY
-
         /// <summary>
-        /// Handles the actual import of profiles from Azure Blob Storage by setting up a producer-consumer scenario
+        /// Handles the actual import of apolloprofiles from Azure Blob Storage by setting up a producer-consumer scenario
         /// where blobs are read and processed by multiple consumer tasks.
         /// </summary>
         /// <param name="blobConnectionString">The connection string to Azure Blob Storage.</param>
@@ -104,16 +101,13 @@ namespace Apollo.ProfileImporter
             object lockObj = new object();
 
             var startTime = DateTime.Now; // Capture start time for duration calculation
-            int blobCount = 0;
 
             var producerTask = Task.Run(async () =>
             {
                 await foreach (var blobItem in blobItems)
                 {
-                    if (blobCount >= 5) break; // Process only the first 5 blobs
                     await fileChannel.Writer.WriteAsync(blobItem);
                     _logger.LogInformation($"Enqueued blob: {blobItem.Name} for processing.");
-                    blobCount++;
                 }
                 fileChannel.Writer.Complete();
             });
@@ -148,7 +142,8 @@ namespace Apollo.ProfileImporter
 
                             var profile = MapJsonToProfile(jsonData);
 
-                            _logger.LogInformation($"Profile object mapped: {System.Text.Json.JsonSerializer.Serialize(profile)}");
+                            //// Log the profile object with indented formatting for better readability
+                            //_logger.LogInformation($"Profile object mapped: {JsonConvert.SerializeObject(profile, Formatting.Indented)}");
 
                             lock (lockObj)
                             {
@@ -169,7 +164,7 @@ namespace Apollo.ProfileImporter
             var endTime = DateTime.Now; // Capture end time
             var elapsedTime = endTime - startTime; // Calculate the duration
 
-            _logger.LogInformation($"Import of profiles completed. Total processed: {processedCount}, Total skipped: {skippedCount}, Total time taken: {elapsedTime}");
+            _logger.LogInformation($"Import of apolloprofiles completed. Total processed: {processedCount}, Total skipped: {skippedCount}, Total time taken: {elapsedTime}");
         }
 
 
@@ -178,198 +173,364 @@ namespace Apollo.ProfileImporter
         /// </summary>
         /// <param name="jsonData">The JSON string representing the profile data.</param>
         /// <returns>The mapped Profile object.</returns>
-        private Profile MapJsonToProfile(string jsonData)
+        public List<Profile> MapJsonToProfile(string jsonData)
         {
-            dynamic jsonObject = JsonConvert.DeserializeObject(jsonData);
-
-            var apolloProfile = new Profile
+            try
             {
-                Id = null,
-                CareerInfos = jsonObject?.bewerber != null ? MapCareerInfo(jsonObject.bewerber) : new List<CareerInfo>(),
-                Occupations = jsonObject?.bewerber != null ? MapOccupation(jsonObject.bewerber) : new List<Occupation>(),
-                EducationInfos = jsonObject?.bewerber != null ? MapEducationInfo(jsonObject.bewerber) : new List<EducationInfo>(),
-                Qualifications = jsonObject?.bewerber != null ? MapQualification(jsonObject.bewerber) : new List<Qualification>(),
-                MobilityInfo = jsonObject?.bewerber != null ? MapMobilityInfo(jsonObject.bewerber) : new Mobility(),
-                LanguageSkills = jsonObject?.bewerber != null ? MapLanguageSkills(jsonObject.bewerber) : new List<LanguageSkill>(),
-                Skills = jsonObject?.bewerber != null ? MapSkills(jsonObject.bewerber) : new List<Skill>(),
-                WebReferences = new List<WebReference> { new WebReference { Title = "BA-Test" } }
-            };
+                dynamic jsonObject = JsonConvert.DeserializeObject(jsonData);
+                var apolloprofiles = new List<Profile>();
 
-            return apolloProfile;
+                if (jsonObject?.bewerber != null)
+                {
+                    foreach (var bewerber in jsonObject.bewerber)
+                    {
+                        var skills = MapSkills(bewerber);
+                        var apolloProfile = new Profile
+                        {
+                            Id = bewerber?.refnr,
+                            Skills = skills,
+                           
+                            CareerInfos = MapCareerInfo(bewerber),
+                            Occupations = MapOccupations(bewerber),
+                            EducationInfos = MapEducationInfo(bewerber),
+                            Qualifications = MapQualification(bewerber),
+                            MobilityInfo = MapMobilityInfo(bewerber),
+                            LanguageSkills = MapLanguageSkills(bewerber),
+                            WebReferences = MapWebReferences(bewerber)
+                        };
+
+                        apolloprofiles.Add(apolloProfile);
+                    }
+                }
+
+                return apolloprofiles;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occurred: " + ex.Message);
+                throw;  
+            }
         }
 
-        private List<CareerInfo> MapCareerInfo(IEnumerable<dynamic> bewerbers)
+
+        /// <summary>
+        /// Maps career information from a dynamic object representing a single bewerber.
+        /// This method extracts career-related data and transforms it into a list of CareerInfo objects.
+        /// </summary>
+        /// <param name="bewerber">Dynamic object containing career data for a profile.</param>
+        /// <returns>List of CareerInfo objects.</returns>
+        private List<CareerInfo> MapCareerInfo(dynamic bewerber)
         {
             var careerInfos = new List<CareerInfo>();
 
-            foreach (var bewerber in bewerbers)
+            if (bewerber?.letzteTaetigkeit != null)
             {
-                if (bewerber?.werdegang != null)
+                var letzteTaetigkeit = bewerber.letzteTaetigkeit;
+
+                var careerInfo = new CareerInfo
                 {
-                    foreach (var item in bewerber.werdegang)
+                    Description = (string)letzteTaetigkeit["bezeichnung"],
+                    Start = bewerber?.verfuegbarkeitVon != null
+                        ? ParseDate((string)bewerber.verfuegbarkeitVon.ToString()) // Ensure it's a string
+                        : (DateTime?)null,
+                    End = null,
+
+                    Job = new Occupation
                     {
-                        careerInfos.Add(new CareerInfo
+                        Description = (string)letzteTaetigkeit["bezeichnung"],
+                        ClassificationCode = bewerber?.arbeitszeitModelle != null
+                            ? string.Join(", ", bewerber.arbeitszeitModelle.ToObject<List<string>>())
+                            : null,
+                        Identifier = bewerber?.stellenart?.ToString(),
+                        ValidFrom = bewerber?.veroeffentlichungsdatum != null
+                            ? ParseDate((string)bewerber.veroeffentlichungsdatum.ToString()) // Ensure it's a string
+                            : (DateTime?)null,
+                        ValidTill = bewerber?.aktualisierungsdatum != null
+                            ? ParseDate((string)bewerber.aktualisierungsdatum.ToString()) // Ensure it's a string
+                            : (DateTime?)null,
+                        UniqueIdentifier = null,
+                        OccupationUri = null,
+                        Concept = null,
+                        RegulatoryAspect = "",
+                        HasApprenticeShip = false,
+                        IsUniversityOccupation = false,
+                        IsUniversityDegree = false,
+                        PreferedTerm = new List<string>(),
+                        NonePreferedTerm = new List<string>(),
+                        TaxonomyInfo = Taxonomy.Unknown,
+                        TaxonomieVersion = "",
+                        CultureString = "de-DE",
+                        BroaderConcepts = new List<string>(),
+                        NarrowerConcepts = new List<string>(),
+                        RelatedConcepts = new List<string>(),
+                        Skills = new List<string>(),
+                        EssentialSkills = new List<string>(),
+                        OptionalSkills = new List<string>(),
+                        EssentialKnowledge = new List<string>(),
+                        OptionalKnowledge = new List<string>(),
+                        Documents = new List<string>(),
+                        OccupationGroup = new Dictionary<string, string>(),
+                        DkzApprenticeship = false,
+                        QualifiedProfessional = false,
+                        NeedsUniversityDegree = false,
+                        IsMilitaryApprenticeship = false,
+                        IsGovernmentApprenticeship = false,
+                    },
+
+                    City = bewerber.lokation?.ort != null ? bewerber.lokation.ort.ToString() : null,
+                    Country = bewerber.lokation?.land != null ? bewerber.lokation.land.ToString() : null,
+                };
+
+                careerInfos.Add(careerInfo);
+            }
+
+            // Mapping Field Experiences
+            if (bewerber?.erfahrung?.berufsfeldErfahrung != null)
+            {
+                foreach (var fieldExperience in bewerber.erfahrung.berufsfeldErfahrung)
+                {
+                    careerInfos.Add(new CareerInfo
+                    {
+                        Description = fieldExperience.berufsfeld?.ToString(),
+                        Start = null, // Assuming no start date available
+                        End = null,
+                        Job = new Occupation
                         {
-                            Description = item?.berufsbezeichnung,
-                            Start = item?.Von,
-                            End = item?.EndDate,
-                            Job = new Occupation()
-                            {
-                                Description = item?.berufsbezeichnung,
-                            }
-                        });
-                    }
+                            Description = fieldExperience.berufsfeld?.ToString(),
+                            Identifier = "FieldExperience",
+                        },
+                        City = null,
+                        Country = null
+                    });
                 }
             }
 
             return careerInfos;
         }
 
-        private List<Occupation> MapOccupation(IEnumerable<dynamic> bewerbers)
+
+        /// <summary>
+        /// Parses a string representation of a date into a DateTime object.
+        /// </summary>
+        /// <param name="dateString">String containing the date to be parsed.</param>
+        private DateTime? ParseDate(string dateString)
+        {
+            if (string.IsNullOrEmpty(dateString))
+                return null;
+
+            string[] formats = new[] {
+                "MM/dd/yyyy HH:mm:ss",  // Format: 12/31/2023 23:59:59
+                "yyyy-MM-ddTHH:mm:ss.fff",  // Format: 2023-04-03T14:00:06.782
+                "yyyy-MM-dd",  // Format: 2023-04-03
+                "yyyy-MM-ddTHH:mm:ss",  // Format: 2023-04-03T14:00:06
+                "MM/dd/yyyy",  // Format: 12/31/2023
+                "yyyy/MM/dd",  // Format: 2023/12/31
+            };
+
+            if (DateTime.TryParseExact(dateString, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateValue))
+            {
+                return dateValue;
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Maps occupation data from the profile's dynamic data structure to a list of Occupation objects.
+        /// </summary>
+        /// <param name="bewerber">Dynamic object containing the individual's occupation information.</param>
+        /// <returns>List of Occupation objects.</returns>
+        private List<Occupation> MapOccupations(dynamic bewerber)
         {
             var occupations = new List<Occupation>();
 
-            foreach (var bewerber in bewerbers)
+            if (bewerber?.berufe != null)
             {
-                if (bewerber?.berufe != null)
+                foreach (var item in bewerber.berufe)
                 {
-                    foreach (var item in bewerber.berufe)
+                    occupations.Add(new Occupation
                     {
-                        occupations.Add(new Occupation
-                        {
-                            Description = item.ToString()
-                        });
-                    }
+                        Description = item.ToString(),
+                        ClassificationCode = bewerber?.arbeitszeitModelle != null
+                            ? string.Join(", ", bewerber.arbeitszeitModelle.ToObject<List<string>>())
+                            : null,
+                        Identifier = bewerber?.stellenart?.ToString()
+                    });
                 }
             }
 
             return occupations;
         }
 
-        private List<EducationInfo> MapEducationInfo(IEnumerable<dynamic> bewerbers)
+
+        /// <summary>
+        /// Maps education information from the dynamic data structure of a profile.
+        /// It transforms the education data into a structured list of EducationInfo objects.
+        /// </summary>
+        /// <param name="bewerber">Dynamic object representing the individual profile.</param>
+        /// <returns>List of EducationInfo objects.</returns>
+        private List<EducationInfo> MapEducationInfo(dynamic bewerber)
         {
             var educationInfos = new List<EducationInfo>();
 
-            foreach (var bewerber in bewerbers)
+            if (bewerber?.ausbildungen != null)
             {
-                if (bewerber?.bildung != null)
+                foreach (var item in bewerber.ausbildungen)
                 {
-                    foreach (var item in bewerber.bildung)
+                    int year = item?.jahr != null ? (int)item.jahr : 0;
+
+                    educationInfos.Add(new EducationInfo
                     {
-                        educationInfos.Add(new EducationInfo
+                        
+                        // Map the end date to the year provided
+                        End = year > 0 ? new DateTime(year, 1, 1) : (DateTime?)null,
+
+                        // Map the city and country from location info, if available.
+                        City = bewerber.lokation?.ort != null ? bewerber.lokation.ort.ToString() : null,
+                        Country = bewerber.lokation?.land != null ? bewerber.lokation.land.ToString() : null,
+
+                        // Map the description from 'art'.
+                        Description = item?.art != null ? item.art.ToString() : null,
+
+                        // Map the professional title from 'art'.
+                        ProfessionalTitle = new Occupation
                         {
-                            Start = item?.von,
-                            End = item?.bis,
-                            Country = item?.land,
-                            Description = item?.beschreibung,
-                            ProfessionalTitle = new Occupation
-                            {
-                                Description = item?.berufsbezeichnung
-                            },
-                            CompletionState = item?.istAbgeschlossen != null ? new CompletionState { ListItemId = 1, Value = item.istAbgeschlossen } : null,
-                            Graduation = item?.schulAbschluss != null ? new SchoolGraduation { ListItemId = 1, Value = item.schulAbschluss } : null,
-                            UniversityDegree = item?.hochSchulAbschluss != null ? new UniversityDegree { ListItemId = 1, Value = item.hochSchulAbschluss } : null,
-                            TypeOfSchool = item?.schulart != null ? new TypeOfSchool { ListItemId = 1, Value = item.schulart } : null,
-                            NameOfInstitution = item?.nameArtEinrichtung,
-                            City = item?.ort,
-                            Recognition = item?.anerkennungAbschluss != null ? new RecognitionType { ListItemId = 1, Value = item.anerkennungAbschluss } : null
-                        });
-                    }
+                            Description = item?.art != null ? item.art.ToString() : null
+                        },
+
+
+                        // Conditionally map other fields
+                        CompletionState = item?.completionState != null ? item.completionState.ToString() : null,
+                        Graduation = item?.graduation != null ? item.graduation.ToString() : null,
+                        UniversityDegree = item?.universityDegree != null ? item.universityDegree.ToString() : null,
+                        TypeOfSchool = item?.typeOfSchool != null ? item.typeOfSchool.ToString() : null,
+                        NameOfInstitution = item?.nameOfInstitution != null ? item.nameOfInstitution.ToString() : null,
+                        EducationType = item?.educationType != null ? item.educationType.ToString() : null,
+                        Recognition = item?.recognition != null ? item.recognition.ToString() : null
+                    });
                 }
             }
 
             return educationInfos;
         }
 
-        private List<Qualification> MapQualification(IEnumerable<dynamic> bewerbers)
+
+        /// <summary>
+        /// Maps qualifications data from a profile's dynamic data structure to a list of Qualification objects.
+        /// </summary>
+        /// <param name="bewerber">Dynamic object containing profile details.</param>
+        /// <returns>List of Qualification objects.</returns>
+        private List<Qualification> MapQualification(dynamic bewerber)
         {
             var qualifications = new List<Qualification>();
 
-            foreach (var bewerber in bewerbers)
+            if (bewerber?.qualifikationen != null)
             {
-                if (bewerber?.qualifikationen != null)
+                foreach (var item in bewerber.qualifikationen)
                 {
-                    foreach (var item in bewerber.qualifikationen)
+                    qualifications.Add(new Qualification
                     {
-                        qualifications.Add(new Qualification
-                        {
-                            Name = item?.qualifikationsName,
-                            Description = item?.beschreibung,
-                            IssueDate = item?.ausstellDatum,
-                            ExpirationDate = item?.ablaufDatum,
-                            IssuingAuthority = null
-                        });
-                    }
+                        Name = item?.qualifikationsName,
+                        Description = item?.beschreibung,
+                        IssueDate = item?.ausstellDatum != null ? DateTime.Parse(item.ausstellDatum.ToString()) : (DateTime?)null,
+                        ExpirationDate = item?.ablaufDatum != null ? DateTime.Parse(item.ablaufDatum.ToString()) : (DateTime?)null,
+                        IssuingAuthority = item?.ausstellendeInstitution
+                    });
+                }
+            }
+
+            // Map licenses as qualifications if they exist
+            if (bewerber?.lizenzen != null)
+            {
+                foreach (var item in bewerber.lizenzen)
+                {
+                    qualifications.Add(new Qualification
+                    {
+                        Name = item?.lizenz,
+                        Description = "License",
+                        IssueDate = item?.erteilt != null ? DateTime.Parse(item.erteilt.ToString()) : (DateTime?)null,
+                        ExpirationDate = item?.ablaufDatum != null ? DateTime.Parse(item.ablaufDatum.ToString()) : (DateTime?)null,
+                        IssuingAuthority = item?.ausstellendeInstitution
+                    });
                 }
             }
 
             return qualifications;
         }
 
-        private Mobility MapMobilityInfo(IEnumerable<dynamic> bewerbers)
+
+        /// <summary>
+        /// Maps mobility information from a profile's dynamic data structure.
+        /// </summary>
+        /// <param name="bewerber">Dynamic object representing the individual's profile.</param>
+        /// <returns>Mobility object containing travel willingness and driver license details.</returns>
+        private Mobility MapMobilityInfo(dynamic bewerber)
         {
             var mobility = new Mobility();
 
-            foreach (var bewerber in bewerbers)
+            if (bewerber?.mobilitaet != null)
             {
-                if (bewerber?.mobilitaet != null)
-                {
-                    mobility = new Mobility
-                    {
-                        WillingToTravel = bewerber.mobilitaet?.reisebereitschaft != null ? new Willing { ListItemId = 1, Value = bewerber.mobilitaet.reisebereitschaft } : null,
-                        DriverLicenses = bewerber.mobilitaet?.DriversLicense != null ? new List<DriversLicense> { new DriversLicense { ListItemId = 1, Value = bewerber.mobilitaet.fuehrerscheine } } : null,
-                        HasVehicle = bewerber.mobilitaet?.fahrzeugVorhanden
-                    };
-                }
+                mobility.WillingToTravel = bewerber.mobilitaet?.reisebereitschaft != null ? new Willing { ListItemId = 1, Value = bewerber.mobilitaet.reisebereitschaft } : null;
+                mobility.DriverLicenses = bewerber.mobilitaet?.DriversLicense != null
+                    ? ((IEnumerable<dynamic>)bewerber.mobilitaet.DriversLicense).Select(dl => new DriversLicense { ListItemId = 1, Value = dl.ToString() }).ToList()
+                    : null;
+                mobility.HasVehicle = bewerber.mobilitaet?.fahrzeugVorhanden;
             }
 
             return mobility;
         }
 
-        private List<LanguageSkill> MapLanguageSkills(IEnumerable<dynamic> bewerbers)
+
+        /// <summary>
+        /// Maps language skills from the profile's dynamic data.
+        /// </summary>
+        /// <param name="bewerber">Dynamic object containing the profile's language skills.</param>
+        /// <returns>List of LanguageSkill objects.</returns>
+        private List<LanguageSkill> MapLanguageSkills(dynamic bewerber)
         {
             var languageSkills = new List<LanguageSkill>();
             int listItemIdCounter = 1;
 
-            foreach (var bewerber in bewerbers)
+            if (bewerber?.sprachkenntnisse != null)
             {
                 // Map Verhandlungssicher languages
-                if (bewerber?.sprachkenntnisse?.Verhandlungssicher != null)
+                if (bewerber.sprachkenntnisse.Verhandlungssicher != null)
                 {
                     foreach (var language in bewerber.sprachkenntnisse.Verhandlungssicher)
                     {
                         languageSkills.Add(new LanguageSkill
                         {
-                            Name = language.Value,
-                            Code = GetCultureName(language.Value),
+                            Name = language.Value.ToString(),
+                            Code = GetCultureName(language.Value.ToString()),
                             Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Verhandlungssicher" },
                         });
                     }
                 }
 
                 // Map Erweiterte Kenntnisse languages
-                if (bewerber?.sprachkenntnisse?.ErweiterteKenntnisse != null)
+                if (bewerber.sprachkenntnisse.ErweiterteKenntnisse != null)
                 {
                     foreach (var language in bewerber.sprachkenntnisse.ErweiterteKenntnisse)
                     {
                         languageSkills.Add(new LanguageSkill
                         {
-                            Name = language.Value,
-                            Code = GetCultureName(language.Value),
+                            Name = language.Value.ToString(),
+                            Code = GetCultureName(language.Value.ToString()),
                             Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Erweiterte Kenntnisse" },
                         });
                     }
                 }
 
                 // Map Grundkenntnisse languages
-                if (bewerber?.sprachkenntnisse?.Grundkenntnisse != null)
+                if (bewerber.sprachkenntnisse.Grundkenntnisse != null)
                 {
                     foreach (var language in bewerber.sprachkenntnisse.Grundkenntnisse)
                     {
                         languageSkills.Add(new LanguageSkill
                         {
-                            Name = language.Value,
-                            Code = GetCultureName(language.Value),
+                            Name = language.Value.ToString(),
+                            Code = GetCultureName(language.Value.ToString()),
                             Niveau = new LanguageNiveau { ListItemId = listItemIdCounter++, Value = "Grundkenntnisse" },
                         });
                     }
@@ -379,66 +540,181 @@ namespace Apollo.ProfileImporter
             return languageSkills;
         }
 
-        private List<Skill> MapSkills(IEnumerable<dynamic> bewerbers)
+
+        /// <summary>
+        /// Maps skills from the dynamic profile data, particularly from designated skill fields.
+        /// </summary>
+        /// <param name="kenntnisse"></param>
+        /// <returns></returns>
+        private List<Skill> MapSkills(dynamic bewerber)
         {
             var skills = new List<Skill>();
+            int skillIdCounter = 1;
 
-            foreach (var bewerber in bewerbers)
+            // Map Expertenkenntnisse
+            if (bewerber?.kenntnisse?.expertenKenntnisse != null)
             {
-                // Map Erweiterte Kenntnisse
-                if (bewerber?.kenntnisse?.ErweiterteKenntnisse != null)
+                foreach (var skill in bewerber.kenntnisse.expertenKenntnisse)
                 {
-                    foreach (var skill in bewerber.kenntnisse.ErweiterteKenntnisse)
+                    skills.Add(new Skill
                     {
-                        skills.Add(new Skill
+                        SkillId = skillIdCounter++, // Assign a unique SkillId
+                        Title = new ApolloList
                         {
-                            Title = skill,
-                            ScopeNote = "Erweiterte Kenntnisse",
-                            TaxonomyInfo = Taxonomy.Unknown
-                        });
-                    }
+                            Items = new List<ApolloListItem>
+                    {
+                        new ApolloListItem { ListItemId = skillIdCounter++, Value = skill.ToString() }
+                    },
+                            ItemType = nameof(Skill.Title)
+                        },
+                        ScopeNote = "Expertenkenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
+                    });
                 }
-
-                // Map Grundkenntnisse
-                if (bewerber?.kenntnisse?.Grundkenntnisse != null)
+            }
+            else if (bewerber?.expertenKenntnisse != null)
+            {
+                foreach (var skill in bewerber.expertenKenntnisse)
                 {
-                    foreach (var skill in bewerber.kenntnisse.Grundkenntnisse)
+                    skills.Add(new Skill
                     {
-                        skills.Add(new Skill
+                        SkillId = skillIdCounter++, // Assign a unique SkillId
+                        Title = new ApolloList
                         {
-                            Title = skill,
-                            ScopeNote = "Grundkenntnisse",
-                            TaxonomyInfo = Taxonomy.Unknown
-                        });
-                    }
+                            Items = new List<ApolloListItem>
+                    {
+                        new ApolloListItem { ListItemId = skillIdCounter++, Value = skill.ToString() }
+                    },
+                            ItemType = nameof(Skill.Title)
+                        },
+                        ScopeNote = "Expertenkenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
+                    });
                 }
+            }
 
-                // Map Expertenkenntnisse
-                if (bewerber?.kenntnisse?.Expertenkenntnisse != null)
+            // Map Erweiterte Kenntnisse
+            if (bewerber?.kenntnisse?.ErweiterteKenntnisse != null)
+            {
+                foreach (var skill in bewerber.kenntnisse.ErweiterteKenntnisse)
                 {
-                    foreach (var skill in bewerber.kenntnisse.Expertenkenntnisse)
+                    skills.Add(new Skill
                     {
-                        skills.Add(new Skill
+                        SkillId = skillIdCounter++, // Assign a unique SkillId
+                        Title = new ApolloList
                         {
-                            Title = skill,
-                            ScopeNote = "Expertenkenntnisse",
-                            TaxonomyInfo = Taxonomy.Unknown
-                        });
-                    }
+                            Items = new List<ApolloListItem>
+                    {
+                        new ApolloListItem { ListItemId = skillIdCounter++, Value = skill.ToString() }
+                    },
+                            ItemType = nameof(Skill.Title)
+                        },
+                        ScopeNote = "Erweiterte Kenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
+                    });
+                }
+            }
+            else if (bewerber?.ErweiterteKenntnisse != null)
+            {
+                foreach (var skill in bewerber.ErweiterteKenntnisse)
+                {
+                    skills.Add(new Skill
+                    {
+                        SkillId = skillIdCounter++, // Assign a unique SkillId
+                        Title = new ApolloList
+                        {
+                            Items = new List<ApolloListItem>
+                    {
+                        new ApolloListItem { ListItemId = skillIdCounter++, Value = skill.ToString() }
+                    },
+                            ItemType = nameof(Skill.Title)
+                        },
+                        ScopeNote = "Erweiterte Kenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
+                    });
+                }
+            }
+
+            // Map Grundkenntnisse
+            if (bewerber?.kenntnisse?.Grundkenntnisse != null)
+            {
+                foreach (var skill in bewerber.kenntnisse.Grundkenntnisse)
+                {
+                    skills.Add(new Skill
+                    {
+                        SkillId = skillIdCounter++, // Assign a unique SkillId
+                        Title = new ApolloList
+                        {
+                            Items = new List<ApolloListItem>
+                    {
+                        new ApolloListItem { ListItemId = skillIdCounter++, Value = skill.ToString() }
+                    },
+                            ItemType = nameof(Skill.Title)
+                        },
+                        ScopeNote = "Grundkenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
+                    });
+                }
+            }
+            else if (bewerber?.Grundkenntnisse != null)
+            {
+                foreach (var skill in bewerber.Grundkenntnisse)
+                {
+                    skills.Add(new Skill
+                    {
+                        SkillId = skillIdCounter++, // Assign a unique SkillId
+                        Title = new ApolloList
+                        {
+                            Items = new List<ApolloListItem>
+                    {
+                        new ApolloListItem { ListItemId = skillIdCounter++, Value = skill.ToString() }
+                    },
+                            ItemType = nameof(Skill.Title)
+                        },
+                        ScopeNote = "Grundkenntnisse",
+                        TaxonomyInfo = Taxonomy.Unknown
+                    });
                 }
             }
 
             return skills;
         }
 
-        string? GetCultureName(string language)
+
+        /// <summary>
+        /// Maps web references from the profile's dynamic data to a list of WebReference objects.
+        /// </summary>
+        /// <param name="bewerber">Dynamic object representing the profile's web references.</param>
+        /// <returns>List of WebReference objects.</returns>
+        private List<WebReference> MapWebReferences(dynamic bewerber)
+        {
+            var webReferences = new List<WebReference>();
+
+            if (bewerber?.webReferenzen != null)
+            {
+                foreach (var item in bewerber.webReferenzen)
+                {
+                    webReferences.Add(new WebReference
+                    {
+                        Url = item?.url != null ? new Uri(item.url.ToString()) : null,
+                        Title = item?.titel
+                    });
+                }
+            }
+
+            return webReferences;
+        }
+
+
+        private string? GetCultureName(string language)
         {
             string? isoCode = GetISOCode(language);
             CultureInfo? cultureInfo = isoCode != null ? GetCultureInfoFromISOCode(isoCode) : null;
             return cultureInfo?.Name;
         }
 
-        CultureInfo? GetCultureInfoFromISOCode(string isoCode)
+
+        private CultureInfo? GetCultureInfoFromISOCode(string isoCode)
         {
             try
             {
@@ -450,7 +726,8 @@ namespace Apollo.ProfileImporter
             }
         }
 
-        string? GetISOCode(string languageName)
+
+        private string? GetISOCode(string languageName)
         {
             if (languageCodesIso6392.ContainsKey(languageName.ToLower()))
             {
@@ -461,6 +738,7 @@ namespace Apollo.ProfileImporter
                 return null;
             }
         }
+
 
         Dictionary<string, string> languageCodesIso6392 = new Dictionary<string, string>
         {

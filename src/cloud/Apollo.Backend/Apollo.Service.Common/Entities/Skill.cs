@@ -19,62 +19,74 @@ namespace Apollo.Common.Entities
         /// <summary>
         /// The local skill index inside the list of skils inside profile
         /// </summary>
+        [DataMember]
         public int SkillId { get; set; }
 
         /// <summary>
         /// The Id of the user to whom the skill belongs.
         /// </summary>
+        [DataMember]
         public string? UserId { get; set; }
 
         /// <summary>
         /// The Id of the user to whom the skill belongs.
         /// </summary>
+        [DataMember]
         public string? ProfileId { get; set; }
 
         /// <summary>
         /// A List in different Cultures for the Lists Title
         /// </summary>
+        [DataMember]
         public ApolloList Title { get; set; } = new ApolloList() { ItemType = nameof(Skill.Title) };
 
         /// <summary>
         /// A List of descriptions for the different cultures
         /// </summary>
+        [DataMember]
         public ApolloList Description { get; set; } = new ApolloList() { ItemType = nameof(Skill.Description) };
 
         /// <summary>
         /// This is a list of synonyms for the title in different cultures
         /// </summary>
+        [DataMember]
         public ApolloList AlternativeLabels { get; set; } = new ApolloList() { ItemType = nameof(Skill.AlternativeLabels) };
 
         /// <summary>
         /// A List of Occupations this Skill is essential for
         /// </summary>
+        [DataMember]
         public List<string>? IsEssentialForOccupationsID { get; set; }
 
         /// <summary>
         /// A List of Occupations that Skill is used optionally
         /// </summary>
+        [DataMember]
         public List<string> ? IsOptionalForOccupationsID { get; set; }
 
         /// <summary>
         /// That is a URI to the Origin of the Skill
         /// </summary>
+        [DataMember]
         public Uri? SkillUri { get; set; }
 
         /// <summary>
         /// Indicates the Taxonomy Version
         /// </summary>
+        [DataMember]
         public string? Version { get; set; }
 
         /// <summary>
         /// This could be very usefull for example:
         /// This Skill requires something or excludes something?
         /// </summary>
+        [DataMember]
         public string? ScopeNote { get; set; }
 
         /// <summary>
         /// Could be one of the supported Taxonomies of Apollo which is ESCO, KLDB or ...
         /// </summary>
+        [DataMember]
         public Taxonomy? TaxonomyInfo { get; set; }
 
         /// <summary>
@@ -82,11 +94,13 @@ namespace Apollo.Common.Entities
         /// Currently we know: Assessment can result in a skill associated to a Profile
         /// as well as the users entry in EducationInfo and CarrerInfo will result in Profile as source   
         /// </summary>
+        [DataMember]
         public string? SkillSource { get; set; }
 
         /// <summary>
         /// When was the Skill acquired
         /// </summary>
+        [DataMember]
         public DateTime? FromWhen { get; set; }
 
         /// <summary>
@@ -94,16 +108,18 @@ namespace Apollo.Common.Entities
         /// As long as a skill is optional or essential for an occupation in carrerinfo
         /// we will continue to count the skill used? maybe? 
         /// </summary>
+        [DataMember]
         public DateTime? LastTimeUsed { get; set; }
 
         /// <summary>
         /// This is a autocalculated Property?
         /// </summary>
         ///public double HowLongUsed => (LastTimeUsed - FromWhen).TotalDays;
-        
+
         /// <summary>
         /// I don´t know how??? But would be cool
         /// </summary>
+        [DataMember]
         public string? HowOftenUsed { get; set; }
 
         /// <summary>
@@ -114,6 +130,7 @@ namespace Apollo.Common.Entities
         /// We need something indicating that something was
         /// acquired from apprenticeship or university degree vs years of experience.
         /// </summary>
+        [DataMember]
         public dynamic? Level { get; set; }
 
 
@@ -121,6 +138,7 @@ namespace Apollo.Common.Entities
         /// Discussion we used to talk about:
         /// HowSkilled or Niveau but leo said its Level :/
         /// </summary>
+        [DataMember]
         public string? Culture { get; set; }
     }
 }

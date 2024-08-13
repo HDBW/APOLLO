@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,27 +24,32 @@ namespace Apollo.Common.Entities
     /// <summary>
     /// Used as a general entity to store a list of items of some type.
     /// </summary>
+    [DataContract]
     public class ApolloList
     {
         /// <summary>
         /// List identifier. Example: <see cref="ApolloApi.CreateListId"/>"/>
         /// </summary>
+        [DataMember]
         public string Id { get; set; }
 
         /// <summary>
         /// Specifies the type  of the item like Qualification, Skill, etc.
         /// Also used as a partition key.
         /// </summary>
+        [DataMember]
         public required string ItemType { get; set; }
 
         /// <summary>
         /// Description of the item, optional.
         /// </summary>
+        [DataMember]
         public string? Description { get; set; }
 
         /// <summary>
         /// List of items in all languages.
         /// </summary>
+        [DataMember]
         public  List<ApolloListItem>? Items{ get; set; }
     }
 
@@ -52,27 +58,32 @@ namespace Apollo.Common.Entities
     ///  The item stored in the DB.
     ///  Describes the item in the list in the specific language.
     /// </summary>
+    [DataContract]
     public class ApolloListItem
     {
         /// <summary>
         /// Identifier of the item in the list.
         /// If set on -1, the item is new and has to be created.
         /// </summary>
+        [DataMember]
         public required int ListItemId { get; set; }
 
         /// <summary>
         /// The ISO language code.
         /// </summary>
+        [DataMember]
         public string? Lng { get; set; }
 
         /// <summary>
         /// Optionl description of the values.
         /// </summary>
+        [DataMember]
         public string? Description { get; set; }
 
         /// <summary>
         /// The name of the item.
         /// </summary>
+        [DataMember]
         public required string Value { get; set; }
    
     }

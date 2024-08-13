@@ -86,6 +86,7 @@ namespace Apollo.ProfileImporter
 
                     // Register ProfileImporterService
                     services.AddHostedService<ProfileImporterService>();
+                    services.AddSingleton<ProfileImporterService>();
                     //services.AddSingleton<ApolloSemanticSearchApi>();   Do we need it ?
 
                 })
