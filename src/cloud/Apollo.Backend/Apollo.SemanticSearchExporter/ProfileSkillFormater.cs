@@ -17,7 +17,7 @@ namespace Apollo.SemanticSearchExporter
     /// </summary>
     internal class ProfileSkillFormatter : IEntityFormatter
     {
-        private string _cDelimiter = "|";
+        private string _cDelimiter = ";";
 
         /// <summary>
         /// Returns:
@@ -50,6 +50,35 @@ namespace Apollo.SemanticSearchExporter
 
             return list;
         }
+
+        public IList<string> FormatLanguageSkill(LanguageSkill languageSkill, string profileId)
+        {
+            List<string> list = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(languageSkill.Name);
+            sb.AppendLine(languageSkill.Niveau?.Value);
+
+            list.Add($"{languageSkill?.Id}{_cDelimiter}{profileId}{_cDelimiter}{languageSkill.Name}{_cDelimiter}{sb.ToString().Replace("\r", " ").Replace("\n", " ")}");
+
+            return list;
+        }
+
+        public IList<string> FormatLeadershipSkill(LeadershipSkills leadershipSkills, string profileId)
+        {
+            List<string> list = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"PowerOfAttorney: {leadershipSkills.PowerOfAttorney}");
+            sb.AppendLine($"BudgetResponsibility: {leadershipSkills.BudgetResponsibility}");
+            sb.AppendLine($"Years of Leadership: {leadershipSkills.YearsofLeadership?.Value}");
+            sb.AppendLine($"Staff Responsibility: {leadershipSkills.StaffResponsibility?.Value}");
+
+            list.Add($"{profileId}{_cDelimiter}LeadershipSkills{_cDelimiter}{sb.ToString().Replace("\r", " ").Replace("\n", " ")}");
+
+            return list;
+        }
+
 
         public IList<string> FormatObject(object entityInstance) => throw new NotImplementedException();
     }

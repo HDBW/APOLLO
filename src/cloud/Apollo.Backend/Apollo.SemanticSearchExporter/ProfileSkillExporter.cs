@@ -71,9 +71,10 @@ namespace Apollo.SemanticSearchExporter
                         foreach (var profile in profiles)
                         {
                             _logger.LogDebug($"Processing profile {profile.Id}");
+
+                            // Process Skills
                             if (profile.Skills != null && profile.Skills.Count > 0)
                             {
-                                _logger.LogInformation($"Profile {profile.Id} has {profile.Skills.Count} skills.");
                                 foreach (var skill in profile.Skills)
                                 {
                                     var lines = formatter.FormatObject(skill, profile.Id);
@@ -83,18 +84,39 @@ namespace Apollo.SemanticSearchExporter
                                         await stream.WriteAsync(bytes, 0, bytes.Length);
                                     }
                                     totalItemsProcessed += lines.Count;
-                                    _logger.LogDebug($"Exporting skill {skill.Id}: {skill.Title?.Items?.FirstOrDefault()?.Value}");
                                 }
                             }
-                            else
+
+                            // Process LanguageSkills
+                            if (profile.LanguageSkills != null && profile.LanguageSkills.Count > 0)
                             {
-                                _logger.LogDebug($"No skills found for profile {profile.Id}");
+                                foreach (var languageSkill in profile.LanguageSkills)
+                                {
+                                    var lines = formatter.FormatLanguageSkill(languageSkill, profile.Id);
+                                    foreach (var line in lines)
+                                    {
+                                        var bytes = Encoding.UTF8.GetBytes(line + Environment.NewLine);
+                                        await stream.WriteAsync(bytes, 0, bytes.Length);
+                                    }
+                                    totalItemsProcessed += lines.Count;
+                                }
+                            }
+
+                            // Process LeadershipSkills
+                            if (profile.LeadershipSkills != null)
+                            {
+                                var lines = formatter.FormatLeadershipSkill(profile.LeadershipSkills, profile.Id);
+                                foreach (var line in lines)
+                                {
+                                    var bytes = Encoding.UTF8.GetBytes(line + Environment.NewLine);
+                                    await stream.WriteAsync(bytes, 0, bytes.Length);
+                                }
+                                totalItemsProcessed += lines.Count;
                             }
                         }
 
                         currentPosition += profiles.Count;
                         query.Skip = currentPosition;
-                        _logger.LogDebug($"Processed {totalItemsProcessed} items. Moving to next batch starting from position {currentPosition}.");
                     }
                 }
 
@@ -116,7 +138,9 @@ namespace Apollo.SemanticSearchExporter
                 Fields = new List<string>
                 {
                     "Id",
-                    "Skills"
+                    "Skills",
+                    "LanguageSkills",
+                    "LeadershipSkills"
                 },
 
                 Filter = new Filter
