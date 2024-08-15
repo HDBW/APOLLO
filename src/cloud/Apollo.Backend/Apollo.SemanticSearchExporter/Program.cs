@@ -43,7 +43,7 @@ namespace Apollo.SemanticSearchExporter
             _logger = loggerFactory.CreateLogger<Program>();
 
             _logger.LogDebug("Exporter started..");
-            
+
             try
             {
                 ApolloApi api = GetApi();
@@ -51,21 +51,29 @@ namespace Apollo.SemanticSearchExporter
                 string? entity = _cfg!["entity"];
                 if (entity == null)
                 {
-                    throw new ArgumentException("The entity name must be specified in the configuration. I.e:as argument  '--entity=training' or as environment variable 'entity=training'");
+                    throw new ArgumentException("The entity name must be specified in the configuration. I.e: as argument '--entity=training' or as environment variable 'entity=training'");
                 }
 
+                // Default connection string for general operations
                 string? blobConnStr = _cfg["blobConnStr"];
                 if (blobConnStr == null)
                 {
-                    throw new ArgumentException("The connection string of the blob storage with the write permission must be specified in the configuration. I.e:as argument  '--blobConnStr=...' or as environment variable 'blobConnStr=...'");
+                    throw new ArgumentException("The connection string of the blob storage with the write permission must be specified in the configuration.");
                 }
 
-                // Export Profile Skills
+                // Specific connection string for profileSkill
+                string? profileSkillBlobConnStr = _cfg["profileSkillBlobConnStr"];
+                if (profileSkillBlobConnStr == null)
+                {
+                    throw new ArgumentException("The connection string for profileSkill blob storage must be specified in the configuration.");
+                }
+
+                // Export Profile Skills using the specific connection string
                 var profileSkillExporterLogger = loggerFactory.CreateLogger<ProfileSkillExporter>();
-                var profileSkillExporter = new ProfileSkillExporter(api, "profileSkill", blobConnStr, profileSkillExporterLogger);
+                var profileSkillExporter = new ProfileSkillExporter(api, "profileSkill", profileSkillBlobConnStr, profileSkillExporterLogger);
                 await profileSkillExporter.ExportAsync();
 
-                // Export Training Entity
+                // Export other entities (e.g., Training Entity) using the default connection string
                 var entityExporterLogger = loggerFactory.CreateLogger<BlobStorageExporter>();
                 var entityExporter = new BlobStorageExporter(api, entity, blobConnStr, entityExporterLogger);
                 await entityExporter.ExportAsync();
