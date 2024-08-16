@@ -17,7 +17,7 @@ namespace Apollo.SemanticSearchExporter
     /// </summary>
     internal class ProfileSkillFormatter : IEntityFormatter
     {
-        private string _cDelimiter = ";";
+        private string _cDelimiter = "|";
 
         /// <summary>
         /// Returns:
@@ -51,6 +51,12 @@ namespace Apollo.SemanticSearchExporter
             return list;
         }
 
+
+        /// <summary>
+        /// Formats a LanguageSkill object into a delimited string.
+        /// </summary>
+        /// <param name="languageSkill"></param>
+        /// <param name="profileId"></param>
         public IList<string> FormatLanguageSkill(LanguageSkill languageSkill, string profileId)
         {
             List<string> list = new List<string>();
@@ -64,6 +70,12 @@ namespace Apollo.SemanticSearchExporter
             return list;
         }
 
+
+        /// <summary>
+        /// Formats a LeaderskipSkill object into a delimited string.
+        /// </summary>
+        /// <param name="leadershipSkills"></param>
+        /// <param name="profileId"></param>
         public IList<string> FormatLeadershipSkill(LeadershipSkills leadershipSkills, string profileId)
         {
             List<string> list = new List<string>();
