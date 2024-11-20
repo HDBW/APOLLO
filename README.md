@@ -17,16 +17,19 @@ INVITE Project APOLLO - **A**I-based cross-**P**lattform C**O**mpanion-app for *
 
 ## Summary
 
+Invite Project Apollo was a BMBF and BIBB founded government project covering the needs of the German labor market. The original Idea is to create a Life Long Learning Journey analyzed by AI.
+The project is now open source and terminated as of November 2024. The project is no longer maintained by the HDBW University of Applied Sciences.
+
 For more information check out our [website](https://project-apollo.de/). 
 
 ## How to Engage, Contribute and Provide Feedback
 
 The project apollo team encourages contributions, both issues and PRs. See [contribution guidlines](CONTRIBUTION.md) for more information.
 
-Check the product [roadmap](docs/roadmap.md) to see what the team is focusing on.
-
-Check the [help wanted](helpwanted.md) to see where and how to engage best.
 
 ## Community
 
 This project uses the .NET Foundation Code of Conduct to define expected conduct in our community. Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting a project maintainer at dominik.boesl@hdbw-hochschule.de.
+
+You can reach out to the original Developers via Discord.
+Thanks a lot! Apollo
